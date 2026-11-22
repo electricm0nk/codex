@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 20.0,
+    "description": null,
+    "key": "Clever Sling Staff",
+    "name": "Clever Sling Staff",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "STR"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sling Staff (Halfling)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Magic.Resizable.Exotic.Ranged.Specific.Halfling.Bludgeoning.Container.Projectile.Sling"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|SlingStone"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|28000.Special Ability ~ +3 ~ Weapon.Special Ability ~ Seeking ~ Ranged.Material ~ Leather.Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHandOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "80"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+    "record_key": "Clever Sling Staff",
+    "sha256": "8bab5c93e80b95941384620665b3bcc691bebf1b540dd94323573020b736d0a7"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

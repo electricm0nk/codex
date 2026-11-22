@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Constructs",
+    "category": "Psionic",
+    "name": "Advanced Constructs",
+    "description": "You gain additional menu options for astral constructs.",
+    "prerequisites": [
+      "PRESPELL:1,Astral Construct",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 24,
+    "record_key": "Advanced Constructs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

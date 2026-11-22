@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L1 ~ Alarm",
+    "name": "Alarm",
+    "class": "Sorcerer",
+    "description": "Alarm creates a subtle ward on an area you select. Once the spell effect is in place, it thereafter sounds a mental or audible alarm each time a creature of Tiny or larger size enters the warded area or touches it. A creature that speaks the password [determined by you at the time of casting] does not set off the alarm. You decide at the time of casting whether the alarm will be mental or audible in nature. Mental Alarm: A mental alarm alerts you [and only you] so long as you remain within 1 mile of the warded area. You note a single mental \"ping\" that awakens you from normal sleep but does not otherwise disturb concentration. A silence spell has no effect on a mental alarm. Audible Alarm: An audible alarm produces the sound of a hand bell, and anyone within 60 feet of the warded area can hear it clearly. Reduce the distance by 10 feet for each interposing closed door and by 20 feet for each substantial interposing wall. In quiet conditions, the ringing can be heard faintly as far as 180 feet away. The sound lasts for 1 round. Creatures within a silence spell cannot hear the ringing. Ethereal or astral creatures do not trigger the alarm. Alarm can be made permanent with a permanency spell.  |PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L1 ~ Alarm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Alarm_L1,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Alarm"
+      },
+      {
+        "key": "DESC",
+        "value": "Alarm creates a subtle ward on an area you select. Once the spell effect is in place, it thereafter sounds a mental or audible alarm each time a creature of Tiny or larger size enters the warded area or touches it. A creature that speaks the password [determined by you at the time of casting] does not set off the alarm. You decide at the time of casting whether the alarm will be mental or audible in nature. Mental Alarm: A mental alarm alerts you [and only you] so long as you remain within 1 mile of the warded area. You note a single mental \"ping\" that awakens you from normal sleep but does not otherwise disturb concentration. A silence spell has no effect on a mental alarm. Audible Alarm: An audible alarm produces the sound of a hand bell, and anyone within 60 feet of the warded area can hear it clearly. Reduce the distance by 10 feet for each interposing closed door and by 20 feet for each substantial interposing wall. In quiet conditions, the ringing can be heard faintly as far as 180 feet away. The sound lasts for 1 round. Creatures within a silence spell cannot hear the ringing. Ethereal or astral creatures do not trigger the alarm. Alarm can be made permanent with a permanency spell.  |PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2104,
+    "record_key": "Sorcerer Bonus Spell L1 ~ Alarm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

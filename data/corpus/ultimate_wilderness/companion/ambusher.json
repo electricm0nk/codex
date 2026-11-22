@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Ambushers sneak up on unsuspecting prey, pouncing on targets when they least expect it.",
+    "key": "Companion Archetype ~ Ambusher",
+    "name": "Ambusher",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Archetype ~ Ambusher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CompanionArchetype.CF_CompanionShareSpells.CF_CompanionDevotion.CF_CompanionMultiattack.CF_CompanionEvasion.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Ambusher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ambushers sneak up on unsuspecting prey, pouncing on targets when they least expect it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Ambusher ~ Camouflage|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Ambusher ~ Cunning Ambusher|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Companion"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 416,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Archetype ~ Ambusher",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

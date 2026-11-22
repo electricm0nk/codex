@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Earth Mephit ~ Change Size",
+    "delivery": "SpellLike",
+    "description": "Once per day an earth mephit can enlarge one size category, as enlarge person spell, except that it only works on the earth mephit. This power acts as a 2nd level spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:earth_mephit_change_size",
+    "name": "Change Size",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day an earth mephit can enlarge one size category, as enlarge person spell, except that it only works on the earth mephit. This power acts as a 2nd level spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Earth Mephit ~ Change Size"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.202",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 888,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Earth Mephit ~ Change Size",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

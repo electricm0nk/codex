@@ -1,0 +1,36 @@
+# SD13-E2 Half-Orc bounded race-semantics classification fixture.
+#
+# Deterministic Half-Orc Fighter level-1 character input chosen to drive the
+# `race.semantics.unverified` diagnostic in `pilot_compute.rs`. The fixture
+# carries a Half-Orc race identity (not Human) with NO Human-specific race
+# semantics: the bounded non-race seam (Fighter chassis, ability modifiers,
+# base saves, total saves, deterministic combat baseline) still grounds a
+# `Computed` receipt because the race semantic gap is intentionally
+# non-claim-blocking. There is no Half-Orc-specific ability-bonus or
+# bonus-feat selection in this fixture (Half-Orc has no equivalent of the
+# Human ability-bonus or bonus-feat pressure), so the deterministic Half-Orc
+# pilot compute path receives only the generic `race.semantics.unverified`
+# diagnostic and no Human race explanation records.
+case_id=pf1-crb-half-orc-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:half-orc
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Moonbound Werewolf ~ Moonbound (New Moon)",
+    "delivery": null,
+    "description": "A moonbound werewolf in animal or hybrid form loses its damage reduction during a new moon. During this time, the moonbound werewolf also suffers -2 Strength and -2 Constitution in all forms, instead of the normal +2 bonuses. These changes decrease its CR by 1.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:moonbound_werewolf_moonbound_new_moon",
+    "name": "Moonbound (New Moon)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A moonbound werewolf in animal or hybrid form loses its damage reduction during a new moon. During this time, the moonbound werewolf also suffers -2 Strength and -2 Constitution in all forms, instead of the normal +2 bonuses. These changes decrease its CR by 1."
+      },
+      {
+        "key": "KEY",
+        "value": "Moonbound Werewolf ~ Moonbound (New Moon)"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MoonboundWerewolf"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "MoonboundWerewolf"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 315,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Moonbound Werewolf ~ Moonbound (New Moon)",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

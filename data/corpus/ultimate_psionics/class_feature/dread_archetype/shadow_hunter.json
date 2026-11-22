@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dread Archetype ~ Shadow Hunter",
+    "name": "Shadow Hunter",
+    "class": "Dread",
+    "description": "You have learned how to use your connection to fears to manipulate darkness to aid others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread Archetype ~ Shadow Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DreadArchetype.DreadFearsomeInsight.DreadDevastatingTouch.DreadBonusFeat5.DreadTerror10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Dread=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Dread Archetype ~ Shadow Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DreadFearsomeInsight,TYPE.DreadDevastatingTouch,TYPE.DreadBonusFeat5,TYPE.DreadTerror10]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to use your connection to fears to manipulate darkness to aid others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Shadow Hunter ~ Covert Nature|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Shadow Hunter ~ Shadow Diversion|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Shadow Hunter ~ Grasping Shade|PRECLASS:1,Dread=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Shadow Hunter ~ Step through Shadows|PRECLASS:1,Dread=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terror|-1|PRECLASS:1,Dread=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1864,
+    "record_key": "Dread Archetype ~ Shadow Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

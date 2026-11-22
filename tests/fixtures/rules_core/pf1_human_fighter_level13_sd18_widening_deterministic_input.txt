@@ -1,0 +1,52 @@
+# SD18 deterministic Human Fighter level 13 widening fixture.
+# Widens the accepted SD18 deterministic Human Fighter pilot from the bounded
+# level 12 (sixth bonus-feat cadence slot) tranche to level 13 as chosen input
+# only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam and the
+# deterministic Longsword / Chain Shirt / no-shield posture. Level 13 grants
+# no new bonus feat (the cadence is 1, 2, 4, 6, 8, 10, 12, ..., and 13 is not
+# in it); instead it raises Weapon Training to rank 3, which requires
+# choosing a THIRD weapon group (canonically Polearms), so this fixture adds
+# the choice:fighter_weapon_training_group_3 selection (canonically
+# group:polearms). No polearm is part of the deterministic loadout, so this
+# third-group seam stays explanation-only, mirroring the second group (Bows).
+case_id=pf1-crb-human-fighter-level13-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:13
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+feat=feat:combat_reflexes
+feat=feat:improved_critical
+feat=feat:greater_weapon_focus
+feat=feat:weapon_specialization
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:fighter_weapon_training_group:group:heavy_blades
+choice=choice:fighter_bonus_feat_6:feat:combat_reflexes
+choice=choice:fighter_bonus_feat_8:feat:improved_critical
+choice=choice:fighter_weapon_training_group_2:group:bows
+choice=choice:fighter_bonus_feat_10:feat:greater_weapon_focus
+choice=choice:fighter_bonus_feat_12:feat:weapon_specialization
+choice=choice:fighter_weapon_training_group_3:group:polearms
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

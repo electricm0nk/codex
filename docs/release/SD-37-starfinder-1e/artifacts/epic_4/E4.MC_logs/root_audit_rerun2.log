@@ -1,0 +1,13 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running tests/sd24_wired_integration_audit.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sd24_wired_integration_audit-e159cf5cb4835e2e)
+
+running 5 tests
+test no_noop_click_handlers_in_shipping_tsx ... ok
+test no_mock_leaks_in_shipping_source ... ok
+test placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral ... ok
+test no_would_strings_in_shipping_source ... ok
+test no_zero_tolerance_forbidden_tokens_in_shipping_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+exit=0

@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1750.0,
+    "description": "Misfire 1-2 (5 ft.)",
+    "key": "Pistol (Double-Barreled)",
+    "name": "Pistol (Double-Barreled)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Double-Barreled Pistol"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Pistol (Double-Barreled)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Pistol"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|FirearmBullet=2"
+      },
+      {
+        "key": "COST",
+        "value": "1750"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHandOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPROP",
+        "value": "Misfire 1-2 (5 ft.)"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Pistol (Double-Barreled)",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

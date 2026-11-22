@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cavalier Mount Boost ~ Paladin",
+    "name": "Paladin Mount",
+    "class": "Cavalier",
+    "description": "Remove Paladin companion and boost Cavalier Mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Mount Boost ~ Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Multiple Companions"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Divine Bond ~ Special Mount"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "2,Cavalier=1,Paladin=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Remove Paladin companion and boost Cavalier Mount."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionDisable_PaladinMount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Cavalier|PaladinLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3727,
+    "record_key": "Cavalier Mount Boost ~ Paladin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Combat Trick ~ Arcane Armor Mastery",
+    "name": "Combat Trick / Arcane Armor Mastery",
+    "class": "Combat Trick",
+    "description": "When casting a spell while wearing armor, you can spend 1 stamina point to activate Arcane Armor Mastery as a free action, or spend a number of stamina points equal to the spell's level (minimum 1) to ignore your armor's arcane spell failure chance entirely for that casting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Arcane Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting a spell while wearing armor, you can spend 1 stamina point to activate Arcane Armor Mastery as a free action, or spend a number of stamina points equal to the spell's level (minimum 1) to ignore your armor's arcane spell failure chance entirely for that casting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1138,
+    "record_key": "Combat Trick ~ Arcane Armor Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,37 @@
+test_a_multi_book_object_is_left_unclassified (scripts.tests.test_provenance.ClassifyUnambiguousTests.test_a_multi_book_object_is_left_unclassified) ... ok
+test_a_packaging_artifact_book_is_flagged_regardless_of_book_count (scripts.tests.test_provenance.ClassifyUnambiguousTests.test_a_packaging_artifact_book_is_flagged_regardless_of_book_count) ... ok
+test_a_single_book_object_is_origin (scripts.tests.test_provenance.ClassifyUnambiguousTests.test_a_single_book_object_is_origin) ... ok
+test_every_populated_record_carries_a_basis (scripts.tests.test_provenance.ClassifyUnambiguousTests.test_every_populated_record_carries_a_basis) ... ok
+test_totality_holds_over_the_output (scripts.tests.test_provenance.ClassifyUnambiguousTests.test_totality_holds_over_the_output) ... ok
+test_errata_source_counts_toward_denominator_origin_does_not_once_superseded (scripts.tests.test_provenance.ComputeDenominatorTests.test_errata_source_counts_toward_denominator_origin_does_not_once_superseded) ... ok
+test_is_a_pure_fold_same_input_same_output (scripts.tests.test_provenance.ComputeDenominatorTests.test_is_a_pure_fold_same_input_same_output) ... ok
+test_origin_and_variant_count_duplicate_and_superseded_do_not (scripts.tests.test_provenance.ComputeDenominatorTests.test_origin_and_variant_count_duplicate_and_superseded_do_not) ... ok
+test_unclassified_never_counts (scripts.tests.test_provenance.ComputeDenominatorTests.test_unclassified_never_counts) ... ok
+test_a_real_change_reports_the_total_and_per_status_delta (scripts.tests.test_provenance.DenominatorChangeReportTests.test_a_real_change_reports_the_total_and_per_status_delta) ... ok
+test_no_change_reports_zero_delta (scripts.tests.test_provenance.DenominatorChangeReportTests.test_no_change_reports_zero_delta) ... ok
+test_a_doneness_verdict_that_moves_is_caught (scripts.tests.test_provenance.DonenessIndependenceTests.test_a_doneness_verdict_that_moves_is_caught) ... ok
+test_a_unit_leaving_the_denominator_is_not_itself_a_violation (scripts.tests.test_provenance.DonenessIndependenceTests.test_a_unit_leaving_the_denominator_is_not_itself_a_violation) ... ok
+test_unchanged_doneness_passes (scripts.tests.test_provenance.DonenessIndependenceTests.test_unchanged_doneness_passes) ... ok
+test_a_single_origin_passes (scripts.tests.test_provenance.ExactlyOneAuthoritativeTests.test_a_single_origin_passes) ... ok
+test_all_unclassified_pairs_are_excluded_not_flagged_unowned (scripts.tests.test_provenance.ExactlyOneAuthoritativeTests.test_all_unclassified_pairs_are_excluded_not_flagged_unowned) ... ok
+test_origin_flipped_to_superseded_plus_errata_source_passes (scripts.tests.test_provenance.ExactlyOneAuthoritativeTests.test_origin_flipped_to_superseded_plus_errata_source_passes) ... ok
+test_two_authoritative_pairs_means_the_comparison_never_ran (scripts.tests.test_provenance.ExactlyOneAuthoritativeTests.test_two_authoritative_pairs_means_the_comparison_never_ran) ... ok
+test_zero_authoritative_pairs_is_unowned (scripts.tests.test_provenance.ExactlyOneAuthoritativeTests.test_zero_authoritative_pairs_is_unowned) ... ok
+test_a_remaining_packaging_artifact_is_reported (scripts.tests.test_provenance.PackagingArtifactAndStructuralSignatureTests.test_a_remaining_packaging_artifact_is_reported) ... ok
+test_a_signed_structural_exclusion_passes (scripts.tests.test_provenance.PackagingArtifactAndStructuralSignatureTests.test_a_signed_structural_exclusion_passes) ... ok
+test_an_unsigned_structural_exclusion_is_caught (scripts.tests.test_provenance.PackagingArtifactAndStructuralSignatureTests.test_an_unsigned_structural_exclusion_is_caught) ... ok
+test_descoped_licensing_needs_no_signature (scripts.tests.test_provenance.PackagingArtifactAndStructuralSignatureTests.test_descoped_licensing_needs_no_signature) ... ok
+test_no_packaging_artifact_passes (scripts.tests.test_provenance.PackagingArtifactAndStructuralSignatureTests.test_no_packaging_artifact_passes) ... ok
+test_every_canonical_status_constructs (scripts.tests.test_provenance.RecordValidationTests.test_every_canonical_status_constructs) ... ok
+test_unclassified_is_a_valid_bookkeeping_status (scripts.tests.test_provenance.RecordValidationTests.test_unclassified_is_a_valid_bookkeeping_status) ... ok
+test_unknown_status_is_rejected (scripts.tests.test_provenance.RecordValidationTests.test_unknown_status_is_rejected) ... ok
+test_a_duplicated_pair_is_caught (scripts.tests.test_provenance.TotalityTests.test_a_duplicated_pair_is_caught) ... ok
+test_a_fully_covered_universe_passes (scripts.tests.test_provenance.TotalityTests.test_a_fully_covered_universe_passes) ... ok
+test_a_missing_pair_is_caught (scripts.tests.test_provenance.TotalityTests.test_a_missing_pair_is_caught) ... ok
+test_a_record_outside_the_universe_is_caught (scripts.tests.test_provenance.TotalityTests.test_a_record_outside_the_universe_is_caught) ... ok
+test_unclassified_satisfies_totality (scripts.tests.test_provenance.TotalityTests.test_unclassified_satisfies_totality) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.003s
+
+OK

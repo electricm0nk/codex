@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 450.0,
+    "description": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil.",
+    "key": "Talisman of Sealed Summons (Lesser)",
+    "name": "Talisman of Sealed Summons, Lesser",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Sealed Summons (Lesser)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "450"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Sealed Summons (Lesser)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

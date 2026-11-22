@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:11:45Z",
+  "data": {
+    "corpus_key": "Dragon Blood",
+    "delivery": "Supernatural",
+    "description": "The mythic dragon's blood and other fluids are infused with acid, cold, electricity, or fire, matching the dragon's breath weapon energy type. Every time the dragon is damaged by a piercing or slashing weapon, the attacking creature takes energy damage according to Table 6-6: Dragon Blood Damage (or double damage if the attack is a critical hit). Using a reach weapon does not endanger the attacker in this way. If the dragon has the swallow whole ability, it adds this damage to its swallow whole damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "mythic_adventures:monster_ability:dragon_blood",
+    "name": "Dragon Blood",
+    "owners": [],
+    "source_page": "p.226",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 343,
+    "record_key": "Dragon Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

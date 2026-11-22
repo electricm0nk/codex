@@ -1,0 +1,161 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:xill_implant",
+      "beastiary:monster_ability:xill_multiweapon_mastery",
+      "beastiary:monster_ability:xill_paralysis",
+      "beastiary:monster_ability:xill_planewalk"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Xill",
+    "external_ability_refs": [
+      "Grab"
+    ],
+    "key": "beastiary:monster:xill",
+    "monster_class": "Outsider (Fort/Ref):9",
+    "name": "Xill",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ShieldProf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Xill ~ Implant|Xill ~ Multiweapon Mastery|Xill ~ Paralysis|Xill ~ Planewalk"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawAttacks|2"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "4"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Intimidate|Knowledge (Arcana)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):9"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "SR",
+        "value": "17"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.283",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 425,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Xill",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

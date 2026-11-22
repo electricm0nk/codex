@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eyebiter ~ Spellblight",
+    "name": "Spellblight",
+    "class": "Mesmerist",
+    "description": "At 14th level, the eyebiter can use this ocular occlusion to afflict the target with the ebon eyes, the eldritch cataracts, or the hemoculysis spellblight (Ultimate Magic 95).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eyebiter ~ Spellblight"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "OcularOcclusion_LVL_4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, the eyebiter can use this ocular occlusion to afflict the target with the ebon eyes, the eldritch cataracts, or the hemoculysis spellblight (Ultimate Magic 95)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Ocular Occlusion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 66,
+    "record_key": "Eyebiter ~ Spellblight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

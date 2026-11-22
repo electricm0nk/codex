@@ -1,0 +1,1141 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/equipment_data/magic_items/MAGIC_ITEMS_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Ring of Ancestral Blood Magic",
+      "category": "MagicItems",
+      "name": "Ring of Ancestral Blood Magic",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "3/day when bloodraging, can cast a bonus spell without spending a spell slot but expending rounds of bloodrage equal to the spell level"
+    },
+    {
+      "key": "Ring of Eloquence",
+      "category": "MagicItems",
+      "name": "Ring of Eloquence",
+      "cost_gp": 3500.0,
+      "weight_lbs": null,
+      "description": "gain ability to speak four specific languages even if in alternate form; +2 on Bluff, Diplomacy, Intimidate, and Perform (Oratory); if deafened, verbal component spell failure is only 10%"
+    },
+    {
+      "key": "Ring of Lingering Blood Magic",
+      "category": "MagicItems",
+      "name": "Ring of Lingering Blood Magic",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "1/round, as free action, can expend 1 round of bloodrage to extend the duration of a beneficial spell, with duration of 1 round/level or greater, by 2 rounds"
+    },
+    {
+      "key": "Ring of Natural Attunement (Drake)",
+      "category": "MagicItems",
+      "name": "Ring of Natural Attunement (Drake)",
+      "cost_gp": 12880.0,
+      "weight_lbs": null,
+      "description": "add to summon nature's ally list: forest drake (4th), shadow drake (4th), flame drake (5th), frost drake (6th), desert drake (9th); 1/day summon shadow drake"
+    },
+    {
+      "key": "Ring of Natural Attunement (Kami)",
+      "category": "MagicItems",
+      "name": "Ring of Natural Attunement (Kami)",
+      "cost_gp": 7800.0,
+      "weight_lbs": null,
+      "description": "add to summon nature's ally list: shikigami (3rd), kodama (5th), zuishin (7th), toshigami (9th); 1/day summon shikigami"
+    },
+    {
+      "key": "Ring of Natural Attunement (Leshy)",
+      "category": "MagicItems",
+      "name": "Ring of Natural Attunement (Leshy)",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": "add to summon nature's ally list: leaf leshy (1st), gourd leshy (2nd), fungus leshy (3rd), seaweed leshy (5th) 1/day summon leaf leshy"
+    },
+    {
+      "key": "Ring of Powerful Blood Magic",
+      "category": "MagicItems",
+      "name": "Ring of Powerful Blood Magic",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": "3/day increase spell save DC by 1 when bloodraging"
+    },
+    {
+      "key": "Ring of Resilience",
+      "category": "MagicItems",
+      "name": "Ring of Resilience",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "when regaining grit or panache, user can attempt a new saving throw against ongoning condition; can be used only once for each ongoing condition."
+    },
+    {
+      "key": "Ring of Summoning Affinity (Aeon)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Aeon)",
+      "cost_gp": 7800.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: paracletus (3rd), theletos (6th), akhana (9th); 1/day summon paracletus"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Agathion)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Agathion)",
+      "cost_gp": 7700.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: silvanshee (3rd), vulpinal (5th), avoral (7th), leonal (8th); 1/day summon silvanshee"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Angel)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Angel)",
+      "cost_gp": 7200.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: cassian (3rd), movanic deva (7th), monadic deva (8th); 1/day summon cassian"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Archon)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Archon)",
+      "cost_gp": 7000.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: harbinger (3rd), legion archon (6th), shield archon (7th); 1/day summon harbinger"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Asura)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Asura)",
+      "cost_gp": 7600.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: tripurasura (3rd), adhukait (6th), upasunda (7th), aghasura (8th); 1/day summon tripurasura"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Daemon)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Daemon)",
+      "cost_gp": 10600.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: cacodaemon (3rd), ceustodaeman (5th), hydrodaemon (6th), leukodaemon (7th), piscodaemon (7th), derghodaemon (8th), meladaemon (8th), thanadaemon (9th); 1/day summon cacodaemon"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Div)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Div)",
+      "cost_gp": 9100.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: doru (3rd), aghash (4th), pairaka (6th), ghawwas (7th), shira (8th), sepid (9th); 1/day summon doru"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Inevitable)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Inevitable)",
+      "cost_gp": 8100.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: arbiter (3rd), zelekhut (7th), kolyarut (8th), marut (9th); 1/day summon arbiter"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Kyton)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Kyton)",
+      "cost_gp": 7300.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: augur (3rd), sacristan (7th), interlocutor (9th); 1/day summon augur"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Protean)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Protean)",
+      "cost_gp": 7200.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: voidworm (3rd), naunet (6th), imentesh (9th); 1/day summon voidworm"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Psychopomp)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Psychopomp)",
+      "cost_gp": 7600.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: nosoi (3rd), catrina (4th), vanth (6th), morrigna (9th); 1/day summon nosoi"
+    },
+    {
+      "key": "Ring of Summoning Affinity (Qlippoth)",
+      "category": "MagicItems",
+      "name": "Ring of Summoning Affinity (Qlippoth)",
+      "cost_gp": 8600.0,
+      "weight_lbs": null,
+      "description": "add to summon monster list: cythnigot (3rd), shoggti (6th), nygogoth (7th), chernobue (8th), augnagar (9th); 1/day summon cythnigot"
+    },
+    {
+      "key": "Ring of Vengeful Blood Magic",
+      "category": "MagicItems",
+      "name": "Ring of Vengeful Blood Magic",
+      "cost_gp": 5400.0,
+      "weight_lbs": null,
+      "description": "3/day when bloodraging, cast 3rd or lower-level spell as attack of opportunity"
+    },
+    {
+      "key": "Rod of Abrupt Hexes",
+      "category": "MagicItems",
+      "name": "Rod of Abrupt Hexes",
+      "cost_gp": 75500.0,
+      "weight_lbs": 5.0,
+      "description": "3/day use hex (not advanced or grand) as swift action"
+    },
+    {
+      "key": "Rod of Grasping Hexes",
+      "category": "MagicItems",
+      "name": "Rod of Grasping Hexes",
+      "cost_gp": 11000.0,
+      "weight_lbs": 5.0,
+      "description": "3/day double range of hex (not advanced or grand) with range measured in feet"
+    },
+    {
+      "key": "Rod of Interminable Hexes",
+      "category": "MagicItems",
+      "name": "Rod of Interminable Hexes",
+      "cost_gp": 11000.0,
+      "weight_lbs": 5.0,
+      "description": "3/day double duration of hex (not advanced or grand) with duration longer than 1 round"
+    },
+    {
+      "key": "Rod of Potent Hexes",
+      "category": "MagicItems",
+      "name": "Rod of Potent Hexes",
+      "cost_gp": 54000.0,
+      "weight_lbs": 5.0,
+      "description": "3/day double damage dealt or healed by hex (not advanced or grand)"
+    },
+    {
+      "key": "Rod of Voracious Hexes",
+      "category": "MagicItems",
+      "name": "Rod of Voracious Hexes",
+      "cost_gp": 32500.0,
+      "weight_lbs": 5.0,
+      "description": "3/day target second target within 30' with a hex (not advanced or grand)"
+    },
+    {
+      "key": "Ember Staff",
+      "category": "MagicItems",
+      "name": "Ember Staff",
+      "cost_gp": 13100.0,
+      "weight_lbs": 3.0,
+      "description": null
+    },
+    {
+      "key": "Gravedigger's Spade",
+      "category": "MagicItems",
+      "name": "Gravedigger's Spade",
+      "cost_gp": 12150.0,
+      "weight_lbs": 4.0,
+      "description": "can be used as a masterwork shovel"
+    },
+    {
+      "key": "Monstrification Staff",
+      "category": "MagicItems",
+      "name": "Monstrification Staff",
+      "cost_gp": 12000.0,
+      "weight_lbs": 4.0,
+      "description": null
+    },
+    {
+      "key": "Spark Staff",
+      "category": "MagicItems",
+      "name": "Spark Staff",
+      "cost_gp": 12650.0,
+      "weight_lbs": 2.0,
+      "description": "1/day regain 1 charge when wielder takes 10 points of electricity damage"
+    },
+    {
+      "key": "Amulet of the Blooded (Aberrant)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Aberrant)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; 25% chance to negate critical hit or sneak attack, increase melee touch attack reach by 5 ft"
+    },
+    {
+      "key": "Amulet of the Blooded (Abyssal)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Abyssal)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain electricity resistance 5, +2 save vs. poison, grow claws as free action"
+    },
+    {
+      "key": "Amulet of the Blooded (Accursed)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Accursed)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; +2 save vs. charm, cold, fear, fire, and sleep; 3/day gaze to stagger 4 rounds (60 ft. range, Will DC 18); old target unstaggered if used on new target"
+    },
+    {
+      "key": "Amulet of the Blooded (Celestial)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Celestial)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain acid resistance 5, cold resistance 5; 3/day fire ray (30 ft., touch attack): 1d4+4 damage aginst evil creatures, heal 1d4+4 damage against good creatures (1/day/target)"
+    },
+    {
+      "key": "Amulet of the Blooded (Destined)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Destined)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; +2 luck bonus on all saves and AC during surprise rounds or when unaware of attack; 1/day reroll one attack roll, critical hit confirmation, or caster level check to overcome spell resistance"
+    },
+    {
+      "key": "Amulet of the Blooded (Draconic Acid)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Draconic Acid)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain acid resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 acid damage, 60-ft. line, Reflex DC 13 half)"
+    },
+    {
+      "key": "Amulet of the Blooded (Draconic Electricity)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Draconic Electricity)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain electricity resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 electricity damage, 60-ft. line, Reflex DC 13 half)"
+    },
+    {
+      "key": "Amulet of the Blooded (Draconic Fire)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Draconic Fire)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain fire resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 fire damage, 30-ft. cone, Reflex DC 13 half)"
+    },
+    {
+      "key": "Amulet of the Blooded (Draconic Cold)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Draconic Cold)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain cold resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 cold damage, 30-ft. cone, Reflex DC 13 half)"
+    },
+    {
+      "key": "Amulet of the Blooded (Elemental Electricity)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Elemental Electricity)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain electricity resistance 5; 1/day elemental burst (4d6 electricity damage, 20-ft. burst, Reflex DC 14 half), failed save gives vulnerability to electricity until wearer's next turn"
+    },
+    {
+      "key": "Amulet of the Blooded (Elemental Acid)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Elemental Acid)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain acid resistance 5; 1/day elemental burst (4d6 acid damage, 20-ft. burst, Reflex DC 14 half), failed save gives vulnerability to acid until wearer's next turn"
+    },
+    {
+      "key": "Amulet of the Blooded (Elemental Fire)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Elemental Fire)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain fire resistance 5; 1/day elemental burst (4d6 fire damage, 20-ft. burst, Reflex DC 14 half), failed save gives vulnerability to fire until wearer's next turn"
+    },
+    {
+      "key": "Amulet of the Blooded (Elemental Cold)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Elemental Cold)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain cold resistance 5; 1/day elemental burst (4d6 cold damage, 20-ft. burst, Reflex DC 14 half), failed save gives vulnerability to cold until wearer's next turn"
+    },
+    {
+      "key": "Amulet of the Blooded (Fey)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Fey)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; 9 rounds/day greater invisibility; 3/day cause debilitating laughter with a melee touch attack"
+    },
+    {
+      "key": "Amulet of the Blooded (Infernal)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Infernal)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain fire resistance 5, +2 save vs. poison; 3/day shaken with melee touch attack"
+    },
+    {
+      "key": "Amulet of the Blooded (Undead)",
+      "category": "MagicItems",
+      "name": "Amulet of the Blooded (Undead)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of bloodline abilities by 2; gain cold resistance 5 and DR 5/- vs. nonlethal damage; 3/day shaken with melee touch attack (if shaken and fewer than 8 Hit Dice, frightened for 1 round)"
+    },
+    {
+      "key": "Amulet of the Spirits (Battle)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Battle)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 1/day activate battle ward (+3 deflection bonus to AC, reduced by 1 each time attacked); 1/day curse creature within 30 ft. for 8 rounds to take additional bleed damage and only half hit points are healed"
+    },
+    {
+      "key": "Amulet of the Spirits (Bones)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Bones)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 1/day gain +2 deflection bonus to AC for 8 rounds; 1/day cause creature within 30 ft. to be frightened for 1 round (Will DC 13)"
+    },
+    {
+      "key": "Amulet of the Spirits (Flame)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Flame)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 2/day activate fire ward (next melee attacker takes 1d6+4 fire damage); 2/day cause creature within 30 ft. to be vulnerable to fire until end of wearer's next turn"
+    },
+    {
+      "key": "Amulet of the Spirits (Heavens)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Heavens)",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; can determine precise location when open sky can be seen at night; add Wisdom modifier to Charisma modifer on all Charisma checks and Charisma-based skill checks; cause enemy within 30 ft. to treat light level as two steps lower for 8 rounds"
+    },
+    {
+      "key": "Amulet of the Spirits (Life)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Life)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; regain 1d6 more hit points from any cure spell; 1/day cut off creature within 30 ft. from all forms of magical healing and effects that remove conditions for 1 minute (Will DC 13)"
+    },
+    {
+      "key": "Amulet of the Spirits (Stone)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Stone)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 1/day activate ward of stone (DR 5/adamantine against next 2 attacks); 1/day give creature within 30 ft. -4 penalty to AC against metal weapons for 2 rounds"
+    },
+    {
+      "key": "Amulet of the Spirits (Waves)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Waves)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 1/day activate ward of mist (blur until 2 attacks miss because of concealment); 1/day cause creature within 30 ft. to be etangled for 1 round by cold damage for 1 minute"
+    },
+    {
+      "key": "Amulet of the Spirits (Wind)",
+      "category": "MagicItems",
+      "name": "Amulet of the Spirits (Wind)",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "increase effective level of mystery or spirit powers by 2; 1/day activate ward of wind (ranged attacks get 20% miss chance) for 1 minute; 1/day cause creature within 30 ft. to emit light like a torch and take 5 electricity damage when hit with a metal weapon"
+    },
+    {
+      "key": "Amulet of Uncanny Defense",
+      "category": "MagicItems",
+      "name": "Amulet of Uncanny Defense",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "gain improved uncanny dodge; treat class level as 4 higher for improved uncanny dodge"
+    },
+    {
+      "key": "Aspect Mask",
+      "category": "MagicItems",
+      "name": "Aspect Mask",
+      "cost_gp": 6500.0,
+      "weight_lbs": 2.0,
+      "description": "3/day gain aspect of animal attuned to mask, as if by hunter's animal focus class feature"
+    },
+    {
+      "key": "Assassin's Dust",
+      "category": "MagicItems",
+      "name": "Assassin's Dust",
+      "cost_gp": 750.0,
+      "weight_lbs": null,
+      "description": "disintegrates dead flesh and bones"
+    },
+    {
+      "key": "Banner of Restful Nights",
+      "category": "MagicItems",
+      "name": "Banner of Restful Nights",
+      "cost_gp": 5040.0,
+      "weight_lbs": 7.0,
+      "description": "1/day endure elements, alarm, and calm magical weather in 20-ft. radius for 8 hours or until removed"
+    },
+    {
+      "key": "Bell of Returning Spirits",
+      "category": "MagicItems",
+      "name": "Bell of Returning Spirits",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day summon your familiar, if within 100 ft.; destroy to raise familiar from the dead"
+    },
+    {
+      "key": "Belt of Superior Maneuvers +1",
+      "category": "MagicItems",
+      "name": "Belt of Superior Maneuvers +1",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "3/day +1 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    },
+    {
+      "key": "Belt of Superior Maneuvers +2",
+      "category": "MagicItems",
+      "name": "Belt of Superior Maneuvers +2",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "3/day +2 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    },
+    {
+      "key": "Belt of Superior Maneuvers +3",
+      "category": "MagicItems",
+      "name": "Belt of Superior Maneuvers +3",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "3/day +3 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    },
+    {
+      "key": "Belt of Superior Maneuvers +4",
+      "category": "MagicItems",
+      "name": "Belt of Superior Maneuvers +4",
+      "cost_gp": 32000.0,
+      "weight_lbs": null,
+      "description": "3/day +4 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    },
+    {
+      "key": "Belt of Superior Maneuvers +5",
+      "category": "MagicItems",
+      "name": "Belt of Superior Maneuvers +5",
+      "cost_gp": 50000.0,
+      "weight_lbs": null,
+      "description": "3/day +5 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    },
+    {
+      "key": "Bloodstained Gloves",
+      "category": "MagicItems",
+      "name": "Bloodstained Gloves",
+      "cost_gp": 8000.0,
+      "weight_lbs": 5.0,
+      "description": "if soaked in blood of recently killed creature, gain +1 insight bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour; if soaked in blood of recently killed creature, gain insight bonus equal to studied target bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour"
+    },
+    {
+      "key": "Blouse of the Boastful Bastard",
+      "category": "MagicItems",
+      "name": "Blouse of the Boastful Bastard",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "Regain 1 panache point when taking damage from critical hit"
+    },
+    {
+      "key": "Boots of Gusto",
+      "category": "MagicItems",
+      "name": "Boots of Gusto",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": "3/day perform derring-do 1st-level swashbuckler deed"
+    },
+    {
+      "key": "Boots of Swift Fury",
+      "category": "MagicItems",
+      "name": "Boots of Swift Fury",
+      "cost_gp": 7500.0,
+      "weight_lbs": 2.0,
+      "description": "Increase base land speed; when in rage, +4 deflection bonus to AC against attacks of opportunity provoked by movement or casting a spell"
+    },
+    {
+      "key": "Boots of the Battle Herald",
+      "category": "MagicItems",
+      "name": "Boots of the Battle Herald",
+      "cost_gp": 30000.0,
+      "weight_lbs": 2.0,
+      "description": "1/day gain greater heroism for 11 minutes"
+    },
+    {
+      "key": "Boots of Vaulting",
+      "category": "MagicItems",
+      "name": "Boots of Vaulting",
+      "cost_gp": 3500.0,
+      "weight_lbs": 1.0,
+      "description": "Ignore additional 10 feet of falling distance with Acrobatics; 1/round gain +10 competence bonus to Acrobatics to jump, treated as running start; +10 to Acrobatics to afoid attacks of opportunity while jumping or to balance after landing; if used more than 1/minute, may reduce speed by half"
+    },
+    {
+      "key": "Bottled Scream",
+      "category": "MagicItems",
+      "name": "Bottled Scream",
+      "cost_gp": 900.0,
+      "weight_lbs": 0.5,
+      "description": "20-foot burst: end audible bard performance; spellcasters concentrating or casting as spell must make concentration check (DC 15+spell level); dispels silence; can be thrown as splash weapon"
+    },
+    {
+      "key": "Brass Spider",
+      "category": "MagicItems",
+      "name": "Brass Spider",
+      "cost_gp": 2500.0,
+      "weight_lbs": 2.0,
+      "description": "diminutive construct (hardness 5, 25 hp); 1/day Disable Device use out to 15 feet and unlimited use as masterwork thieve's tools, without additional range."
+    },
+    {
+      "key": "Cape of Daring Deeds",
+      "category": "MagicItems",
+      "name": "Cape of Daring Deeds",
+      "cost_gp": 9000.0,
+      "weight_lbs": 2.0,
+      "description": "can change color; when using derring-do 1st level swashbuckler deed, add additional die on natural 5 or 6; +2 resistance bonus on saves, +4 for 1 round when charmed life swashbuckler class feature used"
+    },
+    {
+      "key": "Cape of Feinting",
+      "category": "MagicItems",
+      "name": "Cape of Feinting",
+      "cost_gp": 14000.0,
+      "weight_lbs": 1.0,
+      "description": "3/day spend a standard action to purposely miss opponent, opponent loses Dexterity AC until wearer's next turn; also dazed if swashbuckler is using the cape or swashbuckler performs superior feint deed, if the foe fails a DC 13 Will save"
+    },
+    {
+      "key": "Cloak of Disarming",
+      "category": "MagicItems",
+      "name": "Cloak of Disarming",
+      "cost_gp": 35000.0,
+      "weight_lbs": 1.0,
+      "description": "cloak can attempt disarm as swift action; spend 1 panache point to gain +5 competence bonus on disarm"
+    },
+    {
+      "key": "Cloak of the Sneaky Scoundrel",
+      "category": "MagicItems",
+      "name": "Cloak of the Sneaky Scoundrel",
+      "cost_gp": 6400.0,
+      "weight_lbs": 2.0,
+      "description": "+5 competence to Stealth; has concealed scabbard (DC 20 Perception); Spend 1 panache point to vanish, as spell"
+    },
+    {
+      "key": "Cups of Rapport",
+      "category": "MagicItems",
+      "name": "Cups of Rapport",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "master and mark cups; after 5 minutes of drinking, user of master cup gets +5 bonus on Bluff, Diplomacy, and Sense Motive against user of mark cup, bonus lasts 1 hour or until users move more than 15 feet away from each other"
+    },
+    {
+      "key": "Dire Collar",
+      "category": "MagicItems",
+      "name": "Dire Collar",
+      "cost_gp": 1000.0,
+      "weight_lbs": 2.0,
+      "description": "1/day animal gains benefits of enlarge person for 1 minute"
+    },
+    {
+      "key": "Dire Collar (Greater)",
+      "category": "MagicItems",
+      "name": "Dire Collar (Greater)",
+      "cost_gp": 14000.0,
+      "weight_lbs": 2.0,
+      "description": "1/day animal gains benefits of animal growth for 1 minute"
+    },
+    {
+      "key": "Drinking Horn of the Panacea",
+      "category": "MagicItems",
+      "name": "Drinking Horn of the Panacea",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day creates liquid: cure serious wounds, neutralize poison, remove disease, or lesser restoration"
+    },
+    {
+      "key": "Elixir of Sex Shift",
+      "category": "MagicItems",
+      "name": "Elixir of Sex Shift",
+      "cost_gp": 2250.0,
+      "weight_lbs": null,
+      "description": "Permanently transforms imbiber's biology to take on a different set of sexual characteristics of their choice."
+    },
+    {
+      "key": "Elixir of the Thundering Voice",
+      "category": "MagicItems",
+      "name": "Elixir of the Thundering Voice",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": "+10 to Intimidate for 1 hour"
+    },
+    {
+      "key": "False Face",
+      "category": "MagicItems",
+      "name": "False Face",
+      "cost_gp": 1600.0,
+      "weight_lbs": 0.5,
+      "description": "assume appearance of specific Small or Medium humanoid creature"
+    },
+    {
+      "key": "Gloves of Marking",
+      "category": "MagicItems",
+      "name": "Gloves of Marking",
+      "cost_gp": 7200.0,
+      "weight_lbs": 1.0,
+      "description": "when wielding a slashing or piercing weapon and using Weapon Finesse, wearer can mark a creature when confirming a critical instead of dealing additional damage; wielder and allies get +2 morale bonus on attack and melee damage against marked creature for 1 minute, marked creature must save (Will DC %) or be shaken for 1 minute."
+    },
+    {
+      "key": "Glowing Gourd",
+      "category": "MagicItems",
+      "name": "Glowing Gourd",
+      "cost_gp": 4250.0,
+      "weight_lbs": 8.0,
+      "description": "sheds light as candle; when smashed 40-foot radius area affected by hallow with attached remove fear"
+    },
+    {
+      "key": "Handkerchief of Finding",
+      "category": "MagicItems",
+      "name": "Handkerchief of Finding",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "attune to handkerchief by having it for 1 week; once attuned, can sense direction to handkerchief. Bearer unaware of the handkerchief 's power cannot attune to it."
+    },
+    {
+      "key": "Headband of the Wolf",
+      "category": "MagicItems",
+      "name": "Headband of the Wolf",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.5,
+      "description": "gain scent to 10 feet as wolf aspect of the hunter's animal focus class feature; if wearer is a hunter, increase wearer's effective hunter level for the wolf aspect by 8"
+    },
+    {
+      "key": "Helm of the Valkyrie",
+      "category": "MagicItems",
+      "name": "Helm of the Valkyrie",
+      "cost_gp": 16000.0,
+      "weight_lbs": 3.0,
+      "description": "1/day summon giant spectral wolf (as phantom steed, CL 14, but with AC 24 and 100 hp) for up to 24 hours"
+    },
+    {
+      "key": "Howling Bracers",
+      "category": "MagicItems",
+      "name": "Howling Bracers",
+      "cost_gp": 7000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day crushing despair (DC 16); for every two creatures under effect of wearer's raging song, DC increases by 1 (maximum increase 5)"
+    },
+    {
+      "key": "Hunter's Tree Fort",
+      "category": "MagicItems",
+      "name": "Hunter's Tree Fort",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "box becomes stable platform hidden in tree: either tree house or blind; can be used for 12 hours in any 24-hour period"
+    },
+    {
+      "key": "Incense of Eidos",
+      "category": "MagicItems",
+      "name": "Incense of Eidos",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": "after 10 minutes meditation, take 20 on any knowledge check for 10 minutes (3 uses)"
+    },
+    {
+      "key": "Investigator's Pipe",
+      "category": "MagicItems",
+      "name": "Investigator's Pipe",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": "1 hour/day smoky unseen servant that can clear smoke or fog; can use inspiration on Survival checks to track or Perception checks to notice fine detaions without spending a use; 1/day attempt Knowledge check as eidetic recollection investigator talent"
+    },
+    {
+      "key": "Iron Collar of the Unbound Coven",
+      "category": "MagicItems",
+      "name": "Iron Collar of the Unbound Coven",
+      "cost_gp": 46000.0,
+      "weight_lbs": 2.0,
+      "description": "gain powers if wearer is a witch with the coven hex"
+    },
+    {
+      "key": "Lantern of Auras",
+      "category": "MagicItems",
+      "name": "Lantern of Auras",
+      "cost_gp": 2000.0,
+      "weight_lbs": 2.0,
+      "description": "bullseye lantern needs no oil, detect magic on command"
+    },
+    {
+      "key": "Lenses of the Predator's Gaze",
+      "category": "MagicItems",
+      "name": "Lenses of the Predator's Gaze",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "target creature as standard action, if target not already target of wearer's studied target class feature, get +1 on Bluff, Knowledge, Perception, Sense Motive, Survival, weapon attack rolls and damage rolls against that creature; as free action, increase effective slayer level by 5 for studied target class feature"
+    },
+    {
+      "key": "Lute of the Battle Ready (+1 spear)",
+      "category": "MagicItems",
+      "name": "Lute of the Battle Ready (+1 spear)",
+      "cost_gp": 2000.0,
+      "weight_lbs": 3.0,
+      "description": "3/day can transform into +1 spear for 1 minute or until changed back"
+    },
+    {
+      "key": "Lute of the Battle Ready (+1 longsword)",
+      "category": "MagicItems",
+      "name": "Lute of the Battle Ready (+1 longsword)",
+      "cost_gp": 2000.0,
+      "weight_lbs": 3.0,
+      "description": "3/day can transform into +1 longsword for 1 minute or until changed back"
+    },
+    {
+      "key": "Lute of the Battle Ready (+1 battleaxe)",
+      "category": "MagicItems",
+      "name": "Lute of the Battle Ready (+1 battleaxe)",
+      "cost_gp": 2000.0,
+      "weight_lbs": 3.0,
+      "description": "3/day can transform into +1 battleaxe for 1 minute or until changed back"
+    },
+    {
+      "key": "One-Way Window",
+      "category": "MagicItems",
+      "name": "One-Way Window",
+      "cost_gp": 7500.0,
+      "weight_lbs": 1.0,
+      "description": "set against solid surface to become a one-way window (penetrate 1 foot wood, 6 inches stone, 1 inch metal). No visible evidence of the of the window appears on the opposite side of surface and no items, light, sound, spells, or spell effects can pass through the window and divination magic does not function."
+    },
+    {
+      "key": "Physician's Spectacles",
+      "category": "MagicItems",
+      "name": "Physician's Spectacles",
+      "cost_gp": 4900.0,
+      "weight_lbs": null,
+      "description": "constant detect poison and diagnose disease; 1/day delay poison by touch"
+    },
+    {
+      "key": "Plume of Panache",
+      "category": "MagicItems",
+      "name": "Plume of Panache",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "User must affix it to a non-magical hat worth at least 10 gp. 1/day, when the wearer performs a deed, the plume provides her with 1 panache point that can be used for that deed. Once used the plume appears bedraggled until its magic is replenished."
+    },
+    {
+      "key": "Poet's Cloak",
+      "category": "MagicItems",
+      "name": "Poet's Cloak",
+      "cost_gp": 9750.0,
+      "weight_lbs": 1.0,
+      "description": "grants use of raging song as 4th-level skald by spending rounds of bardic performance; grants use of inspire courage and inspire competence as a 4th-level bard by spending rounds of raging song; Grant particular rage power when using raging song; rage power must be useable by 4th-level skald; no prerequisites other than level"
+    },
+    {
+      "key": "Preyfinder",
+      "category": "MagicItems",
+      "name": "Preyfinder",
+      "cost_gp": 85000.0,
+      "weight_lbs": null,
+      "description": "can see and track creature that blood was taken from; +1 insight bonus on all attack and damage rolls against quarry, or 1/day use own blood to gain a +2 morale bonus on all attack rolls, saves, and skill checks for 1 minute"
+    },
+    {
+      "key": "Restoration Dust",
+      "category": "MagicItems",
+      "name": "Restoration Dust",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "reform partially decomposed corpse or skeleton"
+    },
+    {
+      "key": "Runes of the Crone's Coven",
+      "category": "MagicItems",
+      "name": "Runes of the Crone's Coven",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day when using spell kenning, can cast spells from the witch spell list (twice as long casting, spell slot 1 level higher)"
+    },
+    {
+      "key": "Runes of the Old Faith",
+      "category": "MagicItems",
+      "name": "Runes of the Old Faith",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day when using spell kenning, can cast spells from the druid spell list (twice as long casting, spell slot 1 level higher)"
+    },
+    {
+      "key": "Runestone of Power (1st Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (1st Level)",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 1st-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (2nd Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (2nd Level)",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 2nd-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (3rd Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (3rd Level)",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 3rd-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (4th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (4th Level)",
+      "cost_gp": 32000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 4th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (5th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (5th Level)",
+      "cost_gp": 50000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 5th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (6th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (6th Level)",
+      "cost_gp": 72000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 6th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (7th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (7th Level)",
+      "cost_gp": 98000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 7th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (8th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (8th Level)",
+      "cost_gp": 128000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 8th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Runestone of Power (9th Level)",
+      "category": "MagicItems",
+      "name": "Runestone of Power (9th Level)",
+      "cost_gp": 162000.0,
+      "weight_lbs": null,
+      "description": "1/day use as 9th-level spell slot for spontaneous caster"
+    },
+    {
+      "key": "Saboteur's Goggles",
+      "category": "MagicItems",
+      "name": "Saboteur's Goggles",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "3/day use murderous command as a gaze attack (Will DC 16 negates)"
+    },
+    {
+      "key": "Scabbard of Many Blades",
+      "category": "MagicItems",
+      "name": "Scabbard of Many Blades",
+      "cost_gp": 5000.0,
+      "weight_lbs": 3.0,
+      "description": "can hold 4 two-handed weapons or 8 one-handed or light weapons, can store rods and staves; can switch weapons as a move action (swift with Quick Draw)"
+    },
+    {
+      "key": "Skullcrusher Gauntlets",
+      "category": "MagicItems",
+      "name": "Skullcrusher Gauntlets",
+      "cost_gp": 15302.0,
+      "weight_lbs": 6.0,
+      "description": "1/day make single attack as full-round action to deal 4d6 force damage and target must save (Fort DC 15) or fall unconscious until the end of its next turn, staggered if save is made"
+    },
+    {
+      "key": "Slayer's Robe",
+      "category": "MagicItems",
+      "name": "Slayer's Robe",
+      "cost_gp": 15000.0,
+      "weight_lbs": 5.0,
+      "description": "5 min/day gaseous form; +5 bonus to Stealth (+10 in gaseous form) and +5 to Sleight of Hand to conceal a weapon, +1 resistance bonus to saves; bonus to saves increases to studied target bonus when facing a studied target"
+    },
+    {
+      "key": "Spell Lattice (1st Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (1st Level)",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (2nd Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (2nd Level)",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (3rd Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (3rd Level)",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (4th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (4th Level)",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (5th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (5th Level)",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (6th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (6th Level)",
+      "cost_gp": 36000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (7th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (7th Level)",
+      "cost_gp": 49000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (8th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (8th Level)",
+      "cost_gp": 64000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Spell Lattice (9th Level)",
+      "category": "MagicItems",
+      "name": "Spell Lattice (9th Level)",
+      "cost_gp": 81000.0,
+      "weight_lbs": 1.0,
+      "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+    },
+    {
+      "key": "Storyteller's Dust",
+      "category": "MagicItems",
+      "name": "Storyteller's Dust",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": "create 10-foot cube manipulatable minor image above fire, lasts 2 hours, +2 Performance checks to tell a story using the image"
+    },
+    {
+      "key": "Swordmaster's Flair (Blue Scarf)",
+      "category": "MagicItems",
+      "name": "Swordmaster's Flair (Blue Scarf)",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "when in off-hand, can spend 1 panache point to increase melee reach with light or one-handed weapons by 5 feet; 1/day use without panache"
+    },
+    {
+      "key": "Swordmaster's Flair (Green Glove)",
+      "category": "MagicItems",
+      "name": "Swordmaster's Flair (Green Glove)",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "when in off-hand, can spend 1 panache point to ignore effects of difficult terrain until end of turn; 1/day use without panache"
+    },
+    {
+      "key": "Swordmaster's Flair (Red Sash)",
+      "category": "MagicItems",
+      "name": "Swordmaster's Flair (Red Sash)",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "when in off-hand, can spend 1 panache point to trip creature that ends charge within user's melee reach (no AoO, before charge attack, +2 bonus on check), charger can't attack if successful; 1/day use without panache"
+    },
+    {
+      "key": "Swordmaster's Flair (White Lace Kerchief)",
+      "category": "MagicItems",
+      "name": "Swordmaster's Flair (White Lace Kerchief)",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "when in off-hand, can spend 1 panache point to pinpoint an unseen adjacent enemy and gain benefits of Blind-Fight for 1 round; 1/day use without panache"
+    },
+    {
+      "key": "Figurine of Wondrous Power (Tin Imp)",
+      "category": "MagicItems",
+      "name": "Figurine of Wondrous Power (Tin Imp)",
+      "cost_gp": 13000.0,
+      "weight_lbs": 1.0,
+      "description": "can be used 48 hours per week but need not be continuous"
+    },
+    {
+      "key": "Toothpick of Pyrotechnics",
+      "category": "MagicItems",
+      "name": "Toothpick of Pyrotechnics",
+      "cost_gp": 400.0,
+      "weight_lbs": null,
+      "description": "creates a flash and a cloud of smoke; creatures within 20 feet must save (Fort DC:13) or be blinded for 1d4+1 rounds; 20 foot smoke cloud lasts for 3 rounds"
+    },
+    {
+      "key": "Torc of Bloody Rage",
+      "category": "MagicItems",
+      "name": "Torc of Bloody Rage",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day enter rage (as spell) for 6 rounds, except fatigued for 12 rounds afterwards, or gain 3 additional rounds of rage"
+    },
+    {
+      "key": "Torc of the Primal Song",
+      "category": "MagicItems",
+      "name": "Torc of the Primal Song",
+      "cost_gp": 6000.0,
+      "weight_lbs": 4.0,
+      "description": "when performing or benefiting from raging song, gain Diehard feat and benefit from helpful raging song or bardic performance for 1 round after end"
+    },
+    {
+      "key": "Trollbone",
+      "category": "MagicItems",
+      "name": "Trollbone",
+      "cost_gp": 2400.0,
+      "weight_lbs": 1.0,
+      "description": "toss up to 20 feet away to grow into troll under your control for 2d4 rounds or until end of bardic performance"
+    },
+    {
+      "key": "Vanishing Sheath",
+      "category": "MagicItems",
+      "name": "Vanishing Sheath",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": "extradimensional space holds one light weapon, wand, or piece of ammunition up to 5 pounds; wield weapon as swift action (if hand empty)"
+    },
+    {
+      "key": "Wand Key Ring",
+      "category": "MagicItems",
+      "name": "Wand Key Ring",
+      "cost_gp": 3000.0,
+      "weight_lbs": 8.0,
+      "description": "+10 insight bonus to use UMD to activate specific spell on scroll or in spell trigger item"
+    },
+    {
+      "key": "Whistle of Calling",
+      "category": "MagicItems",
+      "name": "Whistle of Calling",
+      "cost_gp": 6300.0,
+      "weight_lbs": null,
+      "description": "1/day attuned mount or animal companion within 1 mile teleported to safe space within 30 feet"
+    }
+  ]
+}

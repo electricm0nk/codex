@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pattern Breaker ~ Disable Weapon or Armor",
+    "name": "Disable Weapon or Armor",
+    "class": "Pattern Breaker",
+    "description": "You have learned to temporarily suppress the magical qualities of a weapon or armor with a touch.  As a melee touch attack that does not provoke attacks of opportunity, you can target one magical weapon or armor on a creature.  If the attack is successful, you make a manifester level check against a DC of 11 + the manifester level of the item.  If the manifester level check is successful, all magical or psionic qualities of the item are suppressed for %1 rounds.  There is no limit to the number of items you can affect, although you can only affect one per use.|DisableWeaponOrArmorDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern Breaker ~ Disable Weapon or Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisableWeaponOrArmorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to temporarily suppress the magical qualities of a weapon or armor with a touch.  As a melee touch attack that does not provoke attacks of opportunity, you can target one magical weapon or armor on a creature.  If the attack is successful, you make a manifester level check against a DC of 11 + the manifester level of the item.  If the manifester level check is successful, all magical or psionic qualities of the item are suppressed for %1 rounds.  There is no limit to the number of items you can affect, although you can only affect one per use.|DisableWeaponOrArmorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableWeaponOrArmorDuration|CrypticPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1841,
+    "record_key": "Pattern Breaker ~ Disable Weapon or Armor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

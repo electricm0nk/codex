@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Hatred ~ Hated Target",
+    "name": "Hated Target",
+    "description": "The phantom can take a move action to designate one creature within its line of sight as a hated target. The phantom gains a +2 bonus on attack rolls against its hated target, and a bonus on damage rolls equal to 1/2 the phantom's Hit Dice (minimum 1). The phantom is so focused on this hated target that it takes a -2 penalty on attack rolls against all other creatures. The phantom can maintain these bonuses against only one target at a time, and these bonuses remain in effect until either the hated opponent is dead or it has been out of the phantom's line of sight for at least 1 minute. When the spiritualist reaches 7th level, the phantom can use this ability as a swift action, and takes no penalty when attacking creatures that are not designated as its hated enemy. The phantom must be manifested in ectoplasmic form to use this ability (unless the spiritualist is 17th level or higher; see Shared Hatred below).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Hatred ~ Hated Target"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Hatred.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom can take a move action to designate one creature within its line of sight as a hated target. The phantom gains a +2 bonus on attack rolls against its hated target, and a bonus on damage rolls equal to 1/2 the phantom's Hit Dice (minimum 1). The phantom is so focused on this hated target that it takes a -2 penalty on attack rolls against all other creatures. The phantom can maintain these bonuses against only one target at a time, and these bonuses remain in effect until either the hated opponent is dead or it has been out of the phantom's line of sight for at least 1 minute. When the spiritualist reaches 7th level, the phantom can use this ability as a swift action, and takes no penalty when attacking creatures that are not designated as its hated enemy. The phantom must be manifested in ectoplasmic form to use this ability (unless the spiritualist is 17th level or higher; see Shared Hatred below)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 99,
+    "record_key": "Emotional Focus / Hatred ~ Hated Target"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

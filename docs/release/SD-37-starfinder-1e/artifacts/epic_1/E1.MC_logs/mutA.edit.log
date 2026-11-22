@@ -1,0 +1,14 @@
+mutA planted: BookRegistry::pathfinder_only(RACE_CORPUS_BOOKS.split_at(1).1); // E1.MC planted: core_rulebook dropped
+diff --git a/apps/desktop/src-tauri/src/race_catalog.rs b/apps/desktop/src-tauri/src/race_catalog.rs
+index 716ddc4a09..7b136ec708 100644
+--- a/apps/desktop/src-tauri/src/race_catalog.rs
++++ b/apps/desktop/src-tauri/src/race_catalog.rs
+@@ -120,7 +120,7 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
+ /// [`GameSystem::Pathfinder1e`] entry, read from that system's corpus root. The list keeps
+ /// its own declaration because `race_resolver`'s pin test and `sheet_rule_parity` read it
+ /// from this file's source text.
+-pub(crate) const RACE_CORPUS_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(RACE_CORPUS_BOOKS);
++pub(crate) const RACE_CORPUS_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(RACE_CORPUS_BOOKS.split_at(1).1); // E1.MC planted: core_rulebook dropped
+ 
+ /// Which ingested book a catalog entry came from. Short codes are the wire
+ /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`

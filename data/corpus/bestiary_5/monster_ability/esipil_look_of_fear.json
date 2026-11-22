@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Esipil ~ Look of Fear",
+    "delivery": "Supernatural",
+    "description": "A creature affected by an esipil's gaze is shaken for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:esipil_look_of_fear",
+    "name": "Look of Fear",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft., DC 14)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature affected by an esipil's gaze is shaken for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Esipil ~ Look of Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.EsipilRacialTrait"
+      }
+    ],
+    "source_page": "p.213",
+    "traits": [
+      "EsipilRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Esipil ~ Look of Fear",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

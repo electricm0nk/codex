@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serpent Lord ~ Poisonous Nature",
+    "name": "Poisonous Nature",
+    "class": "Serpent Lord",
+    "description": "Whenever you have a bite attack, you can choose to have it apply the following poison to any successful bite atatck: [frequency 1 round (6), effect 1 Con damage, cure 1 save, DC %1]. If you already have this poison, increase the damage to 1d3 Con damage and increase the DC by +2.  This poison can be used on %2 attacks per day.|PoisonousNaturePoisonDC|PoisonousNatureTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpent Lord ~ Poisonous Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonousNaturePoisonDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonousNatureTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you have a bite attack, you can choose to have it apply the following poison to any successful bite atatck: [frequency 1 round (6), effect 1 Con damage, cure 1 save, DC %1]. If you already have this poison, increase the damage to 1d3 Con damage and increase the DC by +2.  This poison can be used on %2 attacks per day.|PoisonousNaturePoisonDC|PoisonousNatureTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonousNaturePoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonousNatureTimes|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.338"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PoisonousNatureTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2474,
+    "record_key": "Serpent Lord ~ Poisonous Nature"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

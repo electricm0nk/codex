@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Spell Tattoo",
+    "category": "General",
+    "name": "Spell Tattoo",
+    "cost_gp": 0.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst",
+    "sha256": "47344c89a9f9e99bc68a74867f64d94d46112fa86e31c34acbc18de7c0f364d2",
+    "line": 13,
+    "record_key": "Spell Tattoo"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

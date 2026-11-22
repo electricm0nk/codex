@@ -1,0 +1,59 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Zombie (Void)",
+    "name": "Zombie (Void)",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "PRETEMPLATE",
+        "value": "1,Zombie (Fast)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tongue|TOHIT|-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tongue|TOHIT|3|PREABILITY:1,CATEGORY=FEAT,Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Void Zombie ~ Blood Drain"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tongue,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.BloodDrain,*1,1d6"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "record_key": "Zombie (Void)",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

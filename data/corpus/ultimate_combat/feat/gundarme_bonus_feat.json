@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Gundarme Bonus Feat",
+    "category": "General",
+    "name": "Gundarme Bonus Feat",
+    "description": null,
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Gundarme",
+      "PREABILITY:7,CATEGORY=FEAT,Improved Bull Rush,Mounted Combat,Power Attack,Ride-By Attack,Spirited Charge,Spring Attack,Unseat"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 350,
+    "record_key": "Gundarme Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

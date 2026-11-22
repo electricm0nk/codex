@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ag_equip_arms_armor.lst, KEY: Elven Thornblade
+Elven Thornblade									PROFICIENCY:WEAPON|Elven Thornblade						TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Piercing.Slashing.Elven.Finesseable		COST:60	WT:4					CRITMULT:x2	CRITRANGE:3		DAMAGE:1d6		EQMOD:Material ~ Steel						WIELD:OneHanded									SIZE:M	SOURCEPAGE:p.114		SPROP:+2 bonus on attack rolls made to confrm critical hits

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lycanthropy Corruption ~ Lunar Call Gift",
+    "name": "Lunar Call Gift",
+    "description": "Whenever you are outside and the moon is visible, you gain a +1 morale bonus on attack rolls and damage rolls. These bonuses double during a full moon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Lunar Call Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropyLunarCallGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are outside and the moon is visible, you gain a +1 morale bonus on attack rolls and damage rolls. These bonuses double during a full moon."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 592,
+    "record_key": "Lycanthropy Corruption ~ Lunar Call Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

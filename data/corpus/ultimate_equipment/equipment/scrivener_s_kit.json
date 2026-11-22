@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2.0,
+    "description": "This soft leather case contains a vial for holding ink, an ink pen, spare pen nibs, a small container of pigment for making ink, a tiny knife for cutting quills into pens, a blotter, and a small ruler.",
+    "key": "Scrivener's Kit",
+    "name": "Scrivener's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "SPROP",
+        "value": "This soft leather case contains a vial for holding ink, an ink pen, spare pen nibs, a small container of pigment for making ink, a tiny knife for cutting quills into pens, a blotter, and a small ruler."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 606,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Scrivener's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

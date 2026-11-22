@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "AG Assault Rifle",
+    "name": "AG Assault Rifle",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Longarms"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "starfinder/paizo/alien_archive/saa_equip.lst",
+    "record_key": "AG Assault Rifle",
+    "sha256": "6b5557e98616ac13e1f2750fe5d46cad3da77a33218836fd1fc9d2fc361e7bb3"
+  },
+  "unit_id": "alien_archive:equipment:ag_assault_rifle"
+}

@@ -1,0 +1,36 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+warning: unused import: `super::*`
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3004:9
+     |
+3004 |     use super::*;
+     |         ^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0425]: cannot find function `sf_unmisdecoded` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3025:24
+     |
+3025 |             assert_eq!(sf_unmisdecoded(raw), want, "{raw:?}");
+     |                        ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_unmisdecoded` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3029:30
+     |
+3029 |             assert!(matches!(sf_unmisdecoded(text), std::borrow::Cow::Borrowed(_)), "{text:?}");
+     |                              ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_text_repaired` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3033:20
+     |
+3033 |         assert_eq!(sf_text_repaired(GameSystem::Pathfinder1e, &tokens)[0].1, "1\u{c2} round");
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_text_repaired` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3034:20
+     |
+3034 |         assert_eq!(sf_text_repaired(GameSystem::Starfinder1e, &tokens)[0].1, "1 round");
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+warning: `codex-ingest` (lib test) generated 1 warning
+error: could not compile `codex-ingest` (lib test) due to 4 previous errors; 1 warning emitted

@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You get a +1 bonus on all checks involving the chosen skill.",
+    "key": "SS ~ Linguistics",
+    "name": "Linguistics [+1]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "SS ~ Linguistics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillSpecialization"
+      },
+      {
+        "key": "PRECSKILL",
+        "value": "1,Linguistics"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SSLinguistics,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You get a +1 bonus on all checks involving the chosen skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "SS ~ Linguistics",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

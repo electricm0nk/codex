@@ -1,0 +1,44 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Death Slayer Extra Channel",
+    "name": "Death Slayer Extra Channel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ExtraChannel"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DeathSlayerLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelEnergyTimes|2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "record_key": "Death Slayer Extra Channel",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

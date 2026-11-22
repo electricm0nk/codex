@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Auspicious Mark",
+    "name": "Auspicious Mark",
+    "class": "Unchained Barbarian",
+    "description": "You have been marked by the spirits, as indicated by an impressive tattoo, scar, or birthmark you possess. As a swift action, you can call upon the spirits' favor to increase any d20 roll you just made by rolling",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Auspicious Mark"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Auspicious Mark"
+      },
+      {
+        "key": "DESC",
+        "value": "You have been marked by the spirits, as indicated by an impressive tattoo, scar, or birthmark you possess. As a swift action, you can call upon the spirits' favor to increase any d20 roll you just made by rolling"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6|PREVARLT:RagePowersLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6+%1|floor(RagePowersLVL/4)|PREVARGTEQ:RagePowersLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "and adding it to the result. You can call on the auspicious mark after seeing the result of the d20 roll. This ability can be used only once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 343,
+    "record_key": "Unchained Rage Power ~ Auspicious Mark"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

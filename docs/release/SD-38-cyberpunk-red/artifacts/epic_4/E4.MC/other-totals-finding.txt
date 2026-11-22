@@ -1,0 +1,14 @@
+# Finding: the live CPR sheet's 'Other totals' box shows engine rows under their raw ids
+# command: python3 (this block) over epic_4/E4.7/green/live-sheet-*.txt and epic_3/E3.MC/green/live-sheet-*.txt:
+#   lines between 'OTHER TOTALS' and 'RULES AND FEATURES' whose first tab field starts with 'cpr.'
+epic_3/E3.MC/green/live-sheet-cpr-mc-complete-package-fixer.txt 1 ['cpr.cash\t1950']
+epic_3/E3.MC/green/live-sheet-cpr-mc-edgerunner-netrunner.txt 2 ['cpr.cash\t500', 'cpr.ammo.0\t30']
+epic_3/E3.MC/green/live-sheet-cpr-mc-streetrat-media.txt 2 ['cpr.cash\t500', 'cpr.ammo.0\t50']
+epic_4/E4.7/green/live-sheet-cpr-sheet-complete-package-fixer.txt 1 ['cpr.cash\t1450']
+epic_4/E4.7/green/live-sheet-cpr-sheet-edgerunner-netrunner.txt 2 ['cpr.cash\t500', 'cpr.ammo.0\t30']
+epic_4/E4.7/green/live-sheet-cpr-sheet-streetrat-solo.txt 3 ['cpr.cash\t500', 'cpr.ammo.0\t30', 'cpr.ammo.1\t70']
+total raw-id rows: 11
+cpr-netrunner-decked.json cpr.cash/ammo/housing rows: 0
+cpr-solo-arsenal.json cpr.cash/ammo/housing rows: 0
+cpr-solo-kitted.json cpr.cash/ammo/housing rows: 0
+cpr-solo-streetrat.json cpr.cash/ammo/housing rows: 0

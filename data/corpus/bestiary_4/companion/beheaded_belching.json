@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Beheaded ~ Belching",
+    "delivery": "Supernatural",
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:beheaded_belching",
+    "name": "Belching",
+    "owners": [
+      "bestiary_4:companion:familiar_beheaded",
+      "bestiary_4:companion:beheaded"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Beheaded Belching Type|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Beheaded ~ Belching"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Beheaded ~ Belching",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

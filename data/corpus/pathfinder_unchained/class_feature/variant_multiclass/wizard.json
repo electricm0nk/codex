@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Wizard",
+    "name": "Wizard",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses wizard as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Wizard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses wizard as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;School: At 1st level, he chooses a school of magic in which to specialize. For all powers of that school, he treats his character level as his effective wizard level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Familiar: At 3rd level, he gains a familiar, treating his character level as his effective wizard level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;School Power: At 7th level, he gains the 1st-level powers of his chosen school. If any of those powers grant an extra effect at 20th level, the character does not gain that extra effect."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Cantrip: At 11th level, if he has an Intelligence score of 10 or higher, he chooses a wizard cantrip from his chosen school and can cast that cantrip as a spell-like ability at will. He uses his character level as the caster level and Intelligence as the cantrip's key ability score."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Discovery: At 15th level, he gains an arcane discovery (Pathfinder RPG Ultimate Magic 86) or wizard bonus feat, treating his character level as his effective wizard level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Greater School Power: At 19th level, he gains the 8th-level power of his chosen school."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 860,
+    "record_key": "Variant Multiclass ~ Wizard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 16000.0,
+    "description": "Grants the wearer a +4 resistance bonus on saving throws against all spells with the emotion descriptor. When worn by a tiefling of a good alignment, it provides spell resistance 13 against spells with the evil descriptor and a +2 sacred bonus on saving throws.",
+    "key": "Halo of Inner Calm",
+    "name": "Halo of Inner Calm",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "2",
+          "TYPE=Sacred",
+          "PRERACE:1,Tiefling,RACESUBTYPE=Tiefling",
+          "PREALIGN:LG,NG,CG"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grants the wearer a +4 resistance bonus on saving throws against all spells with the emotion descriptor. When worn by a tiefling of a good alignment, it provides spell resistance 13 against spells with the evil descriptor and a +2 sacred bonus on saving throws."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Halo of Inner Calm",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

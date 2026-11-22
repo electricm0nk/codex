@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enlightened Monk ~ Stunning Fist",
+    "name": "Stunning Fist",
+    "class": "Monk",
+    "description": "When you use your Stunning Fist ability, you can choose to expend your psionic focus to gain a +%1 bonus to the save DC of that Stunning Fist attack.  If you expend your psionic focus for the Psionic Fist feat as part of a Stunning Fist attack, you gain this bonus in addition to the bonus damage from Stunning Fist.|EnlightenedMonkStunningFistDCBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enlightened Monk ~ Stunning Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlightenedMonkStunningFistDCBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your Stunning Fist ability, you can choose to expend your psionic focus to gain a +%1 bonus to the save DC of that Stunning Fist attack.  If you expend your psionic focus for the Psionic Fist feat as part of a Stunning Fist attack, you gain this bonus in addition to the bonus damage from Stunning Fist.|EnlightenedMonkStunningFistDCBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlightenedMonkStunningFistDCBonus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2522,
+    "record_key": "Enlightened Monk ~ Stunning Fist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

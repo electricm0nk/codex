@@ -1,0 +1,76 @@
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_file_that_is_no_character_is_refused_by_name ... ok
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_class_codex_does_not_hold_is_named ... ok
+test pcg_import::fixtures_tests::pcg_import_fixtures_an_unknown_key_is_a_custom_record_and_a_report_line ... ok
+test pcg_import::fixtures_tests::pcg_import_fixtures_an_item_codex_does_not_hold_is_custom_with_its_place ... ok
+test pcg_import::fixtures_tests::pcg_import_fixtures_the_mapping_doc_lists_every_key ... ok
+arrow_alone.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+arrow_alone_apg.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+bow_arrow.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+leather_baseline.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+leather_draco.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+leather_dragonhide.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+leather_matdragonhide.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+outfit_baseline.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+outfit_darkleaf.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+sd33r6_eqm_combo.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+shield_baseline.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+shield_spikesb.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+shield_spikesqshieldbash.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_pinned_skill_keeps_the_file_rank_where_it_can_be_read ... ok
+CodeMonkey.pcg: mode=3e classes=[] race=None verdict=Ok(())
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_race_adjustment_lands_on_the_score ... ok
+test pcg_import::fixtures_tests::pcg_import_fixtures_paladin_reads_what_the_file_says ... ok
+Everything.pcg: mode=3e classes=[] race=None verdict=Ok(())
+Sorcerer.pcg: mode=3e classes=[] race=None verdict=Ok(())
+SpecialWizard.pcg: mode=3e classes=[] race=None verdict=Ok(())
+35e_Alice.pcg: mode=35e classes=["Basic Fighter 1", "Alice Class 3"] race=Some("Alice Race") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Bard.pcg: mode=35e classes=[] race=None verdict=Ok(())
+35e_Bob.pcg: mode=35e classes=["MonKee 4", "Basic Fighter 1"] race=Some("Bob Race") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Bob_Companion.pcg: mode=35e classes=[] race=Some("Companion") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Charlie.pcg: mode=35e classes=["Charlie Class 2", "Basic Fighter 2"] race=Some("Charlie Race") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_CloudGiantHalfDragon.pcg: mode=35e classes=["Giant 17"] race=Some("Giant (Cloud)") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Dave.pcg: mode=35e classes=["KeePer of Knowledge 1", "Test46a 2", "Test51G 1"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_Eve.pcg: mode=35e classes=["Test Nothing 1", "Test46b 2", "Test51H 1"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_Fran.pcg: mode=35e classes=["Domain Test 1", "MonKee 1", "Test46c 2", "Test51I 1"] race=Some("Hughpert Case Won") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Gordon.pcg: mode=35e classes=["Test53 2"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_Harold.pcg: mode=35e classes=["Test53b 3"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_Ivan.pcg: mode=35e classes=["Test Nothing 2"] race=None verdict=Ok(())
+35e_Jango.pcg: mode=35e classes=["Basic Fighter 1", "Test56 4", "Test Nothing 2"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_JimDop.pcg: mode=35e classes=["Monstrous humanoid 4"] race=Some("Doppelganger") verdict=Err(["defense.size_modifier.unknown_race"])
+35e_L10(fighter-human).pcg: mode=35e classes=[] race=None verdict=Ok(())
+pcg_import_fixtures: SPELLNAME lines, 139 kept, 47 custom
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_spell_is_kept_or_custom_and_most_are_kept ... ok
+pcg_import_fixtures: 65 files, 2 refused as older than the format, 7724 data lines
+test pcg_import::fixtures_tests::pcg_import_fixtures_every_file_converts_and_every_line_is_reported ... ok
+35e_L7-3(fighter-cleric-dwarf).pcg: mode=35e classes=[] race=None verdict=Ok(())
+35e_Lauren.pcg: mode=35e classes=["Test Nothing 1", "Basic Fighter 1"] race=Some("Loughbotton Case Due") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Mallory.pcg: mode=35e classes=["Add SpellCaster 1"] race=None verdict=Ok(())
+35e_Q-PsiCrystal.pcg: mode=35e classes=["Companion (Psicrystal) 1"] race=Some("Psicrystal (Coward)") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+35e_Quasvin.pcg: mode=35e classes=[] race=Some("Elan") verdict=Err(["defense.size_modifier.unknown_race"])
+35e_UT~Gordon.pcg: mode=35e classes=["Test53 2"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_UT~Harold.pcg: mode=35e classes=["Test53b 3"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+35e_UT~Ivan.pcg: mode=35e classes=["Test Nothing 2"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+3e_BarJack.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_BrdJoe.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_CleElf.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_FigFae.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_MonKee.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_SWizSam.pcg: mode=3e classes=[] race=None verdict=Ok(())
+3e_WizShar.pcg: mode=3e classes=[] race=None verdict=Ok(())
+Zen_Nancy.pcg: mode=zen_test classes=["Basic Fighter 10"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+msrd_Elwood.pcg: mode=Modern classes=["Fast 3", "Infiltrator 3"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+msrd_Ilyana.pcg: mode=Modern classes=["Tough 3", "Strong 3"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+pf_Cleric.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+pf_Paladin.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+pf_Rogue.pcg: mode=Pathfinder_RPG classes=[] race=None verdict=Ok(())
+pf_goldielocks.pcg: mode=Pathfinder_RPG classes=["Dragon 30"] race=Some("Dragon (Gold)") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+sf_mechanic.pcg: mode=Starfinder classes=["Mechanic 20"] race=Some("Ysoki") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+sf_mechanic_drone.pcg: mode=Starfinder classes=["Drone 1"] race=Some("Drone") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+sf_soldier.pcg: mode=Starfinder classes=["Soldier 10"] race=Some("Android") verdict=Err(["class_chassis.unsupported", "defense.size_modifier.unknown_race", "defense.total_save.unsupported"])
+DrakelingSorc.pcg: mode=3e classes=[] race=None verdict=Ok(())
+Dex3.pcg: mode=35e classes=["Test Nothing 1"] race=None verdict=Err(["class_chassis.unsupported", "defense.total_save.unsupported"])
+pcg_import_fixtures: 35 computed; 28 name a class or race Codex does not hold: ["35e_Alice.pcg", "35e_Bob.pcg", "35e_Bob_Companion.pcg", "35e_Charlie.pcg", "35e_CloudGiantHalfDragon.pcg", "35e_Dave.pcg", "35e_Eve.pcg", "35e_Fran.pcg", "35e_Gordon.pcg", "35e_Harold.pcg", "35e_Ivan.pcg", "35e_Jango.pcg", "35e_JimDop.pcg", "35e_Lauren.pcg", "35e_Mallory.pcg", "35e_Q-PsiCrystal.pcg", "35e_Quasvin.pcg", "35e_UT~Gordon.pcg", "35e_UT~Harold.pcg", "35e_UT~Ivan.pcg", "Zen_Nancy.pcg", "msrd_Elwood.pcg", "msrd_Ilyana.pcg", "pf_goldielocks.pcg", "sf_mechanic.pcg", "sf_mechanic_drone.pcg", "sf_soldier.pcg", "Dex3.pcg"]
+test pcg_import::fixtures_tests::pcg_import_fixtures_a_file_of_held_classes_computes ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 701 filtered out; finished in 27.39s
+suites 177 tests run: 11
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 701 filtered out; finished in 29.39s

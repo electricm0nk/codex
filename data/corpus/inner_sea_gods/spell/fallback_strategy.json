@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "While this spell is active, you may reroll one attack roll, combat maneuver check, or skill check before the result of the roll or check is known. You must take the result of the reroll, even if it's worse than the original roll. Once the reroll is used, the spell ends. You can have no more than one fl/bock strtegy active on you at the same time.",
+    "key": "Fallback Strategy",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Magus,Paladin=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "While this spell is active, you may reroll one attack roll, combat maneuver check, or skill check before the result of the roll or check is known. You must take the result of the reroll, even if it's worse than the original roll. Once the reroll is used, the spell ends. You can have no more than one fl/bock strtegy active on you at the same time."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes or until discharged; see text"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Fallback Strategy"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Fallback Strategy",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ironborn ~ Durable Plating DR",
+    "name": "Ironborn ~ Durable Plating DR",
+    "class": "Ironborn",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DR",
+        "value": "DurablePlatingDR/-"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2506,
+    "record_key": "Ironborn ~ Durable Plating DR"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

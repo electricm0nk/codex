@@ -1,0 +1,50 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Once per day when you succeed at a Bluff, Diplomacy, or Intimidate check against a creature, you can charm that creature as if using charm monster with a caster level equal to your character level. If the creature fails its save, it's charmed for %1 minutes.|TL",
+    "key": "Vampirism Corruption ~ Dreadful Charm Gift",
+    "name": "Dreadful Charm Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Dreadful Charm Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismDreadfulCharmGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day when you succeed at a Bluff, Diplomacy, or Intimidate check against a creature, you can charm that creature as if using charm monster with a caster level equal to your character level. If the creature fails its save, it's charmed for %1 minutes.|TL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 902,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Vampirism Corruption ~ Dreadful Charm Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

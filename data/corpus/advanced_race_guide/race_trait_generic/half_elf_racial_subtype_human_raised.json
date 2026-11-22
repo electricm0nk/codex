@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf Racial Subtype ~ Human-Raised",
+    "name": "Human-Raised",
+    "description": "These half-elves were born and raised into accepting human communities, often raised by generations of a single family, or through the charity of churches and temples. These half-elves have the integrated and wary racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf Racial Subtype ~ Human-Raised"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Half-Elf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf Racial Subtype ~ Human-Raised],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true,HalfElf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "These half-elves were born and raised into accepting human communities, often raised by generations of a single family, or through the charity of churches and temples. These half-elves have the integrated and wary racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Human-Raised"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Elf Racial Trait|NORMAL|Half-Elf ~ Integrated|Half-Elf ~ Wary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2175,
+    "record_key": "Half-Elf Racial Subtype ~ Human-Raised"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

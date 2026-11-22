@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Broken Soul ~ Torturous Touch",
+    "delivery": "Supernatural",
+    "description": "A broken soul can make a touch attack to cause hideous, painful wounds to rip open in the target's body. This touch deals 2d6 points of slashing damage and id6 points of Dexterity damage, and causes the touched creature to fall prone in a fit of convulsions and be dazed for 1d4 rounds. A successful Fortitude save (DC %1) negates the Dexterity damage and the convulsive fit.",
+    "description_variables": [
+      "BrokenSoulAbilitiesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:broken_soul_torturous_touch",
+    "name": "Torturous Touch",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A broken soul can make a touch attack to cause hideous, painful wounds to rip open in the target's body. This touch deals 2d6 points of slashing damage and id6 points of Dexterity damage, and causes the touched creature to fall prone in a fit of convulsions and be dazed for 1d4 rounds. A successful Fortitude save (DC %1) negates the Dexterity damage and the convulsive fit.|BrokenSoulAbilitiesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Broken Soul ~ Torturous Touch"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 340,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Broken Soul ~ Torturous Touch",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

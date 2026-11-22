@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 10.0,
+    "description": "As Fire Ink, but can be used to create permananently glowing tattoos.",
+    "key": "Fire Ink (Concentrated)",
+    "name": "Fire Ink (Concentrated)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Racial.Ifrit"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "SPROP",
+        "value": "As Fire Ink, but can be used to create permananently glowing tattoos."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Fire Ink (Concentrated)",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Temp Bonus ~ Enlarge Person",
+    "name": "Temp Bonus ~ Enlarge Person",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Enlarge/Reduce Weapon List"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.GRAPPLE|EnlargePerson_GrappleBonusValue|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|EnlargePerson_StrBonusValue|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-EnlargePerson_DexBonusValue|TYPE=Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeIncrease|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DamageSizeAdjustment|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|EnlargePerson_ACBonusValue"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 406,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Temp Bonus ~ Enlarge Person",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

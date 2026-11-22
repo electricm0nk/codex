@@ -1,0 +1,137 @@
+[
+  {
+    "key": "Chelish Diva ~ Costume Proficiency",
+    "class": "Bard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 160
+    }
+  },
+  {
+    "key": "Chelish Diva ~ Devastating Aria",
+    "class": "Bard",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 160
+    }
+  },
+  {
+    "key": "Chelish Diva ~ Prima Donna",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 160
+    }
+  },
+  {
+    "key": "Chelish Diva ~ Scathing Tirade",
+    "class": "Bard",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 160
+    }
+  },
+  {
+    "key": "Dawnflower Dervish ~ Battle Dance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 161
+    }
+  },
+  {
+    "key": "Dawnflower Dervish ~ Dervish Dance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 161
+    }
+  },
+  {
+    "key": "Dawnflower Dervish ~ Meditative Whirl",
+    "class": "Bard",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 161
+    }
+  },
+  {
+    "key": "Dawnflower Dervish ~ Spinning Spellcaster",
+    "class": "Bard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 161
+    }
+  },
+  {
+    "key": "Dawnflower Dervish ~ Weapon And Armor Proficiency",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 161
+    }
+  }
+]

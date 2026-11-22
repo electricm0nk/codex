@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Empty Caste ~ Ki Pool",
+    "name": "Ki Pool",
+    "description": "In addition to the other abilities of using ki, you can spend a ki point as a swift action to regain one daily use of your racial energy ray psi-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empty Caste ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to the other abilities of using ki, you can spend a ki point as a swift action to regain one daily use of your racial energy ray psi-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 47,
+    "record_key": "Empty Caste ~ Ki Pool"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

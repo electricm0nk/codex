@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Water Walk ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can use water walk, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:water_walk_constant",
+    "name": "Water Walk",
+    "owners": [
+      "bestiary_4:monster:fossegrim"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use water walk, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use water walk, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Water Walk ~ Constant"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SLA_CL|Water Walk"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Water Walk ~ Constant",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

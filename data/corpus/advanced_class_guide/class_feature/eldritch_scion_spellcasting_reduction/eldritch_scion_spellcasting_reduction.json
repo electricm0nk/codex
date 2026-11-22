@@ -1,0 +1,169 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Eldritch Scion SpellCasting Reduction",
+    "name": "Eldritch Scion SpellCasting Reduction",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusSpellCastingProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusSpellCastingProgressionLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusSpellCastingProgressionLVL|(DragonDiscipleLVL>=2)+(DragonDiscipleLVL>=3)+(DragonDiscipleLVL>=4)+(DragonDiscipleLVL>=6)+(DragonDiscipleLVL>=7)+(DragonDiscipleLVL>=8)+(DragonDiscipleLVL>=10)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=0|4|PREVARGTEQ:MagusSpellCastingProgressionLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=1|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=0|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=1|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=0|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=1|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=2|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=2|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=2|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=1|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=3|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=3|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=3|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=2|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=4|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=4|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=4|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=3|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=4|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=6|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=4|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=6|2|PREVARGTEQ:MagusSpellCastingProgressionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=6|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=6|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=5|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Magus;LEVEL=6|1|PREVARGTEQ:MagusSpellCastingProgressionLVL,20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3382,
+    "record_key": "Eldritch Scion SpellCasting Reduction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

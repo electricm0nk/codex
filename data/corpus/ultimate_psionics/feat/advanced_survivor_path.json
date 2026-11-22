@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Survivor Path",
+    "category": "Psionic",
+    "name": "Advanced Survivor Path",
+    "description": "When using the Survivor trance, you gain %1 resistance to your active energy type.  In addition, when using the Survivor maneuver, the bonus to Will saves can instead apply to Fortitude saves.|AdvancedSurvivorPathResistance",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Survivor Path ~ First,Survivor Path ~ Second",
+      "PREABILITY:2,CATEGORY=FEAT,Mind Over Body,Toughness",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PRESTAT:1,CON=13",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 30,
+    "record_key": "Advanced Survivor Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

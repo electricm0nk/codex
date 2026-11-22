@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Push",
+    "delivery": "Extraordinary",
+    "description": "You can choose to make a free combat maneuver check with a certain successful attack (often a slam attack). If successful, this check pushes a creature directly away as with a bull rush. This ability only works on creatures of a size equal to or smaller than the pushing creature. Creatures pushed in this way do not provoke attacks of opportunity and stop if the push would move them into a solid object or creature.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:push",
+    "name": "Push",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to make a free combat maneuver check with a certain successful attack (often a slam attack). If successful, this check pushes a creature directly away as with a bull rush. This ability only works on creatures of a size equal to or smaller than the pushing creature. Creatures pushed in this way do not provoke attacks of opportunity and stop if the push would move them into a solid object or creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1467,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Push",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

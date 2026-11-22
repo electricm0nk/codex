@@ -1,0 +1,5345 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Ape)",
+      "name": "Companion (Ape)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionPrimate",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Ape",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Companion (Badger (Wolverine))",
+      "name": "Companion (Badger (Wolverine))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Wolverine",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Rage",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 10
+    },
+    {
+      "key": "Companion (Bear)",
+      "name": "Companion (Bear)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Bear",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion (Bird (Eagle))",
+      "name": "Companion (Bird (Eagle))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion",
+        "Raptor"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Bird",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 12
+    },
+    {
+      "key": "Companion (Bird (Hawk))",
+      "name": "Companion (Bird (Hawk))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion",
+        "Raptor"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Bird",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 13
+    },
+    {
+      "key": "Companion (Bird (Owl))",
+      "name": "Companion (Bird (Owl))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion",
+        "Raptor"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Bird",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 14
+    },
+    {
+      "key": "Companion (Boar)",
+      "name": "Companion (Boar)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.55",
+      "ability_keys": [
+        "Companion Advancement ~ Boar",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 15
+    },
+    {
+      "key": "Companion (Camel)",
+      "name": "Companion (Camel)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Camel ~ Spit",
+        "Companion Advancement ~ Camel",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 16
+    },
+    {
+      "key": "Companion (Cat (Small (Cheetah)))",
+      "name": "Companion (Cat (Small (Cheetah)))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Cheetah",
+        "Cat ~ Sprint",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Trip"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 17
+    },
+    {
+      "key": "Companion (Cat (Small (Leopard)))",
+      "name": "Companion (Cat (Small (Leopard)))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Leopard",
+        "Cat ~ Sprint",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Trip"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 18
+    },
+    {
+      "key": "Companion (Crocodile (Alligator))",
+      "name": "Companion (Crocodile (Alligator))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Crocodile ~ Hold Breath",
+        "Companion Advancement ~ Alligator",
+        "Crocodile ~ Death Roll",
+        "Crocodile ~ Sprint",
+        "Crocodile ~ Tail Slap",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 19
+    },
+    {
+      "key": "Companion (Dog)",
+      "name": "Companion (Dog)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Dog",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 20
+    },
+    {
+      "key": "Companion (Horse)",
+      "name": "Companion (Horse)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Horse",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 21
+    },
+    {
+      "key": "Companion (Pony)",
+      "name": "Companion (Pony)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Pony",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 22
+    },
+    {
+      "key": "Companion (Shark)",
+      "name": "Companion (Shark)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "Aquatic",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Shark",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 23
+    },
+    {
+      "key": "Companion (Snake (Constrictor))",
+      "name": "Companion (Snake (Constrictor))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Snake (Constrictor)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 24
+    },
+    {
+      "key": "Companion (Snake (Viper))",
+      "name": "Companion (Snake (Viper))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Poison",
+        "Companion Advancement ~ Snake (Viper)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 25
+    },
+    {
+      "key": "Companion (Cat (Big (Lion)))",
+      "name": "Companion (Cat (Big (Lion)))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Lion",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Rake",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 28
+    },
+    {
+      "key": "Companion (Cat (Big (Tiger)))",
+      "name": "Companion (Cat (Big (Tiger)))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Tiger",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Rake",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 29
+    },
+    {
+      "key": "Companion (Dinosaur (Deinonychus))",
+      "name": "Companion (Dinosaur (Deinonychus))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Deinonychus)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 30
+    },
+    {
+      "key": "Companion (Dinosaur (Velociraptor))",
+      "name": "Companion (Dinosaur (Velociraptor))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Velociraptor)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 31
+    },
+    {
+      "key": "Companion (Wolf)",
+      "name": "Companion (Wolf)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.56",
+      "ability_keys": [
+        "Companion Advancement ~ Wolf",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Trip"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 32
+    },
+    {
+      "key": "Companion (Dire Rat)",
+      "name": "Companion (Dire Rat)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.232",
+      "ability_keys": [
+        "Companion Advancement ~ Dire Rat",
+        "Dire Rat ~ Disease",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 36
+    },
+    {
+      "key": "Companion (Shadow)",
+      "name": "Companion (Shadow)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Undead",
+      "race_subtype": "Incorporeal|Undead",
+      "monster_class": "Shadow Companion:3",
+      "type_segments": [
+        "Companion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Incorporeal Touch",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.245",
+      "ability_keys": [
+        "Shadow Companion Resistance",
+        "Shadow Companion Saves",
+        "Strength Damage",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Channel Resistance",
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 42
+    },
+    {
+      "key": "Companion (Dinosaur (Allosaurus))",
+      "name": "Companion (Dinosaur (Allosaurus))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.90",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Allosaurus)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 53
+    },
+    {
+      "key": "Companion (Dinosaur (Parasaurolophus))",
+      "name": "Companion (Dinosaur (Parasaurolophus))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tail Slap",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.91",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Parasaurolophus)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 54
+    },
+    {
+      "key": "Companion (Dinosaur (Tylosaurus))",
+      "name": "Companion (Dinosaur (Tylosaurus))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.91",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Tylosaurus)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 55
+    },
+    {
+      "key": "Companion (Gar)",
+      "name": "Companion (Gar)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -9
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.128",
+      "ability_keys": [
+        "Companion Advancement ~ Gar",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Can't Be Tripped",
+        "Grab ~ Bite"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 56
+    },
+    {
+      "key": "Companion (Herd Animal (Ram))",
+      "name": "Companion (Herd Animal (Ram))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.154",
+      "ability_keys": [
+        "Companion Advancement ~ Herd Animal (Ram)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 57
+    },
+    {
+      "key": "Companion (Hippopotamus)",
+      "name": "Companion (Hippopotamus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.157",
+      "ability_keys": [
+        "Companion Advancement ~ Hippopotamus",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Hippopotamus ~ Sweat",
+        "Scent",
+        "Hippopotamus Companion Natural Attack"
+      ],
+      "external_ability_ref_conditions": [
+        {
+          "ability": "Hippopotamus Companion Natural Attack",
+          "conditions": [
+            {
+              "negated": true,
+              "family": "TEMPLATE",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "Hippopotamus Companion Advancement"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "source_file": "cr_races_companion",
+      "source_line": 58
+    },
+    {
+      "key": "Companion (Megafauna (Arsinoitherium))",
+      "name": "Companion (Megafauna (Arsinoitherium))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.186",
+      "ability_keys": [
+        "Companion Advancement ~ Megafauna (Arsinoitherium)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent",
+        "Arsinoitherium Companion Natural Attack"
+      ],
+      "external_ability_ref_conditions": [
+        {
+          "ability": "Arsinoitherium Companion Natural Attack",
+          "conditions": [
+            {
+              "negated": true,
+              "family": "TEMPLATE",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "Arsinoitherium Companion Advancement"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "source_file": "cr_races_companion",
+      "source_line": 59
+    },
+    {
+      "key": "Companion (Megafauna (Gylptodon))",
+      "name": "Companion (Megafauna (Gylptodon))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 5,
+      "source_page": "p.186",
+      "ability_keys": [
+        "Companion Advancement ~ Megafauna (Gylptodon)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent",
+        "Gylptodon Companion Natural Attack"
+      ],
+      "external_ability_ref_conditions": [
+        {
+          "ability": "Gylptodon Companion Natural Attack",
+          "conditions": [
+            {
+              "negated": true,
+              "family": "TEMPLATE",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "Gylptodon Companion Advancement"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "source_file": "cr_races_companion",
+      "source_line": 60
+    },
+    {
+      "key": "Companion (Megafauna (Megaloceros))",
+      "name": "Companion (Megafauna (Megaloceros))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.187",
+      "ability_keys": [
+        "Companion Advancement ~ Megafauna (Megaloceros)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 61
+    },
+    {
+      "key": "Companion (Megafauna (Megatherium))",
+      "name": "Companion (Megafauna (Megatherium))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 5,
+      "source_page": "p.187",
+      "ability_keys": [
+        "Companion Advancement ~ Megafauna (Megatherium)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 62
+    },
+    {
+      "key": "Companion (Primate (Baboon))",
+      "name": "Companion (Primate (Baboon))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.212",
+      "ability_keys": [
+        "Companion Advancement ~ Primate (Baboon)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 63
+    },
+    {
+      "key": "Companion (Ray (Manta))",
+      "name": "Companion (Ray (Manta))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tail Slap",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -9
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.232",
+      "ability_keys": [
+        "Companion Advancement ~ Ray (Manta)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 64
+    },
+    {
+      "key": "Companion (Ray (Stingray))",
+      "name": "Companion (Ray (Stingray))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tail Slap",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -9
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.232",
+      "ability_keys": [
+        "Companion Advancement ~ Ray (Stingray)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Animal Traits Output",
+        "Stingray ~ Poison"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 65
+    },
+    {
+      "key": "Companion (Turtle (Giant Snapping))",
+      "name": "Companion (Turtle (Giant Snapping))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 0
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -9
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 10,
+      "source_page": "p.273",
+      "ability_keys": [
+        "Crocodile ~ Hold Breath",
+        "Companion Advancement ~ Turtle (Giant Snapping)",
+        "+2 to Dexterity and Constitution",
+        "Animal Companion Feat ~ Acrobatic",
+        "Animal Companion Feat ~ Agile Maneuvers",
+        "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+        "Animal Companion Feat ~ Armor Proficiency (Light)",
+        "Animal Companion Feat ~ Armor Proficiency (Medium)",
+        "Animal Companion Feat ~ Athletic",
+        "Animal Companion Feat ~ Blind-Fight",
+        "Animal Companion Feat ~ Combat Reflexes",
+        "Animal Companion Feat ~ Diehard",
+        "Animal Companion Feat ~ Dodge",
+        "Animal Companion Feat ~ Endurance",
+        "Animal Companion Feat ~ Feat",
+        "Animal Companion Feat ~ GM Feat",
+        "Animal Companion Feat ~ Great Fortitude",
+        "Animal Companion Feat ~ Improved Bull Rush",
+        "Animal Companion Feat ~ Improved Initiative",
+        "Animal Companion Feat ~ Improved Natural Armor",
+        "Animal Companion Feat ~ Improved Natural Attack",
+        "Animal Companion Feat ~ Improved Overrun",
+        "Animal Companion Feat ~ Intimidating Prowess",
+        "Animal Companion Feat ~ Iron Will",
+        "Animal Companion Feat ~ Lightning Reflexes",
+        "Animal Companion Feat ~ Mobility",
+        "Animal Companion Feat ~ Power Attack",
+        "Animal Companion Feat ~ Run",
+        "Animal Companion Feat ~ Skill Focus",
+        "Animal Companion Feat ~ Spring Attack",
+        "Animal Companion Feat ~ Stealthy",
+        "Animal Companion Feat ~ Toughness",
+        "Animal Companion Feat ~ Weapon Finesse",
+        "Animal Companion Feat ~ Weapon Focus",
+        "Animal Companion ~ AC Bonus",
+        "Animal Companion ~ Ability Score Increase",
+        "Animal Companion ~ Bonus Tricks",
+        "Animal Companion ~ Devotion",
+        "Animal Companion ~ Evasion",
+        "Animal Companion ~ Improved Evasion",
+        "Animal Companion ~ Link",
+        "Animal Companion ~ Multiattack",
+        "Animal Companion ~ Share Spells",
+        "Animal Companion ~ Spell Resistance",
+        "Animal Companion ~ Stat Bonus",
+        "Animal Training ~ Combat Training",
+        "Animal Training ~ Fighting",
+        "Animal Training ~ Guarding",
+        "Animal Training ~ Heavy Labor",
+        "Animal Training ~ Hunting",
+        "Animal Training ~ Performance",
+        "Animal Training ~ Riding",
+        "Animal Trick ~ Air Walk",
+        "Animal Trick ~ Attack",
+        "Animal Trick ~ Attack II",
+        "Animal Trick ~ Come",
+        "Animal Trick ~ Defend",
+        "Animal Trick ~ Down",
+        "Animal Trick ~ Fetch",
+        "Animal Trick ~ Guard",
+        "Animal Trick ~ Heel",
+        "Animal Trick ~ Perform",
+        "Animal Trick ~ Seek",
+        "Animal Trick ~ Stay",
+        "Animal Trick ~ Track",
+        "Animal Trick ~ Work",
+        "Companion Advancement",
+        "Companion Skills",
+        "Companion Stat ~ CHA",
+        "Companion Stat ~ CON",
+        "Companion Stat ~ DEX",
+        "Companion Stat ~ INT",
+        "Companion Stat ~ STR",
+        "Companion Stat ~ WIS"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Animal Traits Output"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "cr_races_companion",
+      "source_line": 66
+    }
+  ]
+}

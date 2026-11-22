@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain a +%1 racial bonus on Bluff, Diplomacy, and Intimidate checks.|VampirismCorruptionAllureBonus",
+    "key": "Vampirism Corruption ~ Allure Gift",
+    "name": "Allure Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Allure Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismAllureGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VampirismCorruptionAllureBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 racial bonus on Bluff, Diplomacy, and Intimidate checks.|VampirismCorruptionAllureBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VampirismCorruptionAllureBonus|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VampirismCorruptionAllureBonus|2|TYPE=Racial|PREVARGTEQ:VampirismManifestationLevel,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate|VampirismCorruptionAllureBonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 886,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Vampirism Corruption ~ Allure Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

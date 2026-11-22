@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ascetic ~ Maneuver",
+    "name": "Maneuver",
+    "class": "Ascetic",
+    "description": "Expend focus to gain +%1 AC; take a 5-ft. step if the attack misses.|AsceticPathManeuverBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ascetic ~ Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsceticPathManeuverBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to gain +%1 AC; take a 5-ft. step if the attack misses.|AsceticPathManeuverBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsceticPathManeuverBonus|2+(AsceticPathLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 650,
+    "record_key": "Ascetic ~ Maneuver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

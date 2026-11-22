@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Water Dancer ~ Elemental Focus",
+    "name": "Elemental Focus",
+    "class": "Monk",
+    "description": "A water dancer gains the elemental focus ability of the kineticist class, but must choose water as his element. He gains the basic hydrokinesis wild talent as normal, and gains the kinetic blast feature of the kineticist class for the water element, using his monk level as his effective kineticist level. He can't use his kinetic blast when armored or encumbered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Elemental Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Base|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A water dancer gains the elemental focus ability of the kineticist class, but must choose water as his element. He gains the basic hydrokinesis wild talent as normal, and gains the kinetic blast feature of the kineticist class for the water element, using his monk level as his effective kineticist level. He can't use his kinetic blast when armored or encumbered."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Primary Element ~ Water"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist Blast ~ Simple Blasts"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Base|max(1,(MonkLVL-2)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 114,
+    "record_key": "Water Dancer ~ Elemental Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/cpr/netrunning.rs b/src/rules_core/cpr/netrunning.rs
+index 0d52daf9c6..6e7ccbc54a 100644
+--- a/src/rules_core/cpr/netrunning.rs
++++ b/src/rules_core/cpr/netrunning.rs
+@@ -179,7 +179,7 @@ pub fn compute_deck(
+ 
+     let base = quality.base_slots();
+     let cyberarm = u8::from(extras.cyberarm_deck);
+-    let suit = u8::from(extras.bodyweight_suit);
++    let suit = 0u8;
+     // Slots any Program or Hardware may use, and the suit's Hardware-only slot.
+     let general_capacity = base + cyberarm;
+     let slots_available = general_capacity + suit;

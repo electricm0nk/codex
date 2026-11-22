@@ -1,0 +1,9 @@
+thread 'character_hub::tests::no_required_gear_a_weapon_stating_no_damage_has_its_own_attack_row' (2983345) panicked at src/character_hub.rs:12620:9:
+assertion `left == right` failed: []
+  left: []
+ right: ["combat.weapon_attack_bonus.net"]
+thread 'character_hub::tests::no_required_gear_every_market_weapon_has_an_attack_row_and_ammunition_none' (2983346) panicked at src/character_hub.rs:12660:9:
+assertion `left == right` failed
+  left: ["Touch Attack (Ray)", "Net (Base)", "Bucket", "Spade", "Tanglefoot Bag", "Thunderstone", "Brawler's Flurry", "Snag Net", "Wrist Launcher", "Mystic Bolts", "Banshee Ballerina (Firework)", "Burst Jar", "Ghast Retch (Flask)", "Star Candle (Firework)", "Poisoned Sand Tube", "Lasso", "Rock (Small)", "Rock (Medium)", "Ectoplasmic Residue", "Spiderdraw", "Ranged Cannon ~ Clockwork Goliath", "Crimson Bluff", "Rostland Edge", "Mantis Blade"]
+ right: []
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 1236 filtered out; finished in 187.46s

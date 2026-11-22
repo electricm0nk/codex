@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bhuta ~ Blood Drain",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a bhuta can suck blood from an adjacent opponent that is taking bleed damage. The target takes 1d6 points of Constitution damage (Fort DC 23 for half). The bhuta heals 5 hit points when it drains blood.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bhuta_blood_drain",
+    "name": "Blood Drain",
+    "owners": [
+      "bestiary_3:monster:bhuta"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a bhuta can suck blood from an adjacent opponent that is taking bleed damage. The target takes 1d6 points of Constitution damage (Fort DC 23 for half). The bhuta heals 5 hit points when it drains blood."
+      },
+      {
+        "key": "KEY",
+        "value": "Bhuta ~ Blood Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "TYPE",
+        "value": "BhutaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.41",
+    "traits": [
+      "BhutaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 502,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bhuta ~ Blood Drain",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

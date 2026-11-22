@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Sticky",
+    "delivery": "Extraordinary",
+    "description": "The creature's limbs are covered in tiny, hooked hairs that give its skin a downy appearance. It gains the grab ability on its primary natural attacks (if it has any) or its unarmed strike, and a +8 racial bonus on Climb checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_sticky",
+    "name": "Sticky",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature's limbs are covered in tiny, hooked hairs that give its skin a downy appearance. It gains the grab ability on its primary natural attacks (if it has any) or its unarmed strike, and a +8 racial bonus on Climb checks."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Sticky"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 563,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Sticky",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

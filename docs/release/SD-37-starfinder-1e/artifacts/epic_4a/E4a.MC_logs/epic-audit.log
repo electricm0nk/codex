@@ -1,0 +1,11 @@
+## epic-range audit ddcb9839678aa45cb441ee9ce0d72a1b530f55c5...HEAD (ae5c7f3c3a77d02626b3933e6d538e818c0e703d)
+6891:+/// number). See `tests/sd24_equipment_coverage_audit.rs` for the standing
+7864:+/// `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+--- tokens
+11226:+/// expression for it. It is never a placeholder string.
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+base: 1 head: 1  :: number). See `tests/sd24_equipment_coverage_audit.rs` for the standing
+base: 1 head: 1  :: `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+base: 1 head: 1  :: expression for it. It is never a placeholder string.

@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Schism",
+    "name": "Schism",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Telepath=4|Dread=5"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Telepathy"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au, Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.241"
+      },
+      {
+        "key": "DESC",
+        "value": "Your partitioned mind can manifest lower level powers."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 401,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Schism",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

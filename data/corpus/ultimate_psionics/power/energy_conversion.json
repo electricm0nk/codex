@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Energy Conversion",
+    "name": "Energy Conversion",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psion,Vitalist,Wilder=7"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychometabolism"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "see text"
+      },
+      {
+        "key": "COMPS",
+        "value": "Me"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal and close [(25+floor(CASTERLEVEL/2)*5) ft.]; see text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Ray; see text"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "DESC",
+        "value": "Offensively channel energy you've absorbed."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 187,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Energy Conversion",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range"
+  ]
+}

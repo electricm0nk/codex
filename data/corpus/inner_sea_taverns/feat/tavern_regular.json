@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Tavern Regular",
+    "category": "General",
+    "name": "Tavern Regular",
+    "description": "You are quite popular at the pubs you frequent and the bartenders remember you. You receive a 10% discount at any tavern after you have spent a cumulative 500 gp there. In addition, if a bar fight occurs in that tavern, you gain a +2 bonus on your checks to use the redirect action. On a round in which you don't attempt the redirect action, the crowd reduces your tenacity by only 1d4 (instead of by the normal amount).",
+    "prerequisites": [
+      "PREVARGTEQ:PreStatScore_CHA,14"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 11,
+    "record_key": "Tavern Regular"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,34 @@
+{
+  "corpus_books": [
+    "core_rulebook",
+    "ultimate_equipment",
+    "inner_sea_races",
+    "advanced_class_guide",
+    "advanced_race_guide",
+    "ultimate_intrigue"
+  ],
+  "items": [
+    {"unit_id": "inner_sea_races:equipment:armor_of_grim_triumph", "book": "inner_sea_races", "key": "Armor of Grim Triumph", "ac_oracle": 7, "multi_shape": true, "var_shape_ours": 4, "var_shape_oracle": 4},
+    {"unit_id": "inner_sea_races:equipment:coat_of_shells", "book": "inner_sea_races", "key": "Coat of Shells", "ac_oracle": 7, "multi_shape": true, "var_shape_ours": 4, "var_shape_oracle": 4},
+    {"unit_id": "inner_sea_races:equipment:gnome_scrap_armor", "book": "inner_sea_races", "key": "Gnome Scrap Armor", "ac_oracle": 5, "multi_shape": true, "var_shape_ours": 1, "var_shape_oracle": 1},
+    {"unit_id": "inner_sea_races:equipment:hallowed_chain", "book": "inner_sea_races", "key": "Hallowed Chain", "ac_oracle": 8, "multi_shape": true, "var_shape_ours": 5, "var_shape_oracle": 5},
+    {"unit_id": "inner_sea_races:equipment:hallowed_chain_greater", "book": "inner_sea_races", "key": "Hallowed Chain (Greater)", "ac_oracle": 9, "multi_shape": true, "var_shape_ours": 5, "var_shape_oracle": 5},
+    {"unit_id": "inner_sea_races:equipment:hide_of_grim_triumph", "book": "inner_sea_races", "key": "Hide of Grim Triumph", "ac_oracle": 5, "multi_shape": true, "var_shape_ours": 3, "var_shape_oracle": 3},
+    {"unit_id": "inner_sea_races:equipment:mail_of_sly_steps", "book": "inner_sea_races", "key": "Mail of Sly Steps", "ac_oracle": 6, "multi_shape": true, "var_shape_ours": 2, "var_shape_oracle": 2},
+    {"unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight", "book": "inner_sea_races", "key": "Panoply of the Fierani Knight", "ac_oracle": 11, "multi_shape": true, "recompute_var": true, "var_oracle": 3},
+    {"unit_id": "advanced_class_guide:equipment:hero_s_hauberk", "book": "advanced_class_guide", "key": "Hero's Hauberk", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_cold", "book": "advanced_class_guide", "key": "Stalking Armor (Cold)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_desert", "book": "advanced_class_guide", "key": "Stalking Armor (Desert)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_forest", "book": "advanced_class_guide", "key": "Stalking Armor (Forest)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_jungle", "book": "advanced_class_guide", "key": "Stalking Armor (Jungle)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_mountain", "book": "advanced_class_guide", "key": "Stalking Armor (Mountain)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_plains", "book": "advanced_class_guide", "key": "Stalking Armor (Plains)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_swamp", "book": "advanced_class_guide", "key": "Stalking Armor (Swamp)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_underground", "book": "advanced_class_guide", "key": "Stalking Armor (Underground)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_urban", "book": "advanced_class_guide", "key": "Stalking Armor (Urban)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:stalking_armor_water", "book": "advanced_class_guide", "key": "Stalking Armor (Water)", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_class_guide:equipment:tireless_tracking_hide", "book": "advanced_class_guide", "key": "Tireless Tracking Hide", "ac_oracle": 5, "multi_shape": false},
+    {"unit_id": "advanced_race_guide:equipment:sea_knife", "book": "advanced_race_guide", "key": "Sea-Knife", "ac_oracle": 0, "multi_shape": false, "allow_none_ac": true},
+    {"unit_id": "ultimate_intrigue:equipment:diviner_s_blight", "book": "ultimate_intrigue", "key": "Diviner's Blight", "ac_oracle": 6, "multi_shape": true, "var_shape_ours": 0, "var_shape_oracle": 0}
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You compel the wind to push the targets in a direction of your choice. The subjects can hustle during local and overland movement without risk of fatigue. If the subjects are flying, the first 20 feet of movement each round in the chosen direction does not count against their movement for the round. Each creature remains affected only while within 120 feet of every other subject. You can change the tailwind's direction once per hour by concentrating as a standard action. This spell has no effect underwater.",
+    "key": "Tailwind",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Occultist,Ranger,Shaman,Spiritualist=3|Bloodrager,Cleric,Magus,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a current of wind to enhance or impede flight.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You compel the wind to push the targets in a direction of your choice. The subjects can hustle during local and overland movement without risk of fatigue. If the subjects are flying, the first 20 feet of movement each round in the chosen direction does not count against their movement for the round. Each creature remains affected only while within 120 feet of every other subject. You can change the tailwind's direction once per hour by concentrating as a standard action. This spell has no effect underwater.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "120 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one or more creatures, no two of which can be more than 120 feet apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Tailwind",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

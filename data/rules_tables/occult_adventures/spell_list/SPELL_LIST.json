@@ -1,0 +1,1021 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "occult_adventures/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "occult_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Akashic Form",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 9,
+      "description": "Store a copy of your body in the Akashic Record, and restore yourself to that form upon your death."
+    },
+    {
+      "key": "Analyze Aura",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "Read a creature's or object's alignment, emotion, health, and magic auras."
+    },
+    {
+      "key": "Anticipate Thoughts",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "Gain increasing bonuses to AC and on attack rolls and damage against one creature."
+    },
+    {
+      "key": "Apport Animal",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 3,
+      "description": "Send or receive a Tiny or smaller animal via teleportation."
+    },
+    {
+      "key": "Apport Object",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 2,
+      "description": "Send or receive a small object via teleportation."
+    },
+    {
+      "key": "Aura Alteration",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Masks a creature's or an object's alignment, emotion, health, and magic auras."
+    },
+    {
+      "key": "Aversion",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Cause the target to avoid an object or location."
+    },
+    {
+      "key": "Awaken Construct",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 6,
+      "description": "Grant a construct humanlike sentience."
+    },
+    {
+      "key": "Babble",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Target becomes nauseated and causes nearby creatures to become fascinated."
+    },
+    {
+      "key": "Bilocation",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 8,
+      "description": "Exist in two places at once."
+    },
+    {
+      "key": "Burst of Adrenaline",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 1,
+      "description": "Gain a +8 bonus to Str, Dex, or Con for one roll, then be fatigued for 1 round."
+    },
+    {
+      "key": "Burst of Insight",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 1,
+      "description": "Gain a +8 bonus to Int, Wis, or Cha for one roll, then be dazed for 1 round."
+    },
+    {
+      "key": "Call Spirit",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 3,
+      "description": "Make the spirit of one creature manifest."
+    },
+    {
+      "key": "Calm Spirit",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 1,
+      "description": "Postpone hostile action by a haunt or incorporeal undead."
+    },
+    {
+      "key": "Catatonia",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Make a willing target appear to be dead."
+    },
+    {
+      "key": "Charge Object",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 1,
+      "description": "Infuse psychic energy and ownership history into an item."
+    },
+    {
+      "key": "Cognitive Block",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Add a thought component to all of the target's spells."
+    },
+    {
+      "key": "Condensed Ether",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 4,
+      "description": "Creates a planar conjunction that slows movement, penalizes AC and Reflex saves, and imposes a miss chance on ranged attacks."
+    },
+    {
+      "key": "Contagious Zeal",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "The target gains a +2 morale bonus on attack rolls and weapon damage rolls, 1d6 temporary hit points, and a +4 morale bonus on saving throws against fear effects and to the DC of Intimidate checks attempted against her. Once per round, the target can select one other creature to gain this bonus as well. The chosen creature can be no farther from the target than (25+(CASTERLEVEL*5)/2) feet, and a creature can't be selected more than once in this way. Such allies gain only the bonuses and temporary hit points; they don't continue to spread it to other creatures. The additional creatures' bonuses and temporary hit points share the original spell's duration, so when that duration ends, all affected creatures lose their bonuses and any remaining temporary hit points from this spell."
+    },
+    {
+      "key": "Create Mindscape",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 4,
+      "description": "Form an immersive mindscape."
+    },
+    {
+      "key": "Create Mindscape (Greater)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 6,
+      "description": "As create mindscape, but affecting more creatures, having a longer duration, and allowing magic alteration."
+    },
+    {
+      "key": "Decrepit Disguise",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 1,
+      "description": "Make an object seem worthless."
+    },
+    {
+      "key": "Deja Vu",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 1,
+      "description": "Make a creature repeat its actions."
+    },
+    {
+      "key": "Demand Offering",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 1,
+      "description": "Make a creature give you an object it's holding."
+    },
+    {
+      "key": "Detect Mindscape",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "Sense the presence and attributes of mindscapes."
+    },
+    {
+      "key": "Detect Psychic Significance",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 0,
+      "description": "Find psychically charged items."
+    },
+    {
+      "key": "Divide Mind",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 9,
+      "description": "Partition your mind, allowing you to roll twice on Will saves and Int checks, and to take extra mental actions."
+    },
+    {
+      "key": "Dream Council",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 4,
+      "description": "Communicate with multiple sleeping creatures."
+    },
+    {
+      "key": "Dream Scan",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "Read a dreaming creature's thoughts."
+    },
+    {
+      "key": "Dream Travel",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 6,
+      "description": "Venture into the Dimension of Dreams to enter the dreams of a designated creature, then exit near that creature's body on the plane where it lies sleeping."
+    },
+    {
+      "key": "Dream Voyage",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 9,
+      "description": "As dream travel, but with more flexibility and able to affect more creatures."
+    },
+    {
+      "key": "Ectoplasmic Eruption",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 6,
+      "description": "Deal 6d6 points of damage and entangle creatures in a 30-ft.-radius, and push ethereal and incorporeal creatures onto the Material Plane."
+    },
+    {
+      "key": "Ectoplasmic Snare",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Tendril of ectoplasm grapples a creature and tethers you to it."
+    },
+    {
+      "key": "Ego Whip I",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Cause a creature to take a -2 penalty to Int, Wis, or Cha and be staggered for 1 round."
+    },
+    {
+      "key": "Ego Whip II",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "As ego whip I, but a -4 penalty and staggered for 1d4 rounds."
+    },
+    {
+      "key": "Ego Whip III",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "As ego whip I, but a -6 penalty and staggered for 1d6 rounds."
+    },
+    {
+      "key": "Ego Whip IV",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 6,
+      "description": "As ego whip I, but a -8 penalty and staggered for 1d8 rounds."
+    },
+    {
+      "key": "Ego Whip V",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 7,
+      "description": "As ego whip I, but a -10 penalty and staggered for 1d10 rounds."
+    },
+    {
+      "key": "Emotive Block",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Add an emotion component to all of the target's spells."
+    },
+    {
+      "key": "Enshroud Thoughts",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 2,
+      "description": "Ward yourself against thought detection and memory alteration."
+    },
+    {
+      "key": "Entrap Spirit",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "Trap an incorporeal creature or a haunt in a mirror."
+    },
+    {
+      "key": "Erase Impressions",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "Erase psychic impressions from an object."
+    },
+    {
+      "key": "Ethereal Envelope",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 4,
+      "description": "Shroud your unconscious self in a cocoon on the Ethereal Plane."
+    },
+    {
+      "key": "Ethereal Envelopment",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 5,
+      "description": "As ethereal envelope, but able to affect an unwilling creature."
+    },
+    {
+      "key": "Ethereal Fists",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Your claws, unarmed strikes, and touch spells affect ethereal creatures."
+    },
+    {
+      "key": "Etheric Shards",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 4,
+      "description": "Fill an area with invisible shards that slow movement and damage creatures."
+    },
+    {
+      "key": "Explode Head",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 5,
+      "description": "Explode the head of a creature with 20 hp or fewer and deal damage in a 10-ft. radius around it."
+    },
+    {
+      "key": "Foster Hatred",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "Cause creatures to hate one type of creature."
+    },
+    {
+      "key": "Ghost Whip",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 2,
+      "description": "Create a ghost touch whip that passes through objects."
+    },
+    {
+      "key": "Grave Words",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 0,
+      "description": "Force a corpse to babble."
+    },
+    {
+      "key": "Hypercognition",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "Rapidly recall everything you know about a subject."
+    },
+    {
+      "key": "Id Insinuation I",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Confuse one creature for the duration of your concentration + 1 round."
+    },
+    {
+      "key": "Id Insinuation II",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "As id insinuation I, but affects two creatures and has a stronger confusion effect."
+    },
+    {
+      "key": "Id Insinuation III",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "As id insinuation I, but affects three creatures and has a stronger confusion effect."
+    },
+    {
+      "key": "Id Insinuation IV",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "As id insinuation I, but affects four creatures and you select the confusion effect."
+    },
+    {
+      "key": "Implant False Reading",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "Instil false psychic impressions into an object."
+    },
+    {
+      "key": "Incorporeal Chains",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 5,
+      "description": "Grapple incorporeal creatures and deal damage equal to 1d8 + Int."
+    },
+    {
+      "key": "Inflict Pain",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 2,
+      "description": "Target takes a -4 penalty on attack rolls, skill checks, and ability checks."
+    },
+    {
+      "key": "Inflict Pain (Mass)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "As inflict pain, but affecting (CASTERLEVEL) creatures."
+    },
+    {
+      "key": "Instigate Psychic Duel",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "Start a psychic duel between yourself and another creature."
+    },
+    {
+      "key": "Intellect Fortress I",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 4,
+      "description": "Suppress emotion and fear effects in a 20-ft. radius as an immediate action."
+    },
+    {
+      "key": "Intellect Fortress II",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 5,
+      "description": "As intellect fortress I, plus reduce the damage of mind-affecting effects."
+    },
+    {
+      "key": "Intellect Fortress III",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "As intellect fortress II, plus remove partial effects of fear and emotion effects."
+    },
+    {
+      "key": "Mental Barrier I",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 2,
+      "description": "Gain a +4 shield bonus to AC and resist mind thrust for 1 round as an immediate action."
+    },
+    {
+      "key": "Mental Barrier II",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "As mental barrier I, but +6 to AC."
+    },
+    {
+      "key": "Mental Barrier III",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 4,
+      "description": "As mental barrier I, but +8 to AC."
+    },
+    {
+      "key": "Mental Barrier IV",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 5,
+      "description": "As mental barrier III, plus 25%% chance to prevent critical hits and sneak attacks."
+    },
+    {
+      "key": "Mental Barrier V",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "As mental barrier III, plus 50%% chance to prevent critical hits and sneak attacks."
+    },
+    {
+      "key": "Mental Block",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Prevent the target from using its skill ranks, spells, feats, and abilities."
+    },
+    {
+      "key": "Microcosm",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 9,
+      "description": "Trap creatures in a veiled mindscape permanently, causing their bodies to waste away in the real world."
+    },
+    {
+      "key": "Mind Probe",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 3,
+      "description": "Learn answers from a subject's memories."
+    },
+    {
+      "key": "Mind Swap",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Switch minds with another creature for (CASTERLEVEL) hours."
+    },
+    {
+      "key": "Mind Swap (Major)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 9,
+      "description": "Swap minds with another creature forever."
+    },
+    {
+      "key": "Mind Thrust I",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Mentally deal 1d6 points of damage per level."
+    },
+    {
+      "key": "Mind Thrust II",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "As mind thrust I, but deal 1d8 points of damage per level (maximum 5d8)."
+    },
+    {
+      "key": "Mind Thrust III",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 3,
+      "description": "As mind thrust II, but deal a maximum of 10d8 points of damage."
+    },
+    {
+      "key": "Mind Thrust IV",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "As mind thrust II, but a maximum of 15d8 points of damage and target is fatigued for 1 round."
+    },
+    {
+      "key": "Mind Thrust V",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 5,
+      "description": "As mind thrust IV, but target is exhausted or fatigued for 1 round."
+    },
+    {
+      "key": "Mind Thrust VI",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 6,
+      "description": "As mind thrust IV, but maximum 20d8 points of damage and target is exhausted or stunned for 1 round."
+    },
+    {
+      "key": "Mindlink",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Communicate a great deal of information in an instant."
+    },
+    {
+      "key": "Mindscape Door",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Create a portal allowing entry to and exit from a mindscape."
+    },
+    {
+      "key": "Mindwipe",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "Erase a portion of the target's mind and experiences, inflicting negative levels."
+    },
+    {
+      "key": "Node of Blasting",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "Place a trap on an object to mentally damage a creature that touches it."
+    },
+    {
+      "key": "Object Possession",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "As lesser object possession, but with a larger object."
+    },
+    {
+      "key": "Object Possession (Greater)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "As possess object, but the object is more powerful and you can possess a construct."
+    },
+    {
+      "key": "Object Possession (Lesser)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Project your soul into an object, animating it."
+    },
+    {
+      "key": "Object Reading",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Read psychic impressions left on an object."
+    },
+    {
+      "key": "Oneiric Horror",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 1,
+      "description": "Distract and fatigue the target with a creature from its nightmares."
+    },
+    {
+      "key": "Oneiric Horror (Greater)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "As oneiric horror, plus Str damage."
+    },
+    {
+      "key": "Paranoia",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 1,
+      "description": "Target becomes hostile to all creatures."
+    },
+    {
+      "key": "Parchment Swarm",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 5,
+      "description": "Shredded parchment deals 1d6 points of damage per level, and has a spell effect if you shred a scroll."
+    },
+    {
+      "key": "Placebo Effect",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "Temporarily suppress an affliction or condition."
+    },
+    {
+      "key": "Possession",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 3,
+      "description": "Project your soul into a creature's body."
+    },
+    {
+      "key": "Possession (Greater)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "As possession, but your body vanishes."
+    },
+    {
+      "key": "Primal Regression",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "Make a creature become bestial and unintelligent."
+    },
+    {
+      "key": "Psychic Asylum",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 5,
+      "description": "Perform a lengthy mental task in a private mindscape."
+    },
+    {
+      "key": "Psychic Crush I",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 5,
+      "description": "Sicken a target and cause it to start dying, or deal 3d6 + 1 points of damage per level on a save."
+    },
+    {
+      "key": "Psychic Crush II",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "As psychic crush I, but deal 5d6 + 1 points of damage per level on a save and harder to resist."
+    },
+    {
+      "key": "Psychic Crush III",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 7,
+      "description": "As psychic crush I, but deal 7d6 + 1 points of damage per level on a save and harder to resist."
+    },
+    {
+      "key": "Psychic Crush IV",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 8,
+      "description": "As psychic crush I, but deal 9d6 + 1 points of damage per level on a save and no Fort save at 1/2 hp or fewer."
+    },
+    {
+      "key": "Psychic Crush V",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 9,
+      "description": "As psychic crush IV, but deal 11d6 + 1 points of damage per level on a save."
+    },
+    {
+      "key": "Psychic Image",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 9,
+      "description": "Create a perfect illusion of yourself that is incorporeal and capable of casting psychic spells, and switch between it and your body at will."
+    },
+    {
+      "key": "Psychic Reading",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Read surface thoughts to learn information about a subject."
+    },
+    {
+      "key": "Psychic Surgery",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "Cure all Int, Wis, and Cha damage and drain, plus remove other mental afflictions and conditions."
+    },
+    {
+      "key": "Purge Spirit",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Deal (CASTERLEVEL)d6 points of damage per level to one haunt or spirit creature and stagger it."
+    },
+    {
+      "key": "Quintessence",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 1,
+      "description": "Mask any flaws of or damage to a creature or object."
+    },
+    {
+      "key": "Remote Viewing",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "Gain psychic impressions from a distant location."
+    },
+    {
+      "key": "Repress Memory",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "Remove a piece of knowledge from your mind."
+    },
+    {
+      "key": "Retrocognition",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 3,
+      "description": "Gain psychic impressions from past events in a location."
+    },
+    {
+      "key": "Riding Possession",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "As possession, but you observe instead of control the subject."
+    },
+    {
+      "key": "Sealed Life",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 2,
+      "description": "Prevent a creature from transferring life force to or from others."
+    },
+    {
+      "key": "Sealed Life (Greater)",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "As sealed life, plus death ward and immunity to soul transference."
+    },
+    {
+      "key": "Sessile Spirit",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Cause a spirit inhabiting a creature or an object to go dormant."
+    },
+    {
+      "key": "Shadow Body",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 5,
+      "description": "Turn your body into a living shadow."
+    },
+    {
+      "key": "Spirit-Bound Blade",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Give a weapon ghost touch and another ability tied to an emotion."
+    },
+    {
+      "key": "Synapse Overload",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "Deal (min(CASTERLEVEL,15))d6 points of damage and stagger target for 1 minute."
+    },
+    {
+      "key": "Synaptic Pulse",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Stun creatures in a 30-ft. radius."
+    },
+    {
+      "key": "Synaptic Pulse (Greater)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "As synaptic pulse, but for 1d4 rounds."
+    },
+    {
+      "key": "Synaptic Scramble",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Prevent the target from communicating and cause it to act randomly."
+    },
+    {
+      "key": "Synesthesia",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Target moves at half speed, takes penalties, and has trouble casting spells."
+    },
+    {
+      "key": "Synesthesia (Mass)",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 5,
+      "description": "As synesthesia, but affecting multiple creatures."
+    },
+    {
+      "key": "Talismanic Implement",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": null,
+      "description": "As contingency, but invests a spell into one of your implements."
+    },
+    {
+      "key": "Telekinetic Maneuver",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Perform a telekinetic combat maneuver."
+    },
+    {
+      "key": "Telekinetic Projectile",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 0,
+      "description": "Telekinetically hurl an object, dealing 1d6 points of damage to the target and object."
+    },
+    {
+      "key": "Telekinetic Storm",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 9,
+      "description": "Deal 1d6 points of damage per level plus daze and stun in a 40-ft. radius."
+    },
+    {
+      "key": "Telempathic Projection",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 1,
+      "description": "Alter the target's attitude or give bonuses to those interacting with the target."
+    },
+    {
+      "key": "Telepathy",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "Communicate mentally with creatures within 100 ft."
+    },
+    {
+      "key": "Thaumaturgic Circle",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "As magic circle, but affecting a non-alignment subtype or outsider race."
+    },
+    {
+      "key": "Thought Echo",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 1,
+      "description": "Replace surface thoughts with a mental echo."
+    },
+    {
+      "key": "Thought Shield I",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 2,
+      "description": "As an immediate action, gain a +4 bonus on Will saves against mind-affecting effects."
+    },
+    {
+      "key": "Thought Shield II",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "As thought shield I, but +6 on Will saves."
+    },
+    {
+      "key": "Thought Shield III",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 4,
+      "description": "As thought shield I, but +8 on Will saves and stun creatures that read your thoughts for 1 round."
+    },
+    {
+      "key": "Thought Shield IV",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 5,
+      "description": "As thought shield III, but stun for 1d4 rounds and resist psychic crush spells."
+    },
+    {
+      "key": "Thought Shield V",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "As thought shield IV, but lasts 1 round per level."
+    },
+    {
+      "key": "Thoughtsense",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 4,
+      "description": "Automatically detect nearby conscious creatures."
+    },
+    {
+      "key": "Tower of Iron Will I",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 5,
+      "description": "As an immediate action, gives creatures in a 10-ft. radius spell resistance against psychic magic and mind-affecting effects."
+    },
+    {
+      "key": "Tower of Iron Will II",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "As tower of iron will I, but lasts 2 rounds."
+    },
+    {
+      "key": "Tower of Iron Will III",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 7,
+      "description": "As tower of iron will I, but lasts 3 rounds."
+    },
+    {
+      "key": "Tower of Iron Will IV",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 8,
+      "description": "As tower of iron will I, but lasts 4 rounds."
+    },
+    {
+      "key": "Tower of Iron Will V",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 9,
+      "description": "As tower of iron will I, but lasts 5 rounds."
+    },
+    {
+      "key": "Unshakable Zeal",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "Grant benefits on future attempts after failed checks, and protect against fear and emotion effects."
+    },
+    {
+      "key": "Wall of Ectoplasm",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 5,
+      "description": "Wall of spirits blocks movement on Material Plane and Ethereal Plane and causes fear."
+    },
+    {
+      "key": "Withdraw Affliction",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "Remove an affliction and inflict it on another creature."
+    },
+    {
+      "key": "Share Language (Communal)",
+      "name_pi_line": null,
+      "school": null,
+      "level": 2,
+      "description": null
+    }
+  ]
+}

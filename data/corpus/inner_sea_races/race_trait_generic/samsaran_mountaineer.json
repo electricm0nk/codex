@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "[redacted PI]",
+    "key": "Samsaran ~ Mountaineer",
+    "name": "Mountaineer",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samsaran ~ Mountaineer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Samsaran Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Samsaran ~ Mountaineer],[!PREFACT:1,ABILITIES,Samsaran_ReplaceLifebound=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|Immune to altitude sickness."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You do not lose your Dexterity bonus to AC when making Climb checks or Acrobatics checks to cross narrow or slippery surfaces."
+      },
+      {
+        "key": "FACT",
+        "value": "Samsaran_ReplaceLifebound|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1060,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Samsaran ~ Mountaineer",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 8.0,
+    "description": null,
+    "key": "Summoner's Sorrow",
+    "name": "Summoner's Sorrow",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cold Iron.Special Ability ~ Enhancement Cost|42800.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SPROP",
+        "value": "2d6 against summoned creatures and wielder can make a dispel check to send away or destroy the creature. 1/day wielder can attempt Dismissal instead."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 535,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Summoner's Sorrow",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

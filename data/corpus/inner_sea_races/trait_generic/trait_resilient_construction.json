@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Resilient Construction",
+    "name": "Resilient Construction",
+    "description": "Once per day, if you would be reduced to 0 or fewer hit points while under the effects of an ongoing spell you cast with a range of personal, you are not destroyed by the attack, but instead become inactive and helpless for 1 round, at negative hit points. If you take damage again during that time, or if you are still below 0 hit points at the end of that round, you are destroyed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Resilient Construction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Wyrwood Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Resilient Construction]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsWyrwood=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, if you would be reduced to 0 or fewer hit points while under the effects of an ongoing spell you cast with a range of personal, you are not destroyed by the attack, but instead become inactive and helpless for 1 round, at negative hit points. If you take damage again during that time, or if you are still below 0 hit points at the end of that round, you are destroyed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 107,
+    "record_key": "Trait ~ Resilient Construction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,47 @@
+[
+ {
+  "name": "Minor Supporting Character",
+  "rank_of_character": "Minor Supporting Character",
+  "stat_points": 50,
+  "source_page": "p079",
+  "text": "Minor Supporting Character: 50 STAT points. No STAT may be higher than 8 or lower than 2.",
+  "default": false,
+  "kind": "complete_package_points"
+ },
+ {
+  "name": "Starting Character",
+  "rank_of_character": "Starting Character",
+  "stat_points": 62,
+  "source_page": "p079",
+  "text": "Starting Character: 62 STAT points. No STAT may be higher than 8 or lower than 2.",
+  "default": true,
+  "kind": "complete_package_points"
+ },
+ {
+  "name": "Major Supporting Character",
+  "rank_of_character": "Major Supporting Character",
+  "stat_points": 70,
+  "source_page": "p079",
+  "text": "Major Supporting Character: 70 STAT points. No STAT may be higher than 8 or lower than 2.",
+  "default": false,
+  "kind": "complete_package_points"
+ },
+ {
+  "name": "Minor Hero",
+  "rank_of_character": "Minor Hero",
+  "stat_points": 75,
+  "source_page": "p079",
+  "text": "Minor Hero: 75 STAT points. No STAT may be higher than 8 or lower than 2.",
+  "default": false,
+  "kind": "complete_package_points"
+ },
+ {
+  "name": "Major Hero",
+  "rank_of_character": "Major Hero",
+  "stat_points": 80,
+  "source_page": "p079",
+  "text": "Major Hero: 80 STAT points. No STAT may be higher than 8 or lower than 2.",
+  "default": false,
+  "kind": "complete_package_points"
+ }
+]

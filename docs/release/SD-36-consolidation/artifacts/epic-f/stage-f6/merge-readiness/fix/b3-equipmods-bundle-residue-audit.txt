@@ -1,0 +1,9 @@
+SD-36 F6 merge-readiness B3 residue audit -- scripts/gen-corpus-bundle.mjs equipment/equipmods/ trim
+command: node scripts/gen-corpus-bundle.mjs && python3 docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/merge-readiness/fix/b3_equipmods_bundle_audit.py
+equipmods records bundled: 1494; bundled fields == raw data.key/name/cost_gp + source.path/line: 1494 of 1494; altered by the residue sanitizer: 0
+of which key contains 'Intelligent Item': 171
+--- python3 scripts/pcgen_residue_gate.py --check --closure
+root apps/desktop files=0 hits=0
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70045
+live_files=0 live_hits=0 verdict=PASS

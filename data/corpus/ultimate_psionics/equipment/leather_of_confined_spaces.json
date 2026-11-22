@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 10.0,
+    "description": "1/day reduce size by one category, +5 to Escape Artist and Combat Manuever checks to escape from grapples",
+    "key": "Leather of Confined Spaces",
+    "name": "Leather of Confined Spaces",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "5",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enhancement.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather.Special Ability ~ Enhancement Cost|5000.Special Ability ~ +3 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.393"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "10"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day reduce size by one category, +5 to Escape Artist and Combat Manuever checks to escape from grapples"
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Leather of Confined Spaces",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

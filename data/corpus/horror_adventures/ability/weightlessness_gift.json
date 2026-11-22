@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can use feather fall and jump at will as spell-like abilities. You can give the possessing spirit 1 point of influence over you to use levitate or spider climb as a spell-like ability. In all cases, your caster level is equal to your character level and the spell-like ability can target only you.",
+    "key": "Possessed Corruption ~ Weightlessness Gift",
+    "name": "Weightlessness Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Weightlessness Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedWeightlessnessGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use feather fall and jump at will as spell-like abilities. You can give the possessing spirit 1 point of influence over you to use levitate or spider climb as a spell-like ability. In all cases, your caster level is equal to your character level and the spell-like ability can target only you."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Corruption|TIMES=ATWILL|CASTERLEVEL=TL|Feather Fall|Jump"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 697,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Weightlessness Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:spells"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Black Dragon ~ Speak with Reptiles",
+    "delivery": "SpellLike",
+    "description": "A young or older black dragon gains the constant spell-like ability to speak with reptiles. This functions as speak with animals, but only with reptilian animals.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:black_dragon_speak_with_reptiles",
+    "name": "Speak with Reptiles",
+    "owners": [
+      "beastiary:monster:dragon_black"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A young or older black dragon gains the constant spell-like ability to speak with reptiles. This functions as speak with animals, but only with reptilian animals."
+      },
+      {
+        "key": "KEY",
+        "value": "Black Dragon ~ Speak with Reptiles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Communicate"
+      }
+    ],
+    "source_page": "p.92",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 407,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Black Dragon ~ Speak with Reptiles",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

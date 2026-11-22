@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Scorpion Whip",
+    "name": "Scorpion Whip"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_scorpion_whip.txt",
+    "record_key": "Scorpion Whip"
+  }
+}

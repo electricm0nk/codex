@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician Archetype ~ Battle Medic",
+    "name": "Battle Medic",
+    "class": "Tactician",
+    "description": "Getting wounded allies back into the fight is a part of combat that you embrace, sacrificing some of your strategic options to learn techniques to mend wounds and guard against attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician Archetype ~ Battle Medic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.TacticianArchetype.TacticianLesserStrategies.TacticianCoordinatedStrike.TacticianStrategy4.TacticianCoordinate.TacticianTeamworkFeats"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Tactician=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Tactician Archetype ~ Battle Medic],[!PREABILITY:1,CATEGORY=Archetype,TYPE.TacticianLesserStrategies,TYPE.TacticianCoordinatedStrike,TYPE.TacticianStrategy4,TYPE.TacticianCoordinate,TYPE.TacticianTeamworkFeats]"
+      },
+      {
+        "key": "DESC",
+        "value": "Getting wounded allies back into the fight is a part of combat that you embrace, sacrificing some of your strategic options to learn techniques to mend wounds and guard against attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Battle Medic ~ Medic Tricks|PRECLASS:1,Tactician=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Battle Medic ~ Transfer Wounds|PRECLASS:1,Tactician=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Battle Medic ~ Healing Bond|PRECLASS:1,Tactician=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Battle Medic ~ Back Into the Fray|PRECLASS:1,Tactician=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Battle Medic ~ Cushion the Blow|PRECLASS:1,Tactician=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Battle Medic Powers Known"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Strategy|-1|PRECLASS:1,Tactician=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Tactician;LEVEL=0|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2227,
+    "record_key": "Tactician Archetype ~ Battle Medic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

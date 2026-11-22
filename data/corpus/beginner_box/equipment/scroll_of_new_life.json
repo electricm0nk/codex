@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Scroll of New Life",
+    "category": "MagicItems",
+    "name": "Scroll of New Life",
+    "cost_gp": 6125.0,
+    "weight_lbs": 0.0,
+    "description": "Casting this spell takes 1 minute. You touch a creature that died no more than 9 days ago and bring it back to life. The creature awakens with only 1 hit point per level or Hit Die. This cleric scroll is caster level 9"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 14,
+    "record_key": "Scroll of New Life"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

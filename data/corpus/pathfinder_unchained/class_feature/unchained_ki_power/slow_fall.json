@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Slow Fall",
+    "name": "Slow Fall",
+    "class": "Unchained Ki Power",
+    "description": "A monk within arm's reach of a wall can use it to slow his descent by expending 1 point from his ki pool. When he uses this ability, he takes no damage from the fall (as if using feather fall), but he must be adjacent to a wall for the length of the fall (although this can be used to reduce the damage from a fall if only part of it is adjacent to a wall).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Slow Fall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Slow Fall"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk within arm's reach of a wall can use it to slow his descent by expending 1 point from his ki pool. When he uses this ability, he takes no damage from the fall (as if using feather fall), but he must be adjacent to a wall for the length of the fall (although this can be used to reduce the damage from a fall if only part of it is adjacent to a wall)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 554,
+    "record_key": "Unchained Ki Power ~ Slow Fall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

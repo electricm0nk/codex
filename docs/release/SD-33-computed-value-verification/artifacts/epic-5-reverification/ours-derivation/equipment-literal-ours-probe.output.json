@@ -1,0 +1,107 @@
+[
+  {
+    "ability": "STR",
+    "bonus": 2,
+    "name": "Anaconda's Coils"
+  },
+  {
+    "ability": "STR",
+    "bonus": 2,
+    "name": "Belt of Thunderous Charging"
+  },
+  {
+    "ability": "DEX",
+    "bonus": 2,
+    "name": "Belt of the Weasel"
+  },
+  {
+    "ability": "CON",
+    "bonus": 2,
+    "name": "Cord of Stubborn Resolve"
+  },
+  {
+    "ability": "CON",
+    "bonus": 4,
+    "name": "Elemental Earth Belt"
+  },
+  {
+    "ability": "STR",
+    "bonus": 4,
+    "name": "Gorgon Belt"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 2,
+    "name": "Headband of Aerial Agility (CHA) +2"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 4,
+    "name": "Headband of Aerial Agility (CHA) +4"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 6,
+    "name": "Headband of Aerial Agility (CHA) +6"
+  },
+  {
+    "ability": "INT",
+    "bonus": 2,
+    "name": "Headband of Aerial Agility (INT) +2"
+  },
+  {
+    "ability": "INT",
+    "bonus": 4,
+    "name": "Headband of Aerial Agility (INT) +4"
+  },
+  {
+    "ability": "INT",
+    "bonus": 6,
+    "name": "Headband of Aerial Agility (INT) +6"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 2,
+    "name": "Headband of Aerial Agility (WIS) +2"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 4,
+    "name": "Headband of Aerial Agility (WIS) +4"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 6,
+    "name": "Headband of Aerial Agility (WIS) +6"
+  },
+  {
+    "ability": "INT",
+    "bonus": 2,
+    "name": "Headband of Ponderous Recollection"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 2,
+    "name": "Headband of Unshakeable Resolve"
+  },
+  {
+    "ability": "STR",
+    "bonus": 2,
+    "name": "Minotaur Belt"
+  },
+  {
+    "ability": "DEX",
+    "bonus": 2,
+    "name": "Monkey Belt"
+  },
+  {
+    "ability": "CON",
+    "bonus": 2,
+    "name": "Plague Rat Belt"
+  },
+  {
+    "ability": "DEX",
+    "bonus": 6,
+    "name": "Shadowform Belt"
+  }
+]

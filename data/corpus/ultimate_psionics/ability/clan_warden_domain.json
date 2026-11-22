@@ -1,0 +1,44 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Clan Warden ~ Domain",
+    "name": "Clan Warden ~ Domain",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Cleric ~ Domains"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Clan Warden Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|InquisitorLVL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Clan Warden ~ Domain",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

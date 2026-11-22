@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 275.0,
+    "description": "Level 3 Universalist; Spells - 2.fox's cunning, scorching ray; 1.alarm, feather fall, obscuring mist, mount, shield, shocking grasp, silent image, sleep",
+    "key": "Unnamed Journal",
+    "name": "Unnamed Journal",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "275"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 3 Universalist"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 2.fox's cunning, scorching ray; 1.alarm, feather fall, obscuring mist, mount, shield, shocking grasp, silent image, sleep"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Unnamed Journal",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

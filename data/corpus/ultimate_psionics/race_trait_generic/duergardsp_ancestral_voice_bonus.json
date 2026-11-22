@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "DuergarDSP ~ Ancestral Voice Bonus",
+    "name": "Ancestral Voice Bonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Ancestral Voice Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.DuergarAncestralVoice"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Knowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|%LIST|DuergarAncestralVoiceBonus|TYPE=Racial"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 105,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "DuergarDSP ~ Ancestral Voice Bonus",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

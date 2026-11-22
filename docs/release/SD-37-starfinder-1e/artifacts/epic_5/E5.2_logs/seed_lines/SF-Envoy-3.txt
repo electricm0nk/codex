@@ -1,0 +1,39 @@
+ability | core:ability:armor_prof_light_armor | Armor Prof ~ Light Armor |  | 
+ability | core:ability:ysoki_default_cheek_pouches | CHEEK POUCHES |  | Ysoki can store up to 1 cubic foot of items weighing up to 1 bulk in total in their cheek pouches, and they can transfer a single object between hand and cheek as a swift action. A ysoki can disgorge the entire contents of his pouch onto the ground in his square as a move action that does not provoke an attack of opportunity.
+ability | core:ability:ysoki_default_darkvision | DARKVISION |  | Ysoki can see up to 60 feet in the dark. See page 263 for more information.
+ability | core:ability:envoy | Envoy | +1 | 
+ability | core:ability:envoy_class_feature_envoy_improvisation | Envoy Improvisation | +2 | As you gain experience, you learn envoy improvisations-little tricks that bolster allies, confound enemies, or change the ebb and flow of battle using guile, inspiration, or luck. You learn your first envoy improvisation at 1st level, and you learn an additional improvisation at 2nd level and every 2 levels thereafter. The list of envoy improvisations appears on page 62. If an improvisation allows you to grant an effect to an ally, you cannot grant yourself that effect unless the improvisation states otherwise. If an envoy improvisation allows a saving throw to resist its effects or requires an enemy to attempt a skill check, the DC is equal to 10 + half your envoy level + your Charisma modifier. Some envoy improvisations are language-dependent, mindaffecting, sense-dependent, or some combination of any or all of these. These terms are defined on page 270.
+ability | core:ability:envoy_class_feature_expertise | Expertise |  | You are an expert at dealing with challenges that test your skills, be the challenges social or otherwise. At 1st level, when attempting a Sense Motive check, you can roll 1d6 (your expertise die) and add the result of the roll to your check as an insight bonus. You can use this and other expertise abilities as long as you have at least 1 Resolve Point remaining. At 5th level, anytime you roll your expertise die, you gain a +1 bonus to the result. At 9th, 17th, and 20th levels, this bonus increases by 1. At 13th level, you roll 1d8 as your expertise die instead of 1d6. Beginning at 9th level, you have even greater expertise with skills to which you can add your expertise die that you have also selected with the Skill Focus feat. For each such skill, once per day when rolling your expertise die to add to that skill, you may roll the expertise die twice and take the better of the two results.
+ability | core:ability:envoy_class_feature_expertise_talent | Expertise Talent | +1 | At 3rd level and every 4 levels thereafter, you choose an expertise talent, which gives you an extra option when using a skill with which you have expertise. The list of expertise talents appears on pages 269-270.
+ability | core:ability:icon | Icon |  | TITLE: Icon
+ability | core:ability:ysoki_default_moxie | MOXIE |  | Ysoki are scrappy and nimble even when the odds are against them. A ysoki can stand from prone as a swift action. Additionally, when off-kilter (see page 276), a ysoki does not take the normal penalties to attacks or gain the flat-footed condition. When attempting an Acrobatics check to tumble through the space of an opponent at least one size category larger than himself, a ysoki receive a +5 racial bonus to the check. / SkillBonus: Acrobatics check to tumble through the space of an opponent at least one size category larger than himself, a ysoki receive a +5 racial bonus to the check.
+ability | core:ability:ysoki_default_scrounger | SCROUNGER (Engineering) | +2 | Ysoki receive a +2 racial bonus to Engineering, Stealth, and Survival checks.
+ability | core:ability:ysoki_default_scrounger#bonus1 | SCROUNGER (Stealth) | +2 | 
+ability | core:ability:ysoki_default_scrounger#bonus2 | SCROUNGER (Survival) | +2 | 
+ability | core:ability:ysoki_default_size_and_type | SIZE AND TYPE |  | Ysoki are Small humanoids with the ysoki subtype.
+ability | core:ability:envoy_class_feature_skill_expertise | Skill Expertise (skill expertise picks) | +1 | At 1st level and every 4 levels thereafter, you can use expertise with one additional class skill. You must have at least 1 rank in a skill to select it, and it must come from the following list: Bluff (Cha), Computers (Int), Culture (Int), Diplomacy (Cha), Disguise (Cha), Engineering (Int), Intimidate (Cha), and Medicine (Int).
+ability | core:ability:icon_theme_benefit_theme_knowledge#bonus2 | THEME KNOWLEDGE (Cha) | +1 | 
+ability | core:ability:icon_theme_benefit_theme_knowledge#bonus1 | THEME KNOWLEDGE (Culture) | +1 | 
+ability | core:ability:icon_theme_benefit_theme_knowledge | THEME KNOWLEDGE (icon profession picks) | +1 | Choose a Profession skill. You are hooked deeply into the culture of your iconic profession. When attempting a Profession or Culture check to recall knowledge about other icons of your profession or details about your profession's cultural aspects, increase the DC by 5. You gain a +1 bonus to checks with your chosen Profession skill. Culture also becomes a class skill for you, though if it is a class skill from the class you take at 1st level, you instead gain a +1 bonus to Culture checks. In addition, you gain an ability adjustment of +1 to Charisma at character creation.
+ability | core:ability:weapon_prof_basic_melee_weapons | Weapon Prof ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_prof_grenades | Weapon Prof ~ Grenades |  | 
+ability | core:ability:weapon_prof_small_arms | Weapon Prof ~ Small Arms |  | 
+ability | core:ability:envoy_class_feature_weapon_specialization | Weapon Specialization |  | You gain the Weapon Specialization feat as a bonus feat for each weapon type with which this class grants you proficiency.
+ability | core:ability:weapon_specialization_basic_melee_weapons | Weapon Specialization ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_specialization_small_arms | Weapon Specialization ~ Small Arms |  | 
+ability | core:ability:ysoki | Ysoki | +1 | 
+class | core:class:envoy | Envoy | +2 | Skill ranks per level: 8
+class | core:class:envoy#bonus2 | Envoy (Stamina Points) | +18 | 
+class | core:class:envoy#bonus3 | Envoy (base Fortitude save) | +1 | 
+class | core:class:envoy#bonus4 | Envoy (base Reflex save) | +3 | 
+class | core:class:envoy#bonus5 | Envoy (base Will save) | +3 | 
+class | core:class:envoy#bonus1 | Envoy (hit points) | +15 | 
+equipment | core:equipment:carbon_skin_graphite | Carbon skin, graphite | +3 | EAC = 3 / KAC = 4 / Price: 1220 / Armor check penalty: -1 / Max Dex bonus: 4 / Quality: Level: 3 / Quality: BULK: 1 / Upgrade slots: 1
+equipment | core:equipment:carbon_skin_graphite#bonus1 | Carbon skin, graphite (KAC) | +4 | 
+equipment | core:equipment:carbon_skin_graphite#speed2 | Carbon skin, graphite (walk speed) | +0 | 
+feat | core:feat:mobility | Mobility |  | You can easily move past dangerous foes. / You gain a +4 bonus to your Armor Class against attacks of opportunity that you provoke by leaving a threatened square.
+feat | core:feat:quick_draw | Quick Draw |  | You can draw weapons faster than most. / You can draw a weapon as a swift action. Additionally, when making an attack using a thrown weapon as an attack or full attack action, you can draw a weapon as part of the action of making a thrown attack with it. You can draw a hidden weapon (see Sleight of Hand on page 146) as a move action. / Normal: You can draw a weapon as a move action, or (if your base attack bonus is +1 or higher) as part of a move action, and you can draw a hidden weapon as a standard action.
+race | core:race:ysoki#bonus2 | Ysoki (Dex) | +2 | 
+race | core:race:ysoki#bonus1 | Ysoki (Int) | +2 | 
+race | core:race:ysoki | Ysoki (Str) | -2 | Speed: Walk 30 ft.
+race | core:race:ysoki#race_hp | Ysoki (racial Hit Points) | +2 | 

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Terrified Escape",
+    "name": "Terrified Escape",
+    "class": "Terror",
+    "description": "Your attack causes the target to flee from you on its next turn (Will DC %1 negates).  This is a mind-affecting fear effect.|TerrifiedEscapeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Terrified Escape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TerrifiedEscapeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes the target to flee from you on its next turn (Will DC %1 negates).  This is a mind-affecting fear effect.|TerrifiedEscapeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifiedEscapeDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifiedEscapeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Terrified Escape)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 312,
+    "record_key": "Terror ~ Terrified Escape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

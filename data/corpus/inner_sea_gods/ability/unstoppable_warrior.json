@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Unstoppable Warrior",
+    "name": "Unstoppable Warrior",
+    "description": "At 10th level, the sentinel becomes a stalwart paragon demonstrating incredible combat prowess. He gains damage reduction based on the alignment of his deity, as shown in the table. In addition, the sentinel no longer falls unconscious when reduced to a negative hit point total, though he can take only a single standard or move action while at negative hit points, and he continues to lose hit points normally if he is not stabilized. Taking standard actions after becoming stable causes the sentinel's wounds to reopen, and he begins losing hit points normally again. Once per day as a swift action, the sentinel can use cure critical wounds, but targeting only himself, with a caster level equal to his character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Unstoppable Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, the sentinel becomes a stalwart paragon demonstrating incredible combat prowess. He gains damage reduction based on the alignment of his deity, as shown in the table. In addition, the sentinel no longer falls unconscious when reduced to a negative hit point total, though he can take only a single standard or move action while at negative hit points, and he continues to lose hit points normally if he is not stabilized. Taking standard actions after becoming stable causes the sentinel's wounds to reopen, and he begins losing hit points normally again. Once per day as a swift action, the sentinel can use cure critical wounds, but targeting only himself, with a caster level equal to his character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (LG)|PREDEITYALIGN:LG"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (NG)|PREDEITYALIGN:NG"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (CG)|PREDEITYALIGN:CG"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (LN)|PREDEITYALIGN:LN"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (TN)|PREDEITYALIGN:TN"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (CN)|PREDEITYALIGN:CN"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (LE)|PREDEITYALIGN:LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (NE)|PREDEITYALIGN:NE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unstoppable Warrior (CE)|PREDEITYALIGN:CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 119,
+    "record_key": "Sentinel ~ Unstoppable Warrior"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,36 @@
+# SD18 deterministic Human Monk level 11 widening fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Monk
+# level-1..level-10 martial chassis baseline (tests/sd13_monk_level10_progression.rs)
+# to level 11 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-10
+# fixtures, adding only the level bump this slice needs.
+#
+# The PF1 CRB Monk class table's level-11 "Special" column reads "Diamond
+# body" only (verified independently against both d20pfsrd and
+# legacy.aonprd.com) — a flat poison-immunity grant, mirroring the 5th-level
+# Purity of Body (disease immunity) grant-only identity idiom exactly. No
+# other new named feature lands at level 11. It deliberately avoids every
+# later Monk burden surface: no execution of what the recognized bonus feat
+# actually does, no repeat bonus-feat grant recognition, no ki-power
+# execution, no ki-strike damage-reduction-bypass resolution, no
+# fall-damage engine, no High Jump, no Wholeness of Body execution, and no
+# level-12+ progression.
+case_id=pf1-crb-human-monk-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:11
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

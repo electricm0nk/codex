@@ -1,0 +1,16 @@
+
+> codex@0.18.0 ui-smoke
+> node scripts/ui-smoke/run.mjs --only browse-cyberpunk-catalog,browse-cyberpunk-gm-reference,landing-select-pathfinder
+
+App data root: /tmp/codex-ui-smoke-sd38-e6_mc-bevsIB/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd38-e6.mc'...
+PASS  browse-cyberpunk-catalog
+PASS  browse-cyberpunk-gm-reference
+PASS  landing-select-pathfinder
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+3/3 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 3 rows)
+Cleanup: 0 character(s) created across 3 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e6_mc-bevsIB/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003
+Evidence: /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/apps/desktop/scripts/ui-smoke/.out/sd38-e6.mc
+Removed isolated app-data root /tmp/codex-ui-smoke-sd38-e6_mc-bevsIB (it held 3 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003).

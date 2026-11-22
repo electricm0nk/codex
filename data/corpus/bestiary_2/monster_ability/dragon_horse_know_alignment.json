@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dragon Horse ~ Know Alignment",
+    "delivery": "Supernatural",
+    "description": "Dragon horses automatically know the alignment of any creature they can see.",
+    "description_variables": [],
+    "facet": "Sense",
+    "key": "bestiary_2:monster_ability:dragon_horse_know_alignment",
+    "name": "Know Alignment",
+    "owners": [
+      "bestiary_2:monster:dragon_horse"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Dragon horses automatically know the alignment of any creature they can see."
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon Horse ~ Know Alignment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Supernatural"
+      }
+    ],
+    "source_page": "p.104",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 422,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Dragon Horse ~ Know Alignment",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

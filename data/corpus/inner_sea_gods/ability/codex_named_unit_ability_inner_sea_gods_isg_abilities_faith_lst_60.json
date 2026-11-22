@@ -1,0 +1,72 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Protection from Good|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Death Knell|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Defile Armor|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREVARGTEQ:SentinelBoonLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance|PREVARGTEQ:SentinelBoonLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 profane bonus on saves vs. fire effects."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 profane bonus on saves vs. poison.|PREVARGTEQ:SentinelBoonLVL,9"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:60",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 60,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

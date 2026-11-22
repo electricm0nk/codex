@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 70.0,
+    "description": "Free action to release the blade, move action to reset. DC 20 Perception check to spot when closed, +4 Sleight of Hand to conceal.",
+    "key": "Spring Blade",
+    "name": "Spring Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Dagger"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Standard.Piercing.Slashing.Dagger.BladeLight"
+      },
+      {
+        "key": "COST",
+        "value": "70"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "Free action to release the blade, move action to reset. DC 20 Perception check to spot when closed, +4 Sleight of Hand to conceal."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
+    "record_key": "Spring Blade",
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

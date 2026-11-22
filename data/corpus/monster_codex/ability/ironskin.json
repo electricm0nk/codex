@@ -1,0 +1,100 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Ironskin",
+    "name": "Ironskin",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Ironskin_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_Ironskin_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_Ironskin_LVL|Ironskin,SLA_Ironskin_DC|PREVAREQ:SLA_Ironskin_AtWill,0|PREVAREQ:SLA_Ironskin_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_Ironskin_LVL|Ironskin,SLA_Ironskin_DC|PREVAREQ:SLA_Ironskin_AtWill,1|PREVAREQ:SLA_Ironskin_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_Ironskin_LVL|Ironskin,SLA_Ironskin_DC|PREVAREQ:SLA_Ironskin_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Ironskin_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Ironskin_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Ironskin_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Ironskin_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Ironskin_DC|10+SLA_Ironskin_SpellLVL+SLA_Ironskin_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities.lst",
+    "record_key": "Ironskin",
+    "sha256": "43a15f2c0959a5d2247268588c1d63bc33ded19afc1fe7936cc169850f30caa9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:spells",
+    "derived:tempbonus"
+  ]
+}

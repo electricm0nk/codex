@@ -1,0 +1,41 @@
+{
+  "engine": {
+    "bab": "1",
+    "hp": "10",
+    "save.Fortitude.base": "0",
+    "save.Reflex.base": "2",
+    "save.Will.base": "0",
+    "speed.fly": "30",
+    "speed.walk": "30",
+    "stat.CHA": "6",
+    "stat.DEX": "16",
+    "stat.INT": "6",
+    "stat.STR": "6",
+    "stat.WIS": "8"
+  },
+  "oracle": {
+    "attack.melee": "-1",
+    "attack.ranged": "4",
+    "bab": "1",
+    "eac": "14",
+    "hp": "10",
+    "initiative": "3",
+    "kac": "14",
+    "save.Fortitude": "0",
+    "save.Fortitude.base": "0",
+    "save.Reflex": "5",
+    "save.Reflex.base": "2",
+    "save.Will": "1",
+    "save.Will.base": "0",
+    "skill.Acrobatics": "4",
+    "skill.Perception": "0",
+    "speed.fly": "60",
+    "speed.walk": "30",
+    "stamina": "0",
+    "stat.CHA": "6",
+    "stat.DEX": "16",
+    "stat.INT": "6",
+    "stat.STR": "6",
+    "stat.WIS": "8"
+  }
+}

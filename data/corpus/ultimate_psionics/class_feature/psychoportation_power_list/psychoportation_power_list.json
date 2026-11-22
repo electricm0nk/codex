@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychoportation Power List",
+    "name": "Psychoportation Power List",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Psion=1|Burst,Detect Teleportation|Psion=2|Dimension Swap,Gravitational Well|Psion=3|Astral Caravan,Delayed Response,Gravitational Anchor|Psion=4|Expulsion,Flight,Wrench|Psion=5|Baleful Teleport,Psychoport,Psychoport Trigger|Psion=6|Banish,Reposition|Psion=7|Dream Travel,Ethereal Form|Psion=8|Time Hop (Mass)|Psion=9|Psychoportation Circle,Time Regression"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1976,
+    "record_key": "Psychoportation Power List"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

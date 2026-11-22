@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Unnatural Aura",
+    "name": "Unnatural Aura",
+    "description": "You are obviously of unnatural origin. Normal animals do not willingly approach you unless the animal's master makes a DC 25 Handle Animal, Ride, or wild empathy check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Unnatural Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You are obviously of unnatural origin. Normal animals do not willingly approach you unless the animal's master makes a DC 25 Handle Animal, Ride, or wild empathy check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 93,
+    "record_key": "Evolution ~ Unnatural Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

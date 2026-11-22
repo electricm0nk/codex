@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 6400.0,
+    "description": "[redacted PI]",
+    "key": "Dawnflower Lantern",
+    "name": "Dawnflower Lantern",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "6400"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dawnflower Lantern|TIMES=1|CASTERLEVEL=5|Bless|Consecrate"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 185,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Dawnflower Lantern",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

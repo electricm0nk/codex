@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aberrant ~ Transformed Body",
+    "name": "Transformed Body",
+    "class": "Aberrant",
+    "description": "You learn to modify your own form as a full-round action, rather than covering yourself in an ectoplasmic suit. This transformation lasts until it is dismissed, and you can dismiss the transformation as a free action. While this ability is active, you gain a +%1 natural armor bonus to your AC. You can modify your form in a fashion similar to the aegis's customization, but your options are more limited. Because you are modifying your own body, you can wear armor as normal. Customization Points:%2|TransformedBodyACBonus|CustomPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant ~ Transformed Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstralSuitPrereqLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransformedBodyACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CustomPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstralSuitLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn to modify your own form as a full-round action, rather than covering yourself in an ectoplasmic suit. This transformation lasts until it is dismissed, and you can dismiss the transformation as a free action. While this ability is active, you gain a +%1 natural armor bonus to your AC. You can modify your form in a fashion similar to the aegis's customization, but your options are more limited. Because you are modifying your own body, you can wear armor as normal. Customization Points:%2|TransformedBodyACBonus|CustomPoints"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Transformed Body Customization|AUTOMATIC|Aegis ~ Hardened Strikes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Transformed Body Customization|AUTOMATIC|Aegis ~ Brawn"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Transformed Body Customization|AUTOMATIC|Aegis ~ Darkvision|PRECLASS:1,Aegis=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Transformed Body Customization|AUTOMATIC|Aegis ~ Improved Damage Reduction|PRECLASS:1,Aegis=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Transformed Body Customization|CustomPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|TransformedBodyACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransformedBodyACBonus|1+floor(AstralSuitLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstralSuitLVL|AegisLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstralSuitPrereqLVL|AstralSuitLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1635,
+    "record_key": "Aberrant ~ Transformed Body"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

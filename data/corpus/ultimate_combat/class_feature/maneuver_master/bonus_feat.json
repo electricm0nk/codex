@@ -1,0 +1,137 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Maneuver Master ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Monk",
+    "description": "In addition to normal monk bonus feats, a maneuver master may select any Improved combat maneuver feat (such as Improved Overrun) as a bonus feat. At 6th level and above, he may select any Greater combat maneuver feat (such as Greater Grapple) as a bonus feat. At 10th level and above, he may select any maneuver Strike feat (such as Tripping Strike) as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Master ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to normal monk bonus feats, a maneuver master may select any Improved combat maneuver feat (such as Improved Overrun) as a bonus feat. At 6th level and above, he may select any Greater combat maneuver feat (such as Greater Grapple) as a bonus feat. At 10th level and above, he may select any maneuver Strike feat (such as Tripping Strike) as a bonus feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Monk Bonus Feat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedBullRush|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedDirtyTrick|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedDisarm|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedOverrun|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedSunder|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedTrip|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterBullRush|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDirtyTrick|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDisarm|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDrag|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterOverrun|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterSunder|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterTrip|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BullRushStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DisarmingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_RepositioningStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SunderingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TrippingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 976,
+    "record_key": "Maneuver Master ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

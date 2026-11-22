@@ -1,0 +1,10 @@
+clippy exit=0
+sd24_audit exit=0
+pf_render exit=0
+sf_lines_writer exit=0
+sf_lines_named exit=0
+desktop_full exit=0
+npm_typecheck exit=0
+npm_test exit=0
+ui_smoke_doc exit=0
+ui_smoke exit=0

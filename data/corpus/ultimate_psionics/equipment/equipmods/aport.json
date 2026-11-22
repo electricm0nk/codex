@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 40320.0,
+    "description": "2/day transports wearer and equipment to any spot within 800 feet as Fold Space",
+    "key": "APORT",
+    "name": "APORT",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Aporter ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "40320"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.391"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement,ShieldEnhancement],[PRETYPE:1,Armor,Shield]"
+      },
+      {
+        "key": "SPROP",
+        "value": "2/day transports wearer and equipment to any spot within 800 feet as Fold Space"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 174,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "APORT",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

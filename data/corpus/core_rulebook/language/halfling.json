@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Halfling",
+    "name": "Halfling",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_languages.lst",
+    "record_key": "Halfling",
+    "sha256": "52673db34716373afac7d7777cbad3253df924f998a63ec53ad57f78a5e4b4b7"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

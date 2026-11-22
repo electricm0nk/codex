@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Accursed Bloodline ~ Feat Tracker",
+    "name": "Accursed Bloodline ~ Feat Tracker",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Alertness|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_BlindFight|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_CombatCasting|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Deceitful|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_DefensiveCombatTraining|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Endurance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_GreatFortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_MountedCombat|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 568,
+    "record_key": "Accursed Bloodline ~ Feat Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

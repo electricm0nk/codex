@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Witch Archetype ~ Flood Walker",
+    "name": "Flood Walker",
+    "class": "Witch",
+    "description": "Witches who dwell in floodplains or along the banks of predictably dangerous rivers can tap into the underlying potential of surging waters in order to enhance their eerie powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Flood Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Flood Walker],[!PREFACT:1,ABILITIES,Witch_Archetype_ClassSkills=True,Witch_Archetype_PatronSpell4=True,Witch_Archetype_PatronSpell10=True,Witch_Archetype_PatronSpell16=True,Witch_Archetype_PatronSpell18=True,Witch_Archetype_Hex1=True,Witch_Archetype_Hex6=True,Witch_Archetype_Hex10=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Witches who dwell in floodplains or along the banks of predictably dangerous rivers can tap into the underlying potential of surging waters in order to enhance their eerie powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Flood Walker ~ Class Skills|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Flood Walker ~ Patron Spells|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flood Walker ~ Alignment|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flood Walker ~ Gasping Breath Aura|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flood Walker ~ River Stride|PRECLASS:1,Witch=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flood Walker ~ Breath Siphon|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_arg.lst",
+    "sha256": "54f3a2c057555c56328ef47ef1d86dfb30eeebc9b377516682828d26ea076021",
+    "line": 11,
+    "record_key": "Witch Archetype ~ Flood Walker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,33 @@
+reachability_audit: 38521 units (excl. beginner_box)
+  grid: 5 wiring classes x 9 statuses = 45 cells evaluated
+  REACHABLE CEILING: 98.94%  (38112 / 38521)
+  per-kind reachable ceiling:
+    class                100.00%
+    class_feature         98.69%
+    companion             99.65%
+    equipment             99.60%
+    equipment_modifier   100.00%
+    feat                  96.82%
+    monster              100.00%
+    monster_ability       99.48%
+    race                 100.00%
+    race_trait            99.56%
+    spell                 97.82%
+  dead-end cells: 9
+    [no-done-path] ambiguous|deferred-with-reason           units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|fixture-verified               units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|grounded                       units=45     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|ingested-magnitude             units=28     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|literal-verified               units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|not-ingested                   units=174    wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|not-started                    units=85     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|text-complete                  units=68     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|unknown                        units=9      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+  known populations (re-derived, not transcribed):
+    ambiguous_wiring_class_units: 409
+    unmeasurable_unknown_status_units: 4034
+    unmeasurable_unknown_status_by_kind: {'class_feature': 3667, 'feat': 367}
+    race_total: 103
+    race_not_done: 103
+    race_trait_total: 3447
+    race_trait_not_done: 3048

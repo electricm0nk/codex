@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 1250.0,
+    "description": "The first time that the wearer takes 5 or more points of fire damage in a single round, he is automatically affected by protection from energy.",
+    "key": "Talisman of Protection from Flames (Lesser)",
+    "name": "Talisman of Protection from Flames, Lesser",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Protection from Flames (Lesser)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "1250"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": "The first time that the wearer takes 5 or more points of fire damage in a single round, he is automatically affected by protection from energy."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Protection from Flames (Lesser)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

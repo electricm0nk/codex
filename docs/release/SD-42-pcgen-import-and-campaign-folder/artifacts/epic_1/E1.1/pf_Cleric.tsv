@@ -1,0 +1,21 @@
+line	name	base	custom_name	outcome	codex_key	sheet_record	worn	carried	copies_emitted	file_quantity	pcgen_location	codex_slot	slot_collision	eqmods_not_applied	data_fields_not_read
+1	Rations (Trail/Per Day)		no	mapped	Rations (Trail/Per Day)	yes	0	4	4	4.0	in Backpack x4.0				
+2	Outfit (Traveler's)		no	mapped	Outfit (Traveler's)	yes	1	0	1	1.0	Torso x1.0	None			
+3	Coin (Silver Piece)		no	mapped	Coin (Silver Piece)	yes	0	10	10	10.0	in Backpack x10.0				
+4	Shield (Light/Steel)	Shield (Light/Steel)	no	mapped	Shield (Light/Steel)	yes	1	0	1	1.0	Shield x1.0	Shield		STEEL	
+5	Potion of Cure Light Wounds		no	mapped	Potion of Cure Light Wounds	yes	0	1	1	1.0	in Backpack x1.0				
+6	Coin (Gold Piece)		no	mapped	Coin (Gold Piece)	yes	0	10	10	10.0	in Backpack x10.0				
+7	Waterskin (Filled)		no	mapped	Waterskin (Filled)	yes	0	1	1	1.0	in Horse (Light/Combat Trained) x1.0				
+8	Masterwork Morningstar	Morningstar	yes	mapped	Morningstar	yes	1	0	1	1.0	Primary Hand x1.0	WieldMain		STEEL.MWORKW	NAME
+9	Bedroll		no	mapped	Bedroll	yes	0	1	1	1.0	in Horse (Light/Combat Trained) x1.0				
+10	Blanket (Winter)		no	mapped	Blanket (Winter)	yes	0	1	1	1.0	in Horse (Light/Combat Trained) x1.0				
+11	Horse (Light/Combat Trained)		no	mapped	Horse (Light/Combat Trained)	yes	0	1	1	1.0	Not Carried x1.0				
+12	Backpack		no	mapped	Backpack	yes	0	1	1	1.0	Carried x1.0				
+13	Bolts (Crossbow/10)	Bolts (Crossbow/10)	no	mapped	Bolts (Crossbow/10)	yes	0	2	2	2.0	in Horse (Light/Combat Trained) x1.0; in Backpack x1.0			STEEL.WOOD	
+14	Coin (Platinum Piece)		no	mapped	Coin (Platinum Piece)	yes	0	5	5	5.0	in Backpack x5.0				
+15	Crossbow (Light)	Crossbow (Light)	no	mapped	Crossbow (Light)	yes	0	1	1	1.0	in Backpack x1.0			WOOD	
+16	Scale Mail	Scale Mail	no	mapped	Scale Mail	yes	1	0	1	1.0	Armor x1.0	Armor		STEEL	
+17	Saddle (Military)		no	mapped	Saddle (Military)	yes	0	1	1	1.0	in Horse (Light/Combat Trained) x1.0				
+18	Holy Symbol (Silver)		no	mapped	Holy Symbol (Silver)	yes	1	0	1	1.0	Equipped x1.0	None			
+19	Citrine		no	mapped	Citrine	yes	0	1	1	1.0	in Backpack x1.0				
+20	Amethyst		no	mapped	Amethyst	yes	0	2	2	2.0	in Backpack x2.0				

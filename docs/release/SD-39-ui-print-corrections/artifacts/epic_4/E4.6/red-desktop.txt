@@ -1,0 +1,25 @@
+test character_hub::tests::worn_item_applies_attack_a_luckstone_moves_initiative ... FAILED
+test character_hub::tests::worn_item_applies_attack_a_subtype_bonus_prints_with_its_subtype_and_moves_no_row ... FAILED
+test character_hub::tests::worn_item_applies_attack_a_pale_green_prism_moves_melee_everywhere_it_is_read ... FAILED
+test character_hub::tests::worn_item_applies_attack_boots_of_striding_move_speed ... FAILED
+test character_hub::tests::worn_item_applies_attack_a_robe_of_vermin_takes_attack_and_initiative_down ... FAILED
+test character_hub::tests::worn_item_applies_attack_a_stock_type_folds_with_a_worn_custom_bonus ... FAILED
+thread 'character_hub::tests::worn_item_applies_attack_a_luckstone_moves_initiative' (557121) panicked at src/character_hub.rs:10207:9:
+  left: 1
+ right: 2
+thread 'character_hub::tests::worn_item_applies_attack_a_subtype_bonus_prints_with_its_subtype_and_moves_no_row' (557125) panicked at src/character_hub.rs:10281:106:
+no note: []
+thread 'character_hub::tests::worn_item_applies_attack_a_pale_green_prism_moves_melee_everywhere_it_is_read' (557122) panicked at src/character_hub.rs:10170:9:
+  left: (8, 8, 8)
+ right: (9, 9, 9)
+thread 'character_hub::tests::worn_item_applies_attack_boots_of_striding_move_speed' (557126) panicked at src/character_hub.rs:10226:9:
+  left: None
+ right: Some(10)
+thread 'character_hub::tests::worn_item_applies_attack_a_robe_of_vermin_takes_attack_and_initiative_down' (557123) panicked at src/character_hub.rs:10190:9:
+  left: (8, 1)
+ right: (6, -4)
+thread 'character_hub::tests::worn_item_applies_attack_a_stock_type_folds_with_a_worn_custom_bonus' (557124) panicked at src/character_hub.rs:10255:9:
+  left: (8, 1, None)
+ right: (9, 2, Some(10))
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 1043 filtered out; finished in 53.85s
+error: test failed, to rerun pass `--bin codex-desktop`

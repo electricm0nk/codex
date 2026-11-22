@@ -1,0 +1,51 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Fungoid",
+    "name": "Fungoid",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Plant,RACETYPE=Undead,RACETYPE=Construct"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Fungoid"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
+    "record_key": "Fungoid",
+    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Anacite ion cannon (tempest)",
+    "name": "Anacite ion cannon (tempest)",
+    "type": "HEAVY WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "starfinder/paizo/pact_worlds/spw_profs_weapon.lst",
+    "record_key": "Anacite ion cannon (tempest)",
+    "sha256": "099bf1ca099117f6aeb2e4fbbce85b2497d569a83a0bd0befd656fc47fb3f818"
+  },
+  "unit_id": "pact_worlds:proficiency:anacite_ion_cannon_tempest"
+}

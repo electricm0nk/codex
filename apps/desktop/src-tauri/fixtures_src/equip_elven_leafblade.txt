@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ag_equip_arms_armor.lst, KEY: Elven Leafblade
+Elven Leafblade									PROFICIENCY:WEAPON|Elven Leafblade						TYPE:Weapon.Resizable.Melee.Light.Exotic.Standard.Piercing.Slashing.Elven.Finesseable		COST:40	WT:3					CRITMULT:x2	CRITRANGE:3		DAMAGE:1d4		EQMOD:Material ~ Steel						WIELD:Light										SIZE:M	SOURCEPAGE:p.114		SPROP:+2 bonus on attack rolls made to confrm critical hits

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Domain ~ Magic",
+    "name": "Sorcerer Domain ~ Magic",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Sorcerer/Cleric (Arcane)=1|Magic Aura|Sorcerer/Cleric (Arcane)=2|Identify|Sorcerer/Cleric (Arcane)=3|Dispel Magic|Sorcerer/Cleric (Arcane)=4|Imbue with Spell Ability|Sorcerer/Cleric (Arcane)=5|Spell Resistance|Sorcerer/Cleric (Arcane)=6|Antimagic Field|Sorcerer/Cleric (Arcane)=7|Spell Turning|Sorcerer/Cleric (Arcane)=8|Protection from Spells|Sorcerer/Cleric (Arcane)=9|Mage's Disjunction|PREVAREQ:MagicDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3138,
+    "record_key": "Sorcerer Domain ~ Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

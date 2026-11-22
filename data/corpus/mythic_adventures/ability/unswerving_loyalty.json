@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Unswerving Loyalty",
+    "name": "Unswerving Loyalty",
+    "description": "You are a bastion of strength and resolve, and you possess the ability to protect your mind from even the most powerful charms and compulsions. You gain immunity to non-mythic mind-affecting effects, though you can choose to be affected by them if you wish. When subject to a mind-affecting effect from a mythic source, you can expend one use of mythic power as an immediate action to gain immunity to that effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Unswerving Loyalty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a bastion of strength and resolve, and you possess the ability to protect your mind from even the most powerful charms and compulsions. You gain immunity to non-mythic mind-affecting effects, though you can choose to be affected by them if you wish. When subject to a mind-affecting effect from a mythic source, you can expend one use of mythic power as an immediate action to gain immunity to that effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 408,
+    "record_key": "Mythic Path Ability ~ Unswerving Loyalty"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

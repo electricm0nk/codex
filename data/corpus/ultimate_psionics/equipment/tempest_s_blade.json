@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": "enhancement of mind blade is increased by +%, up to +5|TempestsBladeHiltBonus",
+    "key": "Tempest's Blade",
+    "name": "Tempest's Blade",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "4*TempestsBladeDuelingWeapon"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Feint",
+          "2*TempestsBladeDuelingWeapon"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TempestsBladeHiltBonus",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMB_Disarm",
+          "2*TempestsBladeDuelingWeapon"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Disarm",
+          "2*TempestsBladeDuelingWeapon"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary.CrystallineFocus"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempestsBladeHiltBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.441"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest's Blade Attunement|PREMULT:4,[PREABILITY:1,CATEGORY=Special Ability,Blade Skill ~ Additional Configuration],[PREVAREQ:HasWeaponFinesseFeat,1],[PRESKILL:1,Knowledge (Psionics)=4],[PREVARGTEQ:TL,4]"
+      },
+      {
+        "key": "SPROP",
+        "value": "enhancement of mind blade is increased by +%, up to +5|TempestsBladeHiltBonus"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 473,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Tempest's Blade",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Hunter ~ Grasping Shade",
+    "name": "Grasping Shade",
+    "class": "Hunter",
+    "description": "You can make shadows turn into reaching, grabbing tentacles of substance.  As a standard action, you can target a creature within %1 ft. and direct shadows near the creature to entangle the target.  The creature targetted cannot be in an area of bright light or the attempt fails.  The creature may make a Reflex save (DC %2) to negate the attack.  Entangled creatures can attempt to break free as a move action, making a Strength or Escape Artist check (DC %3).  Successive successful uses on the same target before the target has successfully broken free cause the target to gain the grapped condition if entangled and the pinned condition if grappled, although a successful save only stops the target from gaining the additional condition.  This ability can be used %4/day.|GraspingShadeRange|GraspingShadeDC|GraspingShadeEscapeDC|GraspingShadeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Hunter ~ Grasping Shade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspingShadeRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspingShadeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspingShadeEscapeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspingShadeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make shadows turn into reaching, grabbing tentacles of substance.  As a standard action, you can target a creature within %1 ft. and direct shadows near the creature to entangle the target.  The creature targetted cannot be in an area of bright light or the attempt fails.  The creature may make a Reflex save (DC %2) to negate the attack.  Entangled creatures can attempt to break free as a move action, making a Strength or Escape Artist check (DC %3).  Successive successful uses on the same target before the target has successfully broken free cause the target to gain the grapped condition if entangled and the pinned condition if grappled, although a successful save only stops the target from gaining the additional condition.  This ability can be used %4/day.|GraspingShadeRange|GraspingShadeDC|GraspingShadeEscapeDC|GraspingShadeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspingShadeRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspingShadeRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspingShadeDC|10+DreadLVL/2+DreadPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspingShadeEscapeDC|11+DreadPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspingShadeTimes|3+DreadPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GraspingShadeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1889,
+    "record_key": "Shadow Hunter ~ Grasping Shade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

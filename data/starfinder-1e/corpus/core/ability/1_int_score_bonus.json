@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "+1 INT Score Bonus",
+    "name": "+1 INT Score Bonus",
+    "type": "Class Feature.GM_Award.SpecialQuality"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2443,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "+1 INT Score Bonus",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:1_int_score_bonus"
+}

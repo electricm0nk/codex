@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Soul Candle",
+    "category": "General",
+    "name": "Soul Candle",
+    "cost_gp": 1.0,
+    "weight_lbs": null,
+    "description": "Goes out when within 5 feet of a haunt or undead."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_general.lst",
+    "sha256": "f3b63f33d6caac3922e869bda5804121127cb41484fb7ebdcf2b83459db13339",
+    "line": 4,
+    "record_key": "Soul Candle"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

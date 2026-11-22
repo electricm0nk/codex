@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pattern Wielder ~ Patterned Weapon",
+    "name": "Patterned Weapon",
+    "class": "Pattern Wielder",
+    "description": "As a move action, you can transfer the tattoo of one of your powers known onto or off of one manufactured weapon you are wielding.  While on the weapon, you add +%1 to damage rolls made with that weapon.  However, you may not manifest the power represented by the tattoo.|PatternedWeaponDamageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern Wielder ~ Patterned Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PatternedWeaponDamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can transfer the tattoo of one of your powers known onto or off of one manufactured weapon you are wielding.  While on the weapon, you add +%1 to damage rolls made with that weapon.  However, you may not manifest the power represented by the tattoo.|PatternedWeaponDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PatternedWeaponDamageBonus|CrypticPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.323"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1854,
+    "record_key": "Pattern Wielder ~ Patterned Weapon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Tribal Hunter",
+    "name": "Tribal Hunter",
+    "description": "From watching pack animals hunt, you learned to take down large prey as part of a group.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Animal Affinity"
+      },
+      {
+        "key": "DESC",
+        "value": "From watching pack animals hunt, you learned to take down large prey as part of a group."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When either you or an ally with this feat is adjacent to and flanking an opponent that is larger than either of you, you both are considered to be flanking the opponent as long as you remain adjacent to it. &nl;[Normal] You must be positioned opposite an ally to flank an opponent."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 69,
+    "record_key": "Tribal Hunter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

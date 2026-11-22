@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L7 ~ Banishment",
+    "name": "Banishment",
+    "class": "Sorcerer",
+    "description": "A banishment spell is a more powerful version of the dismissal spell. It enables you to force extraplanar creatures out of your home plane. As many as 2 Hit Dice of creatures per caster level can be banished. You can improve the spell's chance of success by presenting at least one object or substance that the target hates, fears, or otherwise opposes. For each such object or substance, you gain a +1 bonus on your caster level check to overcome the target's spell resistance [if any], and the saving throw DC increases by 2. Certain rare items might work twice as well as a normal item for the purpose of the bonuses [each providing a +2 bonus on the caster level check against spell resistance and increasing the save DC by 4].|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L7 ~ Banishment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Banishment_L7,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Banishment"
+      },
+      {
+        "key": "DESC",
+        "value": "A banishment spell is a more powerful version of the dismissal spell. It enables you to force extraplanar creatures out of your home plane. As many as 2 Hit Dice of creatures per caster level can be banished. You can improve the spell's chance of success by presenting at least one object or substance that the target hates, fears, or otherwise opposes. For each such object or substance, you gain a +1 bonus on your caster level check to overcome the target's spell resistance [if any], and the saving throw DC increases by 2. Certain rare items might work twice as well as a normal item for the purpose of the bonuses [each providing a +2 bonus on the caster level check against spell resistance and increasing the save DC by 4].|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2110,
+    "record_key": "Sorcerer Bonus Spell L7 ~ Banishment"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

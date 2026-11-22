@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Hulk ~ Reinforced Plating",
+    "name": "Reinforced Plating",
+    "class": "War Hulk",
+    "description": "Your damage reduction while your astral suit is active is increased by %1.|ReinforcedPlatingDRBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Hulk ~ Reinforced Plating"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReinforcedPlatingDRBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your damage reduction while your astral suit is active is increased by %1.|ReinforcedPlatingDRBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ReinforcedPlatingDRBonus|floor(AegisLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1791,
+    "record_key": "War Hulk ~ Reinforced Plating"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

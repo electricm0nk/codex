@@ -1,0 +1,237 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Shifter ~ CLASS",
+    "name": "Shifter",
+    "class": "Shifter",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shifter Archetype|AUTOMATIC|Archetype Shifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CFP_Level|ShifterLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_BonusLanguages|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterClaws|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_WildEmpathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_DefensiveInstinct|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_Track|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_WoodlandStride|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_WildShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_TracklessStep|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShiftersFury|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ChimericAspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_GreaterChimericAspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ThousandFaces|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_TimelessBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_FinalAspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CF_ShifterAspect5|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ClassSkills|1|PREFACT:1,ABILITIES,Shifter_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_WeaponProficiencies|1|PREFACT:1,ABILITIES,Shifter_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ArmorProficiencies|1|PREFACT:1,ABILITIES,Shifter_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShieldProficiency|1|PREFACT:1,ABILITIES,Shifter_CF_ShieldProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_BonusLanguages|1|PREFACT:1,ABILITIES,Shifter_CF_BonusLanguages=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterClaws|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterClaws=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_WildEmpathy|1|PREFACT:1,ABILITIES,Shifter_CF_WildEmpathy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_DefensiveInstinct|1|PREFACT:1,ABILITIES,Shifter_CF_DefensiveInstinct=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_Track|1|PREFACT:1,ABILITIES,Shifter_CF_Track=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_WoodlandStride|1|PREFACT:1,ABILITIES,Shifter_CF_WoodlandStride=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_WildShape|1|PREFACT:1,ABILITIES,Shifter_CF_WildShape=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_TracklessStep|1|PREFACT:1,ABILITIES,Shifter_CF_TracklessStep=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShiftersFury|1|PREFACT:1,ABILITIES,Shifter_CF_ShiftersFury=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ChimericAspect|1|PREFACT:1,ABILITIES,Shifter_CF_ChimericAspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_GreaterChimericAspect|1|PREFACT:1,ABILITIES,Shifter_CF_GreaterChimericAspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ThousandFaces|1|PREFACT:1,ABILITIES,Shifter_CF_ThousandFaces=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_TimelessBody|1|PREFACT:1,ABILITIES,Shifter_CF_TimelessBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_FinalAspect|1|PREFACT:1,ABILITIES,Shifter_CF_FinalAspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect1|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect2|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect3|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect4|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CF_ShifterAspect5|1|PREFACT:1,ABILITIES,Shifter_CF_ShifterAspect5=True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1309,
+    "record_key": "Shifter ~ CLASS"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

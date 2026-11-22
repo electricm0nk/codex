@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Once per day, the power of your faith surges, further empowering your judgments.",
+    "key": "Judgment Surge",
+    "name": "Judgment Surge",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.InquisitorJudgment"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the power of your faith surges, further empowering your judgments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Once per day, you can treat your class level for your judgment class feature as if it were 3 higher than normal. If you have multiple judgments active at the same time, this benefit applies to all of them."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 78,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Judgment Surge",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

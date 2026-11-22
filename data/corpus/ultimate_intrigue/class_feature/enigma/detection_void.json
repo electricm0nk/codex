@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Detection Void",
+    "name": "Detection Void",
+    "class": "Mesmerist",
+    "description": "An enigma can elude detection spells (spells with \"detect\" in their name). A creature using this sort of magic against the enigma must succeed at a caster level check against a DC %1 to succeed (as if the enigma was under the effect of a nondetection spell); failure means the magic fails to detect the enigma, as if he did not exist.|15+MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Detection Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An enigma can elude detection spells (spells with \"detect\" in their name). A creature using this sort of magic against the enigma must succeed at a caster level check against a DC %1 to succeed (as if the enigma was under the effect of a nondetection spell); failure means the magic fails to detect the enigma, as if he did not exist.|15+MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 57,
+    "record_key": "Enigma ~ Detection Void"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

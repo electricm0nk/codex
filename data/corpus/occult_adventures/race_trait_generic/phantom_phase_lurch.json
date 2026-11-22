@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Phantom ~ Phase Lurch",
+    "name": "Phase Lurch",
+    "description": "A phantom in ectoplasmic form has the ability to pass through walls or material obstacles. In order to use this ability, it must begin and end its turn outside whatever wall or obstacle it's moving through. An ectoplasmic phantom can't move through corporeal creatures with this ability, and its movement speed is halved while moving through a wall or obstacle. Any surface it moves through is coated with a thin, silvery mucus that lingers for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom ~ Phase Lurch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phantom Racial Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom in ectoplasmic form has the ability to pass through walls or material obstacles. In order to use this ability, it must begin and end its turn outside whatever wall or obstacle it's moving through. An ectoplasmic phantom can't move through corporeal creatures with this ability, and its movement speed is halved while moving through a wall or obstacle. Any surface it moves through is coated with a thin, silvery mucus that lingers for 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 44,
+    "record_key": "Phantom ~ Phase Lurch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

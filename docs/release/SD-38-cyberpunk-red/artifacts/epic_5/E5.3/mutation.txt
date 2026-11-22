@@ -1,0 +1,5 @@
+test cpr_improve::tests::an_entered_humanity_loss_outside_the_dice_is_refused_and_nothing_is_saved ... FAILED
+test cpr_improve::tests::an_over_slot_install_is_refused_and_nothing_is_saved ... FAILED
+thread 'cpr_improve::tests::an_entered_humanity_loss_outside_the_dice_is_refused_and_nothing_is_saved' (2834199) panicked at src/cpr_improve.rs:908:112:
+thread 'cpr_improve::tests::an_over_slot_install_is_refused_and_nothing_is_saved' (2834201) panicked at src/cpr_improve.rs:932:90:
+test result: FAILED. 14 passed; 2 failed; 0 ignored; 0 measured; 863 filtered out; finished in 11.69s

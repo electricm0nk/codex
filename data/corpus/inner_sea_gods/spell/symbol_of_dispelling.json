@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as symbol of death, except that all creatures within 40 feet of the symbol of dispelling are instead affected as if by the area dispel function of greater dispel magic. Attempt a dispel check when casting symbol of dispelling. Once the symbol is triggered, apply the result of that check to each creature in the area, as well as each object that is the target of one or more spells. Unlike symbol of death, symbol of dispelling grants no saving throws, and it is not subject to spell resistance.",
+    "key": "Symbol of Dispelling",
+    "level": 8,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Witch,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as symbol of death, except that all creatures within 40 feet of the symbol of dispelling are instead affected as if by the area dispel function of greater dispel magic. Attempt a dispel check when casting symbol of dispelling. Once the symbol is triggered, apply the result of that check to each creature in the area, as well as each object that is the target of one or more spells. Unlike symbol of death, symbol of dispelling grants no saving throws, and it is not subject to spell resistance."
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(pure grain alcohol and powdered diamond worth 5,000 gp)"
+      },
+      {
+        "key": "KEY",
+        "value": "Symbol of Dispelling"
+      },
+      {
+        "key": "RANGE",
+        "value": "O ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One symbol"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Symbol of Dispelling",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

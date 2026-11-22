@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Hunter ~ Shadow Diversion",
+    "name": "Shadow Diversion",
+    "class": "Hunter",
+    "description": "As a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Hunter ~ Shadow Diversion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowDiversionRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowDiversionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a"
+      },
+      {
+        "key": "DESC",
+        "value": " standard|!PREABILITY:1,CATEGORY=FEAT,Improved Feint,Greater Feint"
+      },
+      {
+        "key": "DESC",
+        "value": " move|PREMULT:2,[PREABILITY:1,CATEGORY=FEAT,Improved Feint],[!PREABILITY:1,CATEGORY=FEAT,Greater Feint]"
+      },
+      {
+        "key": "DESC",
+        "value": " swift|PREABILITY:1,CATEGORY=FEAT,Greater Feint"
+      },
+      {
+        "key": "DESC",
+        "value": " action, you can cause shadows to take physical shape adjacent to a creature within %1 ft.  Unless the creature makes a successful Will save (DC %2), the creature treats the shadow as an enemy when determining if the creature is flanked until the end of your next turn.  If the shadow is adjacent to multiple creatures, you must choose which one is affected by it.|ShadowDiversionRange|ShadowDiversionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowDiversionRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowDiversionDC|10+DreadLVL/2+DreadPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1888,
+    "record_key": "Shadow Hunter ~ Shadow Diversion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

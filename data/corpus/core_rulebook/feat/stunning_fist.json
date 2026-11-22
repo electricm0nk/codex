@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Stunning Fist",
+    "category": "Combat",
+    "name": "Stunning Fist",
+    "description": "You know just where to strike to temporarily stun a foe. %1/day (DC %2)|StunningFistAttack|StunningFistDC",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREMULT:2,[PREVARGTEQ:PreStatScore_WIS,13],[PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]]",
+      "PRETOTALAB:8"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 171,
+    "record_key": "Stunning Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

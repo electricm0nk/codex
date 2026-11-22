@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Iron Brush
+Iron Brush																				PROFICIENCY:WEAPON|Iron Brush								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.Light.Finesseable.Ranged.Thrown.Martial.Piercing																													COST:2	WT:0.1									CRITMULT:x2	CRITRANGE:1							DAMAGE:1d3					EQMOD:Material ~ Steel																																													RANGE:10						SOURCEPAGE:p.30

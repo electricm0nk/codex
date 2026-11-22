@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Air Step",
+    "name": "Air Step",
+    "class": "Magus",
+    "description": "Tread unsteadily on air, with limitations.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Air Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellBlend.MagusSpellBlendLVL2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=2|Air Step"
+      },
+      {
+        "key": "DESC",
+        "value": "Tread unsteadily on air, with limitations.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|-10|!PRESKILL:1,Fly=1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Acrobatics,Climb,Ride|-4|!PRESKILL:1,Fly=5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4069,
+    "record_key": "Magus Spellblend ~ Air Step"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

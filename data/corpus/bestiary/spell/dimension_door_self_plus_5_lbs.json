@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Dimension Door (self plus 5 lbs.)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "You instantly transfer yourself from your current location to any other spot within range."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+    "sha256": "e7e55cf92a9e94909f085392ce48a7b41c4d2243cd8cf974ac13708204a27195",
+    "line": 66,
+    "record_key": "Dimension Door (self plus 5 lbs.)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

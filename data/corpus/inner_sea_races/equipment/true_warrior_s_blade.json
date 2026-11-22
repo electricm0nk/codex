@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 50.0,
+    "description": null,
+    "key": "True Warrior's Blade",
+    "name": "True Warrior's Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greatsword"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Magic.Resizable.Melee.TwoHanded.Martial.Specific.Slashing.Sword.BladeHeavy"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|32000.Special Ability ~ +3 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ],
+    "weight_lbs": 8.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+    "record_key": "True Warrior's Blade",
+    "sha256": "8bab5c93e80b95941384620665b3bcc691bebf1b540dd94323573020b736d0a7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

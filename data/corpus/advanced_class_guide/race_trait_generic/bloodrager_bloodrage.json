@@ -1,0 +1,30 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Bloodrager ~ Bloodrage",
+    "name": "Bloodrager ~ Bloodrage",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|DwarfBloodragerFavClassBonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Bloodrager ~ Bloodrage",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

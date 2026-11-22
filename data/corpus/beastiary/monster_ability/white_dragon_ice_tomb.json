@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "White Dragon ~ Ice Tomb",
+    "delivery": "SpellLike",
+    "description": "A great wyrm can, as a standard action, cause a creature to sink into ice. This works as imprisonment, but only while the target is touching an icy surface. A white dragon can use this ability once per day (CL %1). Targets entombed by this ability can be freed by casting freedom or by physically freeing the creature from the ice (Hardness 0, 360 hit points).",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:white_dragon_ice_tomb",
+    "name": "Ice Tomb",
+    "owners": [
+      "beastiary:monster:dragon_white"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A great wyrm can, as a standard action, cause a creature to sink into ice. This works as imprisonment, but only while the target is touching an icy surface. A white dragon can use this ability once per day (CL %1). Targets entombed by this ability can be freed by casting freedom or by physically freeing the creature from the ice (Hardness 0, 360 hit points).|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "White Dragon ~ Ice Tomb"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
+    "source_page": "p.100",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 449,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "White Dragon ~ Ice Tomb",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

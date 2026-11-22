@@ -1,0 +1,81 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can call upon your mythic power two additional times per day. You can select this ability up to three times.",
+    "key": "Mythic Path Ability ~ Extra Mythic Power",
+    "name": "Extra Mythic Power",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Extra Mythic Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Ability_ExtraMythicPower_Count,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_ExtraMythicPower_Count|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon your mythic power two additional times per day. You can select this ability up to three times."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicPowerTimes|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ExtraMythicPower_Count|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 168,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Extra Mythic Power",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

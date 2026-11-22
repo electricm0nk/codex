@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Dwarves with this racial trait grew up facing the abominations that live deep beneath the surface. They receive a +2 dodge bonus to AC against monsters of the aberration type and a +2 racial bonus to their CMB on attempts made to grapple such creatures (or to continue a grapple).",
+    "key": "Dwarf ~ Deep Warrior",
+    "name": "Deep Warrior",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Deep Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Defensive"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Deep Warrior],[!PREFACT:1,ABILITIES,Dwarf_ReplaceDefensiveTraining=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves with this racial trait grew up facing the abominations that live deep beneath the surface. They receive a +2 dodge bonus to AC against monsters of the aberration type and a +2 racial bonus to their CMB on attempts made to grapple such creatures (or to continue a grapple)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the defensive training racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Deep Warrior"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 dodge bonus to AC against monsters of the aberration type and a +2 racial bonus to their CMB on attempts made to grapple such creatures (or to continue a grapple)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+2 dodge bonus to AC vs. aberrations)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CMBCircumstance|+2 to grapple vs. aberrations"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceDefensiveTraining|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Dwarf ~ Deep Warrior",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

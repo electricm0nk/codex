@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Symbiosis ~ One with Nature",
+    "name": "One with Nature",
+    "class": "Psychic",
+    "description": "You can cast detect animals or plants as a spell-like ability at will. You gain a +2 insight bonus on Knowledge (nature) checks, and while using detect animals or plants, the bonus increases to +4 to identify a matching animal or plant creature within the area of effect. At 7th level, you can speak with any animal you successfully identify, as per speak with animals, but this ability doesn't make the creature any friendlier than normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Symbiosis ~ One with Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast detect animals or plants as a spell-like ability at will. You gain a +2 insight bonus on Knowledge (nature) checks, and while using detect animals or plants, the bonus increases to +4 to identify a matching animal or plant creature within the area of effect. At 7th level, you can speak with any animal you successfully identify, as per speak with animals, but this ability doesn't make the creature any friendlier than normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 167,
+    "record_key": "Psychic Discipline Symbiosis ~ One with Nature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

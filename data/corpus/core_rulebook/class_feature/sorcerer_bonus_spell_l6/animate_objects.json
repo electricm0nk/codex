@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L6 ~ Animate Objects",
+    "name": "Animate Objects",
+    "class": "Sorcerer",
+    "description": "You imbue inanimate objects with mobility and a semblance of life. Each such animated object then immediately attacks whomever or whatever you initially designate. An animated object can be of any nonmagical material. You may animate one Small or smaller object or a corresponding number of larger objects as follows: A Medium object counts as two Small or smaller objects, a Large object as four, a Huge object as eight, a Gargantuan object as 16, and a Colossal object as 32. You can change the designated target or targets as a move action, as if directing an active spell. This spell cannot affect objects carried or worn by a creature. Animate objects can be made permanent with a permanency spell.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L6 ~ Animate Objects"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_AnimateObjects_L6,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Animate Objects"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue inanimate objects with mobility and a semblance of life. Each such animated object then immediately attacks whomever or whatever you initially designate. An animated object can be of any nonmagical material. You may animate one Small or smaller object or a corresponding number of larger objects as follows: A Medium object counts as two Small or smaller objects, a Large object as four, a Huge object as eight, a Gargantuan object as 16, and a Colossal object as 32. You can change the designated target or targets as a move action, as if directing an active spell. This spell cannot affect objects carried or worn by a creature. Animate objects can be made permanent with a permanency spell.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2106,
+    "record_key": "Sorcerer Bonus Spell L6 ~ Animate Objects"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

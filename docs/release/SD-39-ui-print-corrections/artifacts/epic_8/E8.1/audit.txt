@@ -1,0 +1,7 @@
+audit at 784ae6fde5 against fcf9c83fa1ddffc0b7b06f924bbeaebdef343e70
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+NR-2 (grep -n 'fn compute\|calc(' print/ | awk END NR): 0

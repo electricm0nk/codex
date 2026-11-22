@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L8 ~ Mind Blank",
+    "name": "Mind Blank",
+    "class": "Sorcerer",
+    "description": "The subject is protected from all devices and spells that gather information about the target through divination magic [such as detect evil, locate creature, scry, and see invisible]. This spell also grants a +8 resistance bonus on saving throws against all mind-affecting spells and effects. Mind blank even foils limited wish, miracle, and wish spells when they are used in such a way as to gain information about the target. In the case of scrying that scans an area the creature is in, such as arcane eye, the spell works but the creature simply isn't detected. Scrying attempts that are targeted specifically at the subject do not work at all.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L8 ~ Mind Blank"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_MindBlank_L8,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Mind Blank"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject is protected from all devices and spells that gather information about the target through divination magic [such as detect evil, locate creature, scry, and see invisible]. This spell also grants a +8 resistance bonus on saving throws against all mind-affecting spells and effects. Mind blank even foils limited wish, miracle, and wish spells when they are used in such a way as to gain information about the target. In the case of scrying that scans an area the creature is in, such as arcane eye, the spell works but the creature simply isn't detected. Scrying attempts that are targeted specifically at the subject do not work at all.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2215,
+    "record_key": "Sorcerer Bonus Spell L8 ~ Mind Blank"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

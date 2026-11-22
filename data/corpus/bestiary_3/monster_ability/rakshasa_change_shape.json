@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Rakshasa ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "All rakshasas have the ability to change shape into any humanoid, as if using alter self.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:rakshasa_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All rakshasas have the ability to change shape into any humanoid, as if using alter self."
+      },
+      {
+        "key": "KEY",
+        "value": "Rakshasa ~ Change Shape"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2338,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Rakshasa ~ Change Shape",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

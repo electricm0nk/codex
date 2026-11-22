@@ -1,0 +1,4 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/sheet_rule_convert --system pathfinder-2e --check`
+sheet_rule_convert: unknown game system "pathfinder-2e"; known systems: pathfinder-1e, starfinder-1e
+usage: sheet_rule_convert [--system <game system id>] [--write | --check | --one <unit id> | --dump <dir>]

@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Siege Engines Weapon Group",
+    "name": "Siege Engines Weapon Group",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Mythic Weapon Training"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon Group Choice"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE.SiegeEngine"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 478,
+    "record_key": "Siege Engines Weapon Group"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

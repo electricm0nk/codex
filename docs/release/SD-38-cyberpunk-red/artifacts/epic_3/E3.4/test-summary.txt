@@ -1,0 +1,17 @@
+== desktop_full: per-suite (awk)
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e3/debug/deps/codex_desktop-9b89aecaf12b93dc) => test result: ok. 841 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 540.79s
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd38-e3/debug/deps/packaged_resources-22a850281c1680e9) => test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 122.64s
+== totals (awk)
+2 suites, 842 passed, 0 failed, 2 ignored
+== totals (python)
+2 suites 842 passed 0 failed 2 ignored
+== npm test
+restoreOffer.test.ts: all assertions passed
+appDataIsolation.test.mjs: all assertions passed
+commandChannel.test.mjs: all assertions passed
+rowSelection.test.mjs: all assertions passed
+170/170 test files passed.
+== ui-smoke:doc
+> node scripts/ui-smoke/render-inventory.mjs
+
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/docs/testing/ui-smoke-inventory.md (108 rows, 18 screens).

@@ -1,0 +1,3 @@
+mutC-render exit=0
+mutC-restored diff-exit=0
+post-mutC-render exit=0

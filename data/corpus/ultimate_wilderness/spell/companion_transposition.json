@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You trade places with the other target, teleporting as if you were both affected by dimension door. Both you and the other target arrive in a square you choose in the other's former space. If the targets are different sizes, they must appear in locations that cover previously occupied squares. As with dimension door, after casting this spell, you can't take any other actions until your next turn, and the other target is staggered until the end of its next turn due to the transposition.",
+    "key": "Companion Transposition",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Paladin,Ranger=4|Druid,Shaman,Sorcerer,Witch,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Swap places with your animal companion, familiar, or spirit animal via teleportation.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You trade places with the other target, teleporting as if you were both affected by dimension door. Both you and the other target arrive in a square you choose in the other's former space. If the targets are different sizes, they must appear in locations that cover previously occupied squares. As with dimension door, after casting this spell, you can't take any other actions until your next turn, and the other target is staggered until the end of its next turn due to the transposition.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Yourself and one animal companion, familiar, or spirit animal within range"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Companion Transposition",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Perception",
+    "name": "Perception",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Perception"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PerceptionRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PerceptionRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perception 05 Ranks|PREVARGTEQ:PerceptionRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perception 10 Ranks|PREVARGTEQ:PerceptionRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perception 15 Ranks|PREVARGTEQ:PerceptionRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perception 20 Ranks|PREVARGTEQ:PerceptionRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerceptionRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Perception\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Pierce disguise"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 51,
+    "record_key": "Refined Education Unlock ~ Perception"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

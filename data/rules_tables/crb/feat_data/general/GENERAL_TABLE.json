@@ -1,0 +1,907 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/feat_data/general/GENERAL_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Acrobatic",
+      "category": "General",
+      "name": "Acrobatic",
+      "description": "You are skilled at leaping, jumping, and flying.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Acrobatics",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Acrobatics\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Fly",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Fly\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Acrobatic Steps",
+      "category": "General",
+      "name": "Acrobatic Steps",
+      "description": "You can easily move over and through obstacles.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Feat_NimbleMoves_Squares",
+            "15"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Alertness",
+      "category": "General",
+      "name": "Alertness",
+      "description": "You often notice things that others might miss.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Perception",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Perception\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Sense Motive",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Sense Motive\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Alignment Channel",
+      "category": "General",
+      "name": "Alignment Channel",
+      "description": "You can channel your divine energy to harm or heal outsiders that possess your chosen alignment subtype.",
+      "effect": null
+    },
+    {
+      "key": "Animal Affinity",
+      "category": "General",
+      "name": "Animal Affinity",
+      "description": "You are skilled at working with animals and mounts.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Handle Animal",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Handle Animal\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Ride",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Ride\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Athletic",
+      "category": "General",
+      "name": "Athletic",
+      "description": "You possess inherent physical prowess.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Climb",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Climb\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Swim",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Swim\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Augment Summoning",
+      "category": "General",
+      "name": "Augment Summoning",
+      "description": "Your summoned creatures are more powerful and robust than most.",
+      "effect": null
+    },
+    {
+      "key": "Combat Casting",
+      "category": "General",
+      "name": "Combat Casting",
+      "description": "You are adept at spellcasting when threatened or distracted.",
+      "effect": null
+    },
+    {
+      "key": "Command Undead",
+      "category": "General",
+      "name": "Command Undead",
+      "description": "Using foul powers of necromancy, you can command undead creatures, making them into your servants.",
+      "effect": null
+    },
+    {
+      "key": "Deceitful",
+      "category": "General",
+      "name": "Deceitful",
+      "description": "You are skilled at deceiving others, both with the spoken word ans with physical disguises.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Bluff",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Bluff\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Disguise",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Disguise\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Deft Hands",
+      "category": "General",
+      "name": "Deft Hands",
+      "description": "You have exceptional manual dexterity.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Disable Device",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Disable Device\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Sleight of Hand",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Sleight of Hand\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Diehard",
+      "category": "General",
+      "name": "Diehard",
+      "description": "You are especially hard to kill. Not only do your wounds automatically stabilize when grievously injured, but you can remain conscious and continue to act even at death's door.",
+      "effect": null
+    },
+    {
+      "key": "Elemental Channel",
+      "category": "General",
+      "name": "Elemental Channel",
+      "description": "You can channel your divine energy to harm or heal outsiders that possess your chosen elemental subtype.",
+      "effect": null
+    },
+    {
+      "key": "Endurance",
+      "category": "General",
+      "name": "Endurance",
+      "description": "Harsh conditions or long exertions do not easily tire you.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Feat_Endurance_SaveBonus",
+            "4"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Eschew Materials",
+      "category": "General",
+      "name": "Eschew Materials",
+      "description": "You can cast many spells without needing to utilize minor material components.",
+      "effect": null
+    },
+    {
+      "key": "Extra Channel",
+      "category": "General",
+      "name": "Extra Channel",
+      "description": "You can channel divine energy more often.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Extra Channel",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Ki",
+      "category": "General",
+      "name": "Extra Ki",
+      "description": "You can use your ki pool more times per day than most.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "KiPoints",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Lay On Hands",
+      "category": "General",
+      "name": "Extra Lay On Hands",
+      "description": "You can use your lay on hands ability more often.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "LayOnHandsTimes",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Mercy",
+      "category": "General",
+      "name": "Extra Mercy",
+      "description": "Your lay on hands ability adds an additional mercy.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Mercy",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Performance",
+      "category": "General",
+      "name": "Extra Performance",
+      "description": "You can use your bardic performance ability more often than normal",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "BardicPerformanceDuration",
+            "6"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Rage",
+      "category": "General",
+      "name": "Extra Rage",
+      "description": "You can use your rage ability more than narmal.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "RageDuration",
+            "6"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Fleet",
+      "category": "General",
+      "name": "Fleet",
+      "description": "You are faster than most.",
+      "effect": [
+        {
+          "qualifiers": [
+            "MOVEADD",
+            "TYPE.Walk",
+            "5"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "ENCUMBERANCE"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\\\")"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\\\")"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Great Fortitude",
+      "category": "General",
+      "name": "Great Fortitude",
+      "description": "You are resistant to poisons, diseases, and other deadly maladies.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SAVE",
+            "Fortitude",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Spell Focus",
+      "category": "General",
+      "name": "Greater Spell Focus",
+      "description": "Any spells you cast from your chosen school of magic are very hard to resist.",
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "2"
+          ],
+          "bonus_type": "SpellFocus",
+          "conditions": [],
+          "selection": "ChosenSpellSchool"
+        }
+      ]
+    },
+    {
+      "key": "Greater Spell Penetration",
+      "category": "General",
+      "name": "Greater Spell Penetration",
+      "description": "Your spells break through spell resistance much more easily than most.",
+      "effect": null
+    },
+    {
+      "key": "Improved Channel",
+      "category": "General",
+      "name": "Improved Channel",
+      "description": "Your channeled energy is harder to resist.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ClericChannelPositiveEnergyDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "PaladinChannelPositiveEnergyDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ClericChannelNegativeEnergyDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "PowerOverUndeadCommandDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "PowerOverUndeadTurnDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Counterspell",
+      "category": "General",
+      "name": "Improved Counterspell",
+      "description": "You are skilled at countering the spells of others using similar spells.",
+      "effect": null
+    },
+    {
+      "key": "Improved Familiar",
+      "category": "General",
+      "name": "Improved Familiar",
+      "description": "This feat allows you to acquire a powerful familiar, but only when they could normally acquire a new familiar.",
+      "effect": null
+    },
+    {
+      "key": "Improved Great Fortitude",
+      "category": "General",
+      "name": "Improved Great Fortitude",
+      "description": "You can draw upon an inner reserve to resist diseases, poisons, and other grievous harm.",
+      "effect": null
+    },
+    {
+      "key": "Improved Iron Will",
+      "category": "General",
+      "name": "Improved Iron Will",
+      "description": "Your clarity of thought allows you to resist mental attacks.",
+      "effect": null
+    },
+    {
+      "key": "Improved Lightning Reflexes",
+      "category": "General",
+      "name": "Improved Lightning Reflexes",
+      "description": "You have a knack for avoiding danger all around you.",
+      "effect": null
+    },
+    {
+      "key": "Iron Will",
+      "category": "General",
+      "name": "Iron Will",
+      "description": "You are more resistant to mental effects.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SAVE",
+            "Will",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Leadership",
+      "category": "General",
+      "name": "Leadership",
+      "description": "You attract followers to your cause and a companion to join you on your adventure.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "LeadershipMaxCohortLvl",
+            "min((TL-2),(((LeadershipScore+6)*7)/10)-4)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "LeadershipScore",
+            "(TL+LeadershipAbilityScoreMod)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "LeadershipAbilityScoreMod",
+            "CHA"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Lightning Reflexes",
+      "category": "General",
+      "name": "Lightning Reflexes",
+      "description": "You have faster reflexes than normal.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SAVE",
+            "Reflex",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Magical Aptitude",
+      "category": "General",
+      "name": "Magical Aptitude",
+      "description": "You are skilled at spellcasting and using magic items.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Spellcraft",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Spellcraft\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Use Magic Device",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Use Magic Device\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Master Craftsman",
+      "category": "General",
+      "name": "Master Craftsman",
+      "description": "Your superior crafting skills allow you to create simple magic items.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "LIST",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "MasterCraftsmanRanks"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "ChosenSkillRanks"
+        }
+      ]
+    },
+    {
+      "key": "Natural Spell",
+      "category": "General",
+      "name": "Natural Spell",
+      "description": "You can cast spells even while in a form that cannot normally cast spells.",
+      "effect": null
+    },
+    {
+      "key": "Nimble Moves",
+      "category": "General",
+      "name": "Nimble Moves",
+      "description": "You can move across a single obstacle with ease.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Feat_NimbleMoves_Squares",
+            "5"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Persuasive",
+      "category": "General",
+      "name": "Persuasive",
+      "description": "You are skilled at swaying attitudes and intimidating others into your way of thinking.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Diplomacy",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Diplomacy\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Intimidate",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Intimidate\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Run",
+      "category": "General",
+      "name": "Run",
+      "description": "You are swift of foot.",
+      "effect": null
+    },
+    {
+      "key": "Selective Channeling",
+      "category": "General",
+      "name": "Selective Channeling",
+      "description": "You can choose whom to affect when you channel energy.",
+      "effect": null
+    },
+    {
+      "key": "Self-Sufficient",
+      "category": "General",
+      "name": "Self-Sufficient",
+      "description": "You know how to get along in the wild and how to effectively treat wounds.:",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Heal",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Heal\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Survival",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Survival\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Simple Weapon Proficiency",
+      "category": "General",
+      "name": "Simple Weapon Proficiency",
+      "description": "You are trained in the use of basic weapons.",
+      "effect": null
+    },
+    {
+      "key": "Skill Focus",
+      "category": "General",
+      "name": "Skill Focus",
+      "description": "You are particularly adept at your chosen skill.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "3"
+          ],
+          "bonus_type": "SkillFocus",
+          "conditions": [],
+          "selection": "ChosenSkill"
+        }
+      ]
+    },
+    {
+      "key": "Spell Focus",
+      "category": "General",
+      "name": "Spell Focus",
+      "description": "Any spells you cast of your chosen school of magic are more difficult to resist.",
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "1"
+          ],
+          "bonus_type": "SpellFocus",
+          "conditions": [],
+          "selection": "ChosenSpellSchool"
+        }
+      ]
+    },
+    {
+      "key": "Spell Mastery",
+      "category": "General",
+      "name": "Spell Mastery",
+      "description": "You have mastered a small handfull of spells, and can prepare these spells without referencing your spellbooks at all.",
+      "effect": null
+    },
+    {
+      "key": "Spell Penetration",
+      "category": "General",
+      "name": "Spell Penetration",
+      "description": "Your spells break through spell resistance more easily than most.",
+      "effect": null
+    },
+    {
+      "key": "Stealthy",
+      "category": "General",
+      "name": "Stealthy",
+      "description": "You are good at avoiding attention and slipping out of bonds.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Escape Artist",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Escape Artist\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SKILL",
+            "Stealth",
+            "if(skillinfo(\\\"TOTALRANK\\\",\\\"Stealth\\\")>=10,4,2)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Toughness",
+      "category": "General",
+      "name": "Toughness",
+      "description": "You have enhanced physical stamina.",
+      "effect": [
+        {
+          "qualifiers": [
+            "HP",
+            "CURRENTMAX",
+            "max(3,TL)"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "RULE",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": null,
+                  "value": "DAMAGE_HP"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Turn Undead",
+      "category": "General",
+      "name": "Turn Undead",
+      "description": "Calling upon higher powers, you cause undead to flee from the might of your unleashed divine energy.",
+      "effect": null
+    }
+  ]
+}

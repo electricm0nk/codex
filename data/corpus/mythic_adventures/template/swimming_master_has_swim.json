@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Swimming Master ~ Has Swim",
+    "name": "Has Swim Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swimming Master ~ Has Swim"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMOVE",
+        "value": "1,Swim=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|30"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
+    "record_key": "Swimming Master ~ Has Swim",
+    "sha256": "b8f0ee3a056b2302251f27bda2494492e59da70b3ee28c82c23082bca9cc1e9f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

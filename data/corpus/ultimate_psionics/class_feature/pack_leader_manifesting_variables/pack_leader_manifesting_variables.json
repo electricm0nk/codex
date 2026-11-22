@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pack Leader Manifesting Variables",
+    "name": "Pack Leader Manifesting Variables",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftedBladeML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackLeaderPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackLeaderPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackLeaderMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackLeaderPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackLeaderMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftedBladeML|RangerLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftedBladeML|var(\"BL=Ranger\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|GiftedBladeML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackLeaderPLStatScore|WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackLeaderPKL|RangerLVL+var(\"BL=Ranger\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackLeaderMPL|RangerLVL+var(\"BL=Ranger\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackLeaderPowersKnown|min(4,(PackLeaderPKL-1)/2)+min(3,max(0,(PackLeaderPKL-8)/3))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackLeaderMaxPowerLevel|min(4,(PackLeaderMPL+1)/4,PackLeaderPLStatScore-10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2582,
+    "record_key": "Pack Leader Manifesting Variables"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

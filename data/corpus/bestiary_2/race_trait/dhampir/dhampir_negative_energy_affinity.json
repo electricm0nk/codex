@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:49:29Z",
+  "data": {
+    "key": "Dhampir ~ Negative Energy Affinity",
+    "name": "Negative Energy Affinity",
+    "race_key": "Dhampir",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dhampir Racial Trait",
+      "Dhampir Racial Default"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dhampir_ReplaceEnergyAffinity",
+    "sets_replace_flags": [],
+    "description": "Though they're living creatures, dhampirs react to positive and negative energy as if they were undead; positive energy harms them, and negative energy heals them.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Negative Energy Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceEnergyAffinity=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Though they're living creatures, dhampirs react to positive and negative energy as if they were undead; positive energy harms them, and negative energy heals them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Negative Energy Affinity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "UMR_NegativeEnergyAffinity_SpecificDesc",
+          "1",
+          "TYPE=Boolean"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 21,
+    "record_key": "Dhampir ~ Negative Energy Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

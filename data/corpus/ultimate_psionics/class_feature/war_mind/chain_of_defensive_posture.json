@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Mind ~ Chain of Defensive Posture",
+    "name": "Chain of Defensive Posture",
+    "class": "War Mind",
+    "description": "Gain +%1 insight bonus to AC for up to 1 minute, 3/day.|DefensiveChain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Mind ~ Chain of Defensive Posture"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WarMindClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DefensiveChain|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 insight bonus to AC for up to 1 minute, 3/day.|DefensiveChain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DefensiveChain|2*floor((WarMindLVL+4)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.386"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|DefensiveChain|TYPE=Insight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1573,
+    "record_key": "War Mind ~ Chain of Defensive Posture"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

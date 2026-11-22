@@ -1,0 +1,73 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Aasimar",
+    "name": "Aasimar",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Race|AUTOMATIC|Aasimar"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.Featured"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_races.lst",
+    "record_key": "Aasimar",
+    "sha256": "72664d17fdf88c2232464753954722c3a300ee4fc66203e9264cb3d9ce74b960"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

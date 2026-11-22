@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shining Child ~ Blinding Light",
+    "delivery": "Extraordinary",
+    "description": "A shining child can radiate a 60-foot-radius aura of blinding light as a free action.  Creatures within the affected area must succeed on a DC %1 Fortitude save or be permanently blinded.  A creature that successfully saves cannot be affected again by the same shining child's aura for 24 hours.",
+    "description_variables": [
+      "ShiningChildBlindingLightDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:shining_child_blinding_light",
+    "name": "Blinding Light",
+    "owners": [
+      "bestiary_2:monster:shining_child"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Blinding Light"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 feet)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShiningChildBlindingLightDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShiningChildBlindingLightDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Blinding Light)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShiningChildBlindingLightDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shining child can radiate a 60-foot-radius aura of blinding light as a free action.  Creatures within the affected area must succeed on a DC %1 Fortitude save or be permanently blinded.  A creature that successfully saves cannot be affected again by the same shining child's aura for 24 hours.|ShiningChildBlindingLightDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Shining Child ~ Blinding Light"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Extraordinary"
+      }
+    ],
+    "source_page": "p.245",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1141,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Shining Child ~ Blinding Light",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Fleshy Facade",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "The target's flesh fills out and gains a healthy, natural color. This gives the target the appearance of a living creature of the type it was when it was still alive (if applicable). Creatures casting spells such as detect undead must succeed at a saving throw (with a DC equal to the spell's save DC) to detect the target's presence, and if the target is intelligent, it gains a +10 bonus on Disguise checks to appear alive or recently deceased. If the undead has any features different from those of the type of living creature it most resembles (such as a ghoul's elongated teeth and claws), those features shrink and become less prominent, and the subject deals damage as though it were one size smaller. This spell has no effect on creatures that are skeletal or otherwise lack flesh."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 13,
+    "record_key": "Fleshy Facade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,15 @@
 [package]
-name = "codex_desktop_shell_scaffold"
-version = "0.0.0"
+name = "codex-desktop"
+version = "0.22.0"
 edition = "2021"
+
+# SD-36 Epic A: this crate's new dev-only path dependency below points at a
+# member of the root workspace, which would otherwise make Cargo require
+# this crate to join that workspace too. It stays its own standalone
+# workspace root instead -- exactly the pre-existing shape (a separate
+# `Cargo.lock`, its own `target/`), never rolled into the root
+# `[workspace] members = ["crates/*"]`.
+[workspace]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
@@ -9,5 +17,42 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+sha2 = "0.10"
+# Update downloads (deb self-update). Blocking, rustls-only: no OpenSSL link dependency.
+ureq = { version = "2", default-features = false, features = ["tls"] }
+base64 = "0.22"
+# Mints fresh character ids for `import_character` (Storage Tier Minimal
+# Fix). Already resolved transitively (tauri and other deps pull it in), so
+# this is a direct-dependency promotion, not a new crate in the build graph.
+uuid = { version = "1", features = ["v4"] }
 tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
 codex = { path = "../../.." }
+# SD-39 E8.1 (`decisions.md §4`, operator rulings R1/R2): the sheet PDF is typeset by Typst used as
+# a library. Pinned to the exact release E8.1 recorded (`technical-design.md §1`).
+typst = "=0.15.1"
+typst-layout = "=0.15.1"
+typst-pdf = "=0.15.1"
+# Signed update manifest: the app refuses any update whose manifest lacks a valid Ed25519 signature.
+ed25519-dalek = "2"
+
+[dev-dependencies]
+# SD-36 Epic A / operator ruling D1: the PCGen converter and oracle crate is
+# a dev-dependency ONLY -- it must never appear in this crate's normal
+# dependency graph (verify.sh's `crate-wall` stage checks this with
+# `cargo tree -e normal,build`, and an awk check that every mention of this
+# package name in this manifest sits under this exact section header). The
+# 9 `#[cfg(test)]` sites that assert a player-facing description never
+# leaks raw PCGen syntax are the only reason this crate names the tool side
+# at all.
+codex-ingest = { path = "../../../crates/codex-ingest" }
+# SD-39 E8.1: the print tests read the PDF back -- its text and its page boxes.
+pdf-extract = "0.12.1"
+lopdf = "0.42"
+
+# SD-41 E2.1: the old-save test compiles the crate's modules by path; without the libtest harness
+# `cfg(test)` is off, so their own suites (run by the bin target) are not compiled and run twice.
+[[test]]
+name = "old_save_loads_unchanged"
+harness = false

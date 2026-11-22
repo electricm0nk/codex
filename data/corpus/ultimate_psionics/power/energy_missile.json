@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Energy Missile",
+    "name": "Energy Missile",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Kineticist=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychokinesis"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "see text"
+      },
+      {
+        "key": "VARIANTS",
+        "value": "Cold|Electricity|Fire|Sonic"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to five creatures or unattended objects; no two targets can be more than 15 ft. apart"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half or Fortitude half; see text"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "DESC",
+        "value": "Deal 3d6 energy damage to up to five subjects."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 189,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Energy Missile",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

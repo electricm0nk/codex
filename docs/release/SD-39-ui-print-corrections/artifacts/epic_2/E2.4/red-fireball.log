@@ -1,0 +1,15 @@
+
+> codex@0.19.0 ui-smoke
+> node scripts/ui-smoke/run.mjs --only load-seed-wizard-fireball
+
+App data root: /tmp/codex-ui-smoke-sd39-e2_4-HLSWdM/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd39-e2.4'...
+FAIL  load-seed-wizard-fireball  -- expected string missing: 'HIT POINTS
+27'; expected string missing: 'Skill points: 7'
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+0/1 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)
+Cleanup: 0 character(s) created across 1 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd39-e2_4-HLSWdM/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e2.4
+Removed isolated app-data root /tmp/codex-ui-smoke-sd39-e2_4-HLSWdM (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

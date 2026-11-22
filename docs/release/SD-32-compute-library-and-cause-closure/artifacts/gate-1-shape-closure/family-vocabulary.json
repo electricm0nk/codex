@@ -1,0 +1,207 @@
+{
+  "population": 34631,
+  "unclassified_count": 0,
+  "join_status_counts": {
+    "matched": 11426,
+    "no_formula_tokens": 23073,
+    "no_record": 132
+  },
+  "canonical_families": [
+    {
+      "id": "F9",
+      "label": "Skill-rank-derived (skillinfo/TOTALRANK)",
+      "proof_width": "Covers any formula segment containing the `skillinfo(` call or a bare `TOTALRANK` reference. Does not cover skill-rank use inside a `.MOD`-continuation row this script's join never reaches (see module docstring 'Extraction method'), and does not distinguish class-skill vs. cross-class skillinfo variants.",
+      "priority_rank": 0,
+      "count": 57
+    },
+    {
+      "id": "F6",
+      "label": "classlevel(...)-derived",
+      "proof_width": "Covers any formula segment calling `classlevel(`. Known corpus defect (MEASURE-TWICE.md \u00a73, `defects.md` D2): `classlevel()` does not verify its class-name argument, so a unit landing here is not automatically safe to bank through the interpreter until D2 is fixed -- this script only classifies the shape, it does not certify the value.",
+      "priority_rank": 1,
+      "count": 391
+    },
+    {
+      "id": "F10",
+      "label": "Level-threshold step-count (summed >= indicators)",
+      "proof_width": "Narrow heuristic: >=2 `if(` calls AND >=2 numeric `>=` comparisons AND a top-level `+` in the same formula segment. Does not cover a step-count expressed across multiple separate DEFINE/BONUS tokens summed by the consumer rather than within one formula string -- that shape is invisible to a per-token classifier and would need a per-record aggregation pass.",
+      "priority_rank": 2,
+      "count": 4
+    },
+    {
+      "id": "F5",
+      "label": "Clamped/capped per-level scaling (min/max/floor/ceil around a level expr)",
+      "proof_width": "Covers `min(`/`max(`/`floor(`/`ceil(` wrapping a formula segment that also contains a `<Word>LVL` term. Does not cover a clamp wrapping a named-counter variable with no literal LVL token in the same segment (e.g. a clamp on an accumulator whose own LVL dependency lives in a separate DEFINE row) -- that case falls through to F4 or F8 below, undercounting F5 by construction.",
+      "priority_rank": 3,
+      "count": 586
+    },
+    {
+      "id": "F2",
+      "label": "Per-level scaling (<Class>LVL bare or arithmetic)",
+      "proof_width": "Covers any formula segment containing a `<Word>LVL` token, bare or inside arithmetic. Does not distinguish a modelled class's own LVL variable from an unmodelled class's (T2a/T12 overlap, `epic-breakdown.md` 'What the measurement actually established') -- that distinction needs the class roster, which this script does not consult.",
+      "priority_rank": 4,
+      "count": 2337
+    },
+    {
+      "id": "F7",
+      "label": "Conditional-step (if/boolean toggle)",
+      "proof_width": "Covers any formula segment containing an `if(` call not already claimed by F9/F6/F10 above. Does not distinguish a genuine boolean toggle from an `if(...)` used purely for a units-safe default (e.g. `if(hasfeat,X,0)` vs. a real branch) -- both read as the same shape to a regex-level classifier.",
+      "priority_rank": 5,
+      "count": 12
+    },
+    {
+      "id": "F3",
+      "label": "Ability-modifier-derived (STR/DEX/CON/INT/WIS/CHA)",
+      "proof_width": "Covers a formula segment that is a bare ability abbreviation (optionally signed/offset) or contains one as a token. Does not cover an ability score referenced only by its long PCGen variable form (e.g. a custom-named stat-derived variable one level removed) -- that shape falls through to F4/F8.",
+      "priority_rank": 6,
+      "count": 650
+    },
+    {
+      "id": "F4",
+      "label": "Named-counter/pool variable (plain identifier reference)",
+      "proof_width": "Covers a formula segment that is exactly one bare identifier (no arithmetic, no literal) and is not an ability abbreviation -- the shape `bonus_stack_reader.rs`'s binding-layer pattern targets (`technical-design.md` Gate 2). Does not cover a counter referenced inside arithmetic (`Counter+2`) -- that reads as F8 residual here, which undercounts F4 relative to a full producer-chain resolution (the 77.2%/893-of-1,156 figure in `epic-breakdown.md` Epic 1 comes from resolving producer chains, a heavier analysis than this per-formula classifier performs).",
+      "priority_rank": 7,
+      "count": 1073
+    },
+    {
+      "id": "F1",
+      "label": "Flat-constant magnitude (bare literal)",
+      "proof_width": "Covers a formula segment that is exactly a signed/unsigned integer or decimal literal, optionally with a trailing `%`. Does not cover a literal embedded in a larger arithmetic expression (e.g. `2+CON` is F3, not F1, by design -- the point of this family per `epic-breakdown.md` is that it 'gets zero benefit from any shared function', which only holds for bare literals).",
+      "priority_rank": 8,
+      "count": 6032
+    },
+    {
+      "id": "F0",
+      "label": "No formula content (no DEFINE/BONUS token found for this unit)",
+      "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
+      "priority_rank": null,
+      "count": 23289
+    },
+    {
+      "id": "F8",
+      "label": "Other named-variable expression (residual)",
+      "proof_width": "Covers any non-empty formula segment that matched none of F1/F2/F3/F4/F5/F6/F7/F9/F10 above -- e.g. multi-term arithmetic mixing several identifiers, or a PCGen builtin this classifier does not recognise (var(\"...\"), PREVARGTEQ-gated expressions, COUNT[...] terms). This is the classifier's own named blind spot per AT-32-G1-003 -- a non-zero F8 count is expected and does not indicate a defect by itself, but a cycle that finds F8 dominating a book's population should treat that as a signal the rule list needs another entry, not silence it.",
+      "priority_rank": null,
+      "count": 200
+    }
+  ],
+  "mt_mapping": [
+    {
+      "id": "F9",
+      "canonical_label": "Skill-rank-derived (skillinfo/TOTALRANK)",
+      "canonical_count": 57,
+      "mt_label": "Skill-rank-derived (skillinfo TOTALRANK)",
+      "mt_count": 17,
+      "delta": 40,
+      "note": null
+    },
+    {
+      "id": "F6",
+      "canonical_label": "classlevel(...)-derived",
+      "canonical_count": 391,
+      "mt_label": "classlevel(...)-derived",
+      "mt_count": 211,
+      "delta": 180,
+      "note": null
+    },
+    {
+      "id": "F10",
+      "canonical_label": "Level-threshold step-count (summed >= indicators)",
+      "canonical_count": 4,
+      "mt_label": "Level-threshold step-count (sum of level>=N indicator terms)",
+      "mt_count": 7,
+      "delta": -3,
+      "note": null
+    },
+    {
+      "id": "F5",
+      "canonical_label": "Clamped/capped per-level scaling (min/max/floor/ceil around a level expr)",
+      "canonical_count": 586,
+      "mt_label": "Clamped/capped per-level scaling (min/max/floor wrapping a level expr)",
+      "mt_count": 368,
+      "delta": 218,
+      "note": null
+    },
+    {
+      "id": "F2",
+      "canonical_label": "Per-level scaling (<Class>LVL bare or arithmetic)",
+      "canonical_count": 2337,
+      "mt_label": "Per-level scaling (<Class>LVL bare/arithmetic)",
+      "mt_count": 1140,
+      "delta": 1197,
+      "note": null
+    },
+    {
+      "id": "F7",
+      "canonical_label": "Conditional-step (if/boolean toggle)",
+      "canonical_count": 12,
+      "mt_label": "Conditional-step (if/boolean toggle)",
+      "mt_count": 54,
+      "delta": -42,
+      "note": null
+    },
+    {
+      "id": "F3",
+      "canonical_label": "Ability-modifier-derived (STR/DEX/CON/INT/WIS/CHA)",
+      "canonical_count": 650,
+      "mt_label": "Ability-modifier-derived (STR/DEX/CON/INT/WIS/CHA in formula)",
+      "mt_count": 804,
+      "delta": -154,
+      "note": null
+    },
+    {
+      "id": "F4",
+      "canonical_label": "Named-counter/pool variable (plain identifier reference)",
+      "canonical_count": 1073,
+      "mt_label": "Named-counter/pool variable (e.g. a class's per-day-uses tracker)",
+      "mt_count": 563,
+      "delta": 510,
+      "note": null
+    },
+    {
+      "id": "F1",
+      "canonical_label": "Flat-constant magnitude (bare literal)",
+      "canonical_count": 6032,
+      "mt_label": "Flat-constant magnitude (bare literal, e.g. +2 damage)",
+      "mt_count": 1747,
+      "delta": 4285,
+      "note": null
+    },
+    {
+      "id": "F0",
+      "canonical_label": "No formula content (no DEFINE/BONUS token found for this unit)",
+      "canonical_count": 23289,
+      "mt_label": null,
+      "mt_count": null,
+      "delta": null,
+      "note": "No MT counterpart -- MT's ten families only ever partitioned the 4,948-unit formula-bearing subset; a unit with no DEFINE/BONUS token was never assigned to any MT family at all. F0 is the honest naming of that gap, not a new distinction MT lacked."
+    },
+    {
+      "id": "F8",
+      "canonical_label": "Other named-variable expression (residual)",
+      "canonical_count": 200,
+      "mt_label": "Other named-variable expression (residual)",
+      "mt_count": 37,
+      "delta": 163,
+      "note": null
+    }
+  ],
+  "mt_total_primary_partition": 4948,
+  "engine_coverage_reconciliation": {
+    "population": 689,
+    "resolved": 614,
+    "resolved_pct": 89.1,
+    "unresolved_examples": [
+      "AdaptiveWarriorEnhancementCount",
+      "AegisPrimeStat",
+      "ArcanistEnergyExploitDC",
+      "ArcanistLvl",
+      "BloodragerBloodlineFeatCount",
+      "BodySnatcherEnhancementCount",
+      "BoonCompanionBonus_AnimalCompanion",
+      "CHASCORE",
+      "CL",
+      "CONSCORE"
+    ]
+  }
+}

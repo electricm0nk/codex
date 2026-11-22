@@ -1,0 +1,209 @@
+Kitted Solo
+Identity
+
+Name                                                          Kitted Solo
+Game system                                               Cyberpunk RED
+
+STATs
+
+                                                           STAT Current
+INT                                                           7      —
+REF                                                           8       4
+DEX                                                           6       2
+TECH                                                          5      —
+COOL                                                          4      —
+WILL                                                          3      —
+LUCK                                                          2      —
+MOVE                                                          6       2
+BODY                                                          5       7
+EMP                                                           8       6
+
+Skills
+
+                                                             Level Base
+Awareness
+Concentration (WILL)                                             0     3
+Conceal/Reveal Object (INT)                                      0     7
+Lip Reading (INT)                                                0     7
+Perception (INT)                                                 0     7
+Tracking (INT)                                                   0     7
+Body
+Athletics (DEX)                                                  0     2
+Contortionist (DEX)                                              0     2
+Dance (DEX)                                                      0     2
+Endurance (WILL)                                                 0     3
+Resist Torture/Drugs (WILL)                                      0     3
+Stealth (DEX)                                                    0     2
+Control
+Drive Land Vehicle (REF)                                         0     4
+Pilot Air Vehicle (REF)                                          0     4
+Pilot Sea Vehicle (REF)                                          0     4
+Riding (REF)                                                     0     4
+Education
+Accounting (INT)                                                 0     7
+Animal Handling (INT)                                            0     7
+Bureaucracy (INT)                                                0     7
+Business (INT)                                                   0     7
+Composition (INT)                                                0     7
+Criminology (INT)                                                0     7
+Cryptography (INT)                                               0     7
+Deduction (INT)                                                  0     7
+Education (INT)                                                  0     7
+Gamble (INT)                                                     0     7
+Language (INT)                                                   0     7
+Library Search (INT)                                             0     7
+Local Expert (INT)                                               0     7
+Science (INT)                                                    0     7
+
+                              Kitted Solo · page 1 of 4
+Tactics (INT)                                                                                 0     7
+Wilderness Survival (INT)                                                                     0     7
+Fighting
+Brawling (DEX)                                                                                0     2
+Evasion (DEX)                                                                                 0     2
+Martial Arts (DEX)                                                                            0     2
+Melee Weapon (DEX)                                                                            0     2
+Performance
+Acting (COOL)                                                                                 0     4
+Play Instrument (TECH)                                                                        0     5
+Ranged Weapon
+Archery (REF)                                                                                 0     4
+Autofire (REF)                                                                                0     4
+Handgun (REF)                                                                                 4     8
+Heavy Weapons (REF)                                                                           0     4
+Shoulder Arms (REF)                                                                           0     4
+Social
+Bribery (COOL)                                                                                0     4
+Conversation (EMP)                                                                            0     6
+Human Perception (EMP)                                                                        0     6
+Interrogation (COOL)                                                                          0     4
+Persuasion (COOL)                                                                             0     4
+Personal Grooming (COOL)                                                                      0     4
+Streetwise (COOL)                                                                             0     4
+Trading (COOL)                                                                                0     4
+Wardrobe & Style (COOL)                                                                       0     4
+Technique
+Air Vehicle Tech (TECH)                                                                       0     5
+Basic Tech (TECH)                                                                             0     5
+Cybertech (TECH)                                                                              0     5
+Demolitions (TECH)                                                                            0     5
+Electronics/Security Tech (TECH)                                                              0     5
+First Aid (TECH)                                                                              0     5
+Forgery (TECH)                                                                                0     5
+Land Vehicle Tech (TECH)                                                                      0     5
+Paint/Draw/Sculpt (TECH)                                                                      0     5
+Paramedic (TECH)                                                                              0     5
+Photography/Film (TECH)                                                                       0     5
+Pick Lock (TECH)                                                                              0     5
+Pick Pocket (TECH)                                                                            0     5
+Sea Vehicle Tech (TECH)                                                                       0     5
+Weaponstech (TECH)                                                                            0     5
+
+Role Ability
+
+Solo
+Rank                                                                                                4
+Combat Awareness Points                                                                             4
+
+Reputation
+
+Reputation Level                                                                                     3
+Facedown (COOL + Reputation)                                                                         7
+Facedown roll                                                                                7 + 1d10
+Reputation event                                              Level 3 deed: Held the bridge (defining)
+Reputation event                                           Level 2 cowardice: Ran from the Maelstrom
+
+Improvement Points
+                                   Kitted Solo · page 2 of 4
+Improvement Points (current / total)                                                                                   20 / 40
+
+Lifepath
+
+Cultural Origins: Your (General) Cultural Region                                                         North American
+Your Personality: What Are You Like?                                                                   Shy and secretive
+Your Friends: Friend's Relationship to You                                                   Like an older sibling to you.
+Your Friends: Friend's Relationship to You                                                 Like a younger sibling to you.
+Solo: What Kind of Solo are You?: Type                                                                        Bodyguard
+
+Hit Points, Humanity, MOVE and LUCK
+
+Hit Points                                                                                                                  35
+Seriously Wounded                                                                                                           18
+Death Save                                                                                                                   7
+Humanity                                                                                                               66 / 80
+MOVE                                                                                                                         6
+LUCK                                                                                                                         2
+
+Wound Track
+
+                                                                                                   Below HP Stabilize DV
+Lightly Wounded                                                                                          35           10
+Seriously Wounded                                                                                        18           13
+Mortally Wounded                                                                                          1           15
+Death Save                                                                                                7            —
+Base Death Save Penalty                                                                                   1            —
+
+Critical Injuries
+
+Critical Injuries to the Body
+Collapsed Lung
+ Collapsed Lung: Critical Injury to the Body; raises the Base Death Save Penalty by 1 (Cyberpunk RED core rulebook p. 221-222)
+Broken Ribs
+ Broken Ribs: Critical Injury to the Body; does not raise the Base Death Save Penalty (Cyberpunk RED core rulebook p. 221-222)
+
+Armor
+
+                                                                                                                 SP Penalty
+Head                                                                                                              0       0
+Body                                                                                                             15      -4
+Armor Penalty (REF, DEX, MOVE)                                                                                    —      -4
+
+Weapons
+
+                                                           DMG ROF Hands Concealable Magazine Skill Base
+Heavy Pistol                                                3d6  2     1        Yes         8          8
+
+Range DV
+
+Range (m/yds up to)                                                                  6 12 25 50 100 200 400 800
+Heavy Pistol                                                                        13 15 20 25 30 30 N/A N/A
+
+Cyberware
+
+Grafted Muscle and Bone Lace                                                                                                14
+Humanity Loss                                                                                                               14
+
+                                                    Kitted Solo · page 3 of 4
+Maximum Humanity                                                                                                                  78
+Head SP (cyberware)                                                                                                                0
+Body SP (cyberware)                                                                                                                0
+Initiative bonus                                                                                                                   0
+Fashionware slots                                                                                                                0/7
+Internal Body slots                                                                                                              1/7
+External Body slots                                                                                                              0/7
+
+Rules and Features: Role ability
+
+Combat Awareness                                              Combat Awareness Rank 4, Combat Awareness points 4
+ When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the
+ total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not
+ change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than
+ others: (Cyberpunk RED core rulebook p147)
+
+Rules and Features: Cyberware
+
+Grafted Muscle and Bone Lace                                                                                   Humanity Loss 14
+ User increases their BODY by 2. This increase in BODY changes a Character's HP and Death Save. This cannot increase the
+ user's BODY to 11 or higher. (Cyberpunk RED core rulebook p364)
+
+Rules and Features: Humanity
+
+Humanity Loss                                                                       Humanity Loss 14, Humanity 66, EMP 6
+ Humanity Loss 14 from installed cyberware: Humanity 66 = EMP 8 x 10 - 14. EMP 6: EMP is lowered by 1 every time the tens
+ place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).
+
+
+
+
+                                                       Kitted Solo · page 4 of 4
+

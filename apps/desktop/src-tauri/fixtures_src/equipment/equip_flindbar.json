@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Flindbar",
+    "name": "Flindbar",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Flindbar"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Flail.Gnoll"
+      },
+      {
+        "key": "COST",
+        "value": "9"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Disarm.Special Quality ~ Trip.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_flindbar.txt",
+    "record_key": "Flindbar"
+  }
+}

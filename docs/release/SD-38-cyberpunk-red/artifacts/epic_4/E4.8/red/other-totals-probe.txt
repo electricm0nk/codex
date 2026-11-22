@@ -1,0 +1,5 @@
+cpr-solo-streetrat	other=none	ledger=none	rule ammo/housing lines=none
+cpr-solo-kitted	other=none	ledger=none	rule ammo/housing lines=none
+cpr-solo-arsenal	other=none	ledger=none	rule ammo/housing lines=none
+cpr-netrunner-decked	other=none	ledger=none	rule ammo/housing lines=none
+cpr-solo-ledger	other=cpr.cash=1450,cpr.ammo.0=30,cpr.ammo.1=70,cpr.housing.rent=1000	ledger=none	rule ammo/housing lines=cpr.ammo.0.name,cpr.ammo.1.name

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Snag Net
+Snag Net																				PROFICIENCY:WEAPON|Snag Net								TYPE:Weapon.Resizable.Ranged.Exotic.Piercing.Thrown																																					COST:30	WT:10																										EQMOD:Material ~ Rope																																													RANGE:10						SOURCEPAGE:p.37

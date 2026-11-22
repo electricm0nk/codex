@@ -1,0 +1,22 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.23s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known ... FAILED
+
+failures:
+
+---- sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known stdout ----
+
+thread 'sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known' (1728141) panicked at src/sf_adapter.rs:1265:13:
+SF-Mystic-5: [DiagnosticDto { id: "sf_sheet_print.unknown_spell", message: "core: no Starfinder spell record", claim_blocking: true }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 654 filtered out; finished in 1.19s
+
+error: test failed, to rerun pass `--bin codex-desktop`

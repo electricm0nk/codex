@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 50.0,
+    "description": "Temporarily boosts the strength of a vishkanya's natural poison, increasing the DC of the next weapon envenomed with the vishkanya's blood or saliva by +2 (once used, the tattoo is merely decorative and does not affect the creature's poison).",
+    "key": "Poison Tattoo",
+    "name": "Poison Tattoo",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Racial.Vishkanya"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "SPROP",
+        "value": "Temporarily boosts the strength of a vishkanya's natural poison, increasing the DC of the next weapon envenomed with the vishkanya's blood or saliva by +2 (once used, the tattoo is merely decorative and does not affect the creature's poison)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Poison Tattoo",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

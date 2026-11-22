@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L3 ~ Lightning Bolt",
+    "name": "Lightning Bolt",
+    "class": "Sorcerer",
+    "description": "You release a powerful stroke of electrical energy that deals 1d6 points of electricity damage per caster level [maximum 10d6] to each creature within its area. The bolt begins at your fingertips. The lightning bolt sets fire to combustibles and damages objects in its path. It can melt metals with a low melting point, such as lead, gold, copper, silver, or bronze. If the damage caused to an interposing barrier shatters or breaks through it, the bolt may continue beyond the barrier if the spell's range permits; otherwise, it stops at the barrier just as any other spell effect does.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L3 ~ Lightning Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_LightningBolt_L3,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Lightning Bolt"
+      },
+      {
+        "key": "DESC",
+        "value": "You release a powerful stroke of electrical energy that deals 1d6 points of electricity damage per caster level [maximum 10d6] to each creature within its area. The bolt begins at your fingertips. The lightning bolt sets fire to combustibles and damages objects in its path. It can melt metals with a low melting point, such as lead, gold, copper, silver, or bronze. If the damage caused to an interposing barrier shatters or breaks through it, the bolt may continue beyond the barrier if the spell's range permits; otherwise, it stops at the barrier just as any other spell effect does.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2206,
+    "record_key": "Sorcerer Bonus Spell L3 ~ Lightning Bolt"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

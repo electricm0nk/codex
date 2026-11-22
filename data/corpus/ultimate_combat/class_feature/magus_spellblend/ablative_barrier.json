@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Ablative Barrier",
+    "name": "Ablative Barrier",
+    "class": "Magus",
+    "description": "Surrounds the target with layers of force.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Ablative Barrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Ablative Barrier"
+      },
+      {
+        "key": "DESC",
+        "value": "Surrounds the target with layers of force.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1772,
+    "record_key": "Magus Spellblend ~ Ablative Barrier"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

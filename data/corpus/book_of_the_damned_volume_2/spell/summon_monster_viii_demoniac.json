@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Summon Monster VIII (Demoniac)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "This spell summons one hezrou, 1d3 vrocks, or 1d4+1 succubi. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned monster cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+    "sha256": "cec56af35e0cda5fa61a508cd76ff21a42f9720dd11c459dec81cc3279d094ea",
+    "line": 12,
+    "record_key": "Summon Monster VIII (Demoniac)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

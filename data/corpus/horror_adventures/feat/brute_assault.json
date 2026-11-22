@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Brute Assault",
+    "category": "Combat",
+    "name": "Brute Assault",
+    "description": "With brute force, you can bowl over and cripple opponents by treading on them. While using Brute Style, when you successfully perform an overrun or trip combat maneuver against an opponent that causes that opponent to fall prone, your opponent takes 1d6 points of Strength damage, and its base speed is halved until the Strength damage is healed. A successful Fortitude save (DC ) reduces the Strength damage to 1 point and negates the movement speed reduction.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Brute Stomp,Brute Style",
+      "PRETOTALAB:10",
+      "PREVARGTEQ:PreStatScore_STR,23,PreStatScore_INT,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 9,
+    "record_key": "Brute Assault"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

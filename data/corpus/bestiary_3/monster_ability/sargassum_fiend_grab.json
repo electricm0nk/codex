@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sargassum Fiend ~ Grab",
+    "delivery": "Extraordinary",
+    "description": "A sargassum fiend can grab Huge or smaller foes, and has a +8 racial bonus on grapple checks rather than the normal +4 bonus most creatures with grab possess.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sargassum_fiend_grab",
+    "name": "Grab",
+    "owners": [
+      "bestiary_3:monster:sargassum_fiend"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A sargassum fiend can grab Huge or smaller foes, and has a +8 racial bonus on grapple checks rather than the normal +4 bonus most creatures with grab possess."
+      },
+      {
+        "key": "KEY",
+        "value": "Sargassum Fiend ~ Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "SargassumFiendRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.235",
+    "traits": [
+      "SargassumFiendRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1484,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sargassum Fiend ~ Grab",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

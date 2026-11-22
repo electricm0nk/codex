@@ -1,0 +1,1 @@
+files_read=124 tokens=1954 mapped=1954 refused=0 variables=51 channels=1 functions=1 datatables=2 out=/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../docs/release/SD-37-starfinder-1e/artifacts/epic_3/formula-system/sf-formula-census.json verdict=FAIL_STALE_CENSUS

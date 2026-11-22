@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Curse",
+    "delivery": "Supernatural",
+    "description": "You can bestow a curse upon your enemies.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:curse",
+    "name": "Curse",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can bestow a curse upon your enemies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      }
+    ],
+    "source_page": "p.299",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1344,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Curse",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

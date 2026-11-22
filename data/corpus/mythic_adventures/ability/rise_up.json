@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Rise Up",
+    "name": "Rise Up",
+    "description": "Your allies draw strength from your courage and leadership. As a standard action, you can expend one use of mythic power to grant all of your nonmythic allies within 30 feet one use of the surge ability, using your surge die. This surge must be used within %1 rounds. An ally can benefit from this ability only once every 24 hours.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Rise Up"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your allies draw strength from your courage and leadership. As a standard action, you can expend one use of mythic power to grant all of your nonmythic allies within 30 feet one use of the surge ability, using your surge die. This surge must be used within %1 rounds. An ally can benefit from this ability only once every 24 hours.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 250,
+    "record_key": "Mythic Path Ability ~ Rise Up"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

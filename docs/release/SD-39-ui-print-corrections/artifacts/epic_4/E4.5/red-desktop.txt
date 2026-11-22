@@ -1,0 +1,29 @@
+test character_hub::tests::worn_item_applies_each_armor_class_type_to_its_own_touch_and_flat_footed ... FAILED
+test character_hub::tests::worn_item_applies_a_cloak_of_resistance_to_every_save ... FAILED
+test character_hub::tests::worn_item_applies_boots_of_elvenkind_to_the_one_skill ... FAILED
+test character_hub::tests::worn_item_applies_the_higher_of_two_bonuses_of_one_type ... FAILED
+test character_hub::tests::worn_item_applies_a_belt_to_the_score_and_what_it_drives_and_not_the_save_file ... FAILED
+test character_hub::tests::worn_item_applies_a_derived_armor_reads_its_base ... FAILED
+test character_hub::tests::worn_item_applies_a_stock_type_folds_with_a_worn_custom_bonus ... FAILED
+thread 'character_hub::tests::worn_item_applies_each_armor_class_type_to_its_own_touch_and_flat_footed' (420568) panicked at src/character_hub.rs:10031:9:
+  left: (17, 12, 15)
+ right: (17, 13, 15)
+thread 'character_hub::tests::worn_item_applies_a_cloak_of_resistance_to_every_save' (420564) panicked at src/character_hub.rs:9970:9:
+  left: (5, 2, 2)
+ right: (6, 3, 3)
+thread 'character_hub::tests::worn_item_applies_boots_of_elvenkind_to_the_one_skill' (420567) panicked at src/character_hub.rs:10014:9:
+  left: 0
+ right: 5
+thread 'character_hub::tests::worn_item_applies_the_higher_of_two_bonuses_of_one_type' (420569) panicked at src/character_hub.rs:10051:9:
+  left: 19
+ right: 18
+thread 'character_hub::tests::worn_item_applies_a_belt_to_the_score_and_what_it_drives_and_not_the_save_file' (420563) panicked at src/character_hub.rs:9994:9:
+  left: 19
+ right: 21
+thread 'character_hub::tests::worn_item_applies_a_derived_armor_reads_its_base' (420565) panicked at src/character_hub.rs:10080:9:
+  left: 12
+ right: 16
+thread 'character_hub::tests::worn_item_applies_a_stock_type_folds_with_a_worn_custom_bonus' (420566) panicked at src/character_hub.rs:10125:9:
+  left: (EnhancementRead { melee: 9, armor_class: 19, touch: 13, flat_footed: 17, sword_attack: Some(0), sword_damage: Some(0) }, 20)
+ right: (EnhancementRead { melee: 8, armor_class: 18, touch: 12, flat_footed: 16, sword_attack: Some(0), sword_damage: Some(0) }, 21)
+test result: FAILED. 0 passed; 7 failed; 0 ignored; 0 measured; 1036 filtered out; finished in 43.54s

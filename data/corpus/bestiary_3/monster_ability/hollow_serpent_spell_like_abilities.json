@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hollow Serpent ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 16th; concentration +22) Constant-freedom of movement 1/day-horrid wilting (DC 24), waves of exhaustion",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hollow_serpent_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:hollow_serpent"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 16th; concentration +22) Constant-freedom of movement 1/day-horrid wilting (DC 24), waves of exhaustion"
+      },
+      {
+        "key": "KEY",
+        "value": "Hollow Serpent ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "HollowSerpentRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "HollowSerpentRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1053,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hollow Serpent ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

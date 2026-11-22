@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Magma Dragon ~ Magma Breath",
+    "delivery": "Supernatural",
+    "description": "Three times per day, an ancient or older magma dragon can breathe a cone of lava instead of fire. The damage is unchanged, but the magma clings to those it damages, dealing half damage each round thereafter for 1d3 rounds. After this magma cools, it crumbles to dust.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:magma_dragon_magma_breath",
+    "name": "Magma Breath",
+    "owners": [
+      "bestiary_2:monster:dragon_magma"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, an ancient or older magma dragon can breathe a cone of lava instead of fire. The damage is unchanged, but the magma clings to those it damages, dealing half damage each round thereafter for 1d3 rounds. After this magma cools, it crumbles to dust."
+      },
+      {
+        "key": "KEY",
+        "value": "Magma Dragon ~ Magma Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.100",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 496,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Magma Dragon ~ Magma Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

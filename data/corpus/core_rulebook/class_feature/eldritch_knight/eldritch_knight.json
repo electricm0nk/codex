@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Eldritch Knight",
+    "name": "Eldritch Knight",
+    "class": "Eldritch Knight",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchKnight_CFP_Level|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchKnight_CFP_Level|EldritchKnightLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Eldritch Knight Class Feature|AUTOMATIC|Eldritch Knight ~ Bonus Feat|Eldritch Knight ~ Diverse Training|PREVARGTEQ:EldritchKnight_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Eldritch Knight Class Feature|AUTOMATIC|Eldritch Knight ~ Spell Critical|PREVARGTEQ:EldritchKnight_CFP_Level,10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 115,
+    "record_key": "Eldritch Knight"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

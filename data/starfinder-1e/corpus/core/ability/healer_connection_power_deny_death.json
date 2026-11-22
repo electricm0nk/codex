@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Healer Connection Power ~ Deny Death",
+    "name": "Deny Death",
+    "type": "Class Feature.Healer Connection Power.Healer Connection Power LVL 18.Supernatural"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1622,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Healer Connection Power ~ Deny Death",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:healer_connection_power_deny_death"
+}

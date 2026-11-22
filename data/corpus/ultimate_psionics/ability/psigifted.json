@@ -1,0 +1,70 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Increase manifester level in chosen power.",
+    "key": "Trait ~ Psigifted",
+    "name": "Psigifted",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Psigifted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.PsionicTrait"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.PsionicTrait"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase manifester level in chosen power."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|SPELLTYPE=Psionic[KNOWN=YES]"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.%LIST|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Trait ~ Psigifted",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

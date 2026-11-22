@@ -1,0 +1,23 @@
+test character_hub::tests::worn_item_applies_every_skill_bare_cmb_and_cmd_move_their_rows ... FAILED
+test character_hub::tests::worn_item_applies_every_skill_a_pale_green_prism_moves_every_row ... FAILED
+test character_hub::tests::worn_item_applies_every_skill_a_set_moves_its_rows_and_folds_on_each ... FAILED
+test character_hub::tests::worn_item_applies_every_skill_a_set_folds_with_a_worn_custom_bonus ... FAILED
+test character_hub::tests::worn_item_applies_every_skill_a_loadstone_states_its_multiplier ... FAILED
+test character_hub::tests::worn_item_applies_every_skill_an_unlucky_figurine_takes_all_of_it_down ... FAILED
+thread 'character_hub::tests::worn_item_applies_every_skill_bare_cmb_and_cmd_move_their_rows' (676296) panicked at src/character_hub.rs:9877:14:
+thread 'character_hub::tests::worn_item_applies_every_skill_a_pale_green_prism_moves_every_row' (676292) panicked at src/character_hub.rs:10320:9:
+thread 'character_hub::tests::worn_item_applies_every_skill_a_set_moves_its_rows_and_folds_on_each' (676294) panicked at src/character_hub.rs:10340:9:
+assertion `left == right` failed: the family's row, and no other
+  left: {}
+ right: {"perform": 5}
+thread 'character_hub::tests::worn_item_applies_every_skill_a_set_folds_with_a_worn_custom_bonus' (676293) panicked at src/character_hub.rs:10439:40:
+thread 'character_hub::tests::worn_item_applies_every_skill_a_loadstone_states_its_multiplier' (676291) panicked at src/character_hub.rs:10414:9:
+assertion `left == right` failed
+  left: None
+ right: Some(50)
+thread 'character_hub::tests::worn_item_applies_every_skill_an_unlucky_figurine_takes_all_of_it_down' (676295) panicked at src/character_hub.rs:10363:9:
+assertion `left == right` failed: the Armor Class half
+  left: 16
+ right: 14
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 1049 filtered out; finished in 40.27s
+error: test failed, to rerun pass `--bin codex-desktop`

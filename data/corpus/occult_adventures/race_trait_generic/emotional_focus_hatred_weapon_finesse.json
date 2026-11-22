@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Hatred ~ Weapon Finesse",
+    "name": "Weapon Finesse",
+    "description": "The phantom gains Weapon Finesse as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Hatred ~ Weapon Finesse"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Hatred.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom gains Weapon Finesse as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Weapon Finesse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 98,
+    "record_key": "Emotional Focus / Hatred ~ Weapon Finesse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

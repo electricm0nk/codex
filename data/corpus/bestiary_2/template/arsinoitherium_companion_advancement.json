@@ -1,0 +1,63 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Arsinoitherium Companion Advancement",
+    "name": "Arsinoitherium Companion Advancement",
+    "raw_tokens": [
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Trample"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*1,2d8"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1263,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Arsinoitherium Companion Advancement",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cast your consciousness into a single object within range that bears your likeness, as if choosing a specific image with the spell enter image. In addition to observing your surroundings, speaking, and manipulating the image you inhabit, however, you can converse with nearby creatures and use your normal social skills. You gain a +5 bonus on Bluff checks to tell lies and Diplomacy checks to make a request. You gain a +2 bonus on Intimidate checks and use the object's size to determine whether you gain a bonus or penalty on Intimidate checks for size.|PRERULE:1,DisplayFullSpell",
+    "key": "Majestic Image",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Medium,Mesmerist,Occultist,Sorcerer,Spiritualist,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "As enter image, but also gain bonuses on social skills while in the image.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cast your consciousness into a single object within range that bears your likeness, as if choosing a specific image with the spell enter image. In addition to observing your surroundings, speaking, and manipulating the image you inhabit, however, you can converse with nearby creatures and use your normal social skills. You gain a +5 bonus on Bluff checks to tell lies and Diplomacy checks to make a request. You gain a +2 bonus on Intimidate checks and use the object's size to determine whether you gain a bonus or penalty on Intimidate checks for size.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration"
+      },
+      {
+        "key": "RANGE",
+        "value": "(CASTERLEVEL*200) ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Majestic Image"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Transfer consciousness to an object bearing your likeness"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Majestic Image",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range"
+  ]
+}

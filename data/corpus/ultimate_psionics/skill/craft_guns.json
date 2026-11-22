@@ -1,0 +1,41 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Craft (Guns)",
+    "name": "Craft (Guns)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft.Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Guns)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Guns)|PRESKILL:1,Craft (Guns)=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "record_key": "Craft (Guns)",
+    "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

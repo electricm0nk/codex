@@ -1,0 +1,49 @@
+      "class_id": "Wizard",
+      "level": 5,
+      "base_attack_bonus": 2,
+      "fort_save": 1,
+      "ref_save": 1,
+      "will_save": 4
+      "fort_save": 6,
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.50s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+pf-seed-render manifest_dir=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri
+pf-seed-render aldric sha256=1d830682210a0e6e216093a3125593edf1f25539f38547fc832a56c050a5a569 bytes=55037
+pf-seed-render elowen sha256=16053a51d5317376a18a4dc300e5feff6d50a49de56d42410aaf84620707054c bytes=81136
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 701 filtered out; finished in 25.65s
+
+1d830682210a0e6e216093a3125593edf1f25539f38547fc832a56c050a5a569  aldric.json
+16053a51d5317376a18a4dc300e5feff6d50a49de56d42410aaf84620707054c  elowen.json
+pf_rc_under_mutation=0
+2c2
+< 8d1a711c8519b62b489f47f097d683922568a645f4daabc9c95933c1b2b100f2  elowen.json
+---
+> 16053a51d5317376a18a4dc300e5feff6d50a49de56d42410aaf84620707054c  elowen.json
+same: aldric.json
+22c22
+<       "fortitude": 1,
+---
+>       "fortitude": 6,
+29c29
+<       "fortitude": 2,
+---
+>       "fortitude": 7,
+196,197c196,197
+<       "value": 1,
+<       "detail": "Wizard level 5 base Fortitude save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 1"
+---
+>       "value": 6,
+>       "detail": "Wizard level 5 base Fortitude save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 6"
+256,257c256,257
+<       "value": 2,
+<       "detail": "Total Fortitude save: Wizard base Fortitude save (+1) + Constitution modifier (+1) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 2"
+---
+>       "value": 7,
+>       "detail": "Total Fortitude save: Wizard base Fortitude save (+6) + Constitution modifier (+1) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 7"
+hash_diff_rc=1
+exit=0

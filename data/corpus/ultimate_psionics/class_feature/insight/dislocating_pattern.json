@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Dislocating Pattern",
+    "name": "Dislocating Pattern",
+    "class": "Insight",
+    "description": "When you make a successful disrupt pattern attack, you cause the target to take a -2 penalty to all attack rolls, damage rolls, skill checks, and saving throws until a successful DC 15 Heal check is made.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Dislocating Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a successful disrupt pattern attack, you cause the target to take a -2 penalty to all attack rolls, damage rolls, skill checks, and saving throws until a successful DC 15 Heal check is made."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 196,
+    "record_key": "Insight ~ Dislocating Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

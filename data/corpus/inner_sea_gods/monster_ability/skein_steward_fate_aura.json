@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Skein Steward ~ Fate Aura",
+    "delivery": "Supernatural",
+    "description": "The herald's aura acts as Consecrate and grants her a +4 deflection bonus to AC, a +5 insight bonus to AC, and a +4 resistance bonus on saving throws. Any creature striking the herald from within her aura either is blinded or takes 1d6 points of Strength damage (herald's choice, Will DC %1 negates).",
+    "description_variables": [
+      "FateAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:skein_steward_fate_aura",
+    "name": "Fate Aura",
+    "owners": [
+      "inner_sea_gods:monster:steward_of_the_skein"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 25,
+    "record_key": "Skein Steward ~ Fate Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shielded Blade ~ Improved Shield",
+    "name": "Improved Shield",
+    "class": "Shielded Blade",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shielded Blade ~ Improved Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Improved Shield Blade Skill|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Skill|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2198,
+    "record_key": "Shielded Blade ~ Improved Shield"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

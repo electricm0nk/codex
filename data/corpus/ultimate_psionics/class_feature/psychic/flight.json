@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic ~ Flight",
+    "name": "Flight",
+    "class": "Sorcerer",
+    "description": "You can telekinetically lift yourself, moving at a fly speed of 40 with perfect maneuverability for %1 minutes.  This duration does not need to be consecutive, but it must be used in 1 minute increments.|PsychicFlightDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Flight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicFlightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can telekinetically lift yourself, moving at a fly speed of 40 with perfect maneuverability for %1 minutes.  This duration does not need to be consecutive, but it must be used in 1 minute increments.|PsychicFlightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicFlightDuration|BloodlineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1111,
+    "record_key": "Psychic ~ Flight"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

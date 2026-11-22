@@ -1,0 +1,38 @@
+== file set ==
+  rule files:  +0 -0  (+1 -0 rule ids)
+  _vars/:      +573 -0
+  _defects/:   +1 -0
+  other:       +0 -0  []
+
+== counts (baseline -> fresh) ==
+  records: 49450 -> 49450
+  converted: 49450 -> 49450
+  refused: 0 -> 0
+  rules_written: 71862 -> 71863
+  var_tables: 5309 -> 5882
+
+== added granted_by edges by TARGET kind ==
+  class_feature: 3722
+  race_trait: 426
+  companion: 192
+  ability: 118
+  domain: 33
+  TOTAL: 4491
+  added grants (total): 102
+
+== expected delta classes (named, counted, explained -- never a blanket allowance) ==
+  added granted_by edges: 4491  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)
+  added grants: 102  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)
+  added _vars/ tables: 573  (condition variables an added GatedFactGrant's `when` now references)
+  added _defects/ files: 1
+  provenance deltas on the pinned current_class-fix record list: 30 of 30 pinned records (see structural_diff_expected_provenance_deltas.json)
+  added rule ids: 1
+    ultimate_psionics:class:psion#bonus5: the `current_class` closure fix (commit 71c729e408) correctly attributes a 5th `BONUS:ABILITYPOOL|Psion Feat` occurrence in the Psion subclass block to the Psion chassis, alongside the four it already held (same value/gate shape: ClassLevel(psion)/5 + 1, levels 1-20)
+
+unexpected field deltas: 0
+new rule ids: 1 ['ultimate_psionics:class:psion#bonus5']
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=PASS

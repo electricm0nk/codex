@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dreamstalker ~ Touch of Night",
+    "name": "Touch of Night",
+    "class": "Mesmerist",
+    "description": "A dreamstalker can't remove shaken, frightened, sickened, cowering, nauseated, or panicked conditions using her touch treatment. However, she can remove fatigue or magical sleep (other than hard-to-remove magical sleep such as the eternal slumber hex) as a minor condition, staggered as a moderate condition, and exhausted as a greater condition. As normal, removing fatigue or exhaustion only removes the condition, not the underlying cause, such as lack of sleep. This ability alters touch treatment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamstalker ~ Touch of Night"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreamstalker can't remove shaken, frightened, sickened, cowering, nauseated, or panicked conditions using her touch treatment. However, she can remove fatigue or magical sleep (other than hard-to-remove magical sleep such as the eternal slumber hex) as a minor condition, staggered as a moderate condition, and exhausted as a greater condition. As normal, removing fatigue or exhaustion only removes the condition, not the underlying cause, such as lack of sleep. This ability alters touch treatment."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 143,
+    "record_key": "Dreamstalker ~ Touch of Night"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

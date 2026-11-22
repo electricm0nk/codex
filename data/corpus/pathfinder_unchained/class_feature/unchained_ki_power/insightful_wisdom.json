@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Insightful Wisdom",
+    "name": "Insightful Wisdom",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ability can spend 2 ki points as an immediate action to give another ally within 30 feet just the right word of advice to prevent disaster. If the ally can hear the monk, she can reroll a single attack roll or saving throw. The ally must take the second result, even if it is worse. A monk must be at least 8th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Insightful Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Insightful Wisdom"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ability can spend 2 ki points as an immediate action to give another ally within 30 feet just the right word of advice to prevent disaster. If the ally can hear the monk, she can reroll a single attack roll or saving throw. The ally must take the second result, even if it is worse. A monk must be at least 8th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 541,
+    "record_key": "Unchained Ki Power ~ Insightful Wisdom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

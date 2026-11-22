@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood. You need two hands to use a bow, regardless of its size. A longbow is too unwieldy to use while you are mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a longbow. If you have a Strength bonus, you can apply it to damage rolls when you use a composite longbow, but not when you use a regular longbow.",
+    "key": "Longbow (Base)",
+    "name": "Longbow"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_longbow_base.txt",
+    "record_key": "Longbow (Base)"
+  }
+}

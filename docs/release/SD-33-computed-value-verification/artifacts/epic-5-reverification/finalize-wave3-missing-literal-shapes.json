@@ -1,0 +1,391 @@
+{
+  "detail": [
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_class_guide:equipment:brawler_s_flurry"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_class_guide:equipment:duelist_s_comate"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "advanced_class_guide:equipment:hunter_s_sight"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_class_guide:equipment:rapier_of_battlefield_movement"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "advanced_class_guide:equipment:ring_of_eloquence"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_class_guide:equipment:swashbuckler_s_rapier"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_players_guide:equipment:crossbow_double"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_players_guide:equipment:sword_cane"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_race_guide:equipment:claw_blades_catfolk"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_race_guide:equipment:heartstake_bolts_5"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "advanced_race_guide:equipment:rending_claw_blades"
+    },
+    {
+      "raw_label": "EQM",
+      "shape": "EQM",
+      "unit_id": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_clothing"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses"
+    },
+    {
+      "raw_label": "WEAPONPROF=TYPE.Natural",
+      "shape": "WEAPONPROF",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_1"
+    },
+    {
+      "raw_label": "WEAPONPROF=TYPE.Natural",
+      "shape": "WEAPONPROF",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_2"
+    },
+    {
+      "raw_label": "WEAPONPROF=TYPE.Natural",
+      "shape": "WEAPONPROF",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_3"
+    },
+    {
+      "raw_label": "WEAPONPROF=TYPE.Natural",
+      "shape": "WEAPONPROF",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_4"
+    },
+    {
+      "raw_label": "WEAPONPROF=TYPE.Natural",
+      "shape": "WEAPONPROF",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_5"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:mattock_of_the_titans"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "core_rulebook:equipment:rod_alertness"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:rod_flailing"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:rod_python"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:rod_thunder_and_lightning"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:rod_viper"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment:rod_withering"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "core_rulebook:equipment:stone_of_good_luck_luckstone"
+    },
+    {
+      "raw_label": "VAR",
+      "shape": "VAR",
+      "unit_id": "core_rulebook:equipment_modifier:draco"
+    },
+    {
+      "raw_label": "VAR",
+      "shape": "VAR",
+      "unit_id": "core_rulebook:equipment_modifier:dragonhide"
+    },
+    {
+      "raw_label": "VAR",
+      "shape": "VAR",
+      "unit_id": "core_rulebook:equipment_modifier:material_dragonhide"
+    },
+    {
+      "raw_label": "EQMWEAPON",
+      "shape": "EQMWEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_spikes_shieldbash"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater_no_penalty"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater_no_penalty"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater_no_penalty"
+    },
+    {
+      "raw_label": "EQMWEAPON",
+      "shape": "EQMWEAPON",
+      "unit_id": "core_rulebook:equipment_modifier:spike_sb"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories"
+    },
+    {
+      "raw_label": "EQMWEAPON",
+      "shape": "EQMWEAPON",
+      "unit_id": "ultimate_combat:equipment:arrow_iron_tipped_distance_20"
+    },
+    {
+      "raw_label": "WEAPONPROF=Bite",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:belt_of_teeth"
+    },
+    {
+      "raw_label": "WEAPONPROF=Greatsword",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:berserking_sword"
+    },
+    {
+      "raw_label": "WEAPONPROF=Shortspear",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:cursed_backbiter_spear"
+    },
+    {
+      "raw_label": "WEAPONPROF=Longsword",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:cursed_sword_2"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "ultimate_equipment:equipment:gunfighter_s_poncho"
+    },
+    {
+      "raw_label": "MOVEADD",
+      "shape": "MOVEADD",
+      "unit_id": "ultimate_equipment:equipment:heavy_hammer"
+    },
+    {
+      "raw_label": "WEAPONPROF=Hoof",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_1"
+    },
+    {
+      "raw_label": "WEAPONPROF=Hoof",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_2"
+    },
+    {
+      "raw_label": "WEAPONPROF=Hoof",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_3"
+    },
+    {
+      "raw_label": "WEAPONPROF=Hoof",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_4"
+    },
+    {
+      "raw_label": "WEAPONPROF=Hoof",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_5"
+    },
+    {
+      "raw_label": "WEAPONPROF=Pistol",
+      "shape": "WEAPONPROF",
+      "unit_id": "ultimate_equipment:equipment:ornery_pistol"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "ultimate_equipment:equipment:robe_of_vermin"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "ultimate_equipment:equipment:scattershot_bracers"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "ultimate_equipment:equipment:staff_of_the_hierophant"
+    },
+    {
+      "raw_label": "STAT",
+      "shape": "STAT",
+      "unit_id": "ultimate_equipment:equipment:talons_of_leng"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy"
+    },
+    {
+      "raw_label": "COMBAT",
+      "shape": "COMBAT",
+      "unit_id": "ultimate_psionics:equipment:companion_stone_far_sight"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_detection"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_dread"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "ultimate_psionics:equipment:flurry_of_fists"
+    },
+    {
+      "raw_label": "WEAPON",
+      "shape": "WEAPON",
+      "unit_id": "ultimate_psionics:equipment:flurry_of_strikes"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist"
+    },
+    {
+      "raw_label": "SITUATION",
+      "shape": "SITUATION",
+      "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator"
+    },
+    {
+      "raw_label": "SITUATION",
+      "shape": "SITUATION",
+      "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency"
+    },
+    {
+      "raw_label": "SKILL",
+      "shape": "SKILL",
+      "unit_id": "ultimate_psionics:equipment:third_eye_aware"
+    },
+    {
+      "raw_label": "VAR",
+      "shape": "VAR",
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_alt"
+    },
+    {
+      "raw_label": "VAR",
+      "shape": "VAR",
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_main"
+    }
+  ],
+  "missing_by_shape": {
+    "COMBAT": 7,
+    "EQM": 1,
+    "EQMWEAPON": 3,
+    "MOVEADD": 1,
+    "SITUATION": 2,
+    "SKILL": 17,
+    "STAT": 1,
+    "VAR": 5,
+    "WEAPON": 23,
+    "WEAPONPROF": 15
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Skill Focus (Fly)",
+    "name": "Skill Focus (Fly)",
+    "class": "Sorcerer",
+    "description": "You are particularly adept at the Fly skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Skill Focus (Fly)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusFly,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are particularly adept at the Fly skill."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Skill Focus (Fly)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2076,
+    "record_key": "Sorcerer Bloodline Feat ~ Skill Focus (Fly)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Claim Pattern",
+    "name": "Claim Pattern",
+    "class": "Insight",
+    "description": "You can attune a trap to yourself as a standard action and by making a successful Disable Device check against the trap's DC, after which the trap only triggers when you decide it can be triggered.  If the trap is attuned in a similar fashion to another creature, you must make a manifester level check against a DC of 11 + the current owner's manifester level or the attunement fails.  If the attunement is successful, you can trigger the trap as a swift action at any time in the future.  You may only have one such attuned trap at any given time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Claim Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attune a trap to yourself as a standard action and by making a successful Disable Device check against the trap's DC, after which the trap only triggers when you decide it can be triggered.  If the trap is attuned in a similar fashion to another creature, you must make a manifester level check against a DC of 11 + the current owner's manifester level or the attunement fails.  If the attunement is successful, you can trigger the trap as a swift action at any time in the future.  You may only have one such attuned trap at any given time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 194,
+    "record_key": "Insight ~ Claim Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus ~ Despair",
+    "name": "Despair",
+    "description": "Some creatures die in such horrific ways, or live such pointless and senseless lives, that despair grips their very beings. Phantoms with this focus use misery as a weapon, inflicting the living with the gloom of the phantoms' continued existence. Despair phantoms often appear twisted or wounded, showing the grisly circumstances of their demise. Their coloration tends to have a grayish or sickly green cast. When they speak, they do so in terrifying whispers or high-pitched screeches.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus ~ Despair"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Some creatures die in such horrific ways, or live such pointless and senseless lives, that despair grips their very beings. Phantoms with this focus use misery as a weapon, inflicting the living with the gloom of the phantoms' continued existence. Despair phantoms often appear twisted or wounded, showing the grisly circumstances of their demise. Their coloration tends to have a grayish or sickly green cast. When they speak, they do so in terrifying whispers or high-pitched screeches."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Skills|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Good Saves|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Power from Despair|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Miserable Strike|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Aura of Despair|PREVARGTEQ:PhantomMasterLevel,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Despairing Shout|PREVARGTEQ:PhantomMasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Despair ~ Inescapable Despair|PREVARGTEQ:PhantomMasterLevel,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 50,
+    "record_key": "Emotional Focus ~ Despair"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Energy Resistance Improved",
+    "name": "Energy Resistance (Improved)",
+    "class": "Aegis",
+    "description": "Your energy resistance is doubled.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Energy Resistance Improved"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Energy Resistance Cold,Aegis ~ Energy Resistance Electricity,Aegis ~ Energy Resistance Fire,Aegis ~ Energy Resistance Sonic"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your energy resistance is doubled."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|AegisColdResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|AegisElectricityResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|AegisFireResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|AegisSonicResistance"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 98,
+    "record_key": "Aegis ~ Energy Resistance Improved"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

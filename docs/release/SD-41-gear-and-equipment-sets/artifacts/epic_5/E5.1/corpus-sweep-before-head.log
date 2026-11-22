@@ -1,0 +1,46 @@
+corpus-literal-sweep: 48706 records examined of 51523 read, 413314 tokens compared (9 synthesized), 51463 digests checked, 1240 findings
+corpus-literal-sweep: 3138 tokens exempted under decisions.md §24 redaction across 1058 codex_generated_name records
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/beaststrike_club.json: typed field cost_gp=2300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/fork_of_the_forgotten_one.json: typed field cost_gp=200300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/formula_book.json: typed field cost_gp=15 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/hammer_of_thunderbolts.json: typed field cost_gp=32300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/advanced_race_guide/equipment/arms_armor/weapon_dwarven_boulder.json: typed field cost_gp=20 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/beastiary/equipment/aklys.json: typed field cost_gp=5 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/beginner_box/equipment/feathered_shield.json: typed field cost_gp=9 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/beginner_box/equipment/poison_resistant_scale_mail.json: typed field cost_gp=50 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/bestiary_2/equipment/leprechaun_shillelagh.json: typed field cost_gp=2300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/bestiary_3/equipment/shears.json: typed field cost_gp=164000 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/bestiary_4/equipment/pliers_tooth_fairy.json: typed field cost_gp=2300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/arms_armor/demon_armor_claw_attack.json: typed field cost_gp=0 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_bless_weapon.json: typed field cost_gp=50 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_darkness.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_daylight.json: typed field cost_gp=750 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_flame_arrow.json: typed field cost_gp=750 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_greater_magic_weapon_1.json: typed field cost_gp=750 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_greater_magic_weapon_2.json: typed field cost_gp=1200 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_greater_magic_weapon_3.json: typed field cost_gp=1800 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_greater_magic_weapon_4.json: typed field cost_gp=2400 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_greater_magic_weapon_5.json: typed field cost_gp=3000 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_invisibility.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_keen_edge.json: typed field cost_gp=750 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_levitate.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_stone.json: typed field cost_gp=50 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_vestment_1.json: typed field cost_gp=750 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_vestment_2.json: typed field cost_gp=1200 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_vestment_3.json: typed field cost_gp=1800 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_vestment_4.json: typed field cost_gp=2400 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_vestment_5.json: typed field cost_gp=3000 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_magic_weapon.json: typed field cost_gp=50 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_shillelagh.json: typed field cost_gp=50 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/oil_of_silence.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_aid.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_barkskin_2.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_barkskin_3.json: typed field cost_gp=600 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_barkskin_4.json: typed field cost_gp=900 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_barkskin_5.json: typed field cost_gp=1200 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_bear_s_endurance.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: MISMATCH data/corpus/core_rulebook/equipment/magic_items/potion_of_blur.json: typed field cost_gp=300 is not byte-derivable from any COST: entry in the corpus token closure
+corpus-literal-sweep: ... 1200 further findings suppressed
+corpus-literal-sweep: 1240 findings across 1240 records
+corpus-literal-sweep: ... 1200 further findings suppressed
+corpus-literal-sweep: 1240 findings across 1240 records

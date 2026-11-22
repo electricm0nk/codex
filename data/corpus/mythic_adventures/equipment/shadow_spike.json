@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 96600.0,
+    "description": null,
+    "key": "Shadow Spike",
+    "name": "Shadow Spike",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Cruel ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Ability ~ Cruel ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "As a standard action, the wielder can drive the spike into the ground on either the Material Plane or the Shadow Plane, creating a rift merging those two planes. This rift is 30 feet in diameter, lasts for 1 minute, and can be created once per day. If the creature that drives the shadow spike into the ground expends one use of mythic power when doing so, the effect lasts until the shadow spike is pulled out of the ground (which takes a standard action). The rift's area acts as the deeper darkness spell. Spells with the darkness or shadow descriptors cast within the rift have +1 caster level, and are affected as if cast with the Extend Spell feat. As a standard action, any mythic creature within the area can expend three uses of mythic power to plane shift to the Shadow Plane (if on the Material Plane) or to the Material Plane (if on the Shadow Plane). If a mythic creature plane shifts while holding the shadow spike, the weapon teleports with that creature, ending the effect."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Shadow Spike",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

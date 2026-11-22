@@ -1,0 +1,55 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.97s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_ingest-06e24ac7d271e507)
+
+running 1 test
+test pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest ... FAILED
+
+failures:
+
+---- pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest stdout ----
+
+thread 'pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest' (3503653) panicked at crates/codex-ingest/src/pcgen_import/sheet_rule/sf_mapping.rs:557:9:
+assertion `left == right` failed
+  left: None
+ right: Some("hit_points")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pcgen_import::sheet_rule::sf_mapping::tests::hp_pool_row_routes_claimed_tokens_and_refuses_the_rest
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 688 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p codex-ingest --lib`
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.75s
+     Running tests/sf_drone_companion.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_drone_companion-04e2450f1667edc7)
+
+running 7 tests
+test each_chassis_prints_its_kits_base_ability_scores ... ok
+test the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level ... ok
+test the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite ... ok
+test the_drone_class_prints_its_hit_points_and_no_hit_die_offset ... FAILED
+test the_level_one_special_abilities_are_granted_by_the_modifier ... ok
+test the_drone_race_holds_the_drone_class_and_prints_no_zero_speed ... ok
+test the_drone_picks_offer_the_oracle_members ... ok
+
+failures:
+
+---- the_drone_class_prints_its_hit_points_and_no_hit_die_offset stdout ----
+
+thread 'the_drone_class_prints_its_hit_points_and_no_hit_die_offset' (3507728) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:177:5:
+assertion `left == right` failed: one hit-point line: []
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    the_drone_class_prints_its_hit_points_and_no_hit_die_offset
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_drone_companion`
+exit=101

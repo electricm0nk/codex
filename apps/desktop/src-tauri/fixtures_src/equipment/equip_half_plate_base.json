@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm.",
+    "key": "Half-Plate (Base)",
+    "name": "Half-Plate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "8",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-4",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "7",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-7",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Plate (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Half-Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "600"
+      },
+      {
+        "key": "WT",
+        "value": "50"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "40"
+      },
+      {
+        "key": "DESC",
+        "value": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_half_plate_base.txt",
+    "record_key": "Half-Plate (Base)"
+  }
+}

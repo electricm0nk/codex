@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 1.0,
+    "description": "A javelin is a thin throwing spear. Since it is not designed for melee, you are treated as nonproficient with it and take a -4 penalty on attack rolls if you use a javelin as a melee weapon.",
+    "key": "Javelin (Base)",
+    "name": "Javelin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Javelin (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Javelin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Ranged.Simple.Thrown.Piercing.Javelin.Spear.Weapon Group Spears.Weapon Group Thrown"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHandOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "A javelin is a thin throwing spear. Since it is not designed for melee, you are treated as nonproficient with it and take a -4 penalty on attack rolls if you use a javelin as a melee weapon."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 304,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Javelin (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

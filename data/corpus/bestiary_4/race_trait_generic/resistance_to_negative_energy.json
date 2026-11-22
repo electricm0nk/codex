@@ -1,0 +1,42 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Resistance to Negative Energy",
+    "name": "Resistance to Negative Energy",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NegativeEnergyResistanceBonus|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Resistance to Negative Energy ~ Output|!PREABILITY:1,CATEGORY=Special Ability,Immunity to Negative Energy"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Resistance to Negative Energy",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

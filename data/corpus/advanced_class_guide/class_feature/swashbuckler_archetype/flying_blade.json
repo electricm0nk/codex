@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Flying Blade",
+    "name": "Flying Blade",
+    "class": "Swashbuckler",
+    "description": "While most swashbucklers prefer their battles up close, others prefer dealing death from a distance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Flying Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerPanache.SwashbucklerDodgingPanacheDeed.SwashbucklerMenacingSwordplayDeed.SwashbucklerTargetedStrikeDeed.SwashbucklerBleedingWoundDeed.SwashbucklerPerfectThrustDeed.SwashbucklerWeaponTraining.SwashbucklerSwashbucklerWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Flying Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerPanache,TYPE.SwashbucklerDodgingPanacheDeed,TYPE.SwashbucklerMenacingSwordplayDeed,TYPE.SwashbucklerTargetedStrikeDeed,TYPE.SwashbucklerBleedingWoundDeed,TYPE.SwashbucklerPerfectThrustDeed,TYPE.SwashbucklerSwashbucklerWeaponTraining,TYPE.SwashbucklerSwashbucklerWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most swashbucklers prefer their battles up close, others prefer dealing death from a distance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Flying Blade ~ Panache|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Flying Blade ~ Deeds|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Flying Blade ~ Flying Blade Training|PRECLASS:1,Swashbuckler=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Flying Blade ~ Flying Blade Mastery|PRECLASS:1,Swashbuckler=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Flying Blade],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_SwashbucklerWeaponTraining=True,Swashbuckler_Archetype_SwashbucklerWeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_PerfectThrustDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponMastery|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3841,
+    "record_key": "Swashbuckler Archetype ~ Flying Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

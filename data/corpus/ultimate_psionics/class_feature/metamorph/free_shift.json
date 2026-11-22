@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metamorph ~ Free Shift",
+    "name": "Free Shift",
+    "class": "Metamorph",
+    "description": "Manifest metamorphosis, augmented up to your manifester level, for free %1/day.|FreeShiftTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Free Shift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MetamorphClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreeShiftTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Manifest metamorphosis, augmented up to your manifester level, for free %1/day.|FreeShiftTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreeShiftTimes|(MetamorphLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|FreeShiftTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1292,
+    "record_key": "Metamorph ~ Free Shift"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

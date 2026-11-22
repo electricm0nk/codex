@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Verdant bloodline sorcerers treat Cha as 2 higher for sorcerer spells and abilities; Plant domain clerics get +1 CL for domain spells and abilities.",
+    "key": "Builder Racial Trait ~ Fertile Soil",
+    "name": "Fertile Soil",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Fertile Soil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "Verdant bloodline sorcerers treat Cha as 2 higher for sorcerer spells and abilities; Plant domain clerics get +1 CL for domain spells and abilities."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 341,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Fertile Soil",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

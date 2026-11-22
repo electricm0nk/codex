@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Extreme Prejudice",
+    "name": "Extreme Prejudice",
+    "description": "When you succeed at a sneak attack against a creature that is not the target of your Seething HatredACG feat, you can spend 5 stamina points to treat the creature as if it were the target of your Seething Hatred for that attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Extreme Prejudice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you succeed at a sneak attack against a creature that is not the target of your Seething HatredACG feat, you can spend 5 stamina points to treat the creature as if it were the target of your Seething Hatred for that attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "119"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ACG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_acg.lst",
+    "sha256": "570d75d3124c424e2ac73115e554567a42c86aa05cf319c5d41c5135b1068c68",
+    "line": 21,
+    "record_key": "Combat Trick ~ Extreme Prejudice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

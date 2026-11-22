@@ -1,0 +1,949 @@
+//! Custom: the GM's grants and house-rule records for one character, saved as `custom.json` beside
+//! the character (the same sidecar precedent as `hit_points.json` and `bio.json`).
+//!
+//! Two kinds of entry, honestly different:
+//!
+//! * **Grants** change numbers. An ability grant (`ability:wisdom`, +1) is applied to the saved
+//!   ability score itself, the same place a racial adjustment already lives, so AC, saves, attacks,
+//!   skills and hit points all follow from the engine; no second, display-only "twin" is kept.
+//!   Editing or removing a grant applies only the difference. `hit_points` and `skill_points`
+//!   grants are read by the sheet (the hit point total and the skill point pool).
+//! * **Records** are things the rules corpus does not have: a custom feat, piece of equipment,
+//!   spell or magic device, each a name, a description and free-form stat lines. They are listed on
+//!   the sheet and printed.
+//! * **Custom equipment** may also state typed `bonuses` and a body `slot`. Worn, it applies
+//!   ([`WornItemBonuses`]) and holds its slot against stock items too; carried, it adds nothing. An
+//!   ability bonus goes in at the score on the copy of the input the sheet computes from, never the
+//!   saved one, so what the score drives follows from the engine. Its other numbers move the totals
+//!   the engine returned, by the same stacking rule as the `Var` fold.
+
+use serde::{Deserialize, Serialize};
+use std::collections::{BTreeMap, BTreeSet};
+use std::path::Path;
+
+use crate::character_ledger::{ledger_after_custom_change_at_root, write_character_ledger_at_root, AdmittedRecordDto, OverrideFlag};
+use crate::character_hub::{
+    adjust_character_money_at_root, load_character_money_at_root, worn_stock_slots, CharacterMoneyDto, CreateCharacterResponse, DiagnosticDto, PriceMode, ExplanationDto, LoadSavedCharacterResponse, ResolvedEquipmentEffectDto,
+    WeaponFeatEffectDto,
+};
+use codex::rules_core::body_slots::{slot_conflict, BodySlot};
+use codex::rules_core::character_input::{AbilityScores, ActiveState, CharacterInput};
+use codex::rules_core::pilot_view_model::PilotSnapshot;
+use codex::rules_core::pilot_compute::ArmorClassPart;
+use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillNotFolded;
+use codex::rules_core::equipment_effects::{bonus_always_counts, worn_item_stated_bonuses, WornItemStatedBonuses, NOT_AGAINST_TOUCH};
+use codex::rules_core::source_content::SourcePackageContent;
+use codex::rules_core::skill_allocation::SHEET_SKILL_IDS;
+use codex::saved_character::equipment_sets::CopyKey;
+use codex::saved_character::local_store::SavedCharacterStore;
+
+const CUSTOM_FILE_NAME: &str = "custom.json";
+const MAX_ENTRIES: usize = 200;
+const MAX_NAME: usize = 120;
+const MAX_DESCRIPTION: usize = 10_000;
+const MAX_STATS: usize = 40;
+const MAX_STAT_TEXT: usize = 400;
+const MAX_GRANT_VALUE: i32 = 12;
+const ABILITIES: [&str; 6] = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
+const SAVES: [&str; 3] = ["fortitude", "reflex", "will"];
+/// The sheet's three skill rows that name no subtype, so they are not in `SHEET_SKILL_IDS`.
+const SHEET_FAMILY_SKILLS: [&str; 3] = ["craft", "perform", "profession"];
+const FLAT_TARGETS: [&str; 8] = ["attack", "damage", "ac", "speed", "initiative", "hit_points", "cmb", "cmd"];
+const MAX_BONUS_VALUE: i32 = 100;
+const UNTYPED: &str = "Untyped";
+/// The engine's words for a bonus's type (`SheetRule` `BonusType.name`), and `Untyped`.
+const BONUS_TYPES: [&str; 18] = [
+    UNTYPED, "Alchemical", "Armor", "Circumstance", "Competence", "Deflection", "Dodge", "Enhancement", "Insight", "Luck",
+    "Morale", "NaturalArmor", "Profane", "Racial", "Resistance", "Sacred", "Shield", "Size",
+];
+/// What a touch attack ignores. An enhancement bonus to AC is one on armor or a shield.
+/// The prefix naming a custom item to `set_equipment_active_state`, as `list_held_equipment` lists it.
+pub(crate) const CUSTOM_ITEM_PREFIX: &str = "custom:";
+
+/// One number the GM changed: `target` is `ability:<name>`, `hit_points` or `skill_points`.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomGrantDto {
+    pub id: String,
+    pub label: String,
+    pub target: String,
+    pub value: i32,
+    /// Why (the quest, the god, the house rule), shown with the grant.
+    #[serde(default)]
+    pub reason: String,
+}
+
+/// One line of a custom record's stats ("Damage" / "1d8").
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomStatDto {
+    pub label: String,
+    pub value: String,
+}
+
+/// One number a custom item states. `target` is a name in [`bonus_target_is_known`]; `bonus_type` is
+/// one of [`BONUS_TYPES`].
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomBonusDto {
+    pub target: String,
+    pub bonus_type: String,
+    pub value: i32,
+}
+
+/// A custom feat, item, spell or device: a raw object the GM gives stats and a description. Custom
+/// equipment may also state `bonuses` and a `slot`, and is `worn`, carried or `left_behind`; a record with none of
+/// the three is saved as the text record it always was.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomRecordDto {
+    pub id: String,
+    pub name: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default)]
+    pub stats: Vec<CustomStatDto>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub bonuses: Vec<CustomBonusDto>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub slot: Option<BodySlot>,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub worn: bool,
+    /// Owned and not on the character: on the ground, at an inn. Never with `worn`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub left_behind: bool,
+    /// SD-41 `decisions.md §25`, custom equipment only: what it weighs, counted while carried
+    /// (`compute_encumbrance`'s `extra`). Left out: it weighs nothing, as before.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub weight_lbs: Option<f64>,
+    /// What it cost when created, in gp; above 0 it was deducted then.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub price_gp: Option<f64>,
+    /// Set: the item is a container holding this many lb (`containers::container_loads`' `created`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub container_capacity_lbs: Option<f64>,
+}
+
+/// What the GM lets this character do without qualifying. Each flag is read by the command that
+/// enforces the rule it names; off, which is the default, that command refuses.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct Overrides {
+    pub feats_without_prerequisites: bool,
+    pub weapons_without_proficiency: bool,
+    pub spells_outside_class_list: bool,
+    pub armor_without_proficiency: bool,
+    pub ignore_slot_limits: bool,
+    pub ignore_feat_budget: bool,
+    pub ignore_alignment_restrictions: bool,
+    pub ignore_encumbrance: bool,
+    /// SD-41 `decisions.md §32` (b): no container is flagged over its capacity (the screen and the
+    /// print read it off the load response; the load figure stays the engine's).
+    pub ignore_container_capacity: bool,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterCustomDto {
+    #[serde(default)]
+    pub grants: Vec<CustomGrantDto>,
+    #[serde(default)]
+    pub feats: Vec<CustomRecordDto>,
+    #[serde(default)]
+    pub equipment: Vec<CustomRecordDto>,
+    #[serde(default)]
+    pub spells: Vec<CustomRecordDto>,
+    #[serde(default)]
+    pub devices: Vec<CustomRecordDto>,
+    /// Brief 2 E2: the conditions the character is under (`"Shaken"`), shown on the sheet's
+    /// Conditions box (`Normal` when empty). `#[serde(default)]` so a `custom.json` saved before
+    /// this field existed loads with none.
+    #[serde(default)]
+    pub conditions: Vec<String>,
+    /// `#[serde(default)]`: a `custom.json` saved before this field existed has every flag off.
+    #[serde(default)]
+    pub overrides: Overrides,
+}
+
+/// The targets a custom item's bonus may name (`decisions.md §13`). `ability:<name>` and
+/// `hit_points` are the grants' words for the same numbers.
+pub(crate) fn bonus_target_is_known(target: &str) -> bool {
+    match target.split_once(':') {
+        Some(("ability", name)) => ABILITIES.contains(&name),
+        Some(("save", name)) => SAVES.contains(&name),
+        Some(("skill", name)) => {
+            SHEET_FAMILY_SKILLS.contains(&name) || SHEET_SKILL_IDS.iter().any(|id| id.strip_prefix("skill:") == Some(name))
+        }
+        Some(_) => false,
+        None => FLAT_TARGETS.contains(&target),
+    }
+}
+
+fn validate_records(kind: &str, records: &[CustomRecordDto], seen: &mut BTreeSet<String>) -> Result<(), String> {
+    if records.len() > MAX_ENTRIES {
+        return Err(format!("too many custom {kind} (at most {MAX_ENTRIES})"));
+    }
+    for record in records {
+        if record.id.trim().is_empty() || !seen.insert(record.id.clone()) {
+            return Err(format!("a custom {kind} entry has a missing or duplicate id ({:?})", record.id));
+        }
+        if record.name.trim().is_empty() {
+            return Err(format!("a custom {kind} entry needs a name"));
+        }
+        if record.name.chars().count() > MAX_NAME {
+            return Err(format!("the custom {kind} {:?} has a name over {MAX_NAME} characters", record.name));
+        }
+        if record.description.chars().count() > MAX_DESCRIPTION {
+            return Err(format!("the description of {:?} is over {MAX_DESCRIPTION} characters", record.name));
+        }
+        if record.stats.len() > MAX_STATS {
+            return Err(format!("{:?} has more than {MAX_STATS} stat lines", record.name));
+        }
+        for stat in &record.stats {
+            if stat.label.trim().is_empty() || stat.value.trim().is_empty() {
+                return Err(format!("{:?} has a stat line with no label or no value", record.name));
+            }
+            if stat.label.chars().count() > MAX_STAT_TEXT || stat.value.chars().count() > MAX_STAT_TEXT {
+                return Err(format!("{:?} has a stat line over {MAX_STAT_TEXT} characters", record.name));
+            }
+        }
+        let amounts = [("weight", record.weight_lbs), ("price", record.price_gp), ("container capacity", record.container_capacity_lbs)];
+        if kind != "equipment" && (!record.bonuses.is_empty() || record.slot.is_some() || record.worn || record.left_behind || amounts.iter().any(|(_, amount)| amount.is_some())) {
+            return Err(format!("{:?}: only custom equipment can state bonuses, a weight, a price or a capacity, take a slot or be worn", record.name));
+        }
+        if let Some((what, amount)) = amounts.iter().find_map(|(what, amount)| amount.filter(|lbs| !(lbs.is_finite() && *lbs >= 0.0)).map(|amount| (what, amount))) {
+            return Err(format!("the {what} of {:?} is {amount}, which must be a number, 0 or more", record.name));
+        }
+        if record.worn && record.left_behind {
+            return Err(format!("{:?} cannot be both worn and left behind", record.name));
+        }
+        if record.bonuses.len() > MAX_STATS {
+            return Err(format!("{:?} has more than {MAX_STATS} bonuses", record.name));
+        }
+        for bonus in &record.bonuses {
+            if !bonus_target_is_known(&bonus.target) {
+                return Err(format!("{:?} has a bonus with an unknown target {:?}", record.name, bonus.target));
+            }
+            if !BONUS_TYPES.contains(&bonus.bonus_type.as_str()) {
+                return Err(format!("{:?} has a bonus with an unknown bonus type {:?}", record.name, bonus.bonus_type));
+            }
+            if bonus.value == 0 || bonus.value.abs() > MAX_BONUS_VALUE {
+                return Err(format!("{:?} has a bonus with value {}, which must be from -{MAX_BONUS_VALUE} to {MAX_BONUS_VALUE} and not 0", record.name, bonus.value));
+            }
+        }
+    }
+    Ok(())
+}
+
+pub(crate) fn validate_custom(custom: &CharacterCustomDto) -> Result<(), String> {
+    let mut seen = BTreeSet::new();
+    if custom.grants.len() > MAX_ENTRIES {
+        return Err(format!("too many grants (at most {MAX_ENTRIES})"));
+    }
+    for grant in &custom.grants {
+        if grant.id.trim().is_empty() || !seen.insert(grant.id.clone()) {
+            return Err(format!("a grant has a missing or duplicate id ({:?})", grant.id));
+        }
+        let target_ok = match grant.target.strip_prefix("ability:") {
+            Some(name) => ABILITIES.contains(&name),
+            None => grant.target == "hit_points" || grant.target == "skill_points",
+        };
+        if !target_ok {
+            return Err(format!(
+                "the grant {:?} has an unknown target {:?} (use ability:<name>, hit_points or skill_points)",
+                grant.label, grant.target
+            ));
+        }
+        if grant.value.abs() > MAX_GRANT_VALUE {
+            return Err(format!("the grant {:?} has value {}, outside -{MAX_GRANT_VALUE}..={MAX_GRANT_VALUE}", grant.label, grant.value));
+        }
+        if grant.label.trim().is_empty() || grant.label.chars().count() > MAX_NAME || grant.reason.chars().count() > MAX_DESCRIPTION {
+            return Err(format!("the grant {:?} needs a label of at most {MAX_NAME} characters and a shorter reason", grant.label));
+        }
+    }
+    validate_records("feat", &custom.feats, &mut seen)?;
+    validate_records("equipment", &custom.equipment, &mut seen)?;
+    validate_records("spell", &custom.spells, &mut seen)?;
+    validate_records("device", &custom.devices, &mut seen)?;
+    Ok(())
+}
+
+/// The total ability-score change the grants make, in `ABILITIES` order.
+fn ability_totals(custom: &CharacterCustomDto) -> [i32; 6] {
+    let mut totals = [0; 6];
+    for grant in &custom.grants {
+        if let Some(name) = grant.target.strip_prefix("ability:") {
+            if let Some(slot) = ABILITIES.iter().position(|ability| *ability == name) {
+                totals[slot] += grant.value;
+            }
+        }
+    }
+    totals
+}
+
+fn score_mut(scores: &mut AbilityScores, slot: usize) -> &mut i16 {
+    match slot {
+        0 => &mut scores.strength,
+        1 => &mut scores.dexterity,
+        2 => &mut scores.constitution,
+        3 => &mut scores.intelligence,
+        4 => &mut scores.wisdom,
+        _ => &mut scores.charisma,
+    }
+}
+
+/// One bonus of a worn custom item that counts after stacking.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct WornBonus {
+    item_id: String,
+    item_name: String,
+    target: String,
+    bonus_type: String,
+    value: i16,
+}
+
+/// A stock item's targets that reach the sheet here and in no engine total, beside `skill:<name>`.
+const ONLY_THE_LOAD_HOLDS: [&str; 5] = ["initiative", "speed", "speed_percent", "cmb", "cmd"];
+
+/// The types of an Armor Class bonus that also count on CMD (CRB p.199). A penalty to Armor Class
+/// counts whatever its type, once, for an item that does not state CMD itself.
+const ON_CMD_TOO: [&str; 8] = ["Circumstance", "Deflection", "Dodge", "Insight", "Luck", "Morale", "Profane", "Sacred"];
+
+/// What the character's worn custom items add, and what a worn stock item states on a number only the
+/// load holds: a skill's row, initiative's, CMB's and CMD's rows and the speed rows.
+/// A carried item is not in it. Same-type bonuses to one target take the higher, except a penalty, an
+/// untyped bonus and the types the game mode says stack ([`bonus_always_counts`]), the rule of the
+/// sheet engine's `Var` fold. A stock item's score, save, attack and Armor Class bonuses are already in
+/// the engine's numbers, so a custom bonus of that type adds only what it beats them by.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub(crate) struct WornItemBonuses(Vec<WornBonus>);
+
+impl WornItemBonuses {
+    pub(crate) fn of(custom: &CharacterCustomDto) -> Self {
+        Self::beside(custom, &WornItemStatedBonuses::default())
+    }
+
+    fn beside(custom: &CharacterCustomDto, stock: &WornItemStatedBonuses) -> Self {
+        let in_the_engine = |target: &str| !target.starts_with("skill:") && !ONLY_THE_LOAD_HOLDS.contains(&target);
+        let mut counted: Vec<WornBonus> = stock
+            .rows()
+            .iter()
+            .filter(|row| !in_the_engine(&row.target))
+            .map(|row| WornBonus {
+                item_id: row.item_name.clone(),
+                item_name: row.item_name.clone(),
+                target: row.target.clone(),
+                bonus_type: row.bonus_type.clone().unwrap_or_else(|| UNTYPED.to_owned()),
+                value: row.value,
+            })
+            .collect();
+        for record in custom.equipment.iter().filter(|record| record.worn) {
+            for bonus in &record.bonuses {
+                let value = bonus.value.clamp(-MAX_BONUS_VALUE, MAX_BONUS_VALUE) as i16;
+                let row = WornBonus {
+                    item_id: record.id.clone(),
+                    item_name: record.name.clone(),
+                    target: bonus.target.clone(),
+                    bonus_type: bonus.bonus_type.clone(),
+                    value,
+                };
+                let always_counts = bonus_always_counts(value, Some(&bonus.bonus_type).filter(|word| *word != UNTYPED).map(String::as_str));
+                let same_type = counted
+                    .iter()
+                    .position(|held| held.value > 0 && held.target == row.target && held.bonus_type == row.bonus_type);
+                match same_type {
+                    Some(index) if !always_counts => {
+                        if value > counted[index].value {
+                            counted[index] = row;
+                        }
+                    }
+                    _ => counted.push(row),
+                }
+            }
+        }
+        counted.retain_mut(|row| {
+            if !in_the_engine(&row.target) {
+                return true;
+            }
+            match stock.counted(&row.target, &row.bonus_type) {
+                Some(held) if !bonus_always_counts(row.value, Some(&row.bonus_type)) => {
+                    row.value -= held;
+                    row.value > 0
+                }
+                _ => true,
+            }
+        });
+        let stock_armor_class = stock.rows().iter().filter(|row| row.target == "ac").map(|row| WornBonus {
+            item_id: row.item_name.clone(),
+            item_name: row.item_name.clone(),
+            target: row.target.clone(),
+            bonus_type: row.bonus_type.clone().unwrap_or_else(|| UNTYPED.to_owned()),
+            value: row.value,
+        });
+        // What is left of a custom bonus is what it adds over a stock one of its type, so these sum.
+        let armor_class: Vec<WornBonus> = stock_armor_class.chain(counted.iter().filter(|row| row.target == "ac").cloned()).collect();
+        let stated_on_cmd: Vec<WornBonus> = counted.iter().filter(|row| row.target == "cmd").cloned().collect();
+        let mut from_armor_class: BTreeMap<String, i16> = BTreeMap::new();
+        for row in armor_class {
+            let adds = if row.value < 0 {
+                if stated_on_cmd.iter().any(|stated| stated.item_name == row.item_name) { 0 } else { row.value }
+            } else if !ON_CMD_TOO.contains(&row.bonus_type.as_str()) {
+                0
+            } else if bonus_always_counts(row.value, Some(&row.bonus_type)) {
+                row.value
+            } else {
+                // One type on one number takes the higher, of what AC gives it and what CMD states.
+                let stated = stated_on_cmd.iter().filter(|held| held.bonus_type == row.bonus_type).map(|held| held.value).max().unwrap_or(0);
+                let so_far = from_armor_class.entry(row.bonus_type.clone()).or_default();
+                let before = stated.max(*so_far);
+                *so_far += row.value;
+                stated.max(*so_far) - before
+            };
+            if adds != 0 {
+                counted.push(WornBonus { target: "cmd".to_owned(), value: adds, ..row });
+            }
+        }
+        Self(counted)
+    }
+
+    /// The bonuses of the file beside this character, folded with what `input` wears. An unreadable
+    /// `custom.json` adds nothing here, so the sheet still opens; the Custom tab reads the same file
+    /// and says what is wrong with it.
+    pub(crate) fn at_root(root: &Path, input: &CharacterInput, corpus: &SourcePackageContent) -> Self {
+        Self::beside(&custom_or_empty(root), &worn_item_stated_bonuses(&input.chosen.equipment_selections, corpus))
+    }
+
+    fn sum(&self, target: &str, counts: impl Fn(&WornBonus) -> bool) -> i16 {
+        self.0.iter().filter(|bonus| bonus.target == target && counts(bonus)).map(|bonus| bonus.value).sum()
+    }
+
+    fn total(&self, target: &str) -> i16 {
+        self.sum(target, |_| true)
+    }
+
+    /// `+1 Deflection (Ring of Hats), -1 Untyped (Curse)`, for a row's detail.
+    fn sources(&self, target: &str) -> String {
+        let words: Vec<String> = self
+            .0
+            .iter()
+            .filter(|bonus| bonus.target == target)
+            .map(|bonus| format!("{:+} {} ({})", bonus.value, bonus.bonus_type, bonus.item_name))
+            .collect();
+        words.join(", ")
+    }
+
+    /// Raises the scores on `input`, which must be the copy the sheet computes from, not one that is
+    /// saved.
+    pub(crate) fn raise_abilities(&self, input: &mut CharacterInput) {
+        for (slot, name) in ABILITIES.iter().enumerate() {
+            *score_mut(&mut input.chosen.ability_scores, slot) += self.total(&format!("ability:{name}"));
+        }
+    }
+
+    /// The tiles `recompute_character` and the load both read off the snapshot.
+    pub(crate) fn apply_to_snapshot(&self, snapshot: &mut PilotSnapshot) {
+        snapshot.combat.baseline_melee_attack_bonus += self.total("attack");
+        snapshot.defense.baseline_armor_class += self.total("ac");
+        snapshot.defense.total_save.fortitude += self.total("save:fortitude");
+        snapshot.defense.total_save.reflex += self.total("save:reflex");
+        snapshot.defense.total_save.will += self.total("save:will");
+    }
+
+    /// Every other number the sheet reads off the load: the rows behind the AC and its parts, touch, flat-footed, CMB,
+    /// CMD, initiative and each skill, the Weapons tab's damage, `AC by Source`, and a
+    /// `custom_item.<target>` row per target saying what moved it. The sheet adds `custom_item.speed`
+    /// and `custom_item.hit_points` to the two totals it holds itself.
+    pub(crate) fn apply_to_sheet(&self, sheet: &mut LoadSavedCharacterResponse) {
+        if self.0.is_empty() {
+            return;
+        }
+        let touch = self.sum("ac", |bonus| !NOT_AGAINST_TOUCH.contains(&bonus.bonus_type.as_str()));
+        let flat_footed = self.sum("ac", |bonus| bonus.bonus_type != "Dodge");
+        let rows = [
+            ("defense.baseline_armor_class", "ac", self.total("ac")),
+            ("defense.touch_armor_class", "ac", touch),
+            ("defense.flat_footed_armor_class", "ac", flat_footed),
+            ("combat.combat_maneuver_bonus", "cmb", self.total("cmb")),
+            ("defense.combat_maneuver_defense", "cmd", self.total("cmd")),
+            ("initiative.total", "initiative", self.total("initiative")),
+            ("combat.baseline_melee_attack_bonus", "attack", self.total("attack")),
+            ("combat.baseline_ranged_attack_bonus", "attack", self.total("attack")),
+        ];
+        for (id, target, moved) in rows {
+            if !self.0.iter().any(|bonus| bonus.target == target) {
+                continue;
+            }
+            if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
+                row.value += moved;
+                row.detail = format!("{}; worn items: {}", row.detail, self.sources(target));
+            }
+        }
+        // Each custom AC bonus also goes in the part its type names, so 10 + the parts is the AC row.
+        for bonus in self.0.iter().filter(|bonus| bonus.target == "ac") {
+            let id = ArmorClassPart::of_bonus_type(Some(&bonus.bonus_type)).id();
+            if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
+                row.value += bonus.value;
+                row.detail = format!("{}; worn item: {:+} {} ({})", row.detail, bonus.value, bonus.bonus_type, bonus.item_name);
+            }
+        }
+
+        let mut targets: Vec<&str> = self.0.iter().map(|bonus| bonus.target.as_str()).collect();
+        targets.sort_unstable();
+        targets.dedup();
+        for target in targets {
+            let sources = self.sources(target);
+            if let Some(skill) = target.strip_prefix("skill:").filter(|skill| !skill_has_a_sheet_row(skill)) {
+                // `Perform` is one row, and a bonus on one Perform is on no other: the number prints
+                // under the panel with its subtype, where the panel prints what no row adds.
+                for bonus in self.0.iter().filter(|bonus| bonus.target == target) {
+                    sheet.feat_skill_bonuses.situational.push(FeatSkillNotFolded {
+                        skill: skill.to_owned(),
+                        rule_id: bonus.item_id.clone(),
+                        label: format!("{}: {:+} {} on {}", bonus.item_name, bonus.value, bonus.bonus_type, skill_words(skill)),
+                        reason: "no row of its own on the sheet".to_owned(),
+                    });
+                }
+            } else if let Some(skill) = target.strip_prefix("skill:") {
+                let id = format!("skill.trait_modifier.{skill}");
+                match sheet.explanations.iter_mut().find(|row| row.id == id) {
+                    Some(row) => {
+                        row.value += self.total(target);
+                        row.detail = format!("{}; worn items: {sources}", row.detail);
+                    }
+                    None => sheet.explanations.push(ExplanationDto { id, value: self.total(target), detail: format!("Worn items: {sources}") }),
+                }
+            }
+            sheet.explanations.push(ExplanationDto {
+                id: format!("custom_item.{}", target.replace(':', ".")),
+                value: self.total(target),
+                detail: format!("Worn items: {sources}"),
+            });
+        }
+
+        let effects = &mut sheet.corpus_derived.equipment_effects;
+        effects.armor_class_delta += self.total("ac");
+        for bonus in self.0.iter().filter(|bonus| bonus.target == "ac") {
+            let item_id = format!("{CUSTOM_ITEM_PREFIX}{}", bonus.item_id);
+            match effects.per_item.iter_mut().find(|row| row.item_id == item_id) {
+                Some(row) => row.armor_class_bonus = Some(row.armor_class_bonus.unwrap_or(0) + bonus.value),
+                None => effects.per_item.push(ResolvedEquipmentEffectDto {
+                    item_id,
+                    equipment_record_key: bonus.item_name.clone(),
+                    category: "custom".to_owned(),
+                    armor_class_bonus: Some(bonus.value),
+                    armor_class_enhancement: None,
+                    max_dex: None,
+                    spell_failure: None,
+                    armor_check_penalty: None,
+                    spell_resistance_bonus: None,
+                }),
+            }
+        }
+        for weapon in &mut sheet.weapon_damage {
+            for bonus in self.0.iter().filter(|bonus| bonus.target == "damage") {
+                weapon.feat_effects.push(WeaponFeatEffectDto { feat_key: bonus.item_name.clone(), damage_bonus: bonus.value });
+            }
+        }
+    }
+}
+
+/// Whether the Skills panel has a row for this skill: the sheet's skills, and the one row each of the
+/// three families with a subtype prints.
+fn skill_has_a_sheet_row(skill: &str) -> bool {
+    SHEET_SKILL_IDS.iter().any(|id| id.strip_prefix("skill:") == Some(skill)) || ["craft", "perform", "profession"].contains(&skill)
+}
+
+/// `perform_string_instruments` as the book writes it: `Perform (String Instruments)`.
+fn skill_words(skill: &str) -> String {
+    let title = |word: &str| {
+        let mut letters = word.chars();
+        letters.next().map(|first| first.to_ascii_uppercase().to_string() + letters.as_str()).unwrap_or_default()
+    };
+    let mut words = skill.split('_').map(title);
+    let family = words.next().unwrap_or_default();
+    let subtype: Vec<String> = words.collect();
+    if subtype.is_empty() {
+        family
+    } else {
+        format!("{family} ({})", subtype.join(" "))
+    }
+}
+
+/// The worn custom items that hold a slot, as `(name, slot)`.
+pub(crate) fn worn_custom_slots(custom: &CharacterCustomDto) -> Vec<(String, BodySlot)> {
+    custom
+        .equipment
+        .iter()
+        .filter(|record| record.worn)
+        .filter_map(|record| record.slot.filter(|slot| *slot != BodySlot::None).map(|slot| (record.name.clone(), slot)))
+        .collect()
+}
+
+/// The file beside the character, or nothing when it cannot be read; see [`WornItemBonuses::at_root`].
+pub(crate) fn custom_or_empty(root: &Path) -> CharacterCustomDto {
+    load_character_custom_at_root(root).unwrap_or_default()
+}
+
+/// Whether `record` goes onto the body in this change: it was not worn before, or not there. What is
+/// already on stays, whatever let it on, so a change refuses only what it puts on.
+fn newly_placed(previous: &CharacterCustomDto, record: &CustomRecordDto) -> bool {
+    record.worn && !previous.equipment.iter().any(|before| before.id == record.id && before.worn && before.slot == record.slot)
+}
+
+/// The first custom item this change puts on that does not fit, after everything else worn, in the
+/// slot check's words.
+fn slot_refusal(input: &CharacterInput, previous: &CharacterCustomDto, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
+    if custom.overrides.ignore_slot_limits {
+        return Ok(None);
+    }
+    let placed_in = |records: Vec<CustomRecordDto>| worn_custom_slots(&CharacterCustomDto { equipment: records, ..Default::default() });
+    let (fresh, settled): (Vec<_>, Vec<_>) = custom.equipment.iter().cloned().partition(|record| newly_placed(previous, record));
+    let mut worn = worn_stock_slots(input)?;
+    worn.extend(placed_in(settled));
+    for (name, slot) in placed_in(fresh) {
+        let refs: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
+        if let Some(refusal) = slot_conflict(&refs, slot)? {
+            return Ok(Some(refusal));
+        }
+        worn.push((name, slot));
+    }
+    Ok(None)
+}
+
+/// Whether the rules would refuse this worn custom item a place beside everything else worn: the
+/// override let it on. Asked of the one record, so another's overflow does not tag it.
+fn custom_item_overflows_its_slot(input: &CharacterInput, custom: &CharacterCustomDto, index: usize) -> Result<bool, String> {
+    let Some(slot) = custom.equipment[index].slot.filter(|slot| *slot != BodySlot::None) else {
+        return Ok(false);
+    };
+    let mut others = custom.clone();
+    others.equipment.remove(index);
+    let mut worn = worn_stock_slots(input)?;
+    worn.extend(worn_custom_slots(&others));
+    let refs: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
+    Ok(slot_conflict(&refs, slot)?.is_some())
+}
+
+/// The rows for the custom items at `indices`, newly worn under `ignore_slot_limits`.
+fn slot_override_rows(input: &CharacterInput, custom: &CharacterCustomDto, indices: impl Iterator<Item = usize>) -> Result<Vec<AdmittedRecordDto>, String> {
+    let mut rows = Vec::new();
+    for index in indices {
+        if custom.overrides.ignore_slot_limits && custom_item_overflows_its_slot(input, custom, index)? {
+            rows.push(AdmittedRecordDto::copy(&format!("{CUSTOM_ITEM_PREFIX}{}", custom.equipment[index].id), 0, OverrideFlag::IgnoreSlotLimits));
+        }
+    }
+    Ok(rows)
+}
+
+/// Writes `custom.json` and what the ledger becomes for it, the ledger read before anything is written.
+fn write_custom_and_ledger(root: &Path, previous: &CharacterCustomDto, custom: &CharacterCustomDto, admitted: Vec<AdmittedRecordDto>) -> Result<(), String> {
+    let ledger = ledger_after_custom_change_at_root(root, previous, custom, admitted)?;
+    write_custom(root, custom)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
+    Ok(())
+}
+
+/// The same bound a grant's score keeps, on the score the sheet computes from.
+fn worn_score_refusal(scores: &AbilityScores, custom: &CharacterCustomDto) -> Option<String> {
+    let worn = WornItemBonuses::of(custom);
+    let mut scores = scores.clone();
+    ABILITIES.iter().enumerate().find_map(|(slot, name)| {
+        let moved = worn.total(&format!("ability:{name}"));
+        let next = i32::from(*score_mut(&mut scores, slot)) + i32::from(moved);
+        (moved != 0 && !(1..=60).contains(&next)).then(|| format!("the worn items would make {name} {next}, outside 1..=60"))
+    })
+}
+
+/// Wears, stows or leaves behind one custom item, the backend half of the Equipment control for a `custom:<id>` row.
+/// A refusal is `Blocked`, as a stock item's is, and leaves both files as they were. Past that,
+/// `mutate_saved_character_at_root` supplies the recompute gate and the new revision.
+pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state: ActiveState, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    let previous = load_character_custom_at_root(root)?;
+    let mut custom = previous.clone();
+    let mut admitted = Vec::new();
+    let Some(index) = custom.equipment.iter().position(|record| record.id == id) else {
+        return Err(format!("'{CUSTOM_ITEM_PREFIX}{id}' cannot change state: this character does not carry it"));
+    };
+    custom.equipment[index].worn = active_state == ActiveState::EquippedActive;
+    custom.equipment[index].left_behind = active_state == ActiveState::Absent;
+    if custom.equipment[index].worn {
+        let existing = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+        let refusal = match slot_refusal(&existing.character_input, &previous, &custom)? {
+            Some(refusal) => Some(("equipment.slot_taken", refusal)),
+            None => worn_score_refusal(&existing.character_input.chosen.ability_scores, &custom).map(|refusal| ("equipment.score_range", refusal)),
+        };
+        if let Some((id, message)) = refusal {
+            return Ok(CreateCharacterResponse::Blocked {
+                diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
+            });
+        }
+        admitted = slot_override_rows(&existing.character_input, &custom, std::iter::once(index))?;
+    }
+    let outcome = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
+    if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
+        write_custom_and_ledger(root, &previous, &custom, admitted)?;
+    }
+    Ok(outcome)
+}
+
+fn write_custom(root: &Path, custom: &CharacterCustomDto) -> Result<(), String> {
+    let path = root.join(CUSTOM_FILE_NAME);
+    let json = serde_json::to_string_pretty(custom).map_err(|err| format!("failed to serialize custom data: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    crate::character_hub::after_write(root);
+    Ok(())
+}
+
+/// Copies the file beside one character to beside another; no file, nothing to copy.
+pub(crate) fn copy_character_custom(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(CUSTOM_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(CUSTOM_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
+/// Writes what an imported file states, as it states it: its ability grants are already in the
+/// file's scores, so this is not a save that applies them.
+pub(crate) fn restore_character_custom_at_root(root: &Path, custom: &CharacterCustomDto) -> Result<(), String> {
+    write_custom(root, custom)
+}
+
+pub(crate) fn load_character_custom_at_root(root: &Path) -> Result<CharacterCustomDto, String> {
+    let path = root.join(CUSTOM_FILE_NAME);
+    if !path.exists() {
+        return Ok(CharacterCustomDto::default());
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    serde_json::from_str(&contents).map_err(|err| format!("{}: invalid custom JSON: {err}", path.display()))
+}
+
+/// Validates `custom`, applies the change in ability-grant totals to the saved ability scores (a
+/// new revision, only when something changed), then writes `custom.json`. Nothing is written when
+/// validation fails or the character would no longer compute.
+pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCustomDto, saved_at: &str) -> Result<(), String> {
+    validate_custom(custom)?;
+    let existing = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let previous = load_character_custom_at_root(root)?;
+    let (before, after) = (ability_totals(&previous), ability_totals(custom));
+    let delta: Vec<i32> = (0..6).map(|slot| after[slot] - before[slot]).collect();
+
+    if let Some(refusal) = slot_refusal(&existing.character_input, &previous, custom)? {
+        return Err(refusal);
+    }
+    let mut scores = existing.character_input.chosen.ability_scores.clone();
+    for (slot, change) in delta.iter().enumerate() {
+        let next = i32::from(*score_mut(&mut scores, slot)) + change;
+        if !(1..=60).contains(&next) {
+            return Err(format!("the grants would make {} {next}, outside 1..=60", ABILITIES[slot]));
+        }
+        *score_mut(&mut scores, slot) = next as i16;
+    }
+    if let Some(refusal) = worn_score_refusal(&scores, custom) {
+        return Err(refusal);
+    }
+
+    if delta.iter().any(|change| *change != 0) {
+        let outcome = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |input| {
+            for (slot, change) in delta.iter().enumerate() {
+                let score = score_mut(&mut input.chosen.ability_scores, slot);
+                *score = (i32::from(*score) + change) as i16;
+            }
+        })?;
+        if let CreateCharacterResponse::Blocked { diagnostics } = outcome {
+            return Err(format!(
+                "the character no longer computes with these grants: {}",
+                diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; ")
+            ));
+        }
+    }
+
+    let newly_worn = (0..custom.equipment.len()).filter(|index| newly_placed(&previous, &custom.equipment[*index]));
+    let admitted = slot_override_rows(&existing.character_input, custom, newly_worn)?;
+    write_custom_and_ledger(root, &previous, custom, admitted)
+}
+
+/// The copy key a custom item is held under (`list_held_equipment`, `equipment_sets.json`).
+pub(crate) fn custom_copy(record: &CustomRecordDto) -> CopyKey {
+    CopyKey { item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id), bonus: 0, ordinal: 0 }
+}
+
+/// The capacity of the custom container `item_id` names (`custom:<id>`), if it is one.
+pub(crate) fn custom_container_capacity(custom: &CharacterCustomDto, item_id: &str) -> Option<f64> {
+    let id = item_id.strip_prefix(CUSTOM_ITEM_PREFIX)?;
+    custom.equipment.iter().find(|record| record.id == id)?.container_capacity_lbs
+}
+
+/// SD-41 E2.3 (`decisions.md §25`): an item made at the table, with no corpus base.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateCustomItemRequest {
+    pub character_id: String,
+    pub name: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default)]
+    pub weight_lbs: Option<f64>,
+    #[serde(default)]
+    pub price_gp: Option<f64>,
+    #[serde(default)]
+    pub container_capacity_lbs: Option<f64>,
+    #[serde(default)]
+    pub slot: Option<BodySlot>,
+    pub saved_at: String,
+    #[serde(default)]
+    pub price_mode: PriceMode,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum CreateCustomItemResponse {
+    /// `custom` with the new record last, the balance after the price, and the new copy.
+    Created { custom: Box<CharacterCustomDto>, money: CharacterMoneyDto, copy: CopyKey },
+    Blocked { diagnostics: Vec<DiagnosticDto> },
+}
+
+/// Writes a new custom equipment record and charges its price (above 0) at `price_mode`, through
+/// the money path a purchase takes: `Cashless` charges nothing, the other two 100%; short of funds
+/// it is `Blocked` and nothing is written. The item is named in no set, so it is Carried in every
+/// one (`decisions.md §5.3, §10`). An invalid record (no name, a negative weight) is an error.
+pub(crate) fn create_custom_item_at_root(root: &Path, request: &CreateCustomItemRequest) -> Result<CreateCustomItemResponse, String> {
+    let mut custom = load_character_custom_at_root(root)?;
+    let record = CustomRecordDto {
+        id: uuid::Uuid::new_v4().to_string(),
+        name: request.name.trim().to_owned(),
+        description: request.description.clone(),
+        slot: request.slot,
+        weight_lbs: request.weight_lbs,
+        price_gp: request.price_gp,
+        container_capacity_lbs: request.container_capacity_lbs,
+        ..Default::default()
+    };
+    let copy = custom_copy(&record);
+    custom.equipment.push(record);
+    validate_custom(&custom)?;
+    let cost_copper = match request.price_mode {
+        PriceMode::Cashless => 0,
+        PriceMode::Standard | PriceMode::CharacterBuild => request.price_gp.filter(|gp| *gp > 0.0).map_or(0, codex::rules_core::money::gp_to_copper),
+    };
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return Ok(CreateCustomItemResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.insufficient_funds".to_owned(),
+                message: format!(
+                    "{:?} costs {cost_copper} cp but the character's balance is only {balance_copper} cp. The item was not made and no funds were charged.",
+                    request.name.trim()
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+    save_character_custom_at_root(root, &custom, &request.saved_at)?;
+    let money = if cost_copper > 0 {
+        adjust_character_money_at_root(root, -i64::try_from(cost_copper).map_err(|_| "the price overflows a signed 64-bit total".to_owned())?)?
+    } else {
+        load_character_money_at_root(root)?
+    };
+    Ok(CreateCustomItemResponse::Created { custom: Box::new(custom), money, copy })
+}
+
+#[tauri::command]
+pub fn create_custom_item(app: tauri::AppHandle, request: CreateCustomItemRequest) -> Result<CreateCustomItemResponse, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    create_custom_item_at_root(&root, &request)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterCustomRequest {
+    pub character_id: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveCharacterCustomRequest {
+    pub character_id: String,
+    pub custom: CharacterCustomDto,
+    pub saved_at: String,
+}
+
+#[tauri::command]
+pub fn load_character_custom(app: tauri::AppHandle, request: CharacterCustomRequest) -> Result<CharacterCustomDto, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    load_character_custom_at_root(&root)
+}
+
+#[tauri::command]
+pub fn save_character_custom(app: tauri::AppHandle, request: SaveCharacterCustomRequest) -> Result<CharacterCustomDto, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    save_character_custom_at_root(&root, &request.custom, &request.saved_at)?;
+    Ok(request.custom)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::character_hub::{load_saved_character_at_root, seed_default_characters_at};
+
+    /// The AC row, the printed AC and the seven parts, after asserting `10 + Σ parts` is both.
+    fn armor_class_parts_custom_hold(case: &str, sheet: &LoadSavedCharacterResponse) -> (i16, Vec<(String, i16)>) {
+        let row = sheet.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").expect("the AC row").value;
+        let printed = sheet.snapshot.as_ref().expect("a snapshot").baseline_armor_class;
+        let parts: Vec<(String, i16)> =
+            sheet.explanations.iter().filter(|row| row.id.starts_with("defense.armor_class.")).map(|row| (row.id.clone(), row.value)).collect();
+        let total = 10 + parts.iter().map(|(_, value)| value).sum::<i16>();
+        assert_eq!((row, total), (printed, printed), "{case}: the AC row and 10 + {parts:?} are the printed AC");
+        (printed, parts)
+    }
+
+    fn part(sheet: &LoadSavedCharacterResponse, name: &str) -> (i16, String) {
+        let row = sheet.explanations.iter().find(|row| row.id == format!("defense.armor_class.{name}")).expect("the part");
+        (row.value, row.detail.clone())
+    }
+
+    fn worn(id: &str, name: &str, bonus_type: &str, value: i32) -> CustomRecordDto {
+        CustomRecordDto {
+            id: id.to_owned(),
+            name: name.to_owned(),
+            bonuses: vec![CustomBonusDto { target: "ac".to_owned(), bonus_type: bonus_type.to_owned(), value }],
+            worn: true,
+            ..Default::default()
+        }
+    }
+
+    /// Aldric wearing a custom `+1 Deflection` ring, then also a `-1` untyped curse: each lands in the
+    /// AC row and in the part its type names, so the parts still add up to the AC beside them.
+    #[test]
+    fn armor_class_parts_custom_items_land_in_the_row_and_their_part() {
+        let app_data = std::env::temp_dir().join(format!("codex-armor-class-parts-custom-{}", std::process::id()));
+        std::fs::create_dir_all(&app_data).expect("a temp dir");
+        seed_default_characters_at(&app_data, "0.0.0-test").expect("starter seeding succeeds");
+        let root = app_data.join("characters").join("00000000-0000-0000-0000-000000000001");
+        let before = load_saved_character_at_root(&root).expect("Aldric loads");
+        let (ac, _) = armor_class_parts_custom_hold("aldric", &before);
+
+        let ring = worn("r1", "Ring of Hats", "Deflection", 1);
+        let custom = CharacterCustomDto { equipment: vec![ring.clone()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-11-12T00:00:00Z").expect("the ring saves");
+        let ringed = load_saved_character_at_root(&root).expect("loads");
+        let (ringed_ac, _) = armor_class_parts_custom_hold("aldric + ring", &ringed);
+        let deflection = part(&ringed, "deflection");
+        assert_eq!((ringed_ac, deflection.0), (ac + 1, part(&before, "deflection").0 + 1));
+        assert!(deflection.1.contains("Ring of Hats"), "the part names the item: {}", deflection.1);
+
+        let custom = CharacterCustomDto { equipment: vec![ring, worn("c1", "Curse", "Untyped", -1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-11-12T00:00:01Z").expect("the curse saves");
+        let both = load_saved_character_at_root(&root).expect("loads");
+        std::fs::remove_dir_all(&app_data).ok();
+        let (both_ac, _) = armor_class_parts_custom_hold("aldric + ring + curse", &both);
+        let misc = part(&both, "misc");
+        assert_eq!(
+            (both_ac, part(&both, "deflection").0, misc.0),
+            (ac, part(&before, "deflection").0 + 1, part(&before, "misc").0 - 1)
+        );
+        assert!(misc.1.contains("Curse"), "the part names the item: {}", misc.1);
+    }
+}

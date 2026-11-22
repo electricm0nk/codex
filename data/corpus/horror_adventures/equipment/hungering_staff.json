@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 30000.0,
+    "description": "Staff does not regain charge from Magic Mouth until spell is dismissed or discharged; Beast Shape I only allows forms with bite attacks",
+    "key": "Hungering Staff",
+    "name": "Hungering Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=1|TIMEUNIT=Charge|CASTERLEVEL=9|Magic Mouth"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=2|TIMEUNIT=Charges|CASTERLEVEL=9|Beast Shape I"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=3|TIMEUNIT=Charges|CASTERLEVEL=9|Hungry Pit"
+      },
+      {
+        "key": "SPROP",
+        "value": "Staff does not regain charge from Magic Mouth until spell is dismissed or discharged; Beast Shape I only allows forms with bite attacks"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Hungering Staff",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

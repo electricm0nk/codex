@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can set ranger traps two additional times per day.",
+    "key": "Extra Ranger Trap",
+    "name": "Extra Ranger Trap",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Trapper ~ Trap"
+      },
+      {
+        "key": "DESC",
+        "value": "You can set ranger traps two additional times per day."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can set ranger traps two additional times per day."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Extra Ranger Trap",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

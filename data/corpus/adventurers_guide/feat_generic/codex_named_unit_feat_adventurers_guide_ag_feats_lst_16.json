@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:57:27Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_16)",
+    "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_16)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 16,
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_16)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,raw_tokens,name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_feats.lst:16"
+  }
+}

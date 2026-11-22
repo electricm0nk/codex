@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10000.0,
+    "description": "gain trap spotter insight if wearer has insights; when passing within 10 ft. of a detected trap, goggles black out everything but the trap",
+    "key": "Cowardly Cryptic's Goggles",
+    "name": "Cowardly Cryptic's Goggles",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Eyes"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.410"
+      },
+      {
+        "key": "SPROP",
+        "value": "gain trap spotter insight if wearer has insights; when passing within 10 ft. of a detected trap, goggles black out everything but the trap"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Cowardly Cryptic's Goggles",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

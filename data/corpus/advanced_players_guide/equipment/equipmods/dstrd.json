@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "+2 profane bonus to AC against attacks from the chosen opponent.|PREABILITY:1,CATEGORY=Special Ability,Smite Good,Challenge",
+    "key": "DSTRD",
+    "name": "DSTRD",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Dastard ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Bracer"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 profane bonus to AC against attacks from the chosen opponent.|PREABILITY:1,CATEGORY=Special Ability,Smite Good,Challenge"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "record_key": "DSTRD",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

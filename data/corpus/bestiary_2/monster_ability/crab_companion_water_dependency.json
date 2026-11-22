@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Crab Companion ~ Water Dependency",
+    "delivery": "Extraordinary",
+    "description": "Giant crabs can survive out of the water for 1 hour per point of Constitution. Beyond this limit, a giant crab runs the risk of suffocation, as if it were drowning.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:crab_companion_water_dependency",
+    "name": "Water Dependency",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Giant crabs can survive out of the water for 1 hour per point of Constitution. Beyond this limit, a giant crab runs the risk of suffocation, as if it were drowning."
+      },
+      {
+        "key": "KEY",
+        "value": "Crab Companion ~ Water Dependency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.50",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2186,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Crab Companion ~ Water Dependency",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Deny the Reaper",
+    "category": "Story",
+    "name": "Deny the Reaper",
+    "description": "[Not Implemented] The lives you could not save stay with you to your final breath. You gain a +2 bonus on Heal checks. If you have 10 or more ranks in Heal, this bonus increases to +4. You can apply first aid as a move action and don't take a penalty when treating deadly wounds without a healing kit. Goal:Bring an ally back from the dead, including by using breath of life or reincarnate. Completion Benef it:You and each ally within 10 feet of you gain a +2 bonus on saves against death effects. In addition, once per day you can spontaneously convert any 5th-level or higher conjuration (healing) spell into breath of life.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must have witnessed the death of a close companion in battle-a death that could have been prevented, such as from bleeding, failure to stabilize, or ongoing poison damage-or have the Death in the Family or The War background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 12,
+    "record_key": "Deny the Reaper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

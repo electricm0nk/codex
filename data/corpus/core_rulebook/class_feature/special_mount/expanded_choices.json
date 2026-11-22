@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Special Mount ~ Expanded Choices",
+    "name": "Expanded Choices",
+    "class": "Special Mount",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Mount ~ Expanded Choices"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialMountSelection.SpecialMountAlternate"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Special Mount|ANY"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1392,
+    "record_key": "Special Mount ~ Expanded Choices"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

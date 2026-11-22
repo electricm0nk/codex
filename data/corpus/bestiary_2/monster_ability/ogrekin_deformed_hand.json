@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ogrekin ~ Deformed Hand",
+    "delivery": null,
+    "description": "One hand can't wield weapons; -2 penalty on attack rolls with two-handed weapons.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ogrekin_deformed_hand",
+    "name": "Deformed Hand",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.TwoHanded|TOHIT|-2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "One hand can't wield weapons; -2 penalty on attack rolls with two-handed weapons."
+      },
+      {
+        "key": "KEY",
+        "value": "Ogrekin ~ Deformed Hand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OgrekinDisadvantageousDeformity"
+      }
+    ],
+    "source_page": "p.204",
+    "traits": [
+      "OgrekinDisadvantageousDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 917,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ogrekin ~ Deformed Hand",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

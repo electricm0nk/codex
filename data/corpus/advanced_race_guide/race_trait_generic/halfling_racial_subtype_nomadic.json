@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling Racial Subtype ~ Nomadic",
+    "name": "Nomadic",
+    "description": "These halflings were born on the road and most follow it until the end of their days. They travel fast and light and never miss a chance for either profit or adventure. These halflings have the fleet-footed, polyglot, and wanderlust alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling Racial Subtype ~ Nomadic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Halfling Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling Racial Subtype ~ Nomadic],[!PREFACT:1,ABILITIES,Halfling_ReplaceSpeed=true,Halfling_ReplaceFearless=true,Halfling_ReplaceHalflingLuck=true,Halfling_ReplaceKeenSenses=true,Halfling_ReplaceSureFooted=true,Halfling_ReplaceLanguages=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "These halflings were born on the road and most follow it until the end of their days. They travel fast and light and never miss a chance for either profit or adventure. These halflings have the fleet-footed, polyglot, and wanderlust alternate racial traits."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "LANG|!PC[!TYPE=Secret]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Nomadic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Halfling Racial Trait|NORMAL|Halfling ~ Fleet of Foot|Halfling ~ Polyglot (%LIST)|Halfling ~ Wanderlust"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2186,
+    "record_key": "Halfling Racial Subtype ~ Nomadic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

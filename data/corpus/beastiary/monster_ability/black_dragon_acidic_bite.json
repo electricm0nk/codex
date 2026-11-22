@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Black Dragon ~ Acidic Bite",
+    "delivery": "Supernatural",
+    "description": "At old age, a black dragon's bite deals an additional 2d6 points of acid damage. An ancient dragon's damage increases to 4d6, and a great wrym's to 6d6.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:black_dragon_acidic_bite",
+    "name": "Acidic Bite",
+    "owners": [
+      "beastiary:monster:dragon_black"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d6)|AcidicBiteDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidicBiteDice|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidicBiteDice|2|PREVARGTEQ:DragonAgeCategory,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidicBiteDice|2|PREVARGTEQ:DragonAgeCategory,12"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AcidicBiteDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At old age, a black dragon's bite deals an additional 2d6 points of acid damage. An ancient dragon's damage increases to 4d6, and a great wrym's to 6d6."
+      },
+      {
+        "key": "KEY",
+        "value": "Black Dragon ~ Acidic Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.92",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 404,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Black Dragon ~ Acidic Bite",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

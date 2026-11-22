@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Wandering Trail",
+    "school": "Transmutation",
+    "level": 6,
+    "description": "You cause the trail left by the targets within range to automatically reroute, potentially taking any course within the area. Your modification of the trail within the spell's area can result in a trail at least half the original length or up to twice the original length. If the trail continues beyond the spell's range, you must leave it connecting at that point on the edge of the spell's range. If a tracking creature exceeds the DC of the skill check to follow the trail by an amount equal to your caster level, the tracker recognizes that the trail has been manipulated by this spell, although it cannot see the trail's true nature unless it uses magical means, such as true seeing."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 33,
+    "record_key": "Wandering Trail"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

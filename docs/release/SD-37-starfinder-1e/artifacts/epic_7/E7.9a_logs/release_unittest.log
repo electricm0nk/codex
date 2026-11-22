@@ -1,0 +1,12 @@
+............................./usr/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed <socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 34945)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.........../usr/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed <socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 41475)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..............
+----------------------------------------------------------------------
+Ran 54 tests in 15.584s
+
+OK
+exit=0

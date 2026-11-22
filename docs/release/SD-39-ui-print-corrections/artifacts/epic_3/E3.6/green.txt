@@ -1,0 +1,22 @@
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-b51aea73009681a5)
+test character_hub::tests::market_attach_price_cashless_refused_when_no_copy_is_held ... ok
+test character_hub::tests::market_attach_price_cashless_charged_nothing ... ok
+test character_hub::tests::market_attach_price_character_build_charged ... ok
+test character_hub::tests::market_attach_price_character_build_refused_one_copper_short ... ok
+test character_hub::tests::market_attach_price_cashless_sold_back_moves_no_money ... ok
+test character_hub::tests::market_attach_price_request_carries_the_mode_on_the_wire ... ok
+test character_hub::tests::market_attach_price_a_held_offer_is_credited ... ok
+test character_hub::tests::market_attach_price_character_build_sold_back_nets_zero ... ok
+test character_hub::tests::market_attach_price_credits_the_copy_it_attaches_to ... ok
+test character_hub::tests::market_attach_price_standard_charged ... ok
+test character_hub::tests::market_attach_price_standard_refused_one_copper_short ... ok
+test character_hub::tests::market_attach_price_standard_charges_the_whole_balance_when_it_just_covers ... ok
+test character_hub::tests::market_attach_price_standard_sold_back_loses_half ... ok
+test character_hub::tests::market_attach_price_a_row_with_no_such_offer_attaches_free ... ok
+test character_hub::tests::market_attach_price_the_mint_shape_never_gains ... ok
+test character_hub::tests::market_attach_price_a_lower_or_equal_bonus_costs_nothing ... ok
+test character_hub::tests::market_attach_price_a_flat_priced_modifier_keeps_its_price_and_cashless_skips_it ... ok
+test character_hub::tests::market_attach_price_is_the_market_row_less_the_catalog_price ... ok
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 974 filtered out; finished in 51.95s
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/packaged_resources-693e68cf45da1662)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s

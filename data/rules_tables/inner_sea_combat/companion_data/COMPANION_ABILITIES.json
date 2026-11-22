@@ -1,0 +1,170 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_combat/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_combat",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion Advancement ~ Griffon",
+      "name": "Companion Advancement (Griffon)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Griffon)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 5
+    },
+    {
+      "key": "Companion Advancement ~ Hippocampus",
+      "name": "Companion Advancement (Hippocampus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Hippocampus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Companion Advancement ~ Hippogriff",
+      "name": "Companion Advancement (Hippogriff)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Hippogriff)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 7
+    },
+    {
+      "key": "Companion Advancement ~ Worg",
+      "name": "Companion Advancement (Worg)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Worg)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 8
+    },
+    {
+      "key": "Unable to carry a rider while flying",
+      "name": "Unable to carry a rider while flying",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuality"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Griffon)",
+        "Companion (Hippogriff)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Worg ~ Mastery",
+      "name": "Mastery (7th Level)",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuality"
+      ],
+      "description": "Once per day as a standard action, the worg can make a fearful howl. This functions as the fear cone (30 ft.) version of the fear universal monster rule.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Worg)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "isc_abilities_companion",
+      "source_line": 10
+    }
+  ]
+}

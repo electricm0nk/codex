@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:21:37Z",
+  "data": {
+    "corpus_key": "Homunculus Companion ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury frequency 1/minute for 60 minutes, effect sleep for 1 minute, cure 1 save, DC %1.",
+    "description_variables": [
+      "12+TL/2+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "occult_adventures:monster_ability:homunculus_companion_poison",
+    "name": "Poison",
+    "owners": [],
+    "source_page": "p.113",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 190,
+    "record_key": "Homunculus Companion ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Forlarren ~ Remorse",
+    "delivery": "Extraordinary",
+    "description": "Whenever a forlarren kills a living creature, it must make a DC 15 Will save to avoid becoming overwhelmed with remorse.  If it fails this save, the forlarren becomes nauseated for 1d6 rounds.  This is a mind-affecting effect.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:forlarren_remorse",
+    "name": "Remorse",
+    "owners": [
+      "bestiary_2:monster:forlarren"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a forlarren kills a living creature, it must make a DC 15 Will save to avoid becoming overwhelmed with remorse.  If it fails this save, the forlarren becomes nauseated for 1d6 rounds.  This is a mind-affecting effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Forlarren ~ Remorse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.125",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 542,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Forlarren ~ Remorse",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

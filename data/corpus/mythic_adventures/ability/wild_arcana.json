@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Wild Arcana",
+    "name": "Wild Arcana",
+    "description": "As a standard action, you can expend one use of mythic power to cast any one arcane spell without expending a prepared spell or spell slot. The spell must be on one of your arcane class spell lists, must be of a level that you can cast with that arcane spellcasting class, and must have a casting time of \"1 standard action\" (or less). You don't need to have the spell prepared, nor does it need to be on your list of spells known. When casting a spell in this way, you treat your caster level as 2 levels higher for the purpose of any effect dependent on level. You can apply any metamagic feats you know to this spell, but its total adjusted level can't be greater than that of the highest-level arcane spell you can cast from that spellcasting class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Wild Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.Archmage Path Feature.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend one use of mythic power to cast any one arcane spell without expending a prepared spell or spell slot. The spell must be on one of your arcane class spell lists, must be of a level that you can cast with that arcane spellcasting class, and must have a casting time of \"1 standard action\" (or less). You don't need to have the spell prepared, nor does it need to be on your list of spells known. When casting a spell in this way, you treat your caster level as 2 levels higher for the purpose of any effect dependent on level. You can apply any metamagic feats you know to this spell, but its total adjusted level can't be greater than that of the highest-level arcane spell you can cast from that spellcasting class."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 94,
+    "record_key": "Mythic Path Feature ~ Wild Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,49 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Profession (Gardener)",
+    "name": "Profession (Gardener)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "WIS"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wisdom.Profession.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gardener)|3|TYPE=ClassSkill|PRECSKILL:1,Profession (Gardener)|PRESKILL:1,Profession (Gardener)=1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 78,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "record_key": "Profession (Gardener)",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

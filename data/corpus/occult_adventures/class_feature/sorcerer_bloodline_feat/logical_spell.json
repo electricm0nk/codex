@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Logical Spell",
+    "name": "Logical Spell",
+    "class": "Sorcerer",
+    "description": "You can eschew emotional components by exercising logic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Logical Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_LogicalSpell,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can eschew emotional components by exercising logic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Logical Spell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "A logical spell can be cast without emotion components. Spells that don't require emotion components are not affected. A logical spell uses up a spell slot 1 level higher than the spell's actual level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1831,
+    "record_key": "Sorcerer Bloodline Feat ~ Logical Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

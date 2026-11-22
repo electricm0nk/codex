@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Giant Vulture ~ Diseased",
+    "delivery": "Extraordinary",
+    "description": "Due to their filthy eating habits and constant exposure to decaying flesh, giant vultures are harbingers of disease-much more so than the standard vulture. Any creature bitten by a giant vulture has a 10%% chance of being exposed to filth fever, blinding sickness, or a similar disease (Core Rulebook 557). Once this check is made, a victim can no longer be infected by this particular giant vulture, though attacks by different giant vultures are resolved normally and may result in multiple illnesses. While vultures aren't immune to all diseases, they do gain a +4 racial bonus on all saving throws against such ailments.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:giant_vulture_diseased",
+    "name": "Diseased",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Due to their filthy eating habits and constant exposure to decaying flesh, giant vultures are harbingers of disease-much more so than the standard vulture. Any creature bitten by a giant vulture has a 10%% chance of being exposed to filth fever, blinding sickness, or a similar disease (Core Rulebook 557). Once this check is made, a victim can no longer be infected by this particular giant vulture, though attacks by different giant vultures are resolved normally and may result in multiple illnesses. While vultures aren't immune to all diseases, they do gain a +4 racial bonus on all saving throws against such ailments."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Vulture ~ Diseased"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "TYPE",
+        "value": "GiantVultureRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.284",
+    "traits": [
+      "GiantVultureRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1676,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Giant Vulture ~ Diseased",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

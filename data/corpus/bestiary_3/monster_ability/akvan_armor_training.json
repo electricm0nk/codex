@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Akvan ~ Armor Training",
+    "delivery": "Extraordinary",
+    "description": "An akvan is created wearing armor, and is naturally experienced in its use. An akvan possesses the armor training ability of a 15th-level fighter.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:akvan_armor_training",
+    "name": "Armor Training",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fighter ~ Armor Training"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingLVL|15|TYPE=Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An akvan is created wearing armor, and is naturally experienced in its use. An akvan possesses the armor training ability of a 15th-level fighter."
+      },
+      {
+        "key": "KEY",
+        "value": "Akvan ~ Armor Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "AkvanRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "AkvanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 708,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Akvan ~ Armor Training",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

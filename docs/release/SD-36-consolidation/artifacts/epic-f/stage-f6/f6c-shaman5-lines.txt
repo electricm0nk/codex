@@ -1,0 +1,20 @@
+# class_census --sheet-dump class:shaman:5 --with-sheet-rules, LINE rows naming a domain, a spirit or the shaman's count
+## before F6c (tranche/16 package)
+LINE| id=advanced_class_guide:class:shaman#bonus1 kind=class label=Shaman (domains) printed=+1 condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit kind=class_feature label=Spirit printed=+1 condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_animal kind=class_feature label=Spirit Animal printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_life kind=class_feature label=Life (Spirit) printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_magic kind=class_feature label=Spirit Magic printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_wandering_spirit kind=class_feature label=Wandering Spirit printed=+1 condition=-
+LINE| id=advanced_class_guide:domain:life_spirit kind=domain label=Life (Spirit) printed= condition=-
+
+## after F6c (the count and the Life (Spirit) DOMAIN record print no line; the spirit class features still print)
+LINE| id=advanced_class_guide:class_feature:shaman_spirit kind=class_feature label=Spirit printed=+1 condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_animal kind=class_feature label=Spirit Animal printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_life kind=class_feature label=Life (Spirit) printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_spirit_magic kind=class_feature label=Spirit Magic printed= condition=-
+LINE| id=advanced_class_guide:class_feature:shaman_wandering_spirit kind=class_feature label=Wandering Spirit printed=+1 condition=-
+
+## held set, after F6c (the DOMAIN record is still held)
+HELD| advanced_class_guide:class_feature:life_spirit_channel
+HELD| advanced_class_guide:domain:life_spirit

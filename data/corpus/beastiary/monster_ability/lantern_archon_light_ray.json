@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lantern Archon ~ Light Ray",
+    "delivery": "Extraordinary",
+    "description": "A lantern archon can fire beams of light to damage foes. These light rays have a maximum range of 30 feet. This attack overcomes damage reduction of any type.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:lantern_archon_light_ray",
+    "name": "Light Ray",
+    "owners": [
+      "beastiary:monster:archon_lantern"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A lantern archon can fire beams of light to damage foes. These light rays have a maximum range of 30 feet. This attack overcomes damage reduction of any type."
+      },
+      {
+        "key": "KEY",
+        "value": "Lantern Archon ~ Light Ray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.20",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 116,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Lantern Archon ~ Light Ray",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

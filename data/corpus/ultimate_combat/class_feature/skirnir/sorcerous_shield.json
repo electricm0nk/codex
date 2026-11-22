@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skirnir ~ Sorcerous Shield",
+    "name": "Sorcerous Shield",
+    "class": "Skirnir",
+    "description": "At 1st level, skirnirs are proficient with all types of shields, including tower shields, and do not suffer an arcane spell failure chance when casting magus spells while using a shield. They treat their magus levels as their fighter levels for the purpose of qualifying for shield-related feats. This ability replaces spell combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirnir ~ Sorcerous Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreatShieldFocusQualifyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, skirnirs are proficient with all types of shields, including tower shields, and do not suffer an arcane spell failure chance when casting magus spells while using a shield. They treat their magus levels as their fighter levels for the purpose of qualifying for shield-related feats. This ability replaces spell combat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ShieldProfTower"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Shield Focus Qualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreatShieldFocusQualifyLVL|MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 51,
+    "record_key": "Skirnir ~ Sorcerous Shield"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

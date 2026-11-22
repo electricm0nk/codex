@@ -1,0 +1,42 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5000.0,
+    "description": "Damage 10d6 20/x3 Bludgeoning; Crew 40, Speed 15 ft.",
+    "key": "Ram (Colossal)",
+    "name": "Ram (Colossal)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Siege.Ram"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "SPROP",
+        "value": "Damage 10d6 20/x3 Bludgeoning; Crew 40, Speed 15 ft."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_general.lst",
+    "record_key": "Ram (Colossal)",
+    "sha256": "1fd97ef34d10dba3fd2001b6a93f9b80c063aea5b949c828109b2ec66525d195"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Craft Crystalline Focus",
+    "category": "ItemCreation",
+    "name": "Craft Crystalline Focus",
+    "description": "You can craft crystalline focus items that harness psionic energy such as that for a mind blade, mind armor, or astral suit.",
+    "prerequisites": [
+      "PREVARGTEQ:MaxManifesterLVL,3",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 57,
+    "record_key": "Craft Crystalline Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

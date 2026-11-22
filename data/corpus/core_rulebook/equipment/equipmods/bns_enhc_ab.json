@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Enhancement bonus to ability %CHOICE",
+    "key": "BNS_ENHC_AB",
+    "name": "BNS_ENHC_AB",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "%CHOICE",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Ability / Enhancement"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield.Weapon.Belt.Body.Chest.Eyes.Feet.Hands.Head.Headband.Neck.Ring.Shoulders.Wrist.Instrument.Staff.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "(1000*%CHOICE*%CHOICE)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.550"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PRETYPE:1,Enhancement,ArmorEnhancement,ShieldEnhancement,WeaponEnhancement],[PRETYPE:1,Armor,Shield,Weapon]],[PRETYPE:1,Belt,Body,Chest,Eyes,Feet,Hands,Head,Headband,Neck,Ring,Shoulders,Wrist,Instrument,Staff,Rod]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Enhancement bonus to ability %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STATBONUS|MIN=-6|MAX=6|TITLE=Ability"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 600,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "BNS_ENHC_AB",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

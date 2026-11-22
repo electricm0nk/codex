@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Modify Matter",
+    "name": "Modify Matter",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaper=4"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Metacreativity"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "COMPS",
+        "value": "Ma"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL*10) cu. ft.; see text"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "DESC",
+        "value": "Transforms raw goods to finished items."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 322,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Modify Matter",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

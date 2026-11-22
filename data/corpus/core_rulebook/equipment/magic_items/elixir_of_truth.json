@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 500.0,
+    "description": "This elixir forces the drinker it to say nothing but the truth for 10 minutes (Will DC 13 negates). She must answer any questions put to her in that time, but with each question she can make a separate DC 13 Will save. If one of these secondary saves is successful, she doesn't break free of the truth-compelling enchantment but also doesn't have to answer that particular question (if she does answer, she must tell the truth). No more than one question can be asked each round. This is a mind-affecting compulsion enchantment.",
+    "key": "Elixir of Truth",
+    "name": "Elixir of Truth",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elixir of Truth"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Elixir of Truth"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Elixir.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.512"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, zone of truth"
+      },
+      {
+        "key": "DESC",
+        "value": "This elixir forces the drinker it to say nothing but the truth for 10 minutes (Will DC 13 negates). She must answer any questions put to her in that time, but with each question she can make a separate DC 13 Will save. If one of these secondary saves is successful, she doesn't break free of the truth-compelling enchantment but also doesn't have to answer that particular question (if she does answer, she must tell the truth). No more than one question can be asked each round. This is a mind-affecting compulsion enchantment."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 147,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Elixir of Truth",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a masterwork dagger out of ice. The dagger deals 1 point of cold damage in addition to normal dagger damage. If the dagger leaves your hand for more than 1 round, it melts and the spell ends. At 6th level, the dagger functions as a +1 frost dagger. At 11th level, it gains the returning property when thrown, melting away and reforming in your hand just before your next turn.",
+    "key": "Icicle Dagger",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Masterwork ice dagger deals +1 cold damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a masterwork dagger out of ice. The dagger deals 1 point of cold damage in addition to normal dagger damage. If the dagger leaves your hand for more than 1 round, it melts and the spell ends. At 6th level, the dagger functions as a +1 frost dagger. At 11th level, it gains the returning property when thrown, melting away and reforming in your hand just before your next turn.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Cold"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/icicleDagger.html#_icicle-dagger"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One icicle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Icicle Dagger",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

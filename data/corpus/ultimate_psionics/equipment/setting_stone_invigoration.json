@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10080.0,
+    "description": "1/day invigorate self for 10 minutes",
+    "key": "Setting Stone (Invigoration)",
+    "name": "Setting Stone of [NAME]",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Setting Stone of [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Universal.SettingStone"
+      },
+      {
+        "key": "COST",
+        "value": "10080"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.422"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day invigorate self for 10 minutes"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|CASTERLEVEL|TYPE.Psionic|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Fortitude,Reflex,Will|2|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|DC|TYPE.Psionic|2|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|ALL|2|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|BonusPowerPoints|5|TYPE=Invigoration"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 361,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Setting Stone (Invigoration)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

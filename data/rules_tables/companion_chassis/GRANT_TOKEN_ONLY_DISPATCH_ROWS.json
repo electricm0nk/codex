@@ -1,0 +1,61 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "companion_chassis/GRANT_TOKEN_ONLY_DISPATCH_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "companion_chassis",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Base Companion ~ Animal Companion",
+      "PCGen's own internal dispatch row for the Animal Companion class feature: 11 ABILITY: grant tokens, each routing to a real, already-engine-held Animal Companion ~ * ability row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Base Companion ~ Special Mount",
+      "PCGen's own internal dispatch row for the Special Mount class feature: 11 ABILITY: grant tokens, each routing to a real, already-engine-held Animal Companion ~ * ability row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Ability Score Increase",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Ability Score Increase row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Bonus Tricks",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Bonus Tricks row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Devotion",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Devotion row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Evasion",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Evasion row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Improved Evasion",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Improved Evasion row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Link",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Link row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Multiattack",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Multiattack row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Share Spells",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Share Spells row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Spell Resistance (AC)",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Spell Resistance row; no DESC/TYPE/BONUS token of its own."
+    ],
+    [
+      "Companion ~ Spell Resistance (SM)",
+      "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, already-engine-held Animal Companion ~ Spell Resistance row; no DESC/TYPE/BONUS token of its own."
+    ]
+  ]
+}

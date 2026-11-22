@@ -1,0 +1,6 @@
+FAIL Samurai Weapons tab shows Martial ✓ (the reader grants Martial)
+FAIL Warrior Weapons tab shows Martial ✓
+FAIL Magus Weapons tab shows Martial ✓
+FAIL Magus 5 caster level = 5 (desktop: 0)
+FAIL class-skill list present for the 50 of 59 roster classes the engine answers (desktop: 12 of 59)
+EXIT=1

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill unlock ~ diplomacy 10 Ranks",
+    "name": "Skill unlock diplomacy 10 Ranks",
+    "class": "Skill unlock",
+    "description": "You can attempt to adjust a creature's attitude in 1 round by taking a -10 penalty. If you take 1 minute to adjust a creature's attitude, add your Charisma bonus to the number of hours that attitude change persists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill unlock ~ diplomacy 10 Ranks"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rogue's Edge diplomacy 10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to adjust a creature's attitude in 1 round by taking a -10 penalty. If you take 1 minute to adjust a creature's attitude, add your Charisma bonus to the number of hours that attitude change persists."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1026,
+    "record_key": "Skill unlock ~ diplomacy 10 Ranks"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Suppress Charms and Compulsions",
+    "school": "Abjuration",
+    "level": 2,
+    "description": "You bolster the subject's sense of willpower and self-worth when you cast this spell. As you cast it, you must decide if you want to grant a bonus to saving throws against charms and compulsions or suppress charms and compulsions. If you grant a bonus to saving throws, you grant all affected creatures a +4 morale bonus on saving throws against charm and compulsion effects for 10 minutes. If instead you suppress charms and compulsions, the spell's duration drops to concentration, to a maximum duration of (CASTERLEVEL) rounds. As long as you continue to concentrate, the spell suppresses all existing charm and compulsion effects affecting the targets, regardless of whether the effect is beneficial or harmful. New charm or compulsion effects that successfully target such a protected creature are automatically suppressed as long as you continue concentrating. If you cease concentrating, the spell effect immediately ends, and remaining charm or compulsion effects resume for the rest of their remaining durations as normal."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 43,
+    "record_key": "Suppress Charms and Compulsions"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

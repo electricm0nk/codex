@@ -1,0 +1,2 @@
+     Running `/home/ubuntu/cargo-target/sd38-e06-base/debug/sheet_rule_convert --system starfinder-1e --check`
+records=8582 converted=8582 refused=0 rules=11320 var_tables=238 verdict=PASS (29.5s)

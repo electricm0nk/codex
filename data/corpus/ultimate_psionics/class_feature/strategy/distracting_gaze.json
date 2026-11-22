@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Strategy ~ Distracting Gaze",
+    "name": "Distracting Gaze",
+    "class": "Strategy",
+    "description": "Flank at range for %1 rounds with ranged touch attack.|DistractingGazeDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategy ~ Distracting Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TacticianStrategy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Tactician=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DistractingGazeDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Flank at range for %1 rounds with ranged touch attack.|DistractingGazeDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DistractingGazeDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 933,
+    "record_key": "Strategy ~ Distracting Gaze"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

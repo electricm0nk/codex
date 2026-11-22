@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Jack In/Out",
+    "source_page": "p199",
+    "action_cost": "NET Action",
+    "text": "Enter or safely leave a NET Architecture when within 6 m/yds of an access point. Typically, a wall between you and the access point will block this Action. If you leave a NET Architecture without Jacking Out first, you'll be in a world of pain.",
+    "rules_text": "Using a NET Action, you can Jack In to a NET Architecture while within range (within 6 m/yds, blocked by walls) of one of its access points. Being jacked in is a prerequisite for doing anything in an Architecture. Moving out of the access point's range while jacked in to the Architecture jacks you out of the NET Architecture automatically, but leaves you vulnerable: You suffer the effect of all remaining enemy Black ICE you've encountered, but not Derezzed, in the NET Architecture before you get \"out.\" Black ICE will be explained later (on pg. 204), but you don't want this to happen to you. It is much safer to use a NET Action to Jack Out from within the access point's range. Jacking Out \"resets\" the defenses of a NET Architecture, meaning you'll have to start your run over from the very beginning, which can only be done by jacking back in to the same location you originally entered and giving it another shot. All your Programs leave the Architecture with you when you Jack Out. If you want to have a permanent effect on the Architecture, you'll have to reach the bottom to leave a Virus.",
+    "kind": "net_action"
+  },
+  {
+    "name": "Use Interface Ability",
+    "source_page": "p199",
+    "action_cost": "NET Action",
+    "text": "All but one Interface Ability requires the use of at least one NET Action. See full rules on pg. 199.",
+    "kind": "net_action"
+  },
+  {
+    "name": "Activate/Deactivate Program",
+    "source_page": "p199",
+    "action_cost": "NET Action",
+    "text": "Activate or Deactivate one of your Programs.",
+    "kind": "net_action"
+  },
+  {
+    "name": "Miscellaneous",
+    "source_page": "p199",
+    "action_cost": "NET Action",
+    "text": "Very rarely, something you want to do in the NET won't fall into these categories. This is rare because the Virus Interface Ability lets you do almost anything you can dream to a NET Architecture provided you are at the Architecture's lowest floor. If your GM allows you to do it, it will probably take a NET Action.",
+    "transcription_note": "The NET Actions per Turn bands (Interface 1-3 = 2, 4-6 = 3, 7-9 = 4, 10 = 5; p148, p198) are the role_ability nested net_action_bands (E1.1), not repeated here. p199 'What Isn't a NET Action?': moving in a NET Architecture and saving a copy of a File are not NET Actions.",
+    "kind": "net_action"
+  }
+]

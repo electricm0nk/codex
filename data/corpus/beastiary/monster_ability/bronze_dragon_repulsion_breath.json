@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bronze Dragon ~ Repulsion Breath",
+    "delivery": "Supernatural",
+    "description": "Instead of a line of electricity, a bronze dragon can breathe a cone of repulsion gas. Targets must make a Will save or be compelled to do nothing but move away from the dragon for 1d6 rounds plus 1 round per age category. This is a mind-affecting compulsion effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bronze_dragon_repulsion_breath",
+    "name": "Repulsion Breath",
+    "owners": [
+      "beastiary:monster:dragon_bronze"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Repulsion Breath"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|RepulsionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RepulsionDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RepulsionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Repulsion Breath)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RepulsionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of a line of electricity, a bronze dragon can breathe a cone of repulsion gas. Targets must make a Will save or be compelled to do nothing but move away from the dragon for 1d6 rounds plus 1 round per age category. This is a mind-affecting compulsion effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Bronze Dragon ~ Repulsion Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.104",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 468,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Bronze Dragon ~ Repulsion Breath",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

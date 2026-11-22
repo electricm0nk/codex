@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Ethereal Form (Greater)",
+    "name": "Ethereal Form (Greater)",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ethereal Form, Greater"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psion,Wilder=9"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychoportation"
+      },
+      {
+        "key": "COMPS",
+        "value": "Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You and (CASTERLEVEL/3) other touched willing creatures; all targets must be joined by linked hands"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "DESC",
+        "value": "Become ethereal for (CASTERLEVEL) minutes."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Ethereal Form (Greater)",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

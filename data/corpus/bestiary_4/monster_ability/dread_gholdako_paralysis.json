@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dread Gholdako ~ Paralysis",
+    "delivery": "Supernatural",
+    "description": "A dread gholdako can inflict paralysis (1d4 rounds, DC %1) on its foes with its bite attack.",
+    "description_variables": [
+      "10+TL/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dread_gholdako_paralysis",
+    "name": "Paralysis",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dread gholdako can inflict paralysis (1d4 rounds, DC %1) on its foes with its bite attack.|10+TL/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Gholdako ~ Paralysis"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 760,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dread Gholdako ~ Paralysis",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

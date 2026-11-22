@@ -1,0 +1,1 @@
+{"var":"v5206929a58ad115e","label":"Mechanic LVL","declared_by":["core:class:mechanic"],"contributions":[{"rule_id":"core:class:mechanic","expr":{"ClassLevel":"mechanic"},"when":"Always"}],"provenance":{}}

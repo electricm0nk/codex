@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race Builder Subtype ~ Vishkanya",
+    "name": "Vishkanya",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Vishkanya"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Vishkanya"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_templates.lst",
+    "record_key": "Race Builder Subtype ~ Vishkanya",
+    "sha256": "9d39025373e55e4c952ba045f1fd813abdd98c2da5750dec46cc3f9e50d6507a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

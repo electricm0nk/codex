@@ -1,0 +1,948 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/src-tauri)
+error: let chains are only allowed in Rust 2024 or later
+    --> src/cpr_adapter.rs:1099:24
+     |
+1099 |                     if let Some(name) = name
+     |                        ^^^^^^^^^^^^^^^^^^^^^
+
+error[E0425]: cannot find type `PriceMode` in this scope
+   --> src/cpr_adapter.rs:970:46
+    |
+970 |     fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+    |                                              ^^^^^^^^^ not found in this scope
+    |
+help: consider importing this enum
+    |
+471 +     use crate::character_hub::PriceMode;
+    |
+
+error[E0425]: cannot find type `MarketShellRequest` in this scope
+   --> src/cpr_adapter.rs:970:60
+    |
+970 |     fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+    |                                                            ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `MarketShellRequest` in this scope
+   --> src/cpr_adapter.rs:971:9
+    |
+971 |         MarketShellRequest { character_id: "c".into(), key: key.into(), price_mode, saved_at: "t".into() }
+    |         ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `MarketShellOutcome` in this scope
+   --> src/cpr_adapter.rs:974:23
+    |
+974 |     fn moved(outcome: MarketShellOutcome) -> i64 {
+    |                       ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `PriceMode` in this scope
+   --> src/cpr_adapter.rs:995:14
+    |
+995 |             (PriceMode::Standard, 100, 50),
+    |              ^^^^^^^^^ use of undeclared type `PriceMode`
+    |
+help: consider importing this enum
+    |
+471 +     use crate::character_hub::PriceMode;
+    |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+   --> src/cpr_adapter.rs:996:14
+    |
+996 |             (PriceMode::CharacterBuild, 100, 100),
+    |              ^^^^^^^^^ use of undeclared type `PriceMode`
+    |
+help: consider importing this enum
+    |
+471 +     use crate::character_hub::PriceMode;
+    |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+   --> src/cpr_adapter.rs:997:14
+    |
+997 |             (PriceMode::Cashless, 0, 0),
+    |              ^^^^^^^^^ use of undeclared type `PriceMode`
+    |
+help: consider importing this enum
+    |
+471 +     use crate::character_hub::PriceMode;
+    |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1029:22
+     |
+1029 |         for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+     |                      ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1029:43
+     |
+1029 |         for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+     |                                           ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1036:73
+     |
+1036 |         assert_eq!(moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap()), 0);
+     |                                                                         ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1049:66
+     |
+1049 |             moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap());
+     |                                                                  ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1055:92
+     |
+1055 |         let again = market_buy_at_root(&root, &market_request("armor|Bulletproof Shield|", PriceMode::Cashless)).unwrap();
+     |                                                                                            ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1060:73
+     |
+1060 |             moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Cashless)).unwrap());
+     |                                                                         ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1063:69
+     |
+1063 |         moved(market_sell_at_root(&root, &market_request(&ammo.key, PriceMode::Cashless)).unwrap());
+     |                                                                     ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find type `MarketShellCopyDto` in module `crate::sf_catalog`
+    --> src/cpr_adapter.rs:1072:48
+     |
+1072 | ...   let name = |held: &[crate::sf_catalog::MarketShellCopyDto]| held.iter().find(|c| c.name.starts_with("Basic Heavy Pistol Ammu...
+     |                                              ^^^^^^^^^^^^^^^^^^ not found in `crate::sf_catalog`
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1076:80
+     |
+1076 | ...   assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), 10, "10eb per ...
+     |                                                                              ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1081:73
+     |
+1081 |             moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Standard)).unwrap());
+     |                                                                         ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find function `market_rows` in module `crate::cpr_catalog`
+    --> src/cpr_adapter.rs:1093:40
+     |
+1093 |         let rows = crate::cpr_catalog::market_rows(&catalog).unwrap();
+     |                                        ^^^^^^^^^^^ not found in `crate::cpr_catalog`
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1115:74
+     |
+1115 |             let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+     |                                                                          ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/cpr_adapter.rs:1119:75
+     |
+1119 |             let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+     |                                                                           ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 471 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:314:29
+    |
+314 |         let of = |category: MarketCategory| rows.iter().filter(|r| r.category == category).collect::<Vec<_>>();
+    |                             ^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:316:23
+    |
+316 |         assert_eq!(of(MarketCategory::Weapon).len(), records("weapon.json").len());
+    |                       ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:318:23
+    |
+318 |         assert_eq!(of(MarketCategory::Armor).len(), 8 * 2);
+    |                       ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:319:26
+    |
+319 |         let shields = of(MarketCategory::Shield);
+    |                          ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:321:20
+    |
+321 |         assert!(of(MarketCategory::MagicItem).is_empty());
+    |                    ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/cpr_catalog.rs:323:20
+    |
+323 | ...   assert!(of(MarketCategory::Gear).iter().all(|r| ["gear", "attachment", "ammo", "fashion", "drug"].contains(&r.item.kind.as_st...
+    |                  ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+200 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0425]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1691:46
+     |
+1691 |     fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+     |                                              ^^^^^^^^^ not found in this scope
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find type `MarketShellRequest` in this scope
+    --> src/sf_adapter.rs:1691:60
+     |
+1691 |     fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+     |                                                            ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `MarketShellRequest` in this scope
+    --> src/sf_adapter.rs:1692:9
+     |
+1692 |         MarketShellRequest { character_id: "sf".into(), key: key.into(), price_mode, saved_at: "2026-11-02T00:00:00Z".into() }
+     |         ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1699:23
+     |
+1699 |     fn moved(outcome: MarketShellOutcome) -> i64 {
+     |                       ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1714:14
+     |
+1714 |             (PriceMode::Standard, price, price / 2),
+     |              ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1715:14
+     |
+1715 |             (PriceMode::CharacterBuild, price, price),
+     |              ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1716:14
+     |
+1716 |             (PriceMode::Cashless, 0, 0),
+     |              ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find function `is_buyable` in module `sf_loadout`
+    --> src/sf_adapter.rs:1746:58
+     |
+1746 |             .find(|r| !r.id.contains('#') && sf_loadout::is_buyable(r) && sf_loadout::price(r).unwrap() > start.balance)
+     |                                                          ^^^^^^^^^^ not found in `sf_loadout`
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1749:22
+     |
+1749 |         for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+     |                      ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1749:43
+     |
+1749 |         for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+     |                                           ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1760:78
+     |
+1760 |         assert_eq!(moved(market_buy_at_root(&root, &market_request(&dear.id, PriceMode::Cashless)).unwrap()), 0);
+     |                                                                              ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1773:66
+     |
+1773 |         moved(market_buy_at_root(&root, &market_request(BATTERY, PriceMode::Standard)).unwrap());
+     |                                                                  ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1775:64
+     |
+1775 |         moved(market_sell_at_root(&root, &market_request(&key, PriceMode::Standard)).unwrap());
+     |                                                                ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1799:74
+     |
+1799 |             let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+     |                                                                          ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1803:75
+     |
+1803 |             let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+     |                                                                           ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1829:65
+     |
+1829 |             moved(market_buy_at_root(&root, &market_request(id, PriceMode::Cashless)).unwrap());
+     |                                                                 ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1843:63
+     |
+1843 |         moved(market_buy_at_root(&root, &market_request(item, PriceMode::Standard)).unwrap());
+     |                                                               ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find value `MARKET_CREDITS_CHOICE` in this scope
+    --> src/sf_adapter.rs:1845:101
+     |
+1845 |         assert!(!envelope.character_input.chosen.selected_choices.iter().any(|c| c.choice_set_id == MARKET_CREDITS_CHOICE));
+     |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `PriceMode` in this scope
+    --> src/sf_adapter.rs:1859:80
+     |
+1859 |         assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), value);
+     |                                                                                ^^^^^^^^^ use of undeclared type `PriceMode`
+     |
+help: consider importing this enum
+     |
+ 861 +     use crate::character_hub::PriceMode;
+     |
+
+error[E0425]: cannot find function `is_buyable` in module `codex::rules_core::pilot_compute::sf_loadout`
+   --> src/sf_catalog.rs:427:94
+    |
+427 |             .filter(|r| !r.id.contains('#') && codex::rules_core::pilot_compute::sf_loadout::is_buyable(r))
+    |                                                                                              ^^^^^^^^^^ not found in `codex::rules_core::pilot_compute::sf_loadout`
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/sf_catalog.rs:432:14
+    |
+432 |             (MarketCategory::Weapon, Some("Weapon")),
+    |              ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+190 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/sf_catalog.rs:433:14
+    |
+433 |             (MarketCategory::Armor, Some("ARMOR")),
+    |              ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+190 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/sf_catalog.rs:434:14
+    |
+434 |             (MarketCategory::Shield, Some("Shields")),
+    |              ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+190 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/sf_catalog.rs:435:14
+    |
+435 |             (MarketCategory::MagicItem, Some("Magic")),
+    |              ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+190 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0433]: cannot find type `MarketCategory` in this scope
+   --> src/sf_catalog.rs:436:14
+    |
+436 |             (MarketCategory::Gear, None),
+    |              ^^^^^^^^^^^^^^ use of undeclared type `MarketCategory`
+    |
+help: consider importing this enum
+    |
+190 +     use crate::equipment_catalog::MarketCategory;
+    |
+
+error[E0603]: function `price` is private
+    --> src/sf_adapter.rs:1696:21
+     |
+1696 |         sf_loadout::price(package().unwrap().rule(id).unwrap()).unwrap()
+     |                     ^^^^^ private function
+     |
+note: the function `price` is defined here
+    --> /home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/src/rules_core/pilot_compute/sf_loadout.rs:90:1
+     |
+  90 | fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: function `price` is private
+    --> src/sf_adapter.rs:1746:87
+     |
+1746 |             .find(|r| !r.id.contains('#') && sf_loadout::is_buyable(r) && sf_loadout::price(r).unwrap() > start.balance)
+     |                                                                                       ^^^^^ private function
+     |
+note: the function `price` is defined here
+    --> /home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/src/rules_core/pilot_compute/sf_loadout.rs:90:1
+     |
+  90 | fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: function `price` is private
+    --> src/sf_adapter.rs:1848:138
+     |
+1848 | ...kage.rule(item).unwrap(), m).is_ok() && sf_loadout::price(m).is_ok_and(|p| p > 0 && p <= 100))
+     |                                                        ^^^^^ private function
+     |
+note: the function `price` is defined here
+    --> /home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/src/rules_core/pilot_compute/sf_loadout.rs:90:1
+     |
+  90 | fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0603]: function `price` is private
+    --> src/sf_adapter.rs:1850:41
+     |
+1850 |         let upgrade_price = sf_loadout::price(upgrade).unwrap();
+     |                                         ^^^^^ private function
+     |
+note: the function `price` is defined here
+    --> /home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/src/rules_core/pilot_compute/sf_loadout.rs:90:1
+     |
+  90 | fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1000:25
+     |
+1000 |             let start = market_state_at_root(&root).unwrap();
+     |                         ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1005:30
+     |
+1005 |             assert_eq!(moved(market_buy_at_root(&root, &market_request(key, mode)).unwrap()), charged, "{mode:?}");
+     |                              ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1006:26
+     |
+1006 |             let bought = market_state_at_root(&root).unwrap();
+     |                          ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1013:30
+     |
+1013 |             assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, mode)).unwrap()), returned, "{mode:?}");
+     |                              ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1014:24
+     |
+1014 |             let sold = market_state_at_root(&root).unwrap();
+     |                        ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1026:21
+     |
+1026 |         let start = market_state_at_root(&root).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1030:27
+     |
+1030 |             let outcome = market_buy_at_root(&root, &market_request(key, mode)).unwrap();
+     |                           ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1034:20
+     |
+1034 |         assert_eq!(market_state_at_root(&root).unwrap(), start);
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1036:26
+     |
+1036 |         assert_eq!(moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap()), 0);
+     |                          ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1037:20
+     |
+1037 |         assert_eq!(market_state_at_root(&root).unwrap().balance, start.balance);
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1049:19
+     |
+1049 |             moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap());
+     |                   ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1053:20
+     |
+1053 |         let held = market_state_at_root(&root).unwrap().held;
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1055:21
+     |
+1055 |         let again = market_buy_at_root(&root, &market_request("armor|Bulletproof Shield|", PriceMode::Cashless)).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1059:24
+     |
+1059 | ...   let copy = market_state_at_root(&root).unwrap().held.into_iter().rev().find(|c| c.name == name).unwrap_or_else(|| panic!("{n...
+     |                  ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1060:19
+     |
+1060 |             moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Cashless)).unwrap());
+     |                   ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1062:20
+     |
+1062 | ...   let ammo = market_state_at_root(&root).unwrap().held.into_iter().rev().find(|c| c.name.starts_with("Basic Rifle Ammunition")...
+     |                  ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1063:15
+     |
+1063 |         moved(market_sell_at_root(&root, &market_request(&ammo.key, PriceMode::Cashless)).unwrap());
+     |               ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1073:21
+     |
+1073 |         let state = market_state_at_root(&root).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1076:26
+     |
+1076 | ...   assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), 10, "10eb per ...
+     |                        ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/cpr_adapter.rs:1080:30
+     |
+1080 |             let copy = name(&market_state_at_root(&root).unwrap().held);
+     |                              ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1081:19
+     |
+1081 |             moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Standard)).unwrap());
+     |                   ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprKitCatalog` in this scope
+    --> src/cpr_adapter.rs:1092:23
+     |
+1092 |         let catalog = CprKitCatalog::load(&corpus).unwrap();
+     |                       ^^^^^^^^^^^^^ use of undeclared type `CprKitCatalog`
+     |
+help: a struct with a similar name exists
+     |
+1092 -         let catalog = CprKitCatalog::load(&corpus).unwrap();
+1092 +         let catalog = CprPrintCatalog::load(&corpus).unwrap();
+     |
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/cpr_adapter.rs:1115:27
+     |
+1115 |             let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+     |                           ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/cpr_adapter.rs:1119:27
+     |
+1119 |             let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+     |                           ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `CprKitCatalog` in this scope
+   --> src/cpr_catalog.rs:311:23
+    |
+311 |         let catalog = CprKitCatalog::load(&root()).unwrap();
+    |                       ^^^^^^^^^^^^^ use of undeclared type `CprKitCatalog`
+
+error[E0425]: cannot find function `market_rows` in this scope
+   --> src/cpr_catalog.rs:312:20
+    |
+312 |         let rows = market_rows(&catalog).unwrap();
+    |                    ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1719:25
+     |
+1719 |             let start = market_state_at_root(&root).unwrap();
+     |                         ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1723:30
+     |
+1723 |             assert_eq!(moved(market_buy_at_root(&root, &market_request(BATTERY, mode)).unwrap()), charged, "{mode:?}");
+     |                              ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1724:26
+     |
+1724 |             let bought = market_state_at_root(&root).unwrap();
+     |                          ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/sf_adapter.rs:1729:30
+     |
+1729 |             assert_eq!(moved(market_sell_at_root(&root, &market_request(&key, mode)).unwrap()), returned, "{mode:?}");
+     |                              ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1730:24
+     |
+1730 |             let sold = market_state_at_root(&root).unwrap();
+     |                        ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1743:21
+     |
+1743 |         let start = market_state_at_root(&root).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1750:19
+     |
+1750 |             match market_buy_at_root(&root, &market_request(&dear.id, mode)).unwrap() {
+     |                   ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1758:20
+     |
+1758 |         assert_eq!(market_state_at_root(&root).unwrap(), start);
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1760:26
+     |
+1760 |         assert_eq!(moved(market_buy_at_root(&root, &market_request(&dear.id, PriceMode::Cashless)).unwrap()), 0);
+     |                          ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1761:21
+     |
+1761 |         let after = market_state_at_root(&root).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1772:21
+     |
+1772 |         let start = market_state_at_root(&root).unwrap().balance;
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1773:15
+     |
+1773 |         moved(market_buy_at_root(&root, &market_request(BATTERY, PriceMode::Standard)).unwrap());
+     |               ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1774:19
+     |
+1774 |         let key = market_state_at_root(&root).unwrap().held.last().unwrap().key.clone();
+     |                   ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/sf_adapter.rs:1775:15
+     |
+1775 |         moved(market_sell_at_root(&root, &market_request(&key, PriceMode::Standard)).unwrap());
+     |               ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1777:20
+     |
+1777 |         assert_eq!(market_state_at_root(&root).unwrap().balance, expected, "reloaded from disk");
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1782:20
+     |
+1782 |         assert_eq!(market_state_at_root(&root).unwrap().balance, expected, "after a choices save");
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1799:27
+     |
+1799 |             let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+     |                           ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/sf_adapter.rs:1803:27
+     |
+1803 |             let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+     |                           ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1829:19
+     |
+1829 |             moved(market_buy_at_root(&root, &market_request(id, PriceMode::Cashless)).unwrap());
+     |                   ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1841:21
+     |
+1841 |         let start = market_state_at_root(&root).unwrap().balance;
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_buy_at_root` in this scope
+    --> src/sf_adapter.rs:1843:15
+     |
+1843 |         moved(market_buy_at_root(&root, &market_request(item, PriceMode::Standard)).unwrap());
+     |               ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1854:21
+     |
+1854 |         let state = market_state_at_root(&root).unwrap();
+     |                     ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_sell_at_root` in this scope
+    --> src/sf_adapter.rs:1859:26
+     |
+1859 |         assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), value);
+     |                          ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_state_at_root` in this scope
+    --> src/sf_adapter.rs:1860:20
+     |
+1860 |         assert_eq!(market_state_at_root(&root).unwrap().balance, start);
+     |                    ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `market_rows` in this scope
+   --> src/sf_catalog.rs:438:24
+    |
+438 |             let rows = market_rows(package, category);
+    |                        ^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+   --> src/cpr_adapter.rs:976:13
+    |
+976 |             MarketShellOutcome::Saved { moved } => moved,
+    |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+   --> src/cpr_adapter.rs:977:13
+    |
+977 |             MarketShellOutcome::Blocked { diagnostics } => panic!("blocked: {diagnostics:?}"),
+    |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/cpr_adapter.rs:1031:39
+     |
+1031 |             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{mode:?}: {outcome:?}");
+     |                                       ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/cpr_adapter.rs:1056:33
+     |
+1056 |         assert!(matches!(again, MarketShellOutcome::Blocked { .. }), "one shield: {again:?}");
+     |                                 ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1804:39
+     |
+1804 |             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+     |                                       ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/cpr_adapter.rs:1116:39
+     |
+1116 |             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+     |                                       ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/cpr_adapter.rs:1120:39
+     |
+1120 |             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+     |                                       ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1800:39
+     |
+1800 |             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+     |                                       ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1701:13
+     |
+1701 |             MarketShellOutcome::Saved { moved } => moved,
+     |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1702:13
+     |
+1702 |             MarketShellOutcome::Blocked { diagnostics } => panic!("blocked: {diagnostics:?}"),
+     |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1751:17
+     |
+1751 |                 MarketShellOutcome::Blocked { diagnostics } => {
+     |                 ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+error[E0433]: cannot find type `MarketShellOutcome` in this scope
+    --> src/sf_adapter.rs:1754:25
+     |
+1754 |                 other @ MarketShellOutcome::Saved { .. } => panic!("{mode:?} bought it: {other:?}"),
+     |                         ^^^^^^^^^^^^^^^^^^ use of undeclared type `MarketShellOutcome`
+
+Some errors have detailed explanations: E0422, E0425, E0433, E0603.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 119 previous errors

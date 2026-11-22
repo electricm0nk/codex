@@ -1,0 +1,83 @@
+[
+ {
+  "name": "Intelligence",
+  "abbreviation": "INT",
+  "group": "Mental",
+  "source_page": "p073",
+  "text": "How generally bright you are. As a rule, this is more than sheer intelligence, but also includes cleverness, awareness, perception, and your ability to learn.",
+  "kind": "stat"
+ },
+ {
+  "name": "Willpower",
+  "abbreviation": "WILL",
+  "group": "Mental",
+  "source_page": "p073",
+  "text": "Your determination and ability to face danger and/or stress. This STAT also represents your courage and ability to survive long-term privation. This STAT is important for determining how much damage you can take.",
+  "kind": "stat"
+ },
+ {
+  "name": "Cool",
+  "abbreviation": "COOL",
+  "group": "Mental",
+  "source_page": "p073",
+  "text": "Your ability to impress and influence people through your character and charisma; how well you get along with others; how you interact in social situations.",
+  "kind": "stat"
+ },
+ {
+  "name": "Empathy",
+  "abbreviation": "EMP",
+  "group": "Mental",
+  "source_page": "p073",
+  "text": "Your ability to relate to and care for others, and take others into consideration. Particularly important as it offsets the effects of cyberpsychosis, a dangerous mental illness common in the Dark Future.",
+  "transcription_note": "Group read from the p073 image (U-38): the EMP entry heads the right column above the Combat Group heading and continues the Mental Group list. EMP carries a Maximum and a Current value on the sheet (p121); Current = floor(Humanity / 10) (p081, p230); the compute lives in E2.",
+  "kind": "stat"
+ },
+ {
+  "name": "Technique",
+  "abbreviation": "TECH",
+  "group": "Combat",
+  "source_page": "p073",
+  "text": "Your ability to manipulate tools or instruments. This is not the same as Reflexes, inasmuch as this covers the knack of using tools. One Character might have a high Technique but might not be able to fence or juggle. On the other hand, another might have high Reflexes, but might not be able to rewire a computer or hot-wire a car.",
+  "kind": "stat"
+ },
+ {
+  "name": "Reflexes",
+  "abbreviation": "REF",
+  "group": "Combat",
+  "source_page": "p073",
+  "text": "Your response time and coordination, as used in aiming, throwing, juggling, etc. A stage magician, for example, would have a high Reflex STAT. Most importantly, this is the STAT that affects your ability to hit things with ranged weapons.",
+  "kind": "stat"
+ },
+ {
+  "name": "Luck",
+  "abbreviation": "LUCK",
+  "group": "Fortune",
+  "source_page": "p073",
+  "text": "How the gods of chance see you. With a high enough Luck, you can tip the scales in your favor. In a game mechanics sense, you can apply points from this STAT to offset die rolls in your favor. However, this pool of points only refills at the beginning of the next session.",
+  "kind": "stat"
+ },
+ {
+  "name": "Body",
+  "abbreviation": "BODY",
+  "group": "Physical",
+  "source_page": "p073",
+  "text": "Your size, toughness, and ability to stay alive and conscious due to physical mass, structure, or other qualities. This STAT is important for determining how much damage you can take.",
+  "kind": "stat"
+ },
+ {
+  "name": "Dexterity",
+  "abbreviation": "DEX",
+  "group": "Physical",
+  "source_page": "p073",
+  "text": "Your overall physical competence, as it pertains to balancing, leaping, jumping, combat, and other athletic activities. A gymnast would have a high Dexterity. Most importantly, this is the STAT that affects your ability to hit things with melee weapons and can help you dodge attacks.",
+  "kind": "stat"
+ },
+ {
+  "name": "Movement",
+  "abbreviation": "MOVE",
+  "group": "Physical",
+  "source_page": "p073",
+  "text": "Your speed of movement: running, leaping, swimming, etc.",
+  "kind": "stat"
+ }
+]

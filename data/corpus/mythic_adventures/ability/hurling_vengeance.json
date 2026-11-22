@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Hurling Vengeance",
+    "name": "Hurling Vengeance",
+    "description": "Whenever you are wielding your deity's favored weapon or your paladin bonded weapon, you can throw it as if it had the returning and throwing weapon special abilities. If using a paladin bonded weapon, it retains its bonded abilities when thrown this way. By expending one use of mythic power as part of a full attack, the weapon returns to you immediately after each time you throw it (instead of just before your next turn) allowing you to make your full number of attacks that round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Hurling Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are wielding your deity's favored weapon or your paladin bonded weapon, you can throw it as if it had the returning and throwing weapon special abilities. If using a paladin bonded weapon, it retains its bonded abilities when thrown this way. By expending one use of mythic power as part of a full attack, the weapon returns to you immediately after each time you throw it (instead of just before your next turn) allowing you to make your full number of attacks that round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 326,
+    "record_key": "Mythic Path Ability ~ Hurling Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

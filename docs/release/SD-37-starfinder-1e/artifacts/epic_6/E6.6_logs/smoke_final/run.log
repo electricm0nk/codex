@@ -1,0 +1,18 @@
+App data root: /tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd37-e6-6-final'...
+PASS  open-starfinder-soldier
+PASS  open-starfinder-mystic
+PASS  open-starfinder-technomancer
+PASS  open-starfinder-envoy
+PASS  landing-select-pathfinder
+PASS  open-seed-aldric
+PASS  open-seed-elowen
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+7/7 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 7 rows)
+Cleanup: 4 character(s) created across 7 row(s) with a cleanup record, 4 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final
+Removed isolated app-data root /tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).
+exit=0
+DONE

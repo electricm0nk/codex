@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Heightened Awareness",
+    "name": "Heightened Awareness",
+    "class": "Magus",
+    "description": "Your recall and ability to process information improve.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Heightened Awareness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellBlend.MagusSpellBlendLVL1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=1|Heightened Awareness"
+      },
+      {
+        "key": "DESC",
+        "value": "Your recall and ability to process information improve.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Perception,TYPE.Knowledge|2|TYPE=Competence"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4094,
+    "record_key": "Magus Spellblend ~ Heightened Awareness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

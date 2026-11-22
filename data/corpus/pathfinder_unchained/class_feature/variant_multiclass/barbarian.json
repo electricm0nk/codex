@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Variant Multiclass ~ Barbarian",
+    "name": "Barbarian",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses barbarian as her secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Barbarian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses barbarian as her secondary class gains the following secondary class features."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Barbarian_Class_Selection|1|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 829,
+    "record_key": "Variant Multiclass ~ Barbarian"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

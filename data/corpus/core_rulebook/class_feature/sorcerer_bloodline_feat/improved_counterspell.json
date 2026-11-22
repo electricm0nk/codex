@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Improved Counterspell",
+    "name": "Improved Counterspell",
+    "class": "Sorcerer",
+    "description": "You are skilled at countering the spells of others using similar spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Improved Counterspell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_ImprovedCounterspell,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at countering the spells of others using similar spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Counterspell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When counterspelling, you may use a spell of the same school that is one or more spell levels higher than the target spell."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2044,
+    "record_key": "Sorcerer Bloodline Feat ~ Improved Counterspell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

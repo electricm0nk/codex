@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Moonlight Stalker Feint",
+    "name": "Moonlight Stalker Feint",
+    "description": "When you attempt a Bluff check to feint against an opponent from whom you have concealment, you can spend up to 5 stamina points to gain a bonus on the Bluff check equal to double the number of stamina points you spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Moonlight Stalker Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you attempt a Bluff check to feint against an opponent from whom you have concealment, you can spend up to 5 stamina points to gain a bonus on the Bluff check equal to double the number of stamina points you spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "127"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 112,
+    "record_key": "Combat Trick ~ Moonlight Stalker Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

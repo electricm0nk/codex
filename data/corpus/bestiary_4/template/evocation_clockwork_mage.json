@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Evocation Clockwork Mage",
+    "name": "Evocation Clockwork Mage",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=9|Magic Missile|Shocking Grasp,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=9|Gust of Wind,13|Scorching Ray"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=9|Fireball,14"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "record_key": "Evocation Clockwork Mage",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

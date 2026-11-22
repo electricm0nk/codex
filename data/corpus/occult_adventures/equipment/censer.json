@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5.0,
+    "description": "a censer can hold up to 10 pieces of incense, and burns 1 piece per hour when lit.",
+    "key": "Censer",
+    "name": "Censer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": ".5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "SPROP",
+        "value": "a censer can hold up to 10 pieces of incense, and burns 1 piece per hour when lit."
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Censer",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

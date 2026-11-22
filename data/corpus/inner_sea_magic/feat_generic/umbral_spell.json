@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Umbral Spell",
+    "name": "Umbral Spell",
+    "description": "Targets of your darkness spells radiate darkness.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Metamagic"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Tenebrous Spell"
+      },
+      {
+        "key": "DESC",
+        "value": "Targets of your darkness spells radiate darkness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "An umbral spell gains the darkness descriptor. As long as the spell is in effect, the creature or object affected radiates darkness in a 10-foot radius, reducing illumination similar to the effects of the darkness spell. Nonmagical sources of light, such as torches or lanterns, do not increase the light level in this area. Magical light sources only increase the light level in an area affected by an umbral spell if they are of a higher level than the umbral spell's unmodified spell level. This effect does not stack with itself or with any other effect that creates darkness. An umbral spell uses up a spell slot two levels higher than the spell's actual level. &nl;You cannot use this feat on a spell with an instantaneous duration or a spell that does not target a creature or object."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
+    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c",
+    "line": 12,
+    "record_key": "Umbral Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

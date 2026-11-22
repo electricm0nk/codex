@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Object Reading",
+    "name": "Object Reading",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Seer,Sighted Seeker=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Clairsentience"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au, Ma"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Object touched"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration, up to (CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "DESC",
+        "value": "Learn details about an object's previous owner."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 334,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Object Reading",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

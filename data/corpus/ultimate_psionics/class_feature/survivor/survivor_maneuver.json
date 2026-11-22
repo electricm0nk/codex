@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Survivor ~ Maneuver",
+    "name": "Survivor ~ Maneuver",
+    "class": "Survivor",
+    "description": "Expend focus to gain Mettle until your next turn.|PREMULT:2,[PREVARGT:SurvivorPathLVL,2],[PREVARLT:SurvivorPathLVL,7]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SurvivorManeuverBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to gain Mettle until your next turn.|PREMULT:2,[PREVARGT:SurvivorPathLVL,2],[PREVARLT:SurvivorPathLVL,7]"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to gain Mettle and +1 on Will saves until your next turn.|PREMULT:2,[PREVARGT:SurvivorPathLVL,6],[PREVARLT:SurvivorPathLVL,11]"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to gain Improved Mettle and +%1 on Will saves until your next turn.|SurvivorManeuverBonus|PREVARGT:SurvivorPathLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SurvivorManeuverBonus|(SurvivorPathLVL-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 714,
+    "record_key": "Survivor ~ Maneuver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

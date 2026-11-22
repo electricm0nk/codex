@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Vishkanya",
+    "name": "Bonus Language ~ Vishkanya",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Vishkanya"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_templates_language.lst",
+    "record_key": "Bonus Language ~ Vishkanya",
+    "sha256": "573b62d4eb22fb1bd96eb1437dfa067ceb662ec5a6d0572cadbdd4db32a911c6"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

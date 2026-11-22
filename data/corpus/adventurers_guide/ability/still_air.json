@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Still Air",
+    "name": "Still Air",
+    "description": "The student of perfection can spend 1 ki point to cast calm emotions. His caster level is equal to his class level, and the save DC is %1. He can spend 3 ki points as an immediate action to use this ability on himself when he is affected by an emotion effect, a confusion effect, or a fear effect.|StudentOfPerfectionKiDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Still Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnfoldingWindStudent,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "DESC",
+        "value": "The student of perfection can spend 1 ki point to cast calm emotions. His caster level is equal to his class level, and the save DC is %1. He can spend 3 ki points as an immediate action to use this ability on himself when he is affected by an emotion effect, a confusion effect, or a fear effect.|StudentOfPerfectionKiDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 31,
+    "record_key": "Student of Perfection ~ Still Air"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

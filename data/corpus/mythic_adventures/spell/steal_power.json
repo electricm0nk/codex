@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Steal Power",
+    "school": "Necromancy",
+    "level": 5,
+    "description": "You sap the power from a mythic creature, using it to restore your own. The target loses 1d4 uses of mythic power. If you have the ability to expend mythic power, you regain one use for each use the target loses."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+    "sha256": "d62f0bb802aab15dde7b963773c586cb539a4571e3c404ead1b76788b0546374",
+    "line": 287,
+    "record_key": "Steal Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

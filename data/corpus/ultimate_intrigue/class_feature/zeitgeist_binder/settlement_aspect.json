@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Zeitgeist Binder ~ Settlement Aspect",
+    "name": "Settlement Aspect",
+    "class": "Spiritualist",
+    "description": "A zeitgeist binder gains a number of spell-like abilities tied to her zeitgeist's settlement aspect. Other than being based on Wisdom instead of Charisma, these work the same way as the fractured mind's emotional power ability (Occult Adventures p109).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zeitgeist Binder ~ Settlement Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ZeitgeistBinderClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A zeitgeist binder gains a number of spell-like abilities tied to her zeitgeist's settlement aspect. Other than being based on Wisdom instead of Charisma, these work the same way as the fractured mind's emotional power ability (Occult Adventures p109)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption: Conditional favor UI (5th), false belief UI (7th), charm person (9th), mass suggestion UI (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Crime: Crime of opportunity UI (5th), pilfering hand UC (7th), demand offering OA (9th), crime wave UI (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Economy: Crafter's fortune APG (5th), masterwork transformation APG (7th), beguiling gift (9th), major creation (16th). The masterwork transformation spell-like ability does not ignore the material component."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Law: Detect chaos (5th), arrow of law UM (7th), peacebond UC (9th), mark of justice (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Lore: Object reading OA (5th), hypercognition OA (7th), heightened awareness ACG (9th), legend lore (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Society: Cultural adaptation UI (5th), rumormonger UI (7th), share language APG (9th), coordinated effort APG (16th)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 141,
+    "record_key": "Zeitgeist Binder ~ Settlement Aspect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

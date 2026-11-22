@@ -1,0 +1,5 @@
+file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs:31
+        throw new Error(`--only ${id}: no such row id in spec.json`);
+              ^
+
+Error: --only create-cyberpunk-streetrat-sheet: no such row id in spec.json

@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Telepathy ~ Touch",
+    "delivery": "Supernatural",
+    "description": "You can mentally communicate with any other creature you are touching that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:telepathy_touch",
+    "name": "Telepathy",
+    "owners": [
+      "bestiary_2:monster:qlippoth_cythnigot"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(touch)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can mentally communicate with any other creature you are touching that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time."
+      },
+      {
+        "key": "KEY",
+        "value": "Telepathy ~ Touch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.305"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Communicate"
+      }
+    ],
+    "source_page": "p.305",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1958,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Telepathy ~ Touch",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

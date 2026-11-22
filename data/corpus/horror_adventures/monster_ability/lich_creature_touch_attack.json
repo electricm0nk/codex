@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lich Creature ~ Touch Attack",
+    "delivery": "Supernatural",
+    "description": "A lich creature can perform a touch attack that deals 1d8+%1 points to delivr its paralyzing touch",
+    "description_variables": [
+      "HD/2"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:lich_creature_touch_attack",
+    "name": "Touch Attack",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A lich creature can perform a touch attack that deals 1d8+%1 points to delivr its paralyzing touch|HD/2"
+      },
+      {
+        "key": "KEY",
+        "value": "Lich Creature ~ Touch Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.LichCreature"
+      }
+    ],
+    "source_page": "p.249",
+    "traits": [
+      "LichCreature"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 305,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Lich Creature ~ Touch Attack",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

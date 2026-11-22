@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Asurendra ~ Create Asura",
+    "delivery": null,
+    "description": "As a full-round action, an asurendra can turn a creature that it has eaten within the last 24 hours into a tripurasura (see page 26) that it then excretes into existence. Such tripurasuras remain loyal to the asurendra that created them as long as they remain tripurasuras. If an asurendra has enough tripurasuras at hand, it can consume them as well and transform them into more powerful asuras using this ability. An asurendra can transform any tripurasuras it has eaten within the last 24 hours into a number of Hit Dice worth of other asuras equal to the number of tripurasuras it has consumed. An asurendra can create as many tripurasuras as it wishes with this ability, but can only create more powerful asuras by combining multiple tripurasuras once per day. An asurendra cannot create another asurendra with this ability. A newly formed asura considers the asurendra to be its master. Not all of a creature's soul is consumed when it is used to create a tripurasura-beings swallowed and used to create asuras in this manner are dead, but can be restored to life as normal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:asurendra_create_asura",
+    "name": "Create Asura (Su)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, an asurendra can turn a creature that it has eaten within the last 24 hours into a tripurasura (see page 26) that it then excretes into existence. Such tripurasuras remain loyal to the asurendra that created them as long as they remain tripurasuras. If an asurendra has enough tripurasuras at hand, it can consume them as well and transform them into more powerful asuras using this ability. An asurendra can transform any tripurasuras it has eaten within the last 24 hours into a number of Hit Dice worth of other asuras equal to the number of tripurasuras it has consumed. An asurendra can create as many tripurasuras as it wishes with this ability, but can only create more powerful asuras by combining multiple tripurasuras once per day. An asurendra cannot create another asurendra with this ability. A newly formed asura considers the asurendra to be its master. Not all of a creature's soul is consumed when it is used to create a tripurasura-beings swallowed and used to create asuras in this manner are dead, but can be restored to life as normal."
+      },
+      {
+        "key": "KEY",
+        "value": "Asurendra ~ Create Asura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality"
+      }
+    ],
+    "source_page": "p.",
+    "traits": [
+      "RaceAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 410,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Asurendra ~ Create Asura",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Open Door",
+    "category": "Psionic",
+    "name": "Open Door",
+    "description": "Once an individual has failed a Will save to avoid being mindlocked by you, you can attune yourself to that creature.  You can reactivate the mindlock to an attuned creature at any time by spending 1 power point as a free action, regardless of the time since you first mindlocked the target.  This means they count as having failed their Will save.  Maximum number of attunements:%1|OpenDoorAttunements",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Terror ~ Mindlock",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 229,
+    "record_key": "Open Door"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

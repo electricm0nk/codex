@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 4900.0,
+    "description": "This small rectangular block of sweet-smelling incense is visually indistinguishable from nonmagical incense until lit. When it is burned, the special fragrance and pearly hued smoke of this special incense are recognizable by anyone making a DC 15 Spellcraft check. When a divine spellcaster lights a block of incense of meditation and then spends 8 hours praying and meditating nearby, the incense enables him to prepare all his spells as though affected by the Maximize Spell feat. However, all the spells prepared in this way are at their normal level, not at three levels higher (as with the regular metamagic feat). Each block of incense burns for 8 hours, and the effects persist for 24 hours.",
+    "key": "Incense of Meditation",
+    "name": "Incense of Meditation",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Incense of Meditation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Incense of Meditation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "4900"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.520"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,450 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, Maximize Spell, bless"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "This small rectangular block of sweet-smelling incense is visually indistinguishable from nonmagical incense until lit. When it is burned, the special fragrance and pearly hued smoke of this special incense are recognizable by anyone making a DC 15 Spellcraft check. When a divine spellcaster lights a block of incense of meditation and then spends 8 hours praying and meditating nearby, the incense enables him to prepare all his spells as though affected by the Maximize Spell feat. However, all the spells prepared in this way are at their normal level, not at three levels higher (as with the regular metamagic feat). Each block of incense burns for 8 hours, and the effects persist for 24 hours."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 223,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Incense of Meditation",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

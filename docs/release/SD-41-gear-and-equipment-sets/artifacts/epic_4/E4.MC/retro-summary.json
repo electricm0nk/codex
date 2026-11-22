@@ -1,0 +1,145 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd41-e4.1": 1,
+      "sd41-e4.2": 1,
+      "sd41-e4.4": 2,
+      "sd41-e4.5": 1
+    },
+    "by_subject": {
+      "SD-41 epic-breakdown.md E4.2 row": 1,
+      "SD-41 epic-breakdown.md E4.4 FILES YOU OWN": 1,
+      "SD-41 epic-breakdown.md E4.4 acceptance command": 1,
+      "epic-breakdown.md E4.1 acceptance": 1,
+      "epic-breakdown.md E4.5 FILES YOU OWN": 1
+    },
+    "by_verification_method": {
+      "cargo test --locked -j 8 print_pf_blocks_page1_portrait -- --test-threads=8 -> 1 failed, 1365 filtered out; portrait_prints_the -> 2 failed, 1364 filtered out": 1,
+      "cargo test --test packaged_resources failed at :338 'does not compile in exactly the fonts and templates on disk' once logos existed on disk": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_gear_ -- --test-threads=8 (base and RED logs)": 1,
+      "git grep -n unarmed_strike_combat_rows -- apps; cargo test --locked -j 8 --no-fail-fast (desktop) -> bin 1359 passed; 5 failed": 1,
+      "speed.typ importing /frame.typ: cargo test --locked -j 8 print_pf_blocks_speed_prints -- --test-threads=8 -> 'the sheet did not typeset: Error: cyclic import'": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd41-e4.1",
+        "id": "1794808488636-sd41-e4.1-591842",
+        "summary": "epic-breakdown.md E4.1 acceptance claimed R21 RED on the base: the three FAILED; print_pf_blocks_gear_ filter -> 6 passed (technical-design \u00a711 says 5); actual on base 927475a81e the filter matched 1 test, the old print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections, and it passed (1 passed; 1353 filtered out); with the 6 new tests written all 6 FAILED (0 passed; 6 failed); E4.1 replaces the old test, so GREEN is 6",
+        "ts": "2026-11-16T05:54:48Z"
+      },
+      {
+        "actor": "sd41-e4.2",
+        "id": "1794811676178-sd41-e4.2-4007a0",
+        "summary": "SD-41 epic-breakdown.md E4.2 row claimed frame.typ gains one section-title(text) function every page-1 look calls; actual a look cannot import /frame.typ (frame imports blocks.typ, which imports the looks): Typst refuses with 'cyclic import'; the function lives in looks/section-title.typ",
+        "ts": "2026-11-16T06:47:56Z"
+      },
+      {
+        "actor": "sd41-e4.4",
+        "id": "1794822086027-sd41-e4.4-91165b",
+        "summary": "SD-41 epic-breakdown.md E4.4 acceptance command claimed cargo test print_pf_blocks_page1_portrait -> 2 passed; actual the filter matches 1 of the 2 named tests (print_pf_blocks_page1_no_portrait_... does not contain page1_portrait); filter portrait_prints_the matches both",
+        "ts": "2026-11-16T09:41:26Z"
+      },
+      {
+        "actor": "sd41-e4.4",
+        "id": "1794822086164-sd41-e4.4-7574ad",
+        "summary": "SD-41 epic-breakdown.md E4.4 FILES YOU OWN claimed typst.rs serves the logos and tauri.conf.json bundles resources/print/logos/; actual print assets are compiled into the binary (typst.rs include_bytes, closed world NR-3); packaged_resources.rs the_sidecar_and_the_print_assets_reach_every_installer pins compiled-in = on-disk, so bundling the directory is not read by anything",
+        "ts": "2026-11-16T09:41:26Z"
+      },
+      {
+        "actor": "sd41-e4.5",
+        "id": "1794840454555-sd41-e4.5-148939",
+        "summary": "epic-breakdown.md E4.5 FILES YOU OWN claimed root attack-row producers and their tests; the tab and the print read it unchanged; actual the rows reach the load response only through a desktop caller (character_hub.rs load_saved_character_at_root beside unarmed_strike_combat_rows), and 5 desktop bin tests pinned the in-hand-only attack-row set (4 no_required_gear_*, worn_vs_carried_a_carried_item_moves_no_number_on_the_sheet)",
+        "ts": "2026-11-16T14:47:34Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 5,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd41-e4.1": 2,
+      "sd41-e4.2": 1,
+      "sd41-e4.4": 3,
+      "sd41-e4.5": 1
+    },
+    "by_origin": {
+      "agent": 6,
+      "derived": 1
+    },
+    "by_type": {
+      "correction": 5,
+      "incident": 1,
+      "verification": 1
+    },
+    "total": 7
+  },
+  "generated_at": "2026-11-16T14:52:41Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 14,
+    "events_per_commit": 0.5,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        14
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "publisher-fetch-refused": 1
+    },
+    "recent": [
+      {
+        "actor": "sd41-e4.4",
+        "id": "1794822090954-sd41-e4.4-1a1aa7",
+        "summary": "R. Talsorian Games site refused the Cyberpunk RED logo fetch (HTTP 429 twice); cpr.png not landed",
+        "ts": "2026-11-16T09:41:30Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 1
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/docs/retro/events",
+    "problems": [],
+    "shards": 4
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {},
+    "recent": [],
+    "total": 0
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 1
+  },
+  "window": {
+    "since": "2026-11-16T00:02:46-05:00",
+    "spec": "2026-11-16T00:02:46-05:00",
+    "until": null
+  }
+}

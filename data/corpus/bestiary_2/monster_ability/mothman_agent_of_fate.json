@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Mothman ~ Agent of Fate",
+    "delivery": "SpellLike",
+    "description": "A mothman may recreate the effects of any spell of 5th level or lower once per day as a spell-like ability, but only if doing so steers the flow of fate in its proper course.  What the proper flow of fate entails is determined by the GM.  Typical uses of this ability include casting major image to coax someone to a portentous location, casting raise dead to return someone with an important fate to life, or using rusting grasp to weaken a structure and cause some necessary calamity.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:mothman_agent_of_fate",
+    "name": "Agent of Fate",
+    "owners": [
+      "bestiary_2:monster:mothman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A mothman may recreate the effects of any spell of 5th level or lower once per day as a spell-like ability, but only if doing so steers the flow of fate in its proper course.  What the proper flow of fate entails is determined by the GM.  Typical uses of this ability include casting major image to coax someone to a portentous location, casting raise dead to return someone with an important fate to life, or using rusting grasp to weaken a structure and cause some necessary calamity."
+      },
+      {
+        "key": "KEY",
+        "value": "Mothman ~ Agent of Fate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spelllike"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.194",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 851,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mothman ~ Agent of Fate",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

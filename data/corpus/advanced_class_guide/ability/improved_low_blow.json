@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Low Blow",
+    "name": "Improved Low Blow",
+    "description": "You are adept at hitting larger opponents where it hurts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Low Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Halfling ~ Low-Blow"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfling=true"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "4"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at hitting larger opponents where it hurts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Low Blow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Your bonus to confirm critical hits against opponents larger than yourself improves to +2. Furthermore, once per day, after you fail to hit with a critical hit confirmation roll, you can reroll the confirmation roll, but must take the new result even if it is worse."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 25,
+    "record_key": "Warpriest Bonus Feat ~ Improved Low Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

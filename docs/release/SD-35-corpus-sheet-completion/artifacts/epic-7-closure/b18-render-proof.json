@@ -1,0 +1,201 @@
+{
+  "ruling": "SD-35 operator ruling B18 (decisions.md \u00a721)",
+  "criterion": "AT-35-E7-000-POPULATION-FIX",
+  "admitted": 12,
+  "render": 12,
+  "failures": [],
+  "units": [
+    {
+      "id": "core_rulebook:feat:sylvan_scimitar_cleave",
+      "name": "Cleave (Granted by Sylvan Scimitar)",
+      "book": "core_rulebook",
+      "kind": "feat",
+      "source": "cr_feats.lst:213",
+      "status": "sheet-complete",
+      "evidence": "sheet_rule_rendered:words",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/core_rulebook/feat/sylvan_scimitar_cleave.json",
+      "renders": true,
+      "sheet_lines": [
+        "Cleave (Granted by Sylvan Scimitar): When outdoors, You can strike two adjacent foes with a single swing.",
+        "Cleave (Granted by Sylvan Scimitar): When outdoors, as a standard action, you can make a single attack at your full base attack bonus against a foe within reach. If you hit, you deal damage normally and can make an additional attack (using your full base attack bonus) against a foe that is adjacent to the first and also within reach. You can only make one additional attack per round with this feat. When you use this feat, you take a -2 penalty to your Armor Class until your next turn."
+      ]
+    },
+    {
+      "id": "core_rulebook:spell:magic_vestment_shield_use",
+      "name": "Magic Vestment (Shield use)",
+      "book": "core_rulebook",
+      "kind": "spell",
+      "source": "cr_spells.lst:722",
+      "status": "sheet-complete",
+      "evidence": "sheet_rule_rendered:words",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/core_rulebook/spell/magic_vestment_shield_use.json",
+      "renders": true,
+      "sheet_lines": [
+        "Magic Vestment (Shield use): Shield touched",
+        "Magic Vestment (Shield use): (CASTERLEVEL) hours",
+        "Magic Vestment (Shield use): Grants a shield an enhancement bonus of +1 per four caster levels (maximum +5 at 20th level) [Use Magic Vestment to enhance a suit of armor or clothing]"
+      ]
+    },
+    {
+      "id": "mythic_adventures:spell:elemental_body_iiimod",
+      "name": "Elemental Body IIIMOD",
+      "book": "mythic_adventures",
+      "kind": "spell",
+      "source": "ma_spells.lst:98",
+      "status": "text-complete",
+      "evidence": "spell_list_entry_with_description_but_no_corpus_level",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/mythic_adventures/spell/elemental_body_iiimod.json",
+      "renders": true,
+      "sheet_lines": [
+        "Elemental Body IIIMOD: Mythic: The spell's bonuses to ability scores increase by 2, the natural armor bonus increases by 1, and the ability score penalties decrease by 2 (minimum penalty of 0). There is a 50% chance any critical hit or sneak attack against you is treated as a normal hit, as if you were wearing medium fortification armor. Augmented (3rd): If you expend two uses of mythic power, the ability score bonuses increase by an additional 2. You can also, a number of times equal to your tier, add half your tier to the DC of one spell you cast with an energy descriptor that matches your elemental type (air: electricity, earth: acid, fire: fire, water: cold)."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_anarchy",
+      "name": "Champion of Anarchy",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:6",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_anarchy.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Anarchy: You spread chaos wherever you go.",
+        "Champion of Anarchy: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation to cast lesser confusion as a spell-like ability as a standard action, with a caster level equal to your Hit Dice. The duration of this effect on a failed save is 1d4 rounds. Lastly, you gain a +2 bonus on weapon and spell damage rolls against lawful creatures. This is an alignment-based effect. Residual: If you have this feat but are no longer chaotic neutral, you continue to gain the +2 bonus on weapon and spell damage against lawful creatures."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_balance",
+      "name": "Champion of Balance",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:7",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_balance.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Balance: You are dedicated to perfect balance in the multiverse.",
+        "Champion of Balance: You gain a +2 bonus on weapon and spell damage rolls against good and evil creatures. You also gain a +2 bonus on weapon and spell damage rolls against lawful and chaotic creatures. These bonuses stack with each other. Residual: You gain no benefit from this feat if you are not of neutral alignment."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_destruction",
+      "name": "Champion of Destruction",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:8",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_destruction.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Destruction: You would destroy the world if it were within your power.",
+        "Champion of Destruction: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can also use an affirmation to treat an effect on you from a spell, magic item, or other alignment-based effect as if you were neither chaotic nor evil. You can choose to do so after any attack roll hits you with such an effect or you fail a saving throw against such an effect. Lastly, you gain a +2 bonus on weapon and spell damage rolls against lawful and good creatures (or +4 if the creature is both lawful and good). This is an alignmentbased effect. Residual: If you have this feat but you are no longer chaotic evil, you continue to gain the +2 bonus on weapon and spell damage rolls against lawful and good creatures (or +4 if the creature is both lawful and good)."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_freedom",
+      "name": "Champion of Freedom",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:9",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_freedom.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Freedom: You believe that beings can thrive only when free.",
+        "Champion of Freedom: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can also use an affirmation to gain the effects of freedom of movement for 1 round. Lastly, you gain a +2 bonus on weapon and spell damage rolls against evil and lawful creatures (or +4 if the creature is both evil and lawful). This is an alignment-based effect. Residual: If you have this feat but you are no longer chaotic good, you continue to gain the +2 bonus on weapon and spell damage rolls against evil and lawful creatures (or +4 if the creature is both lawful and evil)."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_grace",
+      "name": "Champion of Grace",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:10",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_grace.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Grace: It is your mission to do as much good as possible.",
+        "Champion of Grace: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation and touch a creature as a standard action to remove a single condition or harmful effect from the list of paladin mercies (using your Hit Dice as your paladin level to determine which mercies you can use and their effects). Lastly, you gain a +2 bonus on weapon and spell damage rolls against evil creatures. This is an alignment-based effect. Residual: If you have this feat but you are no longer neutral good, you continue to gain the +2 bonus on weapon and spell damage rolls against evil creatures."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_malevolence",
+      "name": "Champion of Malevolence",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:11",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_malevolence.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Malevolence: Things would be better if everyone just did as you wished.",
+        "Champion of Malevolence: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation and touch a creature as a standard action to bestow a single condition or harmful effect from the list of antipaladin cruelties (using your Hit Dice as your antipaladin level to determine which cruelties you can use and their effects). Lastly, you gain a +2 bonus on weapon and spell damage rolls against good creatures. This is an alignment-based effect. Residual: If you have this feat but you are no longer neutral evil, you continue to gain the +2 bonus on weapon and spell damage rolls against good creatures."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_righteousness",
+      "name": "Champion of Righteousness",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:12",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_righteousness.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Righteousness: You know that good must be tempered with order if it's going to prevail in the long term.",
+        "Champion of Righteousness: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation to treat the effect of a spell, magic item, or other alignmentbased effect on you as if you were neither lawful nor good. You can choose to do so after any attack roll hits you with such an effect or you fail a saving throw against such an effect. Lastly, you gain a +2 bonus on weapon and spell damage rolls against chaotic and evil creatures (or +4 if the creature is both chaotic and evil). This is an alignmentbased effect. Residual: If you have this feat but you are no longer lawful good, you continue to gain the +2 bonus on weapon and spell damage rolls against chaotic and evil creatures (or +4 if the creature is both chaotic and evil)."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_tranquility",
+      "name": "Champion of Tranquility",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:13",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_tranquility.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Tranquility: The harmony of law is your highest ideal.",
+        "Champion of Tranquility: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation to cast calm emotions as a spell-like ability as a standard action, with a caster level equal to your Hit Dice. Lastly, you gain a +2 bonus on weapon and spell damage rolls against chaotic creatures. This is an alignment-based effect. Residual: If you have this feat but you are no longer lawful neutral, you continue to gain the +2 bonus on weapon and spell damage rolls against chaotic creatures."
+      ]
+    },
+    {
+      "id": "pathfinder_unchained:feat:champion_of_tyranny",
+      "name": "Champion of Tyranny",
+      "book": "pathfinder_unchained",
+      "kind": "feat",
+      "source": "pu_feats.lst:14",
+      "status": "text-complete",
+      "evidence": "in_catalog_and_corpus_record_carries_no_magnitude_token",
+      "in_inventory": true,
+      "rule_file": "data/sheet_rules/pathfinder_unchained/feat/champion_of_tyranny.json",
+      "renders": true,
+      "sheet_lines": [
+        "Champion of Tyranny: You must beat down the masses to have true order.",
+        "Champion of Tyranny: You can store a number of affirmations up to your Charisma bonus (minimum 1) to use at any time, not just within the next 24 hours. You can use an affirmation to cast hold person as a spell-like ability as a standard action, with a caster level equal to your Hit Dice. You gain a +2 bonus on weapon and spell damage rolls against chaotic and good creatures (or +4 if the creature is both chaotic and good). This is an alignment-based effect. Residual: If you have this feat but you are no longer lawful evil, you continue to gain the +2 bonus on weapon and spell damage rolls against chaotic and good creatures (or a +4 bonus if the creature is both chaotic and good)."
+      ]
+    }
+  ]
+}

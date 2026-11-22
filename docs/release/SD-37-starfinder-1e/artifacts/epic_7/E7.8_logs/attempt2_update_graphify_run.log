@@ -1,0 +1,11 @@
+[graphify-update] receipts.md: /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/receipts.md
+[graphify-update] repo root: /home/ubuntu/workspace/worktrees/codex-sd37
+[graphify-update] working tree: clean
+[graphify-update] branch: 645dcf320e703981defe87ae033e82092b5871f0 (645dcf32)
+[graphify-update] integration target: develop
+[graphify-update] graphify CLI: /home/ubuntu/.local/bin/graphify
+[graphify-update] invocation: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/worktrees/codex-sd37 --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+[graphify-update] graphify exit=1, elapsed=1536.8s, outcome=failed
+[graphify-update] log written: graphify-out/.truth-up-run-2026-10-07T19:24:19Z.log
+[graphify-update] appended receipt to /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/receipts.md
+[graphify-update] graphify update complete (with failure receipt; pipeline continues per operator directive)

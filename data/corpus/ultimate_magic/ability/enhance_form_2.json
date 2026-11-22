@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Enhance Form ~ Spontaneous",
+    "name": "Enhance Form",
+    "description": "+4 enhancement bonus to Str, Dex, or Con; end early for +8.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhance Form ~ Spontaneous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Body.Bard2.Oracle2.Sorcerer2.Summoner2"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 enhancement bonus to Str, Dex, or Con; end early for +8."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 248,
+    "record_key": "Enhance Form ~ Spontaneous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

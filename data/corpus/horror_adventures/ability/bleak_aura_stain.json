@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Bleak Aura Stain",
+    "name": "Bleak Aura Stain",
+    "description": "Animals are startled by your presence, worsening their starting attitudes toward you by one step. Any animal companion you have abandons you when you acquire this stain. Whispering voices fill the air around you, begging for release or cursing your existence. Any creature that succeeds at a DC 20 Perception check can hear these whispers, which might alert it to your presence if you're using Stealth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Bleak Aura Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichBleakAuraStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals are startled by your presence, worsening their starting attitudes toward you by one step. Any animal companion you have abandons you when you acquire this stain. Whispering voices fill the air around you, begging for release or cursing your existence. Any creature that succeeds at a DC 20 Perception check can hear these whispers, which might alert it to your presence if you're using Stealth."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 479,
+    "record_key": "Lich Corruption ~ Bleak Aura Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Disintegrator rifle (decimator)",
+    "name": "Disintegrator rifle, decimator",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Longarms.Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 461,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Disintegrator rifle (decimator)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:disintegrator_rifle_decimator"
+}

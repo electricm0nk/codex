@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The iathavos's stench ability is supernaturally disgusting - creatures that succumb to this ability are nauseated, while those that save are still sickened.",
+    "key": "Iathavos ~ Stench",
+    "name": "Stench",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iathavos ~ Stench"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IathavosStenchDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The iathavos's stench ability is supernaturally disgusting - creatures that succumb to this ability are nauseated, while those that save are still sickened."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stench"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosStenchDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosStenchDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stench)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, 10 rounds)|IathavosStenchDC"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1012,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Iathavos ~ Stench",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Blood Alchemist",
+    "name": "Blood Alchemist",
+    "class": "Alchemist",
+    "description": "Most alchemists can transform matter and energy into other forms, but some wicked specialists realize that life itself is an energy that can greatly fuel their alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Blood Alchemist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "Most alchemists can transform matter and energy into other forms, but some wicked specialists realize that life itself is an energy that can greatly fuel their alchemy."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Blood Alchemist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_Bomb=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood Alchemist ~ Lifeblood|PREALIGN:LE,NE,CE|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood Alchemist ~ Alchemical Circles|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood Alchemist ~ Blood Knowledge|PRECLASS:1,Alchemist=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Bomb|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 7,
+    "record_key": "Alchemist Archetype ~ Blood Alchemist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

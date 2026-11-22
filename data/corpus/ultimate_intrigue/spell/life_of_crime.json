@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You unleash the basest instincts of iniquity in the target and cause them to become his overriding reason for being. The target neither gains nor provides benefit from teamwork feats or the aid another action and can't willingly accept harmless magical effects from others. The target moves by Stealth whenever possible, and lies and deceives others instinctively to further its personal agenda. In addition, when the target is conscious, it must succeed at a Will save against the spell's save DC each hour (or each round during combat or a similarly stressful situation) or behave as if affected by a crime wave spell for 1 round. Life of crime is particularly difficult to remove. Only a remove curse with a higher caster level than life of crime's caster level, or a limited wish, wish, or miracle can remove its effects.|PRERULE:1,DisplayFullSpell",
+    "key": "Life of Crime",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=4|Bard,Medium=6|Psychic,Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Permanently turn someone into a crazed criminal.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You unleash the basest instincts of iniquity in the target and cause them to become his overriding reason for being. The target neither gains nor provides benefit from teamwork feats or the aid another action and can't willingly accept harmless magical effects from others. The target moves by Stealth whenever possible, and lies and deceives others instinctively to further its personal agenda. In addition, when the target is conscious, it must succeed at a Will save against the spell's save DC each hour (or each round during combat or a similarly stressful situation) or behave as if affected by a crime wave spell for 1 round. Life of crime is particularly difficult to remove. Only a remove curse with a higher caster level than life of crime's caster level, or a limited wish, wish, or miracle can remove its effects.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Curse|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Life of Crime"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Life of Crime",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

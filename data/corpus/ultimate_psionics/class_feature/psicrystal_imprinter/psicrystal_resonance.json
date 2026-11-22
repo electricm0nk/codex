@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psicrystal Imprinter ~ Psicrystal Resonance",
+    "name": "Psicrystal Resonance",
+    "class": "Psicrystal Imprinter",
+    "description": "Channel power through psicrystal to gain effect: augment",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psicrystal Imprinter ~ Psicrystal Resonance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsicrystalImprinterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsicrystalResonanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Channel power through psicrystal to gain effect: augment"
+      },
+      {
+        "key": "DESC",
+        "value": " empower|PREVARGT:PsicrystalResonanceLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": " extend|PREVARGT:PsicrystalResonanceLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": " twin|PREVARGT:PsicrystalResonanceLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsicrystalResonanceLVL|PsicrystalImprinterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.369"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1386,
+    "record_key": "Psicrystal Imprinter ~ Psicrystal Resonance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

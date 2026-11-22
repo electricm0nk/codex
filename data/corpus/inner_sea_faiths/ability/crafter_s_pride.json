@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Apsu ~ Crafter's Pride",
+    "name": "Crafter's Pride",
+    "description": "If you have performed your daily obedience, you have learned the intrinsic nature of what gives life to objects, and can pour your soul into the construction of a given creation to infuse it with a semblance of blessed life. Once per week, you can cast animate objects on a single object that you've created. The effect does not have a duration; the animated object remains indefinitely as a companion, following your commands as best it can. You cannot animate a new companion while one is already serving you, though as a full-round action you can dismiss a companion, reducing it to lifelessness. If your companion is destroyed, you cannot use this ability again for another week. You cannot affect an object animated in this way with a permanency spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Apsu ~ Crafter's Pride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you have learned the intrinsic nature of what gives life to objects, and can pour your soul into the construction of a given creation to infuse it with a semblance of blessed life. Once per week, you can cast animate objects on a single object that you've created. The effect does not have a duration; the animated object remains indefinitely as a companion, following your commands as best it can. You cannot animate a new companion while one is already serving you, though as a full-round action you can dismiss a companion, reducing it to lifelessness. If your companion is destroyed, you cannot use this ability again for another week. You cannot affect an object animated in this way with a permanency spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 64,
+    "record_key": "Evangelist Boon ~ Apsu ~ Crafter's Pride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Toughness",
+    "name": "Toughness",
+    "class": "Sorcerer",
+    "description": "You have enhanced physical stamina.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Toughness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_Toughness,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have enhanced physical stamina."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain +%1 hit points.|max(3,TL)"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain +1 hit points whenever you gain a Hit Die (such as when you gain a level).|PREHD:MIN=3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2096,
+    "record_key": "Sorcerer Bloodline Feat ~ Toughness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

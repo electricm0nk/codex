@@ -1,0 +1,38 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 1.0,
+    "description": null,
+    "key": "Bridge (Assault/Large)",
+    "name": "Bridge (Assault/Large)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Siege.BridgeAssault"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_general.lst",
+    "record_key": "Bridge (Assault/Large)",
+    "sha256": "1fd97ef34d10dba3fd2001b6a93f9b80c063aea5b949c828109b2ec66525d195"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

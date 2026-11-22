@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dark Tempest ~ Diverse Training",
+    "name": "Diverse Training",
+    "class": "Dark Tempest",
+    "description": "You add your level to any soulknife levels to meet prerequisites of feats and blade skills.  You may also use any blade skills with a weapon summoned with call weaponry as if it were a mind blade.  You also add your level to any levels in a manifesting class for the purpose of meeting the prerequisites for feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tempest ~ Diverse Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DarkTempestClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulknifeFeatPrereqLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeSkillPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add your level to any soulknife levels to meet prerequisites of feats and blade skills.  You may also use any blade skills with a weapon summoned with call weaponry as if it were a mind blade.  You also add your level to any levels in a manifesting class for the purpose of meeting the prerequisites for feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeSkillPrereqLVL|DarkTempestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulknifeFeatPrereqLVL|DarkTempestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.356"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1194,
+    "record_key": "Dark Tempest ~ Diverse Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,2 @@
+    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
+Error: the armor, then its enhancement: expected 2, got 1

@@ -1,0 +1,23 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.90s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-sf-cpr/debug/deps/codex_desktop-ee06b37c3d50d698)
+
+running 15 tests
+test cpr_adapter::tests::market_shell_every_fixed_kit_item_has_a_price ... ok
+test cpr_catalog::tests::market_shell_lists_hold_their_own_kinds_at_a_price ... ok
+test cpr_adapter::tests::market_shell_a_starter_item_with_no_shop_name_sells_for_nothing ... ok
+test cpr_adapter::tests::market_shell_a_buy_over_the_cash_is_refused_in_the_paid_modes ... ok
+test cpr_adapter::tests::market_shell_refuses_a_row_not_on_offer_and_a_copy_not_held ... ok
+test cpr_adapter::tests::market_shell_ammunition_sells_by_the_ten ... ok
+test cpr_adapter::tests::market_shell_what_is_bought_reaches_the_sheet_and_leaves_with_the_sale ... ok
+test sf_catalog::tests::market_shell_lists_partition_the_buyable_records_by_type_tag ... ok
+test cpr_adapter::tests::market_shell_buy_and_sell_honour_the_three_price_modes ... ok
+test sf_adapter::tests::market_shell_refuses_a_row_not_on_offer_and_a_copy_not_held ... ok
+test sf_adapter::tests::market_shell_a_buy_over_the_credits_is_refused_in_the_paid_modes ... ok
+test sf_adapter::tests::market_shell_a_copy_sells_with_what_is_on_it ... ok
+test sf_adapter::tests::market_shell_wears_the_first_armour_and_carries_the_second ... ok
+test sf_adapter::tests::market_shell_the_credits_a_sale_lost_survive_a_reload_and_a_choices_save ... ok
+test sf_adapter::tests::market_shell_buy_and_sell_honour_the_three_price_modes ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 948 filtered out; finished in 9.38s
+

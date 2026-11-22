@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Immunity to Phantasms",
+    "delivery": "Extraordinary",
+    "description": "You are never subject to phantasm effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:immunity_to_phantasms",
+    "name": "Immunity to Phantasms",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Phantasms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You are never subject to phantasm effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1420,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Immunity to Phantasms",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

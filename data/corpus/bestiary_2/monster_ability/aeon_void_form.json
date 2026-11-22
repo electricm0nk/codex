@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Aeon ~ Void Form",
+    "delivery": "Supernatural",
+    "description": "Though aeons aren't incorporeal, their forms are only a semi-tangible manifestation of something greater. An aeon's void form grants it a +%1 deflection bonus.",
+    "description_variables": [
+      "VoidFormACBonus"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:aeon_void_form",
+    "name": "Void Form",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|VoidFormACBonus|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidFormACBonus|HD/4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidFormACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Though aeons aren't incorporeal, their forms are only a semi-tangible manifestation of something greater. An aeon's void form grants it a +%1 deflection bonus.|VoidFormACBonus"
+      },
+      {
+        "key": "KEY",
+        "value": "Aeon ~ Void Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.306",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1980,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Aeon ~ Void Form",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

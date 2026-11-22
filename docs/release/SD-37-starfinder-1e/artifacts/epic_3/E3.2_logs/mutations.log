@@ -1,0 +1,31 @@
+== M-a variable lookup made case-sensitive
+test print_roles_cover_equipment_and_race_facts ... FAILED
+test variable_names_resolve_case_insensitively_like_pcgen ... FAILED
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... FAILED
+test the_committed_census_is_fresh ... FAILED
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+restored: identical
+== M-b ItemLevel role row dropped
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... FAILED
+test print_roles_cover_equipment_and_race_facts ... FAILED
+test the_committed_census_is_fresh ... FAILED
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+restored: identical
+== M-c child scope no longer draws from its parent
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... FAILED
+test print_roles_cover_equipment_and_race_facts ... FAILED
+test the_committed_census_is_fresh ... FAILED
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+restored: identical
+== M-d comment lines read as tokens
+test print_roles_cover_equipment_and_race_facts ... FAILED
+test modifyother_tokens_are_speed_on_a_declared_movement ... FAILED
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... FAILED
+test the_committed_census_is_fresh ... FAILED
+test an_independent_walk_agrees_on_the_token_counts ... FAILED
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+restored: identical
+== M-e python IDENTITY check removed
+FAIL: test_a_token_the_census_missed_fails_identity (scripts.tests.test_token_coverage.SfFormulaMode.test_a_token_the_census_missed_fails_identity)
+FAILED (failures=1)
+restored: identical

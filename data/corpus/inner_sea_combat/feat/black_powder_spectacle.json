@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Black Powder Spectacle",
+    "category": "Combat",
+    "name": "Black Powder Spectacle",
+    "description": "You can sacrifice ammunition to make a grand spectacle. When you spend a swift action to attempt a performance combat check, you can sacrifice one cartridge or an amount of black powder required for a single shot to make either a loud sound or an impressive flash. If you choose to make your weapon's report louder, you gain a +4 bonus on all Intimidate checks you attempt for 1 round. If you choose to create an impressive flash, you gain a +4 bonus on any Perform checks you attempt for 1 round.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Gunslinger],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Grit,Gunslinger ~ Grit]",
+      "PRETEXT:Prerequisites: Amateur Gunslinger or the grit class feature, base attack bonus +4.",
+      "PRETOTALAB:5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 14,
+    "record_key": "Black Powder Spectacle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

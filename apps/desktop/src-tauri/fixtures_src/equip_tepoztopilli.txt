@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Tepoztopilli
+Tepoztopilli																			PROFICIENCY:WEAPON|Tepoztopilli							TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Piercing.Slashing.Polearm																																		COST:8	WT:8										CRITMULT:x2	CRITRANGE:2							DAMAGE:1d10					EQMOD:Special Quality ~ Fragile.Material ~ Steel																																				WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.38

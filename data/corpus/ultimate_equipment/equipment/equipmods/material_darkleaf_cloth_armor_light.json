@@ -1,0 +1,99 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 750.0,
+    "description": null,
+    "key": "Material ~ Darkleaf Cloth ~ Armor / Light",
+    "name": "Darkleaf Cloth",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Darkleaf Cloth ~ Armor / Light"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "750"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Darkleaf"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Light"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Material ~ Leather,Nonmetal"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Artisan,Spell Component"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Material ~ Darkleaf Cloth ~ Armor / Light",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Absorbing Blade",
+    "name": "Absorbing Blade",
+    "class": "Blade Skill",
+    "description": "You may expend your psychic strike to have your mind blade absorb a spell, spell-like ability, power, or psi-like ability that would affect you.  Effects that are not subject to spell or power resistance cannot be absorbed in this fashion.  Effects that target an area or multiple targets are only absorbed for the soulknife.  The level of the effect cannot exceed the nubmer of dice of psychic strike expended.  This blade skill may not be use with the mind bolt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Absorbing Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality.DarkTempestBladeSkill"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You may expend your psychic strike to have your mind blade absorb a spell, spell-like ability, power, or psi-like ability that would affect you.  Effects that are not subject to spell or power resistance cannot be absorbed in this fashion.  Effects that target an area or multiple targets are only absorbed for the soulknife.  The level of the effect cannot exceed the nubmer of dice of psychic strike expended.  This blade skill may not be use with the mind bolt."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 751,
+    "record_key": "Blade Skill ~ Absorbing Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

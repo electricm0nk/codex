@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Defensive Tactics",
+    "category": "General",
+    "name": "Defensive Tactics",
+    "description": "You add your levels of tactician and fighter together for purposes of your tactics and armor training class features.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Tactician ~ Strategy,Armor Training"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 72,
+    "record_key": "Defensive Tactics"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

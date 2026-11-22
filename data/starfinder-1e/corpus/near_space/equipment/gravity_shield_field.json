@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Gravity shield (field)",
+    "name": "Gravity shield, field",
+    "type": "ARMOR.Shields"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "starfinder/paizo/near_space/sns_equip.lst",
+    "record_key": "Gravity shield (field)",
+    "sha256": "597c20e87a811ffff6ea542d4aa1c33f55106c844cdd978829fd0f3e002dedfd"
+  },
+  "unit_id": "near_space:equipment:gravity_shield_field"
+}

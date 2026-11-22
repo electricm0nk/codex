@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Talisman Crafter ~ Warding Seal",
+    "name": "Warding Seal",
+    "class": "Occultist",
+    "description": "A talisman crafter can inscribe a warding seal, infusing an inscribed glyph with psychic energy. Inscribing the seal follows the rules for drawing magic circles, takes 1 minute, and requires the occultist to expend 1 point of mental focus (either generic focus or focus from any one of her implements). As a full-round action that provokes attacks of opportunity, the talisman crafter expends 1 point of mental focus to scribe a special seal, infusing the glyph with a psychic spell she knows that affects one or more creatures and expending the spell slot just as if she had cast the spell. This seal holds the spell energy in check until it's triggered by conditions set forth when the seal is crafted or until the occultist refreshes her mental focus. The seal functions as the spell glyph option of the glyph of warding spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman Crafter ~ Warding Seal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "DESC",
+        "value": "A talisman crafter can inscribe a warding seal, infusing an inscribed glyph with psychic energy. Inscribing the seal follows the rules for drawing magic circles, takes 1 minute, and requires the occultist to expend 1 point of mental focus (either generic focus or focus from any one of her implements). As a full-round action that provokes attacks of opportunity, the talisman crafter expends 1 point of mental focus to scribe a special seal, infusing the glyph with a psychic spell she knows that affects one or more creatures and expending the spell slot just as if she had cast the spell. This seal holds the spell energy in check until it's triggered by conditions set forth when the seal is crafted or until the occultist refreshes her mental focus. The seal functions as the spell glyph option of the glyph of warding spell."
+      },
+      {
+        "key": "DESC",
+        "value": "The talisman crafter's fast circles ability applies to her warding seals, and she treats the ability as the greater spell glyph option of the greater glyph of warding spell.|PRECLASS:1,Occultist=17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 291,
+    "record_key": "Talisman Crafter ~ Warding Seal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

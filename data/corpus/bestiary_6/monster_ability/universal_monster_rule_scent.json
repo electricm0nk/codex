@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:06Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Scent",
+    "delivery": "Extraordinary",
+    "description": "This special sense allows a creature to detect approaching enemies, sniff out hidden foes, and track by sense of smell. Creatures with the scent ability can identify familiar odors just as humans do familiar sights.&nl;The creature can detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if downwind, it drops to 15 feet. Strong scents, such as smoke or rotting garbage, can be detected at twice the ranges noted above. Overpowering scents, such as skunk musk or troglodyte stench, can be detected at triple the normal range.&nl;When a creature detects a scent, the exact location of the source is not revealed--only its presence somewhere within range. The creature can take a move action to note the direction of the scent. When the creature is within 5 feet of the source, it pinpoints the source's location.&nl;A creature with the scent ability can follow tracks by smell, attempting a Wisdom or Survival check to find or follow a track. The typical DC for a fresh trail is 10 (no matter what kind of surface holds the scent). This DC increases or decreases depending on how strong the quarry's odor is, the number of creatures, and the age of the trail. For each hour that the trail is cold, the DC increases by 2. Creatures tracking by scent ignore the effects of surface conditions and poor visibility. The ability otherwise follows the rules for the Survival skill.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:universal_monster_rule_scent",
+    "name": "Scent",
+    "owners": [],
+    "source_page": "p.298",
+    "traits": [
+      "Universal Monster Rule",
+      "Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2448,
+    "record_key": "Universal Monster Rule ~ Scent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

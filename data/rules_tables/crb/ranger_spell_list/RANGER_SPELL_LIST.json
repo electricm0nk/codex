@@ -1,0 +1,469 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/ranger_spell_list/RANGER_SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Accelerate Poison",
+      2
+    ],
+    [
+      "Air Step",
+      2
+    ],
+    [
+      "Alarm",
+      1
+    ],
+    [
+      "Allfood",
+      2
+    ],
+    [
+      "Animal Growth",
+      4
+    ],
+    [
+      "Animal Messenger",
+      1
+    ],
+    [
+      "Animal Purpose Training",
+      1
+    ],
+    [
+      "Ant Haul",
+      1
+    ],
+    [
+      "Arrow Eruption",
+      2
+    ],
+    [
+      "Aspect of the Bear",
+      2
+    ],
+    [
+      "Aspect of the Falcon",
+      1
+    ],
+    [
+      "Aspect of the Stag",
+      3
+    ],
+    [
+      "Aspect of the Wolf",
+      4
+    ],
+    [
+      "Barkskin",
+      2
+    ],
+    [
+      "Bear's Endurance",
+      2
+    ],
+    [
+      "Blessing of the Salamander",
+      4
+    ],
+    [
+      "Bloodhound",
+      2
+    ],
+    [
+      "Bloody Claws",
+      3
+    ],
+    [
+      "Bow Spirit",
+      4
+    ],
+    [
+      "Bullet Ward",
+      2
+    ],
+    [
+      "Call Animal",
+      1
+    ],
+    [
+      "Calm Animals",
+      1
+    ],
+    [
+      "Campfire Wall",
+      2
+    ],
+    [
+      "Cat's Grace",
+      2
+    ],
+    [
+      "Chameleon Stride",
+      2
+    ],
+    [
+      "Chameleon Stride (Greater)",
+      3
+    ],
+    [
+      "Charm Animal",
+      1
+    ],
+    [
+      "Cloak of Shade",
+      1
+    ],
+    [
+      "Cloak of Winds",
+      3
+    ],
+    [
+      "Command Plants",
+      3
+    ],
+    [
+      "Commune with Nature",
+      4
+    ],
+    [
+      "Companion Life Link",
+      2
+    ],
+    [
+      "Create Treasure Map",
+      2
+    ],
+    [
+      "Cure Light Wounds",
+      2
+    ],
+    [
+      "Cure Moderate Wounds",
+      3
+    ],
+    [
+      "Cure Serious Wounds",
+      4
+    ],
+    [
+      "Dancing Lantern",
+      1
+    ],
+    [
+      "Darkvision",
+      3
+    ],
+    [
+      "Delay Poison",
+      1
+    ],
+    [
+      "Detect Aberration",
+      1
+    ],
+    [
+      "Detect Animals or Plants",
+      1
+    ],
+    [
+      "Detect Poison",
+      1
+    ],
+    [
+      "Detect Snares and Pits",
+      1
+    ],
+    [
+      "Diminish Plants",
+      3
+    ],
+    [
+      "Eagle Eye",
+      2
+    ],
+    [
+      "Endure Elements",
+      1
+    ],
+    [
+      "Enemy Insight",
+      2
+    ],
+    [
+      "Entangle",
+      1
+    ],
+    [
+      "Feather Step",
+      1
+    ],
+    [
+      "Feather Step (Mass)",
+      3
+    ],
+    [
+      "Freedom of Movement",
+      4
+    ],
+    [
+      "Glide",
+      1
+    ],
+    [
+      "Gravity Bow",
+      1
+    ],
+    [
+      "Grove of Respite",
+      4
+    ],
+    [
+      "Guiding Star",
+      2
+    ],
+    [
+      "Heightened Awareness",
+      1
+    ],
+    [
+      "Hide Campsite",
+      2
+    ],
+    [
+      "Hide from Animals",
+      1
+    ],
+    [
+      "Hold Animal",
+      2
+    ],
+    [
+      "Hunter's Eye",
+      2
+    ],
+    [
+      "Hunter's Howl",
+      1
+    ],
+    [
+      "Instant Enemy",
+      3
+    ],
+    [
+      "Invisibility Alarm",
+      1
+    ],
+    [
+      "Jump",
+      1
+    ],
+    [
+      "Keen Senses",
+      1
+    ],
+    [
+      "Lead Blades",
+      1
+    ],
+    [
+      "Life Bubble",
+      3
+    ],
+    [
+      "Lockjaw",
+      2
+    ],
+    [
+      "Longstrider",
+      1
+    ],
+    [
+      "Longstrider (Greater)",
+      3
+    ],
+    [
+      "Magic Fang",
+      1
+    ],
+    [
+      "Magic Fang (Greater)",
+      3
+    ],
+    [
+      "Negate Aroma",
+      1
+    ],
+    [
+      "Neutralize Poison",
+      3
+    ],
+    [
+      "Nondetection",
+      3
+    ],
+    [
+      "Owl's Wisdom",
+      2
+    ],
+    [
+      "Pass without Trace",
+      1
+    ],
+    [
+      "Perceive Cues",
+      2
+    ],
+    [
+      "Plant Growth",
+      3
+    ],
+    [
+      "Protection from Energy",
+      2
+    ],
+    [
+      "Protective Spirit",
+      2
+    ],
+    [
+      "Read Magic",
+      1
+    ],
+    [
+      "Reduce Animal",
+      3
+    ],
+    [
+      "Refine Improvised Weapon",
+      1
+    ],
+    [
+      "Remove Disease",
+      3
+    ],
+    [
+      "Repel Vermin",
+      3
+    ],
+    [
+      "Residual Tracking",
+      1
+    ],
+    [
+      "Resist Energy",
+      1
+    ],
+    [
+      "Shield Companion",
+      2
+    ],
+    [
+      "Sickening Entanglement",
+      2
+    ],
+    [
+      "Slipstream",
+      2
+    ],
+    [
+      "Snare",
+      2
+    ],
+    [
+      "Speak with Animals",
+      1
+    ],
+    [
+      "Speak with Plants",
+      2
+    ],
+    [
+      "Spike Growth",
+      2
+    ],
+    [
+      "Stench of Prey",
+      3
+    ],
+    [
+      "Stone Call",
+      2
+    ],
+    [
+      "Strong Jaw",
+      3
+    ],
+    [
+      "Summon Nature's Ally I",
+      1
+    ],
+    [
+      "Summon Nature's Ally II",
+      2
+    ],
+    [
+      "Summon Nature's Ally III",
+      3
+    ],
+    [
+      "Summon Nature's Ally IV",
+      4
+    ],
+    [
+      "Thorn Javelin",
+      1
+    ],
+    [
+      "Thorny Entanglement",
+      3
+    ],
+    [
+      "Thunderstomp",
+      1
+    ],
+    [
+      "Thunderstomp (Greater)",
+      3
+    ],
+    [
+      "Tireless Pursuers",
+      3
+    ],
+    [
+      "Tireless Pursuit",
+      1
+    ],
+    [
+      "Tree Shape",
+      3
+    ],
+    [
+      "Tree Stride",
+      4
+    ],
+    [
+      "Venomous Bolt",
+      3
+    ],
+    [
+      "Versatile Weapon",
+      2
+    ],
+    [
+      "Water Walk",
+      3
+    ],
+    [
+      "Wind Wall",
+      2
+    ]
+  ]
+}

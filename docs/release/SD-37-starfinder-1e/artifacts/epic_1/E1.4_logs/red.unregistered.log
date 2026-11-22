@@ -1,0 +1,8 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.06s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 639 filtered out; finished in 0.00s
+

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Empty Caste ~ Charged Weapon",
+    "name": "Charged Weapon",
+    "description": "You can expend a use of your racial energy ray psi-like ability to charge a single melee or thrown weapon for 1 minute. During that time, the charged weapon deals +1d6 damage of your currently active energy type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empty Caste ~ Charged Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend a use of your racial energy ray psi-like ability to charge a single melee or thrown weapon for 1 minute. During that time, the charged weapon deals +1d6 damage of your currently active energy type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 46,
+    "record_key": "Empty Caste ~ Charged Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

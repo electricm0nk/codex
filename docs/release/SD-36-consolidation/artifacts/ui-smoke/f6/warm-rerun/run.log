@@ -1,0 +1,16 @@
+Launching app for agent 'f6c-smoke'...
+PASS  landing-render
+PASS  landing-ruleset-chips
+PASS  settings-open
+PASS  settings-tab-appearance
+PASS  settings-tab-google-drive
+PASS  settings-tab-update
+PASS  settings-tab-bug
+PASS  settings-tab-enhancement
+PASS  settings-tab-developer
+PASS  settings-close-esc
+PASS  create-character-render
+
+11/11 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 11 rows)
+Evidence: /home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/warm-rerun
+EXIT=0

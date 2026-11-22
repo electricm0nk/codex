@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Great Old One (Bokrug) ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 2d4 Wisdom damage; cure 3 consecutive saves. A creature whose Wisdom damage equals its Wisdom score automatically becomes afflicted by a random insanity (GameMastery Guide 250).",
+    "description_variables": [
+      "25+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:great_old_one_bokrug_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 2d4 Wisdom damage; cure 3 consecutive saves. A creature whose Wisdom damage equals its Wisdom score automatically becomes afflicted by a random insanity (GameMastery Guide 250).|25+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Great Old One (Bokrug) ~ Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 802,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Great Old One (Bokrug) ~ Poison",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

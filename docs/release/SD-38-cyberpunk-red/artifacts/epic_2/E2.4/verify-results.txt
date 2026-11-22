@@ -1,0 +1,9 @@
+sd24_audit exit=0
+pf_render exit=0
+sf_lines_writer exit=0
+sf_lines_named exit=0
+root_lib_sf_seed exit=0
+convert_pf exit=0
+convert_sf exit=0
+root_full exit=0
+desktop_full exit=0

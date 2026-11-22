@@ -1,0 +1,19 @@
+inputs sha256 before: ec0b75e490faf9a6
+P1 table M1 (swap ALTHP<->CURRENTMAX) / sheet_rule_convert --system starfinder-1e --check -> FAIL (exit 1)
+      stale on disk: _report.json
+      stale on disk: _tokens.json
+      stale on disk: core/class/envoy.json
+P2 package hand edit (second_skin KAC 2->3) / --check -> FAIL (exit 1)
+P2 package hand edit / verify.sh --only sf-sheet-rules-check -> FAIL (exit 1)
+P3 corpus PI name written back in clear (data/starfinder-1e/corpus/core/deity/codex_named_unit_deity_core_scr_deities_lst_29.json) / sf_corpus --check -> FAIL (exit 1)
+P4 corpus record deleted (core/feat/toughness) / sf_corpus --check -> FAIL (exit 1)
+P5a structural_diff fresh SF dump vs committed package -> PASS
+    verdict=PASS
+P5b structural_diff with core/class/soldier.json deleted -> FAIL (exit 1)
+    verdict=FAIL (removed rule ids: 6)
+P5c structural_diff with Soldier's Stamina line retargeted to Hp (the PF reading) -> FAIL (exit 1)
+    verdict=FAIL (unexpected field deltas: 1)
+inputs sha256 after:  ec0b75e490faf9a6
+restored: table, package and corpus byte-identical to before
+restored / sheet_rule_convert --system starfinder-1e --check -> PASS
+restored / sf_corpus --check -> PASS

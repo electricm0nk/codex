@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Control Vermin",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You and a number of allies less than or equal to your caster level designated upon casting can use Handle Animal and Ride checks to influence or control the targeted vermin as if they were animals and had animal-level intelligence."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 10,
+    "record_key": "Control Vermin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

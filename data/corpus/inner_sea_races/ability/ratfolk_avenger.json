@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Ratfolk Avenger",
+    "name": "Ratfolk Avenger",
+    "description": "You gain a +1 trait bonus on weapon damage rolls against opponents you have witnessed dealing damage to one of your allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Ratfolk Avenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Ratfolk Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Ratfolk Avenger]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsRatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 trait bonus on weapon damage rolls against opponents you have witnessed dealing damage to one of your allies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 106,
+    "record_key": "Trait ~ Ratfolk Avenger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

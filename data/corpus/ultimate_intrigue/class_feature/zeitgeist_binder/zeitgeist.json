@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Zeitgeist Binder ~ Zeitgeist",
+    "name": "Zeitgeist",
+    "class": "Spiritualist",
+    "description": "A zeitgeist binder's phantom is called a zeitgeist. In addition to an emotion, a zeitgeist is tied to one aspect of its settlement: corruption, crime, economy, law, lore, or society (GameMastery Guide p204). In order to select an aspect, that aspect of the settlement must have a positive modifier (for instance, a settlement with a negative lore modifier or a modifier of 0 could not manifest a lore zeitgeist). Although a zeitgeist personifies a single chosen settlement, a zeitgeist binder can call it anywhere, but outside the bounds of its settlement, it loses the benefits of its settlement aspect and settlement avatar abilities. This ability alters phantom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zeitgeist Binder ~ Zeitgeist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ZeitgeistBinderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A zeitgeist binder's phantom is called a zeitgeist. In addition to an emotion, a zeitgeist is tied to one aspect of its settlement: corruption, crime, economy, law, lore, or society (GameMastery Guide p204). In order to select an aspect, that aspect of the settlement must have a positive modifier (for instance, a settlement with a negative lore modifier or a modifier of 0 could not manifest a lore zeitgeist). Although a zeitgeist personifies a single chosen settlement, a zeitgeist binder can call it anywhere, but outside the bounds of its settlement, it loses the benefits of its settlement aspect and settlement avatar abilities. This ability alters phantom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 140,
+    "record_key": "Zeitgeist Binder ~ Zeitgeist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

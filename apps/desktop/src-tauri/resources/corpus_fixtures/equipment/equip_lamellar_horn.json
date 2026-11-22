@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Lamellar (Horn)",
+    "name": "Lamellar (Horn)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_lamellar_horn.txt",
+    "record_key": "Lamellar (Horn)"
+  }
+}

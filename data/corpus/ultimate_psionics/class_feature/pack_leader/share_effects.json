@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pack Leader ~ Share Effects",
+    "name": "Share Effects",
+    "class": "Pack Leader",
+    "description": "When you manifest a power with a range of personal, you can expend your psionic focus to choose",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Leader ~ Share Effects"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you manifest a power with a range of personal, you can expend your psionic focus to choose"
+      },
+      {
+        "key": "DESC",
+        "value": " an additional target, so long as the target is a member of your pack.|!PRECLASS:1,Ranger=15"
+      },
+      {
+        "key": "DESC",
+        "value": " two additional targets, so long as the targets are members of your pack.|PRECLASS:1,Ranger=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.293"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2574,
+    "record_key": "Pack Leader ~ Share Effects"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

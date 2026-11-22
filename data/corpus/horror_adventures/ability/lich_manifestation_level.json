@@ -1,0 +1,49 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your Lich corruption is level %1.|LichManifestationLevel",
+    "key": "Lich Manifestation Level",
+    "name": "Lich Manifestation Level",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Lich Manifestation Level"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LichManifestationLevel|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|LichManifestationLevel|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Your Lich corruption is level %1.|LichManifestationLevel"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 463,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Manifestation Level",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ]
+}

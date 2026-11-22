@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Block Attack",
+    "name": "Block Attack",
+    "class": "Adaptive Warrior",
+    "description": "When focused, you may attempt to block any non-touch attack made by an opponent examined within the last minute.  To block, make an attack roll against the opponent's attack roll, adding your class level to the roll.  The attack is blocked if the roll is equal to or greater than the enemy's attack.  This ability may not be used against opponents two or more size categories larger than you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Block Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When focused, you may attempt to block any non-touch attack made by an opponent examined within the last minute.  To block, make an attack roll against the opponent's attack roll, adding your class level to the roll.  The attack is blocked if the roll is equal to or greater than the enemy's attack.  This ability may not be used against opponents two or more size categories larger than you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1130,
+    "record_key": "Adaptive Warrior ~ Block Attack"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

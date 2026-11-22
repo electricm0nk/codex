@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Semi-auto pistol (elite)",
+    "name": "Semi-auto pistol (elite)",
+    "type": "SMALL ARMS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 130,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Semi-auto pistol (elite)",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:semi_auto_pistol_elite"
+}

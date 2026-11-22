@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Feral Heart",
+    "name": "Feral Heart",
+    "class": "Soulknife",
+    "description": "Your mind reforms your body, often into bestial form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Feral Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeFormMindBlade.SoulknifeShapeMindBlade.SoulknifeEnhancedMindBlade.SoulknifeBonusFeat.SoulknifeThrowMindBlade.SoulknifePsychicStrike.SoulkifeQuickDraw"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Feral Heart],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeFormMindBlade,TYPE.SoulknifeShapeMindBlade,TYPE.SoulknifeEnhancedMindBlade,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeThrowMindBlade,TYPE.SoulknifePsychicStrike,TYPE.SoulknifeQuickDraw]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mind reforms your body, often into bestial form."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Feral Heart ~ Form Claws|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Feral Heart ~ Improved Claws|PREVARGTEQ:MndBladeLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Feral Heart ~ Tenacious|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Feral Heart ~ Feral Roar|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Feral Heart ~ Enhanced Claws|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Feral Heart ~ Feral Transformation|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Feral Heart ~ Quick Shift|PRECLASS:1,Soulknife=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Feral Heart ~ Blade Skills"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2136,
+    "record_key": "Soulknife Archetype ~ Feral Heart"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

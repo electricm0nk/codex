@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Purging Emesis",
+    "category": "General",
+    "name": "Purging Emesis",
+    "description": "You learn to purge toxins by vomiting. As a full-round action that provokes attacks of opportunity, you can attempt to end an ingested poison effect by making yourself vomit. If you succeed at a new saving throw against the initial effect, you gain the nauseated condition for 1 round but end the poison effect as if you had succeeded at the requisite saving throws. Your vomiting causes one adjacent square to become slippery (Core Rulebook 412) until your vomit is cleaned (usually taking 1 full round) or dries up (usually 1 hour). Once you use this feat, you must wait at least 1 hour and consume food or drink before you can use it again.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Great Fortitude"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 44,
+    "record_key": "Purging Emesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

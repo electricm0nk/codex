@@ -1,0 +1,71 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Spriggan Size Alteration",
+    "name": "Spriggan Size Alteration",
+    "raw_tokens": [
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SizeAlterationActive|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGESIZE|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SizeAlterationActive|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WIELDCATEGORY|ALL|2"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 95,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "record_key": "Spriggan Size Alteration",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

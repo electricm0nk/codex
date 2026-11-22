@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Quickdraw Shield (Light/Steel)
+Quickdraw Shield (Light/Steel)	OUTPUTNAME:Quickdraw Shield, Light Steel	PROFICIENCY:SHIELD|Quickdraw Shield (Light)	TYPE:Shield.Light.Standard.Close			COST:59	WT:7		ACCHECK:-2		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d3	EQMOD:Material ~ Steel						WIELD:Light					SIZE:M	SOURCEPAGE:p.180	SPELLFAILURE:5		BONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0

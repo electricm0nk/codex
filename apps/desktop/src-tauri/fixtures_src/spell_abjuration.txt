@@ -1,0 +1,2 @@
+# Fixture for §2.4 Abjuration, source: cr_spells.lst, spell name: Alarm
+Alarm				TYPE:Arcane.Divine	CLASSES:Bard,Ranger,Sorcerer,Wizard=1						SCHOOL:Abjuration																		COMPS:V, S, F/DF		CASTTIME:1 standard action	RANGE:Close				TARGETAREA:20-ft.-radius emanation centered on a point in space							DURATION:(CASTERLEVEL*2) hours [D]						SAVEINFO:None					SPELLRES:No					SOURCEPAGE:p.240	SOURCELINK:http://paizo.com/pathfinderRPG/prd/spells/alarm.html#_alarm					DESC:Alarm creates a subtle ward on an area you select.|!PRERULE:1,DisplayFullSpell

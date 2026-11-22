@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Steal Life",
+    "name": "Steal Life",
+    "class": "Vitalist",
+    "description": "Target of melee touch attack with %1 or fewer hit points must save (DC: %2) or die.|StealLifeHP|StealLifeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Steal Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealLifeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealLifeHP|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealLifeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Target of melee touch attack with %1 or fewer hit points must save (DC: %2) or die.|StealLifeHP|StealLifeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StealLifeHP|140"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StealLifeDC|10+VitalistPrimeStat+StealLifeLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StealLifeLVL|VitalistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 963,
+    "record_key": "Vitalist ~ Steal Life"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

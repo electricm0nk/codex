@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Curse of Names",
+    "name": "Curse of Names",
+    "description": "When you are finished preparing your spells with this book, write the proper name of a single creature among the list of names in this book. As a swift action, when you are within 30 feet of the named creature, you can call out its name to bestow the curse of names on it. This spends the boon's effect. The target creature takes a -2 penalty on all attack rolls, and a -4 penalty on all attack rolls against you, for 1 minute. When you activate this curse, the name is crossed out in the back of the book. That creature cannot be the target of a curse of names originating from you ever again. The penalties of two instances of curse of names on the same creature do not stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Curse of Names"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are finished preparing your spells with this book, write the proper name of a single creature among the list of names in this book. As a swift action, when you are within 30 feet of the named creature, you can call out its name to bestow the curse of names on it. This spends the boon's effect. The target creature takes a -2 penalty on all attack rolls, and a -4 penalty on all attack rolls against you, for 1 minute. When you activate this curse, the name is crossed out in the back of the book. That creature cannot be the target of a curse of names originating from you ever again. The penalties of two instances of curse of names on the same creature do not stack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 48,
+    "record_key": "Preparation Ritual ~ Curse of Names"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,9 @@
+import json,os,sys,shutil
+src=sys.argv[1]; root=sys.argv[2]
+shutil.rmtree(root,ignore_errors=True); os.makedirs(root)
+conf=json.load(open(src+'/tauri.conf.json'))
+for s,d in conf['bundle']['resources'].items():
+    s=os.path.realpath(os.path.join(src,s)); d=os.path.join(root,d.rstrip('/'))
+    if os.path.exists(d): continue
+    os.makedirs(os.path.dirname(d),exist_ok=True); os.symlink(s,d)
+print(sorted(os.listdir(root)), sorted(os.listdir(root+'/data')))

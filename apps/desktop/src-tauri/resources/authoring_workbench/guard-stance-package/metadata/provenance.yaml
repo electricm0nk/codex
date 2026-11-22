@@ -1,0 +1,22 @@
+entries:
+  - stable_id: feat.homebrew.guard_stance
+    source_package_id: pf1.homebrew.proof.guard-stance
+    canonical_target_id: feat.homebrew.guard_stance
+    canonical_target_field: feat
+    authored_path: objects/feats/feat.homebrew.guard_stance.yaml
+    source_system: codex-authored
+    support: exact
+  - stable_id: effect.homebrew.guard_stance.ac_bonus
+    source_package_id: pf1.homebrew.proof.guard-stance
+    canonical_target_id: effect.homebrew.guard_stance.ac_bonus
+    canonical_target_field: effect
+    authored_path: rules/effects/effect.homebrew.guard_stance.ac_bonus.yaml
+    source_system: codex-authored
+    support: exact
+  - stable_id: prerequisite.homebrew.guard_stance.dex13
+    source_package_id: pf1.homebrew.proof.guard-stance
+    canonical_target_id: prerequisite.homebrew.guard_stance.dex13
+    canonical_target_field: prerequisite
+    authored_path: rules/prerequisites/prerequisite.homebrew.guard_stance.dex13.yaml
+    source_system: codex-authored
+    support: exact

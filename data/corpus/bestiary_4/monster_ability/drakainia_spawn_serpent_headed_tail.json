@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Serpent-Headed Tail",
+    "delivery": "Extraordinary",
+    "description": "The creature has a tail that ends in a snake head. This provides a +4 circumstance bonus on Perception checks and a primary bite attack (1d3 + the creature's Strength modifier for a Medium creature). In addition, the creature gains Improved Trip as a bonus feat.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_serpent_headed_tail",
+    "name": "Serpent-Headed Tail",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Trip"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Circumstance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature has a tail that ends in a snake head. This provides a +4 circumstance bonus on Perception checks and a primary bite attack (1d3 + the creature's Strength modifier for a Medium creature). In addition, the creature gains Improved Trip as a bonus feat."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Serpent-Headed Tail"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 564,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Serpent-Headed Tail",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

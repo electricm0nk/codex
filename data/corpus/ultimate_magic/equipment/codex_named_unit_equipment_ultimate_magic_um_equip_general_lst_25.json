@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_25)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_25)",
+    "cost_gp": 6355.0,
+    "weight_lbs": 6.0,
+    "description": "Level 12 Conjurer; Protection - Sepia snake sigil (Reflex DC 16); Opposition Schools - Divination, necromancy; Spells - 6.getaway(S), planar binding (S), summon monster VI(S), wall of iron(S); 5.contact other plane(OP), life bubble, overland flight, teleport(S); 4.acid pit(S), black tentacles(S), dimensional anchor, lesser geas, phantasmal killer, solid fog(S); 3.gaseous form, greater magic weapon, magic circle against evil, sepia snake sigil(S), spiked pit(S), stinking cloud, tiny hut; 2.arrow eruption(S), daze monster, dust of twilight(S), fantastic reach, glitterdust(S), metabolize(S), shatter, stone call(S); 1.comprehend languages(OP), disguise self, jump, mage armor(S), magic aura, mount(S), sleep, stumble gap(S), unseen servant(S); Preparation Ritual - Sturdy Summoning"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 25,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_25)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:25"
+  }
+}

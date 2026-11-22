@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Skull",
+    "name": "Skull",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Skull"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Skull"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": ".5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equip_arms_armor.lst",
+    "record_key": "Skull",
+    "sha256": "b2f4da1bcf01b3d4734df63a1584128a6def610faf39e2a2fce5012e78297b27"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

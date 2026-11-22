@@ -1,0 +1,41 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/feat_data/teamwork/TEAMWORK_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Improved Duck and Cover",
+      "category": "Teamwork",
+      "name": "Improved Duck and Cover",
+      "description": "Whenever you use Duck and Cover, your ally has evasion or improved evasion, and your ally's saving throw roll succeeds, half of the damage you would have taken is transferred to your ally. (This damage is not reduced by the ally's evasion or improved evasion.)",
+      "effect": null
+    },
+    {
+      "key": "Improved Spell Sharing",
+      "category": "Teamwork",
+      "name": "Improved Spell Sharing",
+      "description": "Your link with your companion creature allows you to share your magic with it.",
+      "effect": null
+    },
+    {
+      "key": "Pack Flanking",
+      "category": "Teamwork",
+      "name": "Pack Flanking",
+      "description": "You and your companion creature are adept at fighting together against foes.",
+      "effect": null
+    },
+    {
+      "key": "Share Healing",
+      "category": "Teamwork",
+      "name": "Share Healing",
+      "description": "Your link with your companion creature allows you to share with it any healing magic that's cast upon you.",
+      "effect": null
+    }
+  ]
+}

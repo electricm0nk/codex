@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Flail Snail ~ Warp Magic",
+    "delivery": "Supernatural",
+    "description": "Anytime a spell targets a flail snail, there is an 80%% chance that it produces a random effect instead of affecting the snail. Only spells that directly target the flail snail are warped; area effect spells are not affected. If a spell is warped, roll 1d10 and consult the following table. DESC:&nl; 1-3 Spell misfires. For the next 1d4 rounds, the caster must make a DC 15 concentration check to successfully cast spells. DESC:&nl; 4-6 Spell misfires. The creature nearest the flail snail is affected as if the spell had been cast on it instead. DESC:&nl; 7-9 Spell fails. Nothing happens. DESC:&nl; 10 Spell rebounds on caster (as spell turning).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:flail_snail_warp_magic",
+    "name": "Warp Magic",
+    "owners": [
+      "bestiary_3:monster:flail_snail"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Anytime a spell targets a flail snail, there is an 80%% chance that it produces a random effect instead of affecting the snail. Only spells that directly target the flail snail are warped; area effect spells are not affected. If a spell is warped, roll 1d10 and consult the following table. DESC:&nl; 1-3 Spell misfires. For the next 1d4 rounds, the caster must make a DC 15 concentration check to successfully cast spells. DESC:&nl; 4-6 Spell misfires. The creature nearest the flail snail is affected as if the spell had been cast on it instead. DESC:&nl; 7-9 Spell fails. Nothing happens. DESC:&nl; 10 Spell rebounds on caster (as spell turning)."
+      },
+      {
+        "key": "KEY",
+        "value": "Flail Snail ~ Warp Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "TYPE",
+        "value": "FlailSnailRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.118",
+    "traits": [
+      "FlailSnailRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 869,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Flail Snail ~ Warp Magic",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

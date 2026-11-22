@@ -1,0 +1,92 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Astral Warrior",
+    "name": "Astral Warrior",
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|2|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Astral Warrior:1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Astral Warrior"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "record_key": "Astral Warrior",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

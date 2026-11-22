@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Cybernetic ~ Cardiac accelerator",
+    "name": "Cardiac accelerator",
+    "type": "Cybernetic.ItemLevel_6.Cybernetic_Heart.Heart"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 509,
+    "path": "starfinder/paizo/core/scr_equip.lst",
+    "record_key": "Cybernetic ~ Cardiac accelerator",
+    "sha256": "e96b7877d21eb6c13cb09a4baa48cd7fd89910d9e73a84c562528dc2c76c352e"
+  },
+  "unit_id": "core:equipment:cybernetic_cardiac_accelerator"
+}

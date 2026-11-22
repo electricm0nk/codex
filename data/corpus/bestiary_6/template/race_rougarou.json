@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race ~ Rougarou",
+    "name": "Rougarou",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race ~ Rougarou"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsRougarou"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_templates.lst",
+    "record_key": "Race ~ Rougarou",
+    "sha256": "de239785a2a8151a840e430b8c2329d5ecd04af7e55f8a3ca36c301603730266"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

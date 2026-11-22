@@ -1,0 +1,39 @@
+# SD18 deterministic Human Sorcerer level 11 widening fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1..level-10 spontaneous spell-burden baseline
+# (tests/sd13_sorcerer_level10_progression.rs, the SD13 tranche's declared
+# ceiling) to Sorcerer level 11 as chosen input only. It names selections; it
+# does not contain derived, computed, or parity values. It preserves the
+# accepted Human race-choice seam (ability-bonus and bonus-feat), the
+# deterministic ability/feat posture from the level-1..level-10 fixtures, and
+# the same canonical bloodline and bloodline class-skill selections (Arcane,
+# Knowledge [arcana]), adding only the level bump this cycle needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bonus spells/feats at 3rd+/7th level, no
+# spellbook, no which-spells-known selection, no spontaneous-casting
+# execution, and no level-12+ progression. The PF1 CRB Sorcerer class table's
+# level-11 "Special" column reads "Bloodline spell" — verified independently
+# against both d20pfsrd and the Archives of Nethys (aonprd.com) — but the
+# entry is bloodline-specific (varies per bloodline) and not flat/
+# identity-shaped, mirroring exactly how the level-3/5/7/9 bloodline entries
+# were left unproven, so this fixture grounds no new class feature at level
+# 11 either — only the existing base-attack/base-save/spells-per-day/
+# spells-known/spell-save-DC/bonus-spell/bloodline-choice pillars are
+# widened.
+case_id=pf1-crb-human-sorcerer-level11-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:11
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

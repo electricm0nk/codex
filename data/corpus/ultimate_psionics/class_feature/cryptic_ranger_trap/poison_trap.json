@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Ranger Trap ~ Poison Trap",
+    "name": "Poison Trap",
+    "class": "Cryptic",
+    "description": "The trap poisons the creature that triggers it. If it is a supernatural trap, the poison deals 1d2 Con damage per round for 6 rounds. If it is an extraordinary trap, you must provide 1 dose of contact, inhaled, or injury poison when setting the trap, and the trap uses that poison's effects and DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Ranger Trap ~ Poison Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.CrypticRangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap poisons the creature that triggers it. If it is a supernatural trap, the poison deals 1d2 Con damage per round for 6 rounds. If it is an extraordinary trap, you must provide 1 dose of contact, inhaled, or injury poison when setting the trap, and the trap uses that poison's effects and DC."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 249,
+    "record_key": "Cryptic Ranger Trap ~ Poison Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

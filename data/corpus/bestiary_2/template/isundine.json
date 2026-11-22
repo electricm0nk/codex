@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "IsUndine",
+    "name": "IsUndine",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "IsUndine|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/undine/undine_templates.lst",
+    "record_key": "IsUndine",
+    "sha256": "9d27812c52fe30eb6f2e9e2d7316786615c4edb4ae6402fab9b8d4ebd3ab85c9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

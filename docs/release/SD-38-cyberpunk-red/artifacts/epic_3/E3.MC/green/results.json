@@ -1,0 +1,117 @@
+[
+ {
+  "id": "select-cyberpunk-red",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [],
+   "deleted": [],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "browse-cyberpunk-catalog",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [],
+   "deleted": [],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "browse-cyberpunk-gm-reference",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [],
+   "deleted": [],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "create-cyberpunk-streetrat-stats",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [
+    "1ca75c37-b1b6-4b36-9987-ec82e629db09"
+   ],
+   "deleted": [
+    "1ca75c37-b1b6-4b36-9987-ec82e629db09"
+   ],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "create-cyberpunk-streetrat-sheet",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [
+    "2c3abebf-197e-4399-a880-b5d09ec46085"
+   ],
+   "deleted": [
+    "2c3abebf-197e-4399-a880-b5d09ec46085"
+   ],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "create-cyberpunk-edgerunner-sheet",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [
+    "dd7ab902-37b5-4a51-a0c2-c97756683d76"
+   ],
+   "deleted": [
+    "dd7ab902-37b5-4a51-a0c2-c97756683d76"
+   ],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "create-cyberpunk-complete-package-sheet",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [
+    "6e8910a5-a5f0-4fb7-a32a-04b155184e3a"
+   ],
+   "deleted": [
+    "6e8910a5-a5f0-4fb7-a32a-04b155184e3a"
+   ],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "create-cyberpunk-complete-package-refuses-63",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [],
+   "deleted": [],
+   "leftover": [],
+   "errors": {}
+  }
+ },
+ {
+  "id": "landing-select-pathfinder",
+  "status": "green",
+  "reason": null,
+  "cleanup": {
+   "created": [],
+   "deleted": [],
+   "leftover": [],
+   "errors": {}
+  }
+ }
+]

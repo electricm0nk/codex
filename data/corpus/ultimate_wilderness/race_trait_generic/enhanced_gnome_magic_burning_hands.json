@@ -1,0 +1,42 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Enhanced Gnome Magic ~ Burning Hands",
+    "name": "Burning Hands",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhanced Gnome Magic ~ Burning Hands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enhanced Gnome Magic"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Burning Hands,11+CHA"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 142,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Enhanced Gnome Magic ~ Burning Hands",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "population": 1883,
+  "written": 1878,
+  "name_pi_skipped": 5,
+  "unresolved": [],
+  "written_by_book": {
+    "advanced_class_guide": 137,
+    "advanced_players_guide": 107,
+    "advanced_race_guide": 80,
+    "bestiary": 133,
+    "bestiary_2": 178,
+    "bestiary_3": 215,
+    "bestiary_4": 115,
+    "bestiary_5": 137,
+    "bestiary_6": 1,
+    "book_of_the_damned_volume_1": 1,
+    "book_of_the_damned_volume_2": 1,
+    "core_rulebook": 141,
+    "horror_adventures": 49,
+    "inner_sea_bestiary": 2,
+    "inner_sea_gods": 24,
+    "inner_sea_races": 47,
+    "inner_sea_world_guide": 31,
+    "monster_codex": 3,
+    "mythic_adventures": 118,
+    "occult_adventures": 71,
+    "pathfinder_unchained": 127,
+    "ultimate_combat": 4,
+    "ultimate_intrigue": 3,
+    "ultimate_magic": 3,
+    "ultimate_psionics": 47,
+    "ultimate_wilderness": 103
+  },
+  "pi_skipped_records": [
+    "inner_sea_gods:isg_abilities_races.lst:12 (term hit)",
+    "inner_sea_races:isr_abilities_race.lst:67 (NAMEISPI:YES)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:34 (term hit)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:35 (term hit)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:36 (term hit)"
+  ],
+  "term_list_size": 60,
+  "pi_exposure_remediated": "SD-32 T9-onboarding-cause-closure cycle (2026-08-23, `decisions.md §24b`-4/`§15`): the 5 entries above originally quoted each unit's literal display name in this committed artifact, under a 'permanently no_record, name cannot be redacted' premise. `decisions.md §24` (2026-08-23) supersedes that premise -- all 5 have SINCE been ingested under a Codex-generated neutral name via `scripts/ingest_generic_kind.py --kind race_trait` (`data/corpus/<book>/race_trait_generic/codex_named_unit_*.json`, `codex_generated_name: true`, zero leaks confirmed by full-corpus cross-check, see the T9-onboarding-cause-closure cycle receipt). This file's literal names were reduced to coordinate-only form as an exposure fix; it is retained as history of the pass that first surfaced these 5, not as their current disposition."
+}

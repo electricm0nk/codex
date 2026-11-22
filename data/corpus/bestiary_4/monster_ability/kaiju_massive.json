@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kaiju ~ Massive",
+    "delivery": "Extraordinary",
+    "description": "Because kaiju are so massive, uneven ground and other terrain features that form difficult terrain generally pose no significant hindrance to a kaiju's movement, though areas of forest or settlements are considered difficult terrain to a kaiju. A Huge or smaller creature can move through any square occupied by a kaiju, or vice-versa. A kaiju can make attacks of opportunity only against foes that are Huge or larger, and can be flanked only by Huge or larger foes. A kaiju gains a bonus for being on higher ground only if its entire space is on higher ground than that of its target. It's possible for a Huge or smaller creature to climb a kaiju-this generally requires a successful DC 30 check, and unlike the normal rules about kaiju and attacks of opportunity, a Small or larger creature that climbs on a kaiju's body provokes an attack of opportunity from the monster.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:kaiju_massive",
+    "name": "Massive",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Because kaiju are so massive, uneven ground and other terrain features that form difficult terrain generally pose no significant hindrance to a kaiju's movement, though areas of forest or settlements are considered difficult terrain to a kaiju. A Huge or smaller creature can move through any square occupied by a kaiju, or vice-versa. A kaiju can make attacks of opportunity only against foes that are Huge or larger, and can be flanked only by Huge or larger foes. A kaiju gains a bonus for being on higher ground only if its entire space is on higher ground than that of its target. It's possible for a Huge or smaller creature to climb a kaiju-this generally requires a successful DC 30 check, and unlike the normal rules about kaiju and attacks of opportunity, a Small or larger creature that climbs on a kaiju's body provokes an attack of opportunity from the monster."
+      },
+      {
+        "key": "KEY",
+        "value": "Kaiju ~ Massive"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 139,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Kaiju ~ Massive",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

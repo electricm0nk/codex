@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ash Giant ~ Vermin Empathy",
+    "delivery": "Extraordinary",
+    "description": "This ability functions as a druid's wild empathy ability, save that it works only on vermin. An ash giant gains a racial bonus on this check equal to its Hit Dice (+14 for most ash giants). Vermin are normally mindless, but this empathic communication imparts upon them a modicum of implanted intelligence, allowing the ash giant to train vermin and use them as guardians (although it does not grant them skills or feats).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ash_giant_vermin_empathy",
+    "name": "Vermin Empathy",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as a druid's wild empathy ability, save that it works only on vermin. An ash giant gains a racial bonus on this check equal to its Hit Dice (+14 for most ash giants). Vermin are normally mindless, but this empathic communication imparts upon them a modicum of implanted intelligence, allowing the ash giant to train vermin and use them as guardians (although it does not grant them skills or feats)."
+      },
+      {
+        "key": "KEY",
+        "value": "Ash Giant ~ Vermin Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "TYPE",
+        "value": "AshGiantRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.126",
+    "traits": [
+      "AshGiantRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 906,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ash Giant ~ Vermin Empathy",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

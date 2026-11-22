@@ -1,0 +1,12 @@
+Reusing live app for agent 'sd36-f4d'.
+PASS  create-character-samurai
+PASS  create-character-magus
+PASS  create-character-warrior
+PASS  create-character-kineticist
+PASS  create-character-inquisitor-generic
+PASS  level-up-fighter6-into-arcane-archer
+FAIL  level-up-fighter6-into-arcane-archer-accept  -- expected string missing: 'You often notice things that others might miss.'
+
+6/7 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 7 rows)
+Evidence: /home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4
+EXIT=1

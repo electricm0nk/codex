@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You imbue inanimate plants with limited mobility and a semblance of life. Each plant targeted acts as a light catapult (see page 162) until the end of the spell's duration, though you must spend a standard action to aim each of these tree catapults before the first time they fire, and anytime thereafter when you want the trees to fire at a new target. The catapult ues your caster level as its targeting bonus. With a free action, you can command one or all of the trees under your command to stop firing. You do not need to supply ammunition to these tree catapults; they will automatically load themselves with rocks and boulders in the area, digging them deep from the ground if need be. You can supply the trees ammunition if you desire. The tree will not load flaming ammunition, and these catapult trees cannot be affected by energy siege shot (see page 228) if the energy selected is fire.",
+    "key": "Siege of Trees",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Transforms Large trees into arboreal catapults of the same size.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue inanimate plants with limited mobility and a semblance of life. Each plant targeted acts as a light catapult (see page 162) until the end of the spell's duration, though you must spend a standard action to aim each of these tree catapults before the first time they fire, and anytime thereafter when you want the trees to fire at a new target. The catapult ues your caster level as its targeting bonus. With a free action, you can command one or all of the trees under your command to stop firing. You do not need to supply ammunition to these tree catapults; they will automatically load themselves with rocks and boulders in the area, digging them deep from the ground if need be. You can supply the trees ammunition if you desire. The tree will not load flaming ammunition, and these catapult trees cannot be affected by energy siege shot (see page 228) if the energy selected is fire.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/siegeOfTrees.html#_siege-of-trees"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one Large plant per three caster levels"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Siege of Trees",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

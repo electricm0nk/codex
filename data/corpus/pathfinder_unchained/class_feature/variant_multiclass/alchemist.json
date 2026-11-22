@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Alchemist",
+    "name": "Alchemist",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses alchemist as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Alchemist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses alchemist as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Alchemy: At 3rd level, he adds his character level as a competence bonus on all Craft (alchemy) checks and can use Craft (alchemy) to identify potions."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Bombs: At 7th level, he gains the ability to create a number of bombs per day equal to his Intelligence modifier + 1/2 his character level. The bombs deal damage as an alchemist of his character level, but since he doesn't have the alchemist's throw anything class feature, he doesn't add his Intelligence modifier to the damage."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Mutagen: At 11th level, he gains the mutagen class feature, with a duration equal to 10 minutes per character level. He counts as an alchemist for the purposes of drinking a mutagen."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Swift Poisoning: At 15th level, he gains the poison use and swift poisoning abilities."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Poison Immunity: At 19th level, he becomes immune to poison."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 861,
+    "record_key": "Variant Multiclass ~ Alchemist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

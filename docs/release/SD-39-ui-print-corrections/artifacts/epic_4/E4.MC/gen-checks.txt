@@ -1,0 +1,8 @@
+roots=40 bundles=48 records=9040 skipped=0 drifted=0 verdict=PASS
+gen_settled_corpus --check exit 0
+gen_desktop_fixture_corpus --check: files=560 drift=0 verdict=PASS
+gen_desktop_fixture_corpus --check exit 0
+kind trait: records=487 converted=487 refused=0
+sheet_rule_convert --check exit 0
+kind template: records=87 converted=87 refused=0
+sheet_rule_convert --system starfinder-1e --check exit 0

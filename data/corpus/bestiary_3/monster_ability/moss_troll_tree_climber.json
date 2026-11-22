@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Moss Troll ~ Tree Climber",
+    "delivery": "Extraordinary",
+    "description": "When climbing trees and other foliage, a moss troll's climb speed increases to 30 feet. If a moss troll falls while climbing in trees, it ignores the first 30 feet it falls for the purposes of calculating total damage from the fall. While climbing in trees, a moss troll gains a +4 racial bonus on initiative checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:moss_troll_tree_climber",
+    "name": "Tree Climber",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When climbing trees and other foliage, a moss troll's climb speed increases to 30 feet. If a moss troll falls while climbing in trees, it ignores the first 30 feet it falls for the purposes of calculating total damage from the fall. While climbing in trees, a moss troll gains a +4 racial bonus on initiative checks."
+      },
+      {
+        "key": "KEY",
+        "value": "Moss Troll ~ Tree Climber"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      },
+      {
+        "key": "TYPE",
+        "value": "MossTrollRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.273",
+    "traits": [
+      "MossTrollRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1635,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Moss Troll ~ Tree Climber",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Stomp",
+    "name": "Stomp",
+    "class": "Thunderjarl",
+    "description": "When manifesting stomp, you can expend a daily use of your stomp psi-like ability to manifest the power augmented to your full manifester level without paying any power point cost, although such a manifestation is not eligible to be affected by metapsionic feats or similar effects that would normally increase the cost of manifesting the power.  Stomp counts as a path power for purposes of the half-giant's alternate favored class bonus.  In addition, when manifesting stomp, you can choose for the power to deal lethal instead of nonlethal damage and gains the additional augment options below.  Augment: If you spend 2 additional power points, allies in the affected area are not subject to the effects of this power.  If you spend 2 additional power points, the area affected becomes a 10 ft. burst centered on you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Stomp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When manifesting stomp, you can expend a daily use of your stomp psi-like ability to manifest the power augmented to your full manifester level without paying any power point cost, although such a manifestation is not eligible to be affected by metapsionic feats or similar effects that would normally increase the cost of manifesting the power.  Stomp counts as a path power for purposes of the half-giant's alternate favored class bonus.  In addition, when manifesting stomp, you can choose for the power to deal lethal instead of nonlethal damage and gains the additional augment options below.  Augment: If you spend 2 additional power points, allies in the affected area are not subject to the effects of this power.  If you spend 2 additional power points, the area affected becomes a 10 ft. burst centered on you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic Warrior=1|Stomp"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2116,
+    "record_key": "Thunderjarl ~ Stomp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

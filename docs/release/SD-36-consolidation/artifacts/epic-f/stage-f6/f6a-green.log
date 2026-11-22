@@ -1,0 +1,10 @@
+PASS Samurai Weapons tab shows Martial ✓ (the reader grants Martial)
+PASS Warrior Weapons tab shows Martial ✓
+PASS Magus Weapons tab shows Martial ✓
+PASS Magus 7 caster level = 7 (desktop: 7)
+PASS class-skill list present for the 50 of 59 roster classes the engine answers (desktop: 50 of 59)
+EXIT=0
+# npm run typecheck && npm test (apps/desktop)
+> tsc --noEmit
+
+127/127 test files passed.

@@ -1,0 +1,55 @@
+name=sf_technomancer_5
+race=Android
+class=Technomancer
+level=5
+stat.STR=10
+stat.DEX=16
+stat.CON=14
+stat.INT=19
+stat.WIS=13
+stat.CHA=8
+hp=29
+stamina=35
+resolve=6
+eac=18
+kac=19
+initiative=+3
+bab=+3
+save.Fortitude=+3
+save.Reflex=+4
+save.Will=+5
+attack.melee=+3
+attack.ranged=+6
+skill.Acrobatics=3|ranks=0.0|untrained=Y
+skill.Athletics=0|ranks=0.0|untrained=Y
+skill.Bluff=-1|ranks=0.0|untrained=Y
+skill.Computers=13|ranks=5.0|untrained=NO
+skill.Diplomacy=-1|ranks=0.0|untrained=Y
+skill.Disguise=-1|ranks=0.0|untrained=Y
+skill.Engineering=12|ranks=5.0|untrained=NO
+skill.Intimidate=-1|ranks=0.0|untrained=Y
+skill.Life Science=12|ranks=5.0|untrained=NO
+skill.Mysticism=10|ranks=5.0|untrained=NO
+skill.Perception=6|ranks=5.0|untrained=Y
+skill.Physical Science=13|ranks=5.0|untrained=NO
+skill.Piloting=11|ranks=5.0|untrained=Y
+skill.Sense Motive=-1|ranks=0.0|untrained=Y
+skill.Sleight of Hand=11|ranks=5.0|untrained=NO
+skill.Stealth=3|ranks=0.0|untrained=Y
+skill.Survival=1|ranks=0.0|untrained=Y
+weapon.Laser pistol, azimuth=+6|damage=1d4+2|category=Non-Standard-Ranged
+spells.Technomancer.0=per_day:0|known:6|dcs:,,,15,,15|in_book:6
+spells.Technomancer.1=per_day:5|known:4|dcs:,,16,|in_book:4
+spells.Technomancer.2=per_day:3|known:3|dcs:17,,|in_book:3
+spells.Technomancer.3=per_day:0|known:0
+spells.Technomancer.4=per_day:0|known:0
+spells.Technomancer.5=per_day:0|known:0
+spells.Technomancer.6=per_day:0|known:0
+bulk=1.4 lbs.
+credits=0
+credits.spent=3650 cr
+acp=+0
+abilities.feat=Mobility, Quick Draw, Spell Focus, Spell Penetration
+abilities.theme=Scholar, THEME KNOWLEDGE
+abilities.class_feature=Spell Cache, Magic Hack, Spell Focus, Techlore, Weapon Specialization
+abilities.racial_trait=SIZE AND TYPE, CONSTRUCTED, EXCEPTIONAL VISION, FLAT AFFECT, UPGRADE SLOT

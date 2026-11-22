@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Photokinetic Infusion",
+    "name": "Photokinetic Infusion",
+    "class": "Kineticist",
+    "description": "Element wood; Type substance infusion; Level 1; Burn 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Photokinetic Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Wood"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Positive Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite positive blast"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type substance infusion; Level 1; Burn 1"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts positive; Saving Throw none; Your blast damages living creatures with light. This deals normal damage to undead creatures but also deals minimum damage (1 point of damage per d6, can't be increased by the 9th-level improvement to metakinesis) to living creatures. Undead creatures that are particularly vulnerable to sunlight, such as vampires, take 1 extra point of damage per die from the infused blast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 64,
+    "record_key": "Wild Talent ~ Photokinetic Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

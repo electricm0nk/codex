@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Level ~ Any",
+    "name": "from any class to any class",
+    "description": "You retrained any class level to any other class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Level ~ Any"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained any class level to any other class."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 109,
+    "record_key": "Retraining ~ Class Level ~ Any"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

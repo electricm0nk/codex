@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Grand Defender ~ Hammer Storm",
+    "delivery": "Extraordinary",
+    "description": "The herald can expel a volley of warhammers from its mouth, which functions like a breath weapon (30-foot cone, 15d6 bludgeoning damage plus Awesome Blow, Reflex %1 half, usable 1/day). If the herald is in its cold iron or mithral form, these hammers count as cold iron or silver, respectively. The herald can exclude any number of squares in the cone. The hammer storm creates 24 physical warhammers that persist after the instantaneous attack and may be used by creatures (though they're normal warhammers, not masterwork, cold iron, or mithral). The herald can spend 1 minute eating 24 warhammers (or an equivalent amount of metal such as that created by its ablative adaptation ability) to recharge this ability.",
+    "description_variables": [
+      "HammerStormDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:grand_defender_hammer_storm",
+    "name": "Hammer Storm",
+    "owners": [
+      "inner_sea_gods:monster:the_grand_defender"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 271,
+    "record_key": "Grand Defender ~ Hammer Storm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

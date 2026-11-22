@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Arcane Armor Mastery",
+    "name": "Arcane Armor Mastery",
+    "class": "Sorcerer",
+    "description": "You have mastered the ability to cast spells while wearing armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Arcane Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Arcane Armor Training"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,SPELLCASTER=7],[PREVARGTEQ:CasterLevel_Highest,7]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHARMOR:1,TYPE.Medium],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Medium)]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_ArcaneArmorMastery,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered the ability to cast spells while wearing armor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Arcane Armor Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a swift action, reduce the arcane spell failure chance due to the armor you are wearing by 20%% for any spells you cast this round. This bonus replaces, and does not stack with, the bonus granted by Arcane Armor Training."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2014,
+    "record_key": "Sorcerer Bloodline Feat ~ Arcane Armor Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

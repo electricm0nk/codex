@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Elemental Blast",
+    "category": "Psionic",
+    "name": "Elemental Blast",
+    "description": "Your surge blast deals damage of your active energy type instead of force damage.  In addition, your surge blast is modified based upon your active energy type.  Cold: A surge blast of this energy type deals +1 point of damage per die.  Electricity: A surge blast of this energy type provides a +3 bonus on your attack roll if the target is wearing metal armor.  Fire: A surge blast of this energy type deals +1 point of damage per die.  Sonic: A surge blast of this energy type deals -1 point of damage per die and ignores an object's hardness.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Surge Blast",
+      "PREVARGTEQ:IsPsionic,1",
+      "PREVARGTEQ:WildSurge,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 83,
+    "record_key": "Elemental Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

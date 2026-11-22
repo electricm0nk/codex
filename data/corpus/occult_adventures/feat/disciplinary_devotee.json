@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Disciplinary Devotee",
+    "category": "General",
+    "name": "Disciplinary Devotee",
+    "description": "Your careful study of mental magic grants you mastery in your discipline. You gain a +1 bonus on caster level checks and concentration checks when casting spells from your psychic discipline, and you gain a +1 insight bonus on saving throws against spells from your discipline.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Psychic ~ Psychic Discipline"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 15,
+    "record_key": "Disciplinary Devotee"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

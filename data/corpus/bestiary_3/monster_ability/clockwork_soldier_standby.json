@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Soldier ~ Standby",
+    "delivery": "Extraordinary",
+    "description": "A clockwork soldier can place itself on standby as a standard action. While on standby, a clockwork soldier cannot move or take any actions. It remains aware of its surroundings but takes a -4 penalty on Perception checks. Time spent on standby does not count against the soldier's wind-down duration. A clockwork soldier can exit standby as a swift action-if it does so to initiate combat, it gains a +4 racial bonus on its Initiative check.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_soldier_standby",
+    "name": "Standby",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A clockwork soldier can place itself on standby as a standard action. While on standby, a clockwork soldier cannot move or take any actions. It remains aware of its surroundings but takes a -4 penalty on Perception checks. Time spent on standby does not count against the soldier's wind-down duration. A clockwork soldier can exit standby as a swift action-if it does so to initiate combat, it gains a +4 racial bonus on its Initiative check."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Soldier ~ Standby"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkSoldierRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.57",
+    "traits": [
+      "ClockworkSoldierRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 583,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Clockwork Soldier ~ Standby",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

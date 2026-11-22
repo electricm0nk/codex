@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 164000.0,
+    "description": "This potent magical item is a small cube fashioned from carnelian. Each of the six sides of the cube is keyed to a different plane of existence or dimension, one of which is the Material Plane. The character creating the item chooses the planes to which the other five sides are keyed.\nIf a side of the cubic gate is pressed once, it opens a gate to a random point on the plane keyed to that side. There is a 10%% chance per minute that an outsider from that plane (determine randomly) comes through it looking for food, fun, or trouble. Pressing the side a second time closes the gate. It is impossible to open more than one gate at a time.\nIf a side is pressed twice in quick succession, the character so doing is transported to a random point on the other plane, along with all creatures in adjacent squares. The other creatures may avoid this fate by succeeding on DC 23 Will saves.",
+    "key": "Cubic Gate",
+    "name": "Cubic Gate",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cubic Gate"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cubic Gate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "164000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.508"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|82,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, plane shift"
+      },
+      {
+        "key": "DESC",
+        "value": "This potent magical item is a small cube fashioned from carnelian. Each of the six sides of the cube is keyed to a different plane of existence or dimension, one of which is the Material Plane. The character creating the item chooses the planes to which the other five sides are keyed.&nl;If a side of the cubic gate is pressed once, it opens a gate to a random point on the plane keyed to that side. There is a 10%% chance per minute that an outsider from that plane (determine randomly) comes through it looking for food, fun, or trouble. Pressing the side a second time closes the gate. It is impossible to open more than one gate at a time.&nl;If a side is pressed twice in quick succession, the character so doing is transported to a random point on the other plane, along with all creatures in adjacent squares. The other creatures may avoid this fate by succeeding on DC 23 Will saves."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Cubic Gate",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

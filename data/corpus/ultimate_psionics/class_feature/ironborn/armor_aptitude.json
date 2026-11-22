@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ironborn ~ Armor Aptitude",
+    "name": "Armor Aptitude",
+    "class": "Ironborn",
+    "description": "Whenever you are wearing armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by %1.  In addition you can move at your normal speed while wearing medium|ArmorAptitudeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironborn ~ Armor Aptitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Fighter ~ Armor Training"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmorAptitudeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are wearing armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by %1.  In addition you can move at your normal speed while wearing medium|ArmorAptitudeBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " or heavy|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "DESC",
+        "value": " armor."
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorAptitudeBonus,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorAptitudeBonus,2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorAptitudeBonus,3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorAptitudeBonus,4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|ArmorAptitudeBonus|PREEQUIP:1,TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorAptitudeBonus|min(4,floor((FighterLVL+2)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "MediumArmor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2501,
+    "record_key": "Ironborn ~ Armor Aptitude"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

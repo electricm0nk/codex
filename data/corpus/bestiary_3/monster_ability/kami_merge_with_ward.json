@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kami ~ Merge with Ward",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a kami can merge its body and mind with its ward. When merged, the kami can observe the surrounding region with its senses as if it were using its own body, as well as via any senses its ward might have. It has no control over its ward, nor can it communicate or otherwise take any action other than to emerge from its ward as a standard action. A kami must be adjacent to its ward to merge with or emerge from it. If its ward is a creature, plant, or object, the kami can emerge mounted on the creature provided the kami's body is at least one size category smaller than the creature. If its ward is a location, the kami may emerge at any point within that location.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:kami_merge_with_ward",
+    "name": "Merge with Ward",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a kami can merge its body and mind with its ward. When merged, the kami can observe the surrounding region with its senses as if it were using its own body, as well as via any senses its ward might have. It has no control over its ward, nor can it communicate or otherwise take any action other than to emerge from its ward as a standard action. A kami must be adjacent to its ward to merge with or emerge from it. If its ward is a creature, plant, or object, the kami can emerge mounted on the creature provided the kami's body is at least one size category smaller than the creature. If its ward is a location, the kami may emerge at any point within that location."
+      },
+      {
+        "key": "KEY",
+        "value": "Kami ~ Merge with Ward"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2330,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Kami ~ Merge with Ward",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

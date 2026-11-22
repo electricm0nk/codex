@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Harmful Surge",
+    "name": "Harmful Surge",
+    "description": "You can maximize a spell, but doing so damages you. Spend this boon effect as a free action when you cast a wizard evocation spell. When you do, you can treat that spell as if it were cast with the Maximize Spell metamagic feat, but you take 1d4 points of damage x the level of the spell that you are maximizing. The damage you take cannot be reduced in any way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Harmful Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "You can maximize a spell, but doing so damages you. Spend this boon effect as a free action when you cast a wizard evocation spell. When you do, you can treat that spell as if it were cast with the Maximize Spell metamagic feat, but you take 1d4 points of damage x the level of the spell that you are maximizing. The damage you take cannot be reduced in any way."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 32,
+    "record_key": "Preparation Ritual ~ Harmful Surge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

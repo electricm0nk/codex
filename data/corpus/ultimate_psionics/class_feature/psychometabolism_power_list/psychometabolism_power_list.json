@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychometabolism Power List",
+    "name": "Psychometabolism Power List",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Psion=1|Corrosive Aura,Metamorphosis (Minor),Natural Healing,Thicken Skin|Psion=2|Animal Affinity,Chameleon,Empathic Transfer,Resist Toxin|Psion=3|Ectoplasmic Form,Hustle,Metamorphosis,Physical Acceleration|Psion=4|Hidden Body,Psychic Drain,Resist Death|Psion=5|Psionic Revivify,Psychofeedback,Restore Extremity|Psion=6|Cleanse Spirit,Expose Weakness,Metamorphosis (Major)|Psion=7|Fission|Psion=8|Fusion|Psion=9|Metamorphosis (True),Regenerative Aura"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1974,
+    "record_key": "Psychometabolism Power List"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

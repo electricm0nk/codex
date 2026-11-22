@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Agile Half-Plate
+Agile Half-Plate											PROFICIENCY:ARMOR|Agile Half-Plate	TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard				COST:850	WT:55								ACCHECK:-7		EQMOD:Material ~ Steel																		MAXDEX:0		SOURCEPAGE:p.180	SPELLFAILURE:40																																																																						BONUS:COMBAT|AC|8|TYPE=Armor|PREVAREQ:DisableArmorBonus,0	BONUS:SITUATION|Acrobatics=When Jumping|min(-ARMORACCHECK,3)	BONUS:SKILL|Climb|min(-ARMORACCHECK,3)

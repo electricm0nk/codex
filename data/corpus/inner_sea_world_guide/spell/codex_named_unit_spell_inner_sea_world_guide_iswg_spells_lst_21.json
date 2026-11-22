@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_inner_sea_world_guide_iswg_spells_lst_21)",
+    "school": "Conjuration",
+    "level": 2,
+    "description": "Generate one dose of apparent clear, pure water that is foul secretion that functions as unholy water. In addition, affected creatures are sickened for 1d4 rounds and [on failed save] take 1d6 Intelligence and 1d6 Dexterity damage."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_spells.lst",
+    "sha256": "526932ef9d7113c17ecbcc92781fbc7b434d15aa18cd3d84ea8c83601cf58b9c",
+    "line": 21,
+    "record_key": "Codex-Named Unit (spell_inner_sea_world_guide_iswg_spells_lst_21)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_spells.lst:21"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Black Blade ~ Spell Defense",
+    "name": "Spell Defense",
+    "description": "A magus can expend an arcane point from his weapon's arcane pool as a free action; he then gains SR %1 until the start of his next turn.|BBEgo",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Black Blade ~ Spell Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A magus can expend an arcane point from his weapon's arcane pool as a free action; he then gains SR %1 until the start of his next turn.|BBEgo"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Blackblade"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 74,
+    "record_key": "Black Blade ~ Spell Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

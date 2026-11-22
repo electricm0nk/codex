@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Bantrid",
+    "name": "Bantrid",
+    "type": "Spoken.World"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "starfinder/paizo/pact_worlds/spw_languages.lst",
+    "record_key": "Bantrid",
+    "sha256": "4af7c9f51ed96b1579e651d8855fbcd934b368c6259e599782a90b51512dad13"
+  },
+  "unit_id": "pact_worlds:language:bantrid"
+}

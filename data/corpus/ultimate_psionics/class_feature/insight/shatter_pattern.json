@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Shatter Pattern",
+    "name": "Shatter Pattern",
+    "class": "Insight",
+    "description": "You learn how to break a minor pattern with your touch, allowing you to destroy a non-magical unattended item with %1 hit points.  This effect ignores any hardness the object might have.  You may attempt to use this insight on an attended object, but doing so provokes attacks of opportunity and you must make a successful touch attck with a -4 penalty against the target's touch AC.|ShatterPatternHitPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Shatter Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShatterPatternHitPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to break a minor pattern with your touch, allowing you to destroy a non-magical unattended item with %1 hit points.  This effect ignores any hardness the object might have.  You may attempt to use this insight on an attended object, but doing so provokes attacks of opportunity and you must make a successful touch attck with a -4 penalty against the target's touch AC.|ShatterPatternHitPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShatterPatternHitPoints|2*CrypticInsightLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 218,
+    "record_key": "Insight ~ Shatter Pattern"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

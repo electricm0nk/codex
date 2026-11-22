@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mephit ~ Summon",
+    "delivery": "SpellLike",
+    "description": "Summon 1 %1, 25%% (Level 2)",
+    "description_variables": [
+      "%CHOICE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:mephit_summon",
+    "name": "Summon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|USERINPUT|TITLE=Mephit Type"
+      },
+      {
+        "key": "DESC",
+        "value": "Summon 1 %1, 25%% (Level 2)|%CHOICE"
+      },
+      {
+        "key": "KEY",
+        "value": "Mephit ~ Summon"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.202",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 891,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Mephit ~ Summon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

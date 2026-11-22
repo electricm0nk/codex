@@ -1,0 +1,42 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Codex-Named Unit (language_inner_sea_races_isr_languages_lst_19)",
+    "name": "Codex-Named Unit (language_inner_sea_races_isr_languages_lst_19)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_races:isr_languages.lst:19",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_languages.lst",
+    "record_key": "Codex-Named Unit (language_inner_sea_races_isr_languages_lst_19)",
+    "sha256": "1b13583eb27d06ce6dea0d5fc66d1edf9a056c4d0fdec687b3945990c976cb71"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

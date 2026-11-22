@@ -1,0 +1,115 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Penanggalen",
+    "name": "Penanggalen",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8"
+      },
+      {
+        "key": "DR",
+        "value": "5/silver and slashing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Fly,Knowledge (Arcana),Perception,Sense Motive,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Fast Healing|Flight Maneuverability|Light Sensitivity|Resistance to Cold|Resistance to Fire|TYPE=PenanggalenRacialAbility"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,60"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "record_key": "Penanggalen",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

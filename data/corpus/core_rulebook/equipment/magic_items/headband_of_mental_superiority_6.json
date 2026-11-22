@@ -1,0 +1,94 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 144000.0,
+    "description": "This ornate headband is decorated with numerous small white gemstones. The headband grants the wearer an enhancement bonus to all mental ability scores (Intelligence, Wisdom, and Charisma) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. The headband also grants skill ranks as a headband of vast intelligence.",
+    "key": "Headband of Mental Superiority +6",
+    "name": "Headband of Mental Superiority +6",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Headband of Intellect Skill Choice",
+          "3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT,WIS,CHA",
+          "6",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Headband of Mental Superiority +6"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Headband of Mental Superiority +6"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband.Intelligence"
+      },
+      {
+        "key": "COST",
+        "value": "144000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.517"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|16th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|headband"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|77,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, eagle's splendor, fox's cunning, owl's wisdom"
+      },
+      {
+        "key": "DESC",
+        "value": "This ornate headband is decorated with numerous small white gemstones. The headband grants the wearer an enhancement bonus to all mental ability scores (Intelligence, Wisdom, and Charisma) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. The headband also grants skill ranks as a headband of vast intelligence."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Headband of Mental Superiority +6",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

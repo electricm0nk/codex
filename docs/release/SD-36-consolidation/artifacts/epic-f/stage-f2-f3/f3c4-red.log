@@ -1,0 +1,62 @@
+# RED: engine at 07f02c6387 (F3c4b HEAD, no engine change) + the new tests/sd36_sorcerer_bloodline_record.rs
+# cargo test --locked -j 8 --test sd36_sorcerer_bloodline_record -- --test-threads=8
+# (the_class_skill_union_reads_the_characters_bloodline_pick was added after this run; it uses the new class_skill_view_for API)
+test an_arcane_sorcerer_still_prints_swim_3 ... ok
+test a_draconic_sorcerer_5_prints_no_power_of_wyrms_blindsense ... FAILED
+test an_arcane_sorcerer_5_prints_no_arcane_apotheosis ... FAILED
+test an_aquatic_sorcerer_prints_swim_6_on_the_census_fixture ... FAILED
+test a_sorcerer_with_the_draconic_bloodline_computes_at_level_5 ... FAILED
+test a_draconic_sorcerer_5_prints_no_natural_armor_2 ... FAILED
+test a_draconic_sorcerer_5_prints_no_breath_weapon_dc ... FAILED
+test an_invented_bloodline_stays_blocked_by_name ... ok
+test a_draconic_sorcerer_9_holds_breath_weapon_and_the_second_natural_armor_step ... FAILED
+test result: FAILED. 2 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.73s
+EXIT=101
+
+thread 'a_draconic_sorcerer_5_prints_no_power_of_wyrms_blindsense' (1341709) panicked at tests/sd36_sorcerer_bloodline_record.rs:154:5:
+assertion `left == right` failed: Power of Wyrms is a 20th-level power (CRB p.75)
+  left: [("class_feature.sorcerer.bloodline.generic.draconic_bloodline.power_of_wyrms.blindsenserange", 60)]
+ right: []
+
+--
+
+thread 'an_arcane_sorcerer_5_prints_no_arcane_apotheosis' (1341713) panicked at tests/sd36_sorcerer_bloodline_record.rs:167:5:
+assertion `left == right` failed: Arcane Apotheosis is a 20th-level power (CRB p.74)
+  left: [("class_feature.sorcerer.bloodline.generic.arcane_bloodline.arcane_apotheosis.sorcererarcanebloodlinepower3", -1)]
+ right: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+--
+
+thread 'an_aquatic_sorcerer_prints_swim_6_on_the_census_fixture' (1341712) panicked at tests/sd36_sorcerer_bloodline_record.rs:127:9:
+assertion `left == right` failed: aquatic 1: [
+    "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported: Sorcerer remains blocked on its bloodline power and progression burden: no bloodline power, bloodline arcana, bloodline class skill grant, or bonus spells/feats at 3rd+ level are implemented for this character's bloodline; only the single canonical bloodline this seam recognizes has its progression grounded anywhere in 
+]
+  left: Blocked
+--
+
+thread 'a_sorcerer_with_the_draconic_bloodline_computes_at_level_5' (1341711) panicked at tests/sd36_sorcerer_bloodline_record.rs:80:5:
+assertion `left == right` failed: [
+    "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported: Sorcerer remains blocked on its bloodline power and progression burden: no bloodline power, bloodline arcana, bloodline class skill grant, or bonus spells/feats at 3rd+ level are implemented for this character's bloodline; only the single canonical bloodline this seam recognizes has its progression grounded anywhere in 
+]
+  left: Blocked
+--
+
+thread 'a_draconic_sorcerer_5_prints_no_natural_armor_2' (1341708) panicked at tests/sd36_sorcerer_bloodline_record.rs:160:5:
+assertion `left == right` failed: +1 at 3rd, +2 only from 9th (CRB p.75)
+  left: [("class_feature.sorcerer.bloodline.generic.draconic_bloodline.dragon_resistances.sorcererdraconicdragonresistancesnaturalarmorbonus", 2)]
+ right: []
+
+--
+
+thread 'a_draconic_sorcerer_5_prints_no_breath_weapon_dc' (1341707) panicked at tests/sd36_sorcerer_bloodline_record.rs:148:5:
+assertion `left == right` failed: Breath Weapon is a 9th-level power (CRB p.75)
+  left: [("class_feature.sorcerer.bloodline.generic.draconic_bloodline.breath_weapon.sorcererdraconicbreathweapondc", 14), ("class_feature.sorcerer.bloodline.generic.draconic_bloodline.breath_weapon.sorcererdraconicbreathweapondice", 10), ("class_feature.sorcerer.bloodline.generic.draconic_bloodline.breath_weapon.sorcererdraconicbreathweapontimes", 1)]
+ right: []
+
+--
+
+thread 'a_draconic_sorcerer_9_holds_breath_weapon_and_the_second_natural_armor_step' (1341710) panicked at tests/sd36_sorcerer_bloodline_record.rs:118:5:
+assertion failed: find("core_rulebook:class_feature:draconic_bloodline_breath_weapon").is_some()
+
+
+failures:

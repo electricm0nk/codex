@@ -1,0 +1,32 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.23s
+     Running tests/sheet_rule_convert_gate.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sheet_rule_convert_gate-6a3c0d4e2aa7d11c)
+
+running 2 tests
+test a_same_object_reprint_resolves_to_the_newest_printing has been running for over 60 seconds
+test an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect has been running for over 60 seconds
+test a_same_object_reprint_resolves_to_the_newest_printing ... FAILED
+test an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect ... FAILED
+
+failures:
+
+---- a_same_object_reprint_resolves_to_the_newest_printing stdout ----
+
+thread 'a_same_object_reprint_resolves_to_the_newest_printing' (873976) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:781:5:
+assertion `left == right` failed
+  left: None
+ right: Some("SPECIAL ABILITY")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect stdout ----
+
+thread 'an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect' (873977) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:751:5:
+{"undefined-variables": ["core_rulebook:class_feature:loremaster_secret_lore: SecretLore", "core_rulebook:class_feature:loremaster_secret_lore: SecretLore"]}
+
+
+failures:
+    a_same_object_reprint_resolves_to_the_newest_printing
+    an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 41 filtered out; finished in 256.17s
+
+error: test failed, to rerun pass `-p codex-ingest --test sheet_rule_convert_gate`

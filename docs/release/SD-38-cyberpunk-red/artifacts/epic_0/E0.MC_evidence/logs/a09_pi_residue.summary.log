@@ -1,0 +1,3 @@
+    PASS  pcgen-residue-gate  (live_files=0 live_hits=0 verdict=PASS)
+  passed:  2  pi-sweep pcgen-residue-gate
+RESULT: PASS

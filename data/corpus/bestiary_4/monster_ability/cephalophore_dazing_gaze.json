@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cephalophore ~ Dazing Gaze",
+    "delivery": "Supernatural",
+    "description": "A cephalophore can make a gaze attack that affects all seeing creatures within a 60-foot radius. These creatures must succeed at a DC %1 Will save or be stunned for 1 round. Creatures that successfully save are instead sickened for 1 round. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "15+WIS"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:cephalophore_dazing_gaze",
+    "name": "Dazing Gaze",
+    "owners": [
+      "bestiary_4:monster:cephalophore"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cephalophore can make a gaze attack that affects all seeing creatures within a 60-foot radius. These creatures must succeed at a DC %1 Will save or be stunned for 1 round. Creatures that successfully save are instead sickened for 1 round. This is a mind-affecting fear effect.|15+WIS"
+      },
+      {
+        "key": "KEY",
+        "value": "Cephalophore ~ Dazing Gaze"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 366,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Cephalophore ~ Dazing Gaze",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

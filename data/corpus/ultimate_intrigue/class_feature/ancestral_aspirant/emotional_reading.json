@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ancestral Aspirant ~ Emotional Reading",
+    "name": "Emotional Reading",
+    "class": "Occultist",
+    "description": "An ancestral aspirant doesn't care much about objects that didn't belong to his ancestors, but he is keenly attuned to his relatives and fellow nobles, allowing him to read the emotions of others. If he spends 1 minute examining a creature, he learns one fact, chosen by the GM, about the creature's current emotions. Since emotional auras are complex, this ability is unlikely to reveal the secret feelings of a professional spy; instead, it only touches upon surface emotions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestral Aspirant ~ Emotional Reading"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancestral aspirant doesn't care much about objects that didn't belong to his ancestors, but he is keenly attuned to his relatives and fellow nobles, allowing him to read the emotions of others. If he spends 1 minute examining a creature, he learns one fact, chosen by the GM, about the creature's current emotions. Since emotional auras are complex, this ability is unlikely to reveal the secret feelings of a professional spy; instead, it only touches upon surface emotions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 102,
+    "record_key": "Ancestral Aspirant ~ Emotional Reading"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

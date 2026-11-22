@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Qinggong Power",
+    "name": "Qinggong Power",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this power selects any of the qinggong monk ki powers (Pathfinder RPG Ultimate Magic 51) for which he qualifies based on his monk level. A monk can select this ability multiple times. Each time, he must select a different qinggong monk ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Qinggong Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Qinggong Power"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this power selects any of the qinggong monk ki powers (Pathfinder RPG Ultimate Magic 51) for which he qualifies based on his monk level. A monk can select this ability multiple times. Each time, he must select a different qinggong monk ki power."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ki Power|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 552,
+    "record_key": "Unchained Ki Power ~ Qinggong Power"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

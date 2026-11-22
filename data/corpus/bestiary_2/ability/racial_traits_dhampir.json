@@ -1,0 +1,37 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Dhampir",
+    "name": "Racial Traits ~ Dhampir",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Dhampir_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dhampir Racial Trait|AUTOMATIC|Dhampir ~ Ability Scores|PREVAREQ:Dhampir_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Dhampir",
+    "sha256": "36294705c8745ab32752c9909ca3ca60026dc007d4df0ce19b3da381461a6a43"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

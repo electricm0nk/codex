@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 25.0,
+    "description": null,
+    "key": "Backpack (Carrier)",
+    "name": "Backpack (Carrier)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Backpack, Carrier"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Any"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_general.lst",
+    "record_key": "Backpack (Carrier)",
+    "sha256": "372c2ea96d9352ae5d06f115b3f8fbd504b4857145cdae1b51d05e54d9be70c7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

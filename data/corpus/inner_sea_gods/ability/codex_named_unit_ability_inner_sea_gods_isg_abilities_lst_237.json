@@ -1,0 +1,67 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "description": "You are unusually perceptive when dealing with others. You gain a +1 trait bonus on Sense Motive checks, and Sense Motive is a class skill for you.",
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_237)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_237)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Sense Motive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_abilities.lst:237",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 237,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_237)",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

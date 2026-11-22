@@ -1,0 +1,62 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Material ~ Obsidian",
+    "name": "Obsidian",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Obsidian"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon.Instruments.Tools.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Obsidian"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wooden"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst",
+    "record_key": "Material ~ Obsidian",
+    "sha256": "74c6f604d044b7bd0487c13c03d4aefad9eab3f2f7b814b54d424da334adedcc"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

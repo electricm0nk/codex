@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Mancatcher
+Mancatcher																PROFICIENCY:WEAPON|Mancatcher			TYPE:Weapon.Resizable.Melee.TwoHanded.Exotic.Reach.Standard.Piercing.Polearm											COST:15	WT:10		CRITMULT:-	CRITRANGE:1	DAMAGE:1d2				EQMOD:Material ~ Wood													WIELD:TwoHanded			REACHMULT:2		SIZE:M	SOURCEPAGE:p.177

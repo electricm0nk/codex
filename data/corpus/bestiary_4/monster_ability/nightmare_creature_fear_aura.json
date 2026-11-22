@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightmare Creature ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "All creatures within a 60-foot radius that see or hear a nightmare creature must succeed at a Will save (DC %1) or be shaken for as long as they are within the aura. Whether or not the save is successful, that creature cannot be affected again by the same nightmare creature's fear aura for 24 hours. This is a mind-affecting fear affect.10+HD+CHA",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nightmare_creature_fear_aura",
+    "name": "Fear Aura",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within a 60-foot radius that see or hear a nightmare creature must succeed at a Will save (DC %1) or be shaken for as long as they are within the aura. Whether or not the save is successful, that creature cannot be affected again by the same nightmare creature's fear aura for 24 hours. This is a mind-affecting fear affect.10+HD+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Nightmare Creature ~ Fear Aura"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1121,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Nightmare Creature ~ Fear Aura",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

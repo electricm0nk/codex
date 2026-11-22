@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Kurgess ~ Break the Anvil",
+    "name": "Break the Anvil",
+    "description": "If you have performed your daily obedience, once per day, you can perform a disarm or sunder combat maneuver with a +4 competence bonus against an adjacent creature and a weapon it holds. If you succeed, the creature's weapon is simultaneously damaged and disarmed, as though you had succeeded at both combat maneuvers simultaneously. If you exceed the target's Combat Maneuver Defense by 10 or more, the target drops the items it is carrying in both hands, but you only sunder the weapon you initially targeted. If you don't have either the Improved Disarm or Improved Sunder feat or a similar ability, this attempt provokes attacks of opportunity as normal; however, if you have one of the feats or a similar ability, this attempt does not provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Kurgess ~ Break the Anvil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day, you can perform a disarm or sunder combat maneuver with a +4 competence bonus against an adjacent creature and a weapon it holds. If you succeed, the creature's weapon is simultaneously damaged and disarmed, as though you had succeeded at both combat maneuvers simultaneously. If you exceed the target's Combat Maneuver Defense by 10 or more, the target drops the items it is carrying in both hands, but you only sunder the weapon you initially targeted. If you don't have either the Improved Disarm or Improved Sunder feat or a similar ability, this attempt provokes attacks of opportunity as normal; however, if you have one of the feats or a similar ability, this attempt does not provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 255,
+    "record_key": "Exalted Boon ~ Kurgess ~ Break the Anvil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

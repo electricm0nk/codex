@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Dastardly Finish",
+    "category": "Mythic",
+    "name": "Dastardly Finish (Mythic)",
+    "description": "You strike downed, dazed, and staggered opponents with deadly efficiency. You can deliver a coup de grace to dazed and staggered non-mythic opponents. In addition, when any creature makes a Fortitude saving throw to survive one of your coup de grace attempts, it takes a penalty to that saving throw.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Dastardly Finish",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 64,
+    "record_key": "Dastardly Finish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

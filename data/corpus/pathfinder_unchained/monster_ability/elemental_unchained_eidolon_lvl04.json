@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Elemental ~ Unchained Eidolon LVL04",
+    "delivery": null,
+    "description": "At 4th level, all elemental eidolons add 1 point to their evolution pools.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl04",
+    "name": "Eidolon Progession Lv.4",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, all elemental eidolons add 1 point to their evolution pools."
+      },
+      {
+        "key": "KEY",
+        "value": "Elemental ~ Unchained Eidolon LVL04"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElementalLVL4"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ElementalLVL4"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 155,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Elemental ~ Unchained Eidolon LVL04",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

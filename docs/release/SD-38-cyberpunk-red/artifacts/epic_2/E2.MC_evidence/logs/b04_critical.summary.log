@@ -1,0 +1,10 @@
+test rules_core::cpr::critical::tests::the_seriously_wounded_threshold_rounds_half_hp_up ... ok
+test rules_core::cpr::critical::tests::the_catalog_equals_the_hand_listed_22_injuries_and_their_flags ... ok
+test rules_core::cpr::critical::tests::foreign_object_is_two_injuries_one_per_table ... ok
+test rules_core::cpr::critical::tests::each_of_the_22_injuries_counts_its_own_flag_toward_the_base_death_save_penalty ... ok
+test rules_core::cpr::critical::tests::refusals_name_their_reason ... ok
+test rules_core::cpr::critical::tests::rows_are_cpr_rows_in_sheet_order_and_cite_a_page ... ok
+test rules_core::cpr::critical::tests::the_base_death_save_penalty_row_names_the_injuries_that_raise_it ... ok
+test rules_core::cpr::critical::tests::thresholds_for_hp_40_are_full_20_and_1_with_stabilization_dvs_10_13_15 ... ok
+test rules_core::cpr::critical::tests::death_save_is_body ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.00s

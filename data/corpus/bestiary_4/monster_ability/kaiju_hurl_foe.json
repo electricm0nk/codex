@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kaiju ~ Hurl Foe",
+    "delivery": "Extraordinary",
+    "description": "When a kaiju damages a Huge or smaller foe with one of its natural attacks, it can try to hurl the foe as part of that attack by attempting a combat maneuver check. On a successful check, the foe is knocked back 10 feet in a direction of the kaiju's choice and falls prone. The distance the foe is hurled increases by 10 feet for every 5 points by which the kaiju's check exceeds the foe's CMD. If an obstacle stops the hurled creature before it travels the whole distance, the hurled foe and the obstacle struck each take 1d6 points of damage per 10 feet of distance remaining and the foe is knocked prone in the space adjacent to the obstacle.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:kaiju_hurl_foe",
+    "name": "Hurl Foe",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a kaiju damages a Huge or smaller foe with one of its natural attacks, it can try to hurl the foe as part of that attack by attempting a combat maneuver check. On a successful check, the foe is knocked back 10 feet in a direction of the kaiju's choice and falls prone. The distance the foe is hurled increases by 10 feet for every 5 points by which the kaiju's check exceeds the foe's CMD. If an obstacle stops the hurled creature before it travels the whole distance, the hurled foe and the obstacle struck each take 1d6 points of damage per 10 feet of distance remaining and the foe is knocked prone in the space adjacent to the obstacle."
+      },
+      {
+        "key": "KEY",
+        "value": "Kaiju ~ Hurl Foe"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 138,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Kaiju ~ Hurl Foe",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

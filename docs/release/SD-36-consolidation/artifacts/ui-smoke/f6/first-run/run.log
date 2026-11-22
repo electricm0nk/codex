@@ -1,0 +1,17 @@
+Launching app for agent 'f6c-smoke'...
+FAIL  create-character-render  -- expected string missing: 'Character name'; expected string missing: 'Player name'; expected string missing: 'Race'; expected string missing: 'Class'; expected string missing: 'Create character'; 'Loading' still present after the row's wait budget; select not found: 'character-race'; select not found: 'character-class'
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+PASS  create-character-samurai
+PASS  create-character-magus
+PASS  create-character-warrior
+PASS  create-character-kineticist
+PASS  create-character-inquisitor-generic
+PASS  level-up-fighter6-into-arcane-archer
+PASS  level-up-fighter6-into-arcane-archer-accept
+FAIL  level-up-fighter6-blockers-and-labels  -- target not found: 'Cannot be taken (10) (no element named 'Cannot be taken (10)')'
+FAIL  sheet-f6c-shaman-no-domain-line  -- forbidden string present: 'failure'
+
+9/12 green, 3 red, 0 blocked, 0 manual, 0 not-run (M = 12 rows)
+Evidence: /home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6
+EXIT=1

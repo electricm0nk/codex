@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Breaker Of Barriers",
+    "category": "Combat",
+    "name": "Breaker Of Barriers",
+    "description": "You see it as your sacred duty to destroy all obstacles. You gain a +2 bonus on Strength checks to break down doors, walls, dams, and other barriers and on combat maneuver checks to bull rush and overrun opponents. You ignore the first 5 points ofhardness when you deal damage to doors, walls, dams, and other barriers.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRESTAT:1,STR=17",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 19,
+    "record_key": "Breaker Of Barriers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

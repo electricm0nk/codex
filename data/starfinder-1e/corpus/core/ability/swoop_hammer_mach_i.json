@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "Swoop hammer (mach I)",
+    "name": "Swoop hammer (mach I)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1052,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Swoop hammer (mach I)",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:swoop_hammer_mach_i"
+}

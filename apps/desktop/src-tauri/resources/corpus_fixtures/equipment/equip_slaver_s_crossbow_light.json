@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Slaver's Crossbow (Light)",
+    "name": "Slaver's Crossbow, Light"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_slaver_s_crossbow_light.txt",
+    "record_key": "Slaver's Crossbow (Light)"
+  }
+}

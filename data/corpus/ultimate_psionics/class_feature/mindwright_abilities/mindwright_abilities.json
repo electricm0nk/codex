@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindwright Abilities",
+    "name": "Mindwright Abilities",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Mindwright ~ Trained Artisan"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Mindwright ~ Efficient Artisan|PRECLASS:1,Psion=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Mindwright ~ Psionic Identification|PRECLASS:1,Psion=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Mindwright ~ Greater Ectoplasmic Creation|PRECLASS:1,Psion=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Mindwright ~ Psionic Infusion|PRECLASS:1,Psion=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mindwright Feat|floor((PsionLVL+4)/5)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1984,
+    "record_key": "Mindwright Abilities"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

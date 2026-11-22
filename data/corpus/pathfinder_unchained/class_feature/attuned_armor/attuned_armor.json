@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Attuned Armor",
+    "name": "Attuned Armor",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "ABP Attunement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Attuned Armor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Armor;Clothing|COMBAT|AC|%CHOICE|TYPE=ArmorEnhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=ABP_ArmorBonusMax|TITLE=Armor Enhancement Bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 70,
+    "record_key": "Attuned Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

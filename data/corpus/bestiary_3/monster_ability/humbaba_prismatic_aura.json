@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Humbaba ~ Prismatic Aura",
+    "delivery": "Supernatural",
+    "description": "As a swift action once per day, a humbaba can activate its prismatic aura. Doing so causes brilliant light to radiate from the humbaba to a radius of 30 feet. Each round at the start of the humbaba's turn, roll 1d8 and consult the table of prismatic spray effects on page 325 of the Core Rulebook to determine the color and effect of the light (reroll results of 8). If a creature begins its turn in the prismatic aura's area, it must make the appropriate saving throw (DC 26) against that effect. Once activated, a humbaba's prismatic aura lasts for 7 rounds. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:humbaba_prismatic_aura",
+    "name": "Prismatic Aura",
+    "owners": [
+      "bestiary_3:monster:humbaba"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action once per day, a humbaba can activate its prismatic aura. Doing so causes brilliant light to radiate from the humbaba to a radius of 30 feet. Each round at the start of the humbaba's turn, roll 1d8 and consult the table of prismatic spray effects on page 325 of the Core Rulebook to determine the color and effect of the light (reroll results of 8). If a creature begins its turn in the prismatic aura's area, it must make the appropriate saving throw (DC 26) against that effect. Once activated, a humbaba's prismatic aura lasts for 7 rounds. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Humbaba ~ Prismatic Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "TYPE",
+        "value": "HumbabaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.151",
+    "traits": [
+      "HumbabaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1061,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Humbaba ~ Prismatic Aura",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

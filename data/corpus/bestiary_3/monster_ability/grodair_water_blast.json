@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Grodair ~ Water Blast",
+    "delivery": "Extraordinary",
+    "description": "The grodair's ranged attack is a pressurized blast of water. This attack has a range of 60 feet with no range increment.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:grodair_water_blast",
+    "name": "Water Blast",
+    "owners": [
+      "bestiary_3:monster:grodair"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The grodair's ranged attack is a pressurized blast of water. This attack has a range of 60 feet with no range increment."
+      },
+      {
+        "key": "KEY",
+        "value": "Grodair ~ Water Blast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "TYPE",
+        "value": "GrodairRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.143",
+    "traits": [
+      "GrodairRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1023,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Grodair ~ Water Blast",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

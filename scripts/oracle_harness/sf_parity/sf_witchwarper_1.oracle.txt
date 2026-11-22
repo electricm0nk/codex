@@ -1,0 +1,52 @@
+name=sf_witchwarper_1
+race=Human
+class=Witchwarper
+level=1
+stat.STR=10
+stat.DEX=14
+stat.CON=11
+stat.INT=10
+stat.WIS=10
+stat.CHA=18
+hp=9
+stamina=5
+resolve=5
+eac=13
+kac=14
+initiative=+2
+bab=+0
+save.Fortitude=+0
+save.Reflex=+4
+save.Will=+0
+attack.melee=+0
+attack.ranged=+2
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=0|ranks=0.0|untrained=Y
+skill.Bluff=8|ranks=1.0|untrained=Y
+skill.Diplomacy=4|ranks=0.0|untrained=Y
+skill.Disguise=4|ranks=0.0|untrained=Y
+skill.Intimidate=4|ranks=0.0|untrained=Y
+skill.Mysticism=4|ranks=1.0|untrained=NO
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Physical Science=4|ranks=1.0|untrained=NO
+skill.Piloting=2|ranks=0.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+2|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+2|damage=1d4|category=OPERATIVE-Melee
+spells.Witchwarper.0=per_day:0|known:4|dcs:14|in_book:1
+spells.Witchwarper.1=per_day:3|known:2|dcs:|in_book:1
+spells.Witchwarper.2=per_day:0|known:0
+spells.Witchwarper.3=per_day:0|known:0
+spells.Witchwarper.4=per_day:0|known:0
+spells.Witchwarper.5=per_day:0|known:0
+spells.Witchwarper.6=per_day:0|known:0
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Icon, THEME KNOWLEDGE
+abilities.class_feature=Infinite Worlds
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

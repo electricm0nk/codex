@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-26T19:37:17Z",
+  "data": {
+    "key": "Weretiger-Kin ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Skinwalker Racial Trait",
+      "SpecialQuality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Skinwalker_ReplaceSpellLikeAbility"
+    ],
+    "description": "A fanglord skinwalker with a Wisdom score of 11 or higher can use jump once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weretiger-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Skinwalker ~ Weretiger-Kin"
+      },
+      {
+        "key": "DESC",
+        "value": "A fanglord skinwalker with a Wisdom score of 11 or higher can use jump once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Jump|PRESTAT:1,WIS=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "Skinwalker_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_Jump_DCMod",
+          "WIS-CHA"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 166,
+    "record_key": "Weretiger-Kin ~ Spell-Like Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

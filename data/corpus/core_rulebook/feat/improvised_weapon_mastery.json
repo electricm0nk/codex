@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improvised Weapon Mastery",
+    "category": "Combat",
+    "name": "Improvised Weapon Mastery",
+    "description": "You can turn nearly any object into a deadly weapon, from a razor sharp chair leg to a sack of flour.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Catch Off-Guard,Throw Anything",
+      "PRETOTALAB:8"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 111,
+    "record_key": "Improvised Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

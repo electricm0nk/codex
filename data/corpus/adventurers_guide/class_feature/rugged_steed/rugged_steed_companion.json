@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rugged Steed ~ Companion",
+    "name": "Rugged Steed ~ Companion",
+    "class": "Rugged Steed",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RuggedSteedACBonus|(CL-1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|RuggedSteedACBonus|TYPE=NaturalArmor.STACK"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 371,
+    "record_key": "Rugged Steed ~ Companion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

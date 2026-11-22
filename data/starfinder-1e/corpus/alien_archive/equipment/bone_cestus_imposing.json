@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Bone Cestus (imposing)",
+    "name": "Bone Cestus, imposing",
+    "type": "RESIZABLE.Bludgeoning.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized.ToHit_UseStr.Damage_UseStr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/alien_archive/saa_equip.lst",
+    "record_key": "Bone Cestus (imposing)",
+    "sha256": "6b5557e98616ac13e1f2750fe5d46cad3da77a33218836fd1fc9d2fc361e7bb3"
+  },
+  "unit_id": "alien_archive:equipment:bone_cestus_imposing"
+}

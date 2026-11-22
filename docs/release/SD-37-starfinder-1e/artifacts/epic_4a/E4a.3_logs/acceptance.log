@@ -1,0 +1,19 @@
+# E4a.3 acceptance (before = git HEAD 615ce41338, after = working tree)
+-- before: compiled tables
+12529
+-- before: data package
+6164
+-- after: acceptance command, verbatim
+0
+-- after: same predicate over the package (data/rules_tables) and its schema
+0
+-- after: python os.walk over the same three paths
+0 0 0
+-- elsewhere in src/rules_core (reported, not burned)
+1117
+-- other bundled data dirs holding the literal (reported)
+data/sheet_rules 53020
+data/starfinder-1e/sheet_rules 9094
+-- D6 half 1: lst_file in the residue gate
+223:    # SD-36 Epic A / operator ruling D6. `SourceRef.lst_file` leaked PCGen
+229:    "lst_file": r"\blst_file\b",

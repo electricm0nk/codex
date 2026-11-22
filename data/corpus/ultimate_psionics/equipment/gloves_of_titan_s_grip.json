@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 14000.0,
+    "description": "3/day +8 enhancement bonus on grapple checks for 7 rounds",
+    "key": "Gloves of Titan's Grip",
+    "name": "Gloves of Titan's Grip",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Universal.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "14000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.415"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day +8 enhancement bonus on grapple checks for 7 rounds"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMB_Grapple|8"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 257,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Gloves of Titan's Grip",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
+}

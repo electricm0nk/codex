@@ -1,0 +1,27 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+error[E0609]: no field `increase_scores` on type `sf_level_up::SfLevelUpPreviewDto`
+   --> src/sf_level_up.rs:758:26
+    |
+758 |         assert_eq!(shown.increase_scores, 0, "level 2 has no increase: it asks for no score");
+    |                          ^^^^^^^^^^^^^^^ unknown field
+    |
+help: a field with a similar name exists
+    |
+758 -         assert_eq!(shown.increase_scores, 0, "level 2 has no increase: it asks for no score");
+758 +         assert_eq!(shown.increase_due, 0, "level 2 has no increase: it asks for no score");
+    |
+
+error[E0609]: no field `increase_scores` on type `sf_level_up::SfLevelUpPreviewDto`
+   --> src/sf_level_up.rs:792:26
+    |
+792 |         assert_eq!(shown.increase_scores, SCORES_PER_INCREASE);
+    |                          ^^^^^^^^^^^^^^^ unknown field
+    |
+help: a field with a similar name exists
+    |
+792 -         assert_eq!(shown.increase_scores, SCORES_PER_INCREASE);
+792 +         assert_eq!(shown.increase_due, SCORES_PER_INCREASE);
+    |
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 2 previous errors

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Disappear ~ Spontaneous",
+    "name": "Disappear",
+    "description": "Invisibility.  Boost(2): Attacks don't end invisibility.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disappear ~ Spontaneous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Concealing.Bard2.Inquisitor2.Sorcerer2.Summoner2"
+      },
+      {
+        "key": "DESC",
+        "value": "Invisibility.  Boost(2): Attacks don't end invisibility."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 271,
+    "record_key": "Disappear ~ Spontaneous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

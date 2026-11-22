@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar ~ Speak with Master",
+    "name": "Speak with Master",
+    "description": "If the master is 5th level or higher, a familiar and the master can communicate verbally as if they were using a common language. Other creatures do not understand the communication without magical help.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar ~ Speak with Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Familiar Class Feature.SpecialQuality.Extraordinary.Communicate"
+      },
+      {
+        "key": "DESC",
+        "value": "If the master is 5th level or higher, a familiar and the master can communicate verbally as if they were using a common language. Other creatures do not understand the communication without magical help."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_cr.lst",
+    "sha256": "edda5ccc2df39b9c3415b43b6bf208454cd1233824b38070c8f19f97c9b45b93",
+    "line": 66,
+    "record_key": "Familiar ~ Speak with Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

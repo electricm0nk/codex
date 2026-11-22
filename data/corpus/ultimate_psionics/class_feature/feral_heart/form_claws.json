@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Heart ~ Form Claws",
+    "name": "Form Claws",
+    "class": "Feral Heart",
+    "description": "You can turn your hands into vicious claws.  If you are hurt, on your next turn you are forced to form your feral claws if they are not already active unless you make a DC 15 Will save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Heart ~ Form Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Soulknife ~ Form Mind Blade"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeSkillDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeSkillPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can turn your hands into vicious claws.  If you are hurt, on your next turn you are forced to form your feral claws if they are not already active unless you make a DC 15 Will save."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Feral Heart Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeSkillPrereqLVL|MndBladeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeLVL|SoulknifeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeSkillDC|10+BAB"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2167,
+    "record_key": "Feral Heart ~ Form Claws"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

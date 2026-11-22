@@ -1,0 +1,24 @@
+test_full_register_with_one_clean_entry_is_ok (scripts.tests.test_supersession_register_gate.CleanEntryPassesTest.test_full_register_with_one_clean_entry_is_ok) ... ok
+test_genuinely_identical_reordered_type_tags_passes (scripts.tests.test_supersession_register_gate.CleanEntryPassesTest.test_genuinely_identical_reordered_type_tags_passes) ... ok
+test_full_register_with_one_bad_entry_fails_the_gate (scripts.tests.test_supersession_register_gate.MaterialDifferenceRefusalTest.test_full_register_with_one_bad_entry_fails_the_gate) ... ok
+test_materially_different_bonus_is_refused (scripts.tests.test_supersession_register_gate.MaterialDifferenceRefusalTest.test_materially_different_bonus_is_refused) ... ok
+test_a_citation_the_oracle_cannot_resolve_is_refused (scripts.tests.test_supersession_register_gate.MissingEvidenceRefusalTest.test_a_citation_the_oracle_cannot_resolve_is_refused) ... ok
+test_a_fabricated_entry_with_raw_lines_but_no_citation_is_refused (scripts.tests.test_supersession_register_gate.MissingEvidenceRefusalTest.test_a_fabricated_entry_with_raw_lines_but_no_citation_is_refused)
+The exact shape that passed before this fix: raw_lines present ... ok
+test_a_side_with_no_source_file_or_line_is_refused (scripts.tests.test_supersession_register_gate.MissingEvidenceRefusalTest.test_a_side_with_no_source_file_or_line_is_refused) ... ok
+test_variant_refusal_still_fires_with_no_finder (scripts.tests.test_supersession_register_gate.NoOracleStructuralOnlyTest.test_variant_refusal_still_fires_with_no_finder) ... ok
+test_bare_integer_corpus_key_is_refused (scripts.tests.test_supersession_register_gate.StructuralRefusalTest.test_bare_integer_corpus_key_is_refused)
+The `companion` key `"1"` defect: a bare-integer corpus_key is a ... ok
+test_core_essentials_is_refused_on_either_side (scripts.tests.test_supersession_register_gate.StructuralRefusalTest.test_core_essentials_is_refused_on_either_side) ... ok
+test_denominator_count_removed_mismatch_is_refused (scripts.tests.test_supersession_register_gate.StructuralRefusalTest.test_denominator_count_removed_mismatch_is_refused) ... ok
+test_survivor_newer_than_superseded_is_refused (scripts.tests.test_supersession_register_gate.StructuralRefusalTest.test_survivor_newer_than_superseded_is_refused) ... ok
+test_empty_string_reprint_proof_still_refused (scripts.tests.test_supersession_register_gate.VariantLineRefusalTest.test_empty_string_reprint_proof_still_refused)
+A present-but-blank `reprint_proof` field must not silently ... ok
+test_mythic_adventures_on_the_superseded_side_is_also_refused (scripts.tests.test_supersession_register_gate.VariantLineRefusalTest.test_mythic_adventures_on_the_superseded_side_is_also_refused) ... ok
+test_variant_line_with_reprint_proof_is_allowed (scripts.tests.test_supersession_register_gate.VariantLineRefusalTest.test_variant_line_with_reprint_proof_is_allowed) ... ok
+test_variant_line_without_reprint_proof_is_refused (scripts.tests.test_supersession_register_gate.VariantLineRefusalTest.test_variant_line_without_reprint_proof_is_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.035s
+
+OK

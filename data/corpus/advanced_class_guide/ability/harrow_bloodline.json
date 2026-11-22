@@ -1,0 +1,44 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Harrow Bloodline",
+    "name": "Harrow Bloodline",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Arcanist Bloodline Development"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Harrow_BloodlineLVL|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Harrow Bloodline ~ Power LVL 01"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 2,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_hh.lst",
+    "record_key": "Harrow Bloodline",
+    "sha256": "fa7530e1a734d80b40ed0dd2aa38633d553a65058d7e62b4ff5a25be2c01cf36"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

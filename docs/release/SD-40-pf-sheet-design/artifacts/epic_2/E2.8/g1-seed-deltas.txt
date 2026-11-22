@@ -1,0 +1,17 @@
+# G-1 (rewritten) — E2.8. base = CARD_BASE 508ffd3eda (rendered in this tree before any change; equals E2.7's head), head = 41f2385895 (desktop full run with PF_SEED_RENDER_OUT), same tree/CARGO_TARGET_DIR
+## diff base/sha256.txt head/sha256.txt
+1,3c1,3
+< 9786d5805abb00fb4a37ac0e5ac4f5e999be3c59991eca247212392de6fb2d17  aldric.json
+< e44b0b5eee7a8a139d82684486b8c9d8f83efc8e9a56451783d7195fca5e8ad9  elowen.json
+< c06f5deb08b2aaed0dc75da4f8f914d107f72d9eb01d5f3f813f5646f98f075d  tomas.json
+---
+> a7b2e4e6adbe9409d17f0bd50b9022f3545d41013e842cba87fdbd3ca7c3f330  aldric.json
+> 45b07de194ef03284d04507e4a080af9249a4b7475a1ba6eb1161d27cb733563  elowen.json
+> 8b3a9cf681fed8e2315f52a6c385a0f6c21bb0bb6c5d0b104fcd4b83df2a1598  tomas.json
+## acceptance-and-verification.md G-1 strip script (NEW_KEYS includes 'languages', 'remainingLbs')
+aldric.json SAME_EXCEPT_NAMED added top-level keys ['languages']
+   languages {"known": ["Common"]} | heavyMaxLbs 350.0 totalCarriedWeightLbs 29.0 remainingLbs 321.0
+elowen.json SAME_EXCEPT_NAMED added top-level keys ['languages']
+   languages {"known": ["Common"]} | heavyMaxLbs 80.0 totalCarriedWeightLbs 29.0 remainingLbs 51.0
+tomas.json SAME_EXCEPT_NAMED added top-level keys ['languages']
+   languages {"known": ["Common"]} | heavyMaxLbs 175.0 totalCarriedWeightLbs 29.0 remainingLbs 146.0

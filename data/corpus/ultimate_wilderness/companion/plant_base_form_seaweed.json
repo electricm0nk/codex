@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Plant Base Form ~ Seaweed",
+    "name": "Plant Base Form ~ Seaweed",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Limbs / Arms|Unchained Evolution ~ Slam|Unchained Evolution ~ Swim|Unchained Evolution ~ Swim +20"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
+    "line": 21,
+    "record_key": "Plant Base Form ~ Seaweed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

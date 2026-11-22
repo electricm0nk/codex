@@ -1,0 +1,1 @@
+{"var":"v3f7902298e797c24","label":"Psion Prime Stat","declared_by":["ultimate_psionics:class:psion"],"contributions":[{"rule_id":"ultimate_psionics:class:psion","expr":{"AbilityMod":"Int"},"when":{"Compare":{"lhs":{"ClassLevel":"psion"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

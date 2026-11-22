@@ -1,0 +1,3 @@
+desktop-full-2 exit=0
+frontend-2 exit=0
+DONE

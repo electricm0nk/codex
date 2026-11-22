@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Worm that Walks ~ Squirming Embrace",
+    "delivery": "Extraordinary",
+    "description": "If a worm that walks grapples a foe, as a swift action, it can cause a swarm of worms to squirm over the grappled creature.  These worms deal automatic %1d6+%2 swarm damage with no attack roll needed.  If a creature takes damage from the swarm, it is also subject to the swarm's distraction ability, and must make a Fortitude save (DC %3) or be nauseated for 1 round.  A worm that walks can only have one embraced target at a time, but it does not have to continue grappling in order to maintain the embrace.  If the worm that walks moves more than 5 feet from the swarm or dismisses the swarm (a free action), the swarm dies.  Any area attack that damages the swarm or any severe or stronger wind effect that affects the swarm's target kills it.",
+    "description_variables": [
+      "EngulfDamageDice",
+      "1.5*STR",
+      "EngulfDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:worm_that_walks_squirming_embrace",
+    "name": "Squirming Embrace",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Squirming Embrace"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EngulfDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EngulfDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Squirming Embrace)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EngulfDamageDice|min(floor((TL+4)/5),5)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EngulfDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EngulfDamageDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a worm that walks grapples a foe, as a swift action, it can cause a swarm of worms to squirm over the grappled creature.  These worms deal automatic %1d6+%2 swarm damage with no attack roll needed.  If a creature takes damage from the swarm, it is also subject to the swarm's distraction ability, and must make a Fortitude save (DC %3) or be nauseated for 1 round.  A worm that walks can only have one embraced target at a time, but it does not have to continue grappling in order to maintain the embrace.  If the worm that walks moves more than 5 feet from the swarm or dismisses the swarm (a free action), the swarm dies.  Any area attack that damages the swarm or any severe or stronger wind effect that affects the swarm's target kills it.|EngulfDamageDice|1.5*STR|EngulfDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Worm that Walks ~ Squirming Embrace"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.287",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1383,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Worm that Walks ~ Squirming Embrace",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ]
+}

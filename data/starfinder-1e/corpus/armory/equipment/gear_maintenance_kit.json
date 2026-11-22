@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Gear maintenance kit",
+    "name": "Gear maintenance kit",
+    "type": "Goods.PersonalItem.General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 209,
+    "path": "starfinder/paizo/armory/sa_equip_gear.lst",
+    "record_key": "Gear maintenance kit",
+    "sha256": "b537ab06ac60450457a52fda1590de79271efcd20e66706cc095e3daf7f122b7"
+  },
+  "unit_id": "armory:equipment:gear_maintenance_kit"
+}

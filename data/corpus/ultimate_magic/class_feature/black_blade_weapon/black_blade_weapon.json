@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Black Blade Weapon",
+    "name": "Black Blade Weapon",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.BlackBladeChoice.Familiar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeboundBlackBladeBonus|0"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|Rapier|Sword Cane|TYPE=Melee,TYPE=Slashing"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeboundBlackBladeBonus|1|PREVARGTEQ:MagusLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeboundBlackBladeBonus|1|PREVARGTEQ:MagusLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeboundBlackBladeBonus|1|PREVARGTEQ:MagusLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeboundBlackBladeBonus|1|PREVARGTEQ:MagusLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeboundBlackBladeBonus|1|PREVARGTEQ:MagusLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|TOHIT,DAMAGE|BladeboundBlackBladeBonus|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1301,
+    "record_key": "Black Blade Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

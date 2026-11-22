@@ -1,0 +1,72 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 11005.0,
+    "description": null,
+    "key": "Quick Block Buckler",
+    "name": "Quick Block Buckler",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Buckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Magic.Specific.GreaterMajor.Buckler"
+      },
+      {
+        "key": "COST",
+        "value": "11005"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Arrow Deflection ~ Shield.Special Ability ~ +3 ~ Shield.Material ~ Wood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 134,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Quick Block Buckler",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

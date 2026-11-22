@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Seaweed Leshy ~ Air Cyst",
+    "delivery": "Supernatural",
+    "description": "Seaweed leshys constantly grow small bulbs filled with air. As a move action, they can detach a bulb and give it to another creature. If consumed as a standard action, this air cyst grants water breathing (as the spell) for 10 minutes. Seaweed leshys can have a maximum of four usable air cysts at any one time, and air cysts regrow at a rate of one per 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:seaweed_leshy_air_cyst",
+    "name": "Air Cyst",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Seaweed leshys constantly grow small bulbs filled with air. As a move action, they can detach a bulb and give it to another creature. If consumed as a standard action, this air cyst grants water breathing (as the spell) for 10 minutes. Seaweed leshys can have a maximum of four usable air cysts at any one time, and air cysts regrow at a rate of one per 24 hours."
+      },
+      {
+        "key": "KEY",
+        "value": "Seaweed Leshy ~ Air Cyst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeaweedLeshyRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.180",
+    "traits": [
+      "SeaweedLeshyRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1202,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Seaweed Leshy ~ Air Cyst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,22 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.39s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_augmentation_adds_its_price_and_no_bulk ... FAILED
+
+failures:
+
+---- rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_augmentation_adds_its_price_and_no_bulk stdout ----
+
+thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_augmentation_adds_its_price_and_no_bulk' (2445405) panicked at src/rules_core/pilot_compute/sf_loadout.rs:296:75:
+an augmented character computes: SfChassisRefusal { id: "sf_loadout.item_bulk", message: "core:equipment:cybernetic_vocal_modulator: the record states no bulk" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_augmentation_adds_its_price_and_no_bulk
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2824 filtered out; finished in 0.53s
+
+error: test failed, to rerun pass `--lib`

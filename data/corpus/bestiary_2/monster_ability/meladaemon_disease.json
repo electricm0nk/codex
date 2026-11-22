@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Meladaemon ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "Daemonic wasting: Bite - injury; save Fort DC %1; onset 1 day; frequency 1/day; effect 1d4 Con and 1d4 CHa damage; cure 2 consecutive saves.",
+    "description_variables": [
+      "MeladaemonDiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:meladaemon_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_2:monster:daemon_meladaemon"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeladaemonDiseaseDC|10+TL/2+CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeladaemonDiseaseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Daemonic wasting: Bite - injury; save Fort DC %1; onset 1 day; frequency 1/day; effect 1d4 Con and 1d4 CHa damage; cure 2 consecutive saves.|MeladaemonDiseaseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Meladaemon ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.69",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 307,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Meladaemon ~ Disease",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

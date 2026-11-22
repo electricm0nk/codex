@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fey Trickster ~ Nature's Lure",
+    "name": "Nature's Lure",
+    "class": "Fey",
+    "description": "[NOT IMPLEMENTED] Rather than casting psychic spells from the mesmerist spell list, a fey trickster casts divine spells drawn from the druid and ranger spell lists, in just the same way as a hunter does. This means that she gains orisons instead of knacks. This doesn't change her number of spells per day or spells known. The fey trickster's mesmerist spells and spell-like abilities count as if they were fey spell-like abilities for the purpose of effects like resist nature's lure that apply against fey spell-like abilities. This alters the mesmerist's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Trickster ~ Nature's Lure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] Rather than casting psychic spells from the mesmerist spell list, a fey trickster casts divine spells drawn from the druid and ranger spell lists, in just the same way as a hunter does. This means that she gains orisons instead of knacks. This doesn't change her number of spells per day or spells known. The fey trickster's mesmerist spells and spell-like abilities count as if they were fey spell-like abilities for the purpose of effects like resist nature's lure that apply against fey spell-like abilities. This alters the mesmerist's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 72,
+    "record_key": "Fey Trickster ~ Nature's Lure"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

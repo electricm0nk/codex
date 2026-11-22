@@ -1,0 +1,6 @@
+CPR MC Streetrat Media: A 114/114 computed rows on the live sheet; B 130/130 live digit lines from compute_sheet; C 212/212 cells = their row (212 rows, 38 printed lines)
+exit 0
+CPR MC Complete Package Fixer: A 110/110 computed rows on the live sheet; B 120/120 live digit lines from compute_sheet; C 208/208 cells = their row (208 rows, 32 printed lines)
+exit 0
+CPR MC Edgerunner Netrunner: A 115/115 computed rows on the live sheet; B 131/131 live digit lines from compute_sheet; C 214/214 cells = their row (214 rows, 41 printed lines)
+exit 0

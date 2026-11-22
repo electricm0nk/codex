@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shatter Mental Mask",
+    "category": "General",
+    "name": "Shatter Mental Mask",
+    "description": "You are adept at ripping away an opponent's mental mask, exposing its true visage during a psychic duel. While in a psychic duel, when you create an offensive manifestation that can be negated or halved only with a successful Will saving throw, if your opponent fails that Will saving throw, its mental mask is shattered, revealing the opponent's true form. Special: If you possess the Third Eye feat, your opponent's mental mask is shattered even on a successful Will saving throw.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity],[PRECLASS:1,TYPE.Psychic=1]",
+      "PREPCLEVEL:MIN=2"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 65,
+    "record_key": "Shatter Mental Mask"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

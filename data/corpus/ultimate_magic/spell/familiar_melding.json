@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You project your soul into your familiar, taking over its body while leaving its consciousness intact. When you transfer your soul upon casting, your body is, as near as anyone can tell, dead. While possessing your familiar, you can communicate with it telepathically. You keep your Intelligence, Wisdom, Charisma, level, class, base attack bonus, base save bonuses, alignment, and mental abilities. The familiar's body retains its own Strength, Dexterity, Constitution, hit points, natural abilities, and automatic abilities. A body with extra limbs does not allow you to make more attacks (or more advantageous twoweapon attacks) than normal. You may use any abilities the familiar has, including spells and spell-like abilities. You cannot speak unless your familiar has the ability to speak a language. You cannot cast spells with somatic components if your familiar does not have anthropomorphic limbs that can perform the appropriate motions. As a standard action, you can return to your body as long as it is within range. If your familiar is slain while your soul is in it and your body is within range, your soul returns to your own body, unharmed. If your familiar is out of range when slain, you die. The spell ends when you shift from the familiar to your own body.",
+    "key": "Familiar Melding",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Possess your familiar.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You project your soul into your familiar, taking over its body while leaving its consciousness intact. When you transfer your soul upon casting, your body is, as near as anyone can tell, dead. While possessing your familiar, you can communicate with it telepathically. You keep your Intelligence, Wisdom, Charisma, level, class, base attack bonus, base save bonuses, alignment, and mental abilities. The familiar's body retains its own Strength, Dexterity, Constitution, hit points, natural abilities, and automatic abilities. A body with extra limbs does not allow you to make more attacks (or more advantageous twoweapon attacks) than normal. You may use any abilities the familiar has, including spells and spell-like abilities. You cannot speak unless your familiar has the ability to speak a language. You cannot cast spells with somatic components if your familiar does not have anthropomorphic limbs that can perform the appropriate motions. As a standard action, you can return to your body as long as it is within range. If your familiar is slain while your soul is in it and your body is within range, your soul returns to your own body, unharmed. If your familiar is out of range when slain, you die. The spell ends when you shift from the familiar to your own body.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until you return to your body"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/familiarMelding.html#_familiar-melding"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your familiar"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 96,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Familiar Melding",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

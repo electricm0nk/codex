@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jabberwock ~ Fear of Vorpal Weapons",
+    "delivery": "Extraordinary",
+    "description": "A jabberwock knows that a vorpal weapon can kill it swiftly.  As soon as it takes damage from a vorpal weapon, a jabberwock becomes shaken for 1 round.  If it is hit by a critical threat from a vorpal weapon, whether or not the critical hit is confirmed, the jabberwock is staggered for 1 round.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:jabberwock_fear_of_vorpal_weapons",
+    "name": "Fear of Vorpal Weapons",
+    "owners": [
+      "bestiary_2:monster:jabberwock",
+      "bestiary_2:monster:jabberwock_lesser"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A jabberwock knows that a vorpal weapon can kill it swiftly.  As soon as it takes damage from a vorpal weapon, a jabberwock becomes shaken for 1 round.  If it is hit by a critical threat from a vorpal weapon, whether or not the critical hit is confirmed, the jabberwock is staggered for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Jabberwock ~ Fear of Vorpal Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.168",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 725,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jabberwock ~ Fear of Vorpal Weapons",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

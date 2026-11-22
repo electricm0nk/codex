@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Suli ~ Type",
+    "name": "Native Outsider",
+    "race_key": "Suli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Suli Racial Trait",
+      "Suli Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Suli_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Sulis are outsiders with the native subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sulis are outsiders with the native subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Outsider|Native"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6",
+    "line": 15,
+    "record_key": "Suli ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

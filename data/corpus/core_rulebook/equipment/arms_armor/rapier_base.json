@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 20.0,
+    "description": "You can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with a rapier sized for you, even though it isn't a light weapon. You can't wield a rapier in two hands in order to apply 1-1/2 times your Strength bonus to damage.",
+    "key": "Rapier (Base)",
+    "name": "Rapier",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGEMULT:2",
+          "-0.5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rapier (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rapier"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.OneHanded.Finesseable.Piercing.MeleePiercing.Sword.BladeLight.Weapon Group Blades Light.Weapon Group Melee OneHanded Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with a rapier sized for you, even though it isn't a light weapon. You can't wield a rapier in two hands in order to apply 1-1/2 times your Strength bonus to damage."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 167,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Rapier (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "static:literal_magnitudes_only"
+  ]
+}

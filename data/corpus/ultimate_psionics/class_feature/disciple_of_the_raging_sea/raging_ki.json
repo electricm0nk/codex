@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Disciple of the Raging Sea ~ Raging Ki",
+    "name": "Raging Ki",
+    "class": "Disciple of the Raging Sea",
+    "description": "You can spend ki to extend a use of your outburst racial ability as with power points, but one ki point is considered equal to two power points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disciple of the Raging Sea ~ Raging Ki"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend ki to extend a use of your outburst racial ability as with power points, but one ki point is considered equal to two power points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2530,
+    "record_key": "Disciple of the Raging Sea ~ Raging Ki"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

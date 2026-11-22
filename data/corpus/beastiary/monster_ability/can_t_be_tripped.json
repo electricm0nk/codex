@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Can't Be Tripped",
+    "delivery": "Extraordinary",
+    "description": "A creature with this ability cannot be tripped.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:can_t_be_tripped",
+    "name": "Can't Be Tripped",
+    "owners": [
+      "beastiary:monster:aboleth",
+      "beastiary:monster:azata_lillend",
+      "beastiary:monster:behir",
+      "beastiary:monster:black_pudding",
+      "beastiary:monster:centipede_house",
+      "beastiary:monster:centipede_sewer",
+      "beastiary:monster:centipede_giant",
+      "beastiary:monster:centipede_hisser",
+      "beastiary:monster:centipede_giant_whiptail",
+      "beastiary:monster:centipede_great_forest",
+      "beastiary:monster:centipede_titan",
+      "beastiary:monster:cloaker",
+      "beastiary:monster:couatl",
+      "beastiary:monster:demon_marilith",
+      "beastiary:monster:eel_electric",
+      "beastiary:monster:eel_giant_moray",
+      "beastiary:monster:flytrap_giant",
+      "beastiary:monster:hydra",
+      "beastiary:monster:kraken",
+      "beastiary:monster:leech_giant",
+      "beastiary:monster:linnorm_crag",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:linnorm_tarn",
+      "beastiary:monster:naga_dark",
+      "beastiary:monster:naga_guardian",
+      "beastiary:monster:naga_spirit",
+      "beastiary:monster:neothelid",
+      "beastiary:monster:ochre_jelly",
+      "beastiary:monster:octopus_giant",
+      "beastiary:monster:purple_worm",
+      "beastiary:monster:remorhaz",
+      "beastiary:monster:roper",
+      "beastiary:monster:salamander",
+      "beastiary:monster:sea_serpent",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:slug_giant",
+      "beastiary:monster:snake_constrictor",
+      "beastiary:monster:snake_venomous"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|CantBeTripped|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CantBeTripped|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability cannot be tripped."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1562,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Can't Be Tripped",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

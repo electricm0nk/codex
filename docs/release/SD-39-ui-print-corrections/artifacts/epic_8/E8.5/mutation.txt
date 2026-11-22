@@ -1,0 +1,55 @@
+## mutation 1: resources/print/blocks.typ prints at most one note per row
+ apps/desktop/src-tauri/resources/print/blocks.typ | 2 +-
+ apps/desktop/src-tauri/src/print/mod.rs           | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+test result: FAILED. 4 passed; 20 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 52.52s
+## mutation 2: layout/pf1e.rs prints Abilities before Combat
+ apps/desktop/src-tauri/src/print/layout/pf1e.rs | 2 +-
+ apps/desktop/src-tauri/src/print/mod.rs         | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+      1 assertion `left == right` failed: pf1e-a4-all: the headings, in print order
+      1 assertion `left == right` failed: pf1e-a4-math: the headings, in print order
+      1 assertion `left == right` failed: pf1e-a4-none: the headings, in print order
+      1 assertion `left == right` failed: pf1e-a4-spellbook: the headings, in print order
+      1 assertion `left == right` failed: pf1e-letter-all: the headings, in print order
+      1 assertion `left == right` failed: pf1e-letter-math: the headings, in print order
+      1 assertion `left == right` failed: pf1e-letter-none: the headings, in print order
+      1 assertion `left == right` failed: pf1e-letter-spellbook: the headings, in print order
+      1 test result: FAILED. 16 passed; 8 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 55.56s
+## mutation 3: typst.rs gives Typst today's date (a print-time value)
+ M apps/desktop/src-tauri/src/print/mod.rs
+?? apps/desktop/src-tauri/src/print/golden/
+?? apps/desktop/src-tauri/src/print/print_golden.rs
+## mutation 3: typst.rs stamps each render with a process-wide counter in the title (two renders differ)
+ apps/desktop/src-tauri/src/print/typst.rs | 4 ++++
+ 1 file changed, 4 insertions(+)
+      1 cpr-a4-all: two renders are byte-equal 
+      1 cpr-a4-math: two renders are byte-equal 
+      1 cpr-a4-none: two renders are byte-equal 
+      1 cpr-a4-spellbook: two renders are byte-equal 
+      1 cpr-letter-all: two renders are byte-equal 
+      1 cpr-letter-math: two renders are byte-equal 
+      1 cpr-letter-none: two renders are byte-equal 
+      1 cpr-letter-spellbook: two renders are byte-equal 
+      1 pf1e-a4-all: two renders are byte-equal 
+      1 pf1e-a4-math: two renders are byte-equal 
+      1 pf1e-a4-none: two renders are byte-equal 
+      1 pf1e-a4-spellbook: two renders are byte-equal 
+      1 pf1e-letter-all: two renders are byte-equal 
+      1 pf1e-letter-math: two renders are byte-equal 
+      1 pf1e-letter-none: two renders are byte-equal 
+      1 pf1e-letter-spellbook: two renders are byte-equal 
+      1 sf1e-a4-all: two renders are byte-equal 
+      1 sf1e-a4-math: two renders are byte-equal 
+      1 sf1e-a4-none: two renders are byte-equal 
+      1 sf1e-a4-spellbook: two renders are byte-equal 
+      1 sf1e-letter-all: two renders are byte-equal 
+      1 sf1e-letter-math: two renders are byte-equal 
+      1 sf1e-letter-none: two renders are byte-equal 
+      1 sf1e-letter-spellbook: two renders are byte-equal 
+      1 test result: FAILED. 0 passed; 24 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 61.18s
+## after restore
+ M apps/desktop/src-tauri/src/print/mod.rs
+?? apps/desktop/src-tauri/src/print/golden/
+?? apps/desktop/src-tauri/src/print/print_golden.rs
+?? docs/release/SD-39-ui-print-corrections/artifacts/epic_8/E8.5/

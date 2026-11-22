@@ -1,0 +1,4 @@
+$ cargo test --locked -j 8 --lib cpr::sheet -- --test-threads=8   (pre-change tree 5b335a722c)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2974 filtered out; finished in 0.00s
+$ cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_adapter -- --test-threads=8   (pre-change tree)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 816 filtered out; finished in 0.00s

@@ -1,0 +1,73 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Gaze attack (range 30', paralyzed in fear 1 round, Will save negates, DC %1).|FrightfulGazeDC",
+    "key": "Builder Racial Trait ~ Frightful Gaze",
+    "name": "Frightful Gaze",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Frightful Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FrightfulGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gaze attack (range 30', paralyzed in fear 1 round, Will save negates, DC %1).|FrightfulGazeDC"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Frightful Gaze)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 526,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Frightful Gaze",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You appeal to sound reasoning and fact, rather than to emotion, when attempting to sway others.",
+    "key": "Ironclad Logic",
+    "name": "Ironclad Logic",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Diplomacy=3"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Int 19, Diplomacy 3 ranks."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_INT,19"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=FEAT|Skill Focus (Diplomacy)"
+      },
+      {
+        "key": "DESC",
+        "value": "You appeal to sound reasoning and fact, rather than to emotion, when attempting to sway others."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "[NOT FULLY IMPLEMENTED] You gain a +4 bonus on Diplomacy checks whenever you add your Charisma modifier on those checks. If you have at least 10 ranks in Diplomacy and an Intelligence score of 27 or more, this bonus increases to +8. This bonus doesn't stack with the bonus from Skill Focus (Diplomacy), but this feat counts as Skill Focus (Diplomacy) for the purpose of feats and other elements with Skill Focus (Diplomacy) as a prerequisite. In verbal duels, when using tactics to which you assigned an Intelligence-based skill, you can add your Intelligence modifier instead of your Charisma modifier to the associated skill check."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "record_key": "Ironclad Logic",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

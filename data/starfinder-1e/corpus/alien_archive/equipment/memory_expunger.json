@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Memory Expunger",
+    "name": "Memory Expunger",
+    "type": "Goods.TechItem.General.MemoryExpunger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "starfinder/paizo/alien_archive/saa_equip_gear.lst",
+    "record_key": "Memory Expunger",
+    "sha256": "4fe37b5210c4a712bf9dbee5b9afc4d666e902112b3bdbe9d9ecd8007dc08899"
+  },
+  "unit_id": "alien_archive:equipment:memory_expunger"
+}

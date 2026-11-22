@@ -1,0 +1,14 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 12s
+     Running tests/sd24_wired_integration_audit.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/sd24_wired_integration_audit-f71108bfe6e18395)
+
+running 5 tests
+test no_noop_click_handlers_in_shipping_tsx ... ok
+test no_mock_leaks_in_shipping_source ... ok
+test no_would_strings_in_shipping_source ... ok
+test placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral ... ok
+test no_zero_tolerance_forbidden_tokens_in_shipping_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+sd24_exit=0

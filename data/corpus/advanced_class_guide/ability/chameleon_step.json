@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hunter Animal Companion Trick ~ Chameleon Step",
+    "name": "Chameleon Step",
+    "description": "The ranger can move up to twice his speed as a move action. The ranger does not take any penalty on Stealth checks for movement during this move. This move provokes attacks of opportunity as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Companion Trick ~ Chameleon Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterAnimalCompanionTrickChoice.AnimalTrick"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Hunter Animal Companion Only"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HunterSkirmisherAnimalTrick,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger can move up to twice his speed as a move action. The ranger does not take any penalty on Stealth checks for movement during this move. This move provokes attacks of opportunity as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_other.lst",
+    "sha256": "b4389e52c8d9361ee77d0885d92393d7bfa3e3289a78fc25dfd666f5402fa218",
+    "line": 38,
+    "record_key": "Hunter Animal Companion Trick ~ Chameleon Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Intuitive Spell",
+    "name": "Intuitive Spell",
+    "class": "Sorcerer",
+    "description": "You can avoid the need for thought components by trusting your instincts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Intuitive Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_IntuitiveSpell,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can avoid the need for thought components by trusting your instincts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Intuitive Spell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "An intuitive spell can be cast with no thought components. Spells without thought components are not affected. An intuitive spell uses up a spell slot 1 level higher than the spell's actual level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1830,
+    "record_key": "Sorcerer Bloodline Feat ~ Intuitive Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

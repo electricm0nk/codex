@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain low-light vision.",
+    "key": "Deep One Corruption ~ Deepsight Gift",
+    "name": "Deepsight Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Deepsight Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneDeepsightGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain low-light vision."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain darkvision with a range of 60 feet, or if you already have darkvision, its range increases by 30 feet.|PREVARGTEQ:DeepOneManifestationLevel,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Add Darkvision|Improve Darkvision"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 149,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Deep One Corruption ~ Deepsight Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

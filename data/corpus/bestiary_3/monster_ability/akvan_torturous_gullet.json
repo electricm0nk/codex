@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Akvan ~ Torturous Gullet",
+    "delivery": "Supernatural",
+    "description": "As hunters of otherworldly beings, akvans are uniquely drawn to digest creatures with a variety of resistances. In addition to the damage dealt by crushing internal organs, creatures swallowed by an akvan take 4d6 points of acid, cold, electricity, or fire damage per round. The akvan chooses what type of energy damage those in its stomach will take every round, and may change this from round to round. Additionally, an akvan's stomach is thickly armored, allowing it to benefit from its entire natural armor bonus instead of merely half.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:akvan_torturous_gullet",
+    "name": "Torturous Gullet",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As hunters of otherworldly beings, akvans are uniquely drawn to digest creatures with a variety of resistances. In addition to the damage dealt by crushing internal organs, creatures swallowed by an akvan take 4d6 points of acid, cold, electricity, or fire damage per round. The akvan chooses what type of energy damage those in its stomach will take every round, and may change this from round to round. Additionally, an akvan's stomach is thickly armored, allowing it to benefit from its entire natural armor bonus instead of merely half."
+      },
+      {
+        "key": "KEY",
+        "value": "Akvan ~ Torturous Gullet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "AkvanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "AkvanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 712,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Akvan ~ Torturous Gullet",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

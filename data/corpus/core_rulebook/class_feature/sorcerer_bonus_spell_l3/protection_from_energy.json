@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L3 ~ Protection from Energy",
+    "name": "Protection from Energy",
+    "class": "Sorcerer",
+    "description": "Protection from energy grants temporary immunity to the type of energy you specify when you cast it [acid, cold, electricity, fire, or sonic]. When the spell absorbs 12 points per caster level of energy damage [to a maximum of 120 points at 10th level], it is discharged. Protection from energy overlaps [and does not stack with] resist energy. If a character is warded by protection from energy and resist energy, the protection spell absorbs damage until its power is exhausted.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L3 ~ Protection from Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_ProtectionfromEnergy_L3,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Protection from Energy"
+      },
+      {
+        "key": "DESC",
+        "value": "Protection from energy grants temporary immunity to the type of energy you specify when you cast it [acid, cold, electricity, fire, or sonic]. When the spell absorbs 12 points per caster level of energy damage [to a maximum of 120 points at 10th level], it is discharged. Protection from energy overlaps [and does not stack with] resist energy. If a character is warded by protection from energy and resist energy, the protection spell absorbs damage until its power is exhausted.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2235,
+    "record_key": "Sorcerer Bonus Spell L3 ~ Protection from Energy"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,5 @@
+export PCGEN_CORPUS_ROOT=/tmp/sd37e01/red-fresh/data
+export PCGEN_REPO_DIR=/tmp/sd37e01/red-fresh
+fetch exit 0
+SF_PCC_MISSING
+GM_MISSING

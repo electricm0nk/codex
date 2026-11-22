@@ -1,0 +1,4 @@
+npm-ci exit=0
+frontend-build exit=0
+desktop-cargo-build exit=0
+DONE

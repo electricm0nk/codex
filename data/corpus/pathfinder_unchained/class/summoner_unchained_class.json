@@ -1,0 +1,215 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Summoner ~ Unchained Class",
+    "name": "Unchained Summoner",
+    "base_class_key": "Summoner",
+    "base_class_book": "advanced_players_guide",
+    "category": "CLASS",
+    "type_tokens": [
+      "Summoner Class Selection",
+      "SummonerAlternative"
+    ],
+    "hit_die": null,
+    "hit_die_template": null,
+    "bab": null,
+    "bab_replaces_base": false,
+    "save_fort": null,
+    "save_ref": null,
+    "save_will": null,
+    "class_skills": [],
+    "feature_grants": [
+      {
+        "feature_key": "Unchained Summoner ~ Skills",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_ClassSkills"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Weapon and Armor Proficiency",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Spells",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Cantrips",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Eidolon",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_Eidolon"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Life Link",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_LifeLink"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Summon Monster",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_SummonMonster"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Bond Senses",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_BondSenses"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Shield Ally",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 4,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_ShieldAlly"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Maker's Call",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 6,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_MakersCall"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Transposition",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 8,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_Transposition"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Aspect",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 10,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Greater Shield Ally",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 12,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_GreaterShieldAlly"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Life Bond",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 14,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_LifeBond"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Merge Forms",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 16,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": "Summoner_CF_MergeForms"
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Greater Aspect",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 18,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Summoner ~ Twin Eidolon",
+        "feature_category": "Unchained Summoner Class Feature",
+        "min_level": 20,
+        "granted_by_key": "Summoner ~ Unchained Class",
+        "suppressed_by_var": null
+      }
+    ],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Selection.SummonerAlternative"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnchainedEidolonDefault|0"
+      },
+      {
+        "key": "DESC",
+        "value": "IMPORTANT!!! After selecting the UNCHAINED SUMMONER. You Need to SAVE the character. Close the Character, and then Re-Open to get the correct Unchained Summoner Spell List."
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "SummonerSelectionMade|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonBaseForm|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonType|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NoSummonerSelection",
+          "-1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "UnchainedEidolonDefault",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 117,
+    "record_key": "Summoner ~ Unchained Class"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/sheet_rule.rs b/src/rules_core/sheet_rule.rs
+index e2d000e8bc..0aa96cbf0e 100644
+--- a/src/rules_core/sheet_rule.rs
++++ b/src/rules_core/sheet_rule.rs
+@@ -62,7 +62,7 @@ pub struct SheetRule {
+     /// The line's principal value.
+     pub value: SheetValue,
+     /// Second/third numbers on one line: uses + caster level + save DC.
+-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
++    #[serde(default)]
+     pub also: Vec<(ValueRole, SheetValue)>,
+     /// The rule's words with typed slots, filled at evaluate time.
+     #[serde(default, skip_serializing_if = "Vec::is_empty")]

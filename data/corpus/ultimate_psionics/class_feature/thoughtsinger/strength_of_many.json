@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Strength of Many",
+    "name": "Strength of Many",
+    "class": "Thoughtsinger",
+    "description": "When a member of your collective is under the effect of a telepathy power or enchantment spell, you can make a Perform (thoughtsong) check against the DC of the spell.  If you succeed, the affected target can make a new save against the power or spell with a +4 bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Strength of Many"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.Thoughtsong"
+      },
+      {
+        "key": "DESC",
+        "value": "When a member of your collective is under the effect of a telepathy power or enchantment spell, you can make a Perform (thoughtsong) check against the DC of the spell.  If you succeed, the affected target can make a new save against the power or spell with a +4 bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2445,
+    "record_key": "Thoughtsinger ~ Strength of Many"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,203 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Barbarian ~ Unchained Class",
+    "name": "Unchained Barbarian",
+    "base_class_key": "Barbarian",
+    "base_class_book": "core_rulebook",
+    "category": "CLASS",
+    "type_tokens": [
+      "Barbarian Class Selection",
+      "AltBarbarianChoice"
+    ],
+    "hit_die": null,
+    "hit_die_template": null,
+    "bab": null,
+    "bab_replaces_base": false,
+    "save_fort": null,
+    "save_ref": null,
+    "save_will": null,
+    "class_skills": [
+      "Acrobatics",
+      "Climb",
+      "TYPE=Craft",
+      "Handle Animal",
+      "Intimidate",
+      "Knowledge (Nature)",
+      "Perception",
+      "Ride",
+      "Survival",
+      "Swim"
+    ],
+    "feature_grants": [
+      {
+        "feature_key": "Unchained Barbarian ~ Weapon and Armor Proficiency",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": null,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_WeaponProficiencies"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Rage",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_Rage"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Fast Movement",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_FastMovement"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Rage Powers",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_RagePowers"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Uncanny Dodge Tracker",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Danger Sense",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 3,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_TrapSense"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Damage Reduction",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 7,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_DamageReduction"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Greater Rage",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 11,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_GreaterRage"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Indomitable Will",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 14,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_IndomitableWill"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Tireless Rage",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 17,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_TirelessRage"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Mighty Rage",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 20,
+        "granted_by_key": "Barbarian ~ Unchained Class Full",
+        "suppressed_by_var": "Barbarian_CF_MightyRage"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Weapon and Armor Proficiency",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": "Barbarian_CF_WeaponProficiencies"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Fast Movement",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": "Barbarian_CF_FastMovement"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Uncanny Dodge Tracker",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": null
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Danger Sense",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 3,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": "Barbarian_CF_TrapSense"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Damage Reduction",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 7,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": "Barbarian_CF_DamageReduction"
+      },
+      {
+        "feature_key": "Unchained Barbarian ~ Indomitable Will",
+        "feature_category": "Unchained Barbarian Class Feature",
+        "min_level": 14,
+        "granted_by_key": "Barbarian ~ Unchained Ex-Class",
+        "suppressed_by_var": "Barbarian_CF_IndomitableWill"
+      }
+    ],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Selection.AltBarbarianChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Unchained Barbarian|PREVAREQ:Barbarian_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class|AUTOMATIC|Barbarian ~ Unchained Class Full|PREMULT:1,[!PRECLASS:1,Ex-Barbarian=1],[PREVAREQ:Class_BarbarianExClass,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class|AUTOMATIC|Barbarian ~ Unchained Ex-Class|PREMULT:1,[PRECLASS:1,Ex-Barbarian=1],[PREVAREQ:Class_BarbarianExClass,1]"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 114,
+    "record_key": "Barbarian ~ Unchained Class"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

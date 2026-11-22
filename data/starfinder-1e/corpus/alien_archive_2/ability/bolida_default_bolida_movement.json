@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Bolida Default ~ BOLIDA MOVEMENT",
+    "name": "BOLIDA MOVEMENT",
+    "type": "Racial Trait.Bolida Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "starfinder/paizo/alien_archive_2/saa2_abilities.lst",
+    "record_key": "Bolida Default ~ BOLIDA MOVEMENT",
+    "sha256": "14b406d0a3505b90887aa54a2c8210f18274d396e71a6cd1b86b881ae249ce8c"
+  },
+  "unit_id": "alien_archive_2:ability:bolida_default_bolida_movement"
+}

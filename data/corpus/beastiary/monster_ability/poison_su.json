@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Poison ~ Su",
+    "delivery": "Supernatural",
+    "description": "You can poison those you attack. The saving throw to resist a poison is usually a Fort save (DC %1). Poisons can be removed through neutralize poison and similar effects.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:poison_su",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|PoisonSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can poison those you attack. The saving throw to resist a poison is usually a Fort save (DC %1). Poisons can be removed through neutralize poison and similar effects.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Poison ~ Su"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1456,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Poison ~ Su",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

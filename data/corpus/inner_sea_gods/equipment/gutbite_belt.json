@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 4500.0,
+    "description": "This heavy leather belt is reinforced with metal and detailed to resemble a gut wound that has sprouted teeth. In addition to functioning as a belt of mighty constitution +2, the mouth on the belt animates whenever the wearer gains the grappled condition, damaging the wearer's opponent as if it were armor spikes (1d6 points of damage for a Medium wearer, 1d4 for Small). Similar to armor spikes, the mouth can be made into a magic weapon in its own right; it can also be temporarily enhanced with magic such as Magic Weapon. The wearer can use the mouth to eat meat, gaining nutrition from it as if he had eaten with his own mouth (the mouth refuses any food other than meat).",
+    "key": "Gutbite Belt",
+    "name": "Gutbite Belt",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CON",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Belt.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "DESC",
+        "value": "This heavy leather belt is reinforced with metal and detailed to resemble a gut wound that has sprouted teeth. In addition to functioning as a belt of mighty constitution +2, the mouth on the belt animates whenever the wearer gains the grappled condition, damaging the wearer's opponent as if it were armor spikes (1d6 points of damage for a Medium wearer, 1d4 for Small). Similar to armor spikes, the mouth can be made into a magic weapon in its own right; it can also be temporarily enhanced with magic such as Magic Weapon. The wearer can use the mouth to eat meat, gaining nutrition from it as if he had eaten with his own mouth (the mouth refuses any food other than meat)."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 200,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Gutbite Belt",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

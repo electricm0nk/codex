@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unifier ~ Strength through Unity",
+    "name": "Strength through Unity",
+    "class": "Unifier",
+    "description": "The benifits of your coordinate ability apply to all members of your collective, instead of only one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unifier ~ Strength through Unity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The benifits of your coordinate ability apply to all members of your collective, instead of only one."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.326"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2301,
+    "record_key": "Unifier ~ Strength through Unity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

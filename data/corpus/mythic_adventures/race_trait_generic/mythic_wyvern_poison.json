@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Wyvern ~ Poison",
+    "name": "Poison",
+    "description": "Sting-injury; save DC 17; frequency 1/round for 6 rounds; effect 1d4 Constitution damage; cure 2 consecutive saves. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Wyvern ~ Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Wyvern Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting-injury; save DC 17; frequency 1/round for 6 rounds; effect 1d4 Constitution damage; cure 2 consecutive saves. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 268,
+    "record_key": "Mythic Wyvern ~ Poison"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

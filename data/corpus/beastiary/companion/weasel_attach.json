@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Weasel ~ Attach",
+    "delivery": "Extraordinary",
+    "description": "When a weasel hits with a bite attack, it automatically grapples its foe, inflicting automatic bite damage each round.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:weasel_attach",
+    "name": "Attach",
+    "owners": [
+      "beastiary:companion:weasel"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a weasel hits with a bite attack, it automatically grapples its foe, inflicting automatic bite damage each round."
+      },
+      {
+        "key": "KEY",
+        "value": "Weasel ~ Attach"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "TYPE",
+        "value": "Special Ability.SpecialAttack.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.133",
+    "stat_adjustments": [],
+    "type_segments": [
+      "Special Ability",
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "record_key": "Weasel ~ Attach",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Teratoma Tentacle ~ Tiny",
+    "name": "Teratoma Tentacle ~ Tiny",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PRESIZEEQ",
+        "value": "T"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Tentacle|WIELDCATEGORY|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Tentacle|TOHIT|-5|!PREABILITY:1,CATEGORY=FEAT,Multiattack"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Tentacle|TOHIT|-2|PREABILITY:1,CATEGORY=FEAT,Multiattack"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Tentacle|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Teratoma Tentacle,Weapon.Natural.Melee.Weapon Group Natural.Finesseable.Bludgeoning,*1,1d3"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "record_key": "Teratoma Tentacle ~ Tiny",
+    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

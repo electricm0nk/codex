@@ -1,0 +1,19 @@
+{
+ "d2_siblings": 1108,
+ "not_found": 0,
+ "line_gate": {
+  "decided": 728,
+  "unconditional": 262,
+  "undecided_leaf": 118
+ },
+ "original_gate_uncarried_leaves": {
+  "Alignment": 25,
+  "Language": 5,
+  "Gender": 1,
+  "ClassSkill": 102,
+  "DeityInPantheon": 1,
+  "AgeCategory": 4,
+  "Deity": 10,
+  "AlignmentMatchesDeity": 2
+ }
+}

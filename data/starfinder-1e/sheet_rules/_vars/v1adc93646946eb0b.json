@@ -1,0 +1,1 @@
+{"var":"v1adc93646946eb0b","label":"Operative LVL","declared_by":["core:class:operative"],"contributions":[{"rule_id":"core:class:operative","expr":{"ClassLevel":"operative"},"when":"Always"}],"provenance":{}}

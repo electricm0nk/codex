@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Surface Stranger",
+    "name": "Surface Stranger (Underground)",
+    "description": "You were born and raised in a subterranean home with little or no bright light. Your miss chance for concealment or total concealment due to either mundane or magical darkness decreases by 10%%. You are dazzled for 1 round when you are suddenly exposed to bright light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Surface Stranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.RegionalTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Surface Stranger],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RegionalTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You were born and raised in a subterranean home with little or no bright light. Your miss chance for concealment or total concealment due to either mundane or magical darkness decreases by 10%%. You are dazzled for 1 round when you are suddenly exposed to bright light."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 260,
+    "record_key": "Trait ~ Surface Stranger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

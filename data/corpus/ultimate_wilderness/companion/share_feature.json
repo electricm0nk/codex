@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Share Feature",
+    "name": "Share Feature",
+    "description": "[NOT IMPLEMENTED] Choose one of the following class features: bravery, camouflage, favored terrain, hide in plain sight, resist nature's lure, track, trackless step, venom immunity, and woodland stride. The animal companion gains the benefits of the selected class feature, using its Hit Dice as its level in its master's class for the purpose of this ability; the animal companion gains the benefits of the base class feature, even if the master alters the class feature via an archetype or other means, though the animal companion doesn't count as having the class feature for the purpose of fulfilling prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Share Feature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] Choose one of the following class features: bravery, camouflage, favored terrain, hide in plain sight, resist nature's lure, track, trackless step, venom immunity, and woodland stride. The animal companion gains the benefits of the selected class feature, using its Hit Dice as its level in its master's class for the purpose of this ability; the animal companion gains the benefits of the base class feature, even if the master alters the class feature via an archetype or other means, though the animal companion doesn't count as having the class feature for the purpose of fulfilling prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Share Feature"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 665,
+    "record_key": "Animal Companion Feat ~ Share Feature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

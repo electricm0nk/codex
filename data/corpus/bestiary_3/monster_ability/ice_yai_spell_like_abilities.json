@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ice Yai ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 18th; concentration +22) Constant-fly, mage armor At will-darkness, invisibility (self only) 3/day- charm monster (DC 18), cone of cold (DC 19), deep slumber (DC 17), gaseous form (self only) 1/day-polar ray, solid fog",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ice_yai_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 18th; concentration +22) Constant-fly, mage armor At will-darkness, invisibility (self only) 3/day- charm monster (DC 18), cone of cold (DC 19), deep slumber (DC 17), gaseous form (self only) 1/day-polar ray, solid fog"
+      },
+      {
+        "key": "KEY",
+        "value": "Ice Yai ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "IceYaiRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "IceYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1345,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ice Yai ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

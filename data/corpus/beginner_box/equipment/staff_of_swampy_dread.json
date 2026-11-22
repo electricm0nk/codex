@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Staff of Swampy Dread",
+    "category": "MagicItems",
+    "name": "Staff of Swampy Dread",
+    "cost_gp": 6000.0,
+    "weight_lbs": 5.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 22,
+    "record_key": "Staff of Swampy Dread"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

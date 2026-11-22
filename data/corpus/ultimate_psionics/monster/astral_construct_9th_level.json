@@ -1,0 +1,118 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "10",
+    "corpus_key": "Astral Construct (9th Level)",
+    "external_ability_refs": [],
+    "key": "ultimate_psionics:monster:astral_construct_9th_level",
+    "monster_class": "Construct:19",
+    "name": "Astral Construct (9th Level)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Astral Construct Menu C Ability|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|25|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|32"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "15/Magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Melee.Bludgeoning,*2,2d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Astral Construct"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.447"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Construct|Mindless"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-light"
+      }
+    ],
+    "size": "H",
+    "source_page": "p.447",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-13T02:27:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "record_key": "Astral Construct (9th Level)",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

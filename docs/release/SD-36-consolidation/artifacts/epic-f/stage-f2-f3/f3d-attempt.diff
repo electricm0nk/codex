@@ -1,0 +1,2808 @@
+diff --git a/tests/sd13_barbarian_level1_chassis_baseline.rs b/tests/sd13_barbarian_level1_chassis_baseline.rs
+index 429fb53f47..5eb771110d 100644
+--- a/tests/sd13_barbarian_level1_chassis_baseline.rs
++++ b/tests/sd13_barbarian_level1_chassis_baseline.rs
+@@ -593,9 +593,22 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
+         "multiclass Barbarian must not surface the level-1 barbarian chassis explanations: {:?}",
+         computation.explanations
+     );
+-    assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Barbarian must stay claim-blocked in this slice"
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Barbarian+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
++    assert!(
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Barbarian: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_barbarian_rage_power_slots.rs b/tests/sd13_barbarian_rage_power_slots.rs
+index dbd4d1ea87..eaf9d59a94 100644
+--- a/tests/sd13_barbarian_rage_power_slots.rs
++++ b/tests/sd13_barbarian_rage_power_slots.rs
+@@ -179,9 +179,22 @@ fn multiclass_barbarian_does_not_gain_rage_power_records() {
+         "multiclass Barbarian must not gain rage power records: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Barbarian+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Barbarian must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Barbarian: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_bonus_spells.rs b/tests/sd13_bard_bonus_spells.rs
+index 061c9bb3db..178853b800 100644
+--- a/tests/sd13_bard_bonus_spells.rs
++++ b/tests/sd13_bard_bonus_spells.rs
+@@ -202,9 +202,22 @@ fn multiclass_bard_does_not_gain_bonus_records() {
+         "multiclass Bard must not gain any bonus-spells record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_spell_level_thresholds.rs b/tests/sd13_bard_spell_level_thresholds.rs
+index 24f9796c0f..8f84d1b98c 100644
+--- a/tests/sd13_bard_spell_level_thresholds.rs
++++ b/tests/sd13_bard_spell_level_thresholds.rs
+@@ -201,9 +201,22 @@ fn multiclass_bard_does_not_gain_spell_level_access() {
+         "multiclass Bard must not gain a spell-level-access record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_spell_save_dcs.rs b/tests/sd13_bard_spell_save_dcs.rs
+index d37d6a5cdd..e96d624a63 100644
+--- a/tests/sd13_bard_spell_save_dcs.rs
++++ b/tests/sd13_bard_spell_save_dcs.rs
+@@ -226,9 +226,22 @@ fn multiclass_bard_does_not_gain_dc_records() {
+         "multiclass Bard must not gain any spell-save-DC record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_spells_known_counts.rs b/tests/sd13_bard_spells_known_counts.rs
+index 35e2dd5edc..615f322aeb 100644
+--- a/tests/sd13_bard_spells_known_counts.rs
++++ b/tests/sd13_bard_spells_known_counts.rs
+@@ -189,9 +189,22 @@ fn multiclass_bard_does_not_gain_known_records() {
+         "multiclass Bard must not gain any spells-known record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_spells_per_day_counts.rs b/tests/sd13_bard_spells_per_day_counts.rs
+index d4bae6fba9..17571ddee7 100644
+--- a/tests/sd13_bard_spells_per_day_counts.rs
++++ b/tests/sd13_bard_spells_per_day_counts.rs
+@@ -234,9 +234,22 @@ fn multiclass_bard_does_not_gain_per_day_records() {
+         "multiclass Bard must not gain any base per-day record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_total_spells_per_day.rs b/tests/sd13_bard_total_spells_per_day.rs
+index 052288bb75..9fb7f577d4 100644
+--- a/tests/sd13_bard_total_spells_per_day.rs
++++ b/tests/sd13_bard_total_spells_per_day.rs
+@@ -200,9 +200,22 @@ fn multiclass_bard_does_not_gain_total_records() {
+         "multiclass Bard must not gain any total record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_bard_versatile_performance_slots.rs b/tests/sd13_bard_versatile_performance_slots.rs
+index 78be6db019..f86ca8aac8 100644
+--- a/tests/sd13_bard_versatile_performance_slots.rs
++++ b/tests/sd13_bard_versatile_performance_slots.rs
+@@ -190,9 +190,22 @@ fn multiclass_bard_does_not_gain_versatile_performance_records() {
+         "multiclass Bard must not gain versatile performance records: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_monk_bonus_feats_three_and_four.rs b/tests/sd13_monk_bonus_feats_three_and_four.rs
+index 254e3fc360..11b024fb37 100644
+--- a/tests/sd13_monk_bonus_feats_three_and_four.rs
++++ b/tests/sd13_monk_bonus_feats_three_and_four.rs
+@@ -177,9 +177,22 @@ fn multiclass_monk_does_not_gain_slot_3_or_4_recognition() {
+         "multiclass Monk must not gain slot-3/4 records: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Monk+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Monk must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Monk: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_monk_level1_chassis_baseline.rs b/tests/sd13_monk_level1_chassis_baseline.rs
+index 9c32f0aa5b..9285e66aab 100644
+--- a/tests/sd13_monk_level1_chassis_baseline.rs
++++ b/tests/sd13_monk_level1_chassis_baseline.rs
+@@ -482,9 +482,22 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
+         !has_explanation(&computation, "class_chassis.monk.bounded_progression"),
+         "multiclass Monk must not gain the bounded level-1 single-class martial recognition record"
+     );
+-    assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Monk must stay claim-blocked in this slice"
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Monk+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
++    assert!(
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Monk: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_monk_second_bonus_feat.rs b/tests/sd13_monk_second_bonus_feat.rs
+index 40cbfb85d1..9115551b53 100644
+--- a/tests/sd13_monk_second_bonus_feat.rs
++++ b/tests/sd13_monk_second_bonus_feat.rs
+@@ -192,9 +192,22 @@ fn multiclass_monk_does_not_gain_slot_2_recognition() {
+         "multiclass Monk must not gain a slot-2 record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Monk+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Monk must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Monk: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_bonus_spells.rs b/tests/sd13_paladin_bonus_spells.rs
+index 62149543da..b5b835e1b5 100644
+--- a/tests/sd13_paladin_bonus_spells.rs
++++ b/tests/sd13_paladin_bonus_spells.rs
+@@ -231,9 +231,22 @@ fn multiclass_paladin_does_not_gain_bonus_records() {
+         "multiclass Paladin must not gain any bonus-spells record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_mercies_two_and_three.rs b/tests/sd13_paladin_mercies_two_and_three.rs
+index 68d7669672..46a2d38379 100644
+--- a/tests/sd13_paladin_mercies_two_and_three.rs
++++ b/tests/sd13_paladin_mercies_two_and_three.rs
+@@ -161,9 +161,22 @@ fn multiclass_paladin_does_not_gain_mercy_slot_records() {
+         "multiclass Paladin must not gain mercy slot records: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_spell_level_thresholds.rs b/tests/sd13_paladin_spell_level_thresholds.rs
+index a217de9584..c4fbceedcb 100644
+--- a/tests/sd13_paladin_spell_level_thresholds.rs
++++ b/tests/sd13_paladin_spell_level_thresholds.rs
+@@ -202,9 +202,22 @@ fn multiclass_paladin_does_not_gain_spell_level_access() {
+         "multiclass Paladin must not gain a spell-level-access record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_spell_save_dcs.rs b/tests/sd13_paladin_spell_save_dcs.rs
+index b6ffc6b6d5..b7d6ce4aa6 100644
+--- a/tests/sd13_paladin_spell_save_dcs.rs
++++ b/tests/sd13_paladin_spell_save_dcs.rs
+@@ -212,9 +212,22 @@ fn multiclass_paladin_does_not_gain_dc_records() {
+         "multiclass Paladin must not gain any spell-save-DC record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_spells_per_day_counts.rs b/tests/sd13_paladin_spells_per_day_counts.rs
+index 95d5e2850f..aa0bc60d28 100644
+--- a/tests/sd13_paladin_spells_per_day_counts.rs
++++ b/tests/sd13_paladin_spells_per_day_counts.rs
+@@ -211,9 +211,22 @@ fn multiclass_paladin_does_not_gain_per_day_records() {
+         "multiclass Paladin must not gain any base per-day record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_paladin_total_spells_per_day.rs b/tests/sd13_paladin_total_spells_per_day.rs
+index b7a77f56e2..67542a8244 100644
+--- a/tests/sd13_paladin_total_spells_per_day.rs
++++ b/tests/sd13_paladin_total_spells_per_day.rs
+@@ -221,9 +221,22 @@ fn multiclass_paladin_does_not_gain_total_records() {
+         "multiclass Paladin must not gain any total record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level10.rs b/tests/sd13_progression/barbarian_level10.rs
+index ba00291cbc..3f3f5ae26e 100644
+--- a/tests/sd13_progression/barbarian_level10.rs
++++ b/tests/sd13_progression/barbarian_level10.rs
+@@ -270,9 +270,22 @@ fn multiclass_barbarian_level10_is_not_promoted_by_this_slice() {
+         "multiclass Barbarian must not gain any bounded barbarian explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Barbarian+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Barbarian must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Barbarian: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level2.rs b/tests/sd13_progression/barbarian_level2.rs
+index eed00f8b94..f4551bd73b 100644
+--- a/tests/sd13_progression/barbarian_level2.rs
++++ b/tests/sd13_progression/barbarian_level2.rs
+@@ -378,7 +378,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level3.rs b/tests/sd13_progression/barbarian_level3.rs
+index ce6a0129d7..5a05456446 100644
+--- a/tests/sd13_progression/barbarian_level3.rs
++++ b/tests/sd13_progression/barbarian_level3.rs
+@@ -381,7 +381,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level4.rs b/tests/sd13_progression/barbarian_level4.rs
+index 2adac9d153..3c6aef99b6 100644
+--- a/tests/sd13_progression/barbarian_level4.rs
++++ b/tests/sd13_progression/barbarian_level4.rs
+@@ -356,7 +356,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level5.rs b/tests/sd13_progression/barbarian_level5.rs
+index 9b3794313e..3e587215a0 100644
+--- a/tests/sd13_progression/barbarian_level5.rs
++++ b/tests/sd13_progression/barbarian_level5.rs
+@@ -415,7 +415,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level6.rs b/tests/sd13_progression/barbarian_level6.rs
+index 806af3f65f..450232ce49 100644
+--- a/tests/sd13_progression/barbarian_level6.rs
++++ b/tests/sd13_progression/barbarian_level6.rs
+@@ -397,7 +397,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level7.rs b/tests/sd13_progression/barbarian_level7.rs
+index 683f4f2fda..437004e079 100644
+--- a/tests/sd13_progression/barbarian_level7.rs
++++ b/tests/sd13_progression/barbarian_level7.rs
+@@ -451,7 +451,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID, BARBARIAN_DAMAGE_REDUCTION_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level8.rs b/tests/sd13_progression/barbarian_level8.rs
+index ea17821d7f..3f536e44d0 100644
+--- a/tests/sd13_progression/barbarian_level8.rs
++++ b/tests/sd13_progression/barbarian_level8.rs
+@@ -402,7 +402,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.barbarian."],
+         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID, BARBARIAN_DAMAGE_REDUCTION_ID],
+         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/barbarian_level9.rs b/tests/sd13_progression/barbarian_level9.rs
+index ddfaac305c..a135d631e2 100644
+--- a/tests/sd13_progression/barbarian_level9.rs
++++ b/tests/sd13_progression/barbarian_level9.rs
+@@ -286,9 +286,22 @@ fn multiclass_barbarian_level9_is_not_promoted_by_this_slice() {
+         "multiclass Barbarian must not gain any bounded barbarian explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Barbarian+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Barbarian must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Barbarian: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level10.rs b/tests/sd13_progression/bard_level10.rs
+index 1bba3e3a72..de533c5882 100644
+--- a/tests/sd13_progression/bard_level10.rs
++++ b/tests/sd13_progression/bard_level10.rs
+@@ -322,9 +322,22 @@ fn multiclass_bard_level10_is_not_promoted_by_this_slice() {
+         "multiclass Bard must not gain any bounded bard explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Bard+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Bard must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Bard: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level2.rs b/tests/sd13_progression/bard_level2.rs
+index 35978a8cf6..c8e3a5a9e8 100644
+--- a/tests/sd13_progression/bard_level2.rs
++++ b/tests/sd13_progression/bard_level2.rs
+@@ -377,7 +377,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level3.rs b/tests/sd13_progression/bard_level3.rs
+index db8ad5bedc..9f55e9814c 100644
+--- a/tests/sd13_progression/bard_level3.rs
++++ b/tests/sd13_progression/bard_level3.rs
+@@ -362,7 +362,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level4.rs b/tests/sd13_progression/bard_level4.rs
+index 74e15c0826..c81beb8e8a 100644
+--- a/tests/sd13_progression/bard_level4.rs
++++ b/tests/sd13_progression/bard_level4.rs
+@@ -432,7 +432,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level5.rs b/tests/sd13_progression/bard_level5.rs
+index cc326c10f0..c9f910dfe0 100644
+--- a/tests/sd13_progression/bard_level5.rs
++++ b/tests/sd13_progression/bard_level5.rs
+@@ -458,7 +458,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID, LORE_MASTER_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level6.rs b/tests/sd13_progression/bard_level6.rs
+index dc7ce4d977..a311d548f1 100644
+--- a/tests/sd13_progression/bard_level6.rs
++++ b/tests/sd13_progression/bard_level6.rs
+@@ -484,7 +484,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID, LORE_MASTER_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level7.rs b/tests/sd13_progression/bard_level7.rs
+index 64b2df0bb9..b93cc022b2 100644
+--- a/tests/sd13_progression/bard_level7.rs
++++ b/tests/sd13_progression/bard_level7.rs
+@@ -465,7 +465,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID, LORE_MASTER_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level8.rs b/tests/sd13_progression/bard_level8.rs
+index 54fb41355b..f24ca434a4 100644
+--- a/tests/sd13_progression/bard_level8.rs
++++ b/tests/sd13_progression/bard_level8.rs
+@@ -461,7 +461,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID, LORE_MASTER_ID],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/bard_level9.rs b/tests/sd13_progression/bard_level9.rs
+index a6f22c2dc3..98e45b20f0 100644
+--- a/tests/sd13_progression/bard_level9.rs
++++ b/tests/sd13_progression/bard_level9.rs
+@@ -254,7 +254,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.bard."],
+         exact: [],
+         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level10.rs b/tests/sd13_progression/cleric_level10.rs
+index 3aa23a329f..94aa5d63c4 100644
+--- a/tests/sd13_progression/cleric_level10.rs
++++ b/tests/sd13_progression/cleric_level10.rs
+@@ -281,7 +281,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: [],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level2.rs b/tests/sd13_progression/cleric_level2.rs
+index 7bf263aebc..4b843301e6 100644
+--- a/tests/sd13_progression/cleric_level2.rs
++++ b/tests/sd13_progression/cleric_level2.rs
+@@ -311,7 +311,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level3.rs b/tests/sd13_progression/cleric_level3.rs
+index 12752423b5..b8dc1e8378 100644
+--- a/tests/sd13_progression/cleric_level3.rs
++++ b/tests/sd13_progression/cleric_level3.rs
+@@ -316,7 +316,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level4.rs b/tests/sd13_progression/cleric_level4.rs
+index 11359e0f19..84dd57ae8b 100644
+--- a/tests/sd13_progression/cleric_level4.rs
++++ b/tests/sd13_progression/cleric_level4.rs
+@@ -329,7 +329,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level5.rs b/tests/sd13_progression/cleric_level5.rs
+index 1dd75bcec9..455c4b0671 100644
+--- a/tests/sd13_progression/cleric_level5.rs
++++ b/tests/sd13_progression/cleric_level5.rs
+@@ -327,7 +327,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level6.rs b/tests/sd13_progression/cleric_level6.rs
+index 9f0ad0013b..0c11d79ed1 100644
+--- a/tests/sd13_progression/cleric_level6.rs
++++ b/tests/sd13_progression/cleric_level6.rs
+@@ -326,7 +326,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level7.rs b/tests/sd13_progression/cleric_level7.rs
+index 6b9707c900..155b3f7b2e 100644
+--- a/tests/sd13_progression/cleric_level7.rs
++++ b/tests/sd13_progression/cleric_level7.rs
+@@ -333,7 +333,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level8.rs b/tests/sd13_progression/cleric_level8.rs
+index 5beafa91ca..b2fb9cf4a7 100644
+--- a/tests/sd13_progression/cleric_level8.rs
++++ b/tests/sd13_progression/cleric_level8.rs
+@@ -331,7 +331,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: ["class_chassis.spell_baseline.cleric"],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/cleric_level9.rs b/tests/sd13_progression/cleric_level9.rs
+index 0828c4710b..186b80c319 100644
+--- a/tests/sd13_progression/cleric_level9.rs
++++ b/tests/sd13_progression/cleric_level9.rs
+@@ -257,7 +257,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.cleric."],
+         exact: [],
+         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level10.rs b/tests/sd13_progression/druid_level10.rs
+index 34490594eb..8dbc567dd0 100644
+--- a/tests/sd13_progression/druid_level10.rs
++++ b/tests/sd13_progression/druid_level10.rs
+@@ -631,9 +631,22 @@ fn multiclass_druid_level10_is_not_promoted_by_this_slice() {
+         &computation, 10, 9, 9, 6, 3, 18, 4, 66,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level2.rs b/tests/sd13_progression/druid_level2.rs
+index c06ec66f67..150844469c 100644
+--- a/tests/sd13_progression/druid_level2.rs
++++ b/tests/sd13_progression/druid_level2.rs
+@@ -531,9 +531,22 @@ fn multiclass_druid_level2_is_not_promoted_by_this_slice() {
+         &computation, 2, 3, 3, 3, 1, 12, 1, 24,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level3.rs b/tests/sd13_progression/druid_level3.rs
+index 9e05ece3e2..a521d3d934 100644
+--- a/tests/sd13_progression/druid_level3.rs
++++ b/tests/sd13_progression/druid_level3.rs
+@@ -562,9 +562,22 @@ fn multiclass_druid_level3_is_not_promoted_by_this_slice() {
+         &computation, 3, 3, 4, 3, 1, 14, 3, 24,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level4.rs b/tests/sd13_progression/druid_level4.rs
+index 17279076d6..3a93af0880 100644
+--- a/tests/sd13_progression/druid_level4.rs
++++ b/tests/sd13_progression/druid_level4.rs
+@@ -604,9 +604,22 @@ fn multiclass_druid_level4_is_not_promoted_by_this_slice() {
+         &computation, 4, 4, 5, 4, 1, 14, 3, 31,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level5.rs b/tests/sd13_progression/druid_level5.rs
+index e3a68df0c8..36f04e527d 100644
+--- a/tests/sd13_progression/druid_level5.rs
++++ b/tests/sd13_progression/druid_level5.rs
+@@ -547,9 +547,22 @@ fn multiclass_druid_level5_is_not_promoted_by_this_slice() {
+         &computation, 5, 5, 5, 4, 1, 14, 3, 38,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level6.rs b/tests/sd13_progression/druid_level6.rs
+index fccc240c54..9a70fb2540 100644
+--- a/tests/sd13_progression/druid_level6.rs
++++ b/tests/sd13_progression/druid_level6.rs
+@@ -565,9 +565,22 @@ fn multiclass_druid_level6_is_not_promoted_by_this_slice() {
+         &computation, 6, 6, 6, 5, 2, 16, 3, 45,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level7.rs b/tests/sd13_progression/druid_level7.rs
+index 9e7343279a..575d3a625d 100644
+--- a/tests/sd13_progression/druid_level7.rs
++++ b/tests/sd13_progression/druid_level7.rs
+@@ -554,9 +554,22 @@ fn multiclass_druid_level7_is_not_promoted_by_this_slice() {
+         &computation, 7, 6, 6, 5, 2, 16, 3, 45,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level8.rs b/tests/sd13_progression/druid_level8.rs
+index 2dfa92df24..ec49acaa4e 100644
+--- a/tests/sd13_progression/druid_level8.rs
++++ b/tests/sd13_progression/druid_level8.rs
+@@ -555,9 +555,22 @@ fn multiclass_druid_level8_is_not_promoted_by_this_slice() {
+         &computation, 8, 7, 7, 5, 2, 16, 3, 52,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/druid_level9.rs b/tests/sd13_progression/druid_level9.rs
+index 9f019209fc..00e8b858e6 100644
+--- a/tests/sd13_progression/druid_level9.rs
++++ b/tests/sd13_progression/druid_level9.rs
+@@ -521,9 +521,22 @@ fn multiclass_druid_level9_is_not_promoted_by_this_slice() {
+         &computation, 9, 8, 9, 6, 2, 18, 4, 59,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level10.rs b/tests/sd13_progression/monk_level10.rs
+index d76c6c9bd1..f752663d9f 100644
+--- a/tests/sd13_progression/monk_level10.rs
++++ b/tests/sd13_progression/monk_level10.rs
+@@ -277,7 +277,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk.", "class_feature.monk."],
+         exact: [],
+         message: "multiclass Monk must not gain any bounded monk explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level2.rs b/tests/sd13_progression/monk_level2.rs
+index 920a0ae0be..4165581cd9 100644
+--- a/tests/sd13_progression/monk_level2.rs
++++ b/tests/sd13_progression/monk_level2.rs
+@@ -287,7 +287,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level3.rs b/tests/sd13_progression/monk_level3.rs
+index c5b3c9e1d3..51b4e37725 100644
+--- a/tests/sd13_progression/monk_level3.rs
++++ b/tests/sd13_progression/monk_level3.rs
+@@ -312,7 +312,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level4.rs b/tests/sd13_progression/monk_level4.rs
+index dfb169716c..cbb61116da 100644
+--- a/tests/sd13_progression/monk_level4.rs
++++ b/tests/sd13_progression/monk_level4.rs
+@@ -418,7 +418,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level5.rs b/tests/sd13_progression/monk_level5.rs
+index 5a00ed9ec3..88707ff5e4 100644
+--- a/tests/sd13_progression/monk_level5.rs
++++ b/tests/sd13_progression/monk_level5.rs
+@@ -414,7 +414,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level6.rs b/tests/sd13_progression/monk_level6.rs
+index 79eca0d98c..1f73e6bf5c 100644
+--- a/tests/sd13_progression/monk_level6.rs
++++ b/tests/sd13_progression/monk_level6.rs
+@@ -447,7 +447,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level7.rs b/tests/sd13_progression/monk_level7.rs
+index 8aac2f819d..313485147d 100644
+--- a/tests/sd13_progression/monk_level7.rs
++++ b/tests/sd13_progression/monk_level7.rs
+@@ -443,7 +443,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level8.rs b/tests/sd13_progression/monk_level8.rs
+index f9c2d7b31c..63cc99fabf 100644
+--- a/tests/sd13_progression/monk_level8.rs
++++ b/tests/sd13_progression/monk_level8.rs
+@@ -452,7 +452,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk."],
+         exact: [MONK_EVASION_ID, MONK_STILL_MIND_ID],
+         message: "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/monk_level9.rs b/tests/sd13_progression/monk_level9.rs
+index 3b9f9cdb12..395fa135b3 100644
+--- a/tests/sd13_progression/monk_level9.rs
++++ b/tests/sd13_progression/monk_level9.rs
+@@ -301,7 +301,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.monk.", "class_feature.monk."],
+         exact: [],
+         message: "multiclass Monk must not gain any bounded monk explanation: {:?}",
+-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/paladin_level10.rs b/tests/sd13_progression/paladin_level10.rs
+index dadb0abaad..314981811f 100644
+--- a/tests/sd13_progression/paladin_level10.rs
++++ b/tests/sd13_progression/paladin_level10.rs
+@@ -321,7 +321,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.paladin."],
+         exact: [],
+         message: "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
+-        blocked_message: "multiclass Paladin must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/paladin_level8.rs b/tests/sd13_progression/paladin_level8.rs
+index 051f984620..17033189f4 100644
+--- a/tests/sd13_progression/paladin_level8.rs
++++ b/tests/sd13_progression/paladin_level8.rs
+@@ -385,7 +385,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.paladin."],
+         exact: [],
+         message: "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
+-        blocked_message: "multiclass Paladin must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/paladin_level9.rs b/tests/sd13_progression/paladin_level9.rs
+index 5960a7e58b..3f60dc8ae3 100644
+--- a/tests/sd13_progression/paladin_level9.rs
++++ b/tests/sd13_progression/paladin_level9.rs
+@@ -300,7 +300,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.paladin."],
+         exact: [],
+         message: "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
+-        blocked_message: "multiclass Paladin must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level10.rs b/tests/sd13_progression/ranger_level10.rs
+index a95c27e67a..34c0da1082 100644
+--- a/tests/sd13_progression/ranger_level10.rs
++++ b/tests/sd13_progression/ranger_level10.rs
+@@ -318,9 +318,22 @@ fn multiclass_ranger_level10_is_not_promoted_by_this_slice() {
+         "multiclass Ranger must not gain any bounded ranger explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level2.rs b/tests/sd13_progression/ranger_level2.rs
+index 8aee3e3984..2eda3d5583 100644
+--- a/tests/sd13_progression/ranger_level2.rs
++++ b/tests/sd13_progression/ranger_level2.rs
+@@ -350,7 +350,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level3.rs b/tests/sd13_progression/ranger_level3.rs
+index 77c77af07c..6e9543899b 100644
+--- a/tests/sd13_progression/ranger_level3.rs
++++ b/tests/sd13_progression/ranger_level3.rs
+@@ -250,7 +250,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level4.rs b/tests/sd13_progression/ranger_level4.rs
+index 9a5d7f57a9..9720d8f930 100644
+--- a/tests/sd13_progression/ranger_level4.rs
++++ b/tests/sd13_progression/ranger_level4.rs
+@@ -372,7 +372,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level5.rs b/tests/sd13_progression/ranger_level5.rs
+index cb4fa76b56..3f55c98781 100644
+--- a/tests/sd13_progression/ranger_level5.rs
++++ b/tests/sd13_progression/ranger_level5.rs
+@@ -364,7 +364,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level6.rs b/tests/sd13_progression/ranger_level6.rs
+index 22b4ee764a..3d9b0e5d69 100644
+--- a/tests/sd13_progression/ranger_level6.rs
++++ b/tests/sd13_progression/ranger_level6.rs
+@@ -281,7 +281,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level7.rs b/tests/sd13_progression/ranger_level7.rs
+index b76f59dc6a..0fe7285c23 100644
+--- a/tests/sd13_progression/ranger_level7.rs
++++ b/tests/sd13_progression/ranger_level7.rs
+@@ -306,7 +306,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID, WOODLAND_STRIDE_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level8.rs b/tests/sd13_progression/ranger_level8.rs
+index 6498a21c7d..9eb917270f 100644
+--- a/tests/sd13_progression/ranger_level8.rs
++++ b/tests/sd13_progression/ranger_level8.rs
+@@ -338,7 +338,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.ranger."],
+         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID, WOODLAND_STRIDE_ID, SWIFT_TRACKER_ID],
+         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/ranger_level9.rs b/tests/sd13_progression/ranger_level9.rs
+index ff9ad328a6..d9ca948138 100644
+--- a/tests/sd13_progression/ranger_level9.rs
++++ b/tests/sd13_progression/ranger_level9.rs
+@@ -264,9 +264,22 @@ fn multiclass_ranger_level9_is_not_promoted_by_this_slice() {
+         "multiclass Ranger must not gain any bounded ranger explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level10.rs b/tests/sd13_progression/rogue_level10.rs
+index 47d37c14de..10a127ec69 100644
+--- a/tests/sd13_progression/rogue_level10.rs
++++ b/tests/sd13_progression/rogue_level10.rs
+@@ -284,9 +284,22 @@ fn multiclass_rogue_level10_is_not_promoted_by_this_slice() {
+         "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level2.rs b/tests/sd13_progression/rogue_level2.rs
+index 1d68aa6626..6832451015 100644
+--- a/tests/sd13_progression/rogue_level2.rs
++++ b/tests/sd13_progression/rogue_level2.rs
+@@ -295,7 +295,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level3.rs b/tests/sd13_progression/rogue_level3.rs
+index 5bdbd6b62e..6813a99e11 100644
+--- a/tests/sd13_progression/rogue_level3.rs
++++ b/tests/sd13_progression/rogue_level3.rs
+@@ -324,7 +324,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level4.rs b/tests/sd13_progression/rogue_level4.rs
+index a849ed78c6..35fa7a24ca 100644
+--- a/tests/sd13_progression/rogue_level4.rs
++++ b/tests/sd13_progression/rogue_level4.rs
+@@ -318,7 +318,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level5.rs b/tests/sd13_progression/rogue_level5.rs
+index 5d3f4eff8c..9d64d6ae18 100644
+--- a/tests/sd13_progression/rogue_level5.rs
++++ b/tests/sd13_progression/rogue_level5.rs
+@@ -310,7 +310,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level6.rs b/tests/sd13_progression/rogue_level6.rs
+index dad575d77d..36a846ccfb 100644
+--- a/tests/sd13_progression/rogue_level6.rs
++++ b/tests/sd13_progression/rogue_level6.rs
+@@ -313,7 +313,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level7.rs b/tests/sd13_progression/rogue_level7.rs
+index e3baa2198d..7e5bcd00c1 100644
+--- a/tests/sd13_progression/rogue_level7.rs
++++ b/tests/sd13_progression/rogue_level7.rs
+@@ -314,7 +314,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level8.rs b/tests/sd13_progression/rogue_level8.rs
+index 3fdf39c9a6..df478f1bb3 100644
+--- a/tests/sd13_progression/rogue_level8.rs
++++ b/tests/sd13_progression/rogue_level8.rs
+@@ -362,7 +362,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.rogue."],
+         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID, ROGUE_IMPROVED_UNCANNY_DODGE_ID],
+         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/rogue_level9.rs b/tests/sd13_progression/rogue_level9.rs
+index cd3b42798f..7f499bc7c5 100644
+--- a/tests/sd13_progression/rogue_level9.rs
++++ b/tests/sd13_progression/rogue_level9.rs
+@@ -240,9 +240,22 @@ fn multiclass_rogue_level9_is_not_promoted_by_this_slice() {
+         "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_progression/rows.rs b/tests/sd13_progression/rows.rs
+index 1bb5a5bcf4..57b6d73067 100644
+--- a/tests/sd13_progression/rows.rs
++++ b/tests/sd13_progression/rows.rs
+@@ -9,7 +9,8 @@
+ //!      family).
+ //!   2. `multiclass_negative_controls!` — "this class's own fixture, widened
+ //!      to a Class+Fighter multiclass mix, must still withhold the bounded
+-//!      chassis explanation and stay claim-blocked" (the
++//!      chassis explanation, and (since SD-36 Epic F3d) its receipt is
++//!      Computed" (the
+ //!      `multiclass_<class>_level<N>_is_not_promoted_by_this_slice` family).
+ //!
+ //! Each macro expands ONE `#[test]` fn per row it is fed, with the row's
+@@ -74,8 +75,9 @@ macro_rules! recognition_negative_controls {
+ /// class's own single-class fixture, widened to a Class+Fighter multiclass
+ /// mix via a literal `.replace(from, to)` (the exact strings the original
+ /// body used), must still withhold the bounded chassis explanation (same
+-/// predicate shape as `recognition_negative_controls!`) AND the computation
+-/// must stay claim-blocked.
++/// predicate shape as `recognition_negative_controls!`) AND -- since SD-36
++/// Epic F3d, a change of meaning from the former "must stay claim-blocked" --
++/// the mix's headless receipt must be `Computed`.
+ ///
+ /// SD-36 Epic C2 vacuity-guard addendum (operator ruling 2026-09-20): the
+ /// sibling `sd18_widening` family's own multiclass macro was found with 64
+@@ -92,8 +94,7 @@ macro_rules! multiclass_negative_controls {
+         $name:ident($fixture:ident, $from:literal => $to:literal) {
+             prefixes: [ $($p:literal),* $(,)? ],
+             exact: [ $($x:expr),* $(,)? ],
+-            message: $msg:literal,
+-            blocked_message: $msg2:literal $(,)?
++            message: $msg:literal $(,)?
+         }
+     ),* $(,)? ) => {
+         $(
+@@ -150,9 +151,21 @@ macro_rules! multiclass_negative_controls {
+                     $msg,
+                     computation.explanations
+                 );
+-                assert!(
+-                    computation.diagnostics.iter().any(|d| d.claim_blocking),
+-                    $msg2
++                // SD-36 Epic F3d: assertion (b) changed meaning. It was "must stay
++                // claim-blocked in this slice"; the generic multiclass gate + fold (F3b)
++                // now computes a Class+Fighter mix, so the mix's receipt must be
++                // Computed. The vacuity guards above (two class_level lines, two
++                // loaded class entries matching `$to`) keep this from passing on a
++                // single-class input.
++                assert!(input.chosen.class_levels.len() >= 2);
++                let receipt = ::codex::rules_core::pilot_compute::build_pilot_headless_receipt(&input);
++                let diagnostics: Vec<_> =
++                    receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++                assert_eq!(
++                    receipt.status,
++                    ::codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++                    "{}: {diagnostics:?}",
++                    stringify!($name)
+                 );
+             }
+         )*
+diff --git a/tests/sd13_progression/sorcerer_level10.rs b/tests/sd13_progression/sorcerer_level10.rs
+index f47ae0320f..1f1ef60cfb 100644
+--- a/tests/sd13_progression/sorcerer_level10.rs
++++ b/tests/sd13_progression/sorcerer_level10.rs
+@@ -281,7 +281,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level2.rs b/tests/sd13_progression/sorcerer_level2.rs
+index 876c34dbeb..67537b7839 100644
+--- a/tests/sd13_progression/sorcerer_level2.rs
++++ b/tests/sd13_progression/sorcerer_level2.rs
+@@ -293,7 +293,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level3.rs b/tests/sd13_progression/sorcerer_level3.rs
+index 0172f41cc5..8eb127dae7 100644
+--- a/tests/sd13_progression/sorcerer_level3.rs
++++ b/tests/sd13_progression/sorcerer_level3.rs
+@@ -280,7 +280,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level4.rs b/tests/sd13_progression/sorcerer_level4.rs
+index c03a008b3a..71f98932b7 100644
+--- a/tests/sd13_progression/sorcerer_level4.rs
++++ b/tests/sd13_progression/sorcerer_level4.rs
+@@ -241,7 +241,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level5.rs b/tests/sd13_progression/sorcerer_level5.rs
+index e63b02bc1d..35aa09dd21 100644
+--- a/tests/sd13_progression/sorcerer_level5.rs
++++ b/tests/sd13_progression/sorcerer_level5.rs
+@@ -251,7 +251,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level6.rs b/tests/sd13_progression/sorcerer_level6.rs
+index 3e65f2eb6c..1fd19e6cac 100644
+--- a/tests/sd13_progression/sorcerer_level6.rs
++++ b/tests/sd13_progression/sorcerer_level6.rs
+@@ -251,7 +251,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level7.rs b/tests/sd13_progression/sorcerer_level7.rs
+index ec6f596a19..5250b038b0 100644
+--- a/tests/sd13_progression/sorcerer_level7.rs
++++ b/tests/sd13_progression/sorcerer_level7.rs
+@@ -248,7 +248,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level8.rs b/tests/sd13_progression/sorcerer_level8.rs
+index 976ef20688..92cdc353a8 100644
+--- a/tests/sd13_progression/sorcerer_level8.rs
++++ b/tests/sd13_progression/sorcerer_level8.rs
+@@ -247,7 +247,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_progression/sorcerer_level9.rs b/tests/sd13_progression/sorcerer_level9.rs
+index f1b82b4431..3c934ef8fd 100644
+--- a/tests/sd13_progression/sorcerer_level9.rs
++++ b/tests/sd13_progression/sorcerer_level9.rs
+@@ -274,7 +274,6 @@ multiclass_negative_controls! {
+         prefixes: ["class_chassis.sorcerer."],
+         exact: ["class_chassis.spell_baseline.sorcerer"],
+         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
+     },
+ }
+ 
+diff --git a/tests/sd13_ranger_bonus_spells.rs b/tests/sd13_ranger_bonus_spells.rs
+index 24a0955602..8267c00768 100644
+--- a/tests/sd13_ranger_bonus_spells.rs
++++ b/tests/sd13_ranger_bonus_spells.rs
+@@ -206,9 +206,22 @@ fn multiclass_ranger_does_not_gain_bonus_records() {
+         "multiclass Ranger must not gain any bonus-spells record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_second_favored_terrain.rs b/tests/sd13_ranger_second_favored_terrain.rs
+index 78e990abb0..1cd5dc6a0d 100644
+--- a/tests/sd13_ranger_second_favored_terrain.rs
++++ b/tests/sd13_ranger_second_favored_terrain.rs
+@@ -261,9 +261,22 @@ fn multiclass_ranger_does_not_gain_second_favored_terrain_recognition() {
+         "multiclass Ranger must not gain any second-favored-terrain record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_spell_level_thresholds.rs b/tests/sd13_ranger_spell_level_thresholds.rs
+index f2f012c8cd..bb1bc9000a 100644
+--- a/tests/sd13_ranger_spell_level_thresholds.rs
++++ b/tests/sd13_ranger_spell_level_thresholds.rs
+@@ -240,9 +240,22 @@ fn multiclass_ranger_does_not_gain_partial_caster_records() {
+         "multiclass Ranger must not gain any partial-caster record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_spell_save_dcs.rs b/tests/sd13_ranger_spell_save_dcs.rs
+index d51826bb22..89afce3cac 100644
+--- a/tests/sd13_ranger_spell_save_dcs.rs
++++ b/tests/sd13_ranger_spell_save_dcs.rs
+@@ -195,9 +195,22 @@ fn multiclass_ranger_does_not_gain_dc_records() {
+         "multiclass Ranger must not gain any spell-save-DC record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_spells_per_day_counts.rs b/tests/sd13_ranger_spells_per_day_counts.rs
+index eaf7866365..19bf0b0b6b 100644
+--- a/tests/sd13_ranger_spells_per_day_counts.rs
++++ b/tests/sd13_ranger_spells_per_day_counts.rs
+@@ -203,9 +203,22 @@ fn multiclass_ranger_does_not_gain_per_day_records() {
+         "multiclass Ranger must not gain any base per-day record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_third_favored_enemy.rs b/tests/sd13_ranger_third_favored_enemy.rs
+index 21d8ee596c..c871601616 100644
+--- a/tests/sd13_ranger_third_favored_enemy.rs
++++ b/tests/sd13_ranger_third_favored_enemy.rs
+@@ -332,9 +332,22 @@ fn multiclass_ranger_does_not_gain_third_favored_enemy_recognition() {
+         "multiclass Ranger must not gain any third-favored-enemy record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_ranger_total_spells_per_day.rs b/tests/sd13_ranger_total_spells_per_day.rs
+index e92761ac4b..cfa9353b66 100644
+--- a/tests/sd13_ranger_total_spells_per_day.rs
++++ b/tests/sd13_ranger_total_spells_per_day.rs
+@@ -191,9 +191,22 @@ fn multiclass_ranger_does_not_gain_total_records() {
+         "multiclass Ranger must not gain any total record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_rogue_level1_chassis_baseline.rs b/tests/sd13_rogue_level1_chassis_baseline.rs
+index b32be390a2..56f657adb0 100644
+--- a/tests/sd13_rogue_level1_chassis_baseline.rs
++++ b/tests/sd13_rogue_level1_chassis_baseline.rs
+@@ -416,9 +416,22 @@ fn multiclass_rogue_is_not_promoted_by_this_slice() {
+          explanation: {:?}",
+         computation.explanations
+     );
+-    assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
++    assert!(
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_rogue_second_talent.rs b/tests/sd13_rogue_second_talent.rs
+index fa483d49eb..6700f7cb69 100644
+--- a/tests/sd13_rogue_second_talent.rs
++++ b/tests/sd13_rogue_second_talent.rs
+@@ -137,9 +137,22 @@ fn multiclass_rogue_does_not_gain_slot_2_recognition() {
+         "multiclass Rogue must not gain a slot-2 record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_rogue_talent_choice.rs b/tests/sd13_rogue_talent_choice.rs
+index 36f74f1759..5285aa828c 100644
+--- a/tests/sd13_rogue_talent_choice.rs
++++ b/tests/sd13_rogue_talent_choice.rs
+@@ -131,9 +131,22 @@ fn multiclass_rogue_does_not_gain_talent_recognition() {
+         "multiclass Rogue must not gain a talent record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_rogue_talents_three_through_five.rs b/tests/sd13_rogue_talents_three_through_five.rs
+index 36920273c6..85947ead0e 100644
+--- a/tests/sd13_rogue_talents_three_through_five.rs
++++ b/tests/sd13_rogue_talents_three_through_five.rs
+@@ -176,9 +176,22 @@ fn multiclass_rogue_does_not_gain_talent_slot_records() {
+             computation.explanations
+         );
+     }
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_bonus_spells.rs b/tests/sd13_sorcerer_bonus_spells.rs
+index 142b7cdbe1..72e434e227 100644
+--- a/tests/sd13_sorcerer_bonus_spells.rs
++++ b/tests/sd13_sorcerer_bonus_spells.rs
+@@ -232,9 +232,22 @@ fn multiclass_sorcerer_does_not_gain_bonus_records() {
+         "multiclass Sorcerer must not gain any bonus-spells record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_spell_level_thresholds.rs b/tests/sd13_sorcerer_spell_level_thresholds.rs
+index ba3f1795b9..00d5a4e8a1 100644
+--- a/tests/sd13_sorcerer_spell_level_thresholds.rs
++++ b/tests/sd13_sorcerer_spell_level_thresholds.rs
+@@ -220,9 +220,22 @@ fn multiclass_sorcerer_does_not_gain_spell_level_access() {
+         "multiclass Sorcerer must not gain a spell-level-access record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_spell_save_dcs.rs b/tests/sd13_sorcerer_spell_save_dcs.rs
+index 091536f4a0..dc783442b3 100644
+--- a/tests/sd13_sorcerer_spell_save_dcs.rs
++++ b/tests/sd13_sorcerer_spell_save_dcs.rs
+@@ -230,9 +230,22 @@ fn multiclass_sorcerer_does_not_gain_dc_records() {
+         "multiclass Sorcerer must not gain any spell-save-DC record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_spells_known_counts.rs b/tests/sd13_sorcerer_spells_known_counts.rs
+index 05a41eecca..b8e4d89882 100644
+--- a/tests/sd13_sorcerer_spells_known_counts.rs
++++ b/tests/sd13_sorcerer_spells_known_counts.rs
+@@ -210,9 +210,22 @@ fn multiclass_sorcerer_does_not_gain_known_records() {
+         "multiclass Sorcerer must not gain any spells-known record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_spells_per_day_counts.rs b/tests/sd13_sorcerer_spells_per_day_counts.rs
+index 90c9229e2c..b2da39d38d 100644
+--- a/tests/sd13_sorcerer_spells_per_day_counts.rs
++++ b/tests/sd13_sorcerer_spells_per_day_counts.rs
+@@ -240,9 +240,22 @@ fn multiclass_sorcerer_does_not_gain_per_day_records() {
+         "multiclass Sorcerer must not gain any base per-day record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd13_sorcerer_total_spells_per_day.rs b/tests/sd13_sorcerer_total_spells_per_day.rs
+index 180b02c119..ddf3dc1c29 100644
+--- a/tests/sd13_sorcerer_total_spells_per_day.rs
++++ b/tests/sd13_sorcerer_total_spells_per_day.rs
+@@ -201,9 +201,22 @@ fn multiclass_sorcerer_does_not_gain_total_records() {
+         "multiclass Sorcerer must not gain any total record: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Sorcerer+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Sorcerer must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Sorcerer: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_barbarian_level11_greater_rage.rs b/tests/sd18_barbarian_level11_greater_rage.rs
+index aa6864c048..7d4643a8db 100644
+--- a/tests/sd18_barbarian_level11_greater_rage.rs
++++ b/tests/sd18_barbarian_level11_greater_rage.rs
+@@ -288,9 +288,22 @@ fn multiclass_barbarian_level11_is_not_promoted_by_this_slice() {
+         "multiclass Barbarian must not gain any bounded barbarian explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Barbarian+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Barbarian must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Barbarian: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_monk_level11_diamond_body.rs b/tests/sd18_monk_level11_diamond_body.rs
+index 560b5aa860..8526784f3e 100644
+--- a/tests/sd18_monk_level11_diamond_body.rs
++++ b/tests/sd18_monk_level11_diamond_body.rs
+@@ -296,9 +296,22 @@ fn multiclass_monk_level11_is_not_promoted_by_this_slice() {
+         "multiclass Monk must not gain any bounded monk explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Monk+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Monk must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Monk: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_paladin_level11_aura_of_justice.rs b/tests/sd18_paladin_level11_aura_of_justice.rs
+index c451f3be31..3221086107 100644
+--- a/tests/sd18_paladin_level11_aura_of_justice.rs
++++ b/tests/sd18_paladin_level11_aura_of_justice.rs
+@@ -435,9 +435,22 @@ fn multiclass_paladin_level11_is_not_promoted_by_this_slice() {
+         "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Paladin+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Paladin must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Paladin: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_ranger_level11_quarry.rs b/tests/sd18_ranger_level11_quarry.rs
+index 84941c1ee5..ea8cd776a6 100644
+--- a/tests/sd18_ranger_level11_quarry.rs
++++ b/tests/sd18_ranger_level11_quarry.rs
+@@ -398,9 +398,22 @@ fn multiclass_ranger_level11_is_not_promoted_by_this_slice() {
+         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_ranger_level16_improved_evasion.rs b/tests/sd18_ranger_level16_improved_evasion.rs
+index d2e19ae3d9..a216738bf7 100644
+--- a/tests/sd18_ranger_level16_improved_evasion.rs
++++ b/tests/sd18_ranger_level16_improved_evasion.rs
+@@ -341,9 +341,22 @@ fn multiclass_ranger_level16_is_not_promoted_by_this_slice() {
+         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_ranger_level17_hide_in_plain_sight.rs b/tests/sd18_ranger_level17_hide_in_plain_sight.rs
+index 37af199a2b..7a58919047 100644
+--- a/tests/sd18_ranger_level17_hide_in_plain_sight.rs
++++ b/tests/sd18_ranger_level17_hide_in_plain_sight.rs
+@@ -355,9 +355,22 @@ fn multiclass_ranger_level17_is_not_promoted_by_this_slice() {
+         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Ranger+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Ranger must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Ranger: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_rogue_level11_sneak_attack.rs b/tests/sd18_rogue_level11_sneak_attack.rs
+index feacf8ca3a..2db88b1470 100644
+--- a/tests/sd18_rogue_level11_sneak_attack.rs
++++ b/tests/sd18_rogue_level11_sneak_attack.rs
+@@ -300,9 +300,22 @@ fn multiclass_rogue_level11_is_not_promoted_by_this_slice() {
+         "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
+         computation.explanations
+     );
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Rogue+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Rogue must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Rogue: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/druid_level11.rs b/tests/sd18_widening/druid_level11.rs
+index fb3c93b338..130c69d73e 100644
+--- a/tests/sd18_widening/druid_level11.rs
++++ b/tests/sd18_widening/druid_level11.rs
+@@ -579,9 +579,22 @@ fn multiclass_druid_level11_is_not_promoted_by_this_slice() {
+         &computation, 11, 9, 9, 6, 3, 18, 4, 66,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/druid_level12.rs b/tests/sd18_widening/druid_level12.rs
+index f25970a536..2eb2f27206 100644
+--- a/tests/sd18_widening/druid_level12.rs
++++ b/tests/sd18_widening/druid_level12.rs
+@@ -594,9 +594,22 @@ fn multiclass_druid_level12_is_not_promoted_by_this_slice() {
+         &computation, 12, 10, 10, 7, 3, 20, 4, 73,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/druid_level13.rs b/tests/sd18_widening/druid_level13.rs
+index 4301121524..15eca5289f 100644
+--- a/tests/sd18_widening/druid_level13.rs
++++ b/tests/sd18_widening/druid_level13.rs
+@@ -632,9 +632,22 @@ fn multiclass_druid_level13_is_not_promoted_by_this_slice() {
+         &computation, 13, 11, 11, 7, 3, 20, 4, 80,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/druid_level14.rs b/tests/sd18_widening/druid_level14.rs
+index fdb0923a9c..2305557dfc 100644
+--- a/tests/sd18_widening/druid_level14.rs
++++ b/tests/sd18_widening/druid_level14.rs
+@@ -587,9 +587,22 @@ fn multiclass_druid_level14_is_not_promoted_by_this_slice() {
+         &computation, 14, 12, 12, 8, 4, 20, 4, 87,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/druid_level15.rs b/tests/sd18_widening/druid_level15.rs
+index 0d23d3ab07..c8dc03cc4a 100644
+--- a/tests/sd18_widening/druid_level15.rs
++++ b/tests/sd18_widening/druid_level15.rs
+@@ -614,9 +614,22 @@ fn multiclass_druid_level15_is_not_promoted_by_this_slice() {
+         &computation, 15, 12, 13, 8, 4, 22, 6, 87,
+     );
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 
+diff --git a/tests/sd18_widening/rows.rs b/tests/sd18_widening/rows.rs
+index 7bf14b5efc..db0e35eae2 100644
+--- a/tests/sd18_widening/rows.rs
++++ b/tests/sd18_widening/rows.rs
+@@ -278,8 +278,9 @@ macro_rules! sd18_boundary_neg_control_test {
+ }
+ 
+ /// Row for the `multiclass_<class>_level<N>_is_not_promoted_by_this_slice`
+-/// negative control: same shape as `NegControlRow` plus the second
+-/// claim-blocking assert every one of these tests also performs.
++/// negative control: same shape as `NegControlRow`; the macro adds the
++/// receipt assert (SD-36 Epic F3d: the mix is `Computed`, formerly "must stay
++/// claim-blocked", whose per-row `cbmsg` field was dropped with that meaning).
+ #[derive(Clone, Copy)]
+ pub struct MulticlassNegControlRow {
+     pub old_sub: &'static str,
+@@ -289,74 +290,73 @@ pub struct MulticlassNegControlRow {
+     pub excludes: &'static [&'static str],
+     pub exclude_prefixes: &'static [&'static str],
+     pub msg: &'static str,
+-    pub cbmsg: &'static str,
+ }
+ 
+ pub const MULTICLASS_NEG_ROWS: &[(&str, MulticlassNegControlRow)] = &[
+-    ("barbarian_level12", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:12", new_sub: "class_level=class:barbarian:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level13", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:13", new_sub: "class_level=class:barbarian:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level14", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:14", new_sub: "class_level=class:barbarian:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level15", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:15", new_sub: "class_level=class:barbarian:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level16", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:16", new_sub: "class_level=class:barbarian:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level17", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:17", new_sub: "class_level=class:barbarian:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level18", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:18", new_sub: "class_level=class:barbarian:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level19", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:19", new_sub: "class_level=class:barbarian:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("barbarian_level20", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:20", new_sub: "class_level=class:barbarian:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation", cbmsg: "multiclass Barbarian must stay claim-blocked in this slice" }),
+-    ("bard_level11_inspire", MulticlassNegControlRow { old_sub: "class_level=class:bard:11", new_sub: "class_level=class:bard:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level12", MulticlassNegControlRow { old_sub: "class_level=class:bard:12", new_sub: "class_level=class:bard:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level13", MulticlassNegControlRow { old_sub: "class_level=class:bard:13", new_sub: "class_level=class:bard:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level14", MulticlassNegControlRow { old_sub: "class_level=class:bard:14", new_sub: "class_level=class:bard:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level15", MulticlassNegControlRow { old_sub: "class_level=class:bard:15", new_sub: "class_level=class:bard:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level16", MulticlassNegControlRow { old_sub: "class_level=class:bard:16", new_sub: "class_level=class:bard:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level17", MulticlassNegControlRow { old_sub: "class_level=class:bard:17", new_sub: "class_level=class:bard:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level18", MulticlassNegControlRow { old_sub: "class_level=class:bard:18", new_sub: "class_level=class:bard:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level19", MulticlassNegControlRow { old_sub: "class_level=class:bard:19", new_sub: "class_level=class:bard:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("bard_level20", MulticlassNegControlRow { old_sub: "class_level=class:bard:20", new_sub: "class_level=class:bard:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation", cbmsg: "multiclass Bard must stay claim-blocked in this slice" }),
+-    ("cleric_level11", MulticlassNegControlRow { old_sub: "class_level=class:cleric:11", new_sub: "class_level=class:cleric:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level12", MulticlassNegControlRow { old_sub: "class_level=class:cleric:12", new_sub: "class_level=class:cleric:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level13", MulticlassNegControlRow { old_sub: "class_level=class:cleric:13", new_sub: "class_level=class:cleric:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level14", MulticlassNegControlRow { old_sub: "class_level=class:cleric:14", new_sub: "class_level=class:cleric:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level15", MulticlassNegControlRow { old_sub: "class_level=class:cleric:15", new_sub: "class_level=class:cleric:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level16", MulticlassNegControlRow { old_sub: "class_level=class:cleric:16", new_sub: "class_level=class:cleric:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level17", MulticlassNegControlRow { old_sub: "class_level=class:cleric:17", new_sub: "class_level=class:cleric:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level18", MulticlassNegControlRow { old_sub: "class_level=class:cleric:18", new_sub: "class_level=class:cleric:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level19", MulticlassNegControlRow { old_sub: "class_level=class:cleric:19", new_sub: "class_level=class:cleric:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("cleric_level20", MulticlassNegControlRow { old_sub: "class_level=class:cleric:20", new_sub: "class_level=class:cleric:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation", cbmsg: "multiclass Cleric must stay claim-blocked in this slice" }),
+-    ("monk_level12", MulticlassNegControlRow { old_sub: "class_level=class:monk:12", new_sub: "class_level=class:monk:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.monk.", "class_feature.monk."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Monk must not gain any bounded monk explanation", cbmsg: "multiclass Monk must stay claim-blocked in this slice" }),
+-    ("paladin_level12", MulticlassNegControlRow { old_sub: "class_level=class:paladin:12", new_sub: "class_level=class:paladin:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level13", MulticlassNegControlRow { old_sub: "class_level=class:paladin:13", new_sub: "class_level=class:paladin:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level14", MulticlassNegControlRow { old_sub: "class_level=class:paladin:14", new_sub: "class_level=class:paladin:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level15", MulticlassNegControlRow { old_sub: "class_level=class:paladin:15", new_sub: "class_level=class:paladin:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level16", MulticlassNegControlRow { old_sub: "class_level=class:paladin:16", new_sub: "class_level=class:paladin:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level17", MulticlassNegControlRow { old_sub: "class_level=class:paladin:17", new_sub: "class_level=class:paladin:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level18", MulticlassNegControlRow { old_sub: "class_level=class:paladin:18", new_sub: "class_level=class:paladin:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level19", MulticlassNegControlRow { old_sub: "class_level=class:paladin:19", new_sub: "class_level=class:paladin:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("paladin_level20", MulticlassNegControlRow { old_sub: "class_level=class:paladin:20", new_sub: "class_level=class:paladin:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation", cbmsg: "multiclass Paladin must stay claim-blocked in this slice" }),
+-    ("ranger_level12", MulticlassNegControlRow { old_sub: "class_level=class:ranger:12", new_sub: "class_level=class:ranger:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("ranger_level13", MulticlassNegControlRow { old_sub: "class_level=class:ranger:13", new_sub: "class_level=class:ranger:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("ranger_level14", MulticlassNegControlRow { old_sub: "class_level=class:ranger:14", new_sub: "class_level=class:ranger:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("ranger_level15", MulticlassNegControlRow { old_sub: "class_level=class:ranger:15", new_sub: "class_level=class:ranger:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("ranger_level18", MulticlassNegControlRow { old_sub: "class_level=class:ranger:18", new_sub: "class_level=class:ranger:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("ranger_level19", MulticlassNegControlRow { old_sub: "class_level=class:ranger:19", new_sub: "class_level=class:ranger:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation", cbmsg: "multiclass Ranger must stay claim-blocked in this slice" }),
+-    ("rogue_level12", MulticlassNegControlRow { old_sub: "class_level=class:rogue:12", new_sub: "class_level=class:rogue:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level13", MulticlassNegControlRow { old_sub: "class_level=class:rogue:13", new_sub: "class_level=class:rogue:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level14", MulticlassNegControlRow { old_sub: "class_level=class:rogue:14", new_sub: "class_level=class:rogue:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level15", MulticlassNegControlRow { old_sub: "class_level=class:rogue:15", new_sub: "class_level=class:rogue:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level16", MulticlassNegControlRow { old_sub: "class_level=class:rogue:16", new_sub: "class_level=class:rogue:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level17", MulticlassNegControlRow { old_sub: "class_level=class:rogue:17", new_sub: "class_level=class:rogue:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level18", MulticlassNegControlRow { old_sub: "class_level=class:rogue:18", new_sub: "class_level=class:rogue:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level19", MulticlassNegControlRow { old_sub: "class_level=class:rogue:19", new_sub: "class_level=class:rogue:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("rogue_level20", MulticlassNegControlRow { old_sub: "class_level=class:rogue:20", new_sub: "class_level=class:rogue:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation", cbmsg: "multiclass Rogue must stay claim-blocked in this slice" }),
+-    ("sorcerer_level11", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:11", new_sub: "class_level=class:sorcerer:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level12", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:12", new_sub: "class_level=class:sorcerer:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level13", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:13", new_sub: "class_level=class:sorcerer:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level14", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:14", new_sub: "class_level=class:sorcerer:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level15", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:15", new_sub: "class_level=class:sorcerer:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level16", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:16", new_sub: "class_level=class:sorcerer:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level17", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:17", new_sub: "class_level=class:sorcerer:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level18", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:18", new_sub: "class_level=class:sorcerer:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level19", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:19", new_sub: "class_level=class:sorcerer:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
+-    ("sorcerer_level20", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:20", new_sub: "class_level=class:sorcerer:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation", cbmsg: "multiclass Sorcerer must stay claim-blocked in this slice" }),
++    ("barbarian_level12", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:12", new_sub: "class_level=class:barbarian:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level13", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:13", new_sub: "class_level=class:barbarian:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level14", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:14", new_sub: "class_level=class:barbarian:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level15", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:15", new_sub: "class_level=class:barbarian:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level16", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:16", new_sub: "class_level=class:barbarian:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level17", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:17", new_sub: "class_level=class:barbarian:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level18", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:18", new_sub: "class_level=class:barbarian:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level19", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:19", new_sub: "class_level=class:barbarian:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("barbarian_level20", MulticlassNegControlRow { old_sub: "class_level=class:barbarian:20", new_sub: "class_level=class:barbarian:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.barbarian.", "class_feature.barbarian."], exact_ors: &[], excludes: &["class_feature.barbarian.rage_execution.not_raging"], exclude_prefixes: &[], msg: "multiclass Barbarian must not gain any bounded barbarian explanation" }),
++    ("bard_level11_inspire", MulticlassNegControlRow { old_sub: "class_level=class:bard:11", new_sub: "class_level=class:bard:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level12", MulticlassNegControlRow { old_sub: "class_level=class:bard:12", new_sub: "class_level=class:bard:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level13", MulticlassNegControlRow { old_sub: "class_level=class:bard:13", new_sub: "class_level=class:bard:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level14", MulticlassNegControlRow { old_sub: "class_level=class:bard:14", new_sub: "class_level=class:bard:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level15", MulticlassNegControlRow { old_sub: "class_level=class:bard:15", new_sub: "class_level=class:bard:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level16", MulticlassNegControlRow { old_sub: "class_level=class:bard:16", new_sub: "class_level=class:bard:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level17", MulticlassNegControlRow { old_sub: "class_level=class:bard:17", new_sub: "class_level=class:bard:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level18", MulticlassNegControlRow { old_sub: "class_level=class:bard:18", new_sub: "class_level=class:bard:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level19", MulticlassNegControlRow { old_sub: "class_level=class:bard:19", new_sub: "class_level=class:bard:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("bard_level20", MulticlassNegControlRow { old_sub: "class_level=class:bard:20", new_sub: "class_level=class:bard:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.bard.", "class_feature.bard."], exact_ors: &[], excludes: &["class_feature.bard.bardic_performance_execution.not_performing", "class_feature.bard.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Bard must not gain any bounded bard explanation" }),
++    ("cleric_level11", MulticlassNegControlRow { old_sub: "class_level=class:cleric:11", new_sub: "class_level=class:cleric:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level12", MulticlassNegControlRow { old_sub: "class_level=class:cleric:12", new_sub: "class_level=class:cleric:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level13", MulticlassNegControlRow { old_sub: "class_level=class:cleric:13", new_sub: "class_level=class:cleric:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level14", MulticlassNegControlRow { old_sub: "class_level=class:cleric:14", new_sub: "class_level=class:cleric:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level15", MulticlassNegControlRow { old_sub: "class_level=class:cleric:15", new_sub: "class_level=class:cleric:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level16", MulticlassNegControlRow { old_sub: "class_level=class:cleric:16", new_sub: "class_level=class:cleric:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level17", MulticlassNegControlRow { old_sub: "class_level=class:cleric:17", new_sub: "class_level=class:cleric:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level18", MulticlassNegControlRow { old_sub: "class_level=class:cleric:18", new_sub: "class_level=class:cleric:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level19", MulticlassNegControlRow { old_sub: "class_level=class:cleric:19", new_sub: "class_level=class:cleric:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("cleric_level20", MulticlassNegControlRow { old_sub: "class_level=class:cleric:20", new_sub: "class_level=class:cleric:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.cleric.", "class_feature.cleric."], exact_ors: &[], excludes: &["class_feature.domain.good_touch_of_good_not_active", "class_feature.cleric.weapon_and_armor_proficiency", "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes", "class_feature.cleric.aura.strength_level"], exclude_prefixes: &[], msg: "multiclass Cleric must not gain any bounded cleric explanation" }),
++    ("monk_level12", MulticlassNegControlRow { old_sub: "class_level=class:monk:12", new_sub: "class_level=class:monk:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.monk.", "class_feature.monk."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Monk must not gain any bounded monk explanation" }),
++    ("paladin_level12", MulticlassNegControlRow { old_sub: "class_level=class:paladin:12", new_sub: "class_level=class:paladin:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level13", MulticlassNegControlRow { old_sub: "class_level=class:paladin:13", new_sub: "class_level=class:paladin:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level14", MulticlassNegControlRow { old_sub: "class_level=class:paladin:14", new_sub: "class_level=class:paladin:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level15", MulticlassNegControlRow { old_sub: "class_level=class:paladin:15", new_sub: "class_level=class:paladin:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level16", MulticlassNegControlRow { old_sub: "class_level=class:paladin:16", new_sub: "class_level=class:paladin:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level17", MulticlassNegControlRow { old_sub: "class_level=class:paladin:17", new_sub: "class_level=class:paladin:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level18", MulticlassNegControlRow { old_sub: "class_level=class:paladin:18", new_sub: "class_level=class:paladin:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level19", MulticlassNegControlRow { old_sub: "class_level=class:paladin:19", new_sub: "class_level=class:paladin:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("paladin_level20", MulticlassNegControlRow { old_sub: "class_level=class:paladin:20", new_sub: "class_level=class:paladin:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.paladin."], exact_ors: &[], excludes: &[], exclude_prefixes: &[], msg: "multiclass Paladin must not gain any bounded paladin chassis explanation" }),
++    ("ranger_level12", MulticlassNegControlRow { old_sub: "class_level=class:ranger:12", new_sub: "class_level=class:ranger:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("ranger_level13", MulticlassNegControlRow { old_sub: "class_level=class:ranger:13", new_sub: "class_level=class:ranger:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("ranger_level14", MulticlassNegControlRow { old_sub: "class_level=class:ranger:14", new_sub: "class_level=class:ranger:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("ranger_level15", MulticlassNegControlRow { old_sub: "class_level=class:ranger:15", new_sub: "class_level=class:ranger:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("ranger_level18", MulticlassNegControlRow { old_sub: "class_level=class:ranger:18", new_sub: "class_level=class:ranger:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("ranger_level19", MulticlassNegControlRow { old_sub: "class_level=class:ranger:19", new_sub: "class_level=class:ranger:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.ranger.", "class_feature.ranger."], exact_ors: &[], excludes: &["class_feature.ranger.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Ranger must not gain any bounded ranger chassis explanation" }),
++    ("rogue_level12", MulticlassNegControlRow { old_sub: "class_level=class:rogue:12", new_sub: "class_level=class:rogue:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level13", MulticlassNegControlRow { old_sub: "class_level=class:rogue:13", new_sub: "class_level=class:rogue:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level14", MulticlassNegControlRow { old_sub: "class_level=class:rogue:14", new_sub: "class_level=class:rogue:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level15", MulticlassNegControlRow { old_sub: "class_level=class:rogue:15", new_sub: "class_level=class:rogue:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level16", MulticlassNegControlRow { old_sub: "class_level=class:rogue:16", new_sub: "class_level=class:rogue:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level17", MulticlassNegControlRow { old_sub: "class_level=class:rogue:17", new_sub: "class_level=class:rogue:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level18", MulticlassNegControlRow { old_sub: "class_level=class:rogue:18", new_sub: "class_level=class:rogue:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level19", MulticlassNegControlRow { old_sub: "class_level=class:rogue:19", new_sub: "class_level=class:rogue:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("rogue_level20", MulticlassNegControlRow { old_sub: "class_level=class:rogue:20", new_sub: "class_level=class:rogue:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.rogue.", "class_feature.rogue."], exact_ors: &[], excludes: &["class_feature.rogue.weapon_and_armor_proficiency"], exclude_prefixes: &[], msg: "multiclass Rogue must not gain any bounded rogue explanation" }),
++    ("sorcerer_level11", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:11", new_sub: "class_level=class:sorcerer:11\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level12", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:12", new_sub: "class_level=class:sorcerer:12\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level13", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:13", new_sub: "class_level=class:sorcerer:13\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level14", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:14", new_sub: "class_level=class:sorcerer:14\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level15", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:15", new_sub: "class_level=class:sorcerer:15\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level16", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:16", new_sub: "class_level=class:sorcerer:16\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level17", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:17", new_sub: "class_level=class:sorcerer:17\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level18", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:18", new_sub: "class_level=class:sorcerer:18\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level19", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:19", new_sub: "class_level=class:sorcerer:19\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
++    ("sorcerer_level20", MulticlassNegControlRow { old_sub: "class_level=class:sorcerer:20", new_sub: "class_level=class:sorcerer:20\nclass_level=class:fighter:1", prefixes: &["class_chassis.sorcerer."], exact_ors: &["class_chassis.spell_baseline.sorcerer"], excludes: &[], exclude_prefixes: &[], msg: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation" }),
+ ];
+ 
+ pub fn find_multiclass_row(module: &str) -> MulticlassNegControlRow {
+@@ -442,10 +442,20 @@ macro_rules! sd18_multiclass_neg_control_test {
+                 row.msg,
+                 computation.explanations
+             );
+-            assert!(
+-                computation.diagnostics.iter().any(|d| d.claim_blocking),
+-                "{}",
+-                row.cbmsg
++            // SD-36 Epic F3d: assertion (b) changed meaning. It was "must stay
++            // claim-blocked in this slice"; the generic multiclass gate + fold (F3b)
++            // now computes a Class+Fighter mix, so the mix's receipt must be Computed.
++            // The vacuity guards above (two class_level lines, two loaded class
++            // entries matching `new_sub`) keep this from passing on a single class.
++            assert!(loaded.chosen.class_levels.len() >= 2);
++            let receipt = ::codex::rules_core::pilot_compute::build_pilot_headless_receipt(&loaded);
++            let diagnostics: Vec<_> =
++                receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++            assert_eq!(
++                receipt.status,
++                ::codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++                "{}: {diagnostics:?}",
++                $module
+             );
+         }
+     };
+diff --git a/tests/v06_druid_level16_to_20_widening.rs b/tests/v06_druid_level16_to_20_widening.rs
+index 2eb501034a..288b0def40 100644
+--- a/tests/v06_druid_level16_to_20_widening.rs
++++ b/tests/v06_druid_level16_to_20_widening.rs
+@@ -450,9 +450,22 @@ fn multiclass_druid_level20_is_not_promoted_by_this_slice() {
+         );
+     }
+ 
++    // SD-36 Epic F3d: assertion (b) changed meaning -- a Druid+other-class mix now
++    // reaches Computed through the generic multiclass gate + fold (was: must stay
++    // claim-blocked). Vacuity guard: the mix must really load >= 2 classes.
++    let mix_input = crate::common::load(&multiclass);
+     assert!(
+-        computation.diagnostics.iter().any(|d| d.claim_blocking),
+-        "multiclass Druid must stay claim-blocked in this slice"
++        mix_input.chosen.class_levels.len() >= 2,
++        "multiclass Druid: the mix must load at least two classes: {:?}",
++        mix_input.chosen.class_levels
++    );
++    let receipt = codex::rules_core::pilot_compute::build_pilot_headless_receipt(&mix_input);
++    let diagnostics: Vec<_> =
++        receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking).collect();
++    assert_eq!(
++        receipt.status,
++        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
++        "{diagnostics:?}"
+     );
+ }
+ 

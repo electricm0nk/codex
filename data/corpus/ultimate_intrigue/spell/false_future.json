@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You interfere with attempts to predict the target's future by preventing divinations from revealing what the target will do and what will befall the target while under the spell's effects. Instead of the target's true actions or experiences, divinations resolve as if the target will experience some different future you describe as you cast false future. The target creature can attempt a Will save to avoid the initial effect, and creatures using divinations get a Will save to disbelieve the illusion. This spell doesn't prevent divinations cast after the duration's end from determining what the subject actually did during the time you obscured using false future. False future can't be detected by detect magic or identify, but greater detect magic can detect it. Material component; crushed jade worth 100 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "False Future",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Medium,Mesmerist=3|Cleric,Psychic,Shaman,Spiritualist,Witch=4|Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Cause divinations of the future to reveal the result you choose.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You interfere with attempts to predict the target's future by preventing divinations from revealing what the target will do and what will befall the target while under the spell's effects. Instead of the target's true actions or experiences, divinations resolve as if the target will experience some different future you describe as you cast false future. The target creature can attempt a Will save to avoid the initial effect, and creatures using divinations get a Will save to disbelieve the illusion. This spell doesn't prevent divinations cast after the duration's end from determining what the subject actually did during the time you obscured using false future. False future can't be detected by detect magic or identify, but greater detect magic can detect it. Material component; crushed jade worth 100 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates or Will disbelief; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=False Future"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature or object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "False Future",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

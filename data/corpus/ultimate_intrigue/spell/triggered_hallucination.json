@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as audiovisual hallucination, except that this spell's phantasm has no apparent effect until a specific condition occurs. You must overcome the target's spell resistance to plant the triggered hallucination, but the target doesn't attempt a Will save to disbelieve the illusion until the condition occurs (at which point it receives an automatic Will save, as with audiovisual hallucination). The phantasm can include auditory, olfactory, visual, tactile, and thermal elements, including intelligible speech. You set the triggering condition (such as hearing a certain word or seeing a type of creature) when casting the spell. The event that triggers the illusion can be as general or detailed as desired but must be based on an audible, tactile, olfactory, or visual trigger. The trigger can't be based on any quality not normally obvious to the senses, such as alignment. Triggered hallucination uses the target's senses to notice triggers. Material component; jade dust worth 25 gp|PRERULE:1,DisplayFullSpell",
+    "key": "Triggered Hallucination",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Magus,Mesmerist,Occultist,Psychic,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "As scripted hallucination, but it only appears when triggered.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as audiovisual hallucination, except that this spell's phantasm has no apparent effect until a specific condition occurs. You must overcome the target's spell resistance to plant the triggered hallucination, but the target doesn't attempt a Will save to disbelieve the illusion until the condition occurs (at which point it receives an automatic Will save, as with audiovisual hallucination). The phantasm can include auditory, olfactory, visual, tactile, and thermal elements, including intelligible speech. You set the triggering condition (such as hearing a certain word or seeing a type of creature) when casting the spell. The event that triggers the illusion can be as general or detailed as desired but must be based on an audible, tactile, olfactory, or visual trigger. The trigger can't be based on any quality not normally obvious to the senses, such as alignment. Triggered hallucination uses the target's senses to notice triggers. Material component; jade dust worth 25 gp|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent until triggered, then (CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Triggered Hallucination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 105,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Triggered Hallucination",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

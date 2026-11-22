@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bestial Werewolf ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "A bestial werewolf does not gain a hybrid form, and its animal form is that of a dire wolf, rather than an ordinary wolf. Otherwise, this ability functions identically to the change shape ability granted by the lycanthrope template.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:bestial_werewolf_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A bestial werewolf does not gain a hybrid form, and its animal form is that of a dire wolf, rather than an ordinary wolf. Otherwise, this ability functions identically to the change shape ability granted by the lycanthrope template."
+      },
+      {
+        "key": "KEY",
+        "value": "Bestial Werewolf ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.BestialWerewolf"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": [
+      "BestialWerewolf"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 246,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Bestial Werewolf ~ Change Shape",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

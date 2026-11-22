@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Contract Devil ~ Binding Contract",
+    "delivery": "Supernatural",
+    "description": "All contract devils carry numerous lengthy contracts draped over their horns or within their numerous carrying cases. They can wield these contracts like whips, but deal lethal damage regardless of the armor bonus of their target. A contract devil modifies attack and damage rolls when using a binding contract by its Intelligence modifier, not its Strength modifier (this equates to a +7 bonus for most contract devils). Wounds created by a binding contract resemble horrifically deep paper cuts and cause 1d6 points of bleed damage. A contract devil can use its binding contract to disarm and trip foes as if the contract were a whip. If it is itself disarmed of the contract, the devil can rearm itself with a new contract as an immediate action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:contract_devil_binding_contract",
+    "name": "Binding Contract",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Binding Contract"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Binding Contract|TOHIT,DAMAGE|INT-STR"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All contract devils carry numerous lengthy contracts draped over their horns or within their numerous carrying cases. They can wield these contracts like whips, but deal lethal damage regardless of the armor bonus of their target. A contract devil modifies attack and damage rolls when using a binding contract by its Intelligence modifier, not its Strength modifier (this equates to a +7 bonus for most contract devils). Wounds created by a binding contract resemble horrifically deep paper cuts and cause 1d6 points of bleed damage. A contract devil can use its binding contract to disarm and trip foes as if the contract were a whip. If it is itself disarmed of the contract, the devil can rearm itself with a new contract as an immediate action."
+      },
+      {
+        "key": "KEY",
+        "value": "Contract Devil ~ Binding Contract"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "TYPE",
+        "value": "ContractDevilRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.76",
+    "traits": [
+      "ContractDevilRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 670,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Contract Devil ~ Binding Contract",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

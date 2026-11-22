@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Sandpoint Devil",
+    "name": "Sandpoint Devil",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/_pfs/pfs_iswg_races.lst",
+    "sha256": "12695fa7d2362e389895bc8a89dc6c893f877fdcc77dfead93b358e6e78e1bc1",
+    "line": 17,
+    "record_key": "Sandpoint Devil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

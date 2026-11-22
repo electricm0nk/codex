@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You may make %1 additional attacks of opportunity per round. With this feat, you may also make attacks of opportunity while flat-footed.|DEX",
+    "key": "Animal Companion Feat ~ Combat Reflexes",
+    "name": "Combat Reflexes",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Combat Reflexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "DESC",
+        "value": "You may make %1 additional attacks of opportunity per round. With this feat, you may also make attacks of opportunity while flat-footed.|DEX"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Combat Reflexes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 234,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Animal Companion Feat ~ Combat Reflexes",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

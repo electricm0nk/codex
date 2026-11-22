@@ -1,0 +1,6 @@
+$ dual audit on 962602cc6a, CARD_BASE=6f19073dc2; identifier audit scoped to docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.MC_run.sh docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.MC_pi_audit.py docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.MC_converter_mutations.py crates data src apps
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

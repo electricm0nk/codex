@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Contemplative ~ Heightened State",
+    "name": "Heightened State",
+    "class": "Contemplative",
+    "description": "After manifesting a power and using Overchannel, you gain %1 temporary hit points and a +%2 insight bonus to saves and AC for one round.  If you manifest another power and use the Overchannel feat while still under these effects, the duration is increased by one round and the insight bonus increases by +1 (to a maximum of +%3).  These temporary hit points take effect after the damage taken from using the Overchannel feat (if any).|HeightenedStateTempHP|HeightenedStateBonus|HeightenedStateMaxBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Contemplative ~ Heightened State"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedStateTempHP|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedStateBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedStateMaxBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "After manifesting a power and using Overchannel, you gain %1 temporary hit points and a +%2 insight bonus to saves and AC for one round.  If you manifest another power and use the Overchannel feat while still under these effects, the duration is increased by one round and the insight bonus increases by +1 (to a maximum of +%3).  These temporary hit points take effect after the damage taken from using the Overchannel feat (if any).|HeightenedStateTempHP|HeightenedStateBonus|HeightenedStateMaxBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedStateBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedStateTempHP|WilderLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedStateMaxBonus|floor(WilderLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2381,
+    "record_key": "Contemplative ~ Heightened State"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

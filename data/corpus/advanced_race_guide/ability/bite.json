@@ -1,0 +1,80 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Gain bite attack; damage as 2 sizes smaller; can be taken twice, second time increases damage one size category.",
+    "key": "Builder Racial Trait ~ Bite",
+    "name": "Bite",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "BuilderRacialTraitBiteLimit,2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BuilderRacialTraitBiteLimit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain bite attack; damage as 2 sizes smaller; can be taken twice, second time increases damage one size category."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tracker ~ Builder Racial Trait ~ Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BuilderRacialTraitBiteLimit|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 466,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Bite",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

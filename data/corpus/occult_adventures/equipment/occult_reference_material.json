@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 80.0,
+    "description": "When used as a reference (an action that typically requires 1d4 minutes of searching the text), occult reference material grants a +2 circumstance bonus on Knowledge checks related to the occult topic covered by that manual.",
+    "key": "Occult Reference Material",
+    "name": "Occult Reference Material",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "80"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPROP",
+        "value": "When used as a reference (an action that typically requires 1d4 minutes of searching the text), occult reference material grants a +2 circumstance bonus on Knowledge checks related to the occult topic covered by that manual."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Occult Reference Material",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

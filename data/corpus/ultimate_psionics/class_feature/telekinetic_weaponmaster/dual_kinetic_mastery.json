@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telekinetic Weaponmaster ~ Dual Kinetic Mastery",
+    "name": "Dual Kinetic Mastery",
+    "class": "Telekinetic Weaponmaster",
+    "description": "You may wield weapons as normal, and also wield a weapon telekinetically.  The weapon must remain within 20 ft. of you.  You designate one square, and can make attacks or attacks of opportunity from that square.  The telekinetically-wielded weapon does not benefit from additional attacks from effects such as haste, nor does it make iterative attacks.  You may attack with both held weapons and your telekinetic weapon on a full attack action, but not as a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telekinetic Weaponmaster ~ Dual Kinetic Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You may wield weapons as normal, and also wield a weapon telekinetically.  The weapon must remain within 20 ft. of you.  You designate one square, and can make attacks or attacks of opportunity from that square.  The telekinetically-wielded weapon does not benefit from additional attacks from effects such as haste, nor does it make iterative attacks.  You may attack with both held weapons and your telekinetic weapon on a full attack action, but not as a standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1522,
+    "record_key": "Telekinetic Weaponmaster ~ Dual Kinetic Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

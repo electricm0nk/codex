@@ -1,0 +1,68 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "1/day, create 10-ft radius patch of difficult terrain (touch range); duration %1 minutes.|TreacherousEarthDuration",
+    "key": "Builder Racial Trait ~ Treacherous Earth",
+    "name": "Treacherous Earth",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Treacherous Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TreacherousEarthDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, create 10-ft radius patch of difficult terrain (touch range); duration %1 minutes.|TreacherousEarthDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TreacherousEarthDuration|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 370,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Treacherous Earth",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Stormrunner Theme Benefit ~ LIGHTNING REACTIONS",
+    "name": "LIGHTNING REACTIONS",
+    "type": "Theme.Theme Benefit.Stormrunner Theme Benefit.Stormrunner Theme Benefit Lvl 18"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "starfinder/paizo/near_space/sns_abilities.lst",
+    "record_key": "Stormrunner Theme Benefit ~ LIGHTNING REACTIONS",
+    "sha256": "85affaef5b4dcd4e292565ad4ffe606b972e9ff6f666e39b5aa35374a4b5aee5"
+  },
+  "unit_id": "near_space:ability:stormrunner_theme_benefit_lightning_reactions"
+}

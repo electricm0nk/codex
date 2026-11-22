@@ -1,0 +1,774 @@
+[
+  {
+    "token_type": "DESC",
+    "instances": "14,291 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL 2026-08-31: 14,985 instances / 11,815 units of 22,366); corpus-wide 33,841 instances of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "11,317 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 28,065 records",
+    "maps_to": "Text",
+    "rule": "DESC is the rule's words. The converter walks the record's token closure in PCGen application order (copy-base row, then the base row, then every `.MOD` row in file order -- NOT the order `data.raw_tokens` stores, which is base, copy-base, mods) and keeps a running list of DESC segments. For each DESC token: (1) split on `|`; (2) pop trailing segments while they match `!?PRE[A-Z0-9]+:` -- these are gates, not arguments; (3) count the highest `%N` the first segment references (a `%%N` counts as a candidate); (4) the last N pipe-segments are the arguments, taken from the RIGHT so a ` | ` table separator inside prose survives; when N is 0 one trailing TIGHT `|tag` (no whitespace either side) is stripped; (5) argument N is resolved: an integer literal -> Const; a bare name that is a same-row `DEFINE:X|<int>` -> Const (3,936 of 5,220 DESC bare-var args corpus-wide are this shape); `<Name>+/-<int>` with a same-row literal -> Const; anything else (1,284 external names, 1,538 formulas such as `max(MesmeristLVL/2,1)`) is handed to the formula lane and becomes a prose SLOT holding an Expr, never dropped; `%CHOICE`/`%LIST` become a Choice slot (see the `%CHOICE / %LIST` row); (6) `%%` collapses to `%` except `%%N` where argument N exists (then it is argument N -- 4 upstream rows, e.g. Water Jet); a bare `%` is kept only after a digit or as `d%` percentile dice, otherwise it is an unresolvable placeholder and is REFUSED (31 corpus rows); (7) `&nl;` `&lbracket;` `&rbracket;` `&pipe;` `&comma;` decode to their characters (`&colon;` appears in TEMPDESC and must be added); (8) a gate whose operands are all same-row literals is decided at convert time (segment kept or discarded); a gate on character facts (PREVAR* on external names, PREABILITY, PRECLASS, PRERULE ...) becomes that SEGMENT's Applies (gap); (9) surviving segments are joined with a single space in application order. A DESCISPI:YES record contributes NO DESC text (see NAMEISPI/DESCISPI row). The final prose string is blacklist-scanned with pi_screening::classify_field; a hit refuses the record, never ships the marker.",
+    "expr_shape": "n/a for the words; each unresolved argument is a slot whose Expr the formula lane supplies (e.g. `10+INT` -> Sum([Const(10), AbilityMod(Int)]))",
+    "expr_gaps": [
+      "prose slots: `prose: String` cannot carry a character-dependent term; need `prose: Vec<ProseSegment>` or `prose: String` + `slots: Vec<Expr>` with `{0}`-style anchors, so the live evaluator prints `DC 15` INSIDE the sentence (decisions.md §1 rule 1) instead of the converter dropping the term as render_pcgen_desc does today",
+      "per-segment Applies: one DESC/ASPECT/SPROP segment can carry its own PRE* gate (`Three|PREVARLTEQ:...` vs `%1|...|PREVARGTEQ:...`); SheetRule has ONE `applies` for the whole rule; need `ProseSegment { text, applies: Option<Applies> }` or the segment is refused",
+      "spell short/long text: `!PRERULE:1,DisplayFullSpell` segment is the one-line summary, the `PRERULE:1,DisplayFullSpell` segment the full text; SheetRule has no `summary` field -- add `summary: Option<String>` or drop the summary (open question)"
+    ],
+    "applies_shape": "none from the prose itself; per-segment PRE* gates on a DESC segment feed the segment's own Applies (prereq lane owns the PRE grammar)",
+    "prose_effect": "IS the prose",
+    "examples": [
+      {
+        "record": "pathfinder_unchained:class_feature:Unchained Rogue Talent ~ Minor Magic",
+        "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:647",
+        "raw": "DESC:You can cast %1. This spell can be cast at will as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|10+INT",
+        "sheet_line": "Minor Magic (Sp): You can cast detect magic. This spell can be cast at will as a spell-like ability. The caster level for this ability is 4. The save DC for this spell is 12.   [fixture: 4th-level unchained rogue, Int 14, chose detect magic; unmade choice prints 'a chosen 0-level spell']"
+      },
+      {
+        "record": "occult_adventures:class_feature:Toxitician ~ Injections",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1488",
+        "raw": "DESC:The toxitician uses his skill with alchemy and his own psychic power to create injections. The toxitician can create %1 injections per day. ...|max(MesmeristLVL/2,1)|100+10*MesmeristLVL",
+        "sheet_line": "Injections: ... The toxitician can create 3 injections per day. ...   [fixture: 6th-level mesmerist; slots = Max(Div(ClassLevel(mesmerist),2),1) and Sum([Const(100), Mul(Const(10), ClassLevel(mesmerist))])]"
+      },
+      {
+        "record": "core_rulebook:spell:Animate Plants",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst:25",
+        "raw": "DESC:You imbue inanimate plants with mobility and a semblance of life. Each animated plant then immediately attacks ...  \\t  DESC:You imbue inanimate plants with mobility and a semblance of life.|!PRERULE:1,DisplayFullSpell",
+        "sheet_line": "Animate Plants: You imbue inanimate plants with mobility and a semblance of life. Each animated plant then immediately attacks ...   [the !PRERULE segment is the one-line summary, not a second paragraph]"
+      }
+    ],
+    "oracle_check": "sheet-line only -- no PCGen total covers prose. Parity oracle for the WORDS is render_pcgen_desc_tokens (see prose.md §4): converter-in-drop-mode must equal it byte-for-byte on every corpus DESC before Epic 6 deletes it.",
+    "confidence": "high",
+    "open_questions": [
+      "Is `summary` (the !PRERULE:DisplayFullSpell short text, 1,872 segments) kept as a field or discarded?",
+      "Does the operator want DESC and BENEFIT concatenated (this lane's rule) or BENEFIT alone when both exist (633 records)?"
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "DESC:.CLEAR",
+    "instances": "30 corpus-wide of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (row heads in the pinned paizo tree: 133 `DESC:.CLEAR` fields, 20 of them inside `_pfs/` overlay files)",
+    "units": "30 records corpus-wide; 0 counted separately in TOKEN-MODEL (folded under DESC)",
+    "maps_to": "Text",
+    "rule": "`.CLEAR` erases every DESC segment accumulated so far in APPLICATION order and nothing after it; `.CLEARALL` is the same for the whole token family. It is meaningful only with row boundaries, which `data.raw_tokens` throws away, so the converter MUST read the closure as rows (`wiring_class::token_closure_rows`) and apply copy-base -> base -> .MOD; on a `.COPY=` row the pattern is `DESC:.CLEAR\\tDESC:<new text>` on the copying row itself (13 Horror Adventures/AP equipment rows). Two closure defects the converter must NOT inherit: (a) `build_mod_index` walks `_pfs/` (Pathfinder Society overlay) files whose `.MOD` rows are gated `!PRECHARACTERTYPE:1,PC` -- they never apply to a PC and must be excluded (215 corpus records carry PFS overlay tokens today); (b) the index keys `.MOD` rows by bare name with the `CATEGORY=` prefix stripped, so `CATEGORY=FEAT|Scribe Scroll.MOD` attaches to the CATEGORY=Special Ability record `Sorcerer Bloodline Feat ~ Scribe Scroll` whose display name is `Scribe Scroll` -- match on (category, name) and on KEY, never on display name alone.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none (the row's own PRE* on a `.MOD` row gates whether the whole row applies)",
+    "prose_effect": "discards earlier prose; the converter never emits the literal `.CLEAR` (render_pcgen_desc has no guard for it and would print `.CLEAR` today)",
+    "examples": [
+      {
+        "record": "horror_adventures:equipment:Ursine Rageskin",
+        "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst:9",
+        "raw": "Hide Armor (Base).COPY=Ursine Rageskin ... SPROP:when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor \\t DESC:.CLEAR \\t DESC:This +1 hide armor is stitched together from grizzly bear hides. ...",
+        "sheet_line": "Ursine Rageskin: This +1 hide armor is stitched together from grizzly bear hides. ... Special: when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor   [the copied Hide Armor description is gone]"
+      },
+      {
+        "record": "core_rulebook:class_feature:Sorcerer Bloodline Feat ~ Scribe Scroll",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2071 (+ the leaked row core_rulebook/_pfs/pfs_cr_feats.lst:20)",
+        "raw": "DESC:You can create magic scrolls. \\t BENEFIT:You can create a scroll of any spell that you know. ... \\t DESC:.CLEAR \\t DESC:Neither the craft feats nor the item creation section ... \\t BENEFIT:.CLEAR",
+        "sheet_line": "Scribe Scroll: You can create magic scrolls. You can create a scroll of any spell that you know. ...   [the .CLEAR rows come from `CATEGORY=FEAT|Scribe Scroll.MOD ... !PRECHARACTERTYPE:1,PC` in the PFS overlay and must not be in the closure]"
+      },
+      {
+        "record": "advanced_class_guide:class_feature:Shaman Hex ~ Fetish",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1431 (+ advanced_class_guide/_pfs/pfs_acg_abilities_class.lst:7)",
+        "raw": "DESC:The shaman receives Craft Wondrous Item as a bonus feat ... \\t DESC:.CLEAR \\t DESC:The shaman receives Spell Focus as a bonus feat ...",
+        "sheet_line": "Fetish: The shaman receives Craft Wondrous Item as a bonus feat and gains a +4 insight bonus on Spellcraft ...   [PFS text excluded]"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "high",
+    "open_questions": [
+      "Should PFS overlay rows be dropped by path (`_pfs/`) or by honouring `!PRECHARACTERTYPE:1,PC` in Applies? Both give the same PC result; path is simpler and also fixes wiring_class."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "BENEFIT",
+    "instances": "483 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL: 483 / 457 units); corpus-wide 672 instances of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "457 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 638 records",
+    "maps_to": "Text",
+    "rule": "BENEFIT is the mechanical text of a feat-shaped record (PCGen splits feats into DESC = flavor summary, BENEFIT = rules). Same tokenisation, argument, gate, escape and entity rules as DESC (111 BENEFIT tokens carry `%N`, 120 carry a `|` tail). Prose = DESC segments, then BENEFIT segments, application order, joined with one space; when DESC is PI-redacted (DESCISPI:YES) prose = BENEFIT alone -- the shipped `codex_named_unit_*` records already have exactly this shape. `BENEFIT:.CLEAR` (9 corpus records; 12 of the 14 tree rows are `_pfs/` overlay) follows the DESC:.CLEAR rule. BENEFIT is blacklist-scanned like every other prose field; DESCISPI does not cover it.",
+    "expr_shape": "n/a; `%N` arguments become slots exactly as in DESC (e.g. `1+TL/3` -> Sum([Const(1), Div(Level, Const(3))]))",
+    "expr_gaps": [
+      "prose slots: `prose: String` cannot carry a character-dependent term; need `prose: Vec<ProseSegment>` or `prose: String` + `slots: Vec<Expr>` with `{0}`-style anchors, so the live evaluator prints `DC 15` INSIDE the sentence (decisions.md §1 rule 1) instead of the converter dropping the term as render_pcgen_desc does today"
+    ],
+    "applies_shape": "none; a `|PRE...` tail on BENEFIT is a segment gate (prereq lane)",
+    "prose_effect": "appended after DESC; sole prose when DESC is redacted",
+    "examples": [
+      {
+        "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:43",
+        "raw": "NAMEISPI:YES \\t DESCISPI:YES \\t DESC:[redacted PI] \\t BENEFIT:Your potency in spells from a chosen school increases, and you gain a spell-like ability.",
+        "sheet_line": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43): Your potency in spells from a chosen school increases, and you gain a spell-like ability."
+      },
+      {
+        "record": "adventurers_guide:feat_generic:Falcon's Cry",
+        "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst:33",
+        "raw": "BENEFIT:... Such checks must be attempted before the beginning of your next turn. You can do this %1 times per day.|1+TL/3",
+        "sheet_line": "Falcon's Cry: ... You can do this 3 times per day.   [fixture: 7th-level character; slot = Sum([Const(1), Div(Level, Const(3))])]"
+      },
+      {
+        "record": "occult_adventures:class_feature:Sorcerer Bloodline Feat ~ Intuitive Spell",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1830",
+        "raw": "BENEFIT:An intuitive spell can be cast with no thought components. Spells without thought components are not affected. An intuitive spell uses up a spell slot 1 level higher than the spell's actual level.",
+        "sheet_line": "Intuitive Spell: An intuitive spell can be cast with no thought components. ... uses up a spell slot 1 level higher than the spell's actual level."
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "high",
+    "open_questions": [
+      "DESC+BENEFIT concatenation vs BENEFIT-only when both present (633 records) -- operator taste, not mechanics."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "ASPECT:<display sub-key> (Ability Benefit, AbilityBenefit, SaveBonus, CombatBonus, SkillBonus, RacialSkillModifier, Immunity, Resistance, ResistanceOutput, UnarmedNotes, Vision, Maneuverability, ModifyAC, CMBCircumstance, NaturalAttack*, Typical Alignment, Ancestry, Alternate *, Skill Modifiers, Spell-Like Ability, *SaveBonus, Racial Points)",
+    "instances": "2,882 ASPECT instances of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) across all sub-keys (TOKEN-MODEL: 2,996 / 1,872 units); corpus-wide 6,420 ASPECT instances of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list, of which display sub-keys ~3,300 (Ability Benefit 1,316 + SaveBonus 376 + CombatBonus 330 + SkillBonus 231 + RacialSkillModifier 136 + Immunity 104 + UnarmedNotes 61 + the tail)",
+    "units": "1,801 records carry any ASPECT of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 4,419; 320 records corpus-wide have an ASPECT and NO DESC/BENEFIT/SPROP -- the ASPECT is their only prose (SD-34 wave 51's dropped-prose finding, decisions.md §~1811)",
+    "maps_to": "Text",
+    "rule": "`ASPECT:<Name>|<text>[|<arg>...][|<PRE gate>...]`. The sub-key is a display label, mechanical per sub-key: for a display sub-key the text goes through the DESC substitution rules (2,040 of 2,387 bare-var ASPECT args are same-row DEFINE literals -> Const; 213 formulas -> slots; gates -> per-segment Applies) and is appended to prose as its own line `<Label>: <text>` after DESC/BENEFIT/SPROP, in application order. Multiple ASPECTs with the same sub-key and mutually exclusive PREVAR gates (Psychic Strike's `(1d6, DC %2)` vs `(1d6+%2, DC %3)`) are alternative segments: decided at convert time when the gate names a same-row literal, else per-segment Applies. A redacted sub-key (`ASPECT:[redacted PI]`, 118 corpus-wide) contributes nothing and is recorded in provenance. Today's ingester lifts ASPECT into `data.description` for NO kind; the converter reads the token, not the field.",
+    "expr_shape": "n/a; args -> slots as DESC",
+    "expr_gaps": [
+      "prose slots: `prose: String` cannot carry a character-dependent term; need `prose: Vec<ProseSegment>` or `prose: String` + `slots: Vec<Expr>` with `{0}`-style anchors, so the live evaluator prints `DC 15` INSIDE the sentence (decisions.md §1 rule 1) instead of the converter dropping the term as render_pcgen_desc does today",
+      "per-segment Applies: one DESC/ASPECT/SPROP segment can carry its own PRE* gate (`Three|PREVARLTEQ:...` vs `%1|...|PREVARGTEQ:...`); SheetRule has ONE `applies` for the whole rule; need `ProseSegment { text, applies: Option<Applies> }` or the segment is refused"
+    ],
+    "applies_shape": "per-segment PRE* gate when present (749 PREVARGTEQ / 354 PREVAREQ / 263 PREVARLT across DESC+ASPECT gates corpus-wide)",
+    "prose_effect": "one labelled line per display aspect, e.g. `Save Bonus: +2 vs. fear`",
+    "examples": [
+      {
+        "record": "occult_adventures:class_feature:Psychic Bloodline ~ Psychic Strike",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1881",
+        "raw": "ASPECT:Ability Benefit|%1/day (1d6+%2, DC %3)|Sorcerer_Psychic_BloodlinePower1Times|Sorcerer_PsychicPsychicStrike_DamageBonus|Sorcerer_PsychicPsychicStrike_DC|PREVARGTEQ:Sorcerer_PsychicPsychicStrike_DamageBonus,1",
+        "sheet_line": "Psychic Strike -- Ability Benefit: 6/day (1d6+2, DC 16)   [fixture: 11th-level psychic-bloodline sorcerer, Cha 16; the sibling `(1d6, DC %2)|...|PREVARLT:...DamageBonus,1` segment is the pre-11th alternative and is suppressed]"
+      },
+      {
+        "record": "bestiary_2:monster_ability:telepathy_miles",
+        "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1955",
+        "raw": "ASPECT:Ability Benefit|%1 miles|TelepathyMilesRange|PREVARGT:TelepathyMilesRange,1  \\t  ASPECT:Ability Benefit|%1 mile|TelepathyMilesRange|PREVAREQ:TelepathyMilesRange,1",
+        "sheet_line": "Telepathy -- Ability Benefit: 100 miles   [singular/plural chosen by the gate]"
+      },
+      {
+        "record": "occult_adventures:class_feature:Psychic Bloodline ~ Bloodline Arcana",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1878",
+        "raw": "ASPECT:Ability Benefit|(sorcerer spells are psychic, using thought and emotion components)",
+        "sheet_line": "Bloodline Arcana -- Ability Benefit: (sorcerer spells are psychic, using thought and emotion components)"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "medium",
+    "open_questions": [
+      "The display allowlist above is derived from the 40 most frequent sub-key names corpus-wide; sub-keys under 3 records (Weakness, Racial Points, Vision variants) default to display -- confirm no internal sub-key is misfiled."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "ASPECT:CheckCount / ASPECT:CheckType",
+    "instances": "corpus-wide CheckCount 694, CheckType 696 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "~690 records corpus-wide (paired on the same record)",
+    "maps_to": "Number(Expr)",
+    "rule": "PCGen's uses-per-period check boxes: `ASPECT:CheckCount|%1|<Var>` is the NUMBER of boxes and `ASPECT:CheckType|Day` (or Week/Round/...) the period. This is a sheet VALUE, not prose: value = the formula lane's Expr for `<Var>` (usually a same-record `DEFINE`/`BONUS:VAR` -> e.g. Sum([Const(3), AbilityMod(Cha)])), printed as `N/day` on the rule's line; CheckType is the unit word. When the rule already has a Number value from another token, CheckCount becomes a second, labelled value (gap: SheetRule has one `value`).",
+    "expr_shape": "whatever the formula lane derives for the named variable, e.g. Sum([Const(1), Div(ClassLevel(sorcerer), Const(2))])",
+    "expr_gaps": [
+      "one `value` per SheetRule; a record can carry a magnitude AND a uses-per-day count -- need `values: Vec<(label, SheetValue)>` or a dedicated `uses: Option<(Expr, Period)>`"
+    ],
+    "applies_shape": "none",
+    "prose_effect": "`3/day` suffix on the rule's line; prints as `-/day` (words) when the Expr has an unmade Choice",
+    "examples": [
+      {
+        "record": "occult_adventures:class_feature:Psychic Bloodline ~ Psychic Strike",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1881",
+        "raw": "ASPECT:CheckCount|%1|Sorcerer_Psychic_BloodlinePower1Times",
+        "sheet_line": "Psychic Strike (Sp) 6/day   [fixture: 11th-level sorcerer, Cha 16]"
+      },
+      {
+        "record": "(second and third real records to be quoted by the formula lane, which owns the variable resolution; this lane verified the sub-key shape on 694 corpus records)",
+        "source": "n/a",
+        "raw": "ASPECT:CheckType|Day",
+        "sheet_line": "n/a"
+      }
+    ],
+    "oracle_check": "sheet-line only (PCGen's BatchExporter set has no uses-per-day key; a `VAR.<name>` export could be added to computed-values.txt.ftl)",
+    "confidence": "medium",
+    "open_questions": [
+      "Add `VAR.<name>` exports to the oracle template so CheckCount values are oracle-checkable?"
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "ASPECT:NAME",
+    "instances": "103 corpus-wide of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "103 records corpus-wide",
+    "maps_to": "Text",
+    "rule": "`ASPECT:NAME|<display-name template>|<args>` overrides the printed LABEL, not the prose: label = template with `%N` substituted by the DESC rules. When an argument is character-dependent (`Str +%1|ABP_LegendaryAbility_STRInherent`) the label needs a slot (gap); until the gap is closed the converter uses the record name as label and puts the template into prose as a labelled line.",
+    "expr_shape": "n/a",
+    "expr_gaps": [
+      "label with a slot: `ASPECT:NAME|Str +%1|ABP_LegendaryAbility_STRInherent` makes the LABEL character-dependent; `label: String` has no slot"
+    ],
+    "applies_shape": "none",
+    "prose_effect": "label override",
+    "examples": [
+      {
+        "record": "occult_adventures:race_trait_generic:Phantom Companion ~ Deliver Touch Spells",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:10",
+        "raw": "ASPECT:NAME|Deliver Touch Spells (%1 ft.)|DeliverTouchSpellsRange",
+        "sheet_line": "Deliver Touch Spells (30 ft.)   [fixture: phantom whose DeliverTouchSpellsRange resolves to 30]"
+      },
+      {
+        "record": "(the other 102 are the same `NAME|<text>|<var>` shape; see v06_work_inventory.rs `closure_has_real_aspect_description` doc, which names `NAME|Str +%1|ABP_LegendaryAbility_STRInherent`)",
+        "source": "pathfinder_unchained pu_abilities_class.lst (ABP legendary abilities)",
+        "raw": "ASPECT:NAME|Str +%1|ABP_LegendaryAbility_STRInherent",
+        "sheet_line": "Str +2"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "medium",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "ASPECT:<structural sub-key> (ChildAbility, MasterAbility, Archetype Base Class, Bloodline, StatBlockName, SourceBook)",
+    "instances": "corpus-wide ChildAbility 833, Archetype Base Class 483, SourceBook 365, MasterAbility 116, Bloodline 57, StatBlockName 27 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "~1,500 records corpus-wide",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "These sub-keys carry PCGen bookkeeping (parent/child ability links, the archetype's base class, the bloodline name, a stat-block name, the source book). None is text a player writes. ChildAbility/MasterAbility/Archetype Base Class/Bloodline are consumed by the grant/structural lane if at all; SourceBook goes to `provenance.source_book`; StatBlockName is ignored.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none from this lane (Archetype Base Class may inform Applies in the grant lane)",
+    "prose_effect": "none",
+    "examples": [
+      {
+        "record": "occult_adventures:class_feature:Psychic Bloodline ~ Undercasting Prodigy",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1883",
+        "raw": "ASPECT:ChildAbility|PsychicBloodlinePowers",
+        "sheet_line": "(nothing)"
+      },
+      {
+        "record": "inner_sea_world_guide:class_feature:Artifice ~ HK",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst:92",
+        "raw": "SOURCELONG:Core Rulebook \\t SOURCESHORT:CR (SourceBook-shaped provenance on a class_feature)",
+        "sheet_line": "(fine print: Core Rulebook)"
+      },
+      {
+        "record": "(Archetype Base Class / MasterAbility rows are the same one-value shape; 483 + 116 corpus-wide)",
+        "source": "n/a",
+        "raw": "ASPECT:Archetype Base Class|Sorcerer",
+        "sheet_line": "(nothing)"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "SAB",
+    "instances": "0 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL has no SAB row); corpus-wide 2 instances of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list; pinned paizo+3pp tree: 65 `SAB:` fields, almost all in homebrew/3pp/adventure-path files not ingested",
+    "units": "0 non-DONE; 2 records corpus-wide (both the giant vulture companion)",
+    "maps_to": "Text",
+    "rule": "`SAB:<text>` (special ability text on race/template/companion rows) is appended to prose as its own sentence, same escape/entity rules as DESC. Embedded formulas: 0 of 2 corpus instances carry `%N` or a `|` tail, so nothing is handed to the formula lane; if a future book brings `SAB:...|<formula>` it follows the DESC argument rule. `SAB:.CLEAR` follows the DESC:.CLEAR rule.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none",
+    "prose_effect": "one extra sentence",
+    "examples": [
+      {
+        "record": "bestiary_3:companion:companion_giant_vulture",
+        "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst:15",
+        "raw": "SAB:+4 on saves vs. disease.",
+        "sheet_line": "Giant Vulture: +4 on saves vs. disease."
+      },
+      {
+        "record": "monster_codex:companion:companion_giant_vulture",
+        "source": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races_companion.lst:15",
+        "raw": "SAB:+4 on saves vs. disease.",
+        "sheet_line": "Giant Vulture: +4 on saves vs. disease."
+      },
+      {
+        "record": "(no third record exists in data/corpus -- stated, not fabricated)",
+        "source": "n/a",
+        "raw": "n/a",
+        "sheet_line": "n/a"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "SPROP",
+    "instances": "179 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 3,816 instances of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (253 with a `|` tail, 52 with `%CHOICE`, 48 with `%LIST`, 8 with `%N`)",
+    "units": "167 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 3,662 records; 2,491 records corpus-wide have SPROP and no DESC (equipment modifiers/materials) -- SPROP is their only prose",
+    "maps_to": "Text",
+    "rule": "`SPROP:<text>[|<PRE gate>...]` is an equipment special property. Text follows the DESC rules and is appended as a `Special: <text>` line; several SPROPs give several lines in application order. A `|PRE...` tail (253) gates the SEGMENT (per-segment Applies, e.g. `PREABILITY:1,CATEGORY=Special Ability,Bloodline ~ Elemental`). `%CHOICE`/`%LIST` (100 instances) follow the choice row. `SPROP:.CLEAR` follows DESC:.CLEAR.",
+    "expr_shape": "n/a",
+    "expr_gaps": [
+      "per-segment Applies: one DESC/ASPECT/SPROP segment can carry its own PRE* gate (`Three|PREVARLTEQ:...` vs `%1|...|PREVARGTEQ:...`); SheetRule has ONE `applies` for the whole rule; need `ProseSegment { text, applies: Option<Applies> }` or the segment is refused",
+      "Choice(ChoiceId) resolves to an integer in the schema; `%CHOICE`/`%LIST` print a NAME (the chosen spell/skill/language) -- need `Expr::ChoiceName(ChoiceId)` or a `ProseSegment::Choice(ChoiceId)` that renders the chosen record's label, and a per-CHOOSE-type table of the unmade words"
+    ],
+    "applies_shape": "per-segment gate",
+    "prose_effect": "`Special:` lines",
+    "examples": [
+      {
+        "record": "occult_adventures:equipment:Hoodwink Cowl",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst:13",
+        "raw": "SPROP:A creature wearing a hoodwink cowl is blinded and deafened, and it takes a -10 penalty on all other Perception checks.",
+        "sheet_line": "Hoodwink Cowl -- Special: A creature wearing a hoodwink cowl is blinded and deafened, and it takes a -10 penalty on all other Perception checks."
+      },
+      {
+        "record": "advanced_class_guide:equipment:Amulet of the Blooded (Elemental Electricity)",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst:322",
+        "raw": "SPROP:increase effective level of bloodline abilities by 2|PREABILITY:1,CATEGORY=Special Ability,Bloodline ~ Elemental",
+        "sheet_line": "Special: increase effective level of bloodline abilities by 2   [printed only for a character holding Bloodline ~ Elemental; otherwise omitted]"
+      },
+      {
+        "record": "inner_sea_world_guide:equipment:Material ~ Paueliel Wood",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equipmods.lst:9",
+        "raw": "VISIBLE:QUALIFY \\t SPROP:10 hp/inch, hardness 7",
+        "sheet_line": "Paueliel Wood -- Special: 10 hp/inch, hardness 7"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "TEMPDESC",
+    "instances": "31 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 184 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "31 non-DONE; 184 corpus-wide",
+    "maps_to": "Text",
+    "rule": "`TEMPDESC:<text>` describes what the record's TEMPBONUS does while active. It is prose for a conditional rule: appended as `When active: <text>` (same DESC rules; note `&colon;` entity, present in ACG templates, is not in render_pcgen_desc's five-entity table). The activation itself is the bonus lane's TEMPBONUS.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none (activation is a player toggle, not a prerequisite)",
+    "prose_effect": "`When active:` line",
+    "examples": [
+      {
+        "record": "advanced_class_guide:template:Sacred Weapon ~ Warpriest",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst:16",
+        "raw": "TEMPDESC:Your BAB is your class levels.",
+        "sheet_line": "Sacred Weapon -- When active: Your BAB is your class levels."
+      },
+      {
+        "record": "advanced_class_guide:template:Inspired Rage",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst:28",
+        "raw": "TEMPDESC:Inspired Rage&colon; Morale bonuses to Strength, Constitution and Will saving throws depending on the ally's Skald level, but also take a –1 penalty to AC.",
+        "sheet_line": "Inspired Rage -- When active: Inspired Rage: Morale bonuses to Strength, Constitution and Will saving throws depending on the ally's Skald level, but also take a –1 penalty to AC."
+      },
+      {
+        "record": "bestiary_2:skill:Craft (Rope)",
+        "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst:8",
+        "raw": "TEMPDESC:Craft skill checks are made with a -2 circumstance penalty if improvised tools are used",
+        "sheet_line": "Craft (Rope) -- When active: Craft skill checks are made with a -2 circumstance penalty if improvised tools are used"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "medium",
+    "open_questions": [
+      "`&colon;` must be added to the entity table (render_pcgen_desc knows five entities; this is a sixth)."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "TEMPVALUE",
+    "instances": "105 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 164 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "105 non-DONE; 164 corpus-wide",
+    "maps_to": "Number(Expr)",
+    "rule": "`TEMPVALUE:MIN=<n>|MAX=<n or var>|TITLE=<words>` is a player-entered integer for a TEMPBONUS (e.g. how many points of a bonus to apply). It is a Choice with an integer range: value = Choice(ChoiceId) bounded MIN..MAX (MAX may be a variable -> formula lane Expr); unmade it prints the TITLE words. Not prose.",
+    "expr_shape": "Choice(ChoiceId) with range [Const(1), Max-Expr]",
+    "expr_gaps": [
+      "Choice with an integer RANGE (min/max Expr) -- `Choice(ChoiceId)` has no bounds"
+    ],
+    "applies_shape": "none",
+    "prose_effect": "TITLE words when the choice is unmade",
+    "examples": [
+      {
+        "record": "pathfinder_unchained:class_feature:Attuned Weapon",
+        "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:66",
+        "raw": "TEMPVALUE:MIN=1|MAX=ABP_WeaponBonusMax|TITLE=Weapon Enhancement Bonus",
+        "sheet_line": "Attuned Weapon: Weapon Enhancement Bonus +3   [fixture: player entered 3; unmade prints `Weapon Enhancement Bonus (choose 1 to 3)`]"
+      },
+      {
+        "record": "adventurers_guide:class_feature:Lantern Bearer ~ Favored Enemy",
+        "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:307",
+        "raw": "TEMPVALUE:MIN=2|MAX=4|TITLE=Choose favored enemy bonus",
+        "sheet_line": "Favored Enemy: Choose favored enemy bonus (2 to 4)"
+      },
+      {
+        "record": "bestiary_2:monster_ability:astradaemon_devour_soul",
+        "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst:275",
+        "raw": "TEMPVALUE:MIN=1|MAX=20|TITLE=Devour Soul profane bonus gained (+1/5 HD of victim)",
+        "sheet_line": "Devour Soul: Devour Soul profane bonus gained (+1/5 HD of victim) (1 to 20)"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "medium",
+    "open_questions": [
+      "Choice lane: does the bounded-integer choice join the CHOOSE machinery or stay a sheet-side text entry?"
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "%CHOICE / %LIST inside DESC, BENEFIT, ASPECT, SPROP",
+    "instances": "corpus-wide DESC 29 %CHOICE + 57 %LIST; ASPECT 4 + 15; SPROP 52 + 48; BENEFIT 0 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (non-DONE: DESC 21 + 18, ASPECT 0 + 9, SPROP 6 + 0)",
+    "units": "~200 records corpus-wide; 54 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL)",
+    "maps_to": "Text",
+    "rule": "`%CHOICE` names the ONE selection the record's CHOOSE: token collected; `%LIST` names ALL selections, comma-joined. In prose they are Choice slots: made -> the chosen record's label (a spell/skill/language/weapon NAME, not a number); unmade -> the words of the choice kind from a per-CHOOSE-type table (CHOOSE:SPELLS -> `a chosen spell`, CHOOSE:LANG -> `a chosen language`, CHOOSE:SKILL -> `a chosen skill`, CHOOSE:WEAPONPROFICIENCY -> `a chosen weapon`, CHOOSE:NUMCHOICES/others -> `a chosen option`); `%LIST` unmade -> plural form. render_pcgen_desc drops both today (`SD31-W6-INTEGRATE-001`); the converter must not. The choice lane owns the ChoiceId and the CHOOSE-type table; this lane owns only how the slot prints.",
+    "expr_shape": "ChoiceName(ChoiceId) slot",
+    "expr_gaps": [
+      "Choice(ChoiceId) resolves to an integer in the schema; `%CHOICE`/`%LIST` print a NAME (the chosen spell/skill/language) -- need `Expr::ChoiceName(ChoiceId)` or a `ProseSegment::Choice(ChoiceId)` that renders the chosen record's label, and a per-CHOOSE-type table of the unmade words"
+    ],
+    "applies_shape": "none",
+    "prose_effect": "the chosen name in the sentence, or the choice-kind words",
+    "examples": [
+      {
+        "record": "adventurers_guide:class_feature:Pathfinder Savant ~ Esoteric Spell",
+        "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:413",
+        "raw": "DESC:You treat the following spells as if they were on your spell list: %1.|%LIST",
+        "sheet_line": "Esoteric Spell: You treat the following spells as if they were on your spell list: haste, fly.   [unmade: `... on your spell list: the chosen spells.`]"
+      },
+      {
+        "record": "pathfinder_unchained:class_feature:Unchained Rogue ~ Finesse Training Choice",
+        "source": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:596",
+        "raw": "DESC:Dexterity to Damage with %1|%LIST",
+        "sheet_line": "Finesse Training: Dexterity to Damage with rapier"
+      },
+      {
+        "record": "horror_adventures:ability:Hellbound Corruption ~ Wizard Spell",
+        "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst:317",
+        "raw": "DESC:You can cast %1 as a spell-like ability %2 times per day.|%LIST|HellboundManifestationLevel",
+        "sheet_line": "Wizard Spell: You can cast burning hands as a spell-like ability 2 times per day.   [%1 = choice slot, %2 = formula-lane slot]"
+      }
+    ],
+    "oracle_check": "sheet-line only",
+    "confidence": "medium",
+    "open_questions": [
+      "The unmade-words table per CHOOSE type is proposed here and must be ratified by the choice lane; 21 non-DONE units were parked in SD-34 (decisions.md ~§460) as `%CHOICE`/`%d<N>` unresolved -- this row closes them mechanically."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "KEY",
+    "instances": "14,295 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL 14,854); corpus-wide 31,498 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (828 values are `[redacted PI]`)",
+    "units": "14,295 non-DONE; 31,497 corpus-wide",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "KEY is identity, never printed. `SheetRule.id` = the work-inventory unit id (`<book>:<kind>:<slug>`), which is already derived from KEY or, when KEY/NAME is PI (`NAMEISPI:YES`, 1,177 records), from the codex-neutral coordinate name (`codex_neutral_name.rs`: kind/book/file/line only). The converter never derives an id or a label from a redacted or PI-declared KEY.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "Applies elsewhere reference OTHER rules by this id (prereq lane)",
+    "prose_effect": "none",
+    "examples": [
+      {
+        "record": "occult_adventures:race_trait_generic:Emotional Focus / Despair ~ Inescapable Despair",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:84",
+        "raw": "KEY:Emotional Focus / Despair ~ Inescapable Despair",
+        "sheet_line": "(id only)"
+      },
+      {
+        "record": "core_rulebook:race_trait_generic:Racial SLA ~ Speak with Animals (rodents only)",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst:239",
+        "raw": "KEY:Racial SLA ~ Speak with Animals (rodents only)",
+        "sheet_line": "(id only)"
+      },
+      {
+        "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:43",
+        "raw": "NAMEISPI:YES (KEY absent; name is PI) -> record key `Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)`",
+        "sheet_line": "(id = inner_sea_world_guide:feat_generic:codex_named_unit_feat_inner_sea_world_guide_iswg_feats_lst_43)"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "OUTPUTNAME",
+    "instances": "587 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 2,124 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (684 contain the `[NAME]` template)",
+    "units": "586 non-DONE; 2,123 corpus-wide",
+    "maps_to": "Text",
+    "rule": "OUTPUTNAME is the printed name: label = OUTPUTNAME when present, else the record name. PCGen's `[NAME]` template expands to the parenthesised part of the record name (`Black Powder (Keg)` + `Black Powder, [NAME]` -> `Black Powder, Keg`; `Zoic Fetish (Mammal)` + `[NAME] Zoic Fetish` -> `Mammal Zoic Fetish`); when the name has no parenthesis `[NAME]` is the whole name. Today's ingest leaves `[NAME]` unexpanded in `data.name` for some equipment (`Companion Stone of [NAME]`, corpus_loader.rs) -- the converter expands it. A redacted OUTPUTNAME (13) falls back to the (already neutral) record name.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none",
+    "prose_effect": "the label",
+    "examples": [
+      {
+        "record": "inner_sea_world_guide:equipment:Black Powder (Keg)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst:30",
+        "raw": "OUTPUTNAME:Black Powder, [NAME]",
+        "sheet_line": "Black Powder, Keg"
+      },
+      {
+        "record": "inner_sea_world_guide:equipment:Zoic Fetish (Mammal)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst:13",
+        "raw": "OUTPUTNAME:[NAME] Zoic Fetish",
+        "sheet_line": "Mammal Zoic Fetish"
+      },
+      {
+        "record": "occult_adventures:spell:Occultist Spell ~ Find The Path",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst:1289",
+        "raw": "OUTPUTNAME:Find The Path",
+        "sheet_line": "Find The Path"
+      }
+    ],
+    "oracle_check": "sheet-line only (PCGen export `NAME=` covers only the character name)",
+    "confidence": "medium",
+    "open_questions": [
+      "Confirm the `[NAME]` = parenthetical rule against PCGen's OutputNameFormatting on 3 real exports before Epic 2 transcribes it."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "NAMEISPI / DESCISPI (and the corpus `license`/`pi_field`/`pi_marker` stamps)",
+    "instances": "NAMEISPI 934, DESCISPI 529 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide NAMEISPI 1,177 (all `YES`), DESCISPI 686 (673 `YES`, 13 `Yes`) of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list; 2,330 records corpus-wide are stamped `license: PI-REDACTED`",
+    "units": "934 + 529 non-DONE",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "Product Identity flags never reach `prose` or `label`; they reach `provenance.pi`. Rule, mirroring pi_screening.rs: (1) `NAMEISPI:YES` -> label = codex neutral name (as shipped today, `codex_generated_name: true`), `provenance.pi.name_declared = true`; (2) `DESCISPI:YES` (case-insensitive value, per `declared_product_identity`) -> every DESC segment is omitted from prose, `provenance.pi.description_declared = true`; BENEFIT/ASPECT/SPROP/SAB are NOT covered by DESCISPI and stay; (3) the final `prose` and `label` strings are scanned with `classify_field`'s 60-term blacklist (union rule: declaration OR term hit); a hit on `label` refuses the record (a name cannot be redacted), a hit on `prose` refuses the record -- the converter never writes `[redacted PI]` into prose because a marker on the sheet is not what a player writes; (4) provenance derives from the TOKENS, not from the record's `pi_field` stamp -- 50 corpus records carry `[redacted PI]` in a token with `pi_field: null`, and 253 have a redacted description without DESCISPI (term hits). A record whose only prose is PI keeps `SheetValue::Text` with empty prose and the label; it is sheet-complete (there is nothing the player may write).",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none",
+    "prose_effect": "removes DESC from prose; forces the neutral label; refuses on a blacklist hit",
+    "examples": [
+      {
+        "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:43",
+        "raw": "NAMEISPI:YES \\t DESCISPI:YES \\t DESC:[redacted PI] \\t BENEFIT:Your potency in spells from a chosen school increases, and you gain a spell-like ability.",
+        "sheet_line": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43): Your potency in spells from a chosen school increases, and you gain a spell-like ability.   [provenance.pi = {name_declared: true, description_declared: true}]"
+      },
+      {
+        "record": "inner_sea_world_guide:feat_generic:Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_8)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst:8",
+        "raw": "NAMEISPI:YES \\t DESCISPI:YES \\t DESC:[redacted PI] \\t BENEFIT:[redacted PI]",
+        "sheet_line": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_8)   [empty prose; BENEFIT was a term hit; Text; sheet-complete]"
+      },
+      {
+        "record": "core_rulebook:feat:Empower Spell",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst:56",
+        "raw": "(no NAMEISPI/DESCISPI token; license OGL)",
+        "sheet_line": "Empower Spell: You can increase the power of your spells, causing them to deal more damage.   [provenance.pi = {name_declared: false, description_declared: false}, license OGL]"
+      }
+    ],
+    "oracle_check": "n/a (declared_pi_shipping_audit.rs is the existing PI gate; run it over data/sheet_rules/ too)",
+    "confidence": "high",
+    "open_questions": [
+      "Should a PI-only record be `sheet-complete` with empty prose, or a named REFUSE (`pi_only_prose`, ~99+ records)? This lane says complete: the sheet shows the label and nothing licensed."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "VISIBLE",
+    "instances": "4,301 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL 4,312 / 4,290 units); corpus-wide 7,505 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list: NO 3,123, DISPLAY 2,319, QUALIFY 1,288, YES 471, EXPORT 303, DISPLAY|READONLY 1",
+    "units": "4,279 non-DONE; 7,005 corpus-wide",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "VISIBLE decides whether the held rule is PRINTED. PCGen semantics: YES (default) = UI and export; NO = neither (internal bookkeeping rows: trackers, `CATEGORY:Internal`, equipmod codes); DISPLAY = UI only, not export; EXPORT = export only; QUALIFY = shown only once prerequisites are met (i.e. hidden in the picker until qualified, printed when held). Sheet rule: `print = VISIBLE != NO`. DISPLAY rows (2,319) are printed too: a player writes `Scribe Scroll (bonus feat)` on paper even though PCGen suppresses the class-feature row because the feat itself prints. The rule is still converted and held (it may grant or gate) -- it just carries `print: false` (gap). `DISPLAY|READONLY` = DISPLAY.",
+    "expr_shape": "n/a",
+    "expr_gaps": [
+      "no `visible`/`print` flag on SheetRule: VISIBLE:NO rules must be held (they grant/gate) but not printed"
+    ],
+    "applies_shape": "none (QUALIFY is a picker-side hint; the prereqs themselves are the prereq lane's Applies)",
+    "prose_effect": "none; `print: false` suppresses the line",
+    "examples": [
+      {
+        "record": "occult_adventures:class_feature:Archetype Psychic",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:31",
+        "raw": "VISIBLE:NO",
+        "sheet_line": "(not printed; held)"
+      },
+      {
+        "record": "core_rulebook:class_feature:Wizard ~ Scribe Scroll",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2572",
+        "raw": "VISIBLE:DISPLAY \\t DESC:At 1st level, a wizard gains Scribe Scroll as a bonus feat.",
+        "sheet_line": "Scribe Scroll: At 1st level, a wizard gains Scribe Scroll as a bonus feat."
+      },
+      {
+        "record": "inner_sea_bestiary:skill:Perception (Dim Light)",
+        "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst:6",
+        "raw": "VISIBLE:EXPORT",
+        "sheet_line": "Perception (Dim Light) +N   [printed; value from the skill lane]"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "medium",
+    "open_questions": [
+      "DISPLAY: print (this lane) or suppress as PCGen's export does? 2,319 rows move between `printed` and `held-only` on this call; neither changes sheet-complete."
+    ],
+    "family": "prose"
+  },
+  {
+    "token_type": "TYPE (display facet)",
+    "instances": "17,332 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL) (TOKEN-MODEL 17,910 / 17,515 units); corpus-wide 41,700 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (597 redacted)",
+    "units": "16,943 non-DONE; 41,139 corpus-wide",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "TYPE is a dotted tag list (`Emotional Focus / Despair.SpecialQuality.Supernatural`). The sheet uses exactly one facet from it: the delivery marker -- a segment `Extraordinary`/`Supernatural`/`SpellLike` (or the monster_ability `delivery` field) prints as `(Ex)`/`(Su)`/`(Sp)` after the label. Every other segment (grouping, `Choice`-suffixed tracker types, PFSNotLegal) is kept as `provenance.type_tags` for the grant/choice lanes and is not printed. A redacted TYPE contributes no suffix.",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none from this lane (other lanes read TYPE for grants and `TYPE=` prerequisites)",
+    "prose_effect": "`(Su)`-style label suffix only",
+    "examples": [
+      {
+        "record": "occult_adventures:race_trait_generic:Emotional Focus / Despair ~ Inescapable Despair",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:84",
+        "raw": "TYPE:Emotional Focus / Despair.SpecialQuality.Supernatural",
+        "sheet_line": "Inescapable Despair (Su): When the spiritualist reaches 17th level, ..."
+      },
+      {
+        "record": "core_rulebook:race_trait_generic:Racial SLA ~ Speak with Animals (rodents only)",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst:239",
+        "raw": "TYPE:Racial Spell-Like Ability",
+        "sheet_line": "Speak with Animals (rodents only) (Sp) ...   [`Spell-Like` matched by the same segment rule]"
+      },
+      {
+        "record": "core_rulebook:class_feature:Add Spoken Language",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:3023",
+        "raw": "TYPE:AddSpokenLanguage",
+        "sheet_line": "Add Spoken Language   [no delivery segment; no suffix]"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "SORTKEY",
+    "instances": "419 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 3,250 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list (12 redacted)",
+    "units": "419 non-DONE; 3,250 corpus-wide",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "`SORTKEY:<text>` orders siblings in a printed list. Kept as `provenance.sort_key` (the desktop's grouped 'Rules and features' section sorts by it, then by label); never printed. A redacted SORTKEY is dropped (falls back to label order).",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none",
+    "prose_effect": "none (ordering only)",
+    "examples": [
+      {
+        "record": "occult_adventures:race_trait_generic:Emotional Focus / Hatred ~ Good Saves",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:97",
+        "raw": "SORTKEY:Emotional Focus 2b",
+        "sheet_line": "(sorts before `Emotional Focus 2e`)"
+      },
+      {
+        "record": "occult_adventures:race_trait_generic:Emotional Focus / Jealousy ~ Resentful Aura",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:109",
+        "raw": "SORTKEY:Emotional Focus 2e",
+        "sheet_line": "(ordering only)"
+      },
+      {
+        "record": "occult_adventures:race_trait_generic:Emotional Focus / Despair ~ Inescapable Despair",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:84",
+        "raw": "SORTKEY:Emotional Focus 2g",
+        "sheet_line": "(ordering only)"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "QUALIFY",
+    "instances": "6 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide 7 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "4 non-DONE; 5 corpus-wide",
+    "maps_to": "Applies",
+    "rule": "`QUALIFY:ABILITY=<category>|<key>[|<key>...]` makes the holder qualify for the named OTHER rules regardless of their prerequisites. It contributes nothing to this rule's prose or value; it adds a prerequisite WAIVER on the target rule's Applies (`Applies::Any([<normal prereqs>, HoldsRule(<this id>)])`). Owned by the prereq lane; listed here so the token has a row.",
+    "expr_shape": "n/a",
+    "expr_gaps": [
+      "Applies needs an `or holds <rule id>` waiver form if the prereq lane's Applies vocabulary has none"
+    ],
+    "applies_shape": "waiver on the TARGET rule",
+    "prose_effect": "none",
+    "examples": [
+      {
+        "record": "ultimate_wilderness:class_feature:Shifter ~ Wild Shape",
+        "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:19",
+        "raw": "QUALIFY:ABILITY=FEAT|Natural Spell",
+        "sheet_line": "(Natural Spell's Applies gains `or holds Shifter ~ Wild Shape`)"
+      },
+      {
+        "record": "horror_adventures:class_feature:Gaslighter ~ Consummate Cruelty",
+        "source": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst:173",
+        "raw": "QUALIFY:ABILITY=FEAT|Improved Dirty Trick",
+        "sheet_line": "(waiver on Improved Dirty Trick)"
+      },
+      {
+        "record": "ultimate_psionics:class_feature:Blade Skill ~ Advanced Talents",
+        "source": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst:811",
+        "raw": "QUALIFY:ABILITY=Special Ability|Rogue Talent ~ Stealthy Sniper",
+        "sheet_line": "(waiver on Rogue Talent ~ Stealthy Sniper)"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "medium",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "SOURCEPAGE / SOURCELONG / SOURCESHORT / SOURCEWEB / SOURCEDATE / SOURCELINK",
+    "instances": "SOURCEPAGE 11,804, SOURCELINK 166, SOURCELONG 156, SOURCESHORT 156, SOURCEWEB 27, SOURCEDATE 23 of 21,722 non-DONE units joined to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL); corpus-wide SOURCEPAGE 32,165, SOURCELINK 1,806, SOURCESHORT 276, SOURCELONG 275, SOURCEWEB 48, SOURCEDATE 44 of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "units": "SOURCEPAGE 11,772 non-DONE / 32,115 corpus-wide; the others as their instance counts",
+    "maps_to": "Metadata(ignored-by-sheet)",
+    "rule": "All six are provenance: SOURCEPAGE -> `provenance.page` (`p.242`); SOURCELONG/SOURCESHORT/SOURCEWEB/SOURCEDATE -> `provenance.source_book.{long,short,web,date}` (row-level overrides of the book's own header; when absent the book dir's LICENSE.json/header supplies them); SOURCELINK -> `provenance.link`. They print only in the sheet's fine print, never in the rule line. (The 6 `%N`-looking SOURCELINK hits in a naive scan are URL escapes like `%20`, not arguments.)",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "none",
+    "prose_effect": "none (fine print)",
+    "examples": [
+      {
+        "record": "core_rulebook:spell:Animate Plants",
+        "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst:25",
+        "raw": "SOURCEPAGE:p.242 \\t SOURCELINK:http://paizo.com/pathfinderRPG/prd/spells/animatePlants.html#_animate-plants",
+        "sheet_line": "(fine print: Core Rulebook p.242)"
+      },
+      {
+        "record": "inner_sea_world_guide:race_trait_generic:Favored Enemy ~ Humanoid (Strix)",
+        "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_race.lst:28",
+        "raw": "SOURCELONG:Core Rulebook \\t SOURCESHORT:CR \\t SOURCEWEB:https://paizo.com/products/btpy88yj \\t SOURCEDATE:2009-08",
+        "sheet_line": "(fine print: Core Rulebook (CR), 2009-08)"
+      },
+      {
+        "record": "occult_adventures:spell:Ectoplasmic Eruption",
+        "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst:36",
+        "raw": "SOURCELINK:http://aonprd.com/SpellDisplay.aspx?ItemName=Ectoplasmic Eruption",
+        "sheet_line": "(fine print link)"
+      }
+    ],
+    "oracle_check": "n/a",
+    "confidence": "high",
+    "open_questions": [],
+    "family": "prose"
+  },
+  {
+    "token_type": "(record with no raw_tokens / empty raw_tokens)",
+    "instances": "921 units of 21,722 non-DONE units joined (888 with no `raw_tokens` field + 33 with an empty list; TOKEN-MODEL's 921) to a corpus record (live docs/work-inventory.json 2026-09-07, 35 books excl. core_rulebook/ultimate_campaign, vehicle excluded; this lane's own join, same method as TOKEN-MODEL)",
+    "units": "921 non-DONE (M 722, B 127, U 54, Z 17, D 1; feat 363, spell 312, equipment 175, equipment_modifier 58, monster_ability 6, race 6, race_trait 1); corpus-wide 2,768 records lack the field and 33 have it empty of 51,474 data/corpus records (39 book dirs, recursive walk, _parity excluded), 48,673 of them with a non-empty raw_tokens list",
+    "maps_to": "Text",
+    "rule": "Not a token type: an ingester artifact. These records were written by the older kind ingesters (feat/spell/equipment) that emitted `data.description` plus typed fields and no token list. The converter does NOT read `raw_tokens`; its input is the `.lst` closure resolved from `source.path:line` in the pinned oracle tree (`token_closure_rows`), which exists for all 921 (0 rows not found). Read that way, 710 of the 921 rows carry a DESC/BENEFIT/SPROP/ASPECT token and follow the rows above; 211 carry no prose token at all (the ARG `Kobold Scale Color` helper feats, ABP `Multitalented Mastery` sub-records, UE equipment mods) -- their sheet line is label + whatever value the bonus lane derives (`Bonus Hit Point +1`), or the label alone, and they are `Text` with empty prose. 752 of the 921 already have a rendered `data.description`; the converter's prose must equal it byte-for-byte for the parity sample (prose.md §4).",
+    "expr_shape": "n/a",
+    "expr_gaps": [],
+    "applies_shape": "from the row's own PRE* (prereq lane)",
+    "prose_effect": "prose from the source row; empty for the 211",
+    "examples": [
+      {
+        "record": "advanced_class_guide:feat:Amateur Investigator",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst (unit advanced_class_guide:feat:amateur_investigator; no raw_tokens field, description present)",
+        "raw": "(no raw_tokens; data.description = the feat's BENEFIT text as ingested)",
+        "sheet_line": "Amateur Investigator: <the ingested description, re-derived from the .lst row>"
+      },
+      {
+        "record": "advanced_race_guide:feat:Black",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst:340",
+        "raw": "Black \\t CATEGORY:Kobold Scale Color \\t TYPE:Kobold Scale Color \\t PREMULT:1,[PREABILITY:1,CATEGORY=Kobold Scale Color,Black],[...] \\t BONUS:VAR|AcidResistanceBonus|5|TYPE=Resistance|PREMULT:... \\t SOURCEPAGE:p.136",
+        "sheet_line": "Black   [no prose token; value from the bonus lane if it maps BONUS:VAR|AcidResistanceBonus, else label alone]"
+      },
+      {
+        "record": "advanced_race_guide:feat:Multitalented Mastery ~ Bonus Hit Point",
+        "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst (unit ...:multitalented_mastery_bonus_hit_point)",
+        "raw": "Bonus Hit Point \\t KEY:Multitalented Mastery ~ Bonus Hit Point \\t CATEGORY:Special Ability \\t TYPE:MultitalentedMasteryBonus \\t VISIBLE:DISPLAY \\t STACK:YES \\t MULT:YES \\t CHOOSE:NOCHOICE",
+        "sheet_line": "Bonus Hit Point   [empty prose; Text; sheet-complete]"
+      }
+    ],
+    "oracle_check": "sheet-line only; the 752 with a shipped description are the parity sample against `data.description`",
+    "confidence": "high",
+    "open_questions": [
+      "Is `label alone, empty prose` acceptable as sheet-complete for the 211 prose-less rows, or does the operator want them `Refused { no_prose_token }`? This lane says complete: the row has nothing more to print."
+    ],
+    "family": "prose"
+  }
+]

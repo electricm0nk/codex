@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)",
+    "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)",
+    "description": "Spend an hour sitting on the grave of someone who suffered an accidental death. You must reflect on how chance has wronged you and vocally reject the influence of any gods associated with these wrongs. If no suitable grave exists, spend an hour telling strangers howv their religious beliefs and hopes for a just afterlife are folly and of no consequence. Alternatively, you can write this screed and post it in a public place within a settlement. If you're away from civilization, you can instead spend an hour sabotaging a path, bridge, tool, or other device so that it's dangerous for the next person who uses it. You gain a +4 profane bonus on Craft (traps) or Disable Device checks, chosen when you complete the obedience.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 336,
+    "record_key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_faiths:isf_abilities_faith.lst:336"
+  }
+}

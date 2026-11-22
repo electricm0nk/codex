@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Worg ~ Mastery",
+    "delivery": null,
+    "description": "Once per day as a standard action, the worg can make a fearful howl. This functions as the fear cone (30 ft.) version of the fear universal monster rule.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_combat:companion:worg_mastery",
+    "name": "Mastery (7th Level)",
+    "owners": [
+      "inner_sea_combat:companion:companion_worg"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, the worg can make a fearful howl. This functions as the fear cone (30 ft.) version of the fear universal monster rule."
+      },
+      {
+        "key": "KEY",
+        "value": "Worg ~ Mastery"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality"
+    ]
+  },
+  "ingested_at": "2026-08-12T13:12:24Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
+    "record_key": "Worg ~ Mastery",
+    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

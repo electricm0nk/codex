@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Alignment Channel",
+    "name": "Alignment Channel (Mythic)",
+    "description": "The power of your faith harms all creatures that follow the alignment you abhor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Alignment Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of your faith harms all creatures that follow the alignment you abhor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Your channeled energy affects any creatures with the alignment chosen when you took Alignment Channel (not just outsiders, and not just those with the alignment subtype), but grants only half healing or deals only half damage to these targets. Alternatively, you can expend two uses of mythic power when using Alignment Channel to affect all targets of the chosen alignment as if they had that alignment subtype."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 247,
+    "record_key": "Mythic Feat Output ~ Alignment Channel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

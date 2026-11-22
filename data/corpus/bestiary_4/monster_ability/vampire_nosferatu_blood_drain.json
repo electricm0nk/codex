@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Blood Drain",
+    "delivery": "Extraordinary",
+    "description": "A nosferatu can suck blood from a helpless, willing, or grappled living victim with its fangs by making a successful grapple check. If it pins the foe, it drains blood, draining 1d4 points of Constitution and Wisdom each round the pin is maintained. On each round it drains blood, the nosferatu gains 5 temporary hit points that last for 1 hour (up to a maximum number of temporary hit points equal to its full normal hit points).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_blood_drain",
+    "name": "Blood Drain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nosferatu can suck blood from a helpless, willing, or grappled living victim with its fangs by making a successful grapple check. If it pins the foe, it drains blood, draining 1d4 points of Constitution and Wisdom each round the pin is maintained. On each round it drains blood, the nosferatu gains 5 temporary hit points that last for 1 hour (up to a maximum number of temporary hit points equal to its full normal hit points)."
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire (Nosferatu) ~ Blood Drain"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1408,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Vampire (Nosferatu) ~ Blood Drain",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

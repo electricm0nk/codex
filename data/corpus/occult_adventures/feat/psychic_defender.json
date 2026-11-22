@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Psychic Defender",
+    "category": "General",
+    "name": "Psychic Defender",
+    "description": "You are adept at defending yourself during psychic duels. Each time you enter a psychic duel, you gain a number of temporary hit points equal to your manifesting level (see Psychic Duels on page 202). These temporary hit points last until the end of the psychic duel.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity],[PRECLASS:1,TYPE.Psychic=1]",
+      "PREPCLEVEL:MIN=3",
+      "PRESTAT:1,INT=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 54,
+    "record_key": "Psychic Defender"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

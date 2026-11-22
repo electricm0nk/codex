@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Ophiduan Scholar ~ Knowledge Skill Bonus",
+    "name": "Knowledge Skill Bonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ophiduan Scholar ~ Knowledge Skill Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.OphiduanScholarBonus"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Knowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|%LIST|OphiduanScholarBonus|TYPE=Racial"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 320,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Ophiduan Scholar ~ Knowledge Skill Bonus",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions like bless, except as noted. It works only in the caster's home city, and in areas under the jurisdiction of the city watch. For example, if the watch patrols a shantytown outside the city walls but not the ruined subterranean tunnels that lie beneath the city, the spell works in the former area but not the latter.",
+    "key": "Blessing of the Watch",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Paladin=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like bless, except as noted. It works only in the caster's home city, and in areas under the jurisdiction of the city watch. For example, if the watch patrols a shantytown outside the city walls but not the ruined subterranean tunnels that lie beneath the city, the spell works in the former area but not the latter."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Blessing of the Watch"
+      },
+      {
+        "key": "RANGE",
+        "value": "50 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Caster and all allies within a 50-ft. burst centered on the caster"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Blessing of the Watch",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

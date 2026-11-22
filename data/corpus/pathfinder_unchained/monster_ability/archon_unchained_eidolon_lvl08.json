@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Archon ~ Unchained Eidolon LVL08",
+    "delivery": null,
+    "description": "At 8th level, archon eidolons gain the ability increase evolution, applied to an ability score the summoner chooses.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl08",
+    "name": "Eidolon Progession Lv.8",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Ability Increase"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, archon eidolons gain the ability increase evolution, applied to an ability score the summoner chooses."
+      },
+      {
+        "key": "KEY",
+        "value": "Archon ~ Unchained Eidolon LVL08"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ArchonLVL8"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ArchonLVL8"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 114,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Archon ~ Unchained Eidolon LVL08",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

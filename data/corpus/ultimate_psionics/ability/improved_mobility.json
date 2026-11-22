@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Heartstaff ~ Improved Mobility",
+    "name": "Improved Mobility",
+    "description": "Psicrystal's movement increased by 10 ft.; can use self-propulsion as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heartstaff ~ Improved Mobility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Psicrystal's movement increased by 10 ft.; can use self-propulsion as a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.437"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 211,
+    "record_key": "Heartstaff ~ Improved Mobility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

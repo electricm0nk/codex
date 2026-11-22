@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Arcane Armor Training",
+    "category": "Combat",
+    "name": "Arcane Armor Training",
+    "description": "You have learned how to cast spells while wearing armor.",
+    "prerequisites": [
+      "PREMULT:1,[PRECLASS:1,SPELLCASTER=3],[PREVARGTEQ:CasterLevel_Highest,3]",
+      "PREMULT:1,[PREPROFWITHARMOR:1,TYPE.Light],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Light)]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 17,
+    "record_key": "Arcane Armor Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

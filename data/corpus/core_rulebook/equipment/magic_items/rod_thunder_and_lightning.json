@@ -1,0 +1,119 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 33000.0,
+    "description": "Constructed of iron set with silver rivets, this rod has the properties of a +2 light mace. Its other powers are as follows.\n* Thunder: Once per day, the rod can strike as a +3 light mace, and the opponent struck is stunned from the noise of the rod's impact (Fortitude DC 16 negates). Activating this sonic power counts as a free action, and it works if the wielder strikes an opponent within 1 round.\n* Lightning: Once per day, when the wielder desires, a short spark of electricity can leap forth when the rod strikes an opponent to deal the normal damage for a +2 light mace (1d6+2) and an extra 2d6 points of electricity damage. Even when the rod might not score a normal hit in combat, if the roll was good enough to count as a successful melee touch attack, then the 2d6 points of electricity damage still apply. The wielder activates this power as a free action, and it works if he strikes an opponent within 1 round.\n* Thunderclap: Once per day as a standard action, the wielder can cause the rod to give out a deafening noise, just as a shout spell (Fortitude DC 16 partial, 2d6 points of sonic damage, target deafened for 2d6 rounds).\n* Lightning Stroke: Once per day as a standard action, the wielder can cause the rod to shoot out a 5-foot-wide lightning bolt (9d6 points of electricity damage, Reflex DC 16 half ) to a range of 200 feet.\n* Thunder and Lightning: Once per week as a standard action, the wielder of the rod can combine the thunderclap described above with a lightning bolt, as in the lightning stroke. The thunderclap affects all within 10 feet of the bolt. The lightning stroke deals 9d6 points of electricity damage (count rolls of 1 or 2 as rolls of 3, for a range of 27 to 54 points), and the thunderclap deals 2d6 points of sonic damage. A single DC 16 Reflex save applies for both effects.",
+    "key": "Rod (Thunder and Lightning)",
+    "name": "Rod",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Thunder and Lightning)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Thunder and Lightning"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mace (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Weapon.Resizable.Melee.Simple.Light.Finesseable.Bludgeoning.Mace.Hammer.Weapon Group Hammers"
+      },
+      {
+        "key": "COST",
+        "value": "33000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.489"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|16,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, Craft Rod, lightning bolt, shout"
+      },
+      {
+        "key": "DESC",
+        "value": "Constructed of iron set with silver rivets, this rod has the properties of a +2 light mace. Its other powers are as follows.&nl;* Thunder: Once per day, the rod can strike as a +3 light mace, and the opponent struck is stunned from the noise of the rod's impact (Fortitude DC 16 negates). Activating this sonic power counts as a free action, and it works if the wielder strikes an opponent within 1 round.&nl;* Lightning: Once per day, when the wielder desires, a short spark of electricity can leap forth when the rod strikes an opponent to deal the normal damage for a +2 light mace (1d6+2) and an extra 2d6 points of electricity damage. Even when the rod might not score a normal hit in combat, if the roll was good enough to count as a successful melee touch attack, then the 2d6 points of electricity damage still apply. The wielder activates this power as a free action, and it works if he strikes an opponent within 1 round.&nl;* Thunderclap: Once per day as a standard action, the wielder can cause the rod to give out a deafening noise, just as a shout spell (Fortitude DC 16 partial, 2d6 points of sonic damage, target deafened for 2d6 rounds).&nl;* Lightning Stroke: Once per day as a standard action, the wielder can cause the rod to shoot out a 5-foot-wide lightning bolt (9d6 points of electricity damage, Reflex DC 16 half ) to a range of 200 feet.&nl;* Thunder and Lightning: Once per week as a standard action, the wielder of the rod can combine the thunderclap described above with a lightning bolt, as in the lightning stroke. The thunderclap affects all within 10 feet of the bolt. The lightning stroke deals 9d6 points of electricity damage (count rolls of 1 or 2 as rolls of 3, for a range of 27 to 54 points), and the thunderclap deals 2d6 points of sonic damage. A single DC 16 Reflex save applies for both effects."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 462,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Thunder and Lightning)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

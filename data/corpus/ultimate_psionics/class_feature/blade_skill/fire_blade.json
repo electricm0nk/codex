@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Fire Blade",
+    "name": "Fire Blade",
+    "class": "Blade Skill",
+    "description": "When you make an attack with your mind blade, you can choose to have it deal fire damage instead of its normal damage.  In addition, you can expend your psionic focus when you hit with an attack to deal an additional +1d10 fire damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Fire Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality.EnergyBladeSkill"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make an attack with your mind blade, you can choose to have it deal fire damage instead of its normal damage.  In addition, you can expend your psionic focus when you hit with an attack to deal an additional +1d10 fire damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 770,
+    "record_key": "Blade Skill ~ Fire Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Magic Boulder",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "This spell works like magic stone, except you transmute as many as three boulders (rocks up to two size categories smaller than yourself) to use with the rock throwing ability or as siege engine ammunition. The boulder's damage increases by one step, and the boulder gains a + 1 enhancement bonus on attack and damage rolls."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 19,
+    "record_key": "Magic Boulder"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

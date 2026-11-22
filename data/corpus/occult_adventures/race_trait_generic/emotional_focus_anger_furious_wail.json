@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Anger ~ Furious Wail",
+    "name": "Furious Wail",
+    "description": "When the spiritualist reaches 17th level, once per day as a standard action, the phantom can emit a single angry wail that acts as wail of the banshee. The phantom uses its Hit Dice as its caster level for the effect, and the DC of the effect is 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier. The phantom can use this ability in either ectoplasmic or incorporeal form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Anger ~ Furious Wail"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2g"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Anger.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the spiritualist reaches 17th level, once per day as a standard action, the phantom can emit a single angry wail that acts as wail of the banshee. The phantom uses its Hit Dice as its caster level for the effect, and the DC of the effect is 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier. The phantom can use this ability in either ectoplasmic or incorporeal form."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 66,
+    "record_key": "Emotional Focus / Anger ~ Furious Wail"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

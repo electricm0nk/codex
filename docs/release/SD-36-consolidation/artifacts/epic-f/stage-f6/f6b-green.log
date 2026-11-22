@@ -1,0 +1,23 @@
+# F6b GREEN: cargo test --locked -j 8 --lib -- --test-threads=8 --nocapture hit_die_source feat_skill_bonus
+test rules_core::pilot_compute::feat_skill_bonus_sheet_rules::tests::the_fold_stacks_by_bonus_type ... ok
+test rules_core::pilot_compute::hit_die_source::tests::the_five_hp_unknown_classes_now_print_hp ... ok
+137 census ids: both tiers 31, bespoke only 0, converted only 106, neither 0; disagree ["class:monk: bespoke d8, converted d10"]
+test rules_core::pilot_compute::hit_die_source::tests::bespoke_and_converted_dice_agree_except_the_fs23_monk ... ok
+chassis-record dice compared: 132 of 137 census ids
+test rules_core::pilot_compute::hit_die_source::tests::every_chassis_record_die_is_unchanged_by_the_source_rule ... ok
+test rules_core::pilot_compute::feat_skill_bonus_sheet_rules::tests::alertness_adds_two_to_perception_and_sense_motive_at_level_one ... ok
+test rules_core::pilot_compute::feat_skill_bonus_sheet_rules::tests::the_fixture_s_own_feats_fold_nothing ... ok
+test rules_core::pilot_compute::hit_die_source::tests::the_class_line_prints_the_die_its_hit_points_are_computed_from ... ok
+feat slugs with a skill-bonus rule: 43 (115 rules)
+  fold into a skill total: 40 ["acrobatic", "alertness", "angelic_flesh", "animal_affinity", "aquatic_combatant", "athletic", "autonomous", "breadth_of_experience", "brewmaster", "deceitful", "deft_hand", "deft_hands", "exquisite_sneak", "improvisation", "intimidating_prowess", "magical_aptitude", "master_alchemist", "monkey_moves", "monkey_style", "noble_scion", "oracular_intuition", "persuasive", "scarred_legion", "scavenger_s_eye", "sea_legs", "seen_and_unseen", "self_sufficient", "snake_style", "stealthy", "street_smarts", "sure_and_fleet", "trlbal_scars_bearpelt", "trlbal_scars_greattusk", "trlbal_scars_ice_chasm", "trlbal_scars_night_hunt", "trlbal_scars_raptorscale", "trlbal_scars_slothjaw", "twilight_tattoo", "uncanny_alertness", "voice_of_the_sibyl"]
+  situational only (printed, not added): 2 ["advanced_infiltrator_path", "taldan_duelist"]
+  Unknown (words): 0 []
+  no skill line rendered on the fixture: 1 ["sociable"]
+test rules_core::pilot_compute::feat_skill_bonus_sheet_rules::tests::every_skill_bonus_feat_is_counted ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2739 filtered out; finished in 50.68s
+EXIT=0
+
+# frontend (apps/desktop): tsx classRoster / skillsModel / characterProgression
+classRoster.test.ts exit=0
+skillsModel.test.ts exit=0
+characterProgression.test.ts exit=0

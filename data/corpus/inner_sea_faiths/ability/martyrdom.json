@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Milani ~ Martyrdom",
+    "name": "Martyrdom",
+    "description": "If you have performed your daily obedience, as an immediate action once per day, whenever a single creature within 300 feet of you is slain by an effect or hit point damage, you can redirect that effect or damage onto yourself. You gain no saving throw to reduce effects redirected in this manner. If the effect kills you, you are restored to life in 1d4 rounds, as per resurrection, but once this resurrection effect occurs, you lose the ability to use martyrdom for 1 year.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Milani ~ Martyrdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, as an immediate action once per day, whenever a single creature within 300 feet of you is slain by an effect or hit point damage, you can redirect that effect or damage onto yourself. You gain no saving throw to reduce effects redirected in this manner. If the effect kills you, you are restored to life in 1d4 rounds, as per resurrection, but once this resurrection effect occurs, you lose the ability to use martyrdom for 1 year."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 284,
+    "record_key": "Sentinel Boon ~ Milani ~ Martyrdom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

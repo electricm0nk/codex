@@ -1,0 +1,397 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/equipment_data/equipmods/EQUIPMODS_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Special Ability ~ Amorphous ~ Armor",
+      "category": "Equipmods",
+      "name": "Amorphous",
+      "cost_gp": 4500.0,
+      "weight_lbs": null,
+      "description": "1/day take form of viscous liquid"
+    },
+    {
+      "key": "Special Ability ~ Burdenless ~ Armor",
+      "category": "Equipmods",
+      "name": "Burdenless",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "Carrying capacity increased by 50%"
+    },
+    {
+      "key": "Special Ability ~ Calming ~ Armor",
+      "category": "Equipmods",
+      "name": "Calming",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "10 rounds/day create 5' aura that supresses rage or emotion effects (DC 15 Will negates)"
+    },
+    {
+      "key": "Special Ability ~ Jarring ~ Armor",
+      "category": "Equipmods",
+      "name": "Jarring",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day daze attacker for 1 round (DC 16 Fortitude negates)"
+    },
+    {
+      "key": "Special Ability ~ Restful ~ Armor",
+      "category": "Equipmods",
+      "name": "Restful",
+      "cost_gp": 4500.0,
+      "weight_lbs": null,
+      "description": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor"
+    },
+    {
+      "key": "Special Ability ~ Sensing ~ Armor",
+      "category": "Equipmods",
+      "name": "Sensing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Gain 5-foot blindsight and 60-foot darksense when wearer can't see"
+    },
+    {
+      "key": "Special Ability ~ Spell Dodging ~ Armor",
+      "category": "Equipmods",
+      "name": "Spell Dodging",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+4 dodge AC against attack rolls from spells, spell-like abilities, and attacks of summoned creatures"
+    },
+    {
+      "key": "Special Ability ~ Spiteful ~ Armor",
+      "category": "Equipmods",
+      "name": "Spiteful",
+      "cost_gp": 7000.0,
+      "weight_lbs": null,
+      "description": "If wearer has panache class feature, can spend 1 panache point to make melee attack aginst creature that reduced wearer to below 0 hp"
+    },
+    {
+      "key": "Special Ability ~ Trackless ~ Armor",
+      "category": "Equipmods",
+      "name": "Trackless",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+5 on Stealth; Survival checks to track wearer take -5 penalty"
+    },
+    {
+      "key": "Special Ability ~ Vouchsafing ~ Armor",
+      "category": "Equipmods",
+      "name": "Vouchsafing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Gain stacking DR 5/- when unconscious, nauseated, stunned, or pinned"
+    },
+    {
+      "key": "Special Ability ~ Answering ~ Weapon",
+      "category": "Equipmods",
+      "name": "Answering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus increases by 4 (to a max of 5) for the purpose of the opportune parry and riposte deed"
+    },
+    {
+      "key": "Special Ability ~ Blood-Hunting ~ Weapon",
+      "category": "Equipmods",
+      "name": "Blood-Hunting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with bloodline"
+    },
+    {
+      "key": "Special Ability ~ Bloodsong ~ Weapon",
+      "category": "Equipmods",
+      "name": "Bloodsong",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon gains keen ability when wielder benefits from raging song; gain 1d10 temporary hit points if wearer confirms critical while under raging song (2d10 if crit multiplier is x3, 3d10 if crit multiplier is x4)"
+    },
+    {
+      "key": "Special Ability ~ Brawling ~ Weapon",
+      "category": "Equipmods",
+      "name": "Brawling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder gains enhancement bonus on combat maneuver checks equal to the enhancement bonus of the weapon"
+    },
+    {
+      "key": "Special Ability ~ Confounding ~ Weapon",
+      "category": "Equipmods",
+      "name": "Confounding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a enhancement bonus equal to the weapon's enhancement bonus"
+    },
+    {
+      "key": "Special Ability ~ Distracting ~ Weapon",
+      "category": "Equipmods",
+      "name": "Distracting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 5 for 1 minute; can't be affected again for 24 hours"
+    },
+    {
+      "key": "Special Ability ~ Distracting / Greater ~ Weapon",
+      "category": "Equipmods",
+      "name": "Distracting (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours"
+    },
+    {
+      "key": "Special Ability ~ Exclusionary ~ Weapon",
+      "category": "Equipmods",
+      "name": "Exclusionary",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions"
+    },
+    {
+      "key": "Special Ability ~ Exhausting ~ Melee",
+      "category": "Equipmods",
+      "name": "Exhausting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on critical hit, wielder can forgo additional damage to cause exhaustion"
+    },
+    {
+      "key": "Special Ability ~ Fate-Stealing ~ Melee",
+      "category": "Equipmods",
+      "name": "Fate-Stealing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "steal 1 grit or panache point from target as swift action"
+    },
+    {
+      "key": "Special Ability ~ Flamboyant ~ Melee",
+      "category": "Equipmods",
+      "name": "Flamboyant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 1 panache point"
+    },
+    {
+      "key": "Special Ability ~ Flamboyant / Greater ~ Melee",
+      "category": "Equipmods",
+      "name": "Flamboyant (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 3 panache points"
+    },
+    {
+      "key": "Special Ability ~ Flying ~ Melee",
+      "category": "Equipmods",
+      "name": "Flying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "as dancing but 30 ft. away; weapon returns to wielder as swift action (500 ft./rd), attempts sunder to return if needed"
+    },
+    {
+      "key": "Special Ability ~ Fortuitous ~ Melee",
+      "category": "Equipmods",
+      "name": "Fortuitous",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "if first attack of opportunity hits, can make second at -5 penalty"
+    },
+    {
+      "key": "Special Ability ~ Inspired ~ Weapon",
+      "category": "Equipmods",
+      "name": "Inspired",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "investigator need only spend one use of inspiration to augment attack rolls; add twice result to damage with combat inspiration talent"
+    },
+    {
+      "key": "Special Ability ~ Phantom Ammunition ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Phantom Ammunition",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "ammunition dissolves and wound closes 1 round after fired"
+    },
+    {
+      "key": "Special Ability ~ Prehensile ~ Melee",
+      "category": "Equipmods",
+      "name": "Prehensile",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike"
+    },
+    {
+      "key": "Special Ability ~ Sacred ~ Weapon",
+      "category": "Equipmods",
+      "name": "Sacred",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "acts as holy symbol; if wielder has blessings class feature, when channeling energy can choose one ally or ally's weapon within the area to get one of his minor blessings at a cost of one use of that blessing"
+    },
+    {
+      "key": "Special Ability ~ Sneaky ~ Melee",
+      "category": "Equipmods",
+      "name": "Sneaky",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "1/day designate foe as prey: get sneak attack damage on next attack; use 2/day if user is rogue or slayer with hunter's surprise talent"
+    },
+    {
+      "key": "Special Ability ~ Spirit-Hunting ~ Weapon",
+      "category": "Equipmods",
+      "name": "Spirit-Hunting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with mystery or spirit"
+    },
+    {
+      "key": "Special Ability ~ Answering ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Answering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus increases by 4 (to a max of 5) when wielder is using the opportune parry and riposte deed"
+    },
+    {
+      "key": "Special Ability ~ Blood-Hunting ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Blood-Hunting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with bloodline"
+    },
+    {
+      "key": "Special Ability ~ Bloodsong ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Bloodsong",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon gains keen ability when wielder benefits from raging song; gain 1d10 temporary hit points if wearer confirms critical while under raging song (2d10 if crit multiplier is x3, 3d10 if crit multiplier is x4)"
+    },
+    {
+      "key": "Special Ability ~ Brawling ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Brawling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder gains enhancement bonus on combat maneuver checks equal to the enhancement bonus of the weapon"
+    },
+    {
+      "key": "Special Ability ~ Confounding ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Confounding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a bonus equal to the weapon's enhancement bonus"
+    },
+    {
+      "key": "Special Ability ~ Distracting ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Distracting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 5 for 1 minute; can't be affected again for 24 hours"
+    },
+    {
+      "key": "Special Ability ~ Distracting / Greater ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Distracting (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours"
+    },
+    {
+      "key": "Special Ability ~ Exclusionary ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Exclusionary",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions"
+    },
+    {
+      "key": "Special Ability ~ Exhausting ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Exhausting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on critical hit, wielder can forgo additional damage to cause exhaustion"
+    },
+    {
+      "key": "Special Ability ~ Fate-Stealing ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Fate-Stealing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "steal 1 grit or panache point from target as swift action"
+    },
+    {
+      "key": "Special Ability ~ Flamboyant ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Flamboyant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 1 panache point"
+    },
+    {
+      "key": "Special Ability ~ Flamboyant / Greater ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Flamboyant (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "has 3 panache points"
+    },
+    {
+      "key": "Special Ability ~ Flying ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Flying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "as dancing but 30 ft. away; weapon returns to wielder as swift action (500 ft./rd), attempts sunder to return if needed"
+    },
+    {
+      "key": "Special Ability ~ Fortuitous ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Fortuitous",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "if first attack of opportunity hits, can make second at -5 penalty"
+    },
+    {
+      "key": "Special Ability ~ Inspired ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Inspired",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "investigator need only spend one use of inspiration to augment attack rolls; add twice result to damage with combat inspiration talent"
+    },
+    {
+      "key": "Special Ability ~ Sacred ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Sacred",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "acts as holy symbol; if wielder has blessings class feature, when channeling energy can choose one ally or ally's weapon within the area to get one of his minor blessings at a cost of one use of that blessing"
+    },
+    {
+      "key": "Special Ability ~ Sneaky ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Sneaky",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "1/day designate foe as prey: get sneak attack damage on next attack; use 2/day if user is rogue or slayer with hunter's surprise talent"
+    },
+    {
+      "key": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists",
+      "category": "Equipmods",
+      "name": "Spirit-Hunting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement, +2d6 damage against foe with mystery or spirit"
+    }
+  ]
+}

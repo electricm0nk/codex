@@ -1,0 +1,273 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Cleric ~ Class",
+    "name": "Cleric",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Archetype|AUTOMATIC|Archetype Cleric"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Cleric|PREVAREQ:Cleric_CF_ClassSkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CFP_Level|ClericLVL|TYPE=Base"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cleric ~ Weapon and Armor Proficiency|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cleric ~ Aura|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cleric ~ Channel Energy|PREVAREQ:Cleric_CF_ChannelEnergy,0|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cleric ~ Orisons|PREVAREQ:Cleric_CF_Orisons,0|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cleric ~ Spontaneous Casting|PREVAREQ:Cleric_CF_SpontaneousCasting,0|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cleric ~ Domains|PREVARGTEQ:Cleric_CFP_Level,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_Orisons|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_SpontaneousCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_Domains|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_WeaponProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_SkillRanks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_Spellcasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cleric_CF_ChannelEnergy10|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_Orisons|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_Orisons=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_SpontaneousCasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_SpontaneousCasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_Domains|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_Domains=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_WeaponProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_WeaponProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_SkillRanks|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_SkillRanks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_Spellcasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_Spellcasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Cleric_CF_ChannelEnergy10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_ChannelEnergy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ClericChannelEnergy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_Orisons|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ClericOrisons"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cleric_CF_SpontaneousCasting|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ClericSpontaneousCasting"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 100,
+    "record_key": "Cleric ~ Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

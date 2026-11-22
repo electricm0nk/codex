@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Sharpclaw",
+    "name": "Sharpclaw",
+    "description": "Your nails are large and strong.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Sharpclaw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsRatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Your nails are large and strong."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Sharpclaw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Finesseable,*2,1d4"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain two claw attacks. These are primary natural attacks that deal 1d4 points of damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 55,
+    "record_key": "Warpriest Bonus Feat ~ Sharpclaw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

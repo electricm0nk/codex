@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Blood of Dragons ~ Saving Throw",
+    "name": "Blood of Dragons ~ Saving Throw",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blood of Dragons"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 trait bonus on saving throws against effects that cause sleep or paralysis"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 246,
+    "record_key": "Blood of Dragons ~ Saving Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Akvan ~ Shake Faith",
+    "delivery": "Supernatural",
+    "description": "Anytime an akvan strikes a divine spellcaster with any of its melee attacks, the target must make a DC 30 Will save or be shaken for 1d4 rounds. If the save is successful, the target is instead shaken for 1 round. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:akvan_shake_faith",
+    "name": "Shake Faith",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Anytime an akvan strikes a divine spellcaster with any of its melee attacks, the target must make a DC 30 Will save or be shaken for 1d4 rounds. If the save is successful, the target is instead shaken for 1 round. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Akvan ~ Shake Faith"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "AkvanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "AkvanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 711,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Akvan ~ Shake Faith",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

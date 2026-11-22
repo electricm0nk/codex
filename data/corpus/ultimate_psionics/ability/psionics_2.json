@@ -1,0 +1,97 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Dedication has opened your third eye, allowing your psychic power to spring forth in a cascade of potential.",
+    "key": "Psionics Domain",
+    "name": "Psionics",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionics Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Dedication has opened your third eye, allowing your psychic power to spring forth in a cascade of potential."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionics Domain ~ Granted Power|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionics Domain ~ Psionic Amplifier|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionics Domain ~ Dispelling Touch|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsDC|10+(DomainPsionicsLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Psionics=1|Charm Person|Psionics=2|Detect Thoughts|Psionics=3|Seek Thoughts|Psionics=4|Charm Monster|Psionics=5|Telepathic Bond|Psionics=6|Suggestion (Mass)|Psionics=7|Insanity|Psionics=8|Mind Blank|Psionics=9|Foresight"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 112,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Psionics Domain",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

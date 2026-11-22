@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "In dim light, catfolk can see twice as far as humans.",
+    "key": "Catfolk ~ Vision",
+    "name": "Low-Light Vision",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Catfolk_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "In dim light, catfolk can see twice as far as humans."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasRacialVision|1"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "record_key": "Catfolk ~ Vision",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

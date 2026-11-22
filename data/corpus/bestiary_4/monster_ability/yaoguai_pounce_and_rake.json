@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yaoguai ~ Pounce and Rake",
+    "delivery": "Extraordinary",
+    "description": "The yaoguai gains pounce and rake (2 claws +14, 1d8+7)",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:yaoguai_pounce_and_rake",
+    "name": "Pounce and Rake",
+    "owners": [
+      "bestiary_4:monster:yaoguai"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pounce|Rake"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The yaoguai gains pounce and rake (2 claws +14, 1d8+7)"
+      },
+      {
+        "key": "KEY",
+        "value": "Yaoguai ~ Pounce and Rake"
+      },
+      {
+        "key": "TYPE",
+        "value": "YaoguaiMakersGift.SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "YaoguaiMakersGift"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1479,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Yaoguai ~ Pounce and Rake",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

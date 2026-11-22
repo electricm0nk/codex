@@ -1,0 +1,4 @@
+Quoted from the first ui-smoke run, on the tag-only weapon test:
+
+FAIL  sheet-market-starfinder-refused  -- target not found: 'Laser rifle, corona (no element named 'Laser rifle, corona')' at row step 10/12 (click "Laser rifle, corona")
+The record's tags are ['Fire', 'LASER']: python3 over data/starfinder-1e/sheet_rules/*/equipment/*.json, of 1,080 records stating a Damage row 978 have no Weapon tag.

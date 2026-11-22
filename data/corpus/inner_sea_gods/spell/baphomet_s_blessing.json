@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You change the target's head into that of a bull. The creature's  Intelligence becomes 2, and it gains a gore melee attack that  it can use as a primary or secondary attack. The gore attack  uses the creature's base attack bonus, and the creature gains  a +2 bonus on attack and damage rolls with the gore attack.  The gore attack deals a number of points of damage equal to  1d6 + Strength modifier if the target is Small, 1d8 + Strength  modifier if the target is Medium, and 2d6 + Strength modifier if  the target is Large or larger.  The affected creature still retains its type, class, levels, and  Hit Dice. The creature's base attack bonus, base save bonuses,  and hit points remain unmodified. It retains all of its class  features and may still cast spells, though it must do so using  its newly modified Intelligence score. Any items equipped in  the creature's head slot meld into its body. Affected items that  grant passive bonuses continue to do so, though items that  require activation become nonfunctional for the duration of  the spell.  If the target fails to resist Baphomet's blessing, it also  becomes immune to polymorph spells (except for this one)  for the duration of the spell's effect. Undead, incorporeal, or  gaseous creatures are immune to Baphomet's blessing.",
+    "key": "Baphomet's Blessing",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, M,/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You change the target's head into that of a bull. The creature's  Intelligence becomes 2, and it gains a gore melee attack that  it can use as a primary or secondary attack. The gore attack  uses the creature's base attack bonus, and the creature gains  a +2 bonus on attack and damage rolls with the gore attack.  The gore attack deals a number of points of damage equal to  1d6 + Strength modifier if the target is Small, 1d8 + Strength  modifier if the target is Medium, and 2d6 + Strength modifier if  the target is Large or larger.  The affected creature still retains its type, class, levels, and  Hit Dice. The creature's base attack bonus, base save bonuses,  and hit points remain unmodified. It retains all of its class  features and may still cast spells, though it must do so using  its newly modified Intelligence score. Any items equipped in  the creature's head slot meld into its body. Affected items that  grant passive bonuses continue to do so, though items that  require activation become nonfunctional for the duration of  the spell.  If the target fails to resist Baphomet's blessing, it also  becomes immune to polymorph spells (except for this one)  for the duration of the spell's effect. Undead, incorporeal, or  gaseous creatures are immune to Baphomet's blessing."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "KEY",
+        "value": "Baphomet's Blessing"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Baphomet's Blessing",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Your land speed is faster than the norm for your race by %1 feet.|floor(ElfBrawlerFavClassBonus/5)",
+    "key": "Elf ~ Brawler ~ Fast Movement",
+    "name": "Fast Movement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Brawler ~ Fast Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ModifyMovement"
+      },
+      {
+        "key": "DESC",
+        "value": "Your land speed is faster than the norm for your race by %1 feet.|floor(ElfBrawlerFavClassBonus/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|floor(ElfBrawlerFavClassBonus/5)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Elf ~ Brawler ~ Fast Movement",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ]
+}

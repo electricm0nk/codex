@@ -1,0 +1,40 @@
+{
+  "name": "damage_total_longsword_parity",
+  "epic": "Epic 6 -- Damage-total engine",
+  "shape": "sd20-epic-seam-v1",
+  "shape_note": "SD-20 fixture-shape decision, documented identically across all six Epic 2-7 wire-fixture parity fixtures (spellbook_parity.json, feat_prereqs_parity.json, skill_allocation_parity.json, equipment_effects_parity.json, damage_total_parity.json, level_up_parity.json): technical-design.md section 1.2 illustrates a CharacterInput -> PilotReceipt shaped fixture, but Epic 8's own integration-closure cycle (tests/sd20_tabletop_readiness_integration.rs module doc comment, Finding 1) found Epics 2-7's compute functions are never wired into PilotReceipt / printed_sheet_cell_map at all -- each epic's real seam takes and returns its own distinct type, not a CharacterInput/PilotReceipt pair. Section 1.2's illustrative format therefore does not fit Epics 2-7 as actually landed. This fixture instead captures that epic's OWN real compute function's input -> output round trip directly: {name, epic, seam_function, input, expected_output}, where input/expected_output mirror the real Rust input/output types field-by-field. A Rust enum variant is represented as its Debug-format string; a Rust Option::None is represented as JSON null. Only boundary_contract_parity.json (Epic 1) and human_fighter_level_1_tabletop.json (Epic 8) are genuinely CharacterInput -> PilotReceipt shaped, because only Epic 1's contract and Epic 8's integration test actually route through that pipeline.",
+  "seam_function": "rules_core::damage_total::{resolve_base_damage_dice, resolve_str_damage_modifier, resolve_critical_threat_range, resolve_critical_multiplier}",
+  "input": {
+    "corpus_equipment": {
+      "raw_lst_row": "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\tWIELD:OneHanded",
+      "note": "the same real verbatim Longsword (Base) row copied from core_rulebook/cr_equip_arms_armor.lst that tests/sd20_damage_base_dice.rs / tests/sd20_damage_str_modifier.rs / tests/sd20_damage_critical_threat_range.rs / tests/sd20_damage_critical_multiplier.rs already use"
+    },
+    "weapon_item_id": "Longsword (Base)",
+    "str_modifier": 3,
+    "hand": "Primary"
+  },
+  "expected_output": {
+    "base_dice": {
+      "weapon_record_key": "Longsword (Base)",
+      "base_dice": { "count": 1, "die_size": 8 },
+      "has_table_cell": true
+    },
+    "str_modifier": {
+      "weapon_record_key": "Longsword (Base)",
+      "wield_category": "OneHanded",
+      "hand": "Primary",
+      "str_damage_modifier": 3,
+      "has_table_cell": true
+    },
+    "critical_threat_range": {
+      "weapon_record_key": "Longsword (Base)",
+      "critical_threat_range": [19, 20],
+      "has_table_cell": true
+    },
+    "critical_multiplier": {
+      "weapon_record_key": "Longsword (Base)",
+      "critical_multiplier": 2,
+      "has_table_cell": true
+    }
+  }
+}

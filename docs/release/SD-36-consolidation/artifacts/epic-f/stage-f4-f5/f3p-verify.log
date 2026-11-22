@@ -1,0 +1,91 @@
+== converter --check
+kind template: records=2248 converted=2248 refused=0
+kind trait: records=487 converted=487 refused=0
+EXIT[check]=0
+== residue
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70045
+live_files=0 live_hits=0 verdict=PASS
+EXIT[residue]=0
+== frozen
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f4/site/status-data.json is frozen at 100% (49450 units)
+EXIT[frozen]=0
+== bundle
+files_copied=14029 dst=/home/ubuntu/workspace/worktrees/codex-epic-f4/apps/desktop/src-tauri/resources/corpus_bundle
+EXIT[bundle]=0
+== diff self-test
+Ran 36 tests in 0.438s
+
+OK
+EXIT[selftest]=0
+== sd36_f3_polish
+test p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not ... ok
+test p5_samurai_alone_prints_no_firearms_line ... ok
+test p2_multiclass_save_explanation_lists_each_class_s_save_term ... ok
+test p4_hit_points_unknown_names_the_missing_chassis_record ... ok
+test p1_flurry_attack_bonus_in_a_mix_adds_the_other_classes_bab ... ok
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified has been running for over 60 seconds
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified ... ok
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 104.21s
+EXIT[sd36_f3_polish]=0
+== sd36_multiclass_any_class
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... ok
+test a_mix_of_prestige_classes_only_states_the_game_rule ... ok
+test magus4_samurai2_computes_the_hand_worked_sheet ... ok
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... ok
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... ok
+test a_class_alone_prints_the_class_skill_points_term_the_fold_sums ... ok
+test a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant ... ok
+test sorcerer5_dragon_disciple3_computes_the_hand_worked_sheet ... ok
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... ok
+test wizard5_loremaster2_computes_the_hand_worked_sheet ... ok
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... ok
+test skill_points_unknown_fires_only_for_a_class_still_lacking_the_row ... ok
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 60.42s
+EXIT[sd36_multiclass_any_class]=0
+== sd36_class_skill_from_record
+test psion_class_skills_answer_through_its_canonical_discipline ... ok
+test expert_prints_its_canonical_class_skill_picks ... ok
+test a_seeded_subclass_pick_is_scanned_for_double_grants_against_the_bespoke_join ... ok
+test barbarian_gets_the_class_skill_bonus_its_record_grants ... ok
+test every_census_class_prints_the_class_skill_bonus_its_record_grants has been running for over 60 seconds
+test every_census_class_prints_the_class_skill_bonus_its_record_grants ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 60.07s
+EXIT[sd36_class_skill_from_record]=0
+== sd36_bloodline_pick_option
+test a_race_gated_pick_is_not_held_by_another_race ... ok
+test a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.50s
+EXIT[sd36_bloodline_pick_option]=0
+== sd36_sorcerer_bloodline_record
+test an_arcane_sorcerer_5_prints_no_arcane_apotheosis ... ok
+test a_draconic_sorcerer_5_prints_no_natural_armor_2 ... ok
+test an_arcane_sorcerer_still_prints_swim_3 ... ok
+test a_draconic_sorcerer_5_prints_no_breath_weapon_dc ... ok
+test a_draconic_sorcerer_5_prints_no_power_of_wyrms_blindsense ... ok
+test the_class_skill_union_reads_the_characters_bloodline_pick ... ok
+test an_invented_bloodline_stays_blocked_by_name ... ok
+test an_aquatic_sorcerer_prints_swim_6_on_the_census_fixture ... ok
+test a_draconic_sorcerer_9_holds_breath_weapon_and_the_second_natural_armor_step ... ok
+test a_sorcerer_with_the_draconic_bloodline_computes_at_level_5 ... ok
+test every_bloodline_prints_the_class_skill_bonus_its_record_grants ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.72s
+EXIT[sd36_sorcerer_bloodline_record]=0
+== lib multiclass
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 2692 filtered out; finished in 14.41s
+EXIT[lib multiclass]=0
+== ingest lib
+test result: ok. 658 passed; 0 failed; 11 ignored; 0 measured; 0 filtered out; finished in 50.32s
+EXIT[ingest lib]=0
+== clippy root
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 41.90s
+EXIT[clippy root]=0
+== clippy ingest
+    Checking codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4/crates/codex-ingest)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 13.45s
+EXIT[clippy ingest]=0
+== census
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+EXIT[census]=0

@@ -1,0 +1,10 @@
+$ cargo test --locked -j 8 --bins cpr_adapter -- --test-threads=8   (new adapter tests on the HEAD adapter, root API present)
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... FAILED
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... FAILED
+thread 'cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason' (840156) panicked at src/cpr_adapter.rs:376:66:
+thread 'cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet' (840155) panicked at src/cpr_adapter.rs:348:9:
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 816 filtered out; finished in 0.02s
+  left: [("cpr.stat.int", 7), ("cpr.stat.ref", 8), ("cpr.stat.dex", 6), ("cpr.stat.tech", 5), ("cpr.stat.cool", 4), ("cpr.stat.will", 3), ("cpr.stat.luck", 2), ("cpr.stat.move", 6), ("cpr.stat.body", 5), ("cpr.stat.emp", 8)]

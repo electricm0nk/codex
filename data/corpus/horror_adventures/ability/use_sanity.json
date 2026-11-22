@@ -1,0 +1,77 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Rules ~ Use Sanity",
+    "name": "Use Sanity",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rules ~ Use Sanity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sanity"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SanityScore|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SanityScore|CHASCORE+INTSCORE+WISSCORE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SanityThreshold|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SanityThreshold|max(CHASCORE,INTSCORE,WISSCORE,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SanityEdge|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SanityEdge|SanityScore/2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Rules ~ Use Sanity",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

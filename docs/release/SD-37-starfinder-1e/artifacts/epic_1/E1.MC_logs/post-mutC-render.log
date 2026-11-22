@@ -1,0 +1,12 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 27.80s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+pf-seed-render manifest_dir=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri
+pf-seed-render aldric sha256=1d830682210a0e6e216093a3125593edf1f25539f38547fc832a56c050a5a569 bytes=55037
+pf-seed-render elowen sha256=8d1a711c8519b62b489f47f097d683922568a645f4daabc9c95933c1b2b100f2 bytes=81136
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 639 filtered out; finished in 24.10s
+

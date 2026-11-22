@@ -1,0 +1,46 @@
+== RED 1: converter gate test on the F3c4 package (5bdf879c24), before --write ==
+$ cargo test --locked -j 8 -p codex-ingest --test sheet_rule_convert_gate -- --test-threads=8 an_internal_natural_attack_helper
+test an_internal_natural_attack_helper_converts_as_a_fact_on_the_rule_that_grants_it ... FAILED
+thread 'an_internal_natural_attack_helper_converts_as_a_fact_on_the_rule_that_grants_it' (1424245) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:945:5:
+Dragon Bite grants the Bite natural attack: []
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 47 filtered out; finished in 3.00s
+
+== RED (F3c4b package, 5bdf879c24) ==
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... ok
+test a_mix_of_prestige_classes_only_states_the_game_rule ... ok
+test magus4_samurai2_computes_the_hand_worked_sheet ... ok
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... ok
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... ok
+test a_class_alone_prints_the_class_skill_points_term_the_fold_sums ... ok
+test a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant ... ok
+test sorcerer5_dragon_disciple3_computes_the_hand_worked_sheet ... FAILED
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... ok
+test wizard5_loremaster2_computes_the_hand_worked_sheet ... ok
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... ok
+test skill_points_unknown_fires_only_for_a_class_still_lacking_the_row ... ok
+thread 'sorcerer5_dragon_disciple3_computes_the_hand_worked_sheet' (1432420) panicked at tests/sd36_multiclass_any_class.rs:144:17:
+    "combat.baseline_weapon_proficiency_unknown: the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:sorcerer\", \"class:dragon_disciple\"] has neither a rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known answer from the converted rule package (class:dragon_disciple level 3: the converted closure of `dragon_disciple` at level 3 grants no weapon proficiency, and the package carries no closure-complete attestation that none is owed), so the attack total below is NOT claimed to be correct",
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.71s
+test a_race_gated_pick_is_not_held_by_another_race ... ok
+test a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states ... FAILED
+thread 'a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states' (1432530) panicked at tests/sd36_bloodline_pick_option.rs:62:9:
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.68s
+
+== GREEN (fresh package) ==
+== GREEN (fresh package) ==
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... ok
+test a_mix_of_prestige_classes_only_states_the_game_rule ... ok
+test magus4_samurai2_computes_the_hand_worked_sheet ... ok
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... ok
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... ok
+test a_class_alone_prints_the_class_skill_points_term_the_fold_sums ... ok
+test a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant ... ok
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... ok
+test sorcerer5_dragon_disciple3_computes_the_hand_worked_sheet ... ok
+test wizard5_loremaster2_computes_the_hand_worked_sheet ... ok
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... ok
+test skill_points_unknown_fires_only_for_a_class_still_lacking_the_row ... ok
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.72s
+test a_race_gated_pick_is_not_held_by_another_race ... ok
+test a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s

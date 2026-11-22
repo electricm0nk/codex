@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 85800.0,
+    "description": "This staff is topped with a fist-sized emerald that gleams with smoldering power. It allows the use of the following spells:\n* Move earth (1 charge)\n* Passwall (1 charge)",
+    "key": "Staff of Earth and Stone",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Earth and Stone"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Earth and Stone"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "85800"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.492"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|42,900 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, move earth, passwall"
+      },
+      {
+        "key": "DESC",
+        "value": "This staff is topped with a fist-sized emerald that gleams with smoldering power. It allows the use of the following spells:&nl;* Move earth (1 charge)&nl;* Passwall (1 charge)"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 428,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Earth and Stone",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

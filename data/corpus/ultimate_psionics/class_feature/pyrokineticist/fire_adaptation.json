@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pyrokineticist ~ Fire Adaptation",
+    "name": "Fire Adaptation",
+    "class": "Pyrokineticist",
+    "description": "Gain +%1 saves against fire and heat effects, resistance to fire %2.|FireAdaptation|FireResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pyrokineticist ~ Fire Adaptation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PyrokineticistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireAdaptation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 saves against fire and heat effects, resistance to fire %2.|FireAdaptation|FireResistanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireAdaptation|4*floor((PyrokineticistLVL+3)/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10*floor((PyrokineticistLVL+3)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.375"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1459,
+    "record_key": "Pyrokineticist ~ Fire Adaptation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

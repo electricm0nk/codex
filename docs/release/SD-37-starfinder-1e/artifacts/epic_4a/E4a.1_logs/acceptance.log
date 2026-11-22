@@ -1,0 +1,24 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.1_logs/acceptance
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=9 verdict=PASS)
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    PASS  rules-schema-check  (3 schemas regenerate byte-equal; 3 schema tests pass)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (22 hits over src/rules_core/rules_tables (11) + data/rules_tables (11), 21 baseline rows, 0 package stamps disagree)
+---------------------------------------------------------------
+SUMMARY
+  passed:  3  tauri-resources-tracked rules-schema-check pi-sweep
+
+RESULT: PASS
+logs in /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.1_logs/acceptance
+exit 0
+rules_tables_package: tables=279 rows_bytes=13314484 pi_files=9 verdict=PASS
+collection functions: 211
+file-level arrays: 226, all registered
+round trip: 279 tables, 24553 rows
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 2830 filtered out; finished in 8.18s

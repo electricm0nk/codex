@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Myrmecoleon ~ Death Throes",
+    "delivery": "Extraordinary",
+    "description": "When a myrmecoleon is slain, its body explodes, releasing the acids that churn within it. All creatures within a 20-foot-radius burst take 4d8 acid damage (Reflex DC %1 half).",
+    "description_variables": [
+      "CON+15"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:myrmecoleon_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_4:monster:myrmecoleon"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a myrmecoleon is slain, its body explodes, releasing the acids that churn within it. All creatures within a 20-foot-radius burst take 4d8 acid damage (Reflex DC %1 half).|CON+15"
+      },
+      {
+        "key": "KEY",
+        "value": "Myrmecoleon ~ Death Throes"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1103,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Myrmecoleon ~ Death Throes",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

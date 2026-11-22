@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Hell Hound ~ Clinging Flames",
+    "name": "Clinging Flames",
+    "description": "A creature that takes damage from a mythic hell hound's breath weapon also catches on fire (using the save DC for its burn ability).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Hell Hound ~ Clinging Flames"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Hell Hound Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that takes damage from a mythic hell hound's breath weapon also catches on fire (using the save DC for its burn ability)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 186,
+    "record_key": "Mythic Hell Hound ~ Clinging Flames"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

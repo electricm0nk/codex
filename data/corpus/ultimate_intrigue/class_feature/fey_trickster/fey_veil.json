@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fey Trickster ~ Fey Veil",
+    "name": "Fey Veil",
+    "class": "Fey",
+    "description": "A fey trickster's physical form begins to shift, as she gains some of the impossible allure of the fey. At the same time, she begins able to use fey veils to assist herself and her allies in befuddling and bewitching their opponents. She can use her fey veils %1 times per day. Using the ability is a standard action (or a swift action if the fey trickster calls up a veil over herself). If she targets another ally, the fey trickster must be able to contact the ally bodily, usually with a kiss. When she uses her fey veil, the fey trickster subtly alters the appearance and aura of her target, granting one of the powers allowed by her mesmerist level. At 3rd level, she can grant the ally a +2 circumstance bonus on her choice of Diplomacy, Intimidate, or Handle Animal checks for 1 minute.|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Trickster ~ Fey Veil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey trickster's physical form begins to shift, as she gains some of the impossible allure of the fey. At the same time, she begins able to use fey veils to assist herself and her allies in befuddling and bewitching their opponents. She can use her fey veils %1 times per day. Using the ability is a standard action (or a swift action if the fey trickster calls up a veil over herself). If she targets another ally, the fey trickster must be able to contact the ally bodily, usually with a kiss. When she uses her fey veil, the fey trickster subtly alters the appearance and aura of her target, granting one of the powers allowed by her mesmerist level. At 3rd level, she can grant the ally a +2 circumstance bonus on her choice of Diplomacy, Intimidate, or Handle Animal checks for 1 minute.|3+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": " At 6th level, she can change the ally's form so thoroughly that the ally gains a +10 bonus on Disguise checks until the next sunrise (similar to the bonus from disguise self, but it also disguises touch and sound, and it doesn't allow a saving throw to disbelieve).|PRECLASS:1,Mesmerist=6"
+      },
+      {
+        "key": "DESC",
+        "value": " At 10th level, the fey trickster can make the ally and her aura so attractive or repulsive for 10 minutes that the veil automatically adjusts the moods of those who see the ally and fail their saving throw, as telempathic projection.|PRECLASS:1,Mesmerist=10"
+      },
+      {
+        "key": "DESC",
+        "value": " At 14th level, a fey trickster can create a veil so powerful that it fools even reality, granting the full effects of both the 6th-level fey veil and alter self to the target for 1 hour. Each of these abilities, even the 14th-level ability, is an illusion and glamer effect, though the last ability counts as a size-changing polymorph effect for the limit of only one polymorph or size-changing effect on a creature.|PRECLASS:1,Mesmerist=14"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 74,
+    "record_key": "Fey Trickster ~ Fey Veil"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

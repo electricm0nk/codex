@@ -1,0 +1,43 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Samurai",
+    "name": "Samurai",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FavoredClass"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Class Bonus|SamuraiLVL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_race.lst",
+    "record_key": "Samurai",
+    "sha256": "050469da246336c7a39e58b3cb25f4ee8e07398ba099186fce009840a557579a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

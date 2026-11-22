@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Deceiver ~ Shift Blame",
+    "name": "Shift Blame",
+    "class": "Medium",
+    "description": "(Greater) When you provoke an attack of opportunity from a given enemy, you can divert that attack of opportunity to another target of your choice within the attacker's reach. Afterward, the foe whose attack you diverted becomes immune to this ability for 24 hours. When you target a creature with a spell, spell-like ability, or supernatural ability, or when you fail a Bluff, Diplomacy, or Intimidate check, you can allow the Deceiver to gain 1 point of influence over you to make the target believe another creature adjacent to you created the effect or attempted to lie to, convince, or bully the target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Deceiver ~ Shift Blame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "(Greater) When you provoke an attack of opportunity from a given enemy, you can divert that attack of opportunity to another target of your choice within the attacker's reach. Afterward, the foe whose attack you diverted becomes immune to this ability for 24 hours. When you target a creature with a spell, spell-like ability, or supernatural ability, or when you fail a Bluff, Diplomacy, or Intimidate check, you can allow the Deceiver to gain 1 point of influence over you to make the target believe another creature adjacent to you created the effect or attempted to lie to, convince, or bully the target."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 100,
+    "record_key": "Medium ~ Deceiver ~ Shift Blame"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

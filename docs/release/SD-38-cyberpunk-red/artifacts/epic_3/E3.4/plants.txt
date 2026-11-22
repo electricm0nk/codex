@@ -1,0 +1,13 @@
+## plant 1: Edgerunner validated as Complete Package (no list, no floor)
+thread 'cpr_creation::tests::edgerunner_skills_are_the_roles_20_from_2_to_6_within_86_points' (1375655) panicked at src/cpr_creation.rs:1680:13:
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 822 filtered out; finished in 12.06s
+## plant 2: Complete Package Basic skills start at 3
+thread 'cpr_creation::tests::complete_package_skills_are_any_of_66_capped_at_6_with_basic_at_2' (1377741) panicked at src/cpr_creation.rs:1702:9:
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 822 filtered out; finished in 11.09s
+## plant 3: save only the Cultural Origin language (the E3.3 behaviour)
+thread 'cpr_creation::tests::complete_package_skills_are_any_of_66_capped_at_6_with_basic_at_2' (1379239) panicked at src/cpr_creation.rs:1076:60:
+thread 'cpr_creation::tests::create_saves_every_allocated_skill_and_the_loaded_character_has_them' (1379242) panicked at src/cpr_creation.rs:1776:9:
+    cpr_creation::tests::create_saves_every_allocated_skill_and_the_loaded_character_has_them
+test result: FAILED. 19 passed; 2 failed; 0 ignored; 0 measured; 822 filtered out; finished in 11.58s
+## plant 4 (frontend): skillPointTiles re-derives the figure from the lines
+Error: the points spent and left are the engine's rows: expected cpr.skills.creation_points_spent=82|cpr.skills.creation_points_remaining=4, got cpr.skills.creation_points_spent=0|cpr.skills.creation_points_remaining=86

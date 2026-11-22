@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thriae Soldier ~ Merope Consumption",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a thriae soldier can consume a dose of merope in order to enhance her combat abilities for 1d6+3 rounds. Starting on the round after the merope is consumed, the thriae soldier gains a +2 insight bonus on attack rolls and saving throws, and gains fast healing 3.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thriae_soldier_merope_consumption",
+    "name": "Merope Consumption",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a thriae soldier can consume a dose of merope in order to enhance her combat abilities for 1d6+3 rounds. Starting on the round after the merope is consumed, the thriae soldier gains a +2 insight bonus on attack rolls and saving throws, and gains fast healing 3."
+      },
+      {
+        "key": "KEY",
+        "value": "Thriae Soldier ~ Merope Consumption"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThriaeSoldierRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.267",
+    "traits": [
+      "ThriaeSoldierRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1611,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thriae Soldier ~ Merope Consumption",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

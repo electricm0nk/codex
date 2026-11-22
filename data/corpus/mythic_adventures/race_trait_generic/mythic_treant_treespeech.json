@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Treant ~ Treespeech",
+    "name": "Treespeech",
+    "description": "A treant has the ability to converse with plants as if subject to a continual speak with plants spell, and most plants greet it with an attitude of friendly or helpful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Treant ~ Treespeech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Treant Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A treant has the ability to converse with plants as if subject to a continual speak with plants spell, and most plants greet it with an attitude of friendly or helpful."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 252,
+    "record_key": "Mythic Treant ~ Treespeech"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

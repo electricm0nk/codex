@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Amplifier ~ Inevitable Strike",
+    "name": "Inevitable Strike",
+    "class": "Amplifier",
+    "description": "You can, %1/day, grant one member of your collective a +%2 insight bonus to its next single attack roll made before the end of its next turn.|InevitableStrikeTimes|InevitableStrikeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Amplifier ~ Inevitable Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InevitableStrikeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InevitableStrikeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, %1/day, grant one member of your collective a +%2 insight bonus to its next single attack roll made before the end of its next turn.|InevitableStrikeTimes|InevitableStrikeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InevitableStrikeTimes|3+TacticianPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InevitableStrikeBonus|5+floor(TacticianLVL-1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InevitableStrikeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2237,
+    "record_key": "Amplifier ~ Inevitable Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

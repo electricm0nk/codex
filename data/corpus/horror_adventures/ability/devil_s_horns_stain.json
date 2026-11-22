@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Devil's Horns Stain",
+    "name": "Devil's Horns Stain",
+    "description": "You gain horns that can't be hidden by magic, but can be hidden by mundane means. Anyone who sees the horns recognizes them as unnatural. If someone leaves a loophole in an agreement with you that would allow you to gain an advantage, you must exploit it. This typically counts as an act that might progress your corruption.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Devil's Horns Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundDevilsHornsStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain horns that can't be hidden by magic, but can be hidden by mundane means. Anyone who sees the horns recognizes them as unnatural. If someone leaves a loophole in an agreement with you that would allow you to gain an advantage, you must exploit it. This typically counts as an act that might progress your corruption."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 307,
+    "record_key": "Hellbound Corruption ~ Devil's Horns Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

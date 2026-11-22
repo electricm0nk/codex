@@ -1,0 +1,5 @@
+# planted: E7.2 status complete -> partial; one row (E7.9) deleted; scan run on the copies
+-- plant 1 (E7.2 partial):
+ E7.2 | partial 
+-- plant 2 (row dropped):
+ROW_COUNT 56

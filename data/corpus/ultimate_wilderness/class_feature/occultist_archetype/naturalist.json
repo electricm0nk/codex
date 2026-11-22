@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occultist Archetype ~ Naturalist",
+    "name": "Naturalist",
+    "class": "Occultist",
+    "description": "A naturalist eschews the contact with outsiders that other occultists use as the core of their work. Instead, he attunes his mind to the natural spirits that exist everywhere, just out of sight for the unawakened mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Naturalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OccultistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Naturalist],[!PREFACT:1,ABILITIES,Occultist_Archetype_ClassSkills=True,Occultist_Archetype_MentalFocus=True,Occultist_Archetype_MagicCircles=True,Occultist_Archetype_FastCircles=True,Occultist_Archetype_OutsideContact=True,Occultist_Archetype_BindingCircles=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A naturalist eschews the contact with outsiders that other occultists use as the core of their work. Instead, he attunes his mind to the natural spirits that exist everywhere, just out of sight for the unawakened mind."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Naturalist ~ Class Skills|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Naturalist ~ Natural Focus|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Naturalist ~ Tree Talker|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Naturalist ~ Reflect on the Land|PRECLASS:1,Occultist=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MentalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_BindingCircles|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 128,
+    "record_key": "Occultist Archetype ~ Naturalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

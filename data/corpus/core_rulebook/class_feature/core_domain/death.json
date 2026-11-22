@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Core Domain ~ Death Domain",
+    "name": "Death",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Core Domain ~ Death Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.DomainAbility"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Bleeding Touch|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Death)|PREVARGTEQ:DomainDeathAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Death's Embrace|PREVARGTEQ:DomainDeathAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Death"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Death],[PREVARLT:DeathDomain,1]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 586,
+    "record_key": "Core Domain ~ Death Domain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

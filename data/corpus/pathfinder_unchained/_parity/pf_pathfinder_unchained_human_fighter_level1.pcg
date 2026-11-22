@@ -1,0 +1,162 @@
+PCGVERSION:2.0
+
+# System Information
+# SD-27 E3.x Pathfinder Unchained per-book parity baseline cycle. Hand-authored
+# against this real PCGen checkout's own campaign/LST data (verified directly:
+# data/pathfinder/paizo/roleplaying_game/core_rulebook/core_rulebook.pcc's
+# CAMPAIGN:Core Rulebook and data/pathfinder/paizo/roleplaying_game/
+# pathfinder_unchained/_pathfinder_unchained.pcc's CAMPAIGN:Pathfinder Unchained,
+# both GAMEMODE:Pathfinder -- keyed as GAMEMODE:Pathfinder_RPG for .pcg files per
+# system/gameModes/Pathfinder/miscinfo.lst's GAMEMODEKEY:Pathfinder_RPG), and
+# structurally modeled on this checkout's own bundled, test-suite-exercised
+# code/testsuite/PCGfiles/pf_Cleric.pcg / pf_Rogue.pcg (both real PCGVERSION:2.0
+# Pathfinder_RPG saves proven to load via code/src/slowtest/pcgen/inttest/
+# game_pathfinder/*Test.java against the same base-xml.ftl export route this
+# cycle's own scripts/pcgen-run-character.sh drives).
+CAMPAIGN:Core Rulebook|CAMPAIGN:Pathfinder Unchained
+VERSION:6.09.08
+ROLLMETHOD:1|EXPRESSION:10
+PURCHASEPOINTS:N
+CHARACTERTYPE:PC
+PREVIEWSHEET:Standard.htm
+POOLPOINTS:0
+POOLPOINTSAVAIL:0
+GAMEMODE:Pathfinder_RPG
+TABLABEL:0
+AUTOSPELLS:Y
+USEHIGHERKNOWN:N
+USEHIGHERPREPPED:N
+LOADCOMPANIONS:N
+USETEMPMODS:Y
+SKILLSOUTPUTORDER:0
+SKILLFILTER:2
+IGNORECOST:N
+ALLOWDEBT:N
+AUTORESIZEGEAR:Y
+
+# Character Bio
+CHARACTERNAME:pf-pathfinder_unchained-human-fighter-level1
+TABNAME:SD-27 E3.x PU Human Fighter L1
+PLAYERNAME:SD-27 Cycle E3.x
+HEIGHT:70
+WEIGHT:180
+AGE:22
+GENDER:Male
+HANDED:Right
+SKINCOLOR:
+EYECOLOR:
+HAIRCOLOR:
+HAIRSTYLE:
+LOCATION:
+CITY:
+BIRTHDAY:
+BIRTHPLACE:
+PERSONALITYTRAIT1:
+PERSONALITYTRAIT2:
+SPEECHPATTERN:
+PHOBIAS:
+INTERESTS:
+CATCHPHRASE:
+PORTRAIT:
+
+# Character Attributes
+STAT:STR|SCORE:16
+STAT:DEX|SCORE:14
+STAT:CON|SCORE:14
+STAT:INT|SCORE:10
+STAT:WIS|SCORE:12
+STAT:CHA|SCORE:8
+ALIGN:LG
+RACE:Human
+
+# Character Class(es)
+CLASS:Fighter|LEVEL:1|SKILLPOOL:0|SPELLBASE:None|CANCASTPERDAY:
+CLASSABILITIESLEVEL:Fighter=1|HITPOINTS:10|SKILLSGAINED:3|SKILLSREMAINING:0
+
+# Character Experience
+EXPERIENCE:0
+EXPERIENCETABLE:Medium
+
+# Character Region
+REGION:None
+
+# Character Skills
+SKILL:Climb|OUTPUTORDER:1|CLASSBOUGHT:[CLASS:Fighter|RANKS:1.0|COST:1|CLASSSKILL:Y]
+SKILL:Intimidate|OUTPUTORDER:2|CLASSBOUGHT:[CLASS:Fighter|RANKS:1.0|COST:1|CLASSSKILL:Y]
+SKILL:Swim|OUTPUTORDER:3|CLASSBOUGHT:[CLASS:Fighter|RANKS:1.0|COST:1|CLASSSKILL:Y]
+
+# Character Languages
+LANGUAGE:Common
+
+# Character Feats
+FEATPOOL:-4.0
+
+# Character Abilities
+# Human's floating +2 ability-score racial bonus (a player CHOICE, not
+# auto-derived by the engine) -- targets Strength, matching this pilot's
+# Codex-side choice:human_ability_bonus:ability:strength selection. Verified
+# directly against this checkout's own LST: cr_abilities_race.lst:148 defines
+# "+2 Strength" (CATEGORY:Special Ability, TYPE:AbilityBonus,
+# BONUS:STAT|STR|2|TYPE=Racial); code/testsuite/PCGfiles/pf_Cleric.pcg's own
+# real, test-suite-exercised save uses the identical pattern for its own
+# Human +2 Charisma pick (`ABILITY:Ability Bonus|TYPE:NORMAL|CATEGORY:Special
+# Ability|KEY:+2 Charisma|TYPE:AbilityBonus`).
+ABILITY:Ability Bonus|TYPE:NORMAL|CATEGORY:Special Ability|KEY:+2 Strength|TYPE:AbilityBonus
+USERPOOL:Ability Bonus|POOLPOINTS:0.0
+# Power Attack / Dodge / Weapon Focus (Longsword) reproduce the accepted
+# GE-06/SD-26 deterministic Human Fighter level 1 posture (cr_feats.lst:53,
+# :134, :184). Endurance is real Pathfinder Unchained content -- its own
+# "Wound Threshold" variant, distinct from the Core Rulebook feat of the same
+# name -- sourced from data/pathfinder/paizo/roleplaying_game/
+# pathfinder_unchained/pu_feats.lst:26 and mirrored in this repo's own ingested
+# cache record at data/corpus/pathfinder_unchained/feat/endurance.json. It has
+# TYPE:Wound Threshold (no PRExxx prerequisites, no Combat type restriction),
+# so it is legal in any open feat slot; it is carried here as this pilot's
+# genuine PU-sourced exercised record.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Power Attack|TYPE:Combat.AttackOption|DESC:You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Dodge|TYPE:Combat|DESC:Your training and reflexes allow you to react swiftly to avoid an opponent's attack.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Weapon Focus|APPLIEDTO:Longsword|TYPE:Combat.WeaponFocus|DESC:You are especially good at using your chosen weapon.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Endurance|TYPE:Wound Threshold|DESC:Harsh conditions or long exertions do not easily tire you.
+USERPOOL:FEAT|POOLPOINTS:0.0
+
+# Character Weapon proficiencies
+
+# Character Equipment
+# Longsword (KEY:Longsword (Base), cr_equip_arms_armor.lst:165, COST:15 WT:4)
+# equipped as primary hand, Chain Shirt (KEY:Chain Shirt (Base),
+# cr_equip_arms_armor.lst:40, COST:100 WT:25) equipped/worn, no shield --
+# the exact GE-06 deterministic equipment posture (item:longsword
+# equipped_primary_active, item:chain_shirt equipped_worn_active,
+# item:shield absent). No other equipment is carried, so total carried
+# weight is the same 29 lbs (4 + 25) the GE-06/SD-26 Codex-side fixture
+# corpus already models.
+MONEY:0.00
+EQUIPNAME:Longsword|OUTPUTORDER:1|COST:15|WT:4.0|QUANTITY:1.0
+EQUIPNAME:Chain Shirt|OUTPUTORDER:2|COST:100|WT:25.0|QUANTITY:1.0
+EQUIPSET:Default Set|ID:0.1|USETEMPMODS:Y
+EQUIPSET:Armor|ID:0.1.1|VALUE:Chain Shirt|QUANTITY:1.0|USETEMPMODS:Y
+EQUIPSET:Primary Hand|ID:0.1.2|VALUE:Longsword|QUANTITY:1.0|USETEMPMODS:Y
+CALCEQUIPSET:0.1
+
+# Temporary Bonuses
+
+# EquipSet Temp Bonuses
+
+# Character Spells Information
+
+# Character Description/Bio/History
+CHARACTERBIO:SD-27 Cycle E3.x Pathfinder Unchained per-book parity baseline pilot -- a level-1 Human Fighter reproducing the accepted GE-06/SD-26 deterministic Longsword/Chain Shirt/Dodge/Power Attack/Weapon Focus posture, who has also trained in Pathfinder Unchained's Wound Threshold optional subsystem by taking its own Endurance feat (data/corpus/pathfinder_unchained/feat/endurance.json).
+CHARACTERDESC:
+CHARACTERCOMP:
+CHARACTERASSET:
+CHARACTERMAGIC:
+CHARACTERDMNOTES:
+
+# Kits
+
+# Character Master/Follower
+
+# Character Notes Tab
+
+# Age Set Selections
+AGESET:1:0:0:0:0:0:0:0:0:0

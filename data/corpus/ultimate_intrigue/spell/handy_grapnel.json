@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause the target rope to shrink and reshape itself into an arrow, bolt, or similar piece of ammunition, which you can shoot at any Medium or larger object. With a successful attack roll against an AC equal to 5 plus the hardness of the target object, the handy grapnel strikes and embeds itself in that object with the strength of an iron grappling hook. As a move action, you can command the rope to extend from the arrow. If you are within a distance equal to the length of the rope and have a hand free, the end of the rope swings directly into your hand. With another move action, you can command the handy grapnel to retract itself up to the grappling hook, pulling up any creature or object supported by the rope at a speed of 50 feet per round. Once embedded, the rope can be used for climbing or any other purpose a rope could serve, and it can bear up to %1 pounds at a time. If this weight limit is exceeded, the handy grapnel comes loose and any creature or object supported by the rope falls.|MIN(1000,(CASTERLEVEL*200))|PRERULE:1,DisplayFullSpell",
+    "key": "Handy Grapnel",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Ranger,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Transform a ropelike object into a retracting grapple.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the target rope to shrink and reshape itself into an arrow, bolt, or similar piece of ammunition, which you can shoot at any Medium or larger object. With a successful attack roll against an AC equal to 5 plus the hardness of the target object, the handy grapnel strikes and embeds itself in that object with the strength of an iron grappling hook. As a move action, you can command the rope to extend from the arrow. If you are within a distance equal to the length of the rope and have a hand free, the end of the rope swings directly into your hand. With another move action, you can command the handy grapnel to retract itself up to the grappling hook, pulling up any creature or object supported by the rope at a speed of 50 feet per round. Once embedded, the rope can be used for climbing or any other purpose a rope could serve, and it can bear up to %1 pounds at a time. If this weight limit is exceeded, the handy grapnel comes loose and any creature or object supported by the rope falls.|MIN(1000,(CASTERLEVEL*200))|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Handy Grapnel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One ropelike object, length up to (CASTERLEVEL*5+50) ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 60,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Handy Grapnel",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ]
+}

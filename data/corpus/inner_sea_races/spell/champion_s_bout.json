@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Champion's Bout",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "You allow two chosen champions to fight without interference. The two creatures must be willing in order for the spell to work. After you cast this spell, any creature attempting to aid or hinder either of the two targets in any way must succeed at a Will save or lose its action instead (spell resistance applies). A creature that fails its Will save against champion's bout cannot attempt to interfere again. If a creature successfully interferes with the bout, the spell ends immediately."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 16,
+    "record_key": "Champion's Bout"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

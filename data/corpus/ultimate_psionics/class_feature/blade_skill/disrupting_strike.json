@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Blade Skill ~ Disrupting Strike",
+    "name": "Disrupting Strike",
+    "class": "Blade Skill",
+    "description": "As a full-round action, you may make one melee attack against each enemy adjacent to you.  If you hit, the attack deals no damage, but each enemy hit takes a -5 penalty to all melee and ranged damage rolls until the start of your next turn.  This blade skill may not be used with the mind bolt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Disrupting Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you may make one melee attack against each enemy adjacent to you.  If you hit, the attack deals no damage, but each enemy hit takes a -5 penalty to all melee and ranged damage rolls until the start of your next turn.  This blade skill may not be used with the mind bolt."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 760,
+    "record_key": "Blade Skill ~ Disrupting Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

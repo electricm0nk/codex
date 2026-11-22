@@ -1,0 +1,19 @@
+  PASS  --check on an absent DEST exits 1 and names the fetch script
+  PASS  fresh fetch: exit 0, OK token, exports, HEAD at pin, cone present, out-of-cone absent
+  PASS  re-run on an already-on-pin DEST is idempotent (exit 0)
+  PASS  off-pin checkout: --check exits 1 and names both SHAs
+  PASS  --force moves an off-pin checkout back to the pin
+  PASS  dirty tracked cone file: --check exits 1 naming the file
+  PASS  dirty tracked cone file: --force refuses too, naming the file
+  PASS  DEST exists but is not a git checkout -> exit 1
+  PASS  pin file missing PCGEN_ORACLE_SHA -> exit 2
+  PASS  a full (non-sparse) clone at the pin passes --check
+  PASS  successful --check emits the exact pcgen-oracle: OK token
+  PASS  SF pin: fresh fetch brings data/starfinder/paizo/core and the SF game mode
+  PASS  SF cone removed: --check exits 1 naming data/starfinder/paizo/core
+  PASS  SF game mode removed: --check exits 1 naming system/gameModes/Starfinder
+  PASS  --force re-applies the SF cone and repairs the checkout
+  PASS  PF-only pin does not demand the SF cone
+---------------------------------------------------------------
+passed: 16  failed: 0
+SELF-TEST PASSED.

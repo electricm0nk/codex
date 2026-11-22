@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "1/day touch attack, target helpless for 24 hours (Will DC %1).|ScrambleMindDC",
+    "key": "Moldev ~ Scramble Mind",
+    "name": "Scramble Mind",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Moldev ~ Scramble Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScrambleMindDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day touch attack, target helpless for 24 hours (Will DC %1).|ScrambleMindDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScrambleMindDC|10+BAB"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.440"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 237,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Moldev ~ Scramble Mind",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

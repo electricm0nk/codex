@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Giantslaying Team",
+    "category": "Combat",
+    "name": "Giantslaying Team",
+    "description": "When a giant attempts to hit your ally, that giant unwittingly reveals an opening in her defenses. Whenever a foe with the giant subtype you threaten misses with an attack of opportunity against an ally with this feat, you can make a melee attack against that giant as an immediate action.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.RacialDefensiveTraining",
+      "PREABILITY:2,CATEGORY=FEAT,Dodge,Mobility",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]",
+      "PRETEXT:Dex 13, Dodge, Mobility, base attack bonus +4, defensive training racial trait.",
+      "PRETOTALAB:4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 38,
+    "record_key": "Giantslaying Team"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

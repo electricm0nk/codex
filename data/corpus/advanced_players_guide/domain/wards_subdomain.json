@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Wards Subdomain",
+    "name": "Wards Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Wards Subdomain],[PREVARLT:RuneDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Wards Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Wards Subdomain=1|Arcane Lock|Wards Subdomain=2|Secret Page|Wards Subdomain=3|Glyph Of Warding|Wards Subdomain=4|Dimensional Anchor|Wards Subdomain=5|Planar Binding (Lesser)|Wards Subdomain=6|Guards and Wards|Wards Subdomain=7|Instant Summons|Wards Subdomain=8|Symbol of Death|Wards Subdomain=9|Teleportation Circle"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "record_key": "Wards Subdomain",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

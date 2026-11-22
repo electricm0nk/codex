@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Forest Dragon ~ Elemental Breath",
+    "delivery": "Supernatural",
+    "description": "Once per day, when an ancient or older forest dragon uses its breath weapon, it can summon a greater earth elemental within the cone. The caster level for these effects is the same as the dragon's caster level.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:forest_dragon_elemental_breath",
+    "name": "Elemental Breath",
+    "owners": [
+      "bestiary_3:monster:dragon_forest"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, when an ancient or older forest dragon uses its breath weapon, it can summon a greater earth elemental within the cone. The caster level for these effects is the same as the dragon's caster level."
+      },
+      {
+        "key": "KEY",
+        "value": "Forest Dragon ~ Elemental Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": [
+      "RaceAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 761,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Forest Dragon ~ Elemental Breath",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

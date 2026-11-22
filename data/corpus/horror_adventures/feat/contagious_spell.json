@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Contagious Spell",
+    "category": "Metamagic",
+    "name": "Contagious Spell",
+    "description": "Your spells are dangerous to dispel and likely to backfire upon those who try. A caster level check to dispel or remove a contagious spell that fails by 5 or more causes it to spread from the original target to the creature that attempted to remove it. The spell spreads to the new target regardless of its normal range or any special targeting requirement like a melee or ranged touch attack. The spell is treated as if you had just cast it on the new target. The new target receives a saving throw or the benefit of spell resistance (if applicable) if the spell normally allows it. You can apply Contagious Spell only to targeted spells that are harmful to their target and don't have a range of personal; a contagious spell never spreads to someone who would benefit from being the target of the spell. A contagious spell uses up a spell slot 2 levels higher than the spell's actual level. [Special] A contagious spell can be identified normally as it is being cast with a successful Spellcraft check. Identifying whether a spell is contagious by its effect, however, requires the use of the analyze dweomer spell or a similar effect.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 15,
+    "record_key": "Contagious Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

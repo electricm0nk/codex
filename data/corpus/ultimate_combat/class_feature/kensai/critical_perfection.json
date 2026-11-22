@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kensai ~ Critical Perfection",
+    "name": "Critical Perfection",
+    "class": "Kensai",
+    "description": "At 9th level, a kensai adds his Intelligence bonus (minimum 0) on critical hit confirmation rolls with his favored weapon. In addition, the kensai may use his magus levels in place of his base attack bonuses to qualify for Critical Focus and any feat for which it is a prerequisite; these feats apply only with a kensai's favored weapon. This ability replaces the magus arcana normally gained at 9th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Critical Perfection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CriticalFocusQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a kensai adds his Intelligence bonus (minimum 0) on critical hit confirmation rolls with his favored weapon. In addition, the kensai may use his magus levels in place of his base attack bonuses to qualify for Critical Focus and any feat for which it is a prerequisite; these feats apply only with a kensai's favored weapon. This ability replaces the magus arcana normally gained at 9th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CriticalFocusQualify|classlevel(\"Magus\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 23,
+    "record_key": "Kensai ~ Critical Perfection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

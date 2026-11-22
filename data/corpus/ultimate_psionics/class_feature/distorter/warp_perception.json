@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Distorter ~ Warp Perception",
+    "name": "Warp Perception",
+    "class": "Distorter",
+    "description": "You have learned to alter the way creatures perceive distances by manipulating the visual patterns. You can cause up to %1 creatures to incorrectly calculate the distance between the affected creature and yourself unless each creature makes a successful Will save (DC %2). For %3 rounds, each square of movement any of the affected creatures take toward you counts as two squares of movement, regardless of the mode of movement (flight, swim, etc) or if the creature is corporeal or incorporeal. In addition, any ranged attacks made at you by the affected creatures that only work within a certain range (such as a ranged sneak attack or Point-Blank Shot) count the distance between the creature and the cryptic as double. This does not affect the range increment of the attack, only if the distance of the attack qualifies.|WarpPerceptionTargets|WarpPerceptionDC|WarpPerceptionDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Distorter ~ Warp Perception"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpPerceptionTargets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpPerceptionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpPerceptionDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to alter the way creatures perceive distances by manipulating the visual patterns. You can cause up to %1 creatures to incorrectly calculate the distance between the affected creature and yourself unless each creature makes a successful Will save (DC %2). For %3 rounds, each square of movement any of the affected creatures take toward you counts as two squares of movement, regardless of the mode of movement (flight, swim, etc) or if the creature is corporeal or incorporeal. In addition, any ranged attacks made at you by the affected creatures that only work within a certain range (such as a ranged sneak attack or Point-Blank Shot) count the distance between the creature and the cryptic as double. This does not affect the range increment of the attack, only if the distance of the attack qualifies.|WarpPerceptionTargets|WarpPerceptionDC|WarpPerceptionDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpPerceptionTargets|CrypticPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpPerceptionDC|10+CrypticLVL/2+CrypticPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpPerceptionDuration|CrypticPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1817,
+    "record_key": "Distorter ~ Warp Perception"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,28 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running tests/sd24_wired_integration_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_wired_integration_audit-f71108bfe6e18395)
+
+running 5 tests
+test no_noop_click_handlers_in_shipping_tsx ... ok
+test no_mock_leaks_in_shipping_source ... ok
+test no_would_strings_in_shipping_source ... ok
+test placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral ... ok
+test no_zero_tolerance_forbidden_tokens_in_shipping_source ... FAILED
+
+failures:
+
+---- no_zero_tolerance_forbidden_tokens_in_shipping_source stdout ----
+
+thread 'no_zero_tolerance_forbidden_tokens_in_shipping_source' (2694648) panicked at tests/sd24_wired_integration_audit.rs:175:5:
+wired-integration audit found zero-tolerance forbidden tokens in shipping source (apps/desktop/, apps/desktop/src-tauri/, src/):
+apps/desktop/src-tauri/Cargo.lock:3873:name = "proc-macro-hack"
+apps/desktop/src-tauri/Cargo.lock:6132: "proc-macro-hack",
+apps/desktop/src-tauri/Cargo.lock:6144: "proc-macro-hack",
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    no_zero_tolerance_forbidden_tokens_in_shipping_source
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+error: test failed, to rerun pass `--test sd24_wired_integration_audit`

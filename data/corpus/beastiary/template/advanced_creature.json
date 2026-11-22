@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Advanced Creature",
+    "name": "Advanced Creature",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CON,WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4|PRESTAT:1,INT=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "FACT",
+        "value": "AppliedName|Advanced"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1036,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Advanced Creature",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

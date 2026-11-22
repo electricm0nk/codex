@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Adhesive Feet",
+    "name": "Adhesive Feet",
+    "class": "Aegis",
+    "description": "You get +4 to CMD against bull rush, trip, and any combat maneuvers that attempt to move you.  You also get a +4 bonus to Climb.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Adhesive Feet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.Defensive.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You get +4 to CMD against bull rush, trip, and any combat maneuvers that attempt to move you.  You also get a +4 bonus to Climb."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|4|TYPE=Circumstance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BullRush,CMD_Trip|4"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 85,
+    "record_key": "Aegis ~ Adhesive Feet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

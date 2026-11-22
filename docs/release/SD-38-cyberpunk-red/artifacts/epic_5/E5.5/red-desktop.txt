@@ -1,0 +1,4 @@
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 3 previous errors
+      1 error[E0425]: cannot find type `CprReputationEventKind` in this scope
+      1 error[E0432]: unresolved import `CprReputationEventKind`
+      1 error[E0599]: no variant named `Reputation` found for enum `cpr_improve::CprPurchase`

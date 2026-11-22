@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Volley Style ~ Burst Arrows",
+    "name": "Burst Arrows",
+    "class": "Volley Style",
+    "description": "Expend focus as part of a full attack to cover the target area with caltrops for %1 rounds and deal %1 damage to all within 5 ft .(DC %2), %3/day|MarksmanStyleStat|MarksmanStyleDC|BurstArrowsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Volley Style ~ Burst Arrows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BurstArrowsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus as part of a full attack to cover the target area with caltrops for %1 rounds and deal %1 damage to all within 5 ft .(DC %2), %3/day|MarksmanStyleStat|MarksmanStyleDC|BurstArrowsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurstArrowsTimes|(MarksmanStyleLVL-10)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BurstArrowsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 380,
+    "record_key": "Volley Style ~ Burst Arrows"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

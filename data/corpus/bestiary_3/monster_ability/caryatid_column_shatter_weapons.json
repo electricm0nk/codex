@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Caryatid Column ~ Shatter Weapons",
+    "delivery": "Extraordinary",
+    "description": "Whenever a character strikes a caryatid column with a weapon (magical or nonmagical), the weapon takes 3d6 points of damage. Apply the weapon's hardness normally. Weapons that take any amount of damage in excess of their hardness gain the broken quality.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:caryatid_column_shatter_weapons",
+    "name": "Shatter Weapons",
+    "owners": [
+      "bestiary_3:monster:caryatid_column"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a character strikes a caryatid column with a weapon (magical or nonmagical), the weapon takes 3d6 points of damage. Apply the weapon's hardness normally. Weapons that take any amount of damage in excess of their hardness gain the broken quality."
+      },
+      {
+        "key": "KEY",
+        "value": "Caryatid Column ~ Shatter Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "CaryatidColumnRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "CaryatidColumnRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 534,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Caryatid Column ~ Shatter Weapons",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

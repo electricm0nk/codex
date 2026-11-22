@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 0.01,
+    "description": "A toll is sometimes charged to cross a well-kept and well-guarded road to pay for patrols on it and for its upkeep. Occasionally, a large, walled city charges a toll to enter or exit (or sometimes just to enter).",
+    "key": "Road or Gate Toll",
+    "name": "Road or Gate Toll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Road or Gate Toll"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Toll Fee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Service.Transportation"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "DESC",
+        "value": "A toll is sometimes charged to cross a well-kept and well-guarded road to pay for patrols on it and for its upkeep. Occasionally, a large, walled city charges a toll to enter or exit (or sometimes just to enter)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 326,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Road or Gate Toll",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

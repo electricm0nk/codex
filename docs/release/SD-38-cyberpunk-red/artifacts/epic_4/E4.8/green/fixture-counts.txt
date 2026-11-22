@@ -1,0 +1,7 @@
+# python over cyberpunkSheetFixtures/*.json: cash/ammo/rent rows, ammo name lines, explanation rows, printed lines
+cpr-netrunner-decked.json ledger_rows 0 ammo_name_lines 0 rows 195 lines 20
+cpr-solo-arsenal.json ledger_rows 0 ammo_name_lines 0 rows 329 lines 59
+cpr-solo-kitted.json ledger_rows 0 ammo_name_lines 0 rows 203 lines 19
+cpr-solo-ledger.json ledger_rows 4 ammo_name_lines 2 rows 186 lines 3
+cpr-solo-streetrat.json ledger_rows 0 ammo_name_lines 0 rows 182 lines 1
+total rows 1095 total printed lines 102

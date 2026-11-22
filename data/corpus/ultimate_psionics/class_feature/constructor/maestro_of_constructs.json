@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Constructor ~ Maestro of Constructs",
+    "name": "Maestro of Constructs",
+    "class": "Constructor",
+    "description": "You can create up to %1 levels in astral constructs, divided at your discretion, repair a damaged astral construct for up to %2 hit points, or summon %3 astral swarms.|MaestroOfConstructsLevels|MaestroOfConstructsRepair|MaestroOfConstructsSwarms",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Constructor ~ Maestro of Constructs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaestroOfConstructsRepair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaestroOfConstructsLevels|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaestroOfConstructsSwarms|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create up to %1 levels in astral constructs, divided at your discretion, repair a damaged astral construct for up to %2 hit points, or summon %3 astral swarms.|MaestroOfConstructsLevels|MaestroOfConstructsRepair|MaestroOfConstructsSwarms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaestroOfConstructsRepair|30+MetacreativityDisciplineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaestroOfConstructsLevels|MetacreativityDisciplineLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaestroOfConstructsSwarms|min(floor((MetacreativityDisciplineLVL-8)/3),4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 491,
+    "record_key": "Constructor ~ Maestro of Constructs"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Dread Gholdako",
+    "name": "Dread Gholdako",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "%+1"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dread Gholdako ~ Paralysis"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 123,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "record_key": "Dread Gholdako",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

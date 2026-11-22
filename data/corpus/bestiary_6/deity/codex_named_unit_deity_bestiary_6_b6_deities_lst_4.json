@@ -1,0 +1,74 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_4)",
+    "name": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_4)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Air,Death,Evil,Law|PREALIGN:LN,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "Archdevil of arrogance, flies, lies"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|Lord of Flies"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Iron crown and diamond"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Fly"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Black|White"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Archdevils"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Spear"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:39Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "bestiary_6:b6_deities.lst:4",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst",
+    "record_key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_4)",
+    "sha256": "4efea24653a7d3bd8d418ad934f8b0f1294ff22c4e0c6649460e1bb39a77d8c3"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

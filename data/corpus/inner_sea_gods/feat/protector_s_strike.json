@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Protector's Strike",
+    "category": "General",
+    "name": "Protector's Strike",
+    "description": "You can use your smiting power to protect an ally from known evil. When you choose the target of your smite evil ability, you also choose one creature other than you within line of sight. While your smite is in effect, the additional creature you chose gains a deflection bonus to AC equal to your Charisma modifier against attacks made by the target of the smite. This bonus ends when the smite ends. You do not gain the deflection bonus to AC normally granted by smite evil. Normal: While smite evil is in effect, the paladin gains a deflection bonus to her AC equal to her Charisma bonus (if any) against attacks made by the target of her smite attack.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Smite Evil",
+      "PRETEXT:Prerequisites: Base attack bonus +5, smite evil class feature.",
+      "PRETOTALAB:5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 73,
+    "record_key": "Protector's Strike"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

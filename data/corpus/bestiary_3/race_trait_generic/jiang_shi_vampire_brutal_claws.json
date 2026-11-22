@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Jiang-Shi Vampire ~ Brutal Claws",
+    "name": "Brutal Claws",
+    "description": "A jiang-shi's nails are brutally sharp and can extend and retract at will. They threaten a critical hit on a roll of 19-20 and grant the grab ability. A jiangshi with monk levels gains this enhanced critical threat range and grab ability with its unarmed attacks, and uses its unarmed monk damage or its claw damage, whichever is higher, when making such attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Jiang-Shi Vampire ~ Brutal Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.RaceAbility.SpecialQuality.JiangShiVampire"
+      },
+      {
+        "key": "DESC",
+        "value": "A jiang-shi's nails are brutally sharp and can extend and retract at will. They threaten a critical hit on a roll of 19-20 and grant the grab ability. A jiangshi with monk levels gains this enhanced critical threat range and grab ability with its unarmed attacks, and uses its unarmed monk damage or its claw damage, whichever is higher, when making such attacks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1660,
+    "record_key": "Jiang-Shi Vampire ~ Brutal Claws"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

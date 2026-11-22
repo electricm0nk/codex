@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 16000.0,
+    "description": "This attractive silver headband is decorated with a number of small red and orange gemstones. The headband grants the wearer an enhancement bonus to Charisma of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn.",
+    "key": "Headband of Alluring Charisma +4",
+    "name": "Headband of Alluring Charisma +4",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CHA",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Headband of Alluring Charisma +4"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Headband of Alluring Charisma +4"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.516"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|8th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|headband"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|8,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, eagle's splendor"
+      },
+      {
+        "key": "DESC",
+        "value": "This attractive silver headband is decorated with a number of small red and orange gemstones. The headband grants the wearer an enhancement bonus to Charisma of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 188,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Headband of Alluring Charisma +4",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

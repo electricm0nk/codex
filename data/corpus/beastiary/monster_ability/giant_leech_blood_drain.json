@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Giant Leech ~ Blood Drain",
+    "delivery": "Extraordinary",
+    "description": "A giant leech drains blood at the end of each turn it is attached, inflicting 1 point of Strength and Constitution damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_leech_blood_drain",
+    "name": "Blood Drain",
+    "owners": [
+      "beastiary:monster:leech_giant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant leech drains blood at the end of each turn it is attached, inflicting 1 point of Strength and Constitution damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Leech ~ Blood Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.187",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 827,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Giant Leech ~ Blood Drain",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

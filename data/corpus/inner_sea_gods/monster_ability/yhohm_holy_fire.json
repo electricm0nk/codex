@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yhohm ~ Holy Fire",
+    "delivery": "Supernatural",
+    "description": "Like a Flame Strike, half the fire damage from a yhohm's fire attacks is fire damage; the other half is divine power and is not subject to fire immunity or resistance.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:yhohm_holy_fire",
+    "name": "Holy Fire",
+    "owners": [
+      "inner_sea_gods:monster:yhohm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Like a Flame Strike, half the fire damage from a yhohm's fire attacks is fire damage; the other half is divine power and is not subject to fire immunity or resistance. "
+      },
+      {
+        "key": "KEY",
+        "value": "Yhohm ~ Holy Fire"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 247,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Yhohm ~ Holy Fire",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

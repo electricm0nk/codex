@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "SRO ~ Medium",
+    "name": "SRO ~ Medium"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "starfinder/paizo/pact_worlds/spw_templates.lst",
+    "record_key": "SRO ~ Medium",
+    "sha256": "9f52d871e28f82b90a11a0a26e0484eb76c332609eb1ca4862b36895a450f7e0"
+  },
+  "unit_id": "pact_worlds:template:sro_medium"
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Greater Tenacious Hunter",
+    "name": "Greater Tenacious Hunter",
+    "description": "The animal companion can attempt a Perception check as a swift action to intentionally search for a stimulus. When using Perception to attempt to pinpoint an invisible foe, the animal companion's bonus from the Tenacious Hunter feat increases to +20. In addition, whenever the animal companion successfully uses Perception to oppose a Stealth check or to pinpoint an invisible creature's location, that foe is denied its Dexterity bonus to AC against all attacks that the animal companion makes before the start of the animal companion's next turn. [Normal] Using Perception to intentionally search for a stimulus is a move action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Greater Tenacious Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Reflexes,Tenacious Hunter"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Perception=3,Stealth=3"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal companion can attempt a Perception check as a swift action to intentionally search for a stimulus. When using Perception to attempt to pinpoint an invisible foe, the animal companion's bonus from the Tenacious Hunter feat increases to +20. In addition, whenever the animal companion successfully uses Perception to oppose a Stealth check or to pinpoint an invisible creature's location, that foe is denied its Dexterity bonus to AC against all attacks that the animal companion makes before the start of the animal companion's next turn. [Normal] Using Perception to intentionally search for a stimulus is a move action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Tenacious Hunter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 661,
+    "record_key": "Animal Companion Feat ~ Greater Tenacious Hunter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

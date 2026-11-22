@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Temp Evolution ~ Scent",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "advanced_players_guide:companion:temp_evolution_scent",
+    "name": "Scent",
+    "owners": [
+      "advanced_players_guide:companion:familiar_fox"
+    ],
+    "raw_tokens": [
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Scent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "TempEvolutionChoice",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 239,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "record_key": "Temp Evolution ~ Scent",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

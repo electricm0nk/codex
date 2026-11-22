@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Unblinking Flame Feint",
+    "category": "Combat",
+    "name": "Unblinking Flame Feint",
+    "description": "You move as swiftly and unpredictably as a flickering flame, throwing your opponents off guard. When using Perfect Style, you can use your Wisdom modifier in place of your Charisma modifier when attempting Bluff checks to feint. You can spend 1 ki point as a swift action to gain the benefits of Improved Feint for 1 round.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Perfect Style,Combat Expertise",
+      "PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:MonkLVL,9]",
+      "PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]",
+      "PRESTAT:1,WIS=13",
+      "PRETEXT:Prerequisites: Int 13, Wis 13, Combat Expertise, Perfect Style, base attack bonus +9 or monk level 9th."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 24,
+    "record_key": "Unblinking Flame Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,13 +1,118 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod ge08_workbench;
+mod browser_handoff;
+mod campaign_folder;
+mod character_custom;
+mod character_hub;
+mod character_ledger;
+#[allow(non_snake_case)]
+mod characterHub;
+mod class_catalog;
+mod class_facts;
+mod class_catalog_generic;
+mod class_feature_descriptions;
+mod class_feature_feat_bridge;
+mod class_feature_pool_picker;
+mod dm_console_export;
+mod encounter_rating;
+mod class_spell_levels;
+/// The catalog-row → converted-record join, which moved into the library crate
+/// (`codex::rules_core::converted_prose`) in SD-35 `AT-35-E6-003-SWEEP` cycle 17 so the
+/// library's own catalogs can reach the same join this crate's screens use. Re-exported under
+/// its original path so every call site in this crate is unchanged by the move.
+use codex::rules_core::converted_prose;
+mod corpus_fixtures;
+mod corpus_full;
+mod corpus_ingest_diagnostic;
+mod cpr_adapter;
+mod cpr_catalog;
+mod cpr_creation;
+mod cpr_improve;
+mod cpr_sheet_print;
+mod equipment_catalog;
+mod feat_catalog;
+mod authoring_workbench;
+#[cfg(test)]
+mod corpus_bundle_parity_test;
+#[cfg(test)]
+mod pf_catalog_dump_hash;
+mod companion_catalog;
+mod companion_pool_catalog;
+mod intelligent_item_catalog;
+mod monster_catalog;
+mod pf1_adapter;
+mod print;
+mod race_catalog;
+mod race_trait_picker;
+mod reference_library_catalog;
+mod rule_system_adapter;
+mod sf_adapter;
+mod sf_catalog;
+mod sf_choices;
+mod sf_creation;
+mod sf_drone_print;
+mod sf_level_up;
+mod sf_oracle_parity;
+mod sf_sheet_print;
+mod spell_catalog;
+mod stub_adapter;
+mod trait_picker;
+mod ui_probe;
+mod update;
 
 use serde::Serialize;
 
-use ge08_workbench::{
-    Ge08AuthoredRecords, Ge08AuthoredRecord, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
-    Ge08BaselineArmorClass, Ge08Diagnostic, Ge08ExplanationRef, Ge08LifecycleGateState, Ge08OracleDimensionStatus,
-    Ge08PackageManifest, Ge08PreviewEnvelope, Ge08ProvenanceRef, Ge08SelectedSlotResolution,
+use campaign_folder::{
+    add_known_campaign_folder, add_map, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_adventure_log, list_campaign_tree,
+    list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
+    set_map_pins, stat_campaign_file, write_campaign_file,
+    add_wiki_folder, delete_wiki_folder, list_wiki_folders, list_wiki_pages, new_wiki_page, rename_wiki_folder, resolve_wiki_link, search_campaign, wiki_backlinks,
+    diff_campaign_character, get_device_identity, set_device_name, import_campaign_character, list_campaign_characters, load_campaign_character,
+    load_character_campaigns,
+};
+use character_hub::{
+    add_equipment_selection, add_feat_selection, add_spell_selection,
+    adjust_character_money, attach_equipment_modifier, clone_character, create_character,
+    delete_character, delete_character_portrait, export_character, export_character_json,
+    import_character, import_pcg, level_up_character, list_feats_for_character, list_saved_characters,
+    load_character_bio,
+    load_character_hit_points,
+    load_character_money, load_character_portrait,
+    list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, list_feat_levels, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_held_equipment, list_progression_ledger, record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    add_trait_selection, remove_trait_selection, set_equipment_active_state,
+    move_equipment_copy, discard_equipment_copy, rename_equipment_copy, describe_held_equipment, purchase_custom_equipment, quote_custom_equipment, list_custom_equipment_options, create_equipment_set, rename_equipment_set, delete_equipment_set, activate_equipment_set,
+    remove_spell_selection,
+    save_character_portrait, set_skill_allocations, update_character_bio,
+};
+use characterHub::appendToCharacter::append_to_character;
+use characterHub::recomputeCharacter::recompute_character;
+use characterHub::reSaveCharacter::re_save_character;
+use class_catalog::list_class_catalog;
+use class_facts::list_class_facts;
+use class_feature_descriptions::list_class_feature_descriptions;
+use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
+use class_feature_pool_picker::list_class_feature_pool_options;
+use dm_console_export::export_dm_console;
+use encounter_rating::rate_encounter;
+use class_spell_levels::list_class_spell_levels;
+use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
+use equipment_catalog::{list_equipment, list_equipment_catalog, list_market};
+use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
+use companion_catalog::list_companion_catalog;
+use reference_library_catalog::list_reference_library_catalog;
+use intelligent_item_catalog::list_intelligent_item_catalog;
+use monster_catalog::list_monster_catalog;
+use race_catalog::list_race_catalog;
+use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
+use spell_catalog::{list_spell_catalog, list_spells};
+use trait_picker::list_available_character_traits;
+use update::transaction::{
+    is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
+};
+
+use authoring_workbench::{
+    build_authoring_workbench_snapshot, AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot,
 };
 
 #[derive(Serialize)]
@@ -41,151 +146,325 @@ fn load_pilot_shell_snapshot() -> PilotShellSnapshot {
 }
 
 #[tauri::command]
-fn load_ge08_authoring_workbench_snapshot(
-    request: Ge08AuthoringWorkbenchRequest,
-) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
-    use codex::homebrew_authoring::preview_bridge::PreviewBridge;
+fn load_authoring_workbench_snapshot(
+    request: AuthoringWorkbenchRequest,
+) -> Result<AuthoringWorkbenchSnapshot, String> {
+    build_authoring_workbench_snapshot(request)
+}
 
-    let repo_root = std::env::current_dir().map_err(|e| format!("cannot determine repo root: {}", e))?;
-    let package_path = repo_root.join(&request.package_root);
+/// Identifies which build of the Rust backend is actually running. `version`
+/// is the crate's own Cargo.toml version (not the npm frontend version, which
+/// is tracked separately); `gitCommit` is the short commit hash embedded at
+/// compile time by build.rs, or "unknown" for a build outside a git checkout.
+/// Reaching this command at all — regardless of what it returns — is itself
+/// proof the Tauri IPC bridge to the Rust backend is alive.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct BackendHealthSnapshot {
+    version: String,
+    git_commit: String,
+}
 
-    if !package_path.exists() {
-        return Err(format!(
-            "package root does not exist: {} (resolved to {})",
-            request.package_root,
-            package_path.display()
-        ));
+/// `version` is the packaged app version (Tauri's `package_info`), which the release stamp sets.
+/// `CARGO_PKG_VERSION` is not stamped, so using it showed `v0.16.0` on every 0.16.x build.
+fn backend_health_snapshot(version: &str, git_commit: &str) -> BackendHealthSnapshot {
+    BackendHealthSnapshot {
+        version: version.to_string(),
+        git_commit: git_commit.to_string(),
     }
+}
 
-    let envelope = PreviewBridge::preview_from_root(&package_path)
-        .map_err(|e| format!("failed to load/preview package: {}", e))?;
+#[tauri::command]
+fn load_backend_health(app: tauri::AppHandle) -> BackendHealthSnapshot {
+    backend_health_snapshot(&app.package_info().version.to_string(), env!("CODEX_GIT_SHA"))
+}
 
-    let package = codex::homebrew_authoring::package_store::PackageStore::load(&package_path)
-        .map_err(|e| format!("failed to load package source: {}", e))?;
+#[cfg(test)]
+mod backend_health_tests {
+    use super::backend_health_snapshot;
 
-    let (actual_state, _diags) = package.recompute_validation();
-    let baseline_ac = match envelope.baseline_armor_class {
-        codex::homebrew_authoring::preview_bridge::ArmorClassPreview::Computed(value) => {
-            Ge08BaselineArmorClass::Computed { value }
-        }
-        codex::homebrew_authoring::preview_bridge::ArmorClassPreview::Blocked(reason) => {
-            Ge08BaselineArmorClass::Blocked { reason }
-        }
-    };
-
-    let export_allowed = actual_state == codex::homebrew_authoring::package_manifest::PackageValidationState::Valid;
-    let preview_allowed = export_allowed && envelope.preview_status != codex::homebrew_authoring::preview_bridge::PreviewStatus::Blocked;
-
-    Ok(Ge08AuthoringWorkbenchSnapshot {
-        package_root: request.package_root,
-        package_state: actual_state.as_str().to_string(),
-        package_manifest: Ge08PackageManifest {
-            package_id: package.manifest.package_id,
-            package_title: package.manifest.package_title,
-            package_version: package.manifest.package_version,
-            depends_on: package.manifest.depends_on,
-            supported_object_kinds: package.manifest.supported_object_kinds,
-        },
-        active_record_ref: request.active_record_ref,
-        authored_records: Ge08AuthoredRecords {
-            feat: package.feat.map(|f| Ge08AuthoredRecord {
-                stable_id: f.stable_id,
-                owning_feat_id: None,
-                display_name: f.display_name,
-                object_kind: f.object_kind,
-                target_family: None,
-                modifier_type: None,
-                modifier_value: None,
-                predicate: None,
-            }),
-            effect: package.effect.map(|e| Ge08AuthoredRecord {
-                stable_id: e.stable_id,
-                owning_feat_id: Some(e.owning_feat_id),
-                display_name: e.target_family.clone(),
-                object_kind: "effect".to_string(),
-                target_family: Some(e.target_family),
-                modifier_type: Some(e.modifier_type),
-                modifier_value: Some(e.modifier_value),
-                predicate: None,
-            }),
-            prerequisite: package.prerequisite.map(|p| Ge08AuthoredRecord {
-                stable_id: p.stable_id,
-                owning_feat_id: Some(p.owning_feat_id),
-                display_name: p.predicate.clone(),
-                object_kind: "prerequisite".to_string(),
-                target_family: None,
-                modifier_type: None,
-                modifier_value: None,
-                predicate: Some(p.predicate),
-            }),
-        },
-        preview: Ge08PreviewEnvelope {
-            case_id: envelope.case_id,
-            preview_status: match envelope.preview_status {
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Success => "success".to_string(),
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Blocked => "blocked".to_string(),
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Unsupported => "unsupported".to_string(),
-            },
-            selected_slot_resolution: Ge08SelectedSlotResolution {
-                slot: envelope.selected_slot_resolution.slot,
-                removed: envelope.selected_slot_resolution.removed,
-                added: envelope.selected_slot_resolution.added,
-                resolved_feat_id: envelope.selected_slot_resolution.resolved_feat_id,
-            },
-            baseline_armor_class: baseline_ac,
-            diagnostics: envelope
-                .diagnostics
-                .iter()
-                .map(|d| Ge08Diagnostic {
-                    class: d.class.clone(),
-                    severity: d.severity.as_str().to_string(),
-                    message: d.message.clone(),
-                    subject_ref: d.subject_ref.clone(),
-                    claim_blocking: d.claim_blocking,
-                })
-                .collect(),
-            provenance_refs: envelope
-                .provenance_refs
-                .iter()
-                .map(|p| Ge08ProvenanceRef {
-                    stable_id: p.stable_id.clone(),
-                    source_package_id: p.source_package_id.clone(),
-                    authored_path: p.authored_path.clone(),
-                })
-                .collect(),
-            explanation_refs: envelope
-                .explanation_refs
-                .iter()
-                .map(|e| Ge08ExplanationRef {
-                    node_kind: e.node_kind.clone(),
-                    ref_id: e.ref_id.clone(),
-                    detail: e.detail.clone(),
-                })
-                .collect(),
-            oracle_dimension_status: envelope
-                .oracle_dimension_status
-                .iter()
-                .map(|o| Ge08OracleDimensionStatus {
-                    dimension: o.dimension.clone(),
-                    status: o.status.clone(),
-                })
-                .collect(),
-            blocked_claims: envelope.blocked_claims,
-        },
-        lifecycle_gate_state: Ge08LifecycleGateState {
-            save_allowed: true,
-            preview_allowed,
-            export_allowed,
-            diff_mode: "deferred".to_string(),
-        },
-        data_source: "ge08-headless-preview-bridge".to_string(),
-        note: "Real GE-08 authoring workbench snapshot from headless substrate.".to_string(),
-    })
+    #[test]
+    fn reports_the_packaged_app_version_not_the_crate_version() {
+        let snapshot = backend_health_snapshot("0.16.141", "157873a67e80");
+        assert_eq!(snapshot.version, "0.16.141");
+        assert_ne!(snapshot.version, env!("CARGO_PKG_VERSION"));
+        assert_eq!(snapshot.git_commit, "157873a67e80");
+    }
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![load_pilot_shell_snapshot, load_ge08_authoring_workbench_snapshot])
+        .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_dialog::init())
+        .setup(|app| {
+            // A Linux AppImage writes its menu entry and icon (naming the running file) on every
+            // start, then, started from anywhere but ~/Codex/Codex.AppImage, offers to install
+            // itself there (once per file).
+            // Runs before the installed-state seed below. Not an AppImage: does nothing.
+            update::self_install::run_at_startup(app.handle(), &app.package_info().version.to_string());
+
+            // SD-36: hand the Tauri-resolved resource directory to
+            // `codex_repo_root()` before anything else runs, so every corpus
+            // loader (race/equipment/spell catalogs, character creation,
+            // authoring workbench) can find `data/corpus` in a packaged
+            // build instead of only ever finding it in a source checkout.
+            use tauri::Manager;
+            if let Ok(resource_dir) = app.path().resource_dir() {
+                authoring_workbench::set_app_resource_dir(resource_dir);
+            }
+            // SD-37 E4a.2: the Pathfinder rules tables are a data package, read from the
+            // resolved root. Bind it before the first table read (the seed character below).
+            authoring_workbench::bind_rules_tables_package_root();
+
+            // The rules crate reads its own data (sheet rules, class grants, the roster fixture)
+            // through a root baked in at compile time -- the CI runner's checkout, which a user's
+            // machine does not have. Hand it the directory the bundled `data/` really lives under.
+            // Must run before anything touches the engine (the roster sweep below does).
+            match authoring_workbench::codex_repo_root() {
+                Ok(root) => {
+                    if !codex::set_data_root(root.clone()) {
+                        eprintln!("Rules data root already set to a different directory; ignoring {}", root.display());
+                    }
+                }
+                Err(err) => eprintln!("Cannot resolve the rules data root: {err}"),
+            }
+
+            // Record the running build's real identity so the Update panel never has to say
+            // "unknown". Failure is reported, not hidden: the panel then states the probe error.
+            let version = app.package_info().version.to_string();
+            if let Err(err) = update::seed::seed_installed_state_for_running_build(&version) {
+                eprintln!("Failed to record installed-state: {err}");
+            }
+
+            // Brief 3 S1: a seed that fails is kept as app state for the Load screen
+            // (`list_starter_seed_errors`), not only printed.
+            let seed_errors = character_hub::seed_default_character_if_needed(app.handle());
+            for err in &seed_errors {
+                eprintln!("Failed to seed default character: {err}");
+            }
+            app.manage(character_hub::StarterSeedErrors::new(seed_errors));
+
+            // SD-36 F4b: the class creation roster is swept from the census (every class at
+            // every level) once per process. Start that sweep now, off the UI thread, so the
+            // Create picker's `list_class_creation_roster` normally reads a warm cache. A failed
+            // sweep is not swallowed: the command returns the same `Err` when it is called.
+            std::thread::spawn(|| {
+                if let Err(err) = codex::rules_core::class_census::class_creation_roster() {
+                    eprintln!("Class creation roster unavailable: {err}");
+                }
+            });
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            load_pilot_shell_snapshot,
+            load_authoring_workbench_snapshot,
+            load_backend_health,
+            browser_handoff::handoff_defect_report_to_browser,
+            is_install_eligible,
+            perform_install,
+            perform_restore_previous,
+            verify_relaunch_artifact,
+            create_character,
+            sf_creation::preview_starfinder_character,
+            sf_creation::create_starfinder_character,
+            sf_level_up::preview_starfinder_level_up,
+            sf_level_up::level_up_starfinder_character,
+            sf_catalog::list_starfinder_catalog,
+            sf_catalog::list_starfinder_market,
+            sf_adapter::starfinder_market_state,
+            sf_adapter::buy_starfinder_market,
+            sf_adapter::sell_starfinder_market,
+            cpr_catalog::list_cyberpunk_catalog,
+            cpr_catalog::compute_cyberpunk_deck,
+            cpr_catalog::list_cyberpunk_market,
+            cpr_adapter::cyberpunk_market_state,
+            cpr_adapter::buy_cyberpunk_market,
+            cpr_adapter::sell_cyberpunk_market,
+            cpr_creation::preview_cyberpunk_character,
+            cpr_creation::create_cyberpunk_character,
+            cpr_adapter::save_cyberpunk_criticals,
+            cpr_improve::preview_cyberpunk_improvement,
+            cpr_improve::apply_cyberpunk_improvement,
+            sf_choices::preview_starfinder_choices,
+            sf_choices::save_starfinder_choices,
+            sf_choices::list_starfinder_equipment_options,
+            clone_character,
+            level_up_character,
+            recompute_character,
+            add_equipment_selection,
+            purchase_equipment,
+            attach_equipment_modifier,
+            add_spell_selection,
+            record_and_prepare_spell_selection,
+            add_feat_selection,
+            remove_feat_selection,
+            add_trait_selection,
+            remove_trait_selection,
+            set_equipment_active_state,
+            move_equipment_copy,
+            discard_equipment_copy,
+            rename_equipment_copy,
+            describe_held_equipment,
+            purchase_custom_equipment,
+            quote_custom_equipment,
+            list_custom_equipment_options,
+            create_equipment_set,
+            rename_equipment_set,
+            delete_equipment_set,
+            activate_equipment_set,
+            remove_spell_selection,
+            remove_equipment_selection,
+            list_held_equipment,
+            list_progression_ledger,
+            set_skill_allocations,
+            append_to_character,
+            re_save_character,
+            list_saved_characters,
+            load_saved_character,
+            character_hub::restore_starter_characters,
+            character_hub::list_starter_seed_errors,
+            preview_level_up,
+            save_character_portrait,
+            load_character_portrait,
+            delete_character_portrait,
+            update_character_bio,
+            load_character_bio,
+            load_character_hit_points,
+            load_character_money,
+            adjust_character_money,
+            delete_character,
+            export_character_json,
+            print::save_sheet_pdf,
+            print::print_sheet_pdf,
+            export_character,
+            import_character,
+            import_pcg,
+            list_known_campaigns,
+            get_device_identity,
+            set_device_name,
+            add_known_campaign_folder,
+            forget_known_campaign_folder,
+            create_campaign_folder,
+            open_campaign_folder,
+            save_campaign_json,
+            migrate_campaign,
+            read_campaign_file,
+            write_campaign_file,
+            stat_campaign_file,
+            create_party_resources_starter,
+            list_campaign_tree,
+            list_adventure_log,
+            new_adventure_log_entry,
+            list_maps,
+            set_map_pins,
+            add_map,
+            list_wiki_folders,
+            list_wiki_pages,
+            list_campaign_characters,
+            load_character_campaigns,
+            import_campaign_character,
+            diff_campaign_character,
+            load_campaign_character,
+            add_wiki_folder,
+            rename_wiki_folder,
+            delete_wiki_folder,
+            new_wiki_page,
+            resolve_wiki_link,
+            wiki_backlinks,
+            search_campaign,
+            save_attachment,
+            list_equipment_catalog,
+            list_spell_catalog,
+            list_feat_catalog,
+            // SD-27: Bestiary 1's 41 ingested monster stat blocks, which
+            // reached no surface at all until this catalog landed.
+            list_monster_catalog,
+            list_companion_catalog,
+            // SD-32 row 19 cycle 4: the twelve corpus content-kind
+            // directories (ability/class_generic/deity/domain/feat_generic/
+            // language/monster_generic/power/race_generic/skill/template/
+            // trait_generic) that reached no surface at all -- a browsable
+            // reference library, generic across every book and kind.
+            list_reference_library_catalog,
+            // SD31-W18: the intelligent/legendary item build system's own
+            // ability scores, Ego and alignment components -- reached no
+            // screen at all before this catalog landed.
+            list_intelligent_item_catalog,
+            // SD31-D7-PROSE-003: real corpus description text for class
+            // features, joined to the character sheet's own explanation ids
+            // -- `ClassFeatureRow.detail` renders the engine's COMPUTED
+            // derivation, never the rulebook prose, so this is a second,
+            // additive field, not a replacement.
+            list_class_feature_descriptions,
+            // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a
+            // class_feature record whose entire content is a grant of an
+            // already-separately-modelled feat carries no local
+            // description of its own -- this serves the matched feat's
+            // own already-verified text through the SAME DTO shape, a
+            // second, additive population `class_feature_descriptions.rs`
+            // never covers (disjoint by construction; see that module's
+            // own doc comment).
+            list_class_feature_feat_bridge_descriptions,
+            // SD31-W22-POOLMEMBER-001: the browsable option-pool reference
+            // catalog (Rogue Talents today) -- a menu of every real record,
+            // regardless of selection, modelled on
+            // `list_alternate_racial_traits`'s own precedent.
+            list_class_feature_pool_options,
+            export_dm_console,
+            rate_encounter,
+            list_equipment,
+            list_market,
+            list_spells,
+            list_feats,
+            // SD-27: the same catalog with each record's real prerequisite
+            // verdict for a specific saved character, so the picker can grey
+            // out what that character cannot take and say why.
+            list_feats_for_character,
+            list_feats_for_draft,
+            list_feat_levels,
+            draft_spell_options,
+            draft_sheet_preview,
+            draft_level_up_preview,
+            starting_wealth_for_class,
+            character_custom::load_character_custom,
+            character_custom::save_character_custom,
+            character_hub::set_character_campaigns,
+            character_custom::create_custom_item,
+            list_weapon_targets,
+            list_class_catalog,
+            list_class_spell_levels,
+            list_race_catalog,
+            list_race_creation_roster,
+            list_class_creation_roster,
+            // SD-36 F6a: weapon proficiency, caster level, class skills and hit die per held
+            // class, from the engine -- the sheet keeps no class table of its own.
+            list_class_facts,
+            list_level_up_class_options,
+            list_alternate_racial_traits,
+            resolve_race_alternate_selection,
+            list_available_character_traits,
+            corpus_ingest_diagnostic,
+            ui_probe::record_ui_probe,
+            ui_probe::poll_ui_probe_command
+        ])
         .run(tauri::generate_context!())
-        .expect("error while running codex desktop shell scaffold");
+        .expect("error while running codex");
+}
+
+#[cfg(test)]
+mod path_resolution_tests {
+    use crate::authoring_workbench::resolve_package_path;
+
+    #[test]
+    fn resolves_repo_relative_fixture_from_src_tauri_runtime() {
+        let resolved = resolve_package_path("tests/fixtures/authoring_workbench/guard-stance-package")
+            .expect("fixture path should resolve from repo root");
+
+        assert!(
+            resolved.ends_with("tests/fixtures/authoring_workbench/guard-stance-package"),
+            "resolved path should end with the repo fixture path, got {}",
+            resolved.display()
+        );
+        assert!(resolved.exists(), "resolved fixture path should exist: {}", resolved.display());
+    }
 }

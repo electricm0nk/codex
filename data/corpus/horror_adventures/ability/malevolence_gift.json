@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Malevolence Gift",
+    "name": "Malevolence Gift",
+    "description": "You can touch a living creature as a standard action and force your soul into its body. If hit by this touch attack, the target must succeed at a Will save (DC %1) or be affected by possession (OA). You can possess creatures for %2 minutes per day. These minutes don't need to be used consecutively, but must be spent in 1-minute increments. A failed attempt costs 1 minute of use and renders your target immune to your malevolence for 24 hours. Your body is helpless while you possess another creature, and if it is destroyed you die when the duration of malevolence ends. You can use malevolence while in another creature's body to transfer your soul again (following the same rules for casting possession while in a body that's not your own).|15+LichManifestationLevel|LichManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Malevolence Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichMalevolenceGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a living creature as a standard action and force your soul into its body. If hit by this touch attack, the target must succeed at a Will save (DC %1) or be affected by possession (OA). You can possess creatures for %2 minutes per day. These minutes don't need to be used consecutively, but must be spent in 1-minute increments. A failed attempt costs 1 minute of use and renders your target immune to your malevolence for 24 hours. Your body is helpless while you possess another creature, and if it is destroyed you die when the duration of malevolence ends. You can use malevolence while in another creature's body to transfer your soul again (following the same rules for casting possession while in a body that's not your own).|15+LichManifestationLevel|LichManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 517,
+    "record_key": "Lich Corruption ~ Malevolence Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

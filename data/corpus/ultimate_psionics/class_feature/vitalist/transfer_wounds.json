@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Transfer Wounds",
+    "name": "Transfer Wounds",
+    "class": "Vitalist",
+    "description": "Touch to transfer %1d%2 hit points of damage to yourself, %3/day|TransferWoundsDice|TransferWoundsDieType|TransferWoundsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Transfer Wounds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferWoundsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferWoundsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferWoundsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransferWoundsDieType|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Touch to transfer %1d%2 hit points of damage to yourself, %3/day|TransferWoundsDice|TransferWoundsDieType|TransferWoundsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferWoundsLVL|VitalistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferWoundsDieType|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferWoundsTimes|(3+VitalistPrimeStat)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransferWoundsDice|(TransferWoundsLVL+2)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TransferWoundsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 957,
+    "record_key": "Vitalist ~ Transfer Wounds"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

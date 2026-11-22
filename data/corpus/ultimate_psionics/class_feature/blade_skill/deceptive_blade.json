@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Deceptive Blade",
+    "name": "Deceptive Blade",
+    "class": "Blade Skill",
+    "description": "When you feint in combat, you may also form your mind blade in the same action as the feint.  Bluff is now a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Deceptive Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality.DarkTempestBladeSkill"
+      },
+      {
+        "key": "DESC",
+        "value": "When you feint in combat, you may also form your mind blade in the same action as the feint.  Bluff is now a class skill for you."
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, you may also charge your psychic strike when performing a feint and forming your mind blade in the same action.  This blade skill may not be used with the mind bolt."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 759,
+    "record_key": "Blade Skill ~ Deceptive Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

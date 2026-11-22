@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 7500.0,
+    "description": "+5 on Stealth; Survival checks to track wearer take -5 penalty",
+    "key": "Special Ability ~ Trackless ~ Armor",
+    "name": "Trackless",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Stealth",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Trackless ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "7500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,LeatherArmor,HideArmor"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 on Stealth; Survival checks to track wearer take -5 penalty"
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Trackless ~ Armor",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

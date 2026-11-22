@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Impossible Bloodline",
+    "name": "Impossible Bloodline",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Arcanist Bloodline Development"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Impossible Bloodline ~ Power LVL 01"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Impossible"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Impossible_BloodlineLVL|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_cob.lst",
+    "record_key": "Impossible Bloodline",
+    "sha256": "3334d8b8c73a1220d3403ddd628f479bd74e3ef4dc94d995fff6103106cc8530"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

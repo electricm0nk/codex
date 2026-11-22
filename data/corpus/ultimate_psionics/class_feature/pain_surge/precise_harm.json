@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pain Surge ~ Precise Harm",
+    "name": "Precise Harm",
+    "class": "Pain Surge",
+    "description": "You can determine exactly how much damage you wish to inflict on a willing or helpless subject.  Whenever you have a minimum to maximum amount of damage to inflict - such as with a weapon - you can choose the amount of damage you deliver within those limits, including foregoing Strength or other bonuses to damage.  You gain a +4 competence bonus on any use of the Heal skill that involves surgery, or any use of Intimidate that involves inflicting pain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pain Surge ~ Precise Harm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can determine exactly how much damage you wish to inflict on a willing or helpless subject.  Whenever you have a minimum to maximum amount of damage to inflict - such as with a weapon - you can choose the amount of damage you deliver within those limits, including foregoing Strength or other bonuses to damage.  You gain a +4 competence bonus on any use of the Heal skill that involves surgery, or any use of Intimidate that involves inflicting pain."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Heal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1069,
+    "record_key": "Pain Surge ~ Precise Harm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

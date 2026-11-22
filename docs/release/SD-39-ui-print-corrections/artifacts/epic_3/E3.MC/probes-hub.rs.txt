@@ -1,0 +1,175 @@
+    // ---- E3.MC temporary probes ----
+    fn probe_out(name: &str) -> PathBuf { PathBuf::from("/home/ubuntu/cargo-target/e3mc-logs/probe").join(name) }
+    #[test]
+    fn e3mcprobe_dump_market() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let mut all = serde_json::Map::new();
+        for (n, category) in [("weapon", MarketCategory::Weapon), ("armor", MarketCategory::Armor), ("shield", MarketCategory::Shield), ("gear", MarketCategory::Gear), ("magic", MarketCategory::MagicItem)] {
+            let m = list_market(MarketFilter { category, name_contains: None, book: None });
+            all.insert(n.to_owned(), serde_json::to_value(&m.entries).unwrap());
+        }
+        std::fs::write(probe_out("pf_market.json"), serde_json::to_string(&all).unwrap()).unwrap();
+    }
+    fn probe_state(cat: &str) -> ActiveState { if cat == "weapon" { ActiveState::SelectedInactive } else { ActiveState::EquippedActive } }
+    /// Every listed row, plain, Cashless, through the save path, then sold; every offer at +5 at CharacterBuild.
+    #[test]
+    fn e3mcprobe_buy_every_row() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let mut rows: Vec<(String, String, Vec<(u8, f64, String)>)> = Vec::new();
+        for (n, category) in [("weapon", MarketCategory::Weapon), ("armor", MarketCategory::Armor), ("shield", MarketCategory::Shield), ("gear", MarketCategory::Gear), ("magic", MarketCategory::MagicItem)] {
+            for r in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows.push((n.to_owned(), r.entry.key.clone(), r.variants.iter().map(|v| (v.bonus, v.price_gp, v.name.clone())).collect()));
+            }
+        }
+        let t0 = std::time::Instant::now();
+        let rows = std::sync::Arc::new(rows);
+        let mut handles = Vec::new();
+        for lane in 0..8usize {
+            let rows = rows.clone();
+            handles.push(std::thread::Builder::new().stack_size(64*1024*1024).spawn(move || {
+                let (dir, root) = enhancement_rows_aldric(&format!("probe-buy-{lane}"));
+                adjust_character_money_at_root(&root, 100_000_000_000).unwrap();
+                let mut out = Vec::new();
+                let mut done = 0;
+                for (i, (cat, key, variants)) in rows.iter().enumerate() {
+                    if i % 8 != lane { continue; }
+                    if t0.elapsed().as_secs() > 480 { break; }
+                    done += 1;
+                    let before = balance(&root);
+                    match purchase_equipment_offer_at_root(&root, key, probe_state(cat), "t", PriceMode::Cashless, None) {
+                        Err(e) => out.push(format!("BUYERR {cat} {key}: {e}")),
+                        Ok(PurchaseEquipmentResponse::Blocked { diagnostics }) => out.push(format!("BLOCKED {cat} {key}: {:?}", diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>())),
+                        Ok(_) => {
+                            match sell_equipment_copy_at_root(&root, key, "t", PriceMode::Cashless, Some(0)) {
+                                Err(e) => out.push(format!("SELLERR {cat} {key}: {e}")),
+                                Ok(CreateCharacterResponse::Blocked { diagnostics }) => out.push(format!("SELLBLOCK {cat} {key}: {:?}", diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>())),
+                                Ok(_) => {}
+                            }
+                        }
+                    }
+                    if let Some((b, gp, name)) = variants.iter().max_by_key(|v| v.0) {
+                        match purchase_equipment_offer_at_root(&root, key, probe_state(cat), "t", PriceMode::CharacterBuild, Some(*b)) {
+                            Ok(PurchaseEquipmentResponse::Purchased { .. }) => {
+                                let paid = before - balance(&root);
+                                if paid != money::gp_to_copper(*gp) { out.push(format!("PRICE {key}: paid {paid} offer {gp}")); }
+                                let held = list_held_equipment_at_root(&root).unwrap();
+                                if !held.iter().any(|h| h.item_id == *key && h.bonus == *b && h.name == *name) { out.push(format!("HELDNAME {key}: {held:?}")); }
+                                match sell_equipment_copy_at_root(&root, key, "t", PriceMode::CharacterBuild, Some(*b)) {
+                                    Ok(CreateCharacterResponse::Saved { .. }) => { if balance(&root) != before { out.push(format!("NOTBACK {key}")); } }
+                                    other => out.push(format!("OFFERSELL {key}: {:?}", other.is_ok())),
+                                }
+                            }
+                            Ok(PurchaseEquipmentResponse::Blocked { diagnostics }) => out.push(format!("OFFERBLOCK {cat} {key}: {:?}", diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>())),
+                            Err(e) => out.push(format!("OFFERERR {key}: {e}")),
+                        }
+                    }
+                }
+                std::fs::remove_dir_all(&dir).ok();
+                (done, out)
+            }).unwrap());
+        }
+        let mut done = 0; let mut lines = Vec::new();
+        for h in handles { let (d, o) = h.join().unwrap(); done += d; lines.extend(o); }
+        lines.sort();
+        std::fs::write(probe_out("pf_buy_every.txt"), format!("rows {} done {done} secs {}\n{}\n", rows.len(), t0.elapsed().as_secs(), lines.join("\n"))).unwrap();
+    }
+    /// Walks random buy/attach/sell sequences; at the end sells everything bought. A mint is a final balance over the start.
+    #[test]
+    fn e3mcprobe_money_walk() {
+        const ITEMS: [&str; 4] = ["Longsword (Base)", "Chain Shirt (Base)", "Heavy Wooden Shield (Base)", "Dagger (Base)"];
+        let kinds = |i: usize| match i { 0 | 3 => "Weapon", 1 => "Armor", _ => "Shield" };
+        let mut report = Vec::new();
+        for (mode, label) in [(PriceMode::Standard, "standard"), (PriceMode::CharacterBuild, "build")] {
+            for seed in 0..12u64 {
+                let (dir, root) = enhancement_rows_aldric(&format!("probe-walk-{label}-{seed}"));
+                adjust_character_money_at_root(&root, 1_000_000_000).unwrap();
+                let start = balance(&root);
+                let mut x = seed.wrapping_mul(0x9E37_79B9_7F4A_7C15).wrapping_add(12345);
+                let mut next = |m: u64| { x ^= x << 13; x ^= x >> 7; x ^= x << 17; x % m };
+                let mut trace = Vec::new();
+                for _ in 0..40 {
+                    let i = next(4) as usize; let item = ITEMS[i]; let n = next(6) as u8;
+                    match next(5) {
+                        0 | 1 => {
+                            let b = if n == 0 { None } else { Some(n) };
+                            let st = if i == 0 || i == 3 { ActiveState::SelectedInactive } else { ActiveState::EquippedActive };
+                            let _ = purchase_equipment_offer_at_root(&root, item, st, "t", mode, b);
+                            trace.push(format!("buy {item} {b:?}"));
+                        }
+                        2 | 3 => {
+                            let k = kinds(if next(4) == 0 { next(3) as usize } else { i });
+                            let key = format!("Special Ability ~ +{} ~ {k}", 1 + next(5));
+                            let r = attach_equipment_modifier_priced_at_root(&root, item, &key, "t", mode);
+                            trace.push(format!("attach {item} {key} ok={}", matches!(r, Ok(AttachEquipmentModifierResponse::Attached { .. }))));
+                        }
+                        _ => {
+                            let b = if next(2) == 0 { None } else { Some(n) };
+                            let r = sell_equipment_copy_at_root(&root, item, "t", mode, b);
+                            trace.push(format!("sell {item} {b:?} ok={}", r.is_ok()));
+                        }
+                    }
+                }
+                let mut guard = 0;
+                loop {
+                    guard += 1;
+                    let held = list_held_equipment_at_root(&root).unwrap();
+                    let Some(h) = held.iter().find(|h| ITEMS.contains(&h.item_id.as_str())) else { break };
+                    if guard > 200 { report.push(format!("{label}/{seed}: stuck on {h:?}")); break; }
+                    let _ = sell_equipment_copy_at_root(&root, &h.item_id, "t", mode, Some(h.bonus));
+                }
+                let end = balance(&root);
+                let bad = match mode { PriceMode::CharacterBuild => end != start, _ => end > start };
+                report.push(format!("{label}/{seed}: start {start} end {end} {}", if bad { format!("BAD {trace:#?}") } else { "ok".to_owned() }));
+                std::fs::remove_dir_all(&dir).ok();
+            }
+        }
+        std::fs::write(probe_out("pf_money_walk.txt"), report.join("\n")).unwrap();
+    }
+    /// The bonus and the two copies through every other writer.
+    #[test]
+    fn e3mcprobe_writers_keep_the_bonus() {
+        let (dir, root) = enhancement_rows_aldric("probe-writers");
+        let mut log = Vec::new();
+        let snap = |root: &Path| -> Vec<(String, String, Vec<String>)> {
+            SavedCharacterStore::load(root).unwrap().character_input.chosen.equipment_selections.iter().filter(|s| s.item_id.contains("(Base)")).map(|s| (s.item_id.clone(), format!("{:?}", s.active_state), s.applied_modifiers.clone())).collect()
+        };
+        adjust_character_money_at_root(&root, 1_000_000_000).unwrap();
+        enhancement_buy(&root, "Chain Shirt (Base)", ActiveState::EquippedActive, 2);
+        let _ = purchase_equipment_offer_at_root(&root, "Longsword (Base)", ActiveState::SelectedInactive, "t", PriceMode::Standard, None);
+        enhancement_buy(&root, "Longsword (Base)", ActiveState::SelectedInactive, 3);
+        let want = snap(&root);
+        log.push(format!("start {want:?}"));
+        let read0 = enhancement_read(&root);
+        log.push(format!("read {read0:?}"));
+        let check = |log: &mut Vec<String>, step: &str, r: &Path| { let now = snap(r); log.push(format!("{step}: {} {}", if now == want { "same" } else { "CHANGED" }, if now == want { String::new() } else { format!("{now:?}") })); };
+        let r = add_feat_selection_at_root(&root, "feat:toughness", None, "t"); log.push(format!("feat ok={}", matches!(r, Ok(CreateCharacterResponse::Saved { .. })))); check(&mut log, "add feat", &root);
+        let r = level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, "t"); log.push(format!("level ok={}", matches!(r, Ok(CreateCharacterResponse::Saved { .. })))); check(&mut log, "level up", &root);
+        let rev = SavedCharacterStore::load(&root).unwrap().revision_id;
+        let r = crate::characterHub::reSaveCharacter::re_save_character_at_root(&root, &rev, "t"); log.push(format!("resave ok={}", r.is_ok())); check(&mut log, "re-save", &root);
+        let json = export_character_to_json(&root).unwrap();
+        let root2 = tempdir("probe-writers-import");
+        let r = import_character_from_json(&json, &root2, "probe-import", "t", "v"); log.push(format!("import saved={}", matches!(r, Ok(CreateCharacterResponse::Saved { .. })))); check(&mut log, "export+import", &root2);
+        std::fs::write(probe_out("pf_writers.txt"), log.join("\n")).unwrap();
+        std::fs::remove_dir_all(&dir).ok(); std::fs::remove_dir_all(&root2).ok();
+    }
+    /// Every explanation row around AC and attack before and after a +N, and the prices of what moved.
+    #[test]
+    fn e3mcprobe_twins() {
+        let (dir, root) = enhancement_rows_aldric("probe-twins");
+        let dump = |root: &Path| -> std::collections::BTreeMap<String, (i16, String)> {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            loaded.explanations.iter().map(|e| (e.id.clone(), (e.value, e.detail.clone()))).collect()
+        };
+        let before = dump(&root);
+        enhancement_buy(&root, "Chain Shirt (Base)", ActiveState::EquippedActive, 2);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Weapon");
+        let after = dump(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let mut out = Vec::new();
+        for (k, v) in &after { if before.get(k) != Some(v) { out.push(format!("{k}: {:?} -> {v:?}", before.get(k))); } }
+        out.push(format!("snapshot ac {} melee {}", loaded.snapshot.as_ref().map_or(0, |s| s.baseline_armor_class), loaded.snapshot.as_ref().map_or(0, |s| s.baseline_melee_attack_bonus)));
+        out.push(serde_json::to_string_pretty(&loaded.weapon_damage).unwrap());
+        out.push(serde_json::to_string_pretty(&loaded.corpus_derived.as_ref().map(|c| serde_json::to_value(&c.equipment_effects).unwrap())).unwrap());
+        std::fs::write(probe_out("pf_twins.txt"), out.join("\n")).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+    }

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 70.0,
+    "description": "These heavy-headed bludgeons are often carved or cast with monstrous faces or drilled with tiny holes to create a menacing whistling as they are swung through the air.",
+    "key": "Longhammer (Dwarven)",
+    "name": "Longhammer (Dwarven)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Longhammer, Dwarven"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Longhammer (Dwarven)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Dwarven.Bludgeoning.Exotic.Hammer.Reach"
+      },
+      {
+        "key": "COST",
+        "value": "70"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SPROP",
+        "value": "These heavy-headed bludgeons are often carved or cast with monstrous faces or drilled with tiny holes to create a menacing whistling as they are swung through the air.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 20.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Longhammer (Dwarven)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

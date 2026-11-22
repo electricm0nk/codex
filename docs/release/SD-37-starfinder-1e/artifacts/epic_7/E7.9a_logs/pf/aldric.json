@@ -1,0 +1,1247 @@
+{
+  "summary": {
+    "characterId": "00000000-0000-0000-0000-000000000001",
+    "displayLabel": "Aldric Ironhand",
+    "gameSystem": "pf1",
+    "schemaVersion": 2,
+    "savedAt": "2026-01-01T00:00:00.000Z",
+    "raceId": "race:human",
+    "classSummary": "class:fighter:3"
+  },
+  "snapshot": {
+    "abilityModifiers": {
+      "strength": 4,
+      "dexterity": 1,
+      "constitution": 2,
+      "intelligence": 2,
+      "wisdom": 1,
+      "charisma": -1
+    },
+    "baseAttackBonus": 3,
+    "baseSaves": {
+      "fortitude": 3,
+      "reflex": 1,
+      "will": 1
+    },
+    "baselineMeleeAttackBonus": 8,
+    "baselineArmorClass": 16,
+    "totalSaves": {
+      "fortitude": 5,
+      "reflex": 2,
+      "will": 2
+    },
+    "selectedSkillModifiers": {
+      "climb": 7,
+      "intimidate": 3,
+      "swim": 7
+    }
+  },
+  "diagnostics": [],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [
+      {
+        "itemId": "item:longsword",
+        "equipmentRecordName": "Longsword",
+        "equipmentRecordKey": "Longsword (Base)",
+        "grounded": true,
+        "appliedModifiers": []
+      },
+      {
+        "itemId": "item:chain_shirt",
+        "equipmentRecordName": "Chain Shirt",
+        "equipmentRecordKey": "Chain Shirt (Base)",
+        "grounded": true,
+        "appliedModifiers": []
+      }
+    ],
+    "equipmentEffects": {
+      "perItem": [
+        {
+          "itemId": "item:longsword",
+          "equipmentRecordKey": "Longsword (Base)",
+          "category": "ArmsArmor"
+        },
+        {
+          "itemId": "item:chain_shirt",
+          "equipmentRecordKey": "Chain Shirt (Base)",
+          "category": "ArmsArmor",
+          "armorClassBonus": 4,
+          "maxDex": 4,
+          "spellFailure": 20.0,
+          "armorCheckPenalty": -2
+        }
+      ],
+      "armorClassDelta": 4,
+      "armorCheckPenaltyTotal": -2,
+      "maxDexCap": 4,
+      "spellFailureChance": 20.0,
+      "attackBonusDelta": 0
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 29.0,
+      "totalCarriedCostGp": 115.0,
+      "lightMaxLbs": 116.0,
+      "mediumMaxLbs": 233.0,
+      "heavyMaxLbs": 350.0,
+      "level": "Light",
+      "loadArmorCheckPenalty": 0,
+      "perItem": [
+        {
+          "itemId": "item:longsword",
+          "weightLbs": 4.0,
+          "costGp": 15.0
+        },
+        {
+          "itemId": "item:chain_shirt",
+          "weightLbs": 25.0,
+          "costGp": 100.0
+        }
+      ],
+      "unresolvedItemIds": [
+        "power_attack"
+      ]
+    },
+    "unresolvedSpellIds": [],
+    "unresolvedEquipmentItemIds": [
+      "item:shield",
+      "power_attack"
+    ]
+  },
+  "selectedFeats": [
+    "feat:power_attack",
+    "feat:dodge",
+    "feat:weapon_focus"
+  ],
+  "spellsSelected": [],
+  "chosenFeatTargets": [
+    {
+      "featId": "feat:weapon_focus",
+      "targetKind": "Weapon",
+      "targets": [
+        "longsword"
+      ]
+    }
+  ],
+  "explanations": [
+    {
+      "id": "race.human.ability_bonus_applied",
+      "value": 19,
+      "detail": "Human ability-bonus selection (choice:human_ability_bonus -> ability:strength) applies the PF1 Core Rulebook Standard Human +2 racial bonus to strength BEFORE ability modifiers are derived: base chosen score 17 + 2 racial = 19. This differs from Dwarf/Half-Elf/etc., whose fixtures pre-bake their own racial adjustment into the chosen score itself (no arithmetic performed on those seams); Human's chosen score is confirmed PRE-bonus by both the deterministic pilot fixture and the real PCGen oracle output."
+    },
+    {
+      "id": "ability_modifier.strength",
+      "value": 4,
+      "detail": "strength ability modifier from chosen score 19: floor(19 / 2) - 5 = 4"
+    },
+    {
+      "id": "ability_modifier.dexterity",
+      "value": 1,
+      "detail": "dexterity ability modifier from chosen score 13: floor(13 / 2) - 5 = 1"
+    },
+    {
+      "id": "ability_modifier.constitution",
+      "value": 2,
+      "detail": "constitution ability modifier from chosen score 14: floor(14 / 2) - 5 = 2"
+    },
+    {
+      "id": "ability_modifier.intelligence",
+      "value": 2,
+      "detail": "intelligence ability modifier from chosen score 14: floor(14 / 2) - 5 = 2"
+    },
+    {
+      "id": "ability_modifier.wisdom",
+      "value": 1,
+      "detail": "wisdom ability modifier from chosen score 12: floor(12 / 2) - 5 = 1"
+    },
+    {
+      "id": "ability_modifier.charisma",
+      "value": -1,
+      "detail": "charisma ability modifier from chosen score 8: floor(8 / 2) - 5 = -1"
+    },
+    {
+      "id": "class_chassis.base_attack_bonus",
+      "value": 3,
+      "detail": "Fighter level 3 base attack bonus = 3"
+    },
+    {
+      "id": "class_chassis.base_save.fortitude",
+      "value": 3,
+      "detail": "Fighter level 3 base Fortitude save = 3"
+    },
+    {
+      "id": "class_chassis.base_save.reflex",
+      "value": 1,
+      "detail": "Fighter level 3 base Reflex save = 1"
+    },
+    {
+      "id": "class_chassis.base_save.will",
+      "value": 1,
+      "detail": "Fighter level 3 base Will save = 1"
+    },
+    {
+      "id": "combat.baseline_melee_attack_bonus",
+      "value": 8,
+      "detail": "Baseline melee attack bonus for the Longsword: Fighter base attack bonus (+3) + Strength modifier (+4) + Weapon Focus (Longsword) (+1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the same size modifier as Armor Class); Power Attack is selected but inactive (+0) = 8"
+    },
+    {
+      "id": "defense.baseline_armor_class",
+      "value": 16,
+      "detail": "Baseline armor class: base 10 + Chain Shirt armor bonus (+4) + Dexterity contribution (+1, DEX modifier +1 within MAXDEX:5) + Medium size modifier (+0, PF1 Table 8-1) + Dodge (+1, only for a character actually carrying feat:dodge) + Barbarian Rage penalty (0, only while actively, validly raging) + Skald Inspired Rage penalty (0, only while actively, validly singing) + Bloodrager Bloodrage penalty (0, only while actively, validly bloodraging) + Brawler AC Bonus (+0, while wearing light or no armor) + Alchemist Mutagen natural armor bonus (+0, only while actively, validly mutated) + Inquisitor Protection judgment sacred/profane bonus (+0, only while actively, validly judging Protection) + Oracle Nature's Whispers Charisma-for-Dexterity substitution (+0, only for a Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty (0, only while actively challenging) + Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus (+0, only for a Draconic-bloodline Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus (+0, only for a character holding that feat who did NOT take the Scaled Skin alternate racial trait); shield is absent (+0) = 16"
+    },
+    {
+      "id": "defense.touch_armor_class",
+      "value": 12,
+      "detail": "Touch armor class: the armor class above (16) with the contributors a touch attack ignores removed -- Chain Shirt armor bonus (-4), Alchemist Mutagen natural armor (-0), Sorcerer Draconic Bloodline natural armor (-0), ARG Armor of the Pit natural armor (-0); shield is absent (-0). The Dexterity contribution (+1), the Medium size modifier (+0, PF1 Table 8-1) and every dodge/sacred/ability bonus and penalty are all retained = 12"
+    },
+    {
+      "id": "defense.flat_footed_armor_class",
+      "value": 14,
+      "detail": "Flat-footed armor class: the armor class above (16) with the contributors a flat-footed character is denied removed -- the Dexterity contribution (-1, bonus only; a Dexterity penalty is kept) including the Oracle Nature's Whispers Charisma-for-Dexterity substitution (-0, which stands in for that bonus), and every dodge-typed bonus (-1: Dodge's +1, per PF1 \"any situation that denies you your Dexterity bonus to Armor Class also denies you dodge bonuses\"). The Chain Shirt armor bonus (+4), the Medium size modifier (+0), every natural armor and sacred/profane bonus, every penalty, and Brawler's AC Bonus (+0, whose own rule text applies it even when flat-footed) are all retained = 14"
+    },
+    {
+      "id": "combat.combat_maneuver_bonus",
+      "value": 7,
+      "detail": "Combat Maneuver Bonus: Fighter base attack bonus (+3) + Strength modifier (+4) + Medium special size modifier (+0) = 7. The special size modifier runs OPPOSITE to Table 8-1's Armor Class column: being smaller makes a creature worse at combat maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is modelled by this engine, so none is summed here"
+    },
+    {
+      "id": "defense.combat_maneuver_defense",
+      "value": 18,
+      "detail": "Combat Maneuver Defense: base 10 + Fighter base attack bonus (+3) + Strength modifier (+4) + Dexterity modifier (+1) + Medium special size modifier (+0) = 18. These are exactly the terms PF1's published CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses to Armor Class that also apply to CMD in real PF1 are NOT folded in here yet, and are named rather than silently implied"
+    },
+    {
+      "id": "combat.weapon_attack_bonus.longsword",
+      "value": 8,
+      "detail": "Attack bonus with the equipped Longsword: base attack bonus (+3) + governing ability modifier (+4) + weapon feats (+1) + nonproficiency penalty (0) + size modifier (+0) = 8. Weapon Focus / Greater Weapon Focus name this weapon, adding +1 to the attack roll. The character is proficient with this weapon (class grant or a Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency penalty applies. Only the Focus feats reach this total -- the Specialization feats are damage and Improved Critical is threat range, both grounded separately. Separate from combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 fixture total until task #80 generalises it"
+    },
+    {
+      "id": "combat.weapon_damage_bonus.longsword",
+      "value": 0,
+      "detail": "Feat damage bonus with the equipped Longsword: +0. No Weapon Specialization or Greater Weapon Specialization names this weapon, so no feat bonus applies to its damage rolls. This is the feat contribution alone, NOT a damage total: the weapon's own 1d8 damage die and the Strength-to-damage contribution are excluded, because Strength applies at 1x one-handed, 1.5x two-handed and 0.5x off-hand and this engine does not record how a weapon is being wielded"
+    },
+    {
+      "id": "combat.weapon_threat_range_low.longsword",
+      "value": 19,
+      "detail": "Critical threat range with the equipped Longsword: 19-20/x2. Improved Critical does not name this weapon, so its threat range is the weapon's printed one. The value grounded here is the LOW end of the range; the corpus stores CRITRANGE as a width, so the range is 21-width..=20"
+    },
+    {
+      "id": "defense.total_save.fortitude",
+      "value": 5,
+      "detail": "Total Fortitude save: Fighter base Fortitude save (+3) + Constitution modifier (+2) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 5"
+    },
+    {
+      "id": "defense.total_save.reflex",
+      "value": 2,
+      "detail": "Total Reflex save: Fighter base Reflex save (+1) + Dexterity modifier (+1) + feat bonus (+0, Lightning Reflexes if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-Dexterity substitution (+0, only for a Lore-Mystery Oracle who took that revelation) + alternate racial trait (+0, only for a character who took one that declares a Reflex modifier -- this one can be NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait (+0, no ultimate_campaign trait currently declares a Reflex bonus, so always 0) = 2"
+    },
+    {
+      "id": "defense.total_save.will",
+      "value": 2,
+      "detail": "Total Will save: Fighter base Will save (+1) + Wisdom modifier (+1) + feat bonus (+0, Iron Will if selected) + Barbarian Rage morale bonus (+0, only while actively, validly raging) + Skald Inspired Rage morale bonus (+0, only while actively, validly singing) + Bloodrager Bloodrage morale bonus (+0, only while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual Minded is the one such trait in the corpus today) + character trait (+0, Indomitable Faith if selected) = 2"
+    },
+    {
+      "id": "skill.selected_modifier.climb",
+      "value": 7,
+      "detail": "Selected Climb modifier: rank 1 + Strength modifier (+4) + class-skill bonus (+3) + Chain Shirt armor-check penalty (-1, reduced from -2 by Fighter armor training) + feat bonus (+0, Athletic if selected) = 7"
+    },
+    {
+      "id": "skill.selected_modifier.intimidate",
+      "value": 3,
+      "detail": "Selected Intimidate modifier: rank 1 + Charisma modifier (-1) + class-skill bonus (+3) + feat bonus (+0, Persuasive and/or Intimidating Prowess if selected) = 3"
+    },
+    {
+      "id": "skill.selected_modifier.swim",
+      "value": 7,
+      "detail": "Selected Swim modifier: rank 1 + Strength modifier (+4) + class-skill bonus (+3) + Chain Shirt armor-check penalty (-1, reduced from -2 by Fighter armor training) + feat bonus (+0, Athletic if selected) + Witch Flight hex (+0) = 7"
+    },
+    {
+      "id": "feat.standalone.weapon_focus.longsword",
+      "value": 1,
+      "detail": "Weapon Focus (longsword) grants a +1 bonus on attack rolls with that weapon (+2 when Greater Weapon Focus names it too). This bonus is also carried inside combat.weapon_attack_bonus.<weapon> whenever that weapon is equipped; this record is the component fact, that one is the total, and the two agreeing is expected rather than a double-count. It still grounds standalone, because the feat's bonus is real whether or not the chosen weapon happens to be equipped. Requires an explicit recorded weapon choice -- nothing is seeded, per the same no-silent-seeding design as Skill Focus"
+    },
+    {
+      "id": "class_feature.fighter.bravery",
+      "value": 1,
+      "detail": "Fighter level 2 Bravery (cr_abilities_class.lst Fighter; +1 at level 2 and another +1 every 4 Fighter levels thereafter): grants +1 to Will saves against fear. This is a flat, non-fabricated bonus magnitude only — no fear-condition or Will-save-resolution engine exists anywhere in this codebase, so this bonus is never folded into the unconditional Will save total"
+    },
+    {
+      "id": "class_feature.fighter.armor_training",
+      "value": 1,
+      "detail": "Fighter level 3 Armor Training 1 (armor training, cr_abilities_class.lst Fighter): reduces the worn Chain Shirt armor-check penalty by 1 (from -2 to -1) and raises the maximum Dexterity bonus by 1 (from 4 to 5)"
+    },
+    {
+      "id": "class_feature.fighter.weapon_and_armor_proficiency",
+      "value": 0,
+      "detail": "Fighter Weapon and Armor Proficiency (corpus KEY:Fighter ~ Weapon and Armor Proficiency): \"A fighter is proficient with all simple and martial weapons and with all armor (heavy, medium, and light) and shields (including tower shields).\" This is a bounded grant-only identity record (value 0, non-fabricated): the record grants proficiencies automatically and carries no magnitude anywhere. The weapon half's real mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is already grounded separately by `weapon_tables::class_weapon_proficiency`, which this record does not duplicate. No armor-nonproficiency-penalty mechanic exists anywhere in this engine (the game system's own miscinfo.lst carries only WEAPONNONPROFPENALTY:-4, no armor equivalent), so the armor half has nothing further to compute here"
+    },
+    {
+      "id": "race.human.ability_bonus_target",
+      "value": 4,
+      "detail": "Human ability-bonus selection (choice:human_ability_bonus -> ability:strength) targets strength; the racial-bonus-adjusted strength score (base chosen score + the +2 Human racial bonus, applied before ability modifiers were derived) yields modifier +4"
+    },
+    {
+      "id": "race.human.bonus_feat_grant",
+      "value": 1,
+      "detail": "Human bonus-feat selection (choice:human_bonus_feat -> feat:dodge) grants Dodge, the deterministic Dodge feat contributing +1 to the baseline armor class"
+    },
+    {
+      "id": "race.human.trait_bundle.size",
+      "value": 0,
+      "detail": "Human racial trait bundle — size: PF1 Standard Human is Medium size (cr_races.lst race:human SIZE:MEDIUM). This is a bounded recognition record naming the Human size category on the deterministic pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, ability checks, or any other computed value, so it carries no fabricated mechanical value (+0)"
+    },
+    {
+      "id": "race.human.trait_bundle.speed",
+      "value": 30,
+      "detail": "Human racial trait bundle — speed: PF1 Standard Human has a base land speed of 30 ft (cr_races.lst race:human GAIT:WALK|30). This is a grounded recognition value carrying the human base-speed identity on the deterministic pilot seam; it contributes no computed speed-derived effect to any chassis output, skill modifier, attack roll, or combat baseline"
+    },
+    {
+      "id": "race.human.trait_bundle.senses",
+      "value": 0,
+      "detail": "Human racial trait bundle — senses: PF1 Standard Human grants no special senses (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, low-light vision, scent, and other sense bonuses are absent). This is a bounded no-effect classification record on the deterministic pilot seam; it carries no fabricated sense bonus and contributes no computed value (+0)"
+    },
+    {
+      "id": "race.human.trait_bundle.extra_skill_ranks",
+      "value": 1,
+      "detail": "Human racial trait bundle — extra skill ranks: PF1 Standard Human gains 4 extra skill points at 1st level and 1 extra skill rank per additional level thereafter (cr_races.lst race:human). The recognition value (+1) carries the per-additional-level extra-rank identity on the deterministic pilot seam; this slice does not propagate these extra skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected skill-modifier computation, so the bounded fighter-posture skill totals remain grounded by the canonical rank-1 posture rather than by the unbounded Human extra skill-rank rule"
+    },
+    {
+      "id": "class_chassis.skill_points",
+      "value": 12,
+      "detail": "class:fighter 3 skill points 12: 2 skill ranks per level + Intelligence modifier (+2), at least 1, times 3 level(s) (core_rulebook:class:fighter); class term only -- racial and favored-class ranks are not the class's"
+    },
+    {
+      "id": "class_feature.fighter.corpus_record.bonus_feats",
+      "value": 1,
+      "detail": "fighter level 3: `Fighter ~ Bonus Feats` (\"Bonus Feats\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    }
+  ],
+  "weaponDamage": [
+    {
+      "weaponItemId": "item:longsword",
+      "weaponRecordKey": "Longsword (Base)",
+      "baseDice": {
+        "count": 1,
+        "dieSize": 8
+      },
+      "strDamageModifier": 4,
+      "wieldCategory": "OneHanded",
+      "enhancementAttackBonus": 0,
+      "enhancementDamageBonus": 0,
+      "criticalThreatRange": [
+        19,
+        20
+      ],
+      "criticalMultiplier": 2,
+      "featEffects": []
+    }
+  ],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "Human",
+    "raceKey": "Human",
+    "raceName": "Human",
+    "book": "CRB",
+    "appliedTraits": [
+      {
+        "key": "Human ~ Ability Scores",
+        "name": "+2 to One Ability Score",
+        "book": "CRB",
+        "role": "default",
+        "description": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature."
+      },
+      {
+        "key": "Human ~ Bonus Feat",
+        "name": "Bonus Feat",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans select one extra feat at 1st level."
+      },
+      {
+        "key": "Human ~ Languages",
+        "name": "Languages",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic)."
+      },
+      {
+        "key": "Human ~ Size",
+        "name": "Medium",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans are Medium creatures and have no bonuses or penalties due to their size."
+      },
+      {
+        "key": "Human ~ Skilled",
+        "name": "Skilled",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level."
+      },
+      {
+        "key": "Human ~ Speed",
+        "name": "Normal Speed",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans have a base speed of 30 feet."
+      }
+    ],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [
+      {
+        "key": "Adopted Race ~ Human",
+        "name": "Human",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human Ethnicity ~ None",
+        "name": "None",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human Ethnicity ~ Unknown",
+        "name": "Unknown",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Ability Scores",
+        "name": "+2 to One Ability Score",
+        "text": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Adoptive Parentage",
+        "name": "Adoptive Parentage",
+        "text": "Humans are sometimes orphaned and adopted by other races. Choose one humanoid race without the human subtype. You start play with that race's languages and gain that race's weapon familiarity racial trait (if any). If the race does not have weapon familiarity, you gain either Skill Focus or Weapon Focus as a bonus feat that is appropriate for that race instead. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Aquatic Ancestry",
+        "name": "Aquatic Ancestry",
+        "text": "Humans with deep one or skum ancestry may exhibit prominent round eyes or webbed fingers and toes. They gain a racial bonus equal to half their character level on Swim checks and Swim is always a class skill for them. In addition, they can hold their breath for twice as long as normal. When the racial bonus on Swim checks from this ability becomes +8 or higher, they can always take 10 on Swim checks, even when threatened or distracted. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Awareness",
+        "name": "Awareness",
+        "text": "Humans raised within monastic traditions or communities that encourage mindfulness seem to shrug off many dangers more easily than other humans. They gain a +1 racial bonus on all saving throws and concentration checks. This racial trait replaces humans' bonus feat.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Bonus Feat",
+        "name": "Bonus Feat",
+        "text": "Humans select one extra feat at 1st level.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Comprehensive Education",
+        "name": "Comprehensive Education",
+        "text": "Humans raised with skilled teachers draw upon vast swathes of knowledge gained over centuries of civilization. They gain all Knowledge skills as class skills, and they gain a +1 racial bonus on skill checks for each Knowledge skill that they gain as a class skill from their class levels. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Dual Talent",
+        "name": "Dual Talent",
+        "text": "Some humans are uniquely skilled at maximizing their natural gifts. These humans pick two ability scores and gain a +2 racial bonus in each of those scores. This racial trait replaces the +2 bonus to any one ability score, the bonus feat, and the skilled traits.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Eye for Talent",
+        "name": "Eye for Talent",
+        "text": "Humans have great intuition for hidden potential. They gain a +2 racial bonus on Sense Motive checks. In addition, when they acquire an animal companion, bonded mount, cohort, or familiar, that creature gains a +2 bonus to one ability score of the character's choice. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Focused Study",
+        "name": "Focused Study",
+        "text": "All humans are skillful, but some focus on a specialized set of skills even more closely. At 1st, 8th, and 16th level, such humans gain Skill Focus in a skill of their choice as a bonus feat. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Giant Ancestry",
+        "name": "Giant Ancestry",
+        "text": "Humans with ogre or troll ancestry end up having hulking builds and asymmetrical features. Such humans gain a +1 bonus on combat maneuver checks and to CMD, but a -2 penalty on Stealth checks. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Fields",
+        "name": "Heart of the Fields",
+        "text": "Humans born in rural areas are used to hard labor. They gain a racial bonus equal to half their character level to any one Craft or Profession skill, and once per day they may ignore an effect that would cause them to become fatigued or exhausted. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Mountain",
+        "name": "Heart of the Mountains",
+        "text": "Humans born in the mountains are skilled at negotiating heights and precipices. They gain a +2 racial bonus on Climb checks and Acrobatics checks to move on narrow surfaces and uneven ground. Furthermore, they are considered acclimated to the effects of high altitude (Core Rulebook 430). This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Sea",
+        "name": "Heart of the Sea",
+        "text": "Humans born near the sea are always drawn to it. They gain a +2 racial bonus on Profession (sailor) and Swim checks, and these are always class skills for them. They can hold their breath twice as long as normal, and spellcasters gain a +4 racial bonus on concentration checks when attempting to cast spells underwater. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Slums",
+        "name": "Heart of the Slums",
+        "text": "Humans who eke out a life in a city's teeming slums must be quick and clever. They gain a +2 racial bonus on Sleight of Hand and Stealth checks, and a +4 racial bonus on Survival checks in urban and underground settings. In addition, they may roll twice when saving against disease, taking the better roll. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Snows",
+        "name": "Heart of the Snows",
+        "text": "Humans born in chilly climes treat cold climates as one category less severe. They gain a +2 racial bonus on Fortitude saving throws against the effects of cold climates, on any check or saving throw to avoid slipping and falling, and to CMD against trip combat maneuvers. This bonus applies on Acrobatics and Climb checks made in slippery conditions. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Streets",
+        "name": "Heart of the Streets",
+        "text": "Humans from bustling cities are skilled with crowds. They gain a +1 racial bonus on Reflex saves and a +1 dodge bonus to Armor Class when adjacent to at least two other allies. Crowds do not count as difficult terrain for them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Sun",
+        "name": "Heart of the Sun",
+        "text": "Humans born in tropical climates treat hot climates as one category less severe. They also gain a +2 racial bonus on Fortitude saving throws against the effects of a hot climate, as well as against the poison and distraction ability of swarms and vermin. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Wilderness",
+        "name": "Heart of the Wilderness",
+        "text": "Humans raised in the wild learn the hard way that only the strong survive. They gain a racial bonus equal to half their character level on Survival checks. They also gain a +5 racial bonus on Constitution checks to stabilize when dying and add half their character level to their Constitution score when determining the negative hit point total necessary to kill them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heroic",
+        "name": "Heroic",
+        "text": "Some humans are born heroes. In campaigns that use the optional hero point system (Advanced Player's Guide 322-325), each time these humans gain a level, they gain 2 hero points instead of 1. If they take the Blood of Heroes feat, they gain 3 hero points each level instead of 2. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Industrious",
+        "name": "Industrious",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Innovative",
+        "name": "Innovative",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Institutional Memory",
+        "name": "Institutional Memory",
+        "text": "Humans rely on their institutions to remember the distant past and to preserve their own memories for the distant future. They gain a +4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which they belong, and they can attempt such skill checks untrained. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Languages",
+        "name": "Languages",
+        "text": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Military Tradition",
+        "name": "Military Tradition",
+        "text": "Several human cultures raise all children (or all children of a certain social class) to serve in the military or defend themselves with force of arms. They gain proficiency with up to two martial or exotic weapons appropriate to their culture. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Mixed Heritage",
+        "name": "Mixed Heritage",
+        "text": "Often human civilization is defined by more than one characteristic. A human with this trait may select a second \"Heart of the\" racial trait. This replaces the bonus feat racial trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Piety",
+        "name": "Piety",
+        "text": "Humans place great trust in the gods to protect them. Humans with this trait receive a +2 racial bonus on Knowledge (religion) checks and Knowledge (religion) is always a class skill for them. In addition, once per day before attempting an attack roll, saving throw, ability check, or skill check, such a human can call out to his deity in order to receive a +2 racial bonus on that roll; he can use this ability only if he is able to speak. This racial trait replaces the bonus feat racial trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Practiced Hunter",
+        "name": "Practiced Hunter",
+        "text": "Members of some human cultures train from youth to find and follow the trails of vital game and at the same time hide the evidence of their own passage. These humans gain a +2 racial bonus on Stealth and Survival checks, and Stealth and Survival are always class skills for them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Psychic Defense",
+        "name": "Psychic Defense",
+        "text": "Humans from cultures steeped in the occult sometimes train their minds to resist outside influence. They gain a +2 racial bonus on saving throws against psychic spells and spell-like abilities, including those that originate from the psychic magic ability (Pathfinder RPG Bestiary 5 297). This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Rationalize",
+        "name": "Rationalize",
+        "text": "Humans have the ability to assuage their own fears by convincing themselves that what they saw or read is not real. Humans with this trait gain a +3 bonus on saving throws against effects that cause sanity damage (see page 12). This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Reptilian Ancestry",
+        "name": "Reptilian Ancestry",
+        "text": "Humans with reptoid or serpentfolk ancestry sometimes have nictitating membranes or patches of scaly skin. They gain a +2 racial bonus on saving throws against mind-affecting effects and poisons. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Self-Made Fate",
+        "name": "Self-Made Fate",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Silver Tongued",
+        "name": "Silver Tongued",
+        "text": "Human are often adept at subtle manipulation and putting even sworn foes at ease. Humans with this trait gain a +2 bonus on Diplomacy and Bluff checks. In addition, when they use Diplomacy to shift a creature's attitude, they can shift up to three steps up rather than just two. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Size",
+        "name": "Medium",
+        "text": "Humans are Medium creatures and have no bonuses or penalties due to their size.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Skilled",
+        "name": "Skilled",
+        "text": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Social Ties",
+        "name": "Social Ties",
+        "text": "Some human societies run on complex webs of favors and loyalties that canny members can intuitively exploit with relative ease. These humans gain a +2 racial bonus on Diplomacy checks, and on any skill checks to recruit members and teams for an organization. They also add a +1 racial bonus to their Leadership scores (if they gain the Leadership feat). This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Speed",
+        "name": "Normal Speed",
+        "text": "Humans have a base speed of 30 feet.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Tribalistic",
+        "name": "Tribalistic",
+        "text": "Many humans naturally form into cliques or tribes, and these humans work exceptionally well with those they view as fellow tribe members. Such humans gain a +2 racial bonus on attack rolls and skill checks to use the aid another action to aid humans of the same ethnicity. Humans with this racial trait must hail from an ethnicity that has its own language other than Common, and they only start with that language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling. This racial trait alters starting and bonus languages.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Tribalistic Languages",
+        "name": "Languages",
+        "text": "Tribalistic humans only start with their ethnic language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Unstoppable Magic",
+        "name": "Unstoppable Magic",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Wayfarer",
+        "name": "Wayfarer",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      }
+    ],
+    "displayValueFeats": [],
+    "errors": []
+  },
+  "abilityScores": {
+    "strength": 19,
+    "dexterity": 13,
+    "constitution": 14,
+    "intelligence": 14,
+    "wisdom": 12,
+    "charisma": 8
+  },
+  "skillAllocations": [
+    {
+      "skillId": "skill:climb",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:intimidate",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:swim",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:ride",
+      "ranks": 3
+    },
+    {
+      "skillId": "skill:survival",
+      "ranks": 3
+    },
+    {
+      "skillId": "skill:knowledge_dungeoneering",
+      "ranks": 3
+    },
+    {
+      "skillId": "skill:knowledge_engineering",
+      "ranks": 3
+    }
+  ],
+  "equipmentSelections": [
+    {
+      "itemId": "item:longsword",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "item:chain_shirt",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "item:shield",
+      "activeState": "Absent"
+    },
+    {
+      "itemId": "power_attack",
+      "activeState": "SelectedInactive"
+    }
+  ],
+  "sheetLines": [
+    {
+      "id": "core_rulebook:ability:racial_traits_human",
+      "kind": "ability",
+      "label": "Racial Traits ~ Human",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:fighter",
+      "kind": "class",
+      "label": "Fighter",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Hit die: d10\nSkill ranks per level: 2",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:fighter#bonus1",
+      "kind": "class",
+      "label": "Fighter (base Fortitude save)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:fighter#bonus2",
+      "kind": "class",
+      "label": "Fighter (base Reflex save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:fighter#bonus3",
+      "kind": "class",
+      "label": "Fighter (base Will save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:fighter#bonus0",
+      "kind": "class",
+      "label": "Fighter (base attack)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:armor_prof_heavy",
+      "kind": "class_feature",
+      "label": "Armor Prof ~ Heavy",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:armor_prof_light",
+      "kind": "class_feature",
+      "label": "Armor Prof ~ Light",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:armor_prof_medium",
+      "kind": "class_feature",
+      "label": "Armor Prof ~ Medium",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_armor_training#bonus5",
+      "kind": "class_feature",
+      "label": "Armor Training (accheck)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": "while armor is equipped"
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_armor_training",
+      "kind": "class_feature",
+      "label": "Armor Training (armor training choice picks)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You are more maneuverable while wearing armor. Whenever you are wearing armor, you reduce the armor check penalty by 1 and increase the maximum Dexterity bonus allowed by your armor by +1\nUnencumbered movement: MediumArmor",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_armor_training#bonus1",
+      "kind": "class_feature",
+      "label": "Armor Training (maxdex)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": "while armor is equipped"
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_bonus_feats",
+      "kind": "class_feature",
+      "label": "Bonus Feats (fighter bonus feat picks)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats, sometimes also called \"fighter bonus feats.\" Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he gains a new bonus feat for the level.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_bravery",
+      "kind": "class_feature",
+      "label": "Bravery",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You gain a +1 bonus to Will saves against fear effects.\nSaveBonus: +1 Will vs. fear",
+      "condition": null
+    },
+    {
+      "id": "advanced_players_guide:class_feature:cmb",
+      "kind": "class_feature",
+      "label": "CMB",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_class",
+      "kind": "class_feature",
+      "label": "Fighter",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:class_skills_fighter",
+      "kind": "class_feature",
+      "label": "Fighter Core Class Skills",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:shield_prof",
+      "kind": "class_feature",
+      "label": "Shield Prof",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:shield_prof_tower",
+      "kind": "class_feature",
+      "label": "Shield Prof ~ Tower",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:weapon_prof_auto",
+      "kind": "class_feature",
+      "label": "Weapon Prof ~ Auto",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:weapon_prof_martial",
+      "kind": "class_feature",
+      "label": "Weapon Prof ~ Martial",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:weapon_prof_simple",
+      "kind": "class_feature",
+      "label": "Weapon Prof ~ Simple",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:chain_shirt",
+      "kind": "equipment",
+      "label": "Chain Shirt",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Covering the torso, this shirt is made up of thousands of interlocking metal rings.\nArmor check penalty: -2\nMax Dex bonus: 4\nArcane spell failure: 20%",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:chain_shirt#bonus0",
+      "kind": "equipment",
+      "label": "Chain Shirt (AC)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:longsword",
+      "kind": "equipment",
+      "label": "Longsword",
+      "form": "dice",
+      "value": "1d8",
+      "also": [],
+      "prose": "This sword is about 3-1/2 feet in length.\nCritical multiplier: x2\nCritical threat: 19-20",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:dodge",
+      "kind": "feat",
+      "label": "Dodge",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Your training and reflexes allow you to react swiftly to avoid an opponent's attack.\nYou gain a +1 dodge bonus to your AC. A condition that makes you lose your Dex bonus to AC also makes you lose the benefits of this feat.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:power_attack",
+      "kind": "feat",
+      "label": "Power Attack",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.\nYou can choose to take a -1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (-50%) if you are making an attack with an off-hand weapon or secondary natural weapon. You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:weapon_focus",
+      "kind": "feat",
+      "label": "Weapon Focus",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "You are especially good at using your chosen weapon.\nYou gain a +1 bonus on all attack rolls you make using the selected weapon.",
+      "condition": null
+    },
+    {
+      "id": "advanced_race_guide:race:human",
+      "kind": "race",
+      "label": "Human",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Speed: Walk 30 ft.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:race_trait:human_bonus_feat",
+      "kind": "race_trait",
+      "label": "Bonus Feat",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Humans select one extra feat at 1st level.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:race_trait:human_skilled",
+      "kind": "race_trait",
+      "label": "Skilled",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:climb",
+      "kind": "skill",
+      "label": "Climb (Climb)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:climb#bonus0",
+      "kind": "skill",
+      "label": "Climb (Climb)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Climb as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:intimidate",
+      "kind": "skill",
+      "label": "Intimidate (Intimidate)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:intimidate#bonus0",
+      "kind": "skill",
+      "label": "Intimidate (Intimidate)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Intimidate as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (Dungeoneering))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (Dungeoneering))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Dungeoneering) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering#bonus1",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (dungeoneering) (underground))",
+      "form": "number",
+      "value": "+0",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_engineering",
+      "kind": "skill",
+      "label": "Knowledge (Engineering) (Knowledge (Engineering))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_engineering#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Engineering) (Knowledge (Engineering))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Engineering) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:ride",
+      "kind": "skill",
+      "label": "Ride (Ride)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "When active: If you are riding bareback, or attempt to ride a creature that is ill suited as a mount, you take a -5 penalty on Ride checks.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:ride#bonus0",
+      "kind": "skill",
+      "label": "Ride (Ride)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Ride as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:ride#bonus1",
+      "kind": "skill",
+      "label": "Ride (Ride)",
+      "form": "number",
+      "value": "-5",
+      "also": [],
+      "prose": "",
+      "condition": "requires type=saddle; when active"
+    },
+    {
+      "id": "core_rulebook:skill:survival#bonus1",
+      "kind": "skill",
+      "label": "Survival (Survival (underground))",
+      "form": "number",
+      "value": "+0",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:survival",
+      "kind": "skill",
+      "label": "Survival (Survival)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:survival#bonus0",
+      "kind": "skill",
+      "label": "Survival (Survival)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Survival as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:swim",
+      "kind": "skill",
+      "label": "Swim (Swim)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:swim#bonus0",
+      "kind": "skill",
+      "label": "Swim (Swim)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Swim as a class skill"
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

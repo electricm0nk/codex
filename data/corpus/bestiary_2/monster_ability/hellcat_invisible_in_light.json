@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hellcat ~ Invisible in Light",
+    "delivery": "Supernatural",
+    "description": "In bright light, a hellcat has natural invisibility.  In normal light, a hellcat has partial concealment (20%% miss chance).  In dim light, it has no concealment.  In darkness, a hellcat's flickering glow limits it to partial concealment, unless the darkness is magical in nature.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:hellcat_invisible_in_light",
+    "name": "Invisible in Light",
+    "owners": [
+      "bestiary_2:monster:hellcat"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "In bright light, a hellcat has natural invisibility.  In normal light, a hellcat has partial concealment (20%% miss chance).  In dim light, it has no concealment.  In darkness, a hellcat's flickering glow limits it to partial concealment, unless the darkness is magical in nature."
+      },
+      {
+        "key": "KEY",
+        "value": "Hellcat ~ Invisible in Light"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.153",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 671,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Hellcat ~ Invisible in Light",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can relate to the creatures that share your type.",
+    "key": "Lycanthropy Corruption ~ Lycanthropic Empathy",
+    "name": "Lycanthropic Empathy",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Lycanthropic Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "LycanthropyManifestation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "You can relate to the creatures that share your type."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lycanthropy Lycanthropic Empathy Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lycanthropy Lycanthropic Empathy Stain Choice|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 598,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lycanthropy Corruption ~ Lycanthropic Empathy",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

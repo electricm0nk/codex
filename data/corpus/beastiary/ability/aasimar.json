@@ -1,0 +1,33 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Aasimar",
+    "name": "Aasimar",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Aasimar_ReplaceAbilityScores|0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar.lst",
+    "record_key": "Aasimar",
+    "sha256": "4e29893c177913511230c4a13170f6667e7865e2141d0349b1a6797166830324"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

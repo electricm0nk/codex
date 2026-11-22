@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "At 4th level, the evangelist may select a new language as a gift from her chosen deity. She gains the ability to speak and write this new language fluently, so as to better communicate with those she meets in the course of her travels. At 8th level, the evangelist selects a second language to learn. The ability to comprehend these languages is an instantaneous divine gift, and spells and effects that dispel persistent effects can't remove the evangelist's gift of tongues.",
+    "key": "Evangelist ~ Gift of Tongues",
+    "name": "Gift of Tongues",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Gift of Tongues"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, the evangelist may select a new language as a gift from her chosen deity. She gains the ability to speak and write this new language fluently, so as to better communicate with those she meets in the course of her travels. At 8th level, the evangelist selects a second language to learn. The ability to comprehend these languages is an instantaneous divine gift, and spells and effects that dispel persistent effects can't remove the evangelist's gift of tongues."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Add Spoken Language|1+(EvangelistLVL>=8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Evangelist ~ Gift of Tongues",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

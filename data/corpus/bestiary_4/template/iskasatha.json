@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "IsKasatha",
+    "name": "IsKasatha",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "IsKasatha|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_templates.lst",
+    "record_key": "IsKasatha",
+    "sha256": "404e4b654a1586d02a60783e48fc5f28714fde4282ec1bc4645481e269a1dab6"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Grippli ~ Camouflage",
+    "name": "Camouflage",
+    "race_key": "Grippli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Grippli Racial Trait",
+      "Grippli Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Grippli_ReplaceCamouflage",
+    "sets_replace_flags": [],
+    "description": "Gripplis receive a +4 racial bonus on Stealth checks in marshes and forested areas.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grippli ~ Camouflage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Grippli_ReplaceCamouflage=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Gripplis receive a +4 racial bonus on Stealth checks in marshes and forested areas."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Stealth in forests or marshes"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Stealth=in forests or marshes",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_race.lst",
+    "sha256": "bfff9461d0fa6795c3e821fef386c34a2d1c85a029a4cad17343a512cf056f5f",
+    "line": 20,
+    "record_key": "Grippli ~ Camouflage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

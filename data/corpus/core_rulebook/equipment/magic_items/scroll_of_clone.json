@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 1000.0,
+    "description": "Duplicate awakens when original dies.",
+    "key": "Scroll of Clone",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Clone"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Clone"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Arcane.Consumable.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Clone]SPELLLEVEL[8]CASTERLEVEL[15]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong necromancy"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, clone"
+      },
+      {
+        "key": "SPROP",
+        "value": "Duplicate awakens when original dies."
+      },
+      {
+        "key": "DESC",
+        "value": "Duplicate awakens when original dies."
+      }
+    ],
+    "weight_lbs": 0.01
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1300,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Clone",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

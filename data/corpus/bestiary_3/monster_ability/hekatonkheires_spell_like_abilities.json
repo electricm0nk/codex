@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hekatonkheires ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 20th; concentration +27) Constant-air walk, spell turning, true seeing At will-bestow curse (DC 21), break enchantment, chain lightning (DC 23), greater dispel magic, find the path, sending 3/day-greater scrying (DC 24), heal, mass suggestion (DC 23) 1/day-dominate monster (DC 26), greater spell immunity, imprisonment (DC 26), storm of vengeance (DC 26)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hekatonkheires_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 20th; concentration +27) Constant-air walk, spell turning, true seeing At will-bestow curse (DC 21), break enchantment, chain lightning (DC 23), greater dispel magic, find the path, sending 3/day-greater scrying (DC 24), heal, mass suggestion (DC 23) 1/day-dominate monster (DC 26), greater spell immunity, imprisonment (DC 26), storm of vengeance (DC 26)"
+      },
+      {
+        "key": "KEY",
+        "value": "Hekatonkheires ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "HekatonkheiresRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "HekatonkheiresRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1619,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hekatonkheires ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

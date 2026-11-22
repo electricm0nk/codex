@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Hardened resin",
+    "name": "Hardened resin",
+    "type": "ARMOR.Light_Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "starfinder/paizo/pact_worlds/spw_equip.lst",
+    "record_key": "Hardened resin",
+    "sha256": "94b4c32719bdc26a95e56d1ddc01d6ff7faa40f07200137eb45048d0471eae95"
+  },
+  "unit_id": "pact_worlds:equipment:hardened_resin"
+}

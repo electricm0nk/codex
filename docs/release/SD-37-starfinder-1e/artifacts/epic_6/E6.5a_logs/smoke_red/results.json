@@ -1,0 +1,34 @@
+[
+  {
+    "id": "choices-starfinder-soldier-loadout",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'Feats, spells and gear (no element named 'Feats, spells and gear')'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-red-aj4Nq0/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c80a9453-1912-45dd-af0b-937b2a1781c9"
+      ],
+      "deleted": [
+        "c80a9453-1912-45dd-af0b-937b2a1781c9"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_red/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-red-aj4Nq0/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

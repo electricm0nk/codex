@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 63000.0,
+    "description": null,
+    "key": "Private Palanquin",
+    "name": "Private Palanquin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "63000"
+      },
+      {
+        "key": "WT",
+        "value": "500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      }
+    ],
+    "weight_lbs": 500.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_magic_items.lst",
+    "record_key": "Private Palanquin",
+    "sha256": "512cb73e16e3c0e9273253690529cf1f0b9b3137cf84315501d3f0105b0c8151"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

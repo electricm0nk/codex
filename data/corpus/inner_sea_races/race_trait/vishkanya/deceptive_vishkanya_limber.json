@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Deceptive ~ Vishkanya ~ Limber",
+    "name": "Limber",
+    "race_key": "Vishkanya",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vishkanya Racial Trait",
+      "SpecialQuality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Deceptive vishkanyas receive a +2 racial bonus on Stealth checks.",
+    "source_page": "p.217",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deceptive ~ Vishkanya ~ Limber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Vishkanya_ReplaceLimber=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Deceptive vishkanyas receive a +2 racial bonus on Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Stealth",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1666,
+    "record_key": "Deceptive ~ Vishkanya ~ Limber"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

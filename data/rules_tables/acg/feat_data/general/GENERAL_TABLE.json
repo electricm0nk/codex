@@ -1,0 +1,680 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/feat_data/general/GENERAL_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Aberrant Tumor",
+      "category": "General",
+      "name": "Aberrant Tumor",
+      "description": "To the surprise of others, that strange growth on you is actually your spellcasting companion.",
+      "effect": null
+    },
+    {
+      "key": "Amateur Investigator",
+      "category": "General",
+      "name": "Amateur Investigator",
+      "description": "Your knowledge is more than plain smarts-it's inspired.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "InspirationTimes",
+            "INT"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Animal Soul",
+      "category": "General",
+      "name": "Animal Soul",
+      "description": "Your close bond with an animal allows you to ignore harmful magic that cannot affect your wild side.",
+      "effect": null
+    },
+    {
+      "key": "Believer's Boon",
+      "category": "General",
+      "name": "Believer's Boon",
+      "description": "Your deity rewards you for your faithfulness.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "BelieversBoonTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Believer's Hands",
+      "category": "General",
+      "name": "Believer's Hands",
+      "description": "You can heal others with a touch of your hand.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "LayOnHandsTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Blasting Charge",
+      "category": "General",
+      "name": "Blasting Charge",
+      "description": "You funnel the power of your bloodrage into a strike capable of erupting with arcane power.",
+      "effect": null
+    },
+    {
+      "key": "Blessed Striker",
+      "category": "General",
+      "name": "Blessed Striker",
+      "description": "All of your attacks are treated as having whatever alignment components you and your deity share for the purpose of overcoming damage reduction. If you grossly violate the code of conduct required by your deity or no longer worship your deity, you lose access to this feat. You can regain it once you atone for your misdeeds to your deity (see the atonement spell).",
+      "effect": null
+    },
+    {
+      "key": "Bookish Rogue",
+      "category": "General",
+      "name": "Bookish Rogue",
+      "description": "By studying a spellbook for 10 minutes, you can change one spell you are able to cast using your minor magic or major magic rogue talent to one sorcerer/wizard spell of the same level contained in the spellbook. This change is permanent until you take the time to change it via this feat again.",
+      "effect": null
+    },
+    {
+      "key": "Channeled Blessing",
+      "category": "General",
+      "name": "Channeled Blessing",
+      "description": "Your channeled energy can deliver a warpriest's blessing.",
+      "effect": null
+    },
+    {
+      "key": "Disable Dweomer",
+      "category": "General",
+      "name": "Disable Dweomer",
+      "description": "You can disable a magic item, suppressing it for a short time.",
+      "effect": null
+    },
+    {
+      "key": "Divine Protection",
+      "category": "General",
+      "name": "Divine Protection",
+      "description": "Your deity protects you against deadly attacks.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "DivineProtectionBonus",
+            "WIS"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Energy Channel",
+      "category": "General",
+      "name": "Energy Channel",
+      "description": "You distill your channeled energy into your weapon to empower it.",
+      "effect": null
+    },
+    {
+      "key": "Esoteric Linguistics",
+      "category": "General",
+      "name": "Esoteric Linguistics",
+      "description": "You can attempt a Linguistics check in place of a Use Magic Device check to activate a scroll, or in place of a Spellcraft check to identify a scroll. You must still have (or emulate) the ability score required to cast a spell of the desired level, and you cannot use Linguistics on the check to emulate the required ability score.",
+      "effect": null
+    },
+    {
+      "key": "Evolved Companion",
+      "category": "General",
+      "name": "Evolved Companion",
+      "description": "Your animal companion has abilities that makes it different from others of its kind.",
+      "effect": null
+    },
+    {
+      "key": "Evolved Summoned Monster",
+      "category": "General",
+      "name": "Evolved Summoned Monster",
+      "description": "The creatures you summon have evolved to have even greater abilities.",
+      "effect": null
+    },
+    {
+      "key": "Expanded Preparation",
+      "category": "General",
+      "name": "Expanded Preparation",
+      "description": "You can prepare more spells than other arcanists can.",
+      "effect": null
+    },
+    {
+      "key": "Extended Animal Focus",
+      "category": "General",
+      "name": "Extended Animal Focus",
+      "description": "Your ability to emulate an animal lingers longer.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "HunterAnimalFocusMinutes",
+            "max(1,WIS)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Arcanist Exploit",
+      "category": "General",
+      "name": "Extra Arcanist Exploit",
+      "description": "Your repertoire of arcanist exploits expands.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ArcanistExploitPool",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Inspiration",
+      "category": "General",
+      "name": "Extra Inspiration",
+      "description": "You are more able to draw upon inspiration than most.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "InvestigatorInspirationPoolBonus",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "InspirationTimes",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Investigator Talent",
+      "category": "General",
+      "name": "Extra Investigator Talent",
+      "description": "You learn a new way to use your training and inspiration.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Investigator Talent",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Martial Flexibility",
+      "category": "General",
+      "name": "Extra Martial Flexibility",
+      "description": "You are extremely versatile in a fight.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "BrawlerMartialFlexibilityTimes",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Reservoir",
+      "category": "General",
+      "name": "Extra Reservoir",
+      "description": "Your reservoir of arcane energy is greater than others'.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "MaxArcanistReservoirSize",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Extra Slayer Talent",
+      "category": "General",
+      "name": "Extra Slayer Talent",
+      "description": "Through long practice, you have learned how to perform a special talent.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Slayer Talent",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Favored Enemy Spellcasting",
+      "category": "General",
+      "name": "Favored Enemy Spellcasting",
+      "description": "Your spells are more effective against creatures that you especially abhor.",
+      "effect": null
+    },
+    {
+      "key": "Flexible Hex",
+      "category": "General",
+      "name": "Flexible Hex",
+      "description": "Your wandering hex shifts at your command.",
+      "effect": null
+    },
+    {
+      "key": "Flexible Wizardry",
+      "category": "General",
+      "name": "Flexible Wizardry",
+      "description": "You have learned a trick that makes your spellcasting more flexible.",
+      "effect": null
+    },
+    {
+      "key": "Focused Inspiration",
+      "category": "General",
+      "name": "Focused Inspiration",
+      "description": "Two of your skills gain a bit more from your inspiration than others.",
+      "effect": null
+    },
+    {
+      "key": "Force Dash",
+      "category": "General",
+      "name": "Force Dash",
+      "description": "You can absorb the magic in your force spells to give you a concentrated burst of speed.",
+      "effect": null
+    },
+    {
+      "key": "Formula Recollection",
+      "category": "General",
+      "name": "Formula Recollection",
+      "description": "You are able to record and recall even the complex and intricate details of spellcasting.",
+      "effect": null
+    },
+    {
+      "key": "Greater Dirge of Doom",
+      "category": "General",
+      "name": "Greater Dirge of Doom",
+      "description": "The haunting sound of sepulchral intonations chills the most stalwart adversary to its very core.",
+      "effect": null
+    },
+    {
+      "key": "Greater Skald's Vigor",
+      "category": "General",
+      "name": "Greater Skald's Vigor",
+      "description": "Your allies share in the fast healing granted by your Skald's Vigor, starting in the round when you begin your performance. They must be able to hear the performance. If you stop maintaining the song, the fast healing ends immediately, even if other effects of your song linger.",
+      "effect": null
+    },
+    {
+      "key": "Improved Dirge of Doom",
+      "category": "General",
+      "name": "Improved Dirge of Doom",
+      "description": "The foreboding tone of your dirge is especially effective at unsettling your enemies.",
+      "effect": null
+    },
+    {
+      "key": "Improved Flexible Wizardry",
+      "category": "General",
+      "name": "Improved Flexible Wizardry",
+      "description": "You possess an impressive flexibility with casting that other wizards lack.",
+      "effect": null
+    },
+    {
+      "key": "Improved Studied Combatant",
+      "category": "General",
+      "name": "Improved Studied Combatant",
+      "description": "Deep understanding of your foes' tics grants you the upper hand in combat.",
+      "effect": null
+    },
+    {
+      "key": "Insightful Delivery",
+      "category": "General",
+      "name": "Insightful Delivery",
+      "description": "Your knowledge of where to strike makes your poisons more deadly.",
+      "effect": null
+    },
+    {
+      "key": "Inspired Alchemy",
+      "category": "General",
+      "name": "Inspired Alchemy",
+      "description": "With some inspiration and elbow grease, you can recreate a consumed extract in a pinch.",
+      "effect": null
+    },
+    {
+      "key": "Inspired by Fear",
+      "category": "General",
+      "name": "Inspired by Fear",
+      "description": "When spreading fear to your enemies, you further embolden your allies.",
+      "effect": null
+    },
+    {
+      "key": "Inspired Strike",
+      "category": "General",
+      "name": "Inspired Strike",
+      "description": "You can turn your natural talent as easily to weapon-work as to skills.",
+      "effect": null
+    },
+    {
+      "key": "Intimidating Performance",
+      "category": "General",
+      "name": "Intimidating Performance",
+      "description": "Your performance strikes fear in the hearts of foes.",
+      "effect": null
+    },
+    {
+      "key": "Lay of the Land",
+      "category": "General",
+      "name": "Lay of the Land",
+      "description": "Your affinity to nature grants you greater insight into specific biomes.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Favored Terrain",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Lunging Spell Touch",
+      "category": "General",
+      "name": "Lunging Spell Touch",
+      "description": "You can increase the reach of your spells' melee touch attacks by 5 feet until the end of your turn by taking a -2 penalty to your AC until your next turn. You must decide to use this ability before you attempt any attacks on your turn.",
+      "effect": null
+    },
+    {
+      "key": "Manifested Blood",
+      "category": "General",
+      "name": "Manifested Blood",
+      "description": "You can use the power of your bloodline to surround yourself in its element.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ManifestedBloodTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Nature Magic",
+      "category": "General",
+      "name": "Nature Magic",
+      "description": "You are able to use simple spells by drawing on nature's raw majesty.",
+      "effect": null
+    },
+    {
+      "key": "Orator",
+      "category": "General",
+      "name": "Orator",
+      "description": "You can use a Linguistics check in place of a Bluff check to tell a falsehood or conceal information, in place of a Diplomacy check to change the attitude of a creature, or in place of an Intimidate check to force a creature to cooperate. You must deliver your attempt in a language the target understands.",
+      "effect": null
+    },
+    {
+      "key": "Quicken Blessing",
+      "category": "General",
+      "name": "Quicken Blessing",
+      "description": "You can deliver one of your blessings with greater speed.",
+      "effect": null
+    },
+    {
+      "key": "Raging Blood",
+      "category": "General",
+      "name": "Raging Blood",
+      "description": "Your blood boils with latent energy, filling you with an intense fury.",
+      "effect": null
+    },
+    {
+      "key": "Ranged Study",
+      "category": "General",
+      "name": "Ranged Study",
+      "description": "You can use a limited form of studied combat and studied strike with a weapon of your choice.",
+      "effect": null
+    },
+    {
+      "key": "Reactive Healing",
+      "category": "General",
+      "name": "Reactive Healing",
+      "description": "You can channel healing energy in response to an attack that would knock you unconscious.",
+      "effect": null
+    },
+    {
+      "key": "Resilient Armor",
+      "category": "General",
+      "name": "Resilient Armor",
+      "description": "When you enhance your armor or shield, you gain a measure of damage reduction.",
+      "effect": null
+    },
+    {
+      "key": "Skilled Rager",
+      "category": "General",
+      "name": "Skilled Rager",
+      "description": "With practice, you've mastered your rage to allow yourself more versatility.",
+      "effect": null
+    },
+    {
+      "key": "Slow Faller",
+      "category": "General",
+      "name": "Slow Faller",
+      "description": "You can reduce the amount of falling damage you take when you are close to a wall.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "SlowFall",
+            "10"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Spirit Talker",
+      "category": "General",
+      "name": "Spirit Talker",
+      "description": "By forging a temporary bond with a spirit, you gain access to an unfamiliar hex.",
+      "effect": null
+    },
+    {
+      "key": "Spirit's Gift",
+      "category": "General",
+      "name": "Spirit's Gift",
+      "description": "You commune with a spirit of your choice, and it grants your animal companion or familiar a boon.",
+      "effect": null
+    },
+    {
+      "key": "Spiritual Guardian",
+      "category": "General",
+      "name": "Spiritual Guardian",
+      "description": "Your spiritual guardians are more powerful than those of most others.",
+      "effect": null
+    },
+    {
+      "key": "Spontaneous Nature's Ally",
+      "category": "General",
+      "name": "Spontaneous Nature's Ally",
+      "description": "Instead of casting a cure spell, you can instead cast summon nature's ally.",
+      "effect": null
+    },
+    {
+      "key": "Stalker's Focus",
+      "category": "General",
+      "name": "Stalker's Focus",
+      "description": "Your affinity to the natural world allows you to adopt the focus of a single animal.",
+      "effect": null
+    },
+    {
+      "key": "Steadfast Personality",
+      "category": "General",
+      "name": "Steadfast Personality",
+      "description": "You rely on your sense of self to keep your mind clear.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SAVE",
+            "Will",
+            "CHA-WIS"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "SAVE",
+            "Will",
+            "WIS"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "WIS"
+                },
+                {
+                  "facet": null,
+                  "value": "0"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Studied Combatant",
+      "category": "General",
+      "name": "Studied Combatant",
+      "description": "Your inspiration guides your strikes when you take a moment to assess your foe.",
+      "effect": null
+    },
+    {
+      "key": "Surprise Maneuver",
+      "category": "General",
+      "name": "Surprise Maneuver",
+      "description": "Your maneuvers are devastating against disadvantaged foes.",
+      "effect": null
+    },
+    {
+      "key": "Talented Magician",
+      "category": "General",
+      "name": "Talented Magician",
+      "description": "You gain an additional daily use of each of your minor magic and major magic rogue talents. You can take this feat multiple times.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "TalentedMagicianTimes",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Unfettered Familiar",
+      "category": "General",
+      "name": "Unfettered Familiar",
+      "description": "%1 times per day, you can cast a touch spell without being in contact with your familiar and designate your familiar as the \"toucher.\" You do not require line of sight to your familiar to use this ability, but you must be within 20 (+%2) feet of your familiar when you cast the spell, and if you can't see or hear your familiar, you must at least be able to speak with it. You may pick this feat multiple times. The range and uses per day increase each time you pick this feat.|UnfetteredFamiliarTimes|UnfetteredFamiliarRange",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "UnfetteredFamiliarTimes",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "UnfetteredFamiliarRange",
+            "10"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "War Blessing",
+      "category": "General",
+      "name": "War Blessing",
+      "description": "Your fervent call to your deity imbues you with a temporary blessing.",
+      "effect": null
+    }
+  ]
+}

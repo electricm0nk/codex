@@ -1,0 +1,24 @@
+== SABOTAGE: resolve_printings returns the first printing (old or_insert)
+test rules_core::pilot_compute::multiclass_fold::tests::printings_that_disagree_answer_nothing ... FAILED
+test rules_core::pilot_compute::multiclass_fold::tests::a_prestige_save_folds_its_own_table_form_exactly ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::every_slug_two_books_state_has_one_chassis_across_its_printings ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_class_with_no_table_and_no_record_is_named_unknown ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_class_whose_record_states_no_skill_ranks_is_named_unknown ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::skill_ranks_come_from_the_record_or_the_base_class_it_is_taken_on ... ok
+thread 'rules_core::pilot_compute::multiclass_fold::tests::printings_that_disagree_answer_nothing' (1786115) panicked at src/rules_core/pilot_compute/multiclass_fold.rs:689:9:
+assertion failed: resolve_printings(vec![warrior.clone(), commoner.clone()]).is_none()
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 2723 filtered out; finished in 4.42s
+EXIT[sabotaged]=101
+== RESTORED
+test rules_core::pilot_compute::multiclass_fold::tests::printings_that_disagree_answer_nothing ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_prestige_save_folds_its_own_table_form_exactly ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::every_slug_two_books_state_has_one_chassis_across_its_printings ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_class_with_no_table_and_no_record_is_named_unknown ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_class_whose_record_states_no_skill_ranks_is_named_unknown ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::skill_ranks_come_from_the_record_or_the_base_class_it_is_taken_on ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2723 filtered out; finished in 3.93s
+EXIT[restored]=0

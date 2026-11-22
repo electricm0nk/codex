@@ -1,0 +1,122 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Grab",
+    "delivery": "Extraordinary",
+    "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of a size equal to or smaller than you.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:grab",
+    "name": "Grab",
+    "owners": [
+      "beastiary:monster:ant_giant",
+      "beastiary:monster:ant_drone",
+      "beastiary:monster:ant_queen",
+      "beastiary:monster:bear_grizzly",
+      "beastiary:monster:bear_dire",
+      "beastiary:monster:cat_leopard",
+      "beastiary:monster:chuul",
+      "beastiary:monster:couatl",
+      "beastiary:monster:crab_giant",
+      "beastiary:monster:crab_giant_king",
+      "beastiary:monster:crab_giant_coconut",
+      "beastiary:monster:crab_giant_rock",
+      "beastiary:monster:crab_giant_shark_eating",
+      "beastiary:monster:crab_giant_reef",
+      "beastiary:monster:crab_giant_shipwrecker",
+      "beastiary:monster:crocodile_dire",
+      "beastiary:monster:demon_hezrou",
+      "beastiary:monster:demon_marilith",
+      "beastiary:monster:devil_pit_fiend",
+      "beastiary:monster:dinosaur_tyrannosaurus",
+      "beastiary:monster:eel_giant_moray",
+      "beastiary:monster:flytrap_giant",
+      "beastiary:monster:frog_giant",
+      "beastiary:monster:froghemoth",
+      "beastiary:monster:gray_ooze",
+      "beastiary:monster:gray_ooze_crystal_ooze",
+      "beastiary:monster:gray_ooze_id_ooze",
+      "beastiary:monster:kraken",
+      "beastiary:monster:linnorm_crag",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:linnorm_tarn",
+      "beastiary:monster:lion_dire",
+      "beastiary:monster:lizard_monitor",
+      "beastiary:monster:mantis_giant",
+      "beastiary:monster:mohrg",
+      "beastiary:monster:ochre_jelly",
+      "beastiary:monster:octopus_giant",
+      "beastiary:monster:otyugh",
+      "beastiary:monster:owlbear",
+      "beastiary:monster:phase_spider",
+      "beastiary:monster:purple_worm",
+      "beastiary:monster:remorhaz",
+      "beastiary:monster:roc",
+      "beastiary:monster:salamander",
+      "beastiary:monster:scorpion_greensting",
+      "beastiary:monster:scorpion_ghost",
+      "beastiary:monster:scorpion_cave",
+      "beastiary:monster:scorpion_giant",
+      "beastiary:monster:scorpion_deadfall",
+      "beastiary:monster:scorpion_giant_emperor",
+      "beastiary:monster:scorpion_black",
+      "beastiary:monster:sea_serpent",
+      "beastiary:monster:shambling_mound",
+      "beastiary:monster:shark_dire",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:snake_constrictor",
+      "beastiary:monster:squid_giant",
+      "beastiary:monster:tarrasque",
+      "beastiary:monster:tiger",
+      "beastiary:monster:tiger_dire",
+      "beastiary:monster:wyvern",
+      "beastiary:monster:xill"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If You hit with the indicated attack, you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of a size equal to or smaller than you.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1384,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Grab",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

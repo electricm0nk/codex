@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You gain a +4 bonus on Perception checks and Sense Motive checks to see through disguises, notice when a creature is under an enchantment, and act on the surprise round.",
+    "key": "Possessed Corruption ~ Hateful Voices Gift",
+    "name": "Hateful Voices Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Hateful Voices Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedHatefulVoicesGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 bonus on Perception checks and Sense Motive checks to see through disguises, notice when a creature is under an enchantment, and act on the surprise round."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=See Through Disguise,Perception=Avoid Surprise,Sense Motive=Sense Enchantment|4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 649,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Hateful Voices Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

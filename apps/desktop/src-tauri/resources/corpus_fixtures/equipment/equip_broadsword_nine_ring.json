@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Broadsword (Nine Ring)",
+    "name": "Broadsword (Nine Ring)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_broadsword_nine_ring.txt",
+    "record_key": "Broadsword (Nine Ring)"
+  }
+}

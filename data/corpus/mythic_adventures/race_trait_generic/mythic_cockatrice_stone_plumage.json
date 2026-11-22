@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Cockatrice ~ Stone Plumage",
+    "name": "Stone Plumage",
+    "description": "Any weapon that strikes a mythic cockatrice takes 1d6 points of damage that bypasses the weapon's hardness. Any creature attacking the cockatrice with natural weapons or unarmed strikes takes 1d6 points of damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Cockatrice ~ Stone Plumage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Cockatrice Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Any weapon that strikes a mythic cockatrice takes 1d6 points of damage that bypasses the weapon's hardness. Any creature attacking the cockatrice with natural weapons or unarmed strikes takes 1d6 points of damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 83,
+    "record_key": "Mythic Cockatrice ~ Stone Plumage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

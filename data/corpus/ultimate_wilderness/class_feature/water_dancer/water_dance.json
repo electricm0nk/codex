@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Water Dancer ~ Water Dance",
+    "name": "Water Dance",
+    "class": "Monk",
+    "description": "A water dancer can move across any liquid surface as though it were solid ground up to a maximum distance of %1 feet before falling through the liquid's surface as normal. Additionally, at 10th level the water dancer can even move vertically up water surfaces (such as a flowing waterfall) as though under the effects of spider climb. If he runs out of movement before reaching a solid surface when climbing a vertical water source, he immediately falls.|10*(MonkLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Water Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A water dancer can move across any liquid surface as though it were solid ground up to a maximum distance of %1 feet before falling through the liquid's surface as normal. Additionally, at 10th level the water dancer can even move vertically up water surfaces (such as a flowing waterfall) as though under the effects of spider climb. If he runs out of movement before reaching a solid surface when climbing a vertical water source, he immediately falls.|10*(MonkLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 119,
+    "record_key": "Water Dancer ~ Water Dance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

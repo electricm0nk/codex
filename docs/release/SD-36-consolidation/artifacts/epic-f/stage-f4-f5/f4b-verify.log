@@ -1,0 +1,16 @@
+== cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- -D warnings
+EXIT=0 (52s)
+== cargo clippy --locked --tests -j 8 -- -D warnings
+EXIT=0 (60s)
+== cargo test --locked -j 8 --lib class_census -- --test-threads=8
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 2698 filtered out; finished in 347.10s
+EXIT=0 (412s)
+== cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+test result: ok. 620 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 423.38s
+EXIT=0 (453s)
+ALLDONE
+== named tests in the full desktop run
+test character_hub::tests::create_character_at_root_grants_no_wealth_when_the_build_is_blocked ... ok
+test character_hub::tests::list_level_up_class_options_offers_prestige_with_printed_requirements ... ok
+test character_hub::tests::list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap ... ok
+test character_hub::tests::list_class_creation_roster_offers_exactly_the_census_roster ... ok

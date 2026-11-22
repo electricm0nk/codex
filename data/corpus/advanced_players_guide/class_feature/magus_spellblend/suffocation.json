@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Suffocation",
+    "name": "Suffocation",
+    "class": "Magus",
+    "description": "This spell extracts the air from the target's lungs, causing swift suffocation. The target can attempt to resist this spell's effects with a Fortitude save-if he succeeds, he is merely staggered for 1 round as he gasps for breath. If the target fails, he immediately begins to suffocate. On the target's next turn, he falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can delay that round's effects from occurring by making a successful Fortitude save, but the spell effect continues for 3 rounds, and each time a target fails his Fortitude save, he moves one step further along the track to suffocation. This spell only affects living creatures that must breathe. It is impossible to defeat the effects of this spell by simply holding one's breath-if the victim fails the initial saving throw, the air in his lungs is extracted.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Suffocation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=5|Suffocation"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Murder Subdomain=5"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell extracts the air from the target's lungs, causing swift suffocation. The target can attempt to resist this spell's effects with a Fortitude save-if he succeeds, he is merely staggered for 1 round as he gasps for breath. If the target fails, he immediately begins to suffocate. On the target's next turn, he falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can delay that round's effects from occurring by making a successful Fortitude save, but the spell effect continues for 3 rounds, and each time a target fails his Fortitude save, he moves one step further along the track to suffocation. This spell only affects living creatures that must breathe. It is impossible to defeat the effects of this spell by simply holding one's breath-if the victim fails the initial saving throw, the air in his lungs is extracted.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3621,
+    "record_key": "Magus Spellblend ~ Suffocation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

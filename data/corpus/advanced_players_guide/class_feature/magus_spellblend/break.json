@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Break",
+    "name": "Break",
+    "class": "Magus",
+    "description": "You can attempt to break or at least damage any one Medium or smaller object within range. If the target fails its Fortitude saving throw, it gains the broken condition. If cast on a broken item, that item is destroyed on a failed save.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Break"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=1|Break"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to break or at least damage any one Medium or smaller object within range. If the target fails its Fortitude saving throw, it gains the broken condition. If cast on a broken item, that item is destroyed on a failed save.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3553,
+    "record_key": "Magus Spellblend ~ Break"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

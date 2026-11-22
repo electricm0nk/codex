@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Grants maximum skill ranks in %CHOICE",
+    "key": "MAX_KNW",
+    "name": "MAX_KNW",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILLRANK",
+          "%CHOICE",
+          "99"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Skill / Maximize Knowledge"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grants maximum skill ranks in %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Knowledge|TITLE=Maximized Knowledge Skill"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 621,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "MAX_KNW",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "When you confirm a critical hit against a living creature, it must succeed at a Fortitude save (DC %1) or become paralyzed for 1 round. Elves are immune to this effect.|10+TL/2+GhoulManifestationLevel",
+    "key": "Ghoul Corruption ~ Paralysis Gift",
+    "name": "Paralysis Gift",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Paralysis Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulParalysisGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "When you confirm a critical hit against a living creature, it must succeed at a Fortitude save (DC %1) or become paralyzed for 1 round. Elves are immune to this effect.|10+TL/2+GhoulManifestationLevel"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 259,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Ghoul Corruption ~ Paralysis Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

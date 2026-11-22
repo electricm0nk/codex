@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Distorter ~ Altered Appearance",
+    "name": "Altered Appearance",
+    "class": "Distorter",
+    "description": "You have learned to alter your pattern to mask your appearance.  As long as you are maintaining psionic focus, as a full-round action, you can change your physical appearance to look like someone else, granting a +10 bonus on Disguise skill checks.  Your size does not change, and you do not gain any special abilities, evein if your new appearance would seem to grant it.  The effect ends once you are not maintaining psionic focus or it can be dismissed as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Distorter ~ Altered Appearance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to alter your pattern to mask your appearance.  As long as you are maintaining psionic focus, as a full-round action, you can change your physical appearance to look like someone else, granting a +10 bonus on Disguise skill checks.  Your size does not change, and you do not gain any special abilities, evein if your new appearance would seem to grant it.  The effect ends once you are not maintaining psionic focus or it can be dismissed as a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1816,
+    "record_key": "Distorter ~ Altered Appearance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Cowering",
+    "name": "Cowering",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.566"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "frozen in fear and can take no actions. A cowering character takes a -2 penalty to Armor Class and loses his Dexterity bonus (if any)."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-max(0,DEX)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 245,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Cowering",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

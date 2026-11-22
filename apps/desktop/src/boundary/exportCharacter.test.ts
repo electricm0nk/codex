@@ -1,0 +1,31 @@
+import { exportCharacter } from './exportCharacter';
+import { assertEqual } from '../testSupport/asserts';
+
+/**
+ * No Tauri runtime is available under `tsx`, so this exercises the same
+ * no-runtime failure path every other boundary loader's test exercises
+ * (see `levelUpCharacter.test.ts`).
+ */
+async function testNoRuntimeThrowsDescriptiveError() {
+  let thrown: unknown;
+  try {
+    await exportCharacter({ characterId: 'char-test', filePath: '/tmp/character-test.json' });
+  } catch (cause) {
+    thrown = cause;
+  }
+  const message = thrown instanceof Error ? thrown.message : String(thrown);
+  assertEqual(
+    message,
+    'Tauri runtime not available for exporting a character',
+    'no-runtime failure is descriptive'
+  );
+}
+
+async function main() {
+  await testNoRuntimeThrowsDescriptiveError();
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  throw error;
+});

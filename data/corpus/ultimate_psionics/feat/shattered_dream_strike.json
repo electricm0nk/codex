@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Shattered Dream Strike",
+    "category": "Psionic",
+    "name": "Shattered Dream Strike",
+    "description": "While in the broken dreams style, after making a successful unarmed strike empowered with your devastating touch, you can make a free Intimidate check against the target.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch",
+      "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Broken Dreams Style",
+      "PRESKILL:1,Intimidate=6",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 308,
+    "record_key": "Shattered Dream Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

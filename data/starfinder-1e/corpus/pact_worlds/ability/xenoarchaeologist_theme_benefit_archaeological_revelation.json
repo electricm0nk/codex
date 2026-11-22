@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Xenoarchaeologist Theme Benefit ~ ARCHAEOLOGICAL REVELATION",
+    "name": "ARCHAEOLOGICAL REVELATION",
+    "type": "Theme.Theme Benefit.Xenoarchaeologist Theme Benefit.Xenoarchaeologist Theme Benefit Lvl 18"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Xenoarchaeologist Theme Benefit ~ ARCHAEOLOGICAL REVELATION",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:xenoarchaeologist_theme_benefit_archaeological_revelation"
+}

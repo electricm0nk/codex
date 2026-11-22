@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman Manifesting Variables",
+    "name": "Marksman Manifesting Variables",
+    "class": "Marksman",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarksmanMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanML|MarksmanLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanML|var(\"BL=Marksman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanPLStatScore|WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|MarksmanML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanPKL|MarksmanLVL+var(\"BL=Marksman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanMPL|MarksmanLVL+var(\"BL=Marksman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanPowersKnown|min(9,floor((3*MarksmanPKL-1)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanPowersKnown|floor((MarksmanLVL-13)/2)|PREVARGTEQ:MarksmanPKL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarksmanMaxPowerLevel|min(4,floor((MarksmanMPL+3)/4),MarksmanPLStatScore-10)|PREVARGTEQ:MarksmanMPL,2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 322,
+    "record_key": "Marksman Manifesting Variables"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

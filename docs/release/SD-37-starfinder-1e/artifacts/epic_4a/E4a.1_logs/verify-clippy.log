@@ -1,0 +1,13 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.1_logs/verify-clippy
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 8  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  clippy
+
+RESULT: PASS
+logs in /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.1_logs/verify-clippy
+CLIPDONE

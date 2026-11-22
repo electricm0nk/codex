@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 7200.0,
+    "description": "add to summon monster list: voidworm (3rd), naunet (6th), imentesh (9th); 1/day summon voidworm",
+    "key": "Ring of Summoning Affinity (Protean)",
+    "name": "Ring of Summoning Affinity (Protean)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "7200"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon monster list: voidworm (3rd), naunet (6th), imentesh (9th); 1/day summon voidworm"
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 288,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Summoning Affinity (Protean)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

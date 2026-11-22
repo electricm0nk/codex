@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Young Adult",
+    "name": "Young Adult",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "REMOVABLE",
+        "value": "NO"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Young Adult"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 941,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Young Adult",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

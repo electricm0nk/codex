@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Blundering Defense",
+    "name": "Blundering Defense",
+    "description": "Your feverish and sometimes comical defensive techniques offer enough distraction to aid allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Blundering Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Cautious Fighter"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Your feverish and sometimes comical defensive techniques offer enough distraction to aid allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Blundering Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Whenever you fight defensively or use the total defense action, allies gain a luck bonus to AC and CMD equal to 1/2 the dodge bonus you gain from the action you are taking. Allies only gain this bonus while they are adjacent to you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 22,
+    "record_key": "Warpriest Bonus Feat ~ Blundering Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

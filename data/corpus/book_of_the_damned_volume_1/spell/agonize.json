@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Agonize",
+    "school": "Evocation",
+    "level": 3,
+    "description": "You afflict a creature you have conjured with a calling spell with bolts of vicious energy to make it more pliant to your will."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+    "sha256": "6ced82a6317309ca529afd1b403d66212011e766aae38468d280623dce0085cf",
+    "line": 7,
+    "record_key": "Agonize"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

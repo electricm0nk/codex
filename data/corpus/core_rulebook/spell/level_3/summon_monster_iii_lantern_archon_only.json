@@ -1,0 +1,33 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list.",
+    "key": "Summon Monster III (lantern archon only)",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": ".CLEARALL"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-17T00:00:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1477,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Summon Monster III.COPY=Summon Monster III (lantern archon only)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

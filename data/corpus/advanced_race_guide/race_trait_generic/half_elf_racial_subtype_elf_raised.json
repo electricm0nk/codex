@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf Racial Subtype ~ Elf-Raised",
+    "name": "Elf-Raised",
+    "description": "These half-elves represent those embraced by their elven relatives, and raised with all of the traditional cultural training and education typical of most full-blooded elves. These half-elves have the ancestral arms and arcane training alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf Racial Subtype ~ Elf-Raised"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Half-Elf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf Racial Subtype ~ Elf-Raised],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "These half-elves represent those embraced by their elven relatives, and raised with all of the traditional cultural training and education typical of most full-blooded elves. These half-elves have the ancestral arms and arcane training alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Elf-Raised"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Elf Racial Trait|NORMAL|Half-Elf ~ Ancestral Arms|Half-Elf ~ Arcane Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2174,
+    "record_key": "Half-Elf Racial Subtype ~ Elf-Raised"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 20000.0,
+    "description": "as psicrystal staff; can be transformed into crystal blade (masterwork deep crystal bastard sword); can deliver touch attacks with melee attacks; crystal blade can create energy burst",
+    "key": "Warblade Staff (Greater)",
+    "name": "Warblade Staff (Greater)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "PsiCrystalLVL",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.428"
+      },
+      {
+        "key": "SPROP",
+        "value": "as psicrystal staff; can be transformed into crystal blade (masterwork deep crystal bastard sword); can deliver touch attacks with melee attacks; crystal blade can create energy burst"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 435,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Warblade Staff (Greater)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

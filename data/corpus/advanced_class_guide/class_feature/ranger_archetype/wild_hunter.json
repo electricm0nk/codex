@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Ranger Archetype ~ Wild Hunter",
+    "name": "Wild Hunter",
+    "class": "Ranger",
+    "description": "A wild hunter seeks to emulate the animals around him to keep him safe while he tracks his prey. Instead of studying the traits and behaviors of a favored enemy, a wild hunter studies those of various animals, incorporating those attributes into his hunting strategy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Wild Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerFavoredEnemy.RangerWoodlandStride.RangerSwiftTracker"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wild Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy,TYPE.RangerWoodlandStride,TYPE.RangerSwiftTracker]"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild hunter seeks to emulate the animals around him to keep him safe while he tracks his prey. Instead of studying the traits and behaviors of a favored enemy, a wild hunter studies those of various animals, incorporating those attributes into his hunting strategy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Wild Hunter ~ Animal Focus|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Wild Hunter ~ Shared Focus|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wild Hunter],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_SwiftTracker=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_SwiftTracker|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3535,
+    "record_key": "Ranger Archetype ~ Wild Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

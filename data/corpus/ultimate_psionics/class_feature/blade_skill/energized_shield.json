@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Energized Shield",
+    "name": "Energized Shield",
+    "class": "Blade Skill",
+    "description": "As an immediate action when you are attacked in melee and by expending your psionic focus, you may charge your mind shield with one of the energy types you could normally make your mind blade deal, dealing additional points of the appropriate type of damage equal to your normal psychic strike damage to your attacker.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Energized Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Blade Skill ~ Mind Shield"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=EnergyBladeSkill"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action when you are attacked in melee and by expending your psionic focus, you may charge your mind shield with one of the energy types you could normally make your mind blade deal, dealing additional points of the appropriate type of damage equal to your normal psychic strike damage to your attacker."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 765,
+    "record_key": "Blade Skill ~ Energized Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Divine Brand",
+    "name": "Divine Brand",
+    "description": "At 1st level, a mark appears somewhere on the exalted's body. The mark's location varies by individual and by faith, but the mark clearly represents the exalted's chosen deity. The divine brand generally appears in a location easy to display, such as on the hand, forearm, chest, or face. An uncovered divine brand functions as a silver holy (or unholy) symbol. If the divine brand is forcibly removed from an unwilling exalted, it reappears on her body 24 hours later.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Divine Brand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a mark appears somewhere on the exalted's body. The mark's location varies by individual and by faith, but the mark clearly represents the exalted's chosen deity. The divine brand generally appears in a location easy to display, such as on the hand, forearm, chest, or face. An uncovered divine brand functions as a silver holy (or unholy) symbol. If the divine brand is forcibly removed from an unwilling exalted, it reappears on her body 24 hours later."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 93,
+    "record_key": "Exalted ~ Divine Brand"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

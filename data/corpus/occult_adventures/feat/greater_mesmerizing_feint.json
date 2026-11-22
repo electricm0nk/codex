@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Greater Mesmerizing Feint",
+    "category": "General",
+    "name": "Greater Mesmerizing Feint",
+    "description": "You can feint against nearly any creature. You can feint against mindless creatures at a -4 penalty. Such a creature must be a subject of your hypnotic stare, and the creature has a 50% chance of ignoring the effects of your feint.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Mesmerizing Feint",
+      "PREABILITY:2,CATEGORY=Special Ability,Mesmerist ~ Hypnotic Stare,Bold Stare ~ Psychic Inception",
+      "PRESKILL:1,Bluff=10"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 35,
+    "record_key": "Greater Mesmerizing Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

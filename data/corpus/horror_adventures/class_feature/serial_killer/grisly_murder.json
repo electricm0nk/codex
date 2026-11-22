@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Grisly Murder",
+    "name": "Grisly Murder",
+    "class": "Vigilante",
+    "description": "A serial killer gains Dreadful Carnage as a bonus feat, and if she leaves a calling card, the murder is so horrifying that creatures examining the corpse are affected as per nightmare that night (DC %1). The nightmare affects %2 creatures, starting with the first creature to examine the corpse.|10+VigilanteLVL/2+CHA|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Grisly Murder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer gains Dreadful Carnage as a bonus feat, and if she leaves a calling card, the murder is so horrifying that creatures examining the corpse are affected as per nightmare that night (DC %1). The nightmare affects %2 creatures, starting with the first creature to examine the corpse.|10+VigilanteLVL/2+CHA|CHA"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Dreadful Carnage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 40,
+    "record_key": "Serial Killer ~ Grisly Murder"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

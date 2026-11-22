@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rogue Archetype Support",
+    "name": "Rogue Archetype Support",
+    "class": "Rogue",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue ~ Sneak Attack|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueSneakAttack|PREVARGTEQ:RogueLvl,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueUncannyDodge,TYPE.RogueImprovedUncannyDodge|PREVARGTEQ:RogueLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueSneakAttackLVL|-2|PREVARGTEQ:RogueLvl,3|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueSneakAttack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|-4|PREVARGTEQ:RogueLvl,8|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueUncannyDodge,TYPE.RogueImprovedUncannyDodge"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1628,
+    "record_key": "Rogue Archetype Support"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

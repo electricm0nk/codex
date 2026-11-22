@@ -1,0 +1,4 @@
+clippy	PASS (clippy.txt: root:0 desktop:0 ingest:0 warnings, 0 errors; clippy_exit=0)
+sd24	5 passed 0 failed (sd24.txt)
+root-sweep	300 suites, 6707 passed, 0 failed (root-sweep.txt; awk and python agree)
+desktop-sweep	2 suites, 892 passed, 0 failed (desktop-sweep.txt; awk and python agree)

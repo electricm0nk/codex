@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shatterspell",
+    "name": "Shatterspell",
+    "description": "Your mighty blows shatter your enemy's magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shatterspell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Disruptive,Spellbreaker"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterWeaponQualifyLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mighty blows shatter your enemy's magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shatterspell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a standard action, you can attempt to sunder an ongoing spell effect as if you had the spell sunder rage power. You may use this feat once per day, plus one additional time per day for every 5 points by which your base attack bonus exceeds +10."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 12,
+    "record_key": "Warpriest Bonus Feat ~ Shatterspell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

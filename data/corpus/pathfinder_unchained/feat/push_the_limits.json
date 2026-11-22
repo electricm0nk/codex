@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "data": {
+    "key": "Push the Limits",
+    "category": "CombatStamina",
+    "name": "Push the Limits",
+    "description": "Even when suffering from fatigue, you can fight through and overcome incredible opposition.",
+    "source_page": "p.113"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 20,
+    "record_key": "Push the Limits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

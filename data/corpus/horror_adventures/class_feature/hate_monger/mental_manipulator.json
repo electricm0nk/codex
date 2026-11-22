@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger ~ Mental Manipulator",
+    "name": "Mental Manipulator",
+    "class": "Mesmerist",
+    "description": "A hate-monger masters a broad repertoire of emotional corruption. At 1st level, he adds one spell to his spells known. When he would gain a new mesmerist trick, he can learn additional spells instead, adding two of spells of a level he can currently cast to his spells known. When he casts a spell he learns in this way, he increases the duration as if his caster level were 1 higher.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger ~ Mental Manipulator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "A hate-monger masters a broad repertoire of emotional corruption. At 1st level, he adds one spell to his spells known. When he would gain a new mesmerist trick, he can learn additional spells instead, adding two of spells of a level he can currently cast to his spells known. When he casts a spell he learns in this way, he increases the duration as if his caster level were 1 higher."
+      },
+      {
+        "key": "DESC",
+        "value": "The save DC is increased by 1 for creatures of his favored enemy type.|PRECLASS:1,Mesmerist=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bonus Hate-Monger Spell|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 182,
+    "record_key": "Hate-Monger ~ Mental Manipulator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Warpriest Blessings Base",
+    "name": "Blessings Base",
+    "class": "Warpriest",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Blessings Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBlessingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBlessingUses|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBlessingDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestMinorBlessingGrantedLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestMajorBlessingGrantedLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBlessingFavoredClassUses|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2188,
+    "record_key": "Warpriest Blessings Base"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Crawling Vine ~ Constrict",
+    "delivery": null,
+    "description": "1d6 bludgeoning with a successful grapple check",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "advanced_race_guide:companion:crawling_vine_constrict",
+    "name": "Constrict",
+    "owners": [
+      "advanced_race_guide:companion:companion_crawling_vine"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 bludgeoning with a successful grapple check"
+      },
+      {
+        "key": "KEY",
+        "value": "Crawling Vine ~ Constrict"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialAttack.SpecialAbility"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "RaceAbility",
+      "SpecialAttack",
+      "SpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Crawling Vine ~ Constrict",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yrthak ~ Blind",
+    "delivery": "Extraordinary",
+    "description": "A yrthak sees and senses exclusively through its blindsight ability, which is based on sound and movement - beyond 120 feet, it is considered blind.  A deaf yrthak is effectively blinded as well except against adjacent foes - its weak eyesight functions enough for it to attack targets this close, although in such cases these creatures still gain the benefit of concealment (20%% miss chance) because of the creature's poor vision.  It is invulnerable to all sight-based effects and attacks, including gaze attacks.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:yrthak_blind",
+    "name": "Blind",
+    "owners": [
+      "bestiary_2:monster:yrthak"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Yrthak ~ Immunity to Gaze Attacks|Yrthak ~ Immunity to Sight-Based Attacks|Yrthak ~ Immunity to Visual Effects and Illusions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A yrthak sees and senses exclusively through its blindsight ability, which is based on sound and movement - beyond 120 feet, it is considered blind.  A deaf yrthak is effectively blinded as well except against adjacent foes - its weak eyesight functions enough for it to attack targets this close, although in such cases these creatures still gain the benefit of concealment (20%% miss chance) because of the creature's poor vision.  It is invulnerable to all sight-based effects and attacks, including gaze attacks."
+      },
+      {
+        "key": "KEY",
+        "value": "Yrthak ~ Blind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.289",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1408,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Yrthak ~ Blind",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

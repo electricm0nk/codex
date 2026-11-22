@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dread ~ Shadow Twin",
+    "name": "Shadow Twin",
+    "class": "Dread",
+    "description": "Form replica within %1 ft.; lasts for %2 rounds.  Replica shares hit points, ability uses, item charges, etc. with original.  Can be used %3/day.|ShadowTwinRange|ShadowTwinDuration|ShadowTwinTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread ~ Shadow Twin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowTwinRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowTwinDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowTwinTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Form replica within %1 ft.; lasts for %2 rounds.  Replica shares hit points, ability uses, item charges, etc. with original.  Can be used %3/day.|ShadowTwinRange|ShadowTwinDuration|ShadowTwinTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowTwinRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowTwinDuration|DreadLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowTwinTimes|DreadPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ShadowTwinTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 272,
+    "record_key": "Dread ~ Shadow Twin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

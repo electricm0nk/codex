@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Crystal Warrior ~ Tactical Suit",
+    "name": "Tactical Suit",
+    "class": "Warrior",
+    "description": "%1/day, expend focus to be treated as if under the battlesense power (ML %2).  You can spend a standard action to alter the benefit of this power.|TacticalSuitTimes|TacticalSuitML",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crystal Warrior ~ Tactical Suit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticalSuitTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticalSuitML|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day, expend focus to be treated as if under the battlesense power (ML %2).  You can spend a standard action to alter the benefit of this power.|TacticalSuitTimes|TacticalSuitML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticalSuitTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticalSuitML|floor(AegisLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticalSuitTimes|1+floor((AegisLVL-12)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TacticalSuitTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1746,
+    "record_key": "Crystal Warrior ~ Tactical Suit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

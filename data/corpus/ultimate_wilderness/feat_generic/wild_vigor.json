@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "The forces of nature bolster your vitality when you use wild shape.",
+    "key": "Wild Vigor",
+    "name": "Wild Vigor",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.DruidWildShape"
+      },
+      {
+        "key": "DESC",
+        "value": "The forces of nature bolster your vitality when you use wild shape."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "A number of times per day equal to your Wisdom bonus (minimum 1), when you use wild shape, you can gain a number of temporary hit points equal to your base attack bonus. These temporary hit points last for the duration of the wild shape or until they are lost."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "record_key": "Wild Vigor",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

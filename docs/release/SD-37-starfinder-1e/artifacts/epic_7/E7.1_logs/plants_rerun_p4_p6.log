@@ -1,0 +1,5 @@
+P4 the operative property is ignored: check exit 101 -> FAIL (red, as required)
+P5 the non-proficiency -4 is dropped: check exit 101 -> FAIL (red, as required)
+P6 melee damage loses the Strength modifier: check exit 101 -> FAIL (red, as required)
+3 of 3 plants red; files restored byte-identical
+exit=0

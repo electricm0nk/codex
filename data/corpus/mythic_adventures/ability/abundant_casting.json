@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Abundant Casting",
+    "name": "Abundant Casting",
+    "description": "Whenever you cast a spell that specifically targets a limited number of targets (such as \"one creature/level\" or \"one or more creatures\"), add +%1 to the number of targets the spell can affect. For example, a 5th-level wizard/1st-tier archmage can target up to six creatures when casting haste (five from caster level 5th and one from 1st tier). Alternatively, you can expend one use of mythic power when casting a spell that affects only one target (such as \"one creature\") to have the spell affect an additional target. If the spell requires you to succeed at a melee touch attack, you must hold the charge in order to make a second touch attack.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Abundant Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell that specifically targets a limited number of targets (such as \"one creature/level\" or \"one or more creatures\"), add +%1 to the number of targets the spell can affect. For example, a 5th-level wizard/1st-tier archmage can target up to six creatures when casting haste (five from caster level 5th and one from 1st tier). Alternatively, you can expend one use of mythic power when casting a spell that affects only one target (such as \"one creature\") to have the spell affect an additional target. If the spell requires you to succeed at a melee touch attack, you must hold the charge in order to make a second touch attack.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 105,
+    "record_key": "Mythic Path Ability ~ Abundant Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

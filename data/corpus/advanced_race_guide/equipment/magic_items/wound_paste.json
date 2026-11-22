@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 50.0,
+    "description": "Acts as a stabilize spell when slathered on a dying creature. Contains 5 doses.",
+    "key": "Wound Paste",
+    "name": "Wound Paste",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPROP",
+        "value": "Acts as a stabilize spell when slathered on a dying creature. Contains 5 doses."
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Wound Paste",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

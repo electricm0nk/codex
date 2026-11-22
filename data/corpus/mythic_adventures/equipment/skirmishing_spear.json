@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 2.0,
+    "description": null,
+    "key": "Skirmishing Spear",
+    "name": "Skirmishing Spear",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Special Ability ~ Returning ~ Thrown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "SPROP",
+        "value": "When thrown, this +1 returning spear is considered a one-handed weapon and gains a +2 bonus on the attack roll. If the spear hits when thrown, the wielder can, as an immediate action, expend one use of mythic power to teleport to an unoccupied space adjacent to the creature struck. This effect is treated as dimension door, except the wielder can act after teleporting. The spear comes back to its wielder's hand when he appears. If he hadn't taken a move action prior to throwing the spear, he can continue a full attack with the spear."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Skirmishing Spear",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

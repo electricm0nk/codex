@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Wayangs get a +2 racial bonus on saving throws against spells of the shadow subschool.",
+    "key": "Wayang ~ Shadow Resistance",
+    "name": "Shadow Resistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayang ~ Shadow Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wayang_ReplaceShadowResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wayangs get a +2 racial bonus on saving throws against spells of the shadow subschool."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_ShadowSpells|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against spells of the shadow subschool."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
+    "record_key": "Wayang ~ Shadow Resistance",
+    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

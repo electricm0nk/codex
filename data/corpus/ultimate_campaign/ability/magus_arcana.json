@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Feature ~ Magus Arcana",
+    "name": "Magus Arcana",
+    "description": "You retrained a magus arcana choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Feature ~ Magus Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassFeature"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained a magus arcana choice."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining_um.lst",
+    "sha256": "230132b49e5d303ce2e664f97a8d2e3a5be0a69190ce80179138d0f9a9e28635",
+    "line": 9,
+    "record_key": "Retraining ~ Class Feature ~ Magus Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

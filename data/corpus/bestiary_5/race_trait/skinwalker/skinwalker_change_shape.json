@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Skinwalker ~ Change Shape",
+    "name": "Change Shape",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Skinwalker Racial Trait",
+      "Skinwalker Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability",
+      "Supernatural"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Skinwalker_ReplaceChangeShape",
+    "sets_replace_flags": [],
+    "description": "A skinwalker can change shape to a bestial form as a standard action. In bestial form, a skinwalker gains a +2 racial bonus to his choice of Strength, Dexterity, or Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a skinwalker assumes bestial form, he can choose to gain two claw attacks that each deal 1d4 points of damage, 60 foot darkvision, or a +1 natural armor bonus. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Special Quality.Special Ability.Supernatural"
+      },
+      {
+        "key": "TYPE",
+        "value": "BuilderMagicalTrait"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Skinwalker_ReplaceChangeShape=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A skinwalker can change shape to a bestial form as a standard action. In bestial form, a skinwalker gains a +2 racial bonus to his choice of Strength, Dexterity, or Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a skinwalker assumes bestial form, he can choose to gain two claw attacks that each deal 1d4 points of damage, 60 foot darkvision, or a +1 natural armor bonus. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|TYPE=Skinwalker Change Shape Default"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Racial Points|5"
+      },
+      {
+        "key": "INFO",
+        "value": "Racial Points|5"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ARG_RaceBuilderPoints",
+          "-5"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
+    "line": 20,
+    "record_key": "Skinwalker ~ Change Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

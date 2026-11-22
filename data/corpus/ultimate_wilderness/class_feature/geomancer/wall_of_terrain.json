@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Geomancer ~ Wall of Terrain",
+    "name": "Wall of Terrain",
+    "class": "Occultist",
+    "description": "As a standard action, a geomancer can expend 3 points of mental focus invested in the terrain to fashion a solid wall of the surrounding terrain, no matter its actual composition. This functions as per wall of stone, using the geomancer's occultist level as his caster level. By expending an extra point of generic mental focus, he can increase the hardness of the wall to 10 and give it an extra 5 hit points per inch of thickness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geomancer ~ Wall of Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.GeomancerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a geomancer can expend 3 points of mental focus invested in the terrain to fashion a solid wall of the surrounding terrain, no matter its actual composition. This functions as per wall of stone, using the geomancer's occultist level as his caster level. By expending an extra point of generic mental focus, he can increase the hardness of the wall to 10 and give it an extra 5 hit points per inch of thickness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 138,
+    "record_key": "Geomancer ~ Wall of Terrain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

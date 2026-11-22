@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The next time the target sleeps (within the next 8 hours), she dreams of a rich feast with her favorite foods and drinks. When she awakens, she is sated as if she had eaten a nutritious meal, regardless of what she dreamed she ate. The target must sleep for at least 1 hour to gain the benefits of this spell. Being awakened during this period interrupts the spell and cancels its effects. If you sleep with this spell prepared, you may automatically expend it while you sleep to gain the spell's benefit. This expenditure does not count as spellcasting for the purpose of determining available spell slots (you could go to sleep at midnight, expend this spell during an 8-hour period of sleep, and still prepare your full allotment of spells in the morning).",
+    "key": "Dream Feast",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, OF"
+      },
+      {
+        "key": "DESC",
+        "value": "The next time the target sleeps (within the next 8 hours), she dreams of a rich feast with her favorite foods and drinks. When she awakens, she is sated as if she had eaten a nutritious meal, regardless of what she dreamed she ate. The target must sleep for at least 1 hour to gain the benefits of this spell. Being awakened during this period interrupts the spell and cancels its effects. If you sleep with this spell prepared, you may automatically expend it while you sleep to gain the spell's benefit. This expenditure does not count as spellcasting for the purpose of determining available spell slots (you could go to sleep at midnight, expend this spell during an 8-hour period of sleep, and still prepare your full allotment of spells in the morning)."
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Dream Feast"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Dream Feast",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

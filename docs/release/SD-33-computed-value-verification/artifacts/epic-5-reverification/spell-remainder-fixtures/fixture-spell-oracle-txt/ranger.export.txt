@@ -1,0 +1,4 @@
+SPELL.0.1.0.NAME=Residual Tracking
+SPELL.0.1.0.DC=
+SPELL.0.3.0.NAME=Venomous Bolt
+SPELL.0.3.0.DC=17

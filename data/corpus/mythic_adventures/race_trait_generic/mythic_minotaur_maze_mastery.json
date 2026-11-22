@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Minotaur ~ Maze Mastery",
+    "name": "Maze Mastery",
+    "description": "A mythic minotaur can designate an area no greater than 100 feet on a side (typically a maze, underground labyrinth, or other confusing structure) as its personal lair. As a move action, the minotaur can teleport from one point in its lair to any other point in its lair, as if using greater teleport. In addition, whenever the minotaur must make a saving throw while inside its lair, it can roll twice and take the higher result. A mythic minotaur can change its lair once per week. A minotaur can share its lair with other creatures (including other minotaurs or mythic minotaurs) without interfering with this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Minotaur ~ Maze Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Minotaur Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic minotaur can designate an area no greater than 100 feet on a side (typically a maze, underground labyrinth, or other confusing structure) as its personal lair. As a move action, the minotaur can teleport from one point in its lair to any other point in its lair, as if using greater teleport. In addition, whenever the minotaur must make a saving throw while inside its lair, it can roll twice and take the higher result. A mythic minotaur can change its lair once per week. A minotaur can share its lair with other creatures (including other minotaurs or mythic minotaurs) without interfering with this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 212,
+    "record_key": "Mythic Minotaur ~ Maze Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

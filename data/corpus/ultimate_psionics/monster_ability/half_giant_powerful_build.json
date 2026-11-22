@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Half-Giant ~ Powerful Build",
+    "delivery": "Extraordinary",
+    "description": "Can be treated as one size larger if advantageous for size modifier for opposed checks, special attacks affected by size, and using weapons.  This stacks with other size-changing effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:half_giant_powerful_build",
+    "name": "Powerful Build",
+    "owners": [
+      "ultimate_psionics:monster:half_giant"
+    ],
+    "source_page": "p.17",
+    "traits": [
+      "RacialTraits",
+      "Half-GiantRacialTrait",
+      "Half-GiantRacialDefault",
+      "PowerfulBuild"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 216,
+    "record_key": "Half-Giant ~ Powerful Build"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

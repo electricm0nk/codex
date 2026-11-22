@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as the planar travel function of gate, except it can be used to travel only between points on the Material Plane and the First World, and it comes with additional dangers. This spell forms a circular portal between 5 and 20 feet in diameter (your choice) oriented in the direction you desire when it comes into being (typically vertical and facing you). The portal is full of gray fog that blocks line of sight. Anyone or anything that moves through the portal to enter the First World is shunted instantly to a random point on that plane (the same point for everything traveling via a particular casting). At the end of the spell's duration, the caster can attempt a DC 30 Spellcraft check. On a success, the portal remains open for 1d4+1 days. Creatures exiting the First World through a fey gate always arrive at the location the spell was cast. While the spell always deposits travelers on solid ground in the First World, it conveys no protections against whatever creatures or environmental hazards may be present there.",
+    "key": "Fey Gate",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Summoner=6|Cleric,Druid,Sorcerer,Witch,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a portal that allows travel to the First World.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as the planar travel function of gate, except it can be used to travel only between points on the Material Plane and the First World, and it comes with additional dangers. This spell forms a circular portal between 5 and 20 feet in diameter (your choice) oriented in the direction you desire when it comes into being (typically vertical and facing you). The portal is full of gray fog that blocks line of sight. Anyone or anything that moves through the portal to enter the First World is shunted instantly to a random point on that plane (the same point for everything traveling via a particular casting). At the end of the spell's duration, the caster can attempt a DC 30 Spellcraft check. On a success, the portal remains open for 1d4+1 days. Creatures exiting the First World through a fey gate always arrive at the location the spell was cast. While the spell always deposits travelers on solid ground in the First World, it conveys no protections against whatever creatures or environmental hazards may be present there.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "See text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Fey Gate",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

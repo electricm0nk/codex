@@ -1,0 +1,88 @@
+{
+  "core_rulebook:equipment:rod_alertness": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": 0
+  },
+  "core_rulebook:equipment:stone_of_good_luck_luckstone": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": null
+  },
+  "ultimate_equipment:equipment:gunfighter_s_poncho": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": null
+  },
+  "ultimate_equipment:equipment:robe_of_vermin": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": [
+      "ALL",
+      -2
+    ],
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": null
+  },
+  "ultimate_equipment:equipment:scattershot_bracers": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": null
+  },
+  "ultimate_equipment:equipment:staff_of_the_hierophant": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": 0
+  },
+  "ultimate_psionics:equipment:companion_stone_far_sight": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": null
+  },
+  "ultimate_psionics:equipment:flurry_of_fists": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": 0
+  },
+  "ultimate_psionics:equipment:flurry_of_strikes": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": null,
+    "to_hit_bonus": 0
+  },
+  "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_alt": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": [
+      1,
+      1
+    ],
+    "to_hit_bonus": null
+  },
+  "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_main": {
+    "resolved": true,
+    "armor_class_bonus": null,
+    "skill_bonus": null,
+    "weapon_enhancement_bonus": [
+      1,
+      1
+    ],
+    "to_hit_bonus": null
+  }
+}

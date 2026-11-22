@@ -1,0 +1,115 @@
+[
+ {
+  "name": "Playstyle I.P. award 10",
+  "ip_earned": 10,
+  "source_page": "p411",
+  "columns": {
+   "Group": "Group did not succeed in mission, but tried valiantly",
+   "Warrior": "Used combat Skills often, even if not to exceptional effective.",
+   "Socializer": "Was a supportive and helpful part of the party, in or out of game.",
+   "Explorer": "Attempted to investigate or explore the world/situation often, even if not to exceptional effect",
+   "Roleplayer": "Attempted to roleplay character often"
+  },
+  "text": "I.P. Earned 10. Group: Group did not succeed in mission, but tried valiantly Warrior: Used combat Skills often, even if not to exceptional effective. Socializer: Was a supportive and helpful part of the party, in or out of game. Explorer: Attempted to investigate or explore the world/situation often, even if not to exceptional effect Roleplayer: Attempted to roleplay character often",
+  "transcription_note": "Cell text read from the p411/p412 page images (the text layer interleaves the five columns). Rows 10-50 are on p411, rows 60-80 on p412. GM table: print-only. Typographic apostrophes in the book are stored as plain apostrophes.",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 20",
+  "ip_earned": 20,
+  "source_page": "p411",
+  "columns": {
+   "Group": "Group barely accomplished mission goals",
+   "Warrior": "Used combat Skills often and effectively, often taking out important opponents.",
+   "Socializer": "Supportive actions were helpful in maintaining Player/party unity and cohesion (quote lists, game notebooks, etc)",
+   "Explorer": "Used exploration effectively to learn about the world/situation",
+   "Roleplayer": "Roleplayed in character all the time, often effectively"
+  },
+  "text": "I.P. Earned 20. Group: Group barely accomplished mission goals Warrior: Used combat Skills often and effectively, often taking out important opponents. Socializer: Supportive actions were helpful in maintaining Player/party unity and cohesion (quote lists, game notebooks, etc) Explorer: Used exploration effectively to learn about the world/situation Roleplayer: Roleplayed in character all the time, often effectively",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 30",
+  "ip_earned": 30,
+  "source_page": "p411",
+  "columns": {
+   "Group": "Group worked together well, accomplishing most of the mission goals with everyone taking part in the adventure.",
+   "Warrior": "Frequent and effective use of combat Skills, defeating the most dangerous opponents in a given combat challenge.",
+   "Socializer": "Frequent and effective use of supportive or helpful activities were beneficial in maintaining Player/party unity and cohesion (Character pictures, extensive diaries, etc.)",
+   "Explorer": "Frequent and effective use of exploration and investigation to further personal and party goals",
+   "Roleplayer": "Frequent and effective use of roleplaying to accomplish a goal (acted, not rolled to accomplish task)"
+  },
+  "text": "I.P. Earned 30. Group: Group worked together well, accomplishing most of the mission goals with everyone taking part in the adventure. Warrior: Frequent and effective use of combat Skills, defeating the most dangerous opponents in a given combat challenge. Socializer: Frequent and effective use of supportive or helpful activities were beneficial in maintaining Player/party unity and cohesion (Character pictures, extensive diaries, etc.) Explorer: Frequent and effective use of exploration and investigation to further personal and party goals Roleplayer: Frequent and effective use of roleplaying to accomplish a goal (acted, not rolled to accomplish task)",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 40",
+  "ip_earned": 40,
+  "source_page": "p411",
+  "columns": {
+   "Group": "Group accomplished most of the mission goals well, showing strong cooperative skills.",
+   "Warrior": "Did something out of the ordinary with use of combat Skills, defeating an opponent in an unexpected or unusual way.",
+   "Socializer": "Did something out of the ordinary that encouraged or helped the group overall (extensive diaries, special events)",
+   "Explorer": "Discovered something out of the ordinary or exceptional through exploration and investigation activities",
+   "Roleplayer": "Did something out of the ordinary roleplaying wise (a clever speech or interaction in game)"
+  },
+  "text": "I.P. Earned 40. Group: Group accomplished most of the mission goals well, showing strong cooperative skills. Warrior: Did something out of the ordinary with use of combat Skills, defeating an opponent in an unexpected or unusual way. Socializer: Did something out of the ordinary that encouraged or helped the group overall (extensive diaries, special events) Explorer: Discovered something out of the ordinary or exceptional through exploration and investigation activities Roleplayer: Did something out of the ordinary roleplaying wise (a clever speech or interaction in game)",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 50",
+  "ip_earned": 50,
+  "source_page": "p411",
+  "columns": {
+   "Group": "Group accomplished most of the mission goals extremely well, with a few stellar moments.",
+   "Warrior": "Very effective or clever use of combat Skills, defeating several opponents in unexpected or unusual ways.",
+   "Socializer": "Did something very effective or clever that encouraged or helped the group overall.",
+   "Explorer": "Very effective or clever use of investigation or exploration activities to uncover an important person, place, clue, or thing",
+   "Roleplayer": "Very effective or clever use of roleplaying (a clever interaction or important roleplaying moment)"
+  },
+  "text": "I.P. Earned 50. Group: Group accomplished most of the mission goals extremely well, with a few stellar moments. Warrior: Very effective or clever use of combat Skills, defeating several opponents in unexpected or unusual ways. Socializer: Did something very effective or clever that encouraged or helped the group overall. Explorer: Very effective or clever use of investigation or exploration activities to uncover an important person, place, clue, or thing Roleplayer: Very effective or clever use of roleplaying (a clever interaction or important roleplaying moment)",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 60",
+  "ip_earned": 60,
+  "source_page": "p412",
+  "columns": {
+   "Group": "Group's mission was a strong success, accomplishing all of the mission goals set forth with several stellar moments in the adventure",
+   "Warrior": "Combat Skills were absolutely critical to the Character in this game session, allowing the Character to defeat a major opponent or long-term nemesis single-handedly",
+   "Socializer": "Player's participation in supporting the group was a very important part of helping the group work together to accomplish its goals",
+   "Explorer": "Player's use of investigation or exploration to uncover an important person, place, clue, or thing was critical to the Character in this game session",
+   "Roleplayer": "Roleplaying actions were critical to the Player in this game session (changed personal game outcome through convincing roleplaying)"
+  },
+  "text": "I.P. Earned 60. Group: Group's mission was a strong success, accomplishing all of the mission goals set forth with several stellar moments in the adventure Warrior: Combat Skills were absolutely critical to the Character in this game session, allowing the Character to defeat a major opponent or long-term nemesis single-handedly Socializer: Player's participation in supporting the group was a very important part of helping the group work together to accomplish its goals Explorer: Player's use of investigation or exploration to uncover an important person, place, clue, or thing was critical to the Character in this game session Roleplayer: Roleplaying actions were critical to the Player in this game session (changed personal game outcome through convincing roleplaying)",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 70",
+  "ip_earned": 70,
+  "source_page": "p412",
+  "columns": {
+   "Group": "Group's mission was a resounding success, accomplishing all of the mission goals set forth and also several side goals of the session. Group also showed strong cooperation and teamwork",
+   "Warrior": "Combat Skills were absolutely critical to entire party in this game session (without Character's help, party would have been totally defeated)",
+   "Socializer": "Player's participation in supporting the group was a critical part of helping the group work together to accomplish its goals",
+   "Explorer": "Player's use of investigation or exploration to uncover an important person, place, clue, or thing was critical to entire party in this game session",
+   "Roleplayer": "Roleplaying actions were critical to entire party in this game session (changed entire game outcome through convincing roleplaying)"
+  },
+  "text": "I.P. Earned 70. Group: Group's mission was a resounding success, accomplishing all of the mission goals set forth and also several side goals of the session. Group also showed strong cooperation and teamwork Warrior: Combat Skills were absolutely critical to entire party in this game session (without Character's help, party would have been totally defeated) Socializer: Player's participation in supporting the group was a critical part of helping the group work together to accomplish its goals Explorer: Player's use of investigation or exploration to uncover an important person, place, clue, or thing was critical to entire party in this game session Roleplayer: Roleplaying actions were critical to entire party in this game session (changed entire game outcome through convincing roleplaying)",
+  "kind": "ip_award"
+ },
+ {
+  "name": "Playstyle I.P. award 80",
+  "ip_earned": 80,
+  "source_page": "p412",
+  "columns": {
+   "Group": "Group's mission was legendary, accomplishing all of the mission goals set forth and also all side goals of the session. Group also showed exceptional cooperation and teamwork",
+   "Warrior": "Did something really incredible in a combat encounter (hole in one shot, took down impossible enemy or nemesis, saved entire party)",
+   "Socializer": "Did something really incredible to support the group and help it work together to accomplish its goals",
+   "Explorer": "Player's use of investigation or exploration uncovered something really incredible in this game session",
+   "Roleplayer": "Did something really incredible in roleplaying, such as a heroic speech, star moment, or amazing influence on game outcomes through roleplaying"
+  },
+  "text": "I.P. Earned 80. Group: Group's mission was legendary, accomplishing all of the mission goals set forth and also all side goals of the session. Group also showed exceptional cooperation and teamwork Warrior: Did something really incredible in a combat encounter (hole in one shot, took down impossible enemy or nemesis, saved entire party) Socializer: Did something really incredible to support the group and help it work together to accomplish its goals Explorer: Player's use of investigation or exploration uncovered something really incredible in this game session Roleplayer: Did something really incredible in roleplaying, such as a heroic speech, star moment, or amazing influence on game outcomes through roleplaying",
+  "kind": "ip_award"
+ }
+]

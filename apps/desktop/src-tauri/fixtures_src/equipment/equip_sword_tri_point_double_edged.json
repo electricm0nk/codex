@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Sword (Tri-Point Double-Edged)",
+    "name": "Sword (Tri-Point Double-Edged)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tri-Point Double-Edged Sword"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sword (Tri-Point Double-Edged)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Piercing.Monk.Sword"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "14"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_sword_tri_point_double_edged.txt",
+    "record_key": "Sword (Tri-Point Double-Edged)"
+  }
+}

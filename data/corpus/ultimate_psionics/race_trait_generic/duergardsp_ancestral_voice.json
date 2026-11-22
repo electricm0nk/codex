@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "+4 to Intimidate and +2 to one Knowledge skill.",
+    "key": "DuergarDSP ~ Ancestral Voice",
+    "name": "Ancestral Voice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Ancestral Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Supernatural.DuergarDSPRacialTrait.DuergarDSPStability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Ancestral Voice],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPStability]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DuergarAncestralVoiceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 to Intimidate and +2 to one Knowledge skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Duergar Ancestral Voice Bonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DuergarAncestralVoiceBonus|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.316"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "DuergarDSP ~ Ancestral Voice",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Ghost Bane",
+    "delivery": "Supernatural",
+    "description": "A young or older umbral dragon's physical attacks deal damage to incorporeal creatures normally.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:umbral_dragon_ghost_bane",
+    "name": "Ghost Bane",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A young or older umbral dragon's physical attacks deal damage to incorporeal creatures normally."
+      },
+      {
+        "key": "KEY",
+        "value": "Umbral Dragon ~ Ghost Bane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 504,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Umbral Dragon ~ Ghost Bane",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

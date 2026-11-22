@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vodyanoi ~ Suffocating Water",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a vodyanoi can cause the water surrounding it up to a radius of 30 feet to grow thick and slimy, making it difficult for water-breathing creatures within the area other than vodyanois to breathe. A vodyanoi can control narrow currents of breathable water to provide oxygen to up to 3 other creatures in the area of effect-vodyanois themselves are immune to this effect. All other creatures in an area of suffocating water must hold their breath or risk suffocation. Once created, an area of suffocating water does not move-it persists for a number of minutes equal to the vodyanoi's Hit Dice. The slimy water does not impact swim speeds or visibility in any significant manner. A creature can make a DC 20 Perception check to notice the difference between suffocating water and any normal water that may surround it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:vodyanoi_suffocating_water",
+    "name": "Suffocating Water",
+    "owners": [
+      "bestiary_3:monster:vodyanoi"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a vodyanoi can cause the water surrounding it up to a radius of 30 feet to grow thick and slimy, making it difficult for water-breathing creatures within the area other than vodyanois to breathe. A vodyanoi can control narrow currents of breathable water to provide oxygen to up to 3 other creatures in the area of effect-vodyanois themselves are immune to this effect. All other creatures in an area of suffocating water must hold their breath or risk suffocation. Once created, an area of suffocating water does not move-it persists for a number of minutes equal to the vodyanoi's Hit Dice. The slimy water does not impact swim speeds or visibility in any significant manner. A creature can make a DC 20 Perception check to notice the difference between suffocating water and any normal water that may surround it."
+      },
+      {
+        "key": "KEY",
+        "value": "Vodyanoi ~ Suffocating Water"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "TYPE",
+        "value": "VodyanoiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.282",
+    "traits": [
+      "VodyanoiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1667,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Vodyanoi ~ Suffocating Water",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

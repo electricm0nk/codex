@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Giant Owl ~ Insightful Senses",
+    "delivery": "Supernatural",
+    "description": "A giant owl's senses are particularly well honed to sensing danger or locating prey. It adds its Wisdom modifier as an insight bonus (+3 for most giant owls) on its initiative checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:giant_owl_insightful_senses",
+    "name": "Insightful Senses",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant owl's senses are particularly well honed to sensing danger or locating prey. It adds its Wisdom modifier as an insight bonus (+3 for most giant owls) on its initiative checks."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Owl ~ Insightful Senses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "TYPE",
+        "value": "GiantOwlRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.213",
+    "traits": [
+      "GiantOwlRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1376,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Giant Owl ~ Insightful Senses",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

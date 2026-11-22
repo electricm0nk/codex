@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Guardian Trick",
+    "name": "Guardian Trick",
+    "description": "With a quick phrase of power, you attempt to foil an attack. Spend this boon's effect as an immediate action when an undead or outsider hits you with an attack. The attacking creature must reroll the attack, taking the second roll even if it is lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Guardian Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "With a quick phrase of power, you attempt to foil an attack. Spend this boon's effect as an immediate action when an undead or outsider hits you with an attack. The attacking creature must reroll the attack, taking the second roll even if it is lower."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 42,
+    "record_key": "Preparation Ritual ~ Guardian Trick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

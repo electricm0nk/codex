@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Apsu ~ Touch of the Artificer",
+    "name": "Touch of the Artificer",
+    "description": "If you have performed your daily obedience, up to three times per day, as a standard action, you can touch a single weapon and grant it the dancing property for the next 3 rounds. A single weapon cannot be targeted by this effect more than once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Apsu ~ Touch of the Artificer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, up to three times per day, as a standard action, you can touch a single weapon and grant it the dancing property for the next 3 rounds. A single weapon cannot be targeted by this effect more than once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 63,
+    "record_key": "Evangelist Boon ~ Apsu ~ Touch of the Artificer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,66 @@
+# SD18 deterministic Human Ranger level 19 Improved Quarry widening
+# fixture.
+# Widens the accepted SD18 deterministic Human Ranger level-1..level-18
+# hybrid chassis (tests/sd18_ranger_level18_widening.rs, the loop's most
+# recent Ranger ceiling) to Ranger level 19 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It
+# is the level-18 fixture with the class level bumped -- no new choice
+# slot is introduced, since the 19th-level "Special" column entry
+# ("Improved quarry", verified independently against d20pfsrd and the
+# Archives of Nethys aonprd.com mirror, both byte-for-byte identical) is
+# an UPGRADE of the already-chosen 11th-level Quarry target
+# (choice:ranger_quarry_target, already present below), not a new
+# selection: the ranger's existing quarry-designation ability improves
+# (free-action reselection instead of a standard action, take 20 instead
+# of take 10 while tracking, the insight attack-roll bonus rising from +2
+# to +4, and the post-kill/dismissal reselection cooldown shrinking from
+# 24 hours/1 hour to a flat 10 minutes) -- it does not grant a new
+# favored-enemy, favored-terrain, or combat-style-bonus-feat slot (19th
+# level is not one of the Favored Enemy 5/10/15/20 intervals, the Favored
+# Terrain 3/8/13/18 intervals, or the Combat Style Feat 2/6/10/14/18
+# levels).
+#
+# Everything else carries over from the level-18 fixture unchanged. No
+# action-economy engine and no Survival-check-execution engine exists in
+# this codebase, so neither the free-action reselection nor the take-20
+# tracking behavior is ever applied to any actual roll or action
+# resolution; the fixture makes no such claim.
+case_id=pf1-crb-human-ranger-level19-sd18-improved-quarry
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:19
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_favored_enemy_4:enemy:construct
+choice=choice:ranger_favored_enemy_bonus_increase_target_3:enemy:fourth
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_combat_style_bonus_feat_4:feat:improved_precise_shot
+choice=choice:ranger_combat_style_bonus_feat_5:feat:improved_precise_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_favored_terrain_3:terrain:swamp
+choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+choice=choice:ranger_favored_terrain_4:terrain:urban
+choice=choice:ranger_favored_terrain_bonus_increase_target_3:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

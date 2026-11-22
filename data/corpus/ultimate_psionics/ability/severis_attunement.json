@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Attuned to Severis, the Scourge Slayer",
+    "key": "Severis Attunement",
+    "name": "Severis Attunement",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Barred Mind (Personal)|PREVARGTEQ:TL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Attuned to Severis, the Scourge Slayer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Severis ~ Scourge Resonance|PREVARGTEQ:TL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Severis ~ Implant Protection|PREVARGTEQ:TL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Severis ~ Power Resistance|PREVARGTEQ:TL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Severis ~ Phrenic Liberation|PREVARGTEQ:TL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.440"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 241,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Severis Attunement",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

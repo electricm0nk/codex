@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Lasting Poison",
+    "name": "Lasting Poison",
+    "class": "Unchained Rogue Talent",
+    "description": "You can apply poison to a weapon in such a way that it is effective for a number of successful attacks equal to your Dexterity modifier (minimum two) instead of one. This poison has a reduced effect, however, and saves made against the poison gain a +2 circumstance bonus. Applying poison in this way is a full-round action, or a standard action if you have the swift poison rogue talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Lasting Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Unchained Rogue Talent"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Lasting Poison"
+      },
+      {
+        "key": "DESC",
+        "value": "You can apply poison to a weapon in such a way that it is effective for a number of successful attacks equal to your Dexterity modifier (minimum two) instead of one. This poison has a reduced effect, however, and saves made against the poison gain a +2 circumstance bonus. Applying poison in this way is a full-round action, or a standard action if you have the swift poison rogue talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 644,
+    "record_key": "Unchained Rogue Talent ~ Lasting Poison"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

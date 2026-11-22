@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Immunity to Enchantment Spells",
+    "name": "Immunity to Enchantment Spells",
+    "description": "You are never subject to enchantment spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.Immunity"
+      },
+      {
+        "key": "DESC",
+        "value": "You are never subject to enchantment spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Enchantment Spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1900,
+    "record_key": "Immunity to Enchantment Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

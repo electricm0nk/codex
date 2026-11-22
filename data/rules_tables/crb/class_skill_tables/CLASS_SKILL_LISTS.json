@@ -1,0 +1,447 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/class_skill_tables/CLASS_SKILL_LISTS",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "owner_id": "class:barbarian",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Acrobatics"
+        },
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Handle Animal"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Named": "Knowledge (Nature)"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Survival"
+        },
+        {
+          "Named": "Swim"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:bard",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Acrobatics"
+        },
+        {
+          "Named": "Appraise"
+        },
+        {
+          "Named": "Bluff"
+        },
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Diplomacy"
+        },
+        {
+          "Named": "Disguise"
+        },
+        {
+          "Named": "Escape Artist"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Family": "Knowledge"
+        },
+        {
+          "Named": "Linguistics"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Family": "Perform"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Sense Motive"
+        },
+        {
+          "Named": "Sleight of Hand"
+        },
+        {
+          "Named": "Spellcraft"
+        },
+        {
+          "Named": "Stealth"
+        },
+        {
+          "Named": "Use Magic Device"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:cleric",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Appraise"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Diplomacy"
+        },
+        {
+          "Named": "Heal"
+        },
+        {
+          "Named": "Knowledge (Arcana)"
+        },
+        {
+          "Named": "Knowledge (History)"
+        },
+        {
+          "Named": "Knowledge (Nobility)"
+        },
+        {
+          "Named": "Knowledge (Planes)"
+        },
+        {
+          "Named": "Knowledge (Religion)"
+        },
+        {
+          "Named": "Linguistics"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Sense Motive"
+        },
+        {
+          "Named": "Spellcraft"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:druid",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Fly"
+        },
+        {
+          "Named": "Handle Animal"
+        },
+        {
+          "Named": "Heal"
+        },
+        {
+          "Named": "Knowledge (Geography)"
+        },
+        {
+          "Named": "Knowledge (Nature)"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Spellcraft"
+        },
+        {
+          "Named": "Survival"
+        },
+        {
+          "Named": "Swim"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:fighter",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Handle Animal"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Named": "Knowledge (Dungeoneering)"
+        },
+        {
+          "Named": "Knowledge (Engineering)"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Survival"
+        },
+        {
+          "Named": "Swim"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:monk",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Acrobatics"
+        },
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Escape Artist"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Named": "Knowledge (History)"
+        },
+        {
+          "Named": "Knowledge (Religion)"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Family": "Perform"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Sense Motive"
+        },
+        {
+          "Named": "Stealth"
+        },
+        {
+          "Named": "Swim"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:paladin",
+      "all_skills": false,
+      "skills": [
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Diplomacy"
+        },
+        {
+          "Named": "Handle Animal"
+        },
+        {
+          "Named": "Heal"
+        },
+        {
+          "Named": "Knowledge (Nobility)"
+        },
+        {
+          "Named": "Knowledge (Religion)"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Sense Motive"
+        },
+        {
+          "Named": "Spellcraft"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:ranger",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Handle Animal"
+        },
+        {
+          "Named": "Heal"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Named": "Knowledge (Dungeoneering)"
+        },
+        {
+          "Named": "Knowledge (Geography)"
+        },
+        {
+          "Named": "Knowledge (Nature)"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Ride"
+        },
+        {
+          "Named": "Spellcraft"
+        },
+        {
+          "Named": "Stealth"
+        },
+        {
+          "Named": "Survival"
+        },
+        {
+          "Named": "Swim"
+        }
+      ]
+    },
+    {
+      "owner_id": "class:rogue",
+      "all_skills": false,
+      "skills": [
+        {
+          "Named": "Acrobatics"
+        },
+        {
+          "Named": "Appraise"
+        },
+        {
+          "Named": "Bluff"
+        },
+        {
+          "Named": "Climb"
+        },
+        {
+          "Family": "Craft"
+        },
+        {
+          "Named": "Diplomacy"
+        },
+        {
+          "Named": "Disable Device"
+        },
+        {
+          "Named": "Disguise"
+        },
+        {
+          "Named": "Escape Artist"
+        },
+        {
+          "Named": "Intimidate"
+        },
+        {
+          "Named": "Knowledge (Dungeoneering)"
+        },
+        {
+          "Named": "Knowledge (Local)"
+        },
+        {
+          "Named": "Linguistics"
+        },
+        {
+          "Named": "Perception"
+        },
+        {
+          "Family": "Perform"
+        },
+        {
+          "Family": "Profession"
+        },
+        {
+          "Named": "Sense Motive"
+        },
+        {
+          "Named": "Sleight of Hand"
+        },
+        {
+          "Named": "Stealth"
+        },
+        {
+          "Named": "Swim"
+        },
+        {
+          "Named": "Use Magic Device"
+        }
+      ]
+    },
+    {
+      "owner_id": "class_feature:jack_of_all_trades",
+      "all_skills": true,
+      "skills": []
+    }
+  ]
+}

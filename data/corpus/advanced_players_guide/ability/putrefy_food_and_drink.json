@@ -1,0 +1,98 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Putrefy Food and Drink",
+    "name": "Putrefy Food and Drink",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_PutrefyFoodAndDrink_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_PutrefyFoodAndDrink_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_PutrefyFoodAndDrink_LVL|Putrefy Food and Drink,SLA_PutrefyFoodAndDrink_DC|PREVAREQ:SLA_PutrefyFoodAndDrink_AtWill,0|PREVAREQ:SLA_PutrefyFoodAndDrink_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_PutrefyFoodAndDrink_LVL|Putrefy Food and Drink,SLA_PutrefyFoodAndDrink_DC|PREVAREQ:SLA_PutrefyFoodAndDrink_AtWill,1|PREVAREQ:SLA_PutrefyFoodAndDrink_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_PutrefyFoodAndDrink_LVL|Putrefy Food and Drink,SLA_PutrefyFoodAndDrink_DC|PREVAREQ:SLA_PutrefyFoodAndDrink_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_PutrefyFoodAndDrink_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_PutrefyFoodAndDrink_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_PutrefyFoodAndDrink_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_PutrefyFoodAndDrink_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_PutrefyFoodAndDrink_DC|10+SLA_PutrefyFoodAndDrink_SpellLVL+SLA_PutrefyFoodAndDrink_DCMod"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 382,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Putrefy Food and Drink",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

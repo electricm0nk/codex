@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Familial Lich ~ Familial Possession",
+    "delivery": "Supernatural",
+    "description": "When a familial lich is destroyed, its spirit departs its body and seeks out the lich's nearest living relative, a process that takes 1d10 days. The familial lich then tries to possess the relative, as per greater possession (OA) (the caster level is equal to the familial lich's HD, and the save DC is Charisma-based). If the relative succeeds at her save, she becomes permanently immune to this ability, and the familial lich must spend another 1d10 days searching for the next-nearest living relative, repeating the process until it succeeds or until no such relatives remain and it is destroyed instead. If the relative fails her saving throw, the familial lich's spirit takes root in her body. The familial lich's consciousness remains within the relative even after the greater possession effect ends, and it is able to share her senses. It can use greater possession on her once per day thereafter. If the relative fails on three consecutive saving throws to resist, the familial lich's spirit takes over, and she physically and mentally transforms into the familial lich permanently. Even if the relative continues succeeding, it is impossible to remove a familial lich without extremely powerful magic once it has taken root. Only lineal ancestors or descendants of the familial lich, as well as siblings, are eligible targets for possession (aunts, uncles, nieces, nephews, cousins, and so forth are immune).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:familial_lich_familial_possession",
+    "name": "Familial Possession",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a familial lich is destroyed, its spirit departs its body and seeks out the lich's nearest living relative, a process that takes 1d10 days. The familial lich then tries to possess the relative, as per greater possession (OA) (the caster level is equal to the familial lich's HD, and the save DC is Charisma-based). If the relative succeeds at her save, she becomes permanently immune to this ability, and the familial lich must spend another 1d10 days searching for the next-nearest living relative, repeating the process until it succeeds or until no such relatives remain and it is destroyed instead. If the relative fails her saving throw, the familial lich's spirit takes root in her body. The familial lich's consciousness remains within the relative even after the greater possession effect ends, and it is able to share her senses. It can use greater possession on her once per day thereafter. If the relative fails on three consecutive saving throws to resist, the familial lich's spirit takes over, and she physically and mentally transforms into the familial lich permanently. Even if the relative continues succeeding, it is impossible to remove a familial lich without extremely powerful magic once it has taken root. Only lineal ancestors or descendants of the familial lich, as well as siblings, are eligible targets for possession (aunts, uncles, nieces, nephews, cousins, and so forth are immune)."
+      },
+      {
+        "key": "KEY",
+        "value": "Familial Lich ~ Familial Possession"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.FamilialLich"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": [
+      "FamilialLich"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 266,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Familial Lich ~ Familial Possession",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

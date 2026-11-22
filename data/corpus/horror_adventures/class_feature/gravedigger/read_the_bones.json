@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Read the Bones",
+    "name": "Read the Bones",
+    "class": "Investigator",
+    "description": "A gravedigger can perform object reading as an occultist (Occult Adventures 48), but only on corpses, bones, and other physical remains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Read the Bones"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger can perform object reading as an occultist (Occult Adventures 48), but only on corpses, bones, and other physical remains."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 38,
+    "record_key": "Gravedigger ~ Read the Bones"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

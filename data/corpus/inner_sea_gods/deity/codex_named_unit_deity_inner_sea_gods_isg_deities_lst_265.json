@@ -1,0 +1,74 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_265)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_265)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Evil,Madness,Void|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Great old one of cataclysms, dreams, the stars"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Dreamer in the Deep"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Complex rune around eye"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|None"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Black|Blue"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Great Old Ones"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Dagger"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_gods:isg_deities.lst:265",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 265,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_265)",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

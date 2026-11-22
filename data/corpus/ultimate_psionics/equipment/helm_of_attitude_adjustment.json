@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 18000.0,
+    "description": "2/day shift attitude by one step (Will DC 14 negates); +4 bonus on Bluff, Diplomacy, Intimidate to change attitude",
+    "key": "Helm of Attitude Adjustment",
+    "name": "Helm of Attitude Adjustment",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Head"
+      },
+      {
+        "key": "COST",
+        "value": "18000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.416"
+      },
+      {
+        "key": "SPROP",
+        "value": "2/day shift attitude by one step (Will DC 14 negates); +4 bonus on Bluff, Diplomacy, Intimidate to change attitude"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 284,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Helm of Attitude Adjustment",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

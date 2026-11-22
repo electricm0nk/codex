@@ -1,0 +1,11 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.63s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_ingest-06e24ac7d271e507)
+
+running 1 test
+test pcgen_import::sheet_rule::convert::sf_text_repair_tests::starfinder_mis_decoded_text_prints_as_the_characters_it_encodes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 687 filtered out; finished in 0.00s
+
+exit=0

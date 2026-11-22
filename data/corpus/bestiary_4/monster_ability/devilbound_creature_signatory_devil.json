@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devilbound Creature ~ Signatory Devil",
+    "delivery": "Supernatural",
+    "description": "The creature gains certain spell-like abilities, depending on the kind of devil it is bound to. The creature uses its Hit Dice or caster level, whichever is higher, as the caster level for its spell-like abilities. Save DCs are based on the creature's Intelligence, Wisdom, or Charisma, whichever is highest. The creature's ability scores are also improved according to the kind of devil it is bound to.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:devilbound_creature_signatory_devil",
+    "name": "Signatory Devil",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature gains certain spell-like abilities, depending on the kind of devil it is bound to. The creature uses its Hit Dice or caster level, whichever is higher, as the caster level for its spell-like abilities. Save DCs are based on the creature's Intelligence, Wisdom, or Charisma, whichever is highest. The creature's ability scores are also improved according to the kind of devil it is bound to."
+      },
+      {
+        "key": "KEY",
+        "value": "Devilbound Creature ~ Signatory Devil"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Accuser Devil Bound|Barbed Devil Bound|Bearded Devil Bound|Belier Devil Bound|Bone Devil Bound|Contract Devil Bound|Drowning Devil Bound|Erinyes Devil Bound|Handmaiden Devil Bound|Horned Devil Bound|Host Devil Bound|Ice Devil Bound|Immolation Devil Bound|Imp Devil Bound|Nemesis Devil Bound|Pit Fiend Devil Bound"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 480,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devilbound Creature ~ Signatory Devil",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,10 @@
+ M apps/desktop/src-tauri/src/sf_level_up.rs
+ M apps/desktop/src/boundary/starfinderLevelUp.ts
+ M apps/desktop/src/characterHub/StarfinderLevelUpDialog.tsx
+ M apps/desktop/src/characterHub/starfinderLevelUpModel.test.ts
+ M apps/desktop/src/characterHub/starfinderLevelUpModel.ts
+ M docs/retro/events/codex-sd37.jsonl
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_6/E6.MC_logs/
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_6/E6.MC_plants.py
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_6/E6.MC_run.sh
+?? docs/retro/events/sd37-e6-mc.jsonl

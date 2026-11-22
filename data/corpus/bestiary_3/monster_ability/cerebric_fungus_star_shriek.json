@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cerebric Fungus ~ Star-Shriek",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a full-round action, a cerebric fungus can unleash a shrill scream of madness. All creatures (except other cerebric fungi) within 30 feet must make a DC 15 Will save or be nauseated for 1d4 rounds. This is a sonic, mindaffecting effect. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:cerebric_fungus_star_shriek",
+    "name": "Star-Shriek",
+    "owners": [
+      "bestiary_3:monster:cerebric_fungus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, a cerebric fungus can unleash a shrill scream of madness. All creatures (except other cerebric fungi) within 30 feet must make a DC 15 Will save or be nauseated for 1d4 rounds. This is a sonic, mindaffecting effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Cerebric Fungus ~ Star-Shriek"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "TYPE",
+        "value": "CerebricFungusRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.52",
+    "traits": [
+      "CerebricFungusRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 561,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Cerebric Fungus ~ Star-Shriek",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

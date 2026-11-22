@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Beast Rider",
+    "category": "general",
+    "name": "Beast Rider",
+    "description": "You gain the service of a monstrous companion or mount.",
+    "effect": [
+      [
+        "FOLLOWERS",
+        "Animal Companion",
+        "-1"
+      ],
+      [
+        "VAR",
+        "SpecialMountLVL",
+        "min(TL,max(var(\"PaladinLVL\")+2,var(\"AnimalCompanionLVL\")+2,var(\"CavalierMountLVL\")+2))"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 67,
+    "record_key": "Beast Rider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

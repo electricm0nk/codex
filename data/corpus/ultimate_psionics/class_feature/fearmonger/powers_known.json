@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fearmonger ~ Powers Known",
+    "name": "Powers Known",
+    "class": "Fearmonger",
+    "description": "none",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearmonger ~ Powers Known"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.Internal"
+      },
+      {
+        "key": "DESC",
+        "value": "none"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT|WISSCORE-CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Dread|WISSCORE-CHASCORE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1878,
+    "record_key": "Fearmonger ~ Powers Known"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

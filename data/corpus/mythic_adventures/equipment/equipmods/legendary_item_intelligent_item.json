@@ -1,0 +1,229 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 1000.0,
+    "description": null,
+    "key": "Legendary Item ~ Intelligent Item",
+    "name": "Intelligent",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemSenseRange",
+          "30"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemNegativeLevel",
+          "1",
+          "PREVARGTEQ:IntelligentItemEgo,20"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemNegativeLevel",
+          "1",
+          "PREVARGTEQ:IntelligentItemEgo,30"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegativeLevel",
+          "1",
+          "PREVARLTEQ:IntelligentItemEgo,19"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegativeLevel",
+          "1",
+          "PREVARLTEQ:IntelligentItemEgo,29"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegativeLevel",
+          "1",
+          "PREVARGTEQ:IntelligentItemEgo,30"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatINT",
+          "10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatWIS",
+          "10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatCHA",
+          "10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BaseCostTracker",
+          "COST"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "(BaseCostTracker>=1001)+(BaseCostTracker>=5001)+(BaseCostTracker>=10001)+(BaseCostTracker>=20001)+(BaseCostTracker>=50001)+(BaseCostTracker>=50001)+(BaseCostTracker>=100001)+(BaseCostTracker>=100001)+(BaseCostTracker>=200001)+(BaseCostTracker>=200001)+(BaseCostTracker>=200001)+(BaseCostTracker>=200001)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemSpeech",
+          "1",
+          "TYPE=Boolean"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "1000"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item"
+      },
+      {
+        "key": "TYPE",
+        "value": "Legendary"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Mythic.Intelligent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Legendary"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Base Intelligent Item"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item ~ Speech"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemSenseRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpeechBonusLang|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemNegativeLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntelligentItemEgo|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemStatINT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemStatWIS|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemStatCHA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BaseCostTracker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemSpeech|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemTelepathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemBlindsense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemDarkvision|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemAlignment|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemCost|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntItemPowers|0"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Legendary Item ~ Intelligent Item",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

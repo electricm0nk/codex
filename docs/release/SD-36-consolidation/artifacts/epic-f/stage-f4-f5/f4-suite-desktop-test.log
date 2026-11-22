@@ -1,0 +1,4 @@
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/codex_desktop-c7abf44157b5a023)
+test corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus ... ok
+test result: ok. 621 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 429.48s
+EXIT=0

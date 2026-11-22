@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Flagellant",
+    "category": "General",
+    "name": "Flagellant",
+    "description": "You have learned to ignore the effects of pain through long years of exposure to it. You gain a +4 bonus on saving throws against pain effects. Also, you suffer no adverse effect when your nonlethal damage equals your current hit points, and you become staggered when your nonlethal damage exceeds your current hit points. You never fall unconscious due to nonlethal damage. Normal: When your nonlethal damage equals your current hit points, you become staggered. When your nonlethal damage exceeds your current hit points, you fall unconscious.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Endurance",
+      "PREDEITY:[redacted PI]",
+      "PREPCLEVEL:MIN=7",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 48,
+    "record_key": "Flagellant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Astral Armor",
+    "name": "Astral Armor",
+    "class": "Aegis",
+    "description": "Treat like masterwork chainmail.  Gain the following customizations for free: brawn, improved damage|PREVARLT:AstralSuitLVL,8",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Astral Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat like masterwork chainmail.  Gain the following customizations for free: brawn, improved damage|PREVARLT:AstralSuitLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat like masterwork breastplate.  Gain the following customizations for free: brawn, improved damage|PREVARGT:AstralSuitLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "flexible suit|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Brawn|Aegis ~ Improved Damage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Flexible Suit|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 44,
+    "record_key": "Aegis ~ Astral Armor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

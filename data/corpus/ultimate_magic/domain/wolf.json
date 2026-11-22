@@ -1,0 +1,80 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Wolf",
+    "name": "Wolf",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wolf Domain ~ Pack Tactics|PREVARGTEQ:DomainWolfAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Trip|PREVARGTEQ:DomainWolfAbilityTriggerLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWolfLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWolfDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWolfTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWolfAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWolfLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWolfDC|10+(DomainWolfLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWolfTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWolfAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Wolf=1|Hunter's Howl|Wolf=2|Bloodhound|Wolf=3|Aspect of the Wolf|Wolf=4|Strong Jaw|Wolf=5|Tireless Pursuers|Wolf=6|Find the Path|Wolf=7|Animal Shapes (Canines Only)|Wolf=8|Phantasmal Revenge|Wolf=9|Freedom"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "record_key": "Wolf",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

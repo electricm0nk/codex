@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Merfolk",
+    "name": "Racial Traits ~ Merfolk",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Merfolk_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Merfolk Racial Trait|AUTOMATIC|Merfolk ~ Ability Scores|PREVAREQ:Merfolk_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Merfolk",
+    "sha256": "d7d65923e9203a8e29f9a34600c6f4279c9fe660327bfa8510683c71566c7b7a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race Builder Subtype ~ Vanara",
+    "name": "Vanara",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Vanara"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Vanara"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_templates.lst",
+    "record_key": "Race Builder Subtype ~ Vanara",
+    "sha256": "4189db200e797b29713506999af6c85092a1314ce5b66040f51475eedfff1c0e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

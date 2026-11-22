@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue ~ Finesse Training Choice",
+    "name": "Weapon Choice",
+    "class": "Rogue",
+    "description": "Dexterity to Damage with %1|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue ~ Finesse Training Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Finesse Damage Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueFinesseTrainingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Dexterity to Damage with %1|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|EQUIPMENT[TYPE=Finesseable]"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|STATDAMAGE|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|DAMAGEMULT:0|if(DEX>0,0.5,1)-if(STR>0,0.5,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|DAMAGEMULT:2|if(DEX>0,1.5,1)-if(STR>0,1.5,1)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 596,
+    "record_key": "Unchained Rogue ~ Finesse Training Choice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

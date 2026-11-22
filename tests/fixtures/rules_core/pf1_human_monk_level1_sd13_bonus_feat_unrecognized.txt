@@ -1,0 +1,25 @@
+# SD13-E5 deterministic Human Monk level 1 martial chassis fixture, bonus-feat
+# choice variant. Identical to the canonical SD13-E3 fixture
+# (pf1_human_monk_level1_sd13_deterministic_input.txt) except the level-1 bonus
+# feat choice-slot selection names Toughness, a feat outside the PF1 Core
+# Rulebook restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows,
+# Improved Grapple, Improved Trip, Stunning Fist). Proves the SD13-E5 bonus-feat
+# choice recognition seam does not fabricate a restricted-list feat name for a
+# selection this bounded seam does not recognize as canonical.
+case_id=pf1-crb-human-monk-level1-bonus-feat-unrecognized
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:1
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:toughness
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:toughness
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

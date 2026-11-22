@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Heartstaff ~ Safe Dock",
+    "name": "Safe Dock",
+    "description": "1/day, psicrystal can teleport back to the staff as an immediate action within 1 mile.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heartstaff ~ Safe Dock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, psicrystal can teleport back to the staff as an immediate action within 1 mile."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.438"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 215,
+    "record_key": "Heartstaff ~ Safe Dock"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

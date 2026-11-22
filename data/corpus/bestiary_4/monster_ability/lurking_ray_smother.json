@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lurking Ray ~ Smother",
+    "delivery": "Extraordinary",
+    "description": "When a lurker above or trapper grapples a target, it forms an airtight seal around its prey. A grappled target cannot speak or cast spells with verbal components, and must hold its breath (see Suffocation, Pathfinder RPG Core Rulebook 445).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:lurking_ray_smother",
+    "name": "Smother",
+    "owners": [
+      "bestiary_4:monster:lurker_above",
+      "bestiary_4:monster:trapper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a lurker above or trapper grapples a target, it forms an airtight seal around its prey. A grappled target cannot speak or cast spells with verbal components, and must hold its breath (see Suffocation, Pathfinder RPG Core Rulebook 445)."
+      },
+      {
+        "key": "KEY",
+        "value": "Lurking Ray ~ Smother"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1054,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Lurking Ray ~ Smother",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

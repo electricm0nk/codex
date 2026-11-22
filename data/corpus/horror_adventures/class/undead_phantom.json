@@ -1,0 +1,29 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Undead Phantom",
+    "name": "Undead Phantom",
+    "raw_tokens": [
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_classes.lst",
+    "record_key": "Undead Phantom",
+    "sha256": "7fa60146f346b85b021f86dee95b7f109ba63f37046bf9d46c631c0738d799a2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

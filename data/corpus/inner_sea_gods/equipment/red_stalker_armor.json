@@ -1,0 +1,71 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 3035.0,
+    "description": null,
+    "key": "Red Stalker Armor",
+    "name": "Red Stalker Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Feint",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather.Special Ability ~ +1 ~ Armor.Special Ability ~ Enhancement Cost|1875"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "DESC",
+        "value": "This dark red +1 leather armor is modeled after the armor worn by the Blood Watch guards in the home city of the Red Mantis assassins. Vented and airy, the armor is suitable for wearing in dense jungles, humid rainforests, and other formidable environments. The wearer gains a +5 competence bonus on Bluff checks to feint."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Red Stalker Armor",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Crimson Breath",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "When you cast this spell, your salivary glands transform and instantly fill with potent venom. Make a ranged touch attack against a single target in range; if you hit, the target is affected by a dose of breath of the mantis god (see page 158). The Fortitude save DC for this poison is the same as the spell's DC, not the standard save DC for the poison."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 14,
+    "record_key": "Crimson Breath"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

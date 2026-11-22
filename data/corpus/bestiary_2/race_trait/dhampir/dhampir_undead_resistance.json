@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:49:29Z",
+  "data": {
+    "key": "Dhampir ~ Undead Resistance",
+    "name": "Undead Resistance",
+    "race_key": "Dhampir",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dhampir Racial Trait",
+      "Dhampir Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dhampir_ReplaceUndeadResistance",
+    "sets_replace_flags": [],
+    "description": "Dhampirs gain a +2 racial bonus on saving throws against disease and mind-affecting effects.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Undead Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceUndeadResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Dhampirs gain a +2 racial bonus on saving throws against disease and mind-affecting effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Disease",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_MindAffecting",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 19,
+    "record_key": "Dhampir ~ Undead Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

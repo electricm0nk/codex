@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Arresting Shot",
+    "name": "Arresting Shot",
+    "class": "Blade Skill",
+    "description": "Reposition nearby target to be adjacent to you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Arresting Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Soulknife Archetype ~ Soulbolt"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Reposition nearby target to be adjacent to you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 849,
+    "record_key": "Blade Skill ~ Arresting Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

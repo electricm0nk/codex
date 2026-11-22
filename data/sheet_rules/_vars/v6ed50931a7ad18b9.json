@@ -1,0 +1,1 @@
+{"var":"v6ed50931a7ad18b9","label":"Psychic Fist Own Manifesting","declared_by":["ultimate_psionics:class:psychic_fist"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:psychic_fist_own","expr":{"Const":1},"when":"Always"}],"provenance":{}}

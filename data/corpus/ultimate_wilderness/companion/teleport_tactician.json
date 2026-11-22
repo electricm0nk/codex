@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Teleport Tactician",
+    "name": "Teleport Tactician",
+    "description": "Any creature using a teleportation effect to enter or leave a square threatened by you provokes an attack of opportunity, even if casting defensively or using a supernatural ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Teleport Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Combat Reflexes,Disruptive,Spellbreaker"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AllowCompanionFeatNimbleMoves,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature using a teleportation effect to enter or leave a square threatened by you provokes an attack of opportunity, even if casting defensively or using a supernatural ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Teleport Tactician"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Advanced Player's Guide"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "APG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 692,
+    "record_key": "Animal Companion Feat ~ Teleport Tactician"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

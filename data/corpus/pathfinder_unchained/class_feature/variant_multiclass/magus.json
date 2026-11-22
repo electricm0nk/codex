@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Magus",
+    "name": "Magus",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses magus as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Magus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses magus as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Arcane Pool: At 3rd level, he gains the arcane pool class feature as a magus of his character level - 2."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Magus Arcana: At 7th level, he gains one magus arcana. He treats his character level as his effective magus level when determining whether or not he can select an arcana."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Spellstrike: At 11th level, he gains the spellstrike class feature, but he can use it only with spells that are on the magus spell list, even though he can cast them using another class's spell slots."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Improved Arcana: At 15th level, he gains one additional magus arcana."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Greater Arcana: At 19th level, he gains one additional magus arcana."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 865,
+    "record_key": "Variant Multiclass ~ Magus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

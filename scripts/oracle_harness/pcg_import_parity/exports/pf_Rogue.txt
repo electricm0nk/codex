@@ -1,0 +1,373 @@
+NAME=Ronald Millbridge
+RACE=Halfling
+TOTALLEVELS=12
+CLASS.COUNT=1
+CLASS.0.NAME=Rogue
+CLASS.0.LEVEL=12
+STAT.0.NAME=STR
+STAT.0.SCORE=12
+STAT.0.MOD=+1
+STAT.1.NAME=DEX
+STAT.1.SCORE=22
+STAT.1.MOD=+6
+STAT.2.NAME=CON
+STAT.2.SCORE=11
+STAT.2.MOD=+0
+STAT.3.NAME=INT
+STAT.3.SCORE=15
+STAT.3.MOD=+2
+STAT.4.NAME=WIS
+STAT.4.SCORE=12
+STAT.4.MOD=+1
+STAT.5.NAME=CHA
+STAT.5.SCORE=14
+STAT.5.MOD=+2
+HP=68
+AC.TOTAL=27
+AC.TOUCH=20
+AC.FLATFOOTED=27
+AC.BASE=10
+AC.ARMOR=5
+AC.SHIELD=0
+AC.ABILITY=6
+AC.SIZE=1
+AC.NATURALARMOR=2
+AC.DEFLECTION=2
+AC.DODGE=1
+AC.MISC=0
+ACCHECK=+0
+BAB=+9
+ATTACK.MELEE.TOTAL=+11/+6
+ATTACK.MELEE.MISC=+0
+ATTACK.RANGED.TOTAL=+16/+11
+ATTACK.RANGED.MISC=+0
+VAR.CMB=9
+VAR.CMD=28
+INITIATIVEMOD=+6
+INITIATIVEMISC=+0
+INITIATIVEBONUS=+0
+CHECK.0.NAME=Fortitude
+CHECK.0.TOTAL=+8
+CHECK.0.BASE=+4
+CHECK.0.MISC=+4
+CHECK.1.NAME=Reflex
+CHECK.1.TOTAL=+18
+CHECK.1.BASE=+8
+CHECK.1.MISC=+10
+CHECK.2.NAME=Will
+CHECK.2.TOTAL=+9
+CHECK.2.BASE=+4
+CHECK.2.MISC=+5
+SKILL.COUNT=29
+SKILL.0.NAME=Acrobatics
+SKILL.0.TOTAL=28
+SKILL.0.RANK=12.0
+SKILL.0.ABMOD=6
+SKILL.0.MISC=10
+SKILL.0.ACHECK=YES
+SKILL.1.NAME=Appraise
+SKILL.1.TOTAL=6
+SKILL.1.RANK=1.0
+SKILL.1.ABMOD=2
+SKILL.1.MISC=3
+SKILL.1.ACHECK=NONE
+SKILL.2.NAME=Bluff
+SKILL.2.TOTAL=14
+SKILL.2.RANK=9.0
+SKILL.2.ABMOD=2
+SKILL.2.MISC=3
+SKILL.2.ACHECK=NONE
+SKILL.3.NAME=Climb
+SKILL.3.TOTAL=9
+SKILL.3.RANK=3.0
+SKILL.3.ABMOD=1
+SKILL.3.MISC=5
+SKILL.3.ACHECK=YES
+SKILL.4.NAME=Craft (Traps)
+SKILL.4.TOTAL=6
+SKILL.4.RANK=1.0
+SKILL.4.ABMOD=2
+SKILL.4.MISC=3
+SKILL.4.ACHECK=NONE
+SKILL.5.NAME=Craft (Untrained)
+SKILL.5.TOTAL=2
+SKILL.5.RANK=0.0
+SKILL.5.ABMOD=2
+SKILL.5.MISC=0
+SKILL.5.ACHECK=NONE
+SKILL.6.NAME=Diplomacy
+SKILL.6.TOTAL=7
+SKILL.6.RANK=2.0
+SKILL.6.ABMOD=2
+SKILL.6.MISC=3
+SKILL.6.ACHECK=NONE
+SKILL.7.NAME=Disable Device
+SKILL.7.TOTAL=29
+SKILL.7.RANK=12.0
+SKILL.7.ABMOD=6
+SKILL.7.MISC=11
+SKILL.7.ACHECK=YES
+SKILL.8.NAME=Disguise
+SKILL.8.TOTAL=16
+SKILL.8.RANK=11.0
+SKILL.8.ABMOD=2
+SKILL.8.MISC=3
+SKILL.8.ACHECK=NONE
+SKILL.9.NAME=Escape Artist
+SKILL.9.TOTAL=21
+SKILL.9.RANK=12.0
+SKILL.9.ABMOD=6
+SKILL.9.MISC=3
+SKILL.9.ACHECK=YES
+SKILL.10.NAME=Fly
+SKILL.10.TOTAL=8
+SKILL.10.RANK=0.0
+SKILL.10.ABMOD=6
+SKILL.10.MISC=2
+SKILL.10.ACHECK=YES
+SKILL.11.NAME=Handle Animal
+SKILL.11.TOTAL=4
+SKILL.11.RANK=2.0
+SKILL.11.ABMOD=2
+SKILL.11.MISC=0
+SKILL.11.ACHECK=NONE
+SKILL.12.NAME=Heal
+SKILL.12.TOTAL=1
+SKILL.12.RANK=0.0
+SKILL.12.ABMOD=1
+SKILL.12.MISC=0
+SKILL.12.ACHECK=NONE
+SKILL.13.NAME=Intimidate
+SKILL.13.TOTAL=6
+SKILL.13.RANK=1.0
+SKILL.13.ABMOD=2
+SKILL.13.MISC=3
+SKILL.13.ACHECK=NONE
+SKILL.14.NAME=Knowledge (Dungeoneering)
+SKILL.14.TOTAL=6
+SKILL.14.RANK=1.0
+SKILL.14.ABMOD=2
+SKILL.14.MISC=3
+SKILL.14.ACHECK=NONE
+SKILL.15.NAME=Knowledge (Engineering)
+SKILL.15.TOTAL=3
+SKILL.15.RANK=1.0
+SKILL.15.ABMOD=2
+SKILL.15.MISC=0
+SKILL.15.ACHECK=NONE
+SKILL.16.NAME=Knowledge (Geography)
+SKILL.16.TOTAL=14
+SKILL.16.RANK=12.0
+SKILL.16.ABMOD=2
+SKILL.16.MISC=0
+SKILL.16.ACHECK=NONE
+SKILL.17.NAME=Knowledge (Local)
+SKILL.17.TOTAL=9
+SKILL.17.RANK=4.0
+SKILL.17.ABMOD=2
+SKILL.17.MISC=3
+SKILL.17.ACHECK=NONE
+SKILL.18.NAME=Linguistics(Skald, Sylvan)
+SKILL.18.TOTAL=6
+SKILL.18.RANK=1.0
+SKILL.18.ABMOD=2
+SKILL.18.MISC=3
+SKILL.18.ACHECK=NONE
+SKILL.19.NAME=Perception
+SKILL.19.TOTAL=18
+SKILL.19.RANK=12.0
+SKILL.19.ABMOD=1
+SKILL.19.MISC=5
+SKILL.19.ACHECK=NONE
+SKILL.20.NAME=Perform (Untrained)
+SKILL.20.TOTAL=2
+SKILL.20.RANK=0.0
+SKILL.20.ABMOD=2
+SKILL.20.MISC=0
+SKILL.20.ACHECK=NONE
+SKILL.21.NAME=Profession (Cook)
+SKILL.21.TOTAL=5
+SKILL.21.RANK=1.0
+SKILL.21.ABMOD=1
+SKILL.21.MISC=3
+SKILL.21.ACHECK=NONE
+SKILL.22.NAME=Ride
+SKILL.22.TOTAL=6
+SKILL.22.RANK=0.0
+SKILL.22.ABMOD=6
+SKILL.22.MISC=0
+SKILL.22.ACHECK=YES
+SKILL.23.NAME=Sense Motive
+SKILL.23.TOTAL=7
+SKILL.23.RANK=3.0
+SKILL.23.ABMOD=1
+SKILL.23.MISC=3
+SKILL.23.ACHECK=NONE
+SKILL.24.NAME=Sleight of Hand
+SKILL.24.TOTAL=11
+SKILL.24.RANK=2.0
+SKILL.24.ABMOD=6
+SKILL.24.MISC=3
+SKILL.24.ACHECK=YES
+SKILL.25.NAME=Stealth
+SKILL.25.TOTAL=25
+SKILL.25.RANK=12.0
+SKILL.25.ABMOD=6
+SKILL.25.MISC=7
+SKILL.25.ACHECK=YES
+SKILL.26.NAME=Survival
+SKILL.26.TOTAL=1
+SKILL.26.RANK=0.0
+SKILL.26.ABMOD=1
+SKILL.26.MISC=0
+SKILL.26.ACHECK=NONE
+SKILL.27.NAME=Swim
+SKILL.27.TOTAL=11
+SKILL.27.RANK=2.0
+SKILL.27.ABMOD=1
+SKILL.27.MISC=8
+SKILL.27.ACHECK=YES
+SKILL.28.NAME=Use Magic Device
+SKILL.28.TOTAL=13
+SKILL.28.RANK=8.0
+SKILL.28.ABMOD=2
+SKILL.28.MISC=3
+SKILL.28.ACHECK=NONE
+MOVE.COUNT=1
+MOVE.0.NAME=Walk
+MOVE.0.RATE=25 ft.
+VISION=
+DR=
+SR=0
+SPELLCLASS.COUNT=0
+WEAPON.COUNT=10
+WEAPON.0.NAME=*Dagger +1 (Small)
+WEAPON.0.TOTALHIT=+15/+10
+WEAPON.0.DAMAGE=1d3+1
+WEAPON.0.CRIT=19-20
+WEAPON.0.MULT=2
+WEAPON.1.NAME=*Dagger +1 (Small/Thrown)
+WEAPON.1.TOTALHIT=+17/+12
+WEAPON.1.DAMAGE=1d3+1
+WEAPON.1.CRIT=19-20
+WEAPON.1.MULT=2
+WEAPON.2.NAME=*Rapier +1 (Small)
+WEAPON.2.TOTALHIT=+15/+10
+WEAPON.2.DAMAGE=1d4+2
+WEAPON.2.CRIT=18-20
+WEAPON.2.MULT=2
+WEAPON.3.NAME=Oil
+WEAPON.3.TOTALHIT=+14/+9
+WEAPON.3.DAMAGE=1d6-1
+WEAPON.3.CRIT=20
+WEAPON.3.MULT=2
+WEAPON.4.NAME=Sling (Small)
+WEAPON.4.TOTALHIT=+16/+11
+WEAPON.4.DAMAGE=1d3+1
+WEAPON.4.CRIT=20
+WEAPON.4.MULT=2
+WEAPON.5.NAME=Masterwork Sap (Small)
+WEAPON.5.TOTALHIT=+17/+12
+WEAPON.5.DAMAGE=1d4+1
+WEAPON.5.CRIT=20
+WEAPON.5.MULT=2
+WEAPON.6.NAME=Dagger (Small)
+WEAPON.6.TOTALHIT=+16/+11
+WEAPON.6.DAMAGE=1d3+1
+WEAPON.6.CRIT=19-20
+WEAPON.6.MULT=2
+WEAPON.7.NAME=Dagger (Small/Thrown)
+WEAPON.7.TOTALHIT=+16/+11
+WEAPON.7.DAMAGE=1d3
+WEAPON.7.CRIT=19-20
+WEAPON.7.MULT=2
+WEAPON.8.NAME=Masterwork Morningstar (Small/Alchemical Silver)
+WEAPON.8.TOTALHIT=+12/+7
+WEAPON.8.DAMAGE=1d6
+WEAPON.8.CRIT=20
+WEAPON.8.MULT=2
+WEAPON.9.NAME=Masterwork Rapier (Small/Cold Iron)
+WEAPON.9.TOTALHIT=+17/+12
+WEAPON.9.DAMAGE=1d4+1
+WEAPON.9.CRIT=18-20
+WEAPON.9.MULT=2
+POOL.COUNT=0
+SPELLBOOK.COUNT=2
+SPELLBOOK.0.NAME=Known Spells
+SPELLBOOK.1.NAME=Innate
+SA.COUNT=20
+SA.0.NAME=Brigand
+SA.1.NAME=Canny Observer
+SA.2.NAME=Crippling Strike
+SA.3.NAME=Evasion
+SA.4.NAME=Fearless
+SA.5.NAME=Guileful Polyglot (Aklo, Giant, Hallit, Varisian)
+SA.6.NAME=Guileful Polyglot
+SA.7.NAME=Halfling Luck
+SA.8.NAME=Improved Evasion
+SA.9.NAME=Improved Uncanny Dodge
+SA.10.NAME=Keen Senses
+SA.11.NAME=Natural-Born Leader
+SA.12.NAME=Rogue ~ Uncanny Dodge Tracker
+SA.13.NAME=Sneak Attack
+SA.14.NAME=Sure-Footed
+SA.15.NAME=Trapfinding
+SA.16.NAME=Trap Sense
+SA.17.NAME=Trap Spotter
+SA.18.NAME=Uncanny Dodge
+SA.19.NAME=Weapon Familiarity
+FEAT.COUNT=7
+FEAT.0.NAME=Combat Expertise
+FEAT.1.NAME=Dodge
+FEAT.2.NAME=Fleet
+FEAT.3.NAME=Improved Two-Weapon Fighting
+FEAT.4.NAME=Quick Draw
+FEAT.5.NAME=Two-Weapon Fighting
+FEAT.6.NAME=Weapon Finesse
+pcg.classes=1
+pcg.class.Rogue=12
+pcg.gold=1,258
+pcg.gear=43
+pcg.gear.0=Amulet of Natural Armor +2|long=Amulet of Natural Armor +2|qty=1|location=Equipped
+pcg.gear.1=Headband of Vast Intelligence +2 ( Maximize Knowledge SkillKnowledge (Geography))|long=Headband of Vast Intelligence +2 ( Maximize Knowledge SkillKnowledge (Geography))|qty=1|location=Equipped
+pcg.gear.2=Dagger +1 (Small)|long=Dagger +1 (Small)|qty=1|location=Equipped
+pcg.gear.3=Rapier +1 (Small)|long=Rapier +1 (Small)|qty=1|location=Equipped
+pcg.gear.4=Ring of Protection +2|long=Ring of Protection +2|qty=1|location=Equipped
+pcg.gear.5=Ring of Swimming|long=Ring of Swimming|qty=1|location=Equipped
+pcg.gear.6=Belt of Incredible Dexterity +2|long=Belt of Incredible Dexterity +2|qty=1|location=Equipped
+pcg.gear.7=Chain Shirt +1 (Small/Mithral)|long=Chain Shirt +1 (Small/Mithral)|qty=1|location=Equipped
+pcg.gear.8=Cloak of Resistance +3|long=Cloak of Resistance +3|qty=1|location=Equipped
+pcg.gear.9=Outfit (Explorer's/Small)|long=Outfit (Explorer's/Small)|qty=1|location=Equipped
+pcg.gear.10=Boots of Elvenkind|long=Boots of Elvenkind|qty=1|location=Equipped
+pcg.gear.11=10 Bullets|long=Bullets, Sling (10)|qty=2|location=Carried
+pcg.gear.12=Backpack (Masterwork) (Small)|long=Backpack (Masterwork) (Small)|qty=1|location=Equipped
+pcg.gear.13=Map Case|long=Case, Map|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.14=Map of Inner Daggermark|long=Map of Inner Daggermark|qty=1|location=Map Case
+pcg.gear.15=Parchment|long=Parchment (Sheet)|qty=4|location=Map Case
+pcg.gear.16=Flint and Steel|long=Flint and Steel|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.17=Inkpen|long=Inkpen|qty=2|location=Backpack (Masterwork) (Small)
+pcg.gear.18=Bullseye Lantern|long=Lantern, Bullseye|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.19=Oil|long=Oil, 1 Pint Flask|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.20=Oil|long=Oil, 1 Pint Flask|qty=1|location=Saddlebags
+pcg.gear.21=Potion of Cure Light Wounds|long=Potion of Cure Light Wounds|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.22=Trail Ration|long=Rations, Trail|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.23=Trail Ration|long=Rations, Trail|qty=4|location=Saddlebags
+pcg.gear.24=Rope of Climbing|long=Rope of Climbing|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.25=Sealing Wax|long=Sealing Wax|qty=1|location=Backpack (Masterwork) (Small)
+pcg.gear.26=Masterwork Thieves' Tools|long=Masterwork Thieves' Tools|qty=1|location=Equipped
+pcg.gear.27=Belt Pouch|long=Pouch, Belt|qty=1|location=Equipped
+pcg.gear.28=Gold Piece|long=Gold Piece|qty=1|location=Belt Pouch
+pcg.gear.29=Silver Piece|long=Silver Piece|qty=6|location=Belt Pouch
+pcg.gear.30=Sling (Small)|long=Sling (Small)|qty=1|location=Carried
+pcg.gear.31=Masterwork Sap (Small)|long=Masterwork Sap (Small)|qty=1|location=Carried
+pcg.gear.32=Riding Dog|long=Dog, Riding|qty=1|location=
+pcg.gear.33=Dagger (Small)|long=Dagger (Small)|qty=1|location=Riding Dog
+pcg.gear.34=Bedroll|long=Bedroll|qty=1|location=Riding Dog
+pcg.gear.35=Masterwork Morningstar (Small/Alchemical Silver)|long=Masterwork Morningstar (Small/Alchemical Silver)|qty=1|location=Riding Dog
+pcg.gear.36=Masterwork Rapier (Small/Cold Iron)|long=Masterwork Rapier (Small/Cold Iron)|qty=1|location=Riding Dog
+pcg.gear.37=Riding Saddle|long=Saddle, Riding|qty=1|location=Riding Dog
+pcg.gear.38=Saddlebags|long=Saddlebags|qty=1|location=Riding Dog
+pcg.gear.39=Grappling Hook|long=Grappling Hook|qty=1|location=Saddlebags
+pcg.gear.40=Map Maker's Kit|long=Map Maker's Kit|qty=1|location=Saddlebags
+pcg.gear.41=Small Tent|long=Tent|qty=1|location=Saddlebags
+pcg.gear.42=Waterskin|long=Waterskin|qty=1|location=Riding Dog

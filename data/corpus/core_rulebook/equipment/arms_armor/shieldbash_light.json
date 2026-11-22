@@ -1,0 +1,78 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Shieldbash (Light)",
+    "name": "Shieldbash (Light Shield)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shieldbash (Light)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Shieldbash"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Shieldbash"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.Light.Finesseable.Bludgeoning.Shieldbash.Unarmed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 293,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Shieldbash (Light)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

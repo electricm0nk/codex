@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Mythic Elemental Bond ~ Earth",
+    "name": "Earth",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental Bond ~ Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MythicElementalBondChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DESCRIPTOR.Acid|MythicLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Ability_ElementalBond_ResistanceBonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 439,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Elemental Bond ~ Earth",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

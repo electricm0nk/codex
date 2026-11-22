@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Samsaran",
+    "name": "Bonus Language ~ Samsaran",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Samsaran"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_templates_language.lst",
+    "record_key": "Bonus Language ~ Samsaran",
+    "sha256": "820914e599cda6d2380dbf56c7e69e0da08fd4e01973d00325068976a08ec999"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,16 @@
+# graphify run 2026-10-07T19:24:19Z
+# cmd: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/worktrees/codex-sd37 --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+# exit: 1
+
+--- stdout ---
+Loading existing graph...
+Graph: 648327 nodes, 655946 edges
+Re-clustering...
+[graphify] backed up semantic+curated graph (7 files) -> 2026-10-07/
+
+--- stderr ---
+[graphify] Extraction warning (1248 issues): 1066x missing required field 'source_file' (e.g. Node 138407 (id='GE-05') missing required field 'source_file'); 182x missing required field 'relation' (e.g. Edge 4568 missing required field 'relation')
+[graphify] community set changed since labeling (6726 saved labels, 30253 communities now; renamed 30 community(ies) by their hub). Run `graphify label` to refresh names with the LLM.
+[graphify] WARNING: new graph has 648327 nodes but existing graph.json has 648328 (net -1). Refusing to overwrite. Possible causes: missing chunk files from a previous session, or fuzzy dedup collapsed same-named symbols across files during an --update on an already-current graph. Run a full rebuild (/graphify .) to be safe, or pass force=True only if you have verified the reduction is legitimate.
+graph.json NOT written: refusing to overwrite (see warning above). GRAPH_REPORT.md, .graphify_labels.json and .graphify_analysis.json left untouched.
+

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_adventurers_guide_ag_spells_lst_46)",
+    "school": "Enchantment",
+    "level": 2,
+    "description": "With a lascivious wink and a sensuous sway, you flood a foe's mind with lustful thoughts of you, distracting your target and rendering that creature vulnerable to your attacks. An affected creature takes a -(CASTERLEVEL/2) penalty on concentration checks and to its CMD against dirty trick, grapple, and steal combat maneuvers you perform. The creature is also denied its Dexterity bonus to AC for the first melee attack you make against it each round. If the target would not normally be sexually attracted to you, it receives a +4 bonus on its saving throw. If you end your turn more than 20 feet from the target or end your turn where your target cannot see you, this spell immediately ends."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 46,
+    "record_key": "Codex-Named Unit (spell_adventurers_guide_ag_spells_lst_46)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_spells.lst:46"
+  }
+}

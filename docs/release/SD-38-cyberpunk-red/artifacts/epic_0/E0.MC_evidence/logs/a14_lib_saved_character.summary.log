@@ -1,0 +1,13 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.57s
+test saved_character::local_store::tests::a_rule_choice_id_containing_the_separator_is_refused ... ok
+test saved_character::local_store::tests::render_envelope_of_the_pf_fixture_is_unchanged ... ok
+test saved_character::local_store::tests::a_successful_save_leaves_no_tmp_files_behind ... ok
+test saved_character::local_store::tests::peek_game_system_reads_the_envelope_alone ... ok
+test saved_character::local_store::tests::save_and_load_round_trips_an_empty_applied_modifiers_list ... ok
+test saved_character::local_store::tests::save_and_load_round_trips_a_choice_recorded_under_a_converted_rule_id ... ok
+test saved_character::local_store::tests::a_save_that_fails_partway_through_leaves_the_previous_version_intact ... ok
+test saved_character::local_store::tests::save_and_load_round_trips_applied_modifiers ... ok
+test saved_character::local_store::tests::save_and_load_round_trips_an_empty_selected_traits_list ... ok
+test saved_character::local_store::tests::list_all_skips_a_directory_of_a_system_the_store_does_not_own ... ok
+test saved_character::local_store::tests::save_and_load_round_trips_selected_traits ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2890 filtered out; finished in 0.00s

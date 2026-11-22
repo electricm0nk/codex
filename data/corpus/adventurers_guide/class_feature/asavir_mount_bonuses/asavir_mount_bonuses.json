@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Asavir Mount Bonuses",
+    "name": "Asavir Mount Bonuses",
+    "class": "Asavir",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Animal Trick|NORMAL|Animal Training ~ Combat Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Light)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asavir ~ Shaitan's Blessing ~ Mount|PREVARGTEQ:MASTERVAR(\"AsavirLVL\"),2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asavir ~ Djinni's Blessing ~ Mount|PREVARGTEQ:MASTERVAR(\"AsavirLVL\"),4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asavir ~ Marid's Blessing ~ Mount|Trample|PREVARGTEQ:MASTERVAR(\"AsavirLVL\"),6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|4|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|3|PRESIZEEQ:M"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asavir ~ Efreeti's Blessing ~ Mount|PREVARGTEQ:MASTERVAR(\"AsavirLVL\"),8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asavir ~ Janni's Blessing ~ Mount|PREVARGTEQ:MASTERVAR(\"AsavirLVL\"),10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 56,
+    "record_key": "Asavir Mount Bonuses"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

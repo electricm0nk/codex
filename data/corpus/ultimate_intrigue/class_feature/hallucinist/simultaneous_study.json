@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hallucinist ~ Simultaneous Study",
+    "name": "Simultaneous Study",
+    "class": "Investigator",
+    "description": "At 6th level and every 3 investigator levels thereafter, the expanded mind of a hallucinist is able to maintain his studied combat bonuses against an additional target at the same time. In order to do so, the hallucinist must be using his psychedelic perception ability and must expend one use of inspiration in order to designate each target beyond the first target (this cost stacks with the use of inspiration required to designate a target more than once per 24 hours). He still needs to take a move action for each target, designating them one at a time. The hallucinist can discard this connection to a target of studied combat as a free action, allowing him to study another target in its place. This ability alters studied combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallucinist ~ Simultaneous Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level and every 3 investigator levels thereafter, the expanded mind of a hallucinist is able to maintain his studied combat bonuses against an additional target at the same time. In order to do so, the hallucinist must be using his psychedelic perception ability and must expend one use of inspiration in order to designate each target beyond the first target (this cost stacks with the use of inspiration required to designate a target more than once per 24 hours). He still needs to take a move action for each target, designating them one at a time. The hallucinist can discard this connection to a target of studied combat as a free action, allowing him to study another target in its place. This ability alters studied combat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 28,
+    "record_key": "Hallucinist ~ Simultaneous Study"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

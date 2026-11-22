@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 28500.0,
+    "description": "Each of the several kinds of figurines of wondrous power appears to be a miniature statuette of a creature an inch or so high (with one exception). When the figurine is tossed down and the correct command word spoken, it becomes a living creature of normal size (except when noted otherwise below). The creature obeys and serves its owner. Unless stated otherwise, the creature understands Common but does not speak.\nIf a figurine of wondrous power is broken or destroyed in its statuette form, it is forever ruined. All magic is lost, its power departed. If slain in animal form, the figurine simply reverts to a statuette that can be used again at a later time.\nObsidian Steed: This figurine appears to be a small, shapeless lump of black stone. Only careful inspection reveals that it vaguely resembles some form of quadruped. On command, the nearformless piece of obsidian becomes a fantastic mount. Treat it as a heavy horse with the following additional powers usable once per round at will: overland flight, plane shift, and ethereal jaunt. The steed allows itself to be ridden, but if the rider is of good alignment, the steed is 10%% likely per use to carry him to the lower planes and then return to its statuette form. The statuette can be used once per week for one continuous period of up to 24 hours. Note that when an obsidian steed becomes ethereal or plane shifts, its rider and his gear follow suit. Thus, the user can travel to other planes via this means.",
+    "key": "Figurine of Wondrous Power (Obsidian Steed)",
+    "name": "Figurine of Wondrous Power (Obsidian Steed)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Figurine of Wondrous Power (Obsidian Steed)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Figurine of Wondrous Power (Obsidian Steed)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "28500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.513"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|Strong conjuration and transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|14,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, animate objects, etherealness, fly, plane shift"
+      },
+      {
+        "key": "DESC",
+        "value": "Each of the several kinds of figurines of wondrous power appears to be a miniature statuette of a creature an inch or so high (with one exception). When the figurine is tossed down and the correct command word spoken, it becomes a living creature of normal size (except when noted otherwise below). The creature obeys and serves its owner. Unless stated otherwise, the creature understands Common but does not speak.&nl;If a figurine of wondrous power is broken or destroyed in its statuette form, it is forever ruined. All magic is lost, its power departed. If slain in animal form, the figurine simply reverts to a statuette that can be used again at a later time.&nl;Obsidian Steed: This figurine appears to be a small, shapeless lump of black stone. Only careful inspection reveals that it vaguely resembles some form of quadruped. On command, the nearformless piece of obsidian becomes a fantastic mount. Treat it as a heavy horse with the following additional powers usable once per round at will: overland flight, plane shift, and ethereal jaunt. The steed allows itself to be ridden, but if the rider is of good alignment, the steed is 10%% likely per use to carry him to the lower planes and then return to its statuette form. The statuette can be used once per week for one continuous period of up to 24 hours. Note that when an obsidian steed becomes ethereal or plane shifts, its rider and his gear follow suit. Thus, the user can travel to other planes via this means."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 165,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Figurine of Wondrous Power (Obsidian Steed)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

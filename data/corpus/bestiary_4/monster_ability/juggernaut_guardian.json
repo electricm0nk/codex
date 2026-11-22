@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Guardian",
+    "delivery": "Supernatural",
+    "description": "The juggernaut and all allies within 30 feet gain a +2 bonus on all saving throws and a +2 deflection bonus to AC.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:juggernaut_guardian",
+    "name": "Protection Domain - Guardian",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The juggernaut and all allies within 30 feet gain a +2 bonus on all saving throws and a +2 deflection bonus to AC."
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Guardian"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 941,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Guardian",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

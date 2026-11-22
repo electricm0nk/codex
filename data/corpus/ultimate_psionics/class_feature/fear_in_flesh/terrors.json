@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear in Flesh ~ Terrors",
+    "name": "Terrors",
+    "class": "Fear in Flesh",
+    "description": "You can use your terrors with natural attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear in Flesh ~ Terrors"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your terrors with natural attacks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1869,
+    "record_key": "Fear in Flesh ~ Terrors"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

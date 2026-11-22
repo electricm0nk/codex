@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Extended Memory",
+    "name": "Extended Memory",
+    "class": "Adaptive Warrior",
+    "description": "You can choose to remember a particular fighting style, skill, proficiency, or feat for upt to one hour.  In addition, you may attempt to recall a single fighting style, skill, proficiency, or feat even after expending focus by making a successful Autohypnosis roll as a swift action (DC 15 + the number of rounds since witnessing the style, skill, proficiency, or feat).  You must currently have focus to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Extended Memory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to remember a particular fighting style, skill, proficiency, or feat for upt to one hour.  In addition, you may attempt to recall a single fighting style, skill, proficiency, or feat even after expending focus by making a successful Autohypnosis roll as a swift action (DC 15 + the number of rounds since witnessing the style, skill, proficiency, or feat).  You must currently have focus to use this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1132,
+    "record_key": "Adaptive Warrior ~ Extended Memory"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

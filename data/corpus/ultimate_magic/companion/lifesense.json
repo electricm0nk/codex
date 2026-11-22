@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You notice and locate living creatures within 60 feet, just as if you possessed the blindsight evolution.",
+    "key": "Evolution ~ Lifesense",
+    "name": "Lifesense",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Lifesense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.Supernatural.Sense"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Undead Appearance"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,11"
+      },
+      {
+        "key": "DESC",
+        "value": "You notice and locate living creatures within 60 feet, just as if you possessed the blindsight evolution."
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Evolution ~ Lifesense",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

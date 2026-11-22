@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Hellish Shackles",
+    "category": "General",
+    "name": "Hellish Shackles",
+    "description": "You can channel the shackles ofHell onto your foes. Once per day when you channel negative energy to damage living creatures, you can attempt to affect damaged creatures with a dimensional anchor. Those damaged must make a successful Will save (DC equal to the DC of the channel effect) in addition to the normal Will save to halve damage from the channeled energy. Those that fail their save against the channeled energy take a -4 penalty on their saving throw against the dimensional anchor effect. Those that fail their second Will save are affected by dimensional anchor for a number of minutes equal to your Charisma modifier (minimum 1 minute).",
+    "prerequisites": [
+      "PREDEITY:1,PANTHEON.Archdevil,PANTHEON.Infernal Duke,Malbranche,Whore Queen",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,5],[PREVARGTEQ:ClericChannelNegativeEnergyDice,5],[PREVARGTEQ:OracleChannelDice,5]",
+      "PRETEXT:Prerequisites: Channel energy 5d6; worshiper of an archdevil, infernal duke, malbranche, or whore queen."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 52,
+    "record_key": "Hellish Shackles"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

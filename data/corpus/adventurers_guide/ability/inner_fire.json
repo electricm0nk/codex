@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Inner Fire",
+    "name": "Inner Fire",
+    "description": "While the student of perfection is under the effects of elemental fury (fire), a creature that successfully grapples him takes 1d6 points of fire damage. The damage increases by 1d6 each round the creature maintains the grapple, to a maximum of %1d6 per round.|StudentOfPerfectionLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Inner Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Student of Perfection ~ Elemental Fury"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnblinkingFlameStudent,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "DESC",
+        "value": "While the student of perfection is under the effects of elemental fury (fire), a creature that successfully grapples him takes 1d6 points of fire damage. The damage increases by 1d6 each round the creature maintains the grapple, to a maximum of %1d6 per round.|StudentOfPerfectionLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 22,
+    "record_key": "Student of Perfection ~ Inner Fire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

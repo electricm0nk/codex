@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bombardier ~ Exploding Stone",
+    "name": "Exploding Stone",
+    "class": "Bombardier",
+    "description": "You can throw a power stone at an enemy as a standard action.  Thrown power stones have a range of 20 feet and use the Throw Splash Weapon special attack.  On a direct hit, an exploding stone inflicts %1d%2+%3+%4d%2 of your active energy type and the effect of the power stone affects the struck creature.  You are capable of empowering mundane crystal to act as an exploding stone in place of using a power stone.  Splash damage from your exploding stone is always equal to the exploding stone's minimum damage.  Those caught in the splash damage can attempt a save (Reflex DC %5) for half damage. You can throw exploding stones %6/day.|ExplodingStoneBaseDice|ExplodingStoneDieSize|ExplodingStoneBonusDamage|ExplodingStoneBonusDice|ExplodingStoneDC|ExplodingStoneTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bombardier ~ Exploding Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneBaseDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneBonusDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingStoneLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can throw a power stone at an enemy as a standard action.  Thrown power stones have a range of 20 feet and use the Throw Splash Weapon special attack.  On a direct hit, an exploding stone inflicts %1d%2+%3+%4d%2 of your active energy type and the effect of the power stone affects the struck creature.  You are capable of empowering mundane crystal to act as an exploding stone in place of using a power stone.  Splash damage from your exploding stone is always equal to the exploding stone's minimum damage.  Those caught in the splash damage can attempt a save (Reflex DC %5) for half damage. You can throw exploding stones %6/day.|ExplodingStoneBaseDice|ExplodingStoneDieSize|ExplodingStoneBonusDamage|ExplodingStoneBonusDice|ExplodingStoneDC|ExplodingStoneTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneTimes|ExplodingStoneLVL+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneBaseDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneBonusDamage|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneBonusDice|floor((ExplodingStoneLVL-1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneDC|10+floor(ExplodingStoneLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingStoneLVL|PsionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ExplodingStoneTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1956,
+    "record_key": "Bombardier ~ Exploding Stone"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

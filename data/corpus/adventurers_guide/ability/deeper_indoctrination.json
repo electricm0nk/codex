@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Gray Maiden Initiate ~ Deeper Indoctrination",
+    "name": "Deeper Indoctrination",
+    "description": "Mental conditioning has bolstered your mind against most magical control. You gain a +1 bonus on Will saving throws, except when resisting charm or compulsion effects created by lawful evil creatures, in which case you instead take a -2 penalty on Will saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Maiden Initiate ~ Deeper Indoctrination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GrayMaidenInitiateTraining.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "DESC",
+        "value": "Mental conditioning has bolstered your mind against most magical control. You gain a +1 bonus on Will saving throws, except when resisting charm or compulsion effects created by lawful evil creatures, in which case you instead take a -2 penalty on Will saving throws."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 on Will saves, except -2 on resisting charm or compulsion effects created by lawful evil creatures"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 23,
+    "record_key": "Gray Maiden Initiate ~ Deeper Indoctrination"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

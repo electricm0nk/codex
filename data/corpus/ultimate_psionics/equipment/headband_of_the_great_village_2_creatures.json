@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "Mindlink with 2 creatures within 30 ft.; Add two to size of collective|PREMULT:1,[PREVARGT:TacticianCollectiveMinds,0],[PREVARGT:CollectiveMinds,0]",
+    "key": "Headband of the Great Village (2 creatures)",
+    "name": "Headband of the Great Village (2 creatures)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "TacticianCollectiveMinds",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CollectiveMinds",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Headband"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SLOTS",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.415"
+      },
+      {
+        "key": "SPROP",
+        "value": "Mindlink with 2 creatures within 30 ft."
+      },
+      {
+        "key": "SPROP",
+        "value": "Add two to size of collective|PREMULT:1,[PREVARGT:TacticianCollectiveMinds,0],[PREVARGT:CollectiveMinds,0]"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 282,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Headband of the Great Village (2 creatures)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

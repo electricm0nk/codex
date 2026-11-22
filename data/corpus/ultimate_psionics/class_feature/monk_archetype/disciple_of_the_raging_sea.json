@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk Archetype ~ Disciple of the Raging Sea",
+    "name": "Disciple of the Raging Sea",
+    "class": "Monk",
+    "description": "Your intense meditations and discipline allow you to unleash a terrifying range when needed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Disciple of the Raging Sea"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Disciple of the Raging Sea],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Maenad"
+      },
+      {
+        "key": "DESC",
+        "value": "Your intense meditations and discipline allow you to unleash a terrifying range when needed."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Disciple of the Raging Sea ~ Unyielding Anger|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Disciple of the Raging Sea ~ Eye of the Storm|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Disciple of the Raging Sea ~ Raging Ki|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2516,
+    "record_key": "Monk Archetype ~ Disciple of the Raging Sea"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

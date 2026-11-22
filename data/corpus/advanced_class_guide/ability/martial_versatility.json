@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Martial Versatility",
+    "name": "Martial Versatility",
+    "description": "You further broaden your study of weapons to encompass multiple similar weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Martial Versatility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHuman=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterWeaponQualifyLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You further broaden your study of weapons to encompass multiple similar weapons."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|FEAT|PC,TYPE=Combat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Martial Versatility (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Choose one combat feat you know that applies to a specific weapon (e.g., Weapon Focus). You can use that feat with any weapon within the same weapon group.  You may take this feat more than once. Each time it applies to a different feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 32,
+    "record_key": "Warpriest Bonus Feat ~ Martial Versatility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

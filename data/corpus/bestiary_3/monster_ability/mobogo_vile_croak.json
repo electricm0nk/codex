@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mobogo ~ Vile Croak",
+    "delivery": "Supernatural",
+    "description": "As a standard action once every 1d4 rounds, a mobogo can unleash a thunderous croak. Any non-boggard or non-mobogo within 50 feet of the mobogo must make a DC 19 Will save or become staggered for 1d4 rounds. Once a creature makes its saving throw against a particular mobogo's vile croak, it is immune to that mobogo's croak for 24 hours. Any boggards or mobogos within the area of a mobogo's vile croak gains a +2 morale bonus on attack rolls and saving throws against fear effects for 1 round. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:mobogo_vile_croak",
+    "name": "Vile Croak",
+    "owners": [
+      "bestiary_3:monster:mobogo"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action once every 1d4 rounds, a mobogo can unleash a thunderous croak. Any non-boggard or non-mobogo within 50 feet of the mobogo must make a DC 19 Will save or become staggered for 1d4 rounds. Once a creature makes its saving throw against a particular mobogo's vile croak, it is immune to that mobogo's croak for 24 hours. Any boggards or mobogos within the area of a mobogo's vile croak gains a +2 morale bonus on attack rolls and saving throws against fear effects for 1 round. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Mobogo ~ Vile Croak"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "TYPE",
+        "value": "MobogoRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.194",
+    "traits": [
+      "MobogoRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1272,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Mobogo ~ Vile Croak",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

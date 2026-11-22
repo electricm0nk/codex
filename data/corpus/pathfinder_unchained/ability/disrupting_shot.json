@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Disrupting Shot",
+    "name": "Disrupting Shot",
+    "description": "When you ready an action to shoot an opponent casting a spell, you can spend up to 3 stamina points. For each stamina point you spend, it increases the range from which you can successfully hit that opponent and gain the benefits of this feat by 10 feet (to a maximum of 60 feet).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Disrupting Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you ready an action to shoot an opponent casting a spell, you can spend up to 3 stamina points. For each stamina point you spend, it increases the range from which you can successfully hit that opponent and gain the benefits of this feat by 10 feet (to a maximum of 60 feet)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "118"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|APG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_apg.lst",
+    "sha256": "485862d2019840c9c67d4cb4145bd6c2f5e0ec192d95ce0ef78779f0bb057a9c",
+    "line": 21,
+    "record_key": "Combat Trick ~ Disrupting Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

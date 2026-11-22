@@ -1,0 +1,514 @@
+[
+  {
+    "kind": "beat_chart",
+    "name": "Coronet Blue",
+    "beat_type": "hook",
+    "source_page": "p398",
+    "summary": "Edgerunners wake in a dangerous spot with no memory of who they are while everyone else treats them as known.",
+    "text": "The name of this Hook is taken from on old ‘60s TV show in which the hero wakes up to find he cannot remember his identity, yet everyone he meets knows him and assumes he knows the score.\n\nIn this Hook, the Edgerunners awake in some type of dangerous or difficult situation. They have no memory of how they got there or who they are expected to be. Meanwhile, friends and enemies alike treat them as though the Edgerunners know the whole thing."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Crisis",
+    "beat_type": "hook",
+    "source_page": "p398",
+    "summary": "Edgerunners are dropped into a citywide or worldwide disaster that must tie directly to the game's plot.",
+    "text": "The Edgerunners are immediately embroiled in an ongoing crisis; a disaster that extends beyond just their immediate sphere of influence to the whole city or maybe even the entire world. A war between Corps has spilled out onto the streets, booster gangs are spilling out of the Combat Zone in an orgy of destruction, an earthquake is shaking everything to the ground, or plague is killing everyone in sight.\n\nThe Crisis begins the moment the Edgerunners walk into the Game and doesn’t let up for a moment until they either escape or set out to stop it. Once again, it’s important that the Crisis Hook relate directly to the Game; the boostergangers are being goaded by the Edgerunner’s enemies, or the Antagonist has caused the earthquake using a new Corp-funded drilling device."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Discovery",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "The adventure opens with a find, such as lost pre-War tech or a dangerous datafile, linked to a later element.",
+    "text": "This Hook marks an adventure started by an important discovery. The Edgerunners might find a lost piece of pre-War tech, or a datafile filled with dangerous information. In all cases, the Discovery Hook should directly link into some important element of the later Game (the datafile is the key to unlocking a vault that belonged to a Crew member’s parent, or that long-lost tech they found is something their Corp Antagonist wants, badly)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "False Accusation",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Edgerunners are blamed for a crime they did not commit and are left with only fight or flee.",
+    "text": "In this Hook, the Edgerunners are falsely accused of a heinous (or not so heinous) crime. A Fixer sends goons after them because \"They stole from my Night Market!\" A seemingly terrified Corp rushes up to one of the Edgerunners and points him out to a nearby NCPD officer as their attacker. A man falls dead in an Edgerunner’s arms, a monoblade sticking out of his body. Anything that could get the Edgerunners into major trouble is laid (undeservingly) at their doorstep. The important part is that the accusation be unfounded and that the Edgerunner be given only a limited number of options: fight (against impossible odds) or flee (with everyone in the world after them)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Kidnapped",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Edgerunners, or a friend of theirs, are taken by a mysterious and far stronger force.",
+    "text": "In this Hook, the Edgerunners are either kidnapped by an unknown force, or one of their friends is kidnapped. The unknown force should be mysterious and far more powerful than the Edgerunners (the idea here is to begin the Game with the kidnapping, setting the Scene for the next actions)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Looming Threat",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Like Crisis, but the danger has not yet broken; portents and massing forces signal that it is coming.",
+    "text": "This Hook immediately places the Edgerunners in a situation similar to the Crisis Hook. However, in the Looming Threat the actual danger hasn’t broken over their heads yet. There are mysterious portents, and an aura of dread pervades the air. In the Looming Threat Hook, the Booster Gangs haven’t hit the streets yet, but they’re all massing in their strongholds, psyching themselves up. The Corps are massing armies in their headquarters, and everyone knows it’s just a matter of time. The plague hasn’t started yet, but dozens of people have all died from a mysterious and horrible disease. Once again, the Threat should be directly related to the Game’s plotline."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Murder",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "The game opens with a killing the Edgerunners cannot solve by capturing the murderer, linking it to the plot.",
+    "text": "This Hook begins with a murder, either of a friend/relative/ally of the Edgerunners, or of an obviously innocent victim. The murder can occur either near the Edgerunners, or the victim can be discovered by them. In no case may you allow the Edgerunners to actually capture the murderer in question; the aim is to link the murder into the subsequent Game."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Play a Cliffhanger",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Open with an action scene (Confrontation, Ambush or Fist Fight work best) that introduces opposition or allies.",
+    "text": "A Hook can also begin with a furious action scene (most action shows begin like this). The best Cliffhanger Beats to play are Confrontation, Ambush, or Fist Fight. A Cliffhanger Beat should serve to propel the Edgerunners immediately into the Game’s plotline, by introducing them to either their opposition or their allies."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Play a Development",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Open with a Development (Secret Meeting, Mistaken Identity, Romance or Treachery) that introduces major allies or foes.",
+    "text": "You can also elect to play a Development Beat as a Hook (this is a common tactic in mystery and crime shows). The best options for this are: Secret Meeting, Mistaken Identity, Romance, or Treachery. Once again, your choice should immediately propel the Edgerunners into the Game’s plotline and introduce major allies or opponents. For example, an Edgerunner could fall in love with a Nomad they’ll ally with later, be betrayed by a friendly force, or find themselves en route to a secret meeting with their opponent."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revelation",
+    "beat_type": "hook",
+    "source_page": "p400",
+    "summary": "A hidden fact, such as a secret past or an inheritance, changes the Edgerunners' lives and links to the game.",
+    "text": "The Revelation Hook represents a previously hidden fact that will dramatically change the Edgerunners’ lives. A Revelation could include an unexpected inheritance, a secret past, mysterious parentage revealed, or an unpurgeable virus in their cyberware. In this Hook, the revelation will directly be linked to the Game in some way or another. (\"You’re probably wondering why I called you all here…\")"
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Ambush",
+    "beat_type": "cliffhanger",
+    "source_page": "p400",
+    "summary": "A fight where one side gets a free first shot; when run against the Edgerunners they check Awareness against the foe's Stealth.",
+    "text": "Generally, this Cliffhanger is much like a Battle: two sides meet and have a fight. But in an Ambush, one side always gets a first free shot before its opposition can respond. There are two ways to play this. If the intent is to have the Edgerunners stage an Ambush, the Gamemaster should set the stage so that it’s obvious that their opposition is nearby and completely unaware of the Edgerunners’ presence. Whatever happens after this is up to them. In most cases, however, when this Cliffhanger is played against the Edgerunners the opposition drops out of nowhere, and the Edgerunners must make a successful Awareness check against their opponent’s Stealth to know the Ambush is coming."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Battle",
+    "beat_type": "cliffhanger",
+    "source_page": "p400",
+    "summary": "A formal open combat free-for-all; scale successive battles from Mooks to Lieutenants to Mini Bosses (1 Mook = 1, 1 Lieutenant = 2, 1 Mini Boss = 3 Edgerunners).",
+    "text": "This Cliffhanger is played when a full-out, formal combat is staged. A Battle differs from an Ambush in that both sides are fully aware of the battle to come and meet openly. Unlike a Duel, all the participants can join in at any time: it’s a combat free for all. When playing this Cliffhanger, you’ll want to scale each subsequent Battle (you might have several in the course of a Game) at higher and higher levels.\n\nFor example, if you have three battles, the first one should be with mere Mooks, the next with Lieutenants, and the next one with the Mini Boss. To make this easier, we have set up the following examples of battles in order of appearance:\n\nBattle 1: Mooks. These types are usually of lesser Skill than the Edgerunners and it’s safe to throw an equal number of Mooks at the Crew (if there are 4 Edgerunners, there are 4 Mooks). If the Crew has several combat-oriented Characters, you can generally have the Mooks outnumber the Crew 2-to-1.\n\nBattle 2: Lieutenants. These enemies are usually of equal or slightly greater Skill than the Edgerunners. For every 2 Edgerunners there should be 1 Lieutenant. If you need to make things interesting, have the Lieutenants round out their forces with Mooks so there’s a number of antagonists equal to the number of Edgerunners (keep in mind that each Lieutenant counts as 2 Edgerunners).\n\nBattle 3: Mini Bosses. The best the opposition can throw at the Edgerunners now makes their appearance. They are always substantially more powerful, skill-wise, than the Edgerunners. Each Mini Boss counts as 3 Edgerunners making them a very difficult fight. Generally, a Mini Boss will be accompanied by a number of Lieutenant and Mooks needed to make the opposition equal the Crew.\n\n1 Mook = 1 Edgerunner 1 Lieutenant = 2 Edgerunners 1 Mini Boss = 3 Edgerunners Keep in mind that sometimes the answer isn’t throwing more enemies at your Players but giving the enemies you’re using better gear. A Mook can be far more dangerous if they trade in their Poor Quality Pistol for a Malorian Arms 3516. This can also go in the other direction. When your Players start getting ahold of high powered gear they’ll probably be able to punch above their weight. You may want to start treating Characters with powerful weapons or cyberware as 2 or even 3 Edgerunners for the purposes of building encounters."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Chase",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "The Crew pursues the opposition; works best right after a Kidnapping or Revelation.",
+    "text": "The Crew engages in a hot pursuit of the opposition. Obviously, you aren’t going to be able to get the Edgerunners to follow anyone unless they’ve got a good reason. This Cliffhanger is best used right after a Kidnapping or Revelation."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Confrontation",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "A verbal, non-physical showdown of threats and intimidation where the stronger side chooses not to attack.",
+    "text": "A Confrontation is a non-physical fight—a scene where the Edgerunners face the opposition on a verbal combat level. Threats are exchanged and intimidation resorted to. Either one side backs down or both do. The Confrontation Cliffhanger is a tough one to play; the opposition should have an overwhelming advantage over the Edgerunners yet choose not to exploit it in combat. A good example is the scene where the Antagonist‘s minions come to the Edgerunners and tell them to \"Get outta town by sundown, or else.\" Unless the Edgerunners push it, the opposition isn’t going to attack just then. The idea is to simply lean on the Edgerunners and give them a reason to want to beat up their enemies when they finally get the chance."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Contest",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "A ritualized one-on-one competition, such as riddles or feats; the GM may not simply decree the NPC wins.",
+    "text": "A contest is some type of ritualized confrontation, in which one side wins and one side loses. A Contest could involve riddles, feats of strength, feats of memory, or cleverness, or any other type of one-on-one competition. Note: You may not use a Gamemaster fiat to allow the NPC to win a Contest; this should come down to roleplay and the rolls and the Edgerunners should always have a chance at victory."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Dogfight",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "Vehicular combat in air, on roads or on water, where the opposition tries to shoot the Edgerunners down.",
+    "text": "A Dogfight is any Cliffhanger that involves vehicular combat; this could be a battle of flying vehicles like the name suggests, but also motorcycles, cars, or even boats. A Dogfight Action gets played when you want to have the opposition attempt to shoot down the Edgerunners."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Duel",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "One-on-one combat between evenly matched participants, not necessarily to the death.",
+    "text": "A Duel is a one-on-one combat between two participants. Weapons are usually of equal power and lethality (for example, a sword vs. a dagger would be considered a Battle, not a duel). Duels do not have to be to the death in most cases, the object is to prove who’s the better combatant between the two parties. A Duel can also be used to ritually decide the outcome of a situation: if A wins, B agrees to do something A wants. In the world of Cyberpunk, some bars have combat pits to help settle things between individuals, so violence doesn’t erupt in the streets."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Fist Fight",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "Hand-to-hand, weaponless combat between the Edgerunners (or a champion) and the opposition, often ritualized.",
+    "text": "In this Cliffhanger, the Edgerunners (or a single champion of the Edgerunners) meets the Opposition in hand-to-hand combat. This doesn’t have to be an actual fist fight; it can be any contest where physical, weaponless combat can take place. Wrestling, kung fu, and fisticuffs are all acceptable. The rules of the combat are often ritualized in some way (inside a circle, one hand behind the back, salt thrown at the opponent)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Monster",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "A non-intelligent threat such as a guard drone, automated turrets or a drone horde.",
+    "text": "Monsters are a special type of Cliffhanger. Monsters are non-intelligent threats to the Edgerunners: the drone guarding the office building, the automated turrets on the wall, or the horde of mini drones in the hallway."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Obstacles",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "Traps and hazards, lethal or non-lethal, that must be physically overcome and must always be beatable with clues present.",
+    "text": "Obstacles are traps, hazards, or other dangers the Edgerunners must physically overcome. The great part about obstacles is that they’re pretty generic—you can move them from adventure to adventure with only a little window dressing.\n\nObstacles can be lethal or non-lethal. Non-lethal obstacles are usually deadfalls, snares, or another type of confinement designed to capture the Edgerunners or subject them to a situation in which they must either perceive and defeat the trap before it is sprung, or escape the trap after they have walked into it. Examples include a booby-trapped hallway with dropdown walls or a closed room filling with knockout gas. Lethal obstacles are similar but can cause real harm and even death. Lethal obstacles include an electrified fence, the crumbling floor of an old building, and a timebomb that started ticking down the moment the Edgerunners entered the room.\n\nIt must be possible to overcome an Obstacle. In the case of traps set by enemies, clues to help the Edgerunners overcome them must be present, either in the scene in which the Obstacle is played or in an earlier scene."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Pursuit",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "The Edgerunners are chased by a clearly superior force and must run.",
+    "text": "The Edgerunners are chased by the opposition, who have superior force on their side. This Cliffhanger works best when you make it really obvious that the enemy has far superior numbers and will do bad things to the Edgerunners if they don’t run."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Race",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "The Edgerunners race the opposition to a person, place or thing; best after a Revelation or Discovery.",
+    "text": "The Edgerunners must race the opposition to reach a goal first. The goal can be a person, place, or thing. This is best played after some type of Revelation or Discovery Development, which gives the Edgerunners a better sense of the stakes and a reason to win the race."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Skirmish!",
+    "beat_type": "cliffhanger",
+    "source_page": "p403",
+    "summary": "A small battle where a winning Crew sees the foe escape and a losing Crew is captured or left wounded.",
+    "text": "The Crew engages in a small battle with the opposition. If the Crew is winning, the opposition escapes via trickery (smoke bombs, leaping onto the back of a passing truck, etc.). If the Crew is losing, the opposition is content to capture them or leave them wounded but alive."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Advantage Revealed",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "The Edgerunners uncover a previously unknown ability, tool or weapon.",
+    "text": "The Edgerunners uncover a previously unknown ability, advantage, tool, or weapon in their quest. Examples are the piece of pile that is really a powerful weapon when assembled, a new, specialized piece of cyberware, or knowledge of a technique that didn’t seem all that important at first (how to weave baskets under water)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Alliance",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "Outside help arrives, giving the Edgerunners a new manpower resource that must not decide the outcome alone.",
+    "text": "This Development represents gaining help from outside sources: an experienced Solo takes up your cause, the locals are swayed into giving you aid, etc.\n\nThe Alliance Development will always give the Edgerunners a new \"manpower\" resource to use in their mission. Allies should be powerful, but not enough to tip the battle’s outcome by themselves."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Back from the Dead",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "An old opponent returns from a supposed death; use once, with a plausible escape.",
+    "text": "An old opponent returns from a supposed death. Like the Second Chance, this is a tough Beat to play: you must devise a reasonable excuse for how the old enemy escaped their doom (the AV crashed in the water, the wound only looked like a death stroke, etc.).\n\nOnly use this once, and it’s best used when the Edgerunners have overwhelmingly defeated the bad guys early in the game and you want the Final Battle to be a challenge."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Betrayal",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "A trusted ally, lover or contact betrays the Party; the Edgerunners must get a chance to catch or avenge it.",
+    "text": "The Party’s been betrayed! It could be a trusted ally, a lover, or their local bartender. A Betrayer can be anyone involved with the Party. What form will the Betrayal take? Maybe the Party’s plans are revealed to the opposition. Maybe the betrayer helps the opposition set up an ambush (or drugs the Edgerunners so that they can be captured). Maybe they kidnap an important NPC and turn them over to the Antagonists as a hostage. Or even steal the gadget needed to defeat the enemy.\n\nA Betrayal should always allow the Edgerunners a chance to catch the Betrayer in the act or find them soon afterward to enact revenge."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Clue",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "An ambiguous Revelation that reveals only one part of the puzzle.",
+    "text": "An ambiguous Revelation. One part of the puzzle is revealed, but not the whole thing. With a Clue, the Edgerunners learn only that ‘’Someone is buying or stealing up all the loose radioactive material in the city,\" instead of \"Inquisitors are acquiring all the radioactive material they can find because they’ve decided to cleanse the city in fire by building and detonating a nuclear device.\""
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Foreshadowing",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "An ambiguous hint of coming events, played well before the event.",
+    "text": "Like Warnings, the foreshadowing Development gives warning of events to come. However, the warnings are always ambiguous and hazy: instead of saying \"Watch out for Corp agents,\" Foreshadowing says \"Be wary of anyone with an expensive haircut.\" This Development can be played at almost any time but shouldn’t be played immediately before the event (as you’re going to want some time for the suspense to build). Foreshadowing can be used in a number of ways: the Antagonists may meet the Edgerunners in a non-threatening situation, or someone may warn the Edgerunners about the Antagonist. Foreshadowing is unique in that it can encompass messages from the NET and obscure hints. The nature of the threat is not obviously explained."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Framed!",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "The Party or a member is set up for a crime they did not commit, obviously to everyone but the authorities.",
+    "text": "The Party (or a member of the Party) is set up for a crime they didn’t commit. The frame should be obvious to everyone except the authorities (who will have convincing evidence to the contrary)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Gain Mastery",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "A compressed period of training or learning that gives the Edgerunners the skills they need.",
+    "text": "This Development represents a period of learning or improvement: a long session with a teacher or master, special training from a skilled source, study, or long practice. The Edgerunners spend weeks in a training camp with an old Militech Drill Sergeant, or travel to a Nomad encampment to learn to drive from Nomad Santiago himself. At the end of the Mastery period, they will possess the skills needed to win the Game, if they use them wisely. It’s best to compress time in this Development: don’t cover each moment of every day, just the high spots (training montage!)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Hazardous Quest",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "A long arduous journey with environmental dangers and only minor unrelated combat.",
+    "text": "The Edgerunners are forced to embark on a journey of hazardous proportions to destroy, find, or recover something. The way will be long and arduous, with obstacles everywhere. There may be terrible storms or other deadly environmental conditions. In the Hazardous Quest Beat, any combat or attacks will be of a minor nature unrelated to their Opposition: wild animals, old drones, random gangers. A hazardous journey can, however, start, be interrupted by, or end with a Battle, Ambush, Trap, or other combat-related Beat."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Hesitation",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The opposition breaks off an attack to negotiate a temporary truce, then usually betrays it.",
+    "text": "The Hesitation Development is much like the Retreat; the opposition breaks off its attack without warning. However, they do not quit the field. Instead, they may pause to negotiate a temporary truce. A typical version of this is the old, \"Hrrmm. You guys are a lot better than I expected. I’m impressed. Perhaps you would be willing to work with me.\" Note that in most cases, should the Edgerunners go along with them, the Antagonist will betray or backstab them at the earliest opportunity."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Lie Revealed",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "Something believed true is shown to be a lie, without revealing the truth.",
+    "text": "Something previously thought to be true turns out to be a lie! This could be a clue, a piece of information, the identity of an NPC, or any other vital fact. The Revealed Lie does not automatically reveal the truth; it just becomes clear to the Edgerunners that what they were originally told is untrue."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Mistaken Identity",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "An Edgerunner is mistaken for, or poses as, an important someone else, bringing problems or advantages.",
+    "text": "One (or more) of the Edgerunners is mistaken for (or poses as) someone else. The identity will always be that of on important person; however, it may be a good or bad guy. \"Aren’t you the PopMedia celeb/ the Boss’s kid/my old lover?\" With the mistaken identity can come problems, advantages, or information, which can be played as Developments after this is played. For example, if everyone thinks an Edgerunner is the Long-Lost, Presumed Dead Rache Bartmoss, this may provoke Rache’s (many) enemies to attack as soon as possible. Later, Rache’s romantic (?) interest may show up with information for the same Edgerunner. Use this Development carefully—it’s dynamite."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Monologue",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The opposition leader brags about the plan when the Edgerunners are fully in their control.",
+    "text": "The leader of the opposition is in a talkative mood. Like Antagonists everywhere, they have the need to brag about the Master Plan; what the Goal is, how it will be accomplished, etc. This Development is only played when the Edgerunners are totally in the Antagonist’s control, after a Kidnapping, Trap, or Confrontation. The bad guys feel like it won’t matter: the Edgerunners are going to die or serve them anyway, so why not make them sweat?"
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Not What it Seems",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "An earlier action turns out to differ from how it was first perceived, such as a double agent.",
+    "text": "An action in a previous Beat is not as it was originally perceived. Friends may turn out to be enemies, something harmful is actually good, etc. A classic example is the ally who changes sides in one Beat, then is discovered to be infiltrating the opposition as a double agent. This is a tough Development to play, as it requires that the Gamemaster knows the true meaning of the original action and makes it obvious that the change was intended all along."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Obsession",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "Another character becomes obsessed with a Party member and follows them without attacking.",
+    "text": "A member of the Party is the target of another Character’s obsession. This obsession may be for love, hate, or curiosity. The obsessed Actor will do their best to follow the object of obsession around, trying to stay close to them. They will not attack the Edgerunners and will avoid confrontation whenever possible."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Personal Stake",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The stakes are raised by something personal, such as a poisoning, a kidnapped loved one or a frame-up.",
+    "text": "This Development raises the ante of the Game by interjecting a Personal Stake into the action. Examples would include one of the Edgerunners being poisoned, with the only vial of the antidote being in the hands of the opposition; an Edgerunner’s friend or lover being kidnapped by the Antagonist; the Edgerunners learning that their enemy set them up in some way and the only way to clear their names is to get the real culprit, etc."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Puzzle",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "A riddle or puzzle with one side only that must be solved to proceed and must always have clues to a solution.",
+    "text": "A riddle is posed to the Edgerunners—something that must be solved before they can move on. It can be any type of riddle or puzzle. Unlike a Contest, a Puzzle does not involve two sides, it is merely placed before the Edgerunners, who must then solve it before they can escape, get into the Corp HQ, learn the Antagonist’s secret, etc. Like a Trap, a Puzzle must always have a solution, and clues to that solution must either be present in the same Scene or in a Scene that has already occurred."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Rescuers!",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The Edgerunners must rescue someone from capture, death or confinement, with a compelling reason to do so.",
+    "text": "The Edgerunners must save someone from capture, death, or confinement. The important part of this Beat is to provide a compelling reason for the rescue to take place. Maybe the victim is a friend or has information the party needs to succeed."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Retreat",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Usually after a Cliffhanger, the opponents break off an action and withdraw to a stronghold, covering their tracks with a delaying tactic.",
+    "text": "Usually played after a Cliffhanger. For an unknown reason, the Edgerunner’s opponents are suddenly forced to break off an Attack, Ambush, or other action, and retreat to their current stronghold. As a Gamemaster, it’s up to you to decide the reasons for this sudden reversal. Perhaps there has been a setback or betrayal in the enemy camp, a hostile third party is on their way, or the opposition has realized that the fight will not serve its original purpose. When a retreat is played, the enemy will always seek to cover their tracks with some delaying tactic that makes it impossible for the Edgerunners to immediately follow: collapsing a stairway, dropping a cluster of grenades, or weaving into impossible to navigate traffic."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revealed Weakness",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The Edgerunners learn a clearly described weakness of the opposition: physical, mental, a special tool or a traitor.",
+    "text": "A Revealed Weakness shows the Edgerunners some previously unknown weakness of their opposition. The weakness could be physical, mental (a hidden fear or phobia), a special weapon or Tool which can be used against the opposition, or a traitor within the enemy’s camp.\n\nA Revealed Weakness is always clearly described: \"The Dragoon Full Body Conversion unit is a combat monster but there’s a flaw in the casing around the power core that can be penetrated by a solid shot.\""
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revelation",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The whole story is revealed in one shot; use only when knowing it will not critically affect the outcome.",
+    "text": "A Revelation is played when a key piece of information is uncovered. Revelations don’t tell the Edgerunners the same things as a Hidden Weakness or Clue. Instead, in a Revelation, they discover the entire story—all of what’s going on in one shot. It’s not merely a clue, like \"Someone is buying up or stealing all the radioactive material in the city,\" but rather, \"The Inquisitors are acquiring all the radioactive material they can find because they’ve decided to cleanse the city in fire by building and detonating a nuclear device.\" Revelations should only be used when you really want the Edgerunners to know the whole story and this knowledge won’t affect the outcome in any critical way."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Romance",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Romance comes to one or more of the Edgerunners.",
+    "text": "Ah, love! (We couldn’t resist.) In this Development, Romance comes to one or more of the Edgerunners when someone takes a strong liking to them.\n\nThis doesn’t have to be all hearts and flowers, though: a new lover can come complete with secret alliances to the Edgerunner’s enemy, jealous suitors, angry parents, hidden secrets, or a lethal and incurable disease."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Sabotage!",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "A Party weapon, cyberware or vehicle is disabled; like Betrayal, the Party gets a chance to detect or repair it.",
+    "text": "An important weapon, piece of cyberware, or vehicle of the Party’s is disabled by sabotage. Like the Betrayal Development, the party should have a chance to detect the sabotage and avert/repair it."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Second Chance",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Another crack at a problem the Edgerunners failed, which the GM must justify.",
+    "text": "This represents another crack at the problem. The Edgerunners have suffered a major setback in some way (they were unprepared or just missed the clues). This Development can be played to \"save\" a disintegrating game; Allies appear with new information, new clues are revealed, or comrades previously thought dead may be brought back by an act of divine intervention (or scriptwriting; i.e.; \"When Harry’s AV crashed, he ejected at the last moment, but was knocked out and lost his memory, but then he recovered and has rejoined the Crew.\").\n\nThis is a very powerful Development to play, and should be deployed with extreme care."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Secret Meeting",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "A clandestine meeting to gain allies or information, usually played before a Clue, Revelation or Alliance.",
+    "text": "A secret meeting is called, in which the Edgerunners can gain new allies or information. Secret Meetings are usually played before a Clue, Revelation, or Alliance Development. A Beat can be played between the two Developments (the Meeting is broken up by an Ambush or some other type of conflict). Most of the action in this Development comes from setting up, reaching, and meeting people at the Meeting."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Strange Bedfellows",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "A common threat forces the Crew and the opposition to work together.",
+    "text": "A common threat suddenly forces the Crew to ally with the opposition. This works best when the enemy suddenly shows up and says, \"We have a common problem and need to work together.\" The common threat must be both compelling and convincing for this Beat to work."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Turnabout!",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "A member of the opposition decides to aid the Crew, for example an underling who betrays the Antagonist.",
+    "text": "One member of the opposition decides (for their own reasons), to aid the Crew. Classic examples of this would be the underling who betrays the Antagonist in order to get their job, or the opponent who joins the Edgerunners because they fall in love with one of them. This is a good way to balance the odds when the Crew has been reduced in strength and needs some support."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Vengeance!",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "One Crew member becomes the opposition's target for vengeance and is repeatedly singled out.",
+    "text": "One member of the Crew becomes the target of the opposition’s vengeance. Maybe it’s something the Edgerunner did. Maybe the bad guy just doesn’t like the Edgerunner’s face. In any conflict, this enemy will make a point of attacking or challenging this Edgerunner, no matter what the risk."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Warning",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "An explicit notice of a coming threat, in contrast to the vague hints of Foreshadowing.",
+    "text": "The Warning Development tells the Edgerunners of something to come, or of a threat they may not be aware of. Warnings are mysterious voices in the NET, notes slipped under doors, or allies coming to the Edgerunners to tell them what’s about to happen. The main difference between a Warning and a Foreshadowing is that a Warning is always explicit: it tells the nature of the threat or problem, while a Foreshadowing gives only vague hints."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Battle",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The last showdown with the Antagonist, henchmen and monsters, a dramatic free-for-all that wraps up the game.",
+    "text": "This is the big megillah, the last showdown between the Edgerunners and the enemy. In this one, you can feel free to bring in the Antagonist, their Henchmen, assorted Minions, and whatever Monsters or other Opposition forces you can muster. A Final Battle should be a dramatic free-for-all, with destruction meted out on a grand scale. Like the Final Revelation, the Final Battle wraps up the Game for the most part, the enemies are beaten, the love interest rescued, and the neighborhood saved."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Revelation",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The gathered cast must work out and expose the underlying mystery; the outcome is already decided.",
+    "text": "In the Final Revelation, the Edgerunners (and appropriate NPCs) are gathered together in one place, and, like the participants in an Agatha Christie novel, must decide what is going on and expose the true facts. What has been going on must finally be revealed in its entirety: the Edgerunner’s learn about the Inquisition’s nuclear bomb plot, the murderer is revealed, or the enemy’s secret identity exposed. The outcome of this Revelation is already decided; once the killer is revealed, the police will arrest them, or once the Corp exec’s illicit business affairs are uncovered, they will slink away in disgrace. The goal of the Final Revelation is to merely uncover the underlying mystery."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Act",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The Edgerunners carry out their big plan, as in a heist, with the focus on how the plan pieces fit together rather than combat.",
+    "text": "Not every mission ends in a big reveal or a huge battle. Sometimes Edgerunners try for stealth and guile and actually succeed. This is especially true in heist adventures. In the Final Act Revelation, the Edgerunners enact their big plan to accomplish their goal. Example goals include stealing a piece of tech, planting a crippling virus in a Corp’s network, or placing the bomb that’ll wipe out an enemy gang’s headquarters once and for all. While the Final Act might involve fights or obstacles, they aren’t the main focus. Instead, the focus should be on how the pieces of the plan come together to help the Edgerunners complete the job."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist Escapes",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist is beaten but gets clean away, available for reuse.",
+    "text": "The Antagonist is Beaten, but not killed or locked away. They’ve got a secret bolt hole, or it really wasn’t them at all—it was a bodysculpted double. If this Scene is played, the Antagonist gets clean away: the Edgerunners have no way of tracing them and no way of recapturing them. They’re out there, waiting. A great way to re-use a major opponent, assuming that you don’t do it all the time."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist is Killed",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist dies and the GM awards I.P.",
+    "text": "Take that, you slimy Corp Exec! Bang! Snicker-snack! The Antagonist is dead and the Gamemaster gets to hand out I.P.. A fairly common Resolution, especially if your Edgerunners are a bloodthirsty lot."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist Toppled",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist survives but the threat is neutralized, for example by prison, disgrace or loss of followers.",
+    "text": "Another common resolution. The Edgerunners win and, while the Antagonist survives, the threat is neutralized. The murderer goes to prison, the Corp Exec gets transferred to a remote posting in shame, or the gang leader loses all their followers. This resolution offers a chance to use the Antagonist down the road but either as a minor threat (perhaps working for a new Antagonist) or as a different sort of challenge."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Edgerunners Captured",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners are captured when the adventure ends; the GM may run a different game before the next.",
+    "text": "This Beat is best played when the Edgerunners have really messed up, but you don’t want to kill them outright. Instead, they’re captured, and the adventure ends with them in durance vile, locked in a Corp jail or left adrift on the ocean. At this point, you have the option of starting a new Game or picking up where the old one left off. A hot Gamemaster tip: don’t immediately start the next Game. Instead, put the PCs in limbo, make them create all new Edgerunners, and run a totally different game first. Not only does this make the Players sweat out the fate of their Edgerunners, it buys you time to decide how you want to proceed after their upcoming daring escape!"
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Edgerunners Escape",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners are rescued or escape when on the ropes, saved for another round.",
+    "text": "This Beat is best used when your Edgerunners are on the ropes and you don’t feel like killing them. Instead, you allow them to escape: an earthquake interrupts their losing battle, another force attacks and distracts the opposition, or an AV lands on the battlefield and an unknown person motions for them to hop in. The object is to save the Edgerunners for another round, because they really did do a good job. Like the Edgerunners Captured Resolution, you should make the Players sweat out another game first. Not a commonly used option, and one to apply with great care."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Ending Cliffhanger",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "A new threat appears just as the Edgerunners celebrate, setting up a sequel.",
+    "text": "So, they beat the rival gang and kicked them out of their territory, huh? Just as the Edgerunners are about to break out the Smash and celebrate, a Nomad convoy rolls down the street and announces they’re taking over the neighborhood!\n\nThe Ending Cliffhanger is another way to set up for a sequel but keep the tension on all the way. As with the Edgerunner Captured Resolution, you might consider spacing out the sequel with another, different game first."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Greater Threat",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "A far greater threat stands behind the defeated Antagonist, showing that this is only the beginning.",
+    "text": "So, you thought getting rid of the Antagonist ended the problem, eh? No; behind them stands a far greater threat! Sure, you took down the local Zhirafa head of security but that means you’ve attracted the attention of their boss or the gang leader you deposed was working for the Yakuza and now you have to deal with them.\n\nIn this Scene, you discover that this is only the beginning, and another game lurks in the offing."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Happy Ending",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners win the day, whether a major or minor victory.",
+    "text": "The Edgerunners win the day! In Cyberpunk, this could be a major victory like toppling a Corporation or minor victory like getting paid after finishing a mission. Any job you can walk away from, choomba."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Pyrrhic Victory",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners win technically but at a heavy cost.",
+    "text": "The Edgerunners won, technically. They finished the job and they killed the Antagonist, but their victory came at a hefty price. Their HQ burned to the ground or an important NPC died during the final confrontation. Whatever the case, while they’re walking away winners, the Edgerunners shouldn’t feel like it. Be careful—while this victory feels very Cyberpunk it can be a tough act to follow."
+  }
+]

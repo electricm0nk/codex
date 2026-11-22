@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist Powers Known",
+    "name": "Martial Kineticist Powers Known",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Psychic Warrior=0|Crystal Light,Energy Splash|Psychic Warrior=1|Control Flames,Control Light,Control Object,Energy Ray,Entangling Debris,Far Hand,Matter Agitation|Psychic Warrior=2|Concussion Blast,Control Air,Control Sound,Energy Missile,Energy Push,Energy Stun|Psychic Warrior=3|Concussive Onslaught,Dispel Psionics,Energy Bolt,Energy Burst,Energy Cone,Energy Retort,Energy Wall,Eradicate Invisibility,Localized Windstorm,Telekinetic Force|Psychic Warrior=4|Control Body,Energy Ball,Intellect Fortress,Psychokinetic Charge|Psychic Warrior=5|Energy Current,Fiery Discorporation,Telekinetic Maneuver|Psychic Warrior=6|Null Psionics Field"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2037,
+    "record_key": "Martial Kineticist Powers Known"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

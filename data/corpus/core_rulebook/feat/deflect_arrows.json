@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Deflect Arrows",
+    "category": "Combat",
+    "name": "Deflect Arrows",
+    "description": "You can know arrows and other projectiles off course, preventing them from hitting you.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 49,
+    "record_key": "Deflect Arrows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Heart ~ Tenacious",
+    "name": "Tenacious",
+    "class": "Feral Heart",
+    "description": "You can expend your psionic focus to gain %1 temporary hit points.  They last for one minute.|TenaciousTempHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Heart ~ Tenacious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TenaciousTempHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus to gain %1 temporary hit points.  They last for one minute.|TenaciousTempHP"
+      },
+      {
+        "key": "DESC",
+        "value": " You can activate tenacious at the same time you activate feral transformation.|PRECLASS:1,Soulknife=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TenaciousTempHP|SoulknifeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2169,
+    "record_key": "Feral Heart ~ Tenacious"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

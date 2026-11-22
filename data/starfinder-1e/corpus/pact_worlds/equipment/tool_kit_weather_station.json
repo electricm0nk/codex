@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Tool kit (Weather Station)",
+    "name": "Tool kit (Weather Station)",
+    "type": "Goods.PersonalItem.TechItem.Tools"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "starfinder/paizo/pact_worlds/spw_equip_gear.lst",
+    "record_key": "Tool kit (Weather Station)",
+    "sha256": "db89d7a788c5e16c279e2ebecbc332ff66e4da0ae0f0e3eb1f0544634cd18cc0"
+  },
+  "unit_id": "pact_worlds:equipment:tool_kit_weather_station"
+}

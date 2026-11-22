@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Cybernetic ~ Prosthetic limb (standard)",
+    "name": "Prosthetic limb, standard",
+    "type": "Cybernetic.ItemLevel_1.Cybernetic_Leg.Cybernetic_Arm.Arm and hand.leg and foot"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 497,
+    "path": "starfinder/paizo/core/scr_equip.lst",
+    "record_key": "Cybernetic ~ Prosthetic limb (standard)",
+    "sha256": "e96b7877d21eb6c13cb09a4baa48cd7fd89910d9e73a84c562528dc2c76c352e"
+  },
+  "unit_id": "core:equipment:cybernetic_prosthetic_limb_standard"
+}

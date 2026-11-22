@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Attuned Shield",
+    "name": "Attuned Shield",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "ABP Attunement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Attuned Shield"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Shield|COMBAT|AC|%CHOICE|TYPE=ShieldEnhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=ABP_ArmorBonusMax|TITLE=Shield Enhancement Bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 71,
+    "record_key": "Attuned Shield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

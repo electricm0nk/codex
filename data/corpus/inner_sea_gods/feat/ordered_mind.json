@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ordered Mind",
+    "category": "General",
+    "name": "Ordered Mind",
+    "description": "You can modify a variety of your spells to use as counterspells. The DC of your Spellcraft check to identify an opponent's spell is equal to 20 + the spell level of the opponent's spell, but for your counterspell you can cast any spell from the same school of your foe's spell. The level of the spell used to counterspell must be equal to or higher than the level of your foe's spell. Normal: The Spellcraft DC to identify an opponent's spell is equal to i5 + the spell's level. Generally, a spell can only counter itself.",
+    "prerequisites": [
+      "PREALIGN:LN,LE,LG",
+      "PRETEXT:Prerequisites: Caster level 7th, any lawful alignment.",
+      "PREVARGTEQ:Caster_Level_Highest,7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 67,
+    "record_key": "Ordered Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

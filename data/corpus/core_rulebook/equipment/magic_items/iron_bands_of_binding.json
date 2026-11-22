@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 26000.0,
+    "description": "This potent item appears to be a 3-inch-diameter rusty iron sphere with bandings on the globe.\nWhen the proper command word is spoken and the spherical iron device is hurled at an opponent, the bands expand and then contract to bind the target creature on a successful ranged touch attack. A single Large or smaller creature can be captured thus and held immobile (as if pinned) until the command word is spoken to bring the bands into spherical form again. The creature can break (and destroy) the bands with a DC 30 Strength check or escape them with a DC 30 combat maneuver check or Escape Artist check. Iron bands of binding are usable once per day.",
+    "key": "Iron Bands of Binding",
+    "name": "Iron Bands of Binding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iron Bands of Binding"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Iron Bands of Binding"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "26000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 1|CHARGES[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.521"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|13,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, grasping hand"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "This potent item appears to be a 3-inch-diameter rusty iron sphere with bandings on the globe.&nl;When the proper command word is spoken and the spherical iron device is hurled at an opponent, the bands expand and then contract to bind the target creature on a successful ranged touch attack. A single Large or smaller creature can be captured thus and held immobile (as if pinned) until the command word is spoken to bring the bands into spherical form again. The creature can break (and destroy) the bands with a DC 30 Strength check or escape them with a DC 30 combat maneuver check or Escape Artist check. Iron bands of binding are usable once per day."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 244,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Iron Bands of Binding",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L3 ~ Magic Vestment",
+    "name": "Magic Vestment",
+    "class": "Sorcerer",
+    "description": "You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels [maximum +5 at 20th level]. An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L3 ~ Magic Vestment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_MagicVestment_L3,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Magic Vestment"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a suit of armor with an enhancement bonus of +1 per four caster levels (maximum +5 at 20th level) &lbracket;Use Magic Vestment (Shield use) to enhance a shield&rbracket;"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Clothing|COMBAT|AC|min(floor(%CHOICE/4),5)|TYPE=ArmorEnhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=5|MAX=20|TITLE=Choose spell caster level"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Armor|COMBAT|AC|min(floor(%CHOICE/4),5)|TYPE=ArmorEnhancement"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels [maximum +5 at 20th level]. An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2209,
+    "record_key": "Sorcerer Bonus Spell L3 ~ Magic Vestment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

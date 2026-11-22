@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_inner_sea_intrigue_isi_spells_lst_15)",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You create an alchemical residue on your hands that allows you to reshape any nonmagical, unattended object with hardness 19 or less as though it were clay. Objects with hardness 9 or less are like soft clay, allowing you to reshape up to 1 cubic foot per round of effort. Objects with hardness 10 or higher are harder to mold, allowing you to reshape up to 1/4 cubic foot per round. The object retains its new shape for 24 hours before returning to its original shape. This spell does not allow you to reshape a portion of a large object, such as a wall; you must be able to reshape the entire target within the spell's duration or the spell fizzles and has no effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 15,
+    "record_key": "Codex-Named Unit (spell_inner_sea_intrigue_isi_spells_lst_15)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_intrigue:isi_spells.lst:15"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Unchained Eidolon Base Form ~ Biped",
+    "name": "Biped",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Base Form Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonBiped,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonFortGood,EidolonWillGood|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Eidolon Base Form ~ Biped",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

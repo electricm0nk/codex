@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Grick (Jungle)",
+    "name": "Grick (Jungle)",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Grick"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky terrain|-8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In forests|8|TYPE=Racial"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Advanced Creature"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 438,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Grick (Jungle)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

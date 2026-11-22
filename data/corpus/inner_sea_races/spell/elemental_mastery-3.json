@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Elemental Mastery",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You gain mastery over the element matching the elemental essence in your blood. You can choose any one of the four elements as you cast this spell. Your mastery gives you an insight bonus to your speed or a new movement mode, depending on the element you choose, and grants one additional benefit. This spell's descriptor matches the chosen element. Air; Fly 30 ft. (average), +1 circumstance bonus on attack rolls when both you and your foe are airborne. Earth; Burrow 15 ft., +1 circumstance bonus on attack rolls when both you and your foe are touching the ground. Fire; +20 ft. on all speeds, +1 circumstance bonus on attack rolls when your foe is on fire. Water;  +30 ft. swim, +1 circumstance bonus on attack rolls when both you and your foe are touching water."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 18,
+    "record_key": "Elemental Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sadist ~ Exquisite Agony",
+    "name": "Exquisite Agony",
+    "class": "Sadist",
+    "description": "When a member of your collective dies, instead of needing to make a save to avoid taking damage, you gain a number of temporary power points equal to the Hit Die of the creature killed.  These power points last %1 rounds and do not stack with each other or other temporary power points.|ExquisiteAgonyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sadist ~ Exquisite Agony"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExquisiteAgonyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a member of your collective dies, instead of needing to make a save to avoid taking damage, you gain a number of temporary power points equal to the Hit Die of the creature killed.  These power points last %1 rounds and do not stack with each other or other temporary power points.|ExquisiteAgonyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExquisiteAgonyDuration|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2329,
+    "record_key": "Sadist ~ Exquisite Agony"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

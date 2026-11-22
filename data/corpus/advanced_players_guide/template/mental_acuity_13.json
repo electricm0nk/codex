@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Mental Acuity 13",
+    "name": "Mental Acuity 13",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "OracleLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MentalAcuityLVL|13"
+      },
+      {
+        "key": "TYPE",
+        "value": "MentalAcuityOracleLevel"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst",
+    "record_key": "Mental Acuity 13",
+    "sha256": "b6eb4cd001ab2ad02bfa2dc2f6935d539bd988d8538a1656518a52e402924e99"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

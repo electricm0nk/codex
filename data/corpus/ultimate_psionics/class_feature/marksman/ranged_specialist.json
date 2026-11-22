@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Ranged Specialist",
+    "name": "Ranged Specialist",
+    "class": "Marksman",
+    "description": "Your ranged and thrown attacks have their critical multiplier increased by one, and penalties for ranged increments are halved.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Ranged Specialist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your ranged and thrown attacks have their critical multiplier increased by one, and penalties for ranged increments are halved."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Ranged|CRITMULTADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Thrown|CRITMULTADD|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 338,
+    "record_key": "Marksman ~ Ranged Specialist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

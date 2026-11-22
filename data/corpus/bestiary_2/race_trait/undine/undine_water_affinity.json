@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Undine ~ Water Affinity",
+    "name": "Water Affinity",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "Undine Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Undine_ReplaceWaterAffinity",
+    "sets_replace_flags": [],
+    "description": "Undine sorcerers with the elemental (water) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Undine clerics with the Water domain cast their Water domain powers and spells at +1 caster level.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Water Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Undine_ReplaceWaterAffinity=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Undine sorcerers with the elemental (water) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Undine clerics with the Water domain cast their Water domain powers and spells at +1 caster level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Affinity Sorcerer Bonus|PREMULT:2,[PRECLASS:1,Sorcerer=1],[PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Water)]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Water",
+          "1",
+          "PRECLASS:1,Cleric=1",
+          "PREDOMAIN:1,Water"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Ice",
+          "1",
+          "PRECLASS:1,Cleric=1",
+          "PREDOMAIN:1,Ice"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Oceans",
+          "1",
+          "PRECLASS:1,Cleric=1",
+          "PREDOMAIN:1,Oceans"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/undine/undine_abilities_race.lst",
+    "sha256": "aca46dccdb42ceebaf07f2bd10ec914aa2d0afcc995ff541eb464aff7c9d3f44",
+    "line": 21,
+    "record_key": "Undine ~ Water Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

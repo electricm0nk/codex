@@ -1,0 +1,16 @@
+file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs:31
+        throw new Error(`--only ${id}: no such row id in spec.json`);
+              ^
+
+Error: --only improve-cyberpunk-role-switch: no such row id in spec.json
+    at file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs:31:15
+    at Array.map (<anonymous>)
+    at selectRows (file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs:28:36)
+    at main (file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/run.mjs:776:20)
+    at file:///home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/run.mjs:1108:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.2
+exit 1

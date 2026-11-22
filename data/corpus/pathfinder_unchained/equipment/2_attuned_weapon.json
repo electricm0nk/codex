@@ -1,0 +1,89 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": "Adds enhancement bonus to attuned equipment.",
+    "equip_type": "Weapon",
+    "key": "ABP ~ +2 Attunement ~ Weapon",
+    "name": "+2 Attuned Weapon",
+    "plus": 2,
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP ~ +2 Attunement ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=[Attuned +2]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "WeaponEnhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,ABP_Weapon"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Ammunition"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "DESC",
+        "value": "Adds enhancement bonus to attuned equipment."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "record_key": "ABP ~ +2 Attunement ~ Weapon",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

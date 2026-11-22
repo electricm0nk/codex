@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP Legendary Gifts",
+    "name": "Legendary Gifts",
+    "class": null,
+    "description": "You gain three legendary gifts.|Pool_ABPLegendaryGifts",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP Legendary Gifts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Special Quality.Automatic Bonus Progression"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain three legendary gifts.|Pool_ABPLegendaryGifts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Legendary Gifts"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Automatic Progression Bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 51,
+    "record_key": "ABP Legendary Gifts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

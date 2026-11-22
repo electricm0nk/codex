@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 1500.0,
+    "description": "This amulet, usually crafted from the splintered remains of spent firearm bullets shaped into a rough holy symbol or clover, grants the wearer a luck bonus to AC against firearm attacks that target touch AC.",
+    "key": "Amulet of Bullet Protection +1",
+    "name": "Amulet of Bullet Protection +1",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Amulet.Magic"
+      },
+      {
+        "key": "COST",
+        "value": "1500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "SPROP",
+        "value": "This amulet, usually crafted from the splintered remains of spent firearm bullets shaped into a rough holy symbol or clover, grants the wearer a luck bonus to AC against firearm attacks that target touch AC."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_magic_items.lst",
+    "record_key": "Amulet of Bullet Protection +1",
+    "sha256": "de278ea567b57b26ae80f87f6706d033555192a3c5a9eecfca7829e8860fd2ef"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

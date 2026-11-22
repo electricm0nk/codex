@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Vision of Hell",
+    "school": "Illusion",
+    "level": 3,
+    "description": "You overlay a realistic illusion of a terrifying hellscape upon an area, causing creatures to be shaken."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+    "sha256": "6ced82a6317309ca529afd1b403d66212011e766aae38468d280623dce0085cf",
+    "line": 11,
+    "record_key": "Vision of Hell"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

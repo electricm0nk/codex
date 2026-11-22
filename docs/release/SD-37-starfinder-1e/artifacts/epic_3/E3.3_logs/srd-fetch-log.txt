@@ -1,0 +1,5 @@
+# SRD pages fetched by E3.3 on 2026-10-03 (curl -sS -m 30 -A Mozilla/5.0); not seed fixtures: they cite the Toughness and Extra Resolve terms PCGen's test characters reach
+https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Toughness bytes=21077 sha256=0bdf82c0b7018cee609a15cf7d89e5397c267d7487d0c4d9f9a3d497411c1fba
+  benefit text: Benefit : For every character level you have (and whenever you gain a new level), you gain 1 Stamina Point. In addition, you gain a +4 bonus to Constitution checks to con
+https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Extra%20Resolve bytes=19908 sha256=87e580a161b2e68512667b54a744ef4664ceccf7c13bb1064aff054d8b9db485
+  benefit text: Benefit : You have 2 additional Resolve Points in your pool. Site Owner: Rose-Winds LLC (Blake Davis) (adsbygoogle = window.adsbygoogle || []).push({}); initiateToggle(do

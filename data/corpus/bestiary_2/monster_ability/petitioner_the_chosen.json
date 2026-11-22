@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Petitioner ~ The Chosen",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:petitioner_the_chosen",
+    "name": "The Chosen",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|Resistance to Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Petitioner ~ The Chosen"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CG"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Petitioner Slam"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Petitioner"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Petitioner"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 944,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Petitioner ~ The Chosen",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

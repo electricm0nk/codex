@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Cannon Master",
+    "category": "Combat",
+    "name": "Cannon Master",
+    "description": "You have learned how to keep firearm siege engines ready for battle despite harrowing circumstances. You gain a +2 competence bonus on any Craft (siege engine) checks made to repair a firearm siege engine. In addition, if you are the crew leader for a firearm siege engine with the broken condition, that siege engine's misfire range is increased by only 2 instead of by 4, and the broken siege engine must misfire twice before it explodes.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Siege Engineer",
+      "PRESKILL:1,Knowledge (engineering)=7,Profession (siege engineer)=7",
+      "PRETEXT:Prerequisites: Siege Engineer, Knowledge (engineering) or Profession (siege engineer) 7 ranks, proficiency with at least one firearm siege engine."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 45,
+    "record_key": "Cannon Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

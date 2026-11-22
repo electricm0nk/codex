@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Meditant ~ Flurry of Strikes",
+    "name": "Flurry of Strikes",
+    "class": "Meditant",
+    "description": "You can make a flurry of strikes as a full-attack action as long as you are maintaining psionic focus. When doing so you may make",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meditant ~ Flurry of Strikes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantFlurryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantFlurryExtraAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantFlurryBABBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantBAB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of strikes as a full-attack action as long as you are maintaining psionic focus. When doing so you may make"
+      },
+      {
+        "key": "DESC",
+        "value": " one additional attack using unarmed strikes as if using the Two-Weapon Fighting feat|PREVARLT:PsychicWarriorLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": " two additional attacks using unarmed strikes as if using the Improved Two-Weapon Fighting feat|PREMULT:2,[PREVARLT:PsychicWarriorLVL,16],[PREVARGTEQ:PsychicWarriorLVL,11]"
+      },
+      {
+        "key": "DESC",
+        "value": " three additional attacks using unarmed strikes as if using the Greater Two-Weapon Fighting feat|PREVARGTEQ:PsychicWarriorLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": " (even if you do not meet the prerequisites for the feat).  For the purpose of these attacks, your base attack bonus from your psychic warrior class levels is equal to your meditant level.  For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.  You apply your full Strength bonus to your damage rolls for all successful attacks made with flurry of strikes.  You may substitute disarm, sunder, and trip combat maneuvers for unarmed attacks as part of a flurry of strikes.  You cannot use any weapon other than an unarmed strike as a part of a flurry of strikes.  If you have natural weapons, you cannot use such weapons as part of a flurry of strikes unless you expend your psionic focus, but you cannot make natural attacks in addition to your flurry of strikes attacks."
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Flurry of Strikes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantFlurryExtraAttacks|min(floor((MeditantFlurryLVL-1)/5),3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantFlurryBABBonus|MeditantFlurryLVL-MeditantBAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantBAB|floor(3*PsychicWarriorLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantFlurryLVL|PsychicWarriorLVL"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Meditant Flurry of Strikes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2067,
+    "record_key": "Meditant ~ Flurry of Strikes"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

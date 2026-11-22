@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You have worked for a crime lord, either as a lowlevel enforcer or as a guard, and are adept at frightening away people.",
+    "key": "Trait ~ Brute",
+    "name": "Brute",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Brute"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Half-Orc Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Brute],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREFACT:1,TEMPLATES,IsHalfOrc=true],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Half-Orc]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have worked for a crime lord, either as a lowlevel enforcer or as a guard, and are adept at frightening away people."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Intimidate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 198,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Brute",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

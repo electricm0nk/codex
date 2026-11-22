@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You gain a bonus on Charisma-based skill checks equal to 1 + 1 for every 4 caster levels you possess (to a maximum of +5), but only when interacting with those who might conceivably find you sexually attractive. You do not gain this bonus against those you or your allies are attacking or threatening.",
+    "key": "Seducer's Eyes",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bonus on Charisma-based skill checks equal to 1 + 1 for every 4 caster levels you possess (to a maximum of +5), but only when interacting with those who might conceivably find you sexually attractive. You do not gain this bonus against those you or your allies are attacking or threatening."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Seducer's Eyes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Charm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Seducer's Eyes",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can have the following spell cast for you (CL 9): atonement (restore cleric/druid powers).",
+    "key": "Spellcasting 8 ~ Secret Society",
+    "name": "Spellcasting (8 PP)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellcasting 8 ~ Secret Society"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can have the following spell cast for you (CL 9): atonement (restore cleric/druid powers)."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:39:33Z",
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 198,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Spellcasting 8 ~ Secret Society",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:prose_expr"
+  ]
+}

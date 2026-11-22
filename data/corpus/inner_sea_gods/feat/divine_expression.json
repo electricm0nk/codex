@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Divine Expression",
+    "category": "General",
+    "name": "Divine Expression",
+    "description": "You mix faith with art to empower your performances. When you take this feat, choose either the cleric or oracle class. Levels in the selected class stack with your bard level when determining the number of rounds per day you can use your bardic performance and the type of action it takes to start a bardic performance.",
+    "prerequisites": [
+      "PRECLASS:1,Bard=1",
+      "PRECLASS:1,Cleric=1,Oracle=1",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 40,
+    "record_key": "Divine Expression"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

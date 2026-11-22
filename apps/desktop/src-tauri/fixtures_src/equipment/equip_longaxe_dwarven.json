@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Longaxe (Dwarven)",
+    "name": "Longaxe (Dwarven)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Longaxe, Dwarven"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Longaxe (Dwarven)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Dwarven.Slashing.Exotic.Reach.Axe"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "14"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d12"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SPROP",
+        "value": "These ornate and heavy blades are mounted atop a long, steel-shod haft for greater reach. They are rare among cave-dwelling dwarves but common in mountain dwarf clans that commonly feud with giants.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_longaxe_dwarven.txt",
+    "record_key": "Longaxe (Dwarven)"
+  }
+}

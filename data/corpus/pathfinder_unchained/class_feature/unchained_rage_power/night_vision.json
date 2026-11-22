@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Night Vision",
+    "name": "Night Vision",
+    "class": "Unchained Barbarian",
+    "description": "Your senses grow incredibly sharp, and you gain darkvision out to a range of 60 feet. If she already has darkvision, the range of that darkvision increases by 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Night Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Unchained Rage Power ~ Low-Light Vision],[PREVISION:1,Low-Light Vision=ANY]"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Night Vision"
+      },
+      {
+        "key": "DESC",
+        "value": "Your senses grow incredibly sharp, and you gain darkvision out to a range of 60 feet. If she already has darkvision, the range of that darkvision increases by 60 feet."
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 368,
+    "record_key": "Unchained Rage Power ~ Night Vision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

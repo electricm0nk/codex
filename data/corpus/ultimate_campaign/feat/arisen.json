@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Arisen",
+    "category": "Story",
+    "name": "Arisen",
+    "description": "[Not Implemented] Escaping death strengthened your bond to life, but fills you with a need for answers. You don't die until your negative hit point total is equal to or greater than 4 + your Constitution score. Once per day as a standard action, you can force yourself to carry on by strength of will alone, gaining 1 temporary hit point per hit die. These temporary hit points last for 10 minutes. Normal:You die when your negative hit point total is equal to or greater than your Constitution score. Goal:You meet in person and hear the words of your deity or your deity's chosen herald. If you worship a pantheon of deities, you must meet and hear a member of that pantheon-a herald does not suffice in this case. If you worship no specific deity, you must hear the words of an appropriate entity of the GM's choice. Completion Benefit:You gain a +2 bonus on saving throws against death effects and fear effects. In addition, the caster level of any conjuration (healing) spell that is cast on you increases by 1 for the purposes of its effects on you alone.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must have been slain and brought back from the dead, or have the Left to Die or Cursed Birth background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 8,
+    "record_key": "Arisen"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

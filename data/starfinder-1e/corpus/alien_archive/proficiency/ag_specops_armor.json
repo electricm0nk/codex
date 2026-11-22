@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "AG SpecOps Armor",
+    "name": "AG SpecOps Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "starfinder/paizo/alien_archive/saa_profs_armor.lst",
+    "record_key": "AG SpecOps Armor",
+    "sha256": "352c0415e53443df12828448ebd60b235b91b5ed6a7a0f5a343c68a850256788"
+  },
+  "unit_id": "alien_archive:proficiency:ag_specops_armor"
+}

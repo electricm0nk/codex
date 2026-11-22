@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Transfer Affliction",
+    "name": "Transfer Affliction",
+    "class": "Mesmerist",
+    "description": "The enigma can afflict others with the harmful conditions that he endures. This ability functions as the touch treatment ability, but can only be used to remove harmful conditions from the enigma, not other creatures. In order to remove these harmful effects, the enigma must succeed at a touch attack against another creature. The creature touched gains the chosen harmful effect for whatever duration it would have afflicted the enigma and the effect is removed from the enigma, unless the creature succeeds at a Will save (DC %1). Using this ability is always a standard action.|10+MesmeristLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Transfer Affliction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The enigma can afflict others with the harmful conditions that he endures. This ability functions as the touch treatment ability, but can only be used to remove harmful conditions from the enigma, not other creatures. In order to remove these harmful effects, the enigma must succeed at a touch attack against another creature. The creature touched gains the chosen harmful effect for whatever duration it would have afflicted the enigma and the effect is removed from the enigma, unless the creature succeeds at a Will save (DC %1). Using this ability is always a standard action.|10+MesmeristLVL/2+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": " The enigma can instead expend one use of touch treatment to replicate the effects of bestow curse, delivered as a touch attack as part of using this ability.|PRECLASS:1,Mesmerist=14"
+      },
+      {
+        "key": "DESC",
+        "value": " Transfer affliction is a mind-affecting effect. This ability alters touch treatment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 55,
+    "record_key": "Enigma ~ Transfer Affliction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

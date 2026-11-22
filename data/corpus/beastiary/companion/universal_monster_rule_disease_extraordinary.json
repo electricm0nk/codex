@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Universal Monster Rule ~ Disease (Extraordinary)",
+    "name": "Universal Monster Rule ~ Disease (Extraordinary)",
+    "description": "Filth fever: Bite--injury; save Fort DC %1; onset 1d3 days; frequency 1/day; effect 1d3 Dex damage and 1d3 Con damage; cure 2 consecutive saves. The save DC is Constitution-based.|UMR_Disease_DC|PREMULT:2,[PREVAREQ:UMR_Disease_SpecificDesc,1],[PRERACE:1,Rat (Dire)]",
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Filth fever: Bite--injury; save Fort DC %1; onset 1d3 days; frequency 1/day; effect 1d3 Dex damage and 1d3 Con damage; cure 2 consecutive saves. The save DC is Constitution-based.|UMR_Disease_DC|PREMULT:2,[PREVAREQ:UMR_Disease_SpecificDesc,1],[PRERACE:1,Rat (Dire)]"
+      }
+    ],
+    "origin": "mod_only",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
+    "line": 89,
+    "record_key": "Universal Monster Rule ~ Disease (Extraordinary)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

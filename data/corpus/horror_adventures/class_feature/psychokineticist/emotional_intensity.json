@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychokineticist ~ Emotional Intensity",
+    "name": "Emotional Intensity",
+    "class": "Kineticist",
+    "description": "A psychokineticist uses his Wisdom modifier instead of his Constitution modifier to determine his damage with wild talents, the DCs of Constitution-based wild talents, the durations of wild talents with Constitution-based durations, his bonus on concentration checks for wild talents, and other Constitution-based effects of all his wild talents. He can't use any of his wild talents whenever he would be unable to use a spell with an emotion component (see page 144 of Pathfinder RPG Occult Adventures), and if he ever gains immunity to charm, compulsion, emotion effects (even if such immunity extends only to a subcategory of these effects like fear effects or compulsion effects from creatures of certain alignments), he loses all his kineticist abilities. This includes effects that he previously activated that normally last until the next time his burn is removed, like elemental defenses, though he still keeps all his penalties from burn. He can always choose to ignore such immunities when he would normally gain them, even if they are granted by another class feature (such as the paladin's aura of courage), but once he decides whether or not to ignore an immunity he would have gained, the choice cannot be changed. A psychokineticist adds Sense Motive to his list of class skills and gains Psychic Sensitivity as a bonus feat. This ability alters the kineticist's class skills and the key ability score of wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychokineticist ~ Emotional Intensity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.PsychokineticistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychokineticist uses his Wisdom modifier instead of his Constitution modifier to determine his damage with wild talents, the DCs of Constitution-based wild talents, the durations of wild talents with Constitution-based durations, his bonus on concentration checks for wild talents, and other Constitution-based effects of all his wild talents. He can't use any of his wild talents whenever he would be unable to use a spell with an emotion component (see page 144 of Pathfinder RPG Occult Adventures), and if he ever gains immunity to charm, compulsion, emotion effects (even if such immunity extends only to a subcategory of these effects like fear effects or compulsion effects from creatures of certain alignments), he loses all his kineticist abilities. This includes effects that he previously activated that normally last until the next time his burn is removed, like elemental defenses, though he still keeps all his penalties from burn. He can always choose to ignore such immunities when he would normally gain them, even if they are granted by another class feature (such as the paladin's aura of courage), but once he decides whether or not to ignore an immunity he would have gained, the choice cannot be changed. A psychokineticist adds Sense Motive to his list of class skills and gains Psychic Sensitivity as a bonus feat. This ability alters the kineticist's class skills and the key ability score of wild talents."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|WIS-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|DAMAGE|WIS-CON"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Sense Motive"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Psychic Sensitivity"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 74,
+    "record_key": "Psychokineticist ~ Emotional Intensity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "create-character-render",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-render.FAILED.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nLoading classes from the rules engine…",
+    "reason": "expected string missing: 'Character name'; expected string missing: 'Player name'; expected string missing: 'Race'; expected string missing: 'Class'; expected string missing: 'Create character'; 'Loading' still present after the row's wait budget; select not found: 'character-race'; select not found: 'character-class'"
+  },
+  {
+    "id": "create-character-fill-and-submit",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-fill-and-submit.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nWizard is fully computed at every level offered here.\n\nWizard 1: BAB +0 · Fort +0 · Ref +0 · Will +2\n\nLevel\n\nHP\n7\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nLow-light vision\nHeight\n5'8\"\n🎲\nWeight\n109 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Dexterity, +2 Intelligence, -2 Constitution · Racial trait (CRB)\nElves ar",
+    "reason": null
+  },
+  {
+    "id": "create-character-back",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
+  },
+  {
+    "id": "create-character-samurai",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-samurai.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null
+  },
+  {
+    "id": "create-character-magus",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-magus.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-warrior.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-kineticist.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Delta — Kineticist 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nKineticist 1\nLevel 1 Kineticist\nSkill points: 5\nFeat\nNEXT\nLevel 2 Kineticist\nSkill points: 5\nCharacter Name\nF4 Smoke Delta\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+",
+    "reason": null
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/create-character-inquisitor-generic.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Echo — Inquisitor 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nInquisitor 1\nLevel 1 Inquisitor\nSkill points: 7\nFeat\nNEXT\nLevel 2 Inquisitor\nSkill points: 7\nCharacter Name\nF4 Smoke Echo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\n",
+    "reason": null
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/level-up-fighter6-into-arcane-archer.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Foxtrot — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF4 Smo",
+    "reason": null
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/level-up-fighter6-into-arcane-archer-accept.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Golf — Fighter 6 / Arcane Archer 1\nPROGRESSION\n«\n\nLevel\n7\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6 / Arcane Archer 1\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nLevel 1 Arcane Archer\nSkill po",
+    "reason": null
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'Cannot be taken (10) (no element named 'Cannot be taken (10)')'"
+  },
+  {
+    "id": "sheet-f6c-shaman-no-domain-line",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f6/docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/sheet-f6c-shaman-no-domain-line.FAILED.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke India — Shaman 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nShaman 1\nLevel 1 Shaman\nSkill points: 5\nFeat\nNEXT\nLevel 2 Shaman\nSkill points: 5\nCharacter Name\nF6 Smoke India\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\nCMB\n+4\nCMD\n16\n",
+    "reason": "forbidden string present: 'failure'"
+  }
+]

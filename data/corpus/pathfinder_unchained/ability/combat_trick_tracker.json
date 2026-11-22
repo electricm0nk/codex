@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick Tracker",
+    "name": "Combat Trick Tracker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Amateur Swashbuckler|PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_acg.lst",
+    "sha256": "570d75d3124c424e2ac73115e554567a42c86aa05cf319c5d41c5135b1068c68",
+    "line": 56,
+    "record_key": "Combat Trick Tracker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

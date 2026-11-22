@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Damai Default ~ LOW-LIGHT VISION",
+    "name": "LOW-LIGHT VISION",
+    "type": "Racial Trait.Damai Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "starfinder/paizo/alien_archive_2/saa2_abilities.lst",
+    "record_key": "Damai Default ~ LOW-LIGHT VISION",
+    "sha256": "14b406d0a3505b90887aa54a2c8210f18274d396e71a6cd1b86b881ae249ce8c"
+  },
+  "unit_id": "alien_archive_2:ability:damai_default_low_light_vision"
+}

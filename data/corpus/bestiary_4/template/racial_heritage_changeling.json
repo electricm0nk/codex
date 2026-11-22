@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Racial Heritage ~ Changeling",
+    "name": "Changeling",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Heritage ~ Changeling"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsChangeling|Changeling"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Heritage"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_templates.lst",
+    "record_key": "Racial Heritage ~ Changeling",
+    "sha256": "1a2f9d63bda26030a07640d168e784cb88c033010545733e17a3037b602d922b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

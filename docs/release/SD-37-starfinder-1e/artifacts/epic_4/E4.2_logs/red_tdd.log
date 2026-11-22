@@ -1,0 +1,48 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 12 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms ... FAILED
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_a_record_that_is_not_armour_is_refused ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_eac_kac_initiative_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_the_soldier_armour_caps_dex ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_every_ac_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_a_trained_only_skill_opens_with_a_rank ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values ... FAILED
+
+failures:
+
+---- rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms stdout ----
+
+thread 'rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms' (3555941) panicked at src/rules_core/pilot_compute/sf_skills.rs:233:13:
+Engineering: SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:engineering" }, SfTerm { label: "Int modifier", value: 1, source: "core:skill:engineering" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values stdout ----
+
+thread 'rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values' (3555942) panicked at src/rules_core/pilot_compute/sf_skills.rs:213:9:
+10 skill totals mismatch:
+SF-Soldier-3 Athletics: engine Value(5), SRD Value(6) -- Some(SfTotal { total: 5, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:athletics" }, SfTerm { label: "Str modifier", value: 3, source: "core:skill:athletics" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }, SfTerm { label: "armor check penalty", value: -4, source: "core:equipment:defiance_series_squad" }] })
+SF-Mystic-5 Mysticism: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:mysticism" }, SfTerm { label: "Wis modifier", value: 4, source: "core:skill:mysticism" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }] })
+SF-Mystic-5 Perception: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:perception" }, SfTerm { label: "Wis modifier", value: 4, source: "core:skill:perception" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }, SfTerm { label: "Empath (Display ~ Perception)", value: 0, source: "core:ability:empath" }] })
+SF-Mystic-5 Sense Motive: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:sense_motive" }, SfTerm { label: "Wis modifier", value: 4, source: "core:skill:sense_motive" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }, SfTerm { label: "Empath (Display ~ Sense Motive)", value: 0, source: "core:ability:empath#bonus1" }] })
+SF-Technomancer-5 Physical Science: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:physical_science" }, SfTerm { label: "Int modifier", value: 4, source: "core:skill:physical_science" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }] })
+SF-Technomancer-5 Sense Motive: engine Value(1), SRD Value(-1) -- Some(SfTotal { total: 1, terms: [SfTerm { label: "Wis modifier", value: 1, source: "core:skill:sense_motive" }] })
+SF-Envoy-3 Culture: engine Value(7), SRD Value(8) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:culture" }, SfTerm { label: "Int modifier", value: 1, source: "core:skill:culture" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }] })
+SF-Envoy-3 Engineering: engine Value(7), SRD Value(9) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:engineering" }, SfTerm { label: "Int modifier", value: 1, source: "core:skill:engineering" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }] })
+SF-Envoy-3 Stealth: engine Value(6), SRD Value(8) -- Some(SfTotal { total: 6, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:stealth" }, SfTerm { label: "Dex modifier", value: 1, source: "core:skill:stealth" }, SfTerm { label: "trained class skill", value: 3, source: "SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)" }, SfTerm { label: "armor check penalty", value: -1, source: "core:equipment:carbon_skin_graphite" }] })
+SF-Envoy-3 Survival: engine Value(0), SRD Value(2) -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Wis modifier", value: 0, source: "core:skill:survival" }] })
+
+
+failures:
+    rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms
+    rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values
+
+test result: FAILED. 10 passed; 2 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 0.84s
+
+error: test failed, to rerun pass `--lib`

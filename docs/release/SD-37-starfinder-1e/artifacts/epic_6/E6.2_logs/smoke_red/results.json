@@ -1,0 +1,16 @@
+[
+  {
+    "id": "create-starfinder-soldier",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'sf-character-name (no element named 'sf-character-name')'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-2-red-LaVWo1/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

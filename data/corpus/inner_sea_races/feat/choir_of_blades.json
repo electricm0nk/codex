@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Choir of Blades",
+    "category": "Combat",
+    "name": "Choir of Blades",
+    "description": "You can imitate your allies' exotic martial styles to such an extent that you can gain benefits to your own fighting abilities, even without formal training. While you're adjacent to an ally of a race different that your own who also has this feat, you gain the following benefits. If your ally has a racial bonus on attack rolls against a particular creature type or subtype, you also gain that bonus. If your ally has ancestral arms, weapon familiarity, or any other racial trait that grants weapon proficiencies, you also gain those proficiencies.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 21,
+    "record_key": "Choir of Blades"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

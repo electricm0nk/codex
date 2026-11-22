@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Frequency 1 round [4], effect 1 Str damage, cure 1 save, DC %1|GiantSpiderCompanionPoisonDC",
+    "key": "Giant Spider Vermin Companion ~ Poison",
+    "name": "Poison",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Spider Vermin Companion ~ Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantSpiderCompanionPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Frequency 1 round [4], effect 1 Str damage, cure 1 save, DC %1|GiantSpiderCompanionPoisonDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantSpiderCompanionPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantSpiderCompanionPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Giant Spider Vermin Companion ~ Poison",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

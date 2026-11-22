@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 100.0,
+    "description": "An underwater crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet.; 20 ft increment underwater",
+    "key": "Underwater Crossbow (Heavy)",
+    "name": "Underwater Crossbow (Heavy)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Underwater Crossbow, Heavy"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Simple.Ranged.Standard.Piercing.Container.Projectile.Crossbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Bolt"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "RANGE",
+        "value": "120"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "SPROP",
+        "value": "An underwater crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet.|PRERULE:1,DisplayWeaponDetails"
+      },
+      {
+        "key": "SPROP",
+        "value": "20 ft increment underwater|!PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 8.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 48,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Underwater Crossbow (Heavy)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

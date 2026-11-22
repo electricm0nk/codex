@@ -1,0 +1,10 @@
+test rules_core::cpr::armor::tests::refusals_name_their_reason ... ok
+test rules_core::cpr::armor::tests::sp_does_not_stack_the_highest_source_in_a_location_wins ... ok
+test rules_core::cpr::armor::tests::move_3_with_minus_4_floors_at_0 ... ok
+test rules_core::cpr::armor::tests::light_armorjack_head_and_flak_body_give_body_sp_15_head_sp_11_and_minus_4_once ... ok
+test rules_core::cpr::armor::tests::rows_cite_the_page_and_the_stat_order_is_ref_dex_move ... ok
+test rules_core::cpr::armor::tests::other_sp_sources_compete_with_worn_armour_highest_wins ... ok
+test rules_core::cpr::armor::tests::the_catalog_equals_the_p351_master_armor_list ... ok
+test rules_core::cpr::armor::tests::the_bodyweight_suit_covers_both_locations_at_sp_11 ... ok
+test rules_core::cpr::armor::tests::the_single_worst_penalty_applies_once_across_both_locations ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.00s

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Eater of Magic",
+    "name": "Eater of Magic",
+    "class": "Unchained Barbarian",
+    "description": "When you succeed at a saving throw to resist a spell, supernatural ability, or spell-like ability, you gain temporary hit points equal to the spell's level (in the case of spells or spell-like abilities) or 1/2 the CR of the effect's creator (in the case of supernatural abilities). These temporary hit points disappear when your rage ends, and they stack with your temporary hit points from rage but not with other temporary hit points gained from this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Eater of Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rage Power ~ Superstition"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Eater of Magic"
+      },
+      {
+        "key": "DESC",
+        "value": "When you succeed at a saving throw to resist a spell, supernatural ability, or spell-like ability, you gain temporary hit points equal to the spell's level (in the case of spells or spell-like abilities) or 1/2 the CR of the effect's creator (in the case of supernatural abilities). These temporary hit points disappear when your rage ends, and they stack with your temporary hit points from rage but not with other temporary hit points gained from this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 349,
+    "record_key": "Unchained Rage Power ~ Eater of Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

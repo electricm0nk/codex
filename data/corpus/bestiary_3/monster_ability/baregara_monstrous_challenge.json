@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Baregara ~ Monstrous Challenge",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a baregara can make an Intimidate check to demoralize an opponent. If this check is successful, the baregara surges with power and gains a +4 enhancement bonus to Strength and Constitution for 10 minutes. This ability is usable three times per day.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:baregara_monstrous_challenge",
+    "name": "Monstrous Challenge",
+    "owners": [
+      "bestiary_3:monster:baregara"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a baregara can make an Intimidate check to demoralize an opponent. If this check is successful, the baregara surges with power and gains a +4 enhancement bonus to Strength and Constitution for 10 minutes. This ability is usable three times per day."
+      },
+      {
+        "key": "KEY",
+        "value": "Baregara ~ Monstrous Challenge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaregaraRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.34",
+    "traits": [
+      "BaregaraRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 472,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Baregara ~ Monstrous Challenge",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

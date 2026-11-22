@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demon Lord (Dagon) ~ Command Aquatic Creature",
+    "delivery": "Supernatural",
+    "description": "[redacted PI]",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:demon_lord_dagon_command_aquatic_creature",
+    "name": "Command Aquatic Creature",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "KEY",
+        "value": "Demon Lord (Dagon) ~ Command Aquatic Creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 440,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Demon Lord (Dagon) ~ Command Aquatic Creature",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

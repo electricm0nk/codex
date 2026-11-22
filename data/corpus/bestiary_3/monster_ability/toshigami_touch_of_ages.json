@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Toshigami ~ Touch of Ages",
+    "delivery": "Supernatural",
+    "description": "When a toshigami hits a target with a touch attack or any melee weapon, the target must succeed at a DC 27 Fortitude save to avoid being magically aged. When a toshigami strikes a foe, it must decide whether it wishes to physically increase the target's age or mentally reduce the target's age. If it increases the target's physical age, the target takes 1 point of Strength, Dexterity, and Constitution drain. If it decreases the target's mental age, the target takes 1 point of Intelligence, Wisdom, and Charisma drain. Combined with the toshigami's numerous attacks, this can quickly devastate a target, but once a target succeeds at its saving throw against the touch of ages, it can no longer be affected by this ability for 1 round. This is a magical aging effect, but does not actually alter the victim's true age-it merely simulates the creeping effect of age on the flesh or the reversion to an increasingly infantile state of mind. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:toshigami_touch_of_ages",
+    "name": "Touch of Ages",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a toshigami hits a target with a touch attack or any melee weapon, the target must succeed at a DC 27 Fortitude save to avoid being magically aged. When a toshigami strikes a foe, it must decide whether it wishes to physically increase the target's age or mentally reduce the target's age. If it increases the target's physical age, the target takes 1 point of Strength, Dexterity, and Constitution drain. If it decreases the target's mental age, the target takes 1 point of Intelligence, Wisdom, and Charisma drain. Combined with the toshigami's numerous attacks, this can quickly devastate a target, but once a target succeeds at its saving throw against the touch of ages, it can no longer be affected by this ability for 1 round. This is a magical aging effect, but does not actually alter the victim's true age-it merely simulates the creeping effect of age on the flesh or the reversion to an increasingly infantile state of mind. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Toshigami ~ Touch of Ages"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "TYPE",
+        "value": "ToshigamiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.164",
+    "traits": [
+      "ToshigamiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1131,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Toshigami ~ Touch of Ages",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

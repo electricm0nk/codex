@@ -1,0 +1,21 @@
+name=${pcstring('NAME')}
+race=${pcstring('RACE')}
+class=${pcstring('CLASS.0')}
+level=${pcvar('TL')}
+<#list 0..5 as stat>
+stat.${pcstring('STAT.${stat}.NAME')}=${pcstring('STAT.${stat}')}
+stat.${pcstring('STAT.${stat}.NAME')}.mod=${pcstring('STAT.${stat}.MOD')}
+</#list>
+hp=${pcstring('HP')}
+althp=${pcstring('ALTHP')}
+ac.eac=${pcstring('AC.EAC')}
+ac.kac=${pcstring('AC.KAC')}
+ac.base=${pcstring('AC.Base')}
+ac.ability=${pcstring('AC.Ability')}
+ac.eac_armor=${pcstring('AC.EAC_Armor')}
+ac.kac_armor=${pcstring('AC.KAC_Armor')}
+ac.total=${pcstring('AC.Total')}
+var.resolve=${pcvar('VAR.Resolve')}
+var.key_ability_score=${pcvar('VAR.KeyAbilityScore')}
+var.key_ability_bonus=${pcvar('VAR.KeyAbilityBonus')}
+var.race_hp=${pcvar('VAR.RaceHP')}

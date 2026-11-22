@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unknown ~ Hallucinatory Camouflage",
+    "delivery": "Supernatural",
+    "description": "As long as an unknown is targeting a creature with its victimize ability, it hides its appearance behind a veil of illusions, appearing to be an unremarkable member of the victimized creature's race to everyone except the target of victimize. A successful Will save (DC %1) allows a creature that interacts with the illusion to disbelieve the effect. This is a mind-affecting illusion (glamer) effect.",
+    "description_variables": [
+      "10+TL+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:unknown_hallucinatory_camouflage",
+    "name": "Hallucinatory Camouflage",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as an unknown is targeting a creature with its victimize ability, it hides its appearance behind a veil of illusions, appearing to be an unremarkable member of the victimized creature's race to everyone except the target of victimize. A successful Will save (DC %1) allows a creature that interacts with the illusion to disbelieve the effect. This is a mind-affecting illusion (glamer) effect.|10+TL+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Unknown ~ Hallucinatory Camouflage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.UnknownTemplate"
+      }
+    ],
+    "source_page": "p.245",
+    "traits": [
+      "UnknownTemplate"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 342,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Unknown ~ Hallucinatory Camouflage",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

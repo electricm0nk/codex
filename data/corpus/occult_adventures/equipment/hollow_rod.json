@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 121500.0,
+    "description": "Three times per day, a kineticist can utilize the hollow rod in conjunction with a blast wild talent or the kinetic healer wild talent to augment that talent's destructive or healing capabilities, treating the wild talent as maximized",
+    "key": "Hollow Rod",
+    "name": "Hollow Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hollow Rod"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rod.Magic.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "121500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 3|CHARGES[3]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Three times per day, a kineticist can utilize the hollow rod in conjunction with a blast wild talent or the kinetic healer wild talent to augment that talent's destructive or healing capabilities, treating the wild talent as maximized"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Hollow Rod",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

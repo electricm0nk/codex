@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Wayang ~ In the Shadows",
+    "name": "In the Shadows",
+    "race_key": "Wayang",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Wayang Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Wayang_ReplaceLurker"
+    ],
+    "description": "Many wayangs perform a variety of unusual roles and tasks in wayang society. They gain a +2 racial bonus on their choice of two of the following skills: Appraise, Bluff, Craft, Profession, and Sleight of Hand. This racial trait replaces lurker.",
+    "source_page": "p.217",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayang ~ In the Shadows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wayang Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Wayang ~ In the Shadows],[!PREFACT:1,ABILITIES,Wayang_ReplaceLurker=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many wayangs perform a variety of unusual roles and tasks in wayang society. They gain a +2 racial bonus on their choice of two of the following skills: Appraise, Bluff, Craft, Profession, and Sleight of Hand."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces lurker.|!PREABILITY:1,CATEGORY=Special Ability,Wayang ~ In the Shadows"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|Appraise|Bluff|TYPE=Craft|TYPE=Profession|Sleight of Hand"
+      },
+      {
+        "key": "SELECT",
+        "value": "2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 %1|%LIST"
+      },
+      {
+        "key": "FACT",
+        "value": "Wayang_ReplaceLurker|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "%LIST",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1690,
+    "record_key": "Wayang ~ In the Shadows"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

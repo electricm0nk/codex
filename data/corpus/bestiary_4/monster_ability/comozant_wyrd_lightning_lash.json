@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Comozant Wyrd ~ Lightning Lash",
+    "delivery": "Supernatural",
+    "description": "As a standard action that doesn't provoke attacks of opportunity, a comozant wyrd can shock any creature or object within 30 feet to which it has line of effect, dealing 2d8 electricity damage. The wyrd can choose for this damage to be nonlethal. If the target is also affected by the wyrd's illuminating flames, it is stunned for 1 round (Fortitude DC %1 negates) and the flames are dispelled.",
+    "description_variables": [
+      "12+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:comozant_wyrd_lightning_lash",
+    "name": "Lightning Lash",
+    "owners": [
+      "bestiary_4:monster:comozant_wyrd"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Ranged lightning lash +8 (2d8 electricity damage)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action that doesn't provoke attacks of opportunity, a comozant wyrd can shock any creature or object within 30 feet to which it has line of effect, dealing 2d8 electricity damage. The wyrd can choose for this damage to be nonlethal. If the target is also affected by the wyrd's illuminating flames, it is stunned for 1 round (Fortitude DC %1 negates) and the flames are dispelled.|12+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Comozant Wyrd ~ Lightning Lash"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 421,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Comozant Wyrd ~ Lightning Lash",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

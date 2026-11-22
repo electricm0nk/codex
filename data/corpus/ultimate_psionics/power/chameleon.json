@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Chameleon",
+    "name": "Chameleon",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cryptic,Gifted Blade,Marksman,Psychic Warrior,Sighted Seeker=1|Egoist=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychometabolism"
+      },
+      {
+        "key": "COMPS",
+        "value": "Ol"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +10 enhancement bonus on vision-based Stealth checks."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Stealth|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=10|MAX=25|TITLE=Choose Stealth bonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Chameleon",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:prose_expr"
+  ]
+}

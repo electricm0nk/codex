@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Legendary Gifts ~ Legendary Mind 2",
+    "name": "Legendary Mind 2",
+    "class": "Legendary Gifts",
+    "description": "Increase your bonuses from mental prowess to +6/+6/+6. You must already have legendary mind to select this legendary gift.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Gifts ~ Legendary Mind 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ABP Legendary Gifts.Automatic Bonus Progression"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Legendary Gifts ~ Legendary Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase your bonuses from mental prowess to +6/+6/+6. You must already have legendary mind to select this legendary gift."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ABPMentalProwess|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Legendary Gifts"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 89,
+    "record_key": "Legendary Gifts ~ Legendary Mind 2"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

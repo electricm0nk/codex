@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Blazing Aura",
+    "name": "Blazing Aura",
+    "description": "When you create an aura of heat with this feat, you can spend 5 stamina points to increase the fire damage dealt to any creature that begins its turn in the aura to 2d6 points of fire damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Blazing Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you create an aura of heat with this feat, you can spend 5 stamina points to increase the fire damage dealt to any creature that begins its turn in the aura to 2d6 points of fire damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ARG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_arg.lst",
+    "sha256": "b41ac3a17891f22fc0609b12ce383abe454fb693714e9e3d5dc8e4481b7f6965",
+    "line": 7,
+    "record_key": "Combat Trick ~ Blazing Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

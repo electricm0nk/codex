@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tenebrous Worm ~ Bristles",
+    "delivery": "Supernatural",
+    "description": "Long bristles of shadowstuff extend from between the tenebrous worm's armor plates. These bristles react swiftly to attacks, stabbing at any creature that attempts to harm the worm.  Each time a creature attacks a tenebrous worm, it must make a DC %1 Reflex save to avoid being punctured by several bristles.  Each time a creature is punctured by these bristles, it takes 1d4 points of piercing damage and is exposed to the tenebrous worm's poison.  A creature that grapples a tenebrous worm is automatically hurt by these bristles.",
+    "description_variables": [
+      "TenebrousWormBristlesDC"
+    ],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:tenebrous_worm_bristles",
+    "name": "Bristles",
+    "owners": [
+      "bestiary_2:monster:tenebrous_worm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Bristles"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TenebrousWormBristlesDC|10+TL/2+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TenebrousWormBristlesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Bristles)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TenebrousWormBristlesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Long bristles of shadowstuff extend from between the tenebrous worm's armor plates. These bristles react swiftly to attacks, stabbing at any creature that attempts to harm the worm.  Each time a creature attacks a tenebrous worm, it must make a DC %1 Reflex save to avoid being punctured by several bristles.  Each time a creature is punctured by these bristles, it takes 1d4 points of piercing damage and is exposed to the tenebrous worm's poison.  A creature that grapples a tenebrous worm is automatically hurt by these bristles.|TenebrousWormBristlesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Tenebrous Worm ~ Bristles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.260",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1229,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Tenebrous Worm ~ Bristles",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

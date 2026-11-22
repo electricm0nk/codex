@@ -1,0 +1,129 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Power Points",
+    "name": "Aegis Power Points",
+    "class": "Aegis",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisPPL|AegisLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisPPL|var(\"BL=Aegis\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1|PREVARGTEQ:AegisPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1|PREVARGTEQ:AegisPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:AegisPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:AegisPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:AegisPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:AegisPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|3|PREVARGTEQ:AegisPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|3|PREVARGTEQ:AegisPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|3|PREVARGTEQ:AegisPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:AegisPPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:AegisPPL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:AegisPPL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:AegisPPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:AegisPPL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:AegisPPL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:AegisPPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:AegisPPL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:AegisPPL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:AegisPPL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(AegisPPStat*AegisPPL)/2|TYPE=AegisBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 20,
+    "record_key": "Aegis Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

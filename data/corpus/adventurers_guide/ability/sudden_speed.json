@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Sudden Speed",
+    "name": "Sudden Speed",
+    "description": "A student of perfection with this ki power can spend 1 point from his ki pool as a swift action to grant himself a sudden burst of speed. This increases the student of perfection's base land speed by 30 feet for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Sudden Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnblinkingFlameStudent,1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Pathfinder Unchained"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "PU"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "DESC",
+        "value": "A student of perfection with this ki power can spend 1 point from his ki pool as a swift action to grant himself a sudden burst of speed. This increases the student of perfection's base land speed by 30 feet for 1 minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 32,
+    "record_key": "Student of Perfection ~ Sudden Speed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

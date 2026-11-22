@@ -1,0 +1,23 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.47s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item ... FAILED
+
+failures:
+
+---- sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item stdout ----
+
+thread 'sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item' (2094312) panicked at src/sf_sheet_print.rs:725:13:
+Price: 200: "ItemLevel=1\nBulk=L\nYou gain darkvision with a range of 60 feet.\nSenses: Darkvision 60 ft.\nUpgrade slots used: +1"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 661 filtered out; finished in 0.78s
+
+error: test failed, to rerun pass `--bin codex-desktop`

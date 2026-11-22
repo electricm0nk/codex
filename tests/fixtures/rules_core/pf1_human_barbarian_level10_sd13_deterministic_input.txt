@@ -1,0 +1,45 @@
+# SD13-E5 deterministic Human Barbarian level 10 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human
+# Barbarian level-1..level-9 martial chassis baseline to level 10 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-9
+# fixtures, adding only the level bump this bounded tranche needs. No
+# rage-power choice-slot line is present (rage powers are a
+# level-2/4/6/8/10 choice-list feature this tranche deliberately does not
+# implement — a genuinely open-ended power list, not a flat arithmetic
+# burden; 10th IS a rage-power level, but exactly like the 2/4/6/8 grants
+# before it the selection stays named-but-unproven), so no new choice=
+# line is required beyond the level-1..level-9 baseline.
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power
+# recognition or execution, no damage-reduction application engine, and no
+# level-11+ progression. The PF1 Core Rulebook Barbarian class table's
+# level-10 "Special" column reads "Damage reduction 2/—, rage power"
+# (verified independently against d20pfsrd and legacy.aonprd.com) — the DR
+# entry is a tier-rise on the already-grounded Damage Reduction
+# flat-magnitude pillar (1 at 7th, rising by 1 at 10th and every three
+# levels thereafter), and the rage-power entry is the same open-ended
+# choice-list feature left unproven at 2/4/6/8 — so no new pillar is
+# grounded at level 10, only the existing pillars are widened.
+case_id=pf1-crb-human-barbarian-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:10
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

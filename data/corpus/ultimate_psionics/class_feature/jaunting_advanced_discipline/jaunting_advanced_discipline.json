@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Jaunting Advanced Discipline",
+    "name": "Jaunting Advanced Discipline",
+    "class": null,
+    "description": "You have chosen to specialize in teleportation.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.ClassSpecialization.PsionicDiscipline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychoportationDisciplineLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in teleportation."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Psychoportation ~ Nomad's Step|PREVARGTEQ:PsychoportationDisciplineLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Psychoportation ~ Inconstant Position|PREVARGTEQ:PsychoportationDisciplineLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Jaunting ~ Evacuate|PREVARGTEQ:PsychoportationDisciplineLVL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Jaunting ~ Far Strider|PREVARGTEQ:PsychoportationDisciplineLVL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 483,
+    "record_key": "Jaunting Advanced Discipline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

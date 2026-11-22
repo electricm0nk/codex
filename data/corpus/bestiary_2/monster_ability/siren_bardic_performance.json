@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Siren ~ Bardic Performance",
+    "delivery": "Supernatural",
+    "description": "A siren may use bardic performance as a 4th-level bard, and can use countersong, distraction, fascinate, inspire competence, and inspire courage.  Levels in the bard class stack with this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:siren_bardic_performance",
+    "name": "Bardic Performance",
+    "owners": [
+      "bestiary_2:monster:siren"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bard ~ Bardic Countersong|Bard ~ Bardic Performance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceLVL|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A siren may use bardic performance as a 4th-level bard, and can use countersong, distraction, fascinate, inspire competence, and inspire courage.  Levels in the bard class stack with this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Siren ~ Bardic Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.247",
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1160,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Siren ~ Bardic Performance",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

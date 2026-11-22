@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_213)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_213)",
+    "description": "If you have performed your daily obedience, once per day, you can channel the effects of holy smite through your weapon. You must declare your use of this ability before you roll your attack. On a hit, the target is affected as if targeted with holy smite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day, you can channel the effects of holy smite through your weapon. You must declare your use of this ability before you roll your attack. On a hit, the target is affected as if targeted with holy smite."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 213,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_213)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:213"
+  }
+}

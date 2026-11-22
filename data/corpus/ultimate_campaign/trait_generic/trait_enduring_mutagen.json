@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Enduring Mutagen",
+    "name": "Enduring Mutagen",
+    "description": "Because of special training, your unique body chemistry, or the uncovering of an alchemical secret, your mutagens last longer. The bonuses and penalties granted by your mutagens last for 1 additional minute per alchemist level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Enduring Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Enduring Mutagen],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Because of special training, your unique body chemistry, or the uncovering of an alchemical secret, your mutagens last longer. The bonuses and penalties granted by your mutagens last for 1 additional minute per alchemist level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 135,
+    "record_key": "Trait ~ Enduring Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

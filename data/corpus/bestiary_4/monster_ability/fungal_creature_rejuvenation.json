@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fungal Creature ~ Rejuvenation",
+    "delivery": "Extraordinary",
+    "description": "A fungal creature gains all the sustenance it requires from contact with moist natural earth, but it must rejuvenate itself as often and for as long as humans need sleep. As long as it is in contact with moist natural earth, a resting fungal creature regains hit points as though it were undergoing complete bed rest and long term care (4 hit points per Hit Die for each day of rest). The fungal creature can engage in light activity during rejuvenation, but any strenuous activity (like fighting, running, or casting a spell) prevents it from regaining hit points for that day. Complete bed rest doesn't increase the amount of healing a fungal creature gains from rejuvenation.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:fungal_creature_rejuvenation",
+    "name": "Rejuvenation",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A fungal creature gains all the sustenance it requires from contact with moist natural earth, but it must rejuvenate itself as often and for as long as humans need sleep. As long as it is in contact with moist natural earth, a resting fungal creature regains hit points as though it were undergoing complete bed rest and long term care (4 hit points per Hit Die for each day of rest). The fungal creature can engage in light activity during rejuvenation, but any strenuous activity (like fighting, running, or casting a spell) prevents it from regaining hit points for that day. Complete bed rest doesn't increase the amount of healing a fungal creature gains from rejuvenation."
+      },
+      {
+        "key": "KEY",
+        "value": "Fungal Creature ~ Rejuvenation"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 727,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fungal Creature ~ Rejuvenation",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

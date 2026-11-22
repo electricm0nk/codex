@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Sweeping Strike",
+    "name": "Sweeping Strike",
+    "description": "Even when you're swarmed, your foes are not safe from danger. Whenever you could make a full attack, you may instead make a single attack at your highest attack bonus and apply the results to all opponents within your reach. Roll damage once and apply it to all opponents hit by the attack. This attack can't deal precision damage. If the attack roll is a critical threat, choose one target you hit and attempt to confirm the critical against that target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Sweeping Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Even when you're swarmed, your foes are not safe from danger. Whenever you could make a full attack, you may instead make a single attack at your highest attack bonus and apply the results to all opponents within your reach. Roll damage once and apply it to all opponents hit by the attack. This attack can't deal precision damage. If the attack roll is a critical threat, choose one target you hit and attempt to confirm the critical against that target."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 403,
+    "record_key": "Mythic Path Ability ~ Sweeping Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Fear ~ Frightful Attack",
+    "name": "Frightful Attack",
+    "description": "When the spiritualist reaches 12th level, if the phantom hits with a slam attack, it can frighten those it hits instead of causing them to be shaken (the phantom chooses when it makes the attack). This is a mind-affecting fear effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Fear ~ Frightful Attack"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2f"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Fear.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the spiritualist reaches 12th level, if the phantom hits with a slam attack, it can frighten those it hits instead of causing them to be shaken (the phantom chooses when it makes the attack). This is a mind-affecting fear effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 92,
+    "record_key": "Emotional Focus / Fear ~ Frightful Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

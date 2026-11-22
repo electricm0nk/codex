@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Skill Mastery",
+    "name": "Skill Mastery",
+    "class": "Unchained Rogue Talent",
+    "description": "You become so confident in the use of certain skills that you can use them reliably even under adverse conditions. When making a skill check with one of these skills, you may take 10 even if stree and distraction would normally prevent you from doing so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Skill Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Unchained Rogue Advanced Talent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You become so confident in the use of certain skills that you can use them reliably even under adverse conditions. When making a skill check with one of these skills, you may take 10 even if stree and distraction would normally prevent you from doing so."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skill Mastery Choice|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 678,
+    "record_key": "Unchained Rogue Talent ~ Skill Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

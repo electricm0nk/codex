@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Myrmidarch Weapon Training",
+    "name": "Myrmidarch Weapon Training",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MyrmidarchWeaponTrainingLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training I|1|PREVARGTEQ:MyrmidarchWeaponTrainingLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training II|1|PREVARGTEQ:MyrmidarchWeaponTrainingLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training III|1|PREVARGTEQ:MyrmidarchWeaponTrainingLVL,18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 45,
+    "record_key": "Myrmidarch Weapon Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

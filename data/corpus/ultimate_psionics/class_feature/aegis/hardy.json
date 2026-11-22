@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Hardy",
+    "name": "Hardy",
+    "class": "Aegis",
+    "description": "Gain a +%1 bonus to Constitution.|AegisHardyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Hardy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisHardyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +%1 bonus to Constitution.|AegisHardyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|AegisHardyBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisHardyBonus|2"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 107,
+    "record_key": "Aegis ~ Hardy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

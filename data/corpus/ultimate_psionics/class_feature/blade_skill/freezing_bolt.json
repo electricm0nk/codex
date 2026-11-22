@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Freezing Bolt",
+    "name": "Freezing Bolt",
+    "class": "Blade Skill",
+    "description": "Mind bolt deals cold damage and may reduce speed (DC %1).|10+MndBladeLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Freezing Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Soulknife Archetype ~ Soulbolt"
+      },
+      {
+        "key": "DESC",
+        "value": "Mind bolt deals cold damage and may reduce speed (DC %1).|10+MndBladeLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 854,
+    "record_key": "Blade Skill ~ Freezing Bolt"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

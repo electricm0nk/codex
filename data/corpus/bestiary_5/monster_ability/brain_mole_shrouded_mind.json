@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brain Mole ~ Shrouded Mind",
+    "delivery": "Supernatural",
+    "description": "Brain moles are able to psychically shield their minds, allowing them to go undetected by predators that hunt psychically. Brain moles are immune to detect spells as well as spells that read or examine auras.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:brain_mole_shrouded_mind",
+    "name": "Shrouded Mind",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Brain moles are able to psychically shield their minds, allowing them to go undetected by predators that hunt psychically. Brain moles are immune to detect spells as well as spells that read or examine auras."
+      },
+      {
+        "key": "KEY",
+        "value": "Brain Mole ~ Shrouded Mind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.BrainMoleRacialTrait"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "BrainMoleRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Brain Mole ~ Shrouded Mind",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

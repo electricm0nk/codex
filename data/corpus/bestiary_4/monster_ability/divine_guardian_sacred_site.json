@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Divine Guardian ~ Sacred Site",
+    "delivery": "Extraordinary",
+    "description": "Each divine guardian is assigned to guard a specific site sacred to the deity that invested it with power. This area may be a structure, a series of structures, or a natural site with clearly defined borders. It can be as large as a city, but in most cases it's a single temple or a sacred grove. Gods don't waste their powers on places that their worshipers can protect, so most divine guardians keep watch over abandoned burial grounds or lost temples. The divine guardian of such a site is charged with protecting it from harm and preventing incursions by those not of the faith. It must keep its vigil until the god deems the guardian's task done. If the divine guardian ever moves out of the area defined as the sacred site, it immediately loses the divine guardian template and any spellcasting ability the deity might have granted from class levels. It cannot regain the template unless it atones for its failure (usually by completing some quest or via an atonement spell) and reenters the site within 1 week. Otherwise, it loses the template permanently, taking 6d6 points of Constitution drain as the years of lost food, drink, and sleep return to it tenfold. A creature that lacks a Constitution score takes 2d6 points of damage per Hit Die from this process. Even if it survives the Constitution drain, the creature can never regain the template.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:divine_guardian_sacred_site",
+    "name": "Sacred Site",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Each divine guardian is assigned to guard a specific site sacred to the deity that invested it with power. This area may be a structure, a series of structures, or a natural site with clearly defined borders. It can be as large as a city, but in most cases it's a single temple or a sacred grove. Gods don't waste their powers on places that their worshipers can protect, so most divine guardians keep watch over abandoned burial grounds or lost temples. The divine guardian of such a site is charged with protecting it from harm and preventing incursions by those not of the faith. It must keep its vigil until the god deems the guardian's task done. If the divine guardian ever moves out of the area defined as the sacred site, it immediately loses the divine guardian template and any spellcasting ability the deity might have granted from class levels. It cannot regain the template unless it atones for its failure (usually by completing some quest or via an atonement spell) and reenters the site within 1 week. Otherwise, it loses the template permanently, taking 6d6 points of Constitution drain as the years of lost food, drink, and sleep return to it tenfold. A creature that lacks a Constitution score takes 2d6 points of damage per Hit Die from this process. Even if it survives the Constitution drain, the creature can never regain the template."
+      },
+      {
+        "key": "KEY",
+        "value": "Divine Guardian ~ Sacred Site"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 500,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Divine Guardian ~ Sacred Site",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

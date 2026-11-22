@@ -1,0 +1,59 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "description": "[redacted PI]",
+    "key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_235)",
+    "name": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_235)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.ReligionTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.333"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "advanced_players_guide:apg_abilities.lst:235",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_235)",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

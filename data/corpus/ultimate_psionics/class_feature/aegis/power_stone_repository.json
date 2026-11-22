@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Power Stone Repository",
+    "name": "Power Stone Repository",
+    "class": "Aegis",
+    "description": "You can store %1 power stones in your suit, and you gain a bonus equal to the number of stored power stones to Use Magic Device checks to use the stones.|AegisPowerStoneStorage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Power Stone Repository"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisPowerStoneStorage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can store %1 power stones in your suit, and you gain a bonus equal to the number of stored power stones to Use Magic Device checks to use the stones.|AegisPowerStoneStorage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisPowerStoneStorage|AstralSuitLVL"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 66,
+    "record_key": "Aegis ~ Power Stone Repository"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

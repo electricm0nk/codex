@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You need not sleep; but only meditate for 4 hours to gain all benefits of sleep.",
+    "key": "DuergarDSP ~ Waking Dreamer",
+    "name": "Waking Dreamer",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Waking Dreamer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.DuergarDSPRacialTrait.DuergarDSPPsionics"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Waking Dreamer],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPPsionics]"
+      },
+      {
+        "key": "DESC",
+        "value": "You need not sleep; but only meditate for 4 hours to gain all benefits of sleep."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "DuergarDSP ~ Waking Dreamer",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Brain Eater Gift",
+    "name": "Brain Eater Gift",
+    "description": "If you eat the brain of a creature with an Intelligence score of 3 or higher, you gain a +2 insight bonus on all skill checks in which the creature possessed ranks for 1 hour. Eating a brain is a full-round action, and the target must be dead or helpless. If the target is alive, you can attempt to eat its brain as a coup de grace attack with your gnashing bite, but you gain the bonus only if your attempt results in the victim's death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Brain Eater Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulBrainEaterGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "If you eat the brain of a creature with an Intelligence score of 3 or higher, you gain a +2 insight bonus on all skill checks in which the creature possessed ranks for 1 hour. Eating a brain is a full-round action, and the target must be dead or helpless. If the target is alive, you can attempt to eat its brain as a coup de grace attack with your gnashing bite, but you gain the bonus only if your attempt results in the victim's death."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 211,
+    "record_key": "Ghoul Corruption ~ Brain Eater Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

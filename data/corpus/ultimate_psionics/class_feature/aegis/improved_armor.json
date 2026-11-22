@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Improved Armor",
+    "name": "Improved Armor",
+    "class": "Aegis",
+    "description": "Your armor bonus increases by %1.|AegisImprovedArmorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Improved Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AstralSuitLVL,5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisImprovedArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your armor bonus increases by %1.|AegisImprovedArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|AegisImprovedArmorBonus|TYPE=Armor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisImprovedArmorBonus|1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 62,
+    "record_key": "Aegis ~ Improved Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

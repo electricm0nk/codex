@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as ooze form I except you can also assume the form of a Large ooze. You gain blindsight 30 feet and immunity to critical hits and precision damage as well. [Large Ooze] If you assume this form, you gain a +2 size bonus to your Strength score, a +8 size bonus to your Constitution score, a slam attack (2d4 plus 1d6 acid and grab), and constrict (2d4), and you take a -8 penalty to your Dexterity score.",
+    "key": "Ooze Form II",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Magus,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Assume the form of a Large ooze creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as ooze form I except you can also assume the form of a Large ooze. You gain blindsight 30 feet and immunity to critical hits and precision damage as well. [Large Ooze] If you assume this form, you gain a +2 size bonus to your Strength score, a +8 size bonus to your Constitution score, a slam attack (2d4 plus 1d6 acid and grab), and constrict (2d4), and you take a -8 penalty to your Dexterity score.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Ooze Form II",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_expr"
+  ]
+}

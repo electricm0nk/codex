@@ -1,0 +1,60 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "The waves call to you, like a siren's song echoing across crashing surf. Once the deep one corruption has taken root, the summons calling you to the deep ones' cold, lightless realm becomes a constant thrum in the back of your mind. Exposure to sea water becomes increasingly important to you. Each day that you don't spend at least %1 hours fully immersed in the ocean or a salt-water sea, you must succeed at a Will save (DC %2). You also need to attempt such a Will save whenever you are a target of (or in the area of) a divine spell or spell-like ability with the evil descriptor.|DeepOneManifestationLevel|15+DeepOneManifestationLevel",
+    "key": "Corruption ~ Deep One",
+    "name": "Deep One",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Deep One"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeepOneCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "DESC",
+        "value": "The waves call to you, like a siren's song echoing across crashing surf. Once the deep one corruption has taken root, the summons calling you to the deep ones' cold, lightless realm becomes a constant thrum in the back of your mind. Exposure to sea water becomes increasingly important to you. Each day that you don't spend at least %1 hours fully immersed in the ocean or a salt-water sea, you must succeed at a Will save (DC %2). You also need to attempt such a Will save whenever you are a target of (or in the area of) a divine spell or spell-like ability with the evil descriptor.|DeepOneManifestationLevel|15+DeepOneManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|Deep OneCorruptionResistance|PREVARGTEQ:Deep OneCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Deep One Corruption Counter"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Corruption ~ Deep One",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

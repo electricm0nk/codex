@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Forgesteed Rider ~ Life Link",
+    "name": "Life Link",
+    "description": "While mounted or within 30 feet of each other, neither you nor your mount can be brought below 1 hit point as long as the other has more than 1 hit point.  All hit point damage in excess of that last 1 hit point is instead applied to the mount, if you are at 1 hit point, or to you, if the mount is at 1 hit point.  When both are at 1 hit point, this ability ceases to work.  In addition, you and the mount are always treated as if under the effects of mindlink to the other.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgesteed Rider ~ Life Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While mounted or within 30 feet of each other, neither you nor your mount can be brought below 1 hit point as long as the other has more than 1 hit point.  All hit point damage in excess of that last 1 hit point is instead applied to the mount, if you are at 1 hit point, or to you, if the mount is at 1 hit point.  When both are at 1 hit point, this ability ceases to work.  In addition, you and the mount are always treated as if under the effects of mindlink to the other."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 44,
+    "record_key": "Forgesteed Rider ~ Life Link"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

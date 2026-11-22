@@ -1,0 +1,27 @@
+control (unmodified): exit=0 verdict=PASS
+M1 the hellknight verdict names the older printing: exit=1 verdict=FAIL (unexpected field deltas: 1; F6c pin failures: 1)
+    F6c pinned printing moved: adventurers_guide:class:hellknight
+    unexpected field deltas: 1
+M2 a verdict the resolver never proved (cyphermage): exit=1 verdict=FAIL (unexpected field deltas: 1; F6c pin failures: 1)
+    F6c pinned printing moved: inner_sea_magic:class:cyphermage
+    unexpected field deltas: 1
+M3 a printing's SOURCEDATE moved: exit=1 verdict=FAIL (unexpected field deltas: 1; F6c pin failures: 1)
+    F6c pinned printing moved: inner_sea_magic:class:cyphermage
+    unexpected field deltas: 1
+M4 a pinned printing withdrawn: exit=1 verdict=FAIL (F6c pin failures: 1)
+    F6c pinned printing withdrawn: inner_sea_magic:class:cyphermage
+M5 an unpinned printing on a class no other book states: exit=1 verdict=FAIL (unexpected field deltas: 1)
+    unexpected field deltas: 1
+M6 the shaman's withheld count prints again: exit=1 verdict=FAIL (F4pre pin failures: 1; F6c pin failures: 1)
+    F4pre pinned offer withdrawn or moved: advanced_class_guide:class:shaman#bonus1
+    F6c advanced_class_guide:class:shaman#bonus1: not exactly a withheld domain count (offers absent, print false)
+M7 the shaman's withheld count offers the domains again: exit=1 verdict=FAIL (unexpected field deltas: 1; F6c pin failures: 1)
+    F6c advanced_class_guide:class:shaman#bonus1: not exactly a withheld domain count (offers absent, print false)
+    unexpected field deltas: 1
+M8 the cleric's domain count withheld (its domains are the player's picks): exit=1 verdict=FAIL (unexpected field deltas: 1733)
+    unexpected field deltas: 1733
+M9 a spirit-magic domain record prints again: exit=1 verdict=FAIL (F6c pin failures: 1)
+    F6c advanced_class_guide:domain:life_spirit: the pinned domain record prints again
+M10 a domain another class grants (the druid's Air) stops printing: exit=1 verdict=FAIL (unexpected field deltas: 1)
+    unexpected field deltas: 1
+control (restored): exit=0 verdict=PASS

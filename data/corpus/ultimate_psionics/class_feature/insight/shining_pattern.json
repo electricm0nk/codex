@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Shining Pattern",
+    "name": "Shining Pattern",
+    "class": "Insight",
+    "description": "When you make a successful disrupt pattern attack, all creatures within 15 ft. of the creature struck must make a DC %1 Fortitude save or be blinded for 1 round.|ShiningPatternDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Shining Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShiningPatternDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a successful disrupt pattern attack, all creatures within 15 ft. of the creature struck must make a DC %1 Fortitude save or be blinded for 1 round.|ShiningPatternDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShiningPatternDC|CrypticInsightDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 219,
+    "record_key": "Insight ~ Shining Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

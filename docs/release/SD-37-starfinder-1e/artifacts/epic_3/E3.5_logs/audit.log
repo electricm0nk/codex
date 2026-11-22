@@ -1,0 +1,6 @@
+$ dual audit on d08635eed8, CARD_BASE=b385be8d3e; identifier audit scoped to crates/codex-ingest data/starfinder-1e docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.5_gates.sh E3.5_verify.sh E3.5_core_delta_classes.py E3.5_fact_gate_check.py
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

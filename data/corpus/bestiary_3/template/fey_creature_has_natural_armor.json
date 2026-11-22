@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Fey Creature Has Natural Armor",
+    "name": "Fey Creature Has Natural Armor",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "var(\"AC.Natural\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|-1|TYPE=Base"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "record_key": "Fey Creature Has Natural Armor",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Bushwhack",
+    "category": "Combat",
+    "name": "Bushwhack",
+    "description": "You can subdue an unsuspecting foe quickly. When a flat-footed creature is unaware of your presence and you successfully grapple it, you can attempt a second grapple combat maneuver check to pin the creature as a free action. If you have the Chokehold feat (Ultimate Combat 92), you can instead use this second combat maneuver check to initiate a chokehold.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Grapple,Improved Unarmed Strike",
+      "PREVARGTEQ:PreStatScore_DEX,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 9,
+    "record_key": "Bushwhack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

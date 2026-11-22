@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Water) ~ Pressure Wave",
+    "name": "Pressure Wave",
+    "description": "A mythic water elemental can expend one use of mythic power to create a 60-foot-radius bust of pressurized water. Creatures in the area must attempt a DC 22 Fort save. Success means the creature is sickened for 1d4 rounds; failure means the creature is nauseated for 1d4 rounds and sickened for 1d4 rounds after that. If the elemental expends two uses of mythic power, creatures nauseated by this ability also take slam damage. Creatures with the aquatic or water subtypes are immune to this ability. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Water) ~ Pressure Wave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Water) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic water elemental can expend one use of mythic power to create a 60-foot-radius bust of pressurized water. Creatures in the area must attempt a DC 22 Fort save. Success means the creature is sickened for 1d4 rounds; failure means the creature is nauseated for 1d4 rounds and sickened for 1d4 rounds after that. If the elemental expends two uses of mythic power, creatures nauseated by this ability also take slam damage. Creatures with the aquatic or water subtypes are immune to this ability. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 152,
+    "record_key": "Mythic Elemental (Water) ~ Pressure Wave"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

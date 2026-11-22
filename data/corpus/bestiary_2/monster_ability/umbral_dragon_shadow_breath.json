@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Shadow Breath",
+    "delivery": "Supernatural",
+    "description": "Three times per day, an adult or older umbral dragon can breathe a cone of shadows.  Creatures who fail a Fortitude save are blinded for 1d4 rounds and take %1 points of Str drain.  A successful save negates the blindness and reduces Str drain to 1d4 points.",
+    "description_variables": [
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:umbral_dragon_shadow_breath",
+    "name": "Shadow Breath",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 Str)|DragonAgeCategory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, an adult or older umbral dragon can breathe a cone of shadows.  Creatures who fail a Fortitude save are blinded for 1d4 rounds and take %1 points of Str drain.  A successful save negates the blindness and reduces Str drain to 1d4 points.|DragonAgeCategory"
+      },
+      {
+        "key": "KEY",
+        "value": "Umbral Dragon ~ Shadow Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 506,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Umbral Dragon ~ Shadow Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

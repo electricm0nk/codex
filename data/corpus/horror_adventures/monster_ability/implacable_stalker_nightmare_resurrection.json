@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Nightmare Resurrection",
+    "delivery": "Supernatural",
+    "description": "When an implacable stalker dies, it creates a psychic imprint on the mind of each intelligent creature within 60 feet that witnessed its death. Each week, such creatures are subject to a nightmare effect (DC %1; the normal modifiers for nightmare based on knowledge and connection do not apply). In this nightmare, the creature is hunted and slain by the implacable stalker (for GMs using the nightmare dreamscape rules on page 162, these nightmares always have the \"being chased\" nightmare feature). A creature that succeeds at three consecutive saving throws to resist the effect is freed from it. If any creature fails at three consecutive saving throws to resist the nightmare, the implacable stalker returns to life, as per true resurrection. If its corpse has been completely destroyed, it returns to life in a random location within 5 miles of the creature that failed to resist the nightmare effects. Once the implacable stalker is returned to life, the psychic imprint fades from all creatures still affected by it.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:implacable_stalker_nightmare_resurrection",
+    "name": "Nightmare Resurrection",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When an implacable stalker dies, it creates a psychic imprint on the mind of each intelligent creature within 60 feet that witnessed its death. Each week, such creatures are subject to a nightmare effect (DC %1; the normal modifiers for nightmare based on knowledge and connection do not apply). In this nightmare, the creature is hunted and slain by the implacable stalker (for GMs using the nightmare dreamscape rules on page 162, these nightmares always have the \"being chased\" nightmare feature). A creature that succeeds at three consecutive saving throws to resist the effect is freed from it. If any creature fails at three consecutive saving throws to resist the nightmare, the implacable stalker returns to life, as per true resurrection. If its corpse has been completely destroyed, it returns to life in a random location within 5 miles of the creature that failed to resist the nightmare effects. Once the implacable stalker is returned to life, the psychic imprint fades from all creatures still affected by it.|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Implacable Stalker ~ Nightmare Resurrection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.ImplacableStalker"
+      }
+    ],
+    "source_page": "p.239",
+    "traits": [
+      "ImplacableStalker"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 293,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Implacable Stalker ~ Nightmare Resurrection",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,156 @@
+[
+ {
+  "name": "Typical Skill Improvement",
+  "table": "typical_skill",
+  "per_level": 20,
+  "unit": "Level",
+  "costs": [
+   {
+    "level": 1,
+    "ip_cost": 20
+   },
+   {
+    "level": 2,
+    "ip_cost": 40
+   },
+   {
+    "level": 3,
+    "ip_cost": 60
+   },
+   {
+    "level": 4,
+    "ip_cost": 80
+   },
+   {
+    "level": 5,
+    "ip_cost": 100
+   },
+   {
+    "level": 6,
+    "ip_cost": 120
+   },
+   {
+    "level": 7,
+    "ip_cost": 140
+   },
+   {
+    "level": 8,
+    "ip_cost": 160
+   },
+   {
+    "level": 9,
+    "ip_cost": 180
+   },
+   {
+    "level": 10,
+    "ip_cost": 200
+   }
+  ],
+  "source_page": "p412",
+  "text": "I.P. cost to reach each Level 1 to 10; cost is based on the next Level/Rank; you can't skip Levels/Ranks.",
+  "transcription_note": "U-37: the cost tables are on p412 (printed 411) per the image; p411 holds the Playstyle award table (10-50). `costs` values are the printed numbers (checked against the page text: 20..200, 40..400, 60..600).",
+  "kind": "ip_cost"
+ },
+ {
+  "name": "Difficult (x2) Skill Improvement",
+  "table": "difficult_skill",
+  "per_level": 40,
+  "unit": "Level",
+  "costs": [
+   {
+    "level": 1,
+    "ip_cost": 40
+   },
+   {
+    "level": 2,
+    "ip_cost": 80
+   },
+   {
+    "level": 3,
+    "ip_cost": 120
+   },
+   {
+    "level": 4,
+    "ip_cost": 160
+   },
+   {
+    "level": 5,
+    "ip_cost": 200
+   },
+   {
+    "level": 6,
+    "ip_cost": 240
+   },
+   {
+    "level": 7,
+    "ip_cost": 280
+   },
+   {
+    "level": 8,
+    "ip_cost": 320
+   },
+   {
+    "level": 9,
+    "ip_cost": 360
+   },
+   {
+    "level": 10,
+    "ip_cost": 400
+   }
+  ],
+  "source_page": "p412",
+  "text": "I.P. cost to reach each Level 1 to 10; cost is based on the next Level/Rank; you can't skip Levels/Ranks.",
+  "kind": "ip_cost"
+ },
+ {
+  "name": "Role Ability Rank Improvement",
+  "table": "role_ability_rank",
+  "per_level": 60,
+  "unit": "Rank",
+  "costs": [
+   {
+    "level": 1,
+    "ip_cost": 60
+   },
+   {
+    "level": 2,
+    "ip_cost": 120
+   },
+   {
+    "level": 3,
+    "ip_cost": 180
+   },
+   {
+    "level": 4,
+    "ip_cost": 240
+   },
+   {
+    "level": 5,
+    "ip_cost": 300
+   },
+   {
+    "level": 6,
+    "ip_cost": 360
+   },
+   {
+    "level": 7,
+    "ip_cost": 420
+   },
+   {
+    "level": 8,
+    "ip_cost": 480
+   },
+   {
+    "level": 9,
+    "ip_cost": 540
+   },
+   {
+    "level": 10,
+    "ip_cost": 600
+   }
+  ],
+  "source_page": "p412",
+  "text": "I.P. cost to reach each Rank 1 to 10; cost is based on the next Level/Rank; you can't skip Levels/Ranks.",
+  "kind": "ip_cost"
+ }
+]

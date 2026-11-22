@@ -1,0 +1,10 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 10s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 863 filtered out; finished in 0.00s
+

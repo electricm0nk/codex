@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dhampir ~ Moroi-Born",
+    "name": "Moroi-Born (Svetocher)",
+    "description": "These dhampirs are blessed with unnatural grace, beauty, and charm, and they often feel most at home among a region's aristocracy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Moroi-Born"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dhampir Subrace"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceAbilityScores=True,Dhampir_ReplaceSkilled=True,Dhampir_ReplaceWeakness=True,Dhampir_ReplaceSpellLikeAbility=True"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Internal,TYPE.Dhampir Subrace],[PREABILITY:1,CATEGORY=Special Ability,Dhampir Moroi-Born]"
+      },
+      {
+        "key": "DESC",
+        "value": "These dhampirs are blessed with unnatural grace, beauty, and charm, and they often feel most at home among a region's aristocracy."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Dhampir ~ Moroi-Born"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dhampir Racial Trait|AUTOMATIC|Moroi-Born ~ Ability Scores|Moroi-Born ~ Skilled|Moroi-Born ~ Spell-Like Ability|Moroi-Born ~ Weakness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Moroi"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Str, +2 Cha, -2 Con."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Diplomacy, Knowledge (nobility)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Svetochers gain obscuring mist as a spell-like ability."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Weakness|Svetochers take a -1 penalty on saves against effects that deal positive energy damage."
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceAbilityScores|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSkilled|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceWeakness|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSpellLikeAbility|True"
+      },
+      {
+        "key": "INFO",
+        "value": "Ancestry|Moroi"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Str, +2 Cha, -2 Con."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Skill Modifiers|Diplomacy, Knowledge (nobility)."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Spell-Like Ability|Svetochers gain obscuring mist as a spell-like ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Weakness|Svetochers take a -1 penalty on saves against effects that deal positive energy damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 37,
+    "record_key": "Dhampir ~ Moroi-Born"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,542 @@
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import {
+  applyCyberpunkImprovement,
+  previewCyberpunkImprovement,
+  type CyberpunkImprovePlan,
+  type CyberpunkImprovePreview,
+  type CyberpunkImproveRow,
+  type CyberpunkReputationEvent,
+} from '../boundary/cprImprove';
+import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import {
+  EMPTY_CYBERPUNK_IMPROVE_PLAN,
+  addPurchase,
+  canSpend,
+  cyberwareOptionLabel,
+  humanityLossFromText,
+  improveHumanity,
+  improvePlanFromIpText,
+  improveReputation,
+  improveTotals,
+  nextTarget,
+  pinSeed,
+  purchaseCost,
+  purchaseHumanityLoss,
+  purchaseHumanityRegained,
+  purchaseLabel,
+  purchaseReputationLevel,
+  removePurchase,
+  reputationLevelFromText,
+  skillPurchaseKey,
+  switchOptionLabel,
+  therapyOptionLabel,
+  therapyRegainedFromText,
+} from './cyberpunkImproveModel';
+
+/**
+ * The Cyberpunk RED improve dialog (SD-38 E5.1): the player enters the IP the GM awarded and buys
+ * Skill Levels and Role Ability Ranks one step at a time, or changes Roles (E5.2: Rank 1 of a new Role
+ * once the latest Role is at Rank 4, p. 143; priced by the engine at the A-1 Rank 1 price). Every change is priced by the engine
+ * (`preview_cyberpunk_improvement`): each purchase's cost, the IP available, the plan's cost and the
+ * IP left are its rows, and a skipped Level or an overspend shows its refusal. E5.3: cyberware installed
+ * after Character Generation takes the Humanity Loss entered, or rolled on its dice when left blank (p. 111,
+ * A-3); the engine refuses a loss outside the dice and an install over its option slots (D-11), and its rows
+ * give the loss and the Humanity and EMP before and after. E5.4: therapy (p. 230) regains the Humanity entered,
+ * or rolled on its dice when left blank; the engine refuses a regain outside the dice and stops it at the D-5
+ * maximum Humanity, and its rows give the regain and the Humanity and EMP before and after. Addiction therapy
+ * regains no Humanity: its printed effect is shown, not bought. E5.5: a Reputation change (p. 193-194) records the event the
+ * GM awarded -- its Level, deed or cowardice, and what it was for; the engine refuses a Level outside 1-10, decides whether the
+ * event replaces the defining one (only a higher Level does), and its rows give the Level after each event and the Reputation and
+ * Facedown base before and after (negative Reputation for cowardice). The engine's roller seed is pinned on the plan so
+ * the apply keeps the previewed dice. "Spend IP" saves through `apply_cyberpunk_improvement` and hands the
+ * reloaded sheet to `onApplied`.
+ */
+export function CyberpunkImproveDialog(props: {
+  characterId: string;
+  onApplied: (detail: LoadSavedCharacterResponse) => void;
+  onClose: () => void;
+}) {
+  const { characterId } = props;
+  const [plan, setPlan] = useState<CyberpunkImprovePlan>(EMPTY_CYBERPUNK_IMPROVE_PLAN);
+  const [ipText, setIpText] = useState('');
+  const [ipError, setIpError] = useState<string | null>(null);
+  const [preview, setPreview] = useState<CyberpunkImprovePreview | null>(null);
+  const [previewError, setPreviewError] = useState<string | null>(null);
+  const [skillKey, setSkillKey] = useState('');
+  const [specialty, setSpecialty] = useState('');
+  const [skillTarget, setSkillTarget] = useState('');
+  const [rankTarget, setRankTarget] = useState('');
+  const [switchRole, setSwitchRole] = useState('');
+  const [cyberName, setCyberName] = useState('');
+  const [lossText, setLossText] = useState('');
+  const [therapyName, setTherapyName] = useState('');
+  const [regainText, setRegainText] = useState('');
+  const [repLevelText, setRepLevelText] = useState('');
+  const [repEvent, setRepEvent] = useState<CyberpunkReputationEvent>('deed');
+  const [repDescription, setRepDescription] = useState('');
+  const [spending, setSpending] = useState(false);
+  const [spendError, setSpendError] = useState<string | null>(null);
+  const mounted = useRef(true);
+  useEffect(
+    () => () => {
+      mounted.current = false;
+    },
+    [],
+  );
+
+  useEffect(() => {
+    let live = true;
+    previewCyberpunkImprovement(characterId, plan)
+      .then((answer) => {
+        if (live) {
+          setPreview(answer);
+          setPreviewError(null);
+          setPlan((current) => (current === plan ? pinSeed(current, answer) : current));
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setPreviewError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, [characterId, plan]);
+
+  const option = preview?.skills.find((s) => s.key === skillKey) ?? null;
+  const key = option === null ? null : skillPurchaseKey(option, specialty);
+  const skillDefault = option === null || key === null ? null : nextTarget(plan, { kind: 'skill', key }, option.level);
+  const role = preview?.role ?? null;
+  const rankDefault = role === null ? null : nextTarget(plan, { kind: 'roleRank' }, role.rank);
+  const totals = improveTotals(preview);
+
+  const targetOf = (text: string, fallback: number | null): number | null => {
+    const trimmed = text.trim();
+    if (trimmed === '') {
+      return fallback;
+    }
+    return /^\d+$/.test(trimmed) ? Number(trimmed) : null;
+  };
+  const skillTo = targetOf(skillTarget, skillDefault);
+  const rankTo = targetOf(rankTarget, rankDefault);
+  const loss = humanityLossFromText(lossText);
+  const regain = therapyRegainedFromText(regainText);
+  const therapies = preview?.therapy ?? [];
+  const humanity = improveHumanity(preview);
+  const repLevel = reputationLevelFromText(repLevelText);
+  const reputation = improveReputation(preview);
+
+  const onSpend = () => {
+    setSpending(true);
+    setSpendError(null);
+    applyCyberpunkImprovement(characterId, plan)
+      .then((reloaded) => {
+        if (mounted.current) {
+          props.onApplied(reloaded);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (mounted.current) {
+          setSpendError(cause instanceof Error ? cause.message : String(cause));
+        }
+      })
+      .finally(() => {
+        if (mounted.current) {
+          setSpending(false);
+        }
+      });
+  };
+
+  return (
+    <div data-testid="cpr-improve-dialog" role="dialog" aria-label="Improve Improvement Points" style={dialogStyle}>
+      <p style={headingStyle}>Improve: spend Improvement Points</p>
+      <p style={noteStyle}>
+        The cost is based on the next Level/Rank; you can&apos;t skip Levels/Ranks (p. 411). Typical Skills cost 20 IP x the next Level,
+        Difficult (x2) Skills 40 IP x, Role Ability Ranks 60 IP x the next Rank.
+      </p>
+
+      <label style={fieldStyle}>
+        IP awarded
+        <input
+          aria-label="IP entered"
+          inputMode="numeric"
+          value={ipText}
+          onChange={(event) => {
+            setIpText(event.target.value);
+            const next = improvePlanFromIpText(plan, event.target.value);
+            setIpError(next.error);
+            setPlan(next.plan);
+          }}
+          style={inputStyle}
+        />
+      </label>
+      {ipError === null ? null : <p style={errorStyle}>{ipError}</p>}
+      <p data-testid="cpr-improve-available" style={{ margin: '0.4rem 0' }}>
+        IP available: <Figure row={totals.available} />
+      </p>
+
+      <div style={rowStyle}>
+        <select
+          aria-label="Skill to improve"
+          value={skillKey}
+          onChange={(event) => {
+            setSkillKey(event.target.value);
+            setSpecialty('');
+            setSkillTarget('');
+          }}
+          style={inputStyle}
+        >
+          <option value="">— choose a skill —</option>
+          {(preview?.skills ?? []).map((s) => (
+            <option key={s.key} value={s.key}>
+              {s.specialtyRequired ? `${s.name} (new specialty)` : s.key} — Level {s.level}
+              {s.next === null ? ', Level 10' : `, next Level ${s.next.value} IP`}
+            </option>
+          ))}
+        </select>
+        {option?.specialtyRequired === true ? (
+          <input aria-label="Specialty" value={specialty} onChange={(event) => setSpecialty(event.target.value)} style={inputStyle} />
+        ) : null}
+        <input
+          aria-label="Skill Level to buy"
+          title={skillDefault === null ? 'Level' : `Level ${skillDefault} when left blank`}
+          inputMode="numeric"
+          value={skillTarget}
+          onChange={(event) => setSkillTarget(event.target.value)}
+          style={{ ...inputStyle, width: '6rem' }}
+        />
+        {skillDefault === null ? null : <span style={noteStyle}>blank buys Level {skillDefault}</span>}
+        <button
+          type="button"
+          disabled={key === null || skillTo === null}
+          onClick={() => {
+            if (key !== null && skillTo !== null) {
+              setPlan(addPurchase(plan, { kind: 'skill', key, to: skillTo }));
+              setSkillTarget('');
+            }
+          }}
+          style={buttonStyle}
+        >
+          Add skill level
+        </button>
+      </div>
+
+      {role === null ? (
+        <p style={noteStyle}>This character has no Role, so it has no Role Ability Rank to raise.</p>
+      ) : (
+        <div style={rowStyle}>
+          <span>
+            {role.name} Role Ability, Rank {role.rank}
+            {role.next === null ? '' : `, next Rank ${role.next.value} IP`}
+          </span>
+          <input
+            aria-label="Role Rank to buy"
+            title={rankDefault === null ? 'Rank' : `Rank ${rankDefault} when left blank`}
+            inputMode="numeric"
+            value={rankTarget}
+            onChange={(event) => setRankTarget(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          {rankDefault === null ? null : <span style={noteStyle}>blank buys Rank {rankDefault}</span>}
+          <button
+            type="button"
+            disabled={rankTo === null}
+            onClick={() => {
+              if (rankTo !== null) {
+                setPlan(addPurchase(plan, { kind: 'roleRank', to: rankTo }));
+                setRankTarget('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add Role Rank
+          </button>
+        </div>
+      )}
+
+      {role === null ? null : (
+        <div data-testid="cpr-improve-switch">
+          <p style={noteStyle}>
+            Multiclassing (p. 143): you can change Roles anytime you have completed at least 4 Ranks in your previous Role by buying
+            Rank 1 in the new Role with Improvement Points. You then start the new Role at Rank 1. When you switch, you&apos;ll be locked
+            from multiclassing again until your latest Role is at least Rank 4. You can continue increasing the Rank of your previous Role,
+            and you retain all features granted by it.
+          </p>
+          <div style={rowStyle}>
+            <select aria-label="New Role" value={switchRole} onChange={(event) => setSwitchRole(event.target.value)} style={inputStyle}>
+              <option value="">— change Role to —</option>
+              {(preview?.switch ?? []).map((o) => (
+                <option key={o.role} value={o.role} title={o.refusal ?? o.cost?.detail ?? ''}>
+                  {switchOptionLabel(o)}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              disabled={switchRole === ''}
+              onClick={() => {
+                if (switchRole !== '') {
+                  setPlan(addPurchase(plan, { kind: 'roleSwitch', role: switchRole }));
+                  setSwitchRole('');
+                }
+              }}
+              style={buttonStyle}
+            >
+              Add Role switch
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div data-testid="cpr-improve-cyberware">
+        <p style={noteStyle}>
+          Cyberware after Character Generation (p. 111): Humanity Loss is determined by the dice in parentheses following the preset
+          number. Enter the loss you rolled, or leave it blank to roll it here. The install&apos;s price and where it is installed are
+          printed in the cyberware listing; they cost no IP.
+        </p>
+        <div style={rowStyle}>
+          <select aria-label="Cyberware to install" value={cyberName} onChange={(event) => setCyberName(event.target.value)} style={inputStyle}>
+            <option value="">— install cyberware —</option>
+            {(preview?.cyberware ?? []).map((o) => (
+              <option key={o.name} value={o.name}>
+                {cyberwareOptionLabel(o)}
+              </option>
+            ))}
+          </select>
+          <input
+            aria-label="Humanity Loss rolled"
+            title="Blank rolls the piece's dice"
+            inputMode="numeric"
+            value={lossText}
+            onChange={(event) => setLossText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <span style={noteStyle}>blank rolls the dice</span>
+          <button
+            type="button"
+            disabled={cyberName === '' || loss.error !== null}
+            onClick={() => {
+              if (cyberName !== '' && loss.error === null) {
+                setPlan(addPurchase(plan, { kind: 'cyberware', name: cyberName, humanityLoss: loss.humanityLoss }));
+                setCyberName('');
+                setLossText('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add cyberware
+          </button>
+        </div>
+        {loss.error === null ? null : <p style={errorStyle}>{loss.error}</p>}
+      </div>
+
+      <div data-testid="cpr-improve-therapy">
+        <p style={noteStyle}>
+          Therapy (p. 230): Humanity cannot be fully regained without the removal of cyberware. Each piece of cyberware will decrease
+          your maximum Humanity by 2; each piece of borgware lowers it by 4 instead; cyberware with 0 Humanity Loss on installation will
+          not decrease it. Enter the Humanity you regained, or leave it blank to roll it here. The therapy&apos;s cost, materials and
+          Medical Tech DV are printed; they cost no IP.
+        </p>
+        <div style={rowStyle}>
+          <select aria-label="Therapy" value={therapyName} onChange={(event) => setTherapyName(event.target.value)} style={inputStyle}>
+            <option value="">— therapy —</option>
+            {therapies
+              .filter((t) => t.dice !== null)
+              .map((t) => (
+                <option key={t.name} value={t.name} title={t.text}>
+                  {therapyOptionLabel(t)}
+                </option>
+              ))}
+          </select>
+          <input
+            aria-label="Humanity regained rolled"
+            title="Blank rolls the therapy's dice"
+            inputMode="numeric"
+            value={regainText}
+            onChange={(event) => setRegainText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <span style={noteStyle}>blank rolls the dice</span>
+          <button
+            type="button"
+            disabled={therapyName === '' || regain.error !== null}
+            onClick={() => {
+              if (therapyName !== '' && regain.error === null) {
+                setPlan(addPurchase(plan, { kind: 'therapy', name: therapyName, regained: regain.regained }));
+                setTherapyName('');
+                setRegainText('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add therapy
+          </button>
+        </div>
+        {regain.error === null ? null : <p style={errorStyle}>{regain.error}</p>}
+        {therapies
+          .filter((t) => t.dice === null)
+          .map((t) => (
+            <p key={t.name} data-testid="cpr-improve-therapy-printed" style={noteStyle}>
+              {therapyOptionLabel(t)}; materials {t.materialsEb}eb ({t.materialsPriceCategory}); {t.duration}. {t.text}
+            </p>
+          ))}
+      </div>
+
+      <div data-testid="cpr-improve-reputation">
+        <p style={noteStyle}>
+          Reputation (p. 193): when your GM believes your Character has done something worthy of gaining a Reputation, they can assign
+          a Reputation Level from 1 to 10. A new deed&apos;s Reputation will only replace the old one if the Level is higher. Reputation
+          received from a negative event or action (show cowardice, desert or betray an ally) can replace the Reputation of a positive
+          one. Facedown (p. 194): COOL + Reputation + 1d10; if your defining Reputation Event is for cowardice your Reputation Level is
+          treated as a negative number.
+        </p>
+        <div style={rowStyle}>
+          <input
+            aria-label="Reputation Level"
+            title="The Level the GM awarded, 1 to 10"
+            inputMode="numeric"
+            value={repLevelText}
+            onChange={(event) => setRepLevelText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <select
+            aria-label="Reputation event kind"
+            value={repEvent}
+            onChange={(event) => setRepEvent(event.target.value === 'cowardice' ? 'cowardice' : 'deed')}
+            style={inputStyle}
+          >
+            <option value="deed">deed</option>
+            <option value="cowardice">cowardice</option>
+          </select>
+          <input
+            aria-label="Reputation event"
+            title="What the Reputation was awarded for"
+            value={repDescription}
+            onChange={(event) => setRepDescription(event.target.value)}
+            style={inputStyle}
+          />
+          <button
+            type="button"
+            disabled={repLevel.level === null || repDescription.trim() === ''}
+            onClick={() => {
+              if (repLevel.level !== null && repDescription.trim() !== '') {
+                setPlan(addPurchase(plan, { kind: 'reputation', level: repLevel.level, event: repEvent, description: repDescription.trim() }));
+                setRepLevelText('');
+                setRepEvent('deed');
+                setRepDescription('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add Reputation event
+          </button>
+        </div>
+        {repLevel.error === null ? null : <p style={errorStyle}>{repLevel.error}</p>}
+      </div>
+
+      {plan.purchases.length === 0 ? null : (
+        <table data-testid="cpr-improve-plan" style={{ borderCollapse: 'collapse', margin: '0.5rem 0', width: '100%' }}>
+          <tbody>
+            {plan.purchases.map((purchase, index) => (
+              <tr key={`${index}:${purchaseLabel(purchase)}`}>
+                <th scope="row" style={{ fontWeight: 600, textAlign: 'left' }}>
+                  {purchaseLabel(purchase)}
+                </th>
+                <td style={{ textAlign: 'right' }}>
+                  {purchase.kind === 'cyberware' ? (
+                    <>
+                      Humanity Loss <Figure row={purchaseHumanityLoss(preview, index)} />
+                    </>
+                  ) : purchase.kind === 'therapy' ? (
+                    <>
+                      Humanity regained <Figure row={purchaseHumanityRegained(preview, index)} />
+                    </>
+                  ) : purchase.kind === 'reputation' ? (
+                    <>
+                      Reputation <Figure row={purchaseReputationLevel(preview, index)} />
+                    </>
+                  ) : (
+                    <>
+                      <Figure row={purchaseCost(preview, index)} /> IP
+                    </>
+                  )}
+                </td>
+                <td style={{ textAlign: 'right' }}>
+                  <button type="button" aria-label={`Remove ${purchaseLabel(purchase)}`} onClick={() => setPlan(removePurchase(plan, index))} style={buttonStyle}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <p data-testid="cpr-improve-totals" style={{ margin: '0.4rem 0' }}>
+        Plan cost: <Figure row={totals.cost} /> IP; IP left: <Figure row={totals.remaining} />
+      </p>
+      {humanity.humanityAfter === null ? null : (
+        <p data-testid="cpr-improve-humanity" style={{ margin: '0.4rem 0' }}>
+          Humanity <Figure row={humanity.humanityBefore} /> → <Figure row={humanity.humanityAfter} />; EMP <Figure row={humanity.empBefore} /> →{' '}
+          <Figure row={humanity.empAfter} />
+        </p>
+      )}
+
+      {reputation.reputationAfter === null ? null : (
+        <p data-testid="cpr-improve-reputation-change" style={{ margin: '0.4rem 0' }}>
+          Reputation <Figure row={reputation.reputationBefore} /> → <Figure row={reputation.reputationAfter} />; Facedown{' '}
+          <Figure row={reputation.facedownBefore} /> + 1d10 → <Figure row={reputation.facedownAfter} /> + 1d10
+        </p>
+      )}
+
+      {preview?.refusal == null ? null : (
+        <p data-testid="cpr-improve-refusal" style={errorStyle}>
+          {preview.refusal}
+        </p>
+      )}
+      {previewError === null ? null : <p style={errorStyle}>{previewError}</p>}
+      {spendError === null ? null : <p style={errorStyle}>{spendError}</p>}
+
+      <div style={{ ...rowStyle, justifyContent: 'flex-end' }}>
+        <button type="button" onClick={props.onClose} style={buttonStyle}>
+          Cancel
+        </button>
+        <button type="button" disabled={spending || !canSpend(plan, preview)} onClick={onSpend} style={buttonStyle}>
+          Spend IP
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** An engine row's value (its derivation as the title), or a dash when the engine gave none. */
+function Figure(props: { row: CyberpunkImproveRow | null }) {
+  if (props.row === null) {
+    return <span style={{ color: 'var(--color-text-faint)' }}>—</span>;
+  }
+  return (
+    <span data-cpr-row={props.row.id} title={props.row.detail} style={{ fontWeight: 800 }}>
+      {props.row.value}
+    </span>
+  );
+}
+
+const dialogStyle: CSSProperties = {
+  border: '1px solid var(--color-border)',
+  borderRadius: 8,
+  margin: '0 0 1rem',
+  padding: '0.75rem 1rem',
+};
+const headingStyle: CSSProperties = { fontWeight: 700, margin: '0 0 0.4rem' };
+const noteStyle: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 0.5rem' };
+const errorStyle: CSSProperties = { color: 'var(--color-danger, #c0392b)', fontSize: '0.85rem', margin: '0.4rem 0' };
+const fieldStyle: CSSProperties = { alignItems: 'center', display: 'flex', gap: '0.5rem' };
+const rowStyle: CSSProperties = { alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', margin: '0.4rem 0' };
+const inputStyle: CSSProperties = { padding: '0.3rem 0.5rem' };
+const buttonStyle: CSSProperties = {
+  background: 'none',
+  border: '1px solid var(--color-border)',
+  borderRadius: 8,
+  cursor: 'pointer',
+  padding: '0.4rem 0.8rem',
+};

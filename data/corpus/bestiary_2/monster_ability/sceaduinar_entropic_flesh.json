@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sceaduinar ~ Entropic Flesh",
+    "delivery": "Extraordinary",
+    "description": "Any creature that hits a sceaduinar with a melee attack takes 1d6 points of negative energy damage.  Attacking with a weapon that provides reach allows a creature to avoid taking this damage.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:sceaduinar_entropic_flesh",
+    "name": "Entropic Flesh",
+    "owners": [
+      "bestiary_2:monster:sceaduinar"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that hits a sceaduinar with a melee attack takes 1d6 points of negative energy damage.  Attacking with a weapon that provides reach allows a creature to avoid taking this damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Sceaduinar ~ Entropic Flesh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.239",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1104,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sceaduinar ~ Entropic Flesh",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

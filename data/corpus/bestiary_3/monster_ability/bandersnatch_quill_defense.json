@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bandersnatch ~ Quill Defense",
+    "delivery": "Extraordinary",
+    "description": "Any creature that strikes a bandersnatch with a non-reach melee weapon, unarmed strike, or natural weapon takes 1d10 points of piercing damage from the bandersnatch's quills and suffers from the bandersnatch's pain attack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bandersnatch_quill_defense",
+    "name": "Quill Defense",
+    "owners": [
+      "bestiary_3:monster:bandersnatch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that strikes a bandersnatch with a non-reach melee weapon, unarmed strike, or natural weapon takes 1d10 points of piercing damage from the bandersnatch's quills and suffers from the bandersnatch's pain attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Bandersnatch ~ Quill Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "BandersnatchRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.32",
+    "traits": [
+      "BandersnatchRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 450,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bandersnatch ~ Quill Defense",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

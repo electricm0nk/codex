@@ -1,0 +1,8 @@
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-b51aea73009681a5)
+test result: FAILED. 1018 passed; 1 failed; 2 ignored; 0 measured; 0 filtered out; finished in 703.61s
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/packaged_resources-693e68cf45da
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 99.85s
+test character_hub::tests::add_equipment_selection_surfaces_an_unresolvable_item_instead_of_silently_dropping_it ... FAILED
+test character_hub::tests::attach_equipment_modifier_at_root_surfaces_the_real_corpus_resolution_gap ... FAILED
+test character_hub::tests::enhancement_rows_every_weapon_offer_reaches_its_row ... FAILED
+test character_hub::tests::worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus ... FAILED

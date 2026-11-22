@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures bestowed on ammunition",
+    "key": "Special Ability ~ Psibane ~ Ranged",
+    "name": "Psibane",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1",
+          "PREVARGT:IsPsionic,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Psibane ~ Ranged"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.395"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Ranged"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Thrown"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures bestowed on ammunition"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Ability ~ Psibane ~ Ranged",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

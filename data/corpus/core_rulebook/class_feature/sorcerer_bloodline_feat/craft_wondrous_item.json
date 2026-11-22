@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Craft Wondrous Item",
+    "name": "Craft Wondrous Item",
+    "class": "Sorcerer",
+    "description": "You can create wondrous items, a type of magic item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Craft Wondrous Item"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRECLASS:1,SPELLCASTER=3],[PREVARGTEQ:CasterLevel_Highest,3]],[PREVARGTEQ:MasterCraftsmanRanks,3]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_CraftWondrousItem,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create wondrous items, a type of magic item."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Craft Wondrous Item"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can create a wide variety of magic wondrous items. Crafting a wondrous item takes 1 day for each 1,000 gp in its price. To create a wondrous item, you must use up raw materials costing half of its base price. See the magic item creation rules in Chapter 15 for more information. You can also mend a broken wondrous item if it is one that you could make. Doing so costs half the raw materials and half the time it would take to craft that item."
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "Neither the craft feats nor the item creation section of the magic items chapter in the Core Rulebook are legal for play."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.8"
+      },
+      {
+        "key": "BENEFIT",
+        "value": ".CLEAR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2026,
+    "record_key": "Sorcerer Bloodline Feat ~ Craft Wondrous Item"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

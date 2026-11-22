@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Bayonet
+Bayonet																PROFICIENCY:WEAPON|Bayonet			TYPE:Weapon.Resizable.Melee.TwoHanded.Simple.Standard.Piercing.Bayonet.Close											COST:5	WT:1		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d6				EQMOD:Material ~ Steel													WIELD:TwoHanded						SIZE:M	SOURCEPAGE:p.177

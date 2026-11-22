@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Awesome Blow",
+    "category": "Combat",
+    "name": "Improved Awesome Blow",
+    "description": "You are skilled at sending your opponents flying.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Power Attack",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Brawler ~ Awesome Blow,TYPE.AwesomeBlow],[PREABILITY:1,CATEGORY=FEAT,Awesome Blow]",
+      "PRESTAT:1,STR=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 86,
+    "record_key": "Improved Awesome Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

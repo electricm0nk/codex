@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Kitsune ~ Duplicitous",
+    "name": "Duplicitous",
+    "race_key": "Kitsune",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Kitsune Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Kitsune_ReplaceKitsuneMagic"
+    ],
+    "description": "Many kitsune prefer to avoid the attention they often attract from human neighbors and attempt to convince all around them that they are human. They gain a +2 racial bonus on Bluff and Disguise checks. This racial trait replaces kitsune magic.",
+    "source_page": "p.215",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Duplicitous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Kitsune ~ Duplicitous],[!PREFACT:1,ABILITIES,Kitsune_ReplaceKitsuneMagic=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many kitsune prefer to avoid the attention they often attract from human neighbors and attempt to convince all around them that they are human. They gain a +2 racial bonus on Bluff and Disguise checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces kitsune magic.|!PREABILITY:1,CATEGORY=Special Ability,Kitsune ~ Duplicitous"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Bluff, +2 Disguise"
+      },
+      {
+        "key": "FACT",
+        "value": "Kitsune_ReplaceKitsuneMagic|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Disguise",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 870,
+    "record_key": "Kitsune ~ Duplicitous"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

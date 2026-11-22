@@ -1,0 +1,4 @@
+# merge-readiness blocker 1 — cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml --no-fail-fast -- --test-threads=8, worktree HEAD d8cf00c76a + uncommitted fix
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/codex_desktop-c7abf44157b5a023)
+test result: ok. 621 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 449.42s
+EXIT=0

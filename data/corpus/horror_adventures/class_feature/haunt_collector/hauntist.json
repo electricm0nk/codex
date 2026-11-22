@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Haunt Collector ~ Hauntist",
+    "name": "Hauntist",
+    "class": "Occultist",
+    "description": "A haunt collector with at least one haunted implement gains the medium's haunt channeler class feature (Occult Adventures 31), with an effective medium level equal to his occultist level -2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Haunt Collector ~ Hauntist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "DESC",
+        "value": "A haunt collector with at least one haunted implement gains the medium's haunt channeler class feature (Occult Adventures 31), with an effective medium level equal to his occultist level -2."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Haunt Channeler"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntChannelDice|(OccultistLVL-2)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntChannelDC|20+(OccultistLVL-2)/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntChannelDice|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 267,
+    "record_key": "Haunt Collector ~ Hauntist"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,40 @@
+# SD18 deterministic Human Cleric level 11 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Cleric
+# level-1..level-10 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_cleric_level10_sd13_deterministic_input.txt)
+# to level 11 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-10 fixtures, and the
+# same canonical domain selections (Good, Healing), adding only the level
+# bump this bounded slice needs.
+#
+# It deliberately avoids every later Cleric burden surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, no domain
+# power execution beyond the flat facets already grounded at levels 1-10, no
+# domain spell-list contents, and no level-12+ progression. The PF1 CRB
+# Cleric class table's level-11 "Special" column reads "Channel energy 6d6"
+# (verified independently against both d20pfsrd and legacy.aonprd.com), and
+# 6th-level cleric spells first appear at 11th (the level-11 spells-per-day
+# row gains a 6th-level column of "1"), so Channel Energy genuinely rises to
+# 6d6 and the domain spell slot count genuinely rises to 6; base attack bonus
+# genuinely rises to +8 (11 * 3 / 4); base saves and Touch of Good's bonus
+# stay numerically unchanged from level 10 (integer-division coincidences),
+# so no new pillar is grounded at level 11 — only the existing pillars are
+# widened.
+case_id=pf1-crb-human-cleric-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:cleric:11
+ability=strength:10
+ability=dexterity:12
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:14
+feat=feat:dodge
+choice=choice:cleric_domain:domain:good
+choice=choice:cleric_domain:domain:healing
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

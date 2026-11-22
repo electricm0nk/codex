@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Disenchanter ~ Disenchant",
+    "delivery": "Extraordinary",
+    "description": "A disenchanter can use its trunk to make a melee touch attack against a target's worn, held, or carried magic item in an attempt to drink the item's magic. The disenchanter makes a caster level check (+4) opposed by the target's Fortitude save. If the check succeeds, the disenchanter drains the item's magic, rendering it nonmagical. To determine which of a target's magic items is affected, use Table 9-2 on page 216 of the Core Rulebook (though a disenchanter never uses this ability on a headband or similar head-slot item unless it has first tried to wear the item). Disenchanters may instead target specific visible items, in which case they generally target the most obvious items. Artifacts are immune to this ability. Disenchant only works against objects that a disenchanter can touch, and even a thin layer of cloth effectively protects items from it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:disenchanter_disenchant",
+    "name": "Disenchant",
+    "owners": [
+      "bestiary_3:monster:disenchanter"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A disenchanter can use its trunk to make a melee touch attack against a target's worn, held, or carried magic item in an attempt to drink the item's magic. The disenchanter makes a caster level check (+4) opposed by the target's Fortitude save. If the check succeeds, the disenchanter drains the item's magic, rendering it nonmagical. To determine which of a target's magic items is affected, use Table 9-2 on page 216 of the Core Rulebook (though a disenchanter never uses this ability on a headband or similar head-slot item unless it has first tried to wear the item). Disenchanters may instead target specific visible items, in which case they generally target the most obvious items. Artifacts are immune to this ability. Disenchant only works against objects that a disenchanter can touch, and even a thin layer of cloth effectively protects items from it."
+      },
+      {
+        "key": "KEY",
+        "value": "Disenchanter ~ Disenchant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "TYPE",
+        "value": "DisenchanterRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.81",
+    "traits": [
+      "DisenchanterRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 695,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Disenchanter ~ Disenchant",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

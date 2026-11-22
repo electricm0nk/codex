@@ -1,0 +1,26 @@
+{
+  "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_clothing": {
+    "kind": "weight_lbs",
+    "ours": 4.0
+  },
+  "core_rulebook:equipment_modifier:draco": {
+    "kind": "var_armor_check_penalty",
+    "ours": -1
+  },
+  "core_rulebook:equipment_modifier:dragonhide": {
+    "kind": "var_armor_check_penalty",
+    "ours": -1
+  },
+  "core_rulebook:equipment_modifier:material_dragonhide": {
+    "kind": "var_armor_check_penalty",
+    "ours": -1
+  },
+  "core_rulebook:equipment_modifier:special_quality_spikes_shieldbash": {
+    "kind": "damage_die",
+    "ours": "1d6"
+  },
+  "core_rulebook:equipment_modifier:spike_sb": {
+    "kind": "damage_die",
+    "ours": "1d6"
+  }
+}

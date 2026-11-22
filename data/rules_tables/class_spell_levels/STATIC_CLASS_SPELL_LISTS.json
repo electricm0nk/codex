@@ -1,0 +1,93 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "class_spell_levels/STATIC_CLASS_SPELL_LISTS",
+  "licence": {
+    "license": "OGL",
+    "book": "class_spell_levels",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "class_id": "class:alchemist",
+      "list": "apg/alchemist_spell_list/ALCHEMIST_SPELL_LIST",
+      "corpus_class_id": "class:alchemist"
+    },
+    {
+      "class_id": "class:bard",
+      "list": "crb/bard_spell_list/BARD_SPELL_LIST",
+      "corpus_class_id": "class:bard"
+    },
+    {
+      "class_id": "class:bloodrager",
+      "list": "acg/bloodrager_spell_list/BLOODRAGER_SPELL_LIST",
+      "corpus_class_id": "class:bloodrager"
+    },
+    {
+      "class_id": "class:cleric",
+      "list": "crb/cleric_spell_list/CLERIC_SPELL_LIST",
+      "corpus_class_id": "class:cleric"
+    },
+    {
+      "class_id": "class:druid",
+      "list": "crb/druid_spell_list/DRUID_SPELL_LIST",
+      "corpus_class_id": "class:druid"
+    },
+    {
+      "class_id": "class:inquisitor",
+      "list": "apg/inquisitor_spell_list/INQUISITOR_SPELL_LIST",
+      "corpus_class_id": "class:inquisitor"
+    },
+    {
+      "class_id": "class:paladin",
+      "list": "crb/paladin_spell_list/PALADIN_SPELL_LIST",
+      "corpus_class_id": "class:paladin"
+    },
+    {
+      "class_id": "class:ranger",
+      "list": "crb/ranger_spell_list/RANGER_SPELL_LIST",
+      "corpus_class_id": "class:ranger"
+    },
+    {
+      "class_id": "class:shaman",
+      "list": "acg/shaman_spell_list/SHAMAN_SPELL_LIST",
+      "corpus_class_id": "class:shaman"
+    },
+    {
+      "class_id": "class:sorcerer",
+      "list": "crb/sorcerer_spell_list/SORCERER_SPELL_LIST",
+      "corpus_class_id": "class:sorcerer"
+    },
+    {
+      "class_id": "class:witch",
+      "list": "apg/witch_spell_list/WITCH_SPELL_LIST",
+      "corpus_class_id": "class:witch"
+    },
+    {
+      "class_id": "class:wizard",
+      "list": "crb/wizard_spell_list/WIZARD_SPELL_LIST",
+      "corpus_class_id": "class:wizard"
+    },
+    {
+      "class_id": "class:arcanist",
+      "list": "crb/wizard_spell_list/WIZARD_SPELL_LIST",
+      "corpus_class_id": "class:wizard"
+    },
+    {
+      "class_id": "class:investigator",
+      "list": "apg/alchemist_spell_list/ALCHEMIST_SPELL_LIST",
+      "corpus_class_id": "class:alchemist"
+    },
+    {
+      "class_id": "class:skald",
+      "list": "crb/bard_spell_list/BARD_SPELL_LIST",
+      "corpus_class_id": "class:bard"
+    },
+    {
+      "class_id": "class:warpriest",
+      "list": "crb/cleric_spell_list/CLERIC_SPELL_LIST",
+      "corpus_class_id": "class:cleric"
+    }
+  ]
+}

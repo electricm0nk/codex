@@ -1,0 +1,15 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.73s
+     Running tests/sf_drone_companion.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_drone_companion-04e2450f1667edc7)
+
+running 5 tests
+test each_chassis_prints_its_kits_base_ability_scores ... ok
+test the_level_one_special_abilities_are_granted_by_the_modifier ... ok
+test the_drone_race_holds_the_drone_class_and_prints_no_zero_speed ... ok
+test the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level ... ok
+test the_drone_picks_offer_the_oracle_members ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+exit=0

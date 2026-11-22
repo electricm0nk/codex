@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire ~ Energy Drain",
+    "delivery": "Supernatural",
+    "description": "A creature hit by a vampire's slam (or other natural weapon) gains two negative levels. This ability only triggers once per round, regardless of the number of attacks a vampire makes.",
+    "description_variables": [
+      "EnergyDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vampire_energy_drain",
+    "name": "Energy Drain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Energy Drain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyDrainDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Energy Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature hit by a vampire's slam (or other natural weapon) gains two negative levels. This ability only triggers once per round, regardless of the number of attacks a vampire makes.|EnergyDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire ~ Energy Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.271",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1215,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vampire ~ Energy Drain",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

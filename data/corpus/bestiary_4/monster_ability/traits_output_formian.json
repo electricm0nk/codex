@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Formian",
+    "delivery": "Extraordinary",
+    "description": "A formian possesses the darkvision 60 feet and blindsense 30 feet. &nl; Formians have telepathy 60 ft. &nl; When formians are within telepathic range of at least one other formian, they gain +4 on initiative and Perception checks and if one disbelieves an illusion, all within range do as well. &nl; Formian spellcasters cast spells as spell-like abilities. &nl; Formians have sonic resistance 10.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_formian",
+    "name": "Formian Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Formian spellcasters cast spells as spell-like abilities."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Formians have sonic resistance 10."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Formians have telepathy 60 ft."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; When formians are within telepathic range of at least one other formian, they gain +4 on initiative and Perception checks and if one disbelieves an illusion, all within range do as well."
+      },
+      {
+        "key": "DESC",
+        "value": "A formian possesses the darkvision 60 feet and blindsense 30 feet."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Formian"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Formian",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

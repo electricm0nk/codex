@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Doppelganger ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "You have the ability to assume the appearance of a specific creature or type of creature, but retains most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:doppelganger_change_shape",
+    "name": "Change Shape",
+    "owners": [
+      "beastiary:monster:doppelganger"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Alter Self)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=While using change shape ability|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Disguise=While using change shape ability|20|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You have the ability to assume the appearance of a specific creature or type of creature, but retains most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic)."
+      },
+      {
+        "key": "KEY",
+        "value": "Doppelganger ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.89",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 395,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Doppelganger ~ Change Shape",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

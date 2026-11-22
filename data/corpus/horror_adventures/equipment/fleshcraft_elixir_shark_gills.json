@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 500.0,
+    "description": "Subject can breathe water [Penalty] Subject can no longer breathe air; DURATION 1 hour; SAVE DC 20",
+    "key": "Fleshcraft Elixir (Shark Gills)",
+    "name": "Fleshcraft Elixir (Shark Gills)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Fleshcraft Elixir"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Fleshcraft.Elixir.Consumable.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "SPROP",
+        "value": "Subject can breathe water [Penalty] Subject can no longer breathe air; DURATION 1 hour; SAVE DC 20"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Fleshcraft Elixir (Shark Gills)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

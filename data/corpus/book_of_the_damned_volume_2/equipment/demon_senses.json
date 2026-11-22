@@ -1,0 +1,55 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 20000.0,
+    "description": null,
+    "key": "Demon Senses",
+    "name": "Demon Senses",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perception",
+          "8",
+          "TYPE=Racial"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Implant"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst",
+    "record_key": "Demon Senses",
+    "sha256": "a3abe7c104eb200a65f98f952c4f997ca6e275a5f06362bdd081ee9791c12010"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

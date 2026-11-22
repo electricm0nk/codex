@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bogeyman ~ Striking Fear",
+    "delivery": "Supernatural",
+    "description": "If a bogeyman confirms a critical hit or a sneak attack with one of its claws on a target currently suffering a fear effect, that effect automatically becomes one step more severe (shaken creatures become frightened, frightened creatures become panicked, and panicked creatures cower in fear). A DC 25 Will save negates this increase. In addition, a critical hit from the bogeyman's claw forces any target that has successfully saved against the creature's fear aura to make another Will save against its effects, even if 24 hours have not yet passed. This is a fear effect. The DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bogeyman_striking_fear",
+    "name": "Striking Fear",
+    "owners": [
+      "bestiary_3:monster:bogeyman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a bogeyman confirms a critical hit or a sneak attack with one of its claws on a target currently suffering a fear effect, that effect automatically becomes one step more severe (shaken creatures become frightened, frightened creatures become panicked, and panicked creatures cower in fear). A DC 25 Will save negates this increase. In addition, a critical hit from the bogeyman's claw forces any target that has successfully saved against the creature's fear aura to make another Will save against its effects, even if 24 hours have not yet passed. This is a fear effect. The DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Bogeyman ~ Striking Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "TYPE",
+        "value": "BogeymanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.42",
+    "traits": [
+      "BogeymanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 508,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bogeyman ~ Striking Fear",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

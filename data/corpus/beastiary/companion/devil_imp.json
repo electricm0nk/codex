@@ -1,0 +1,164 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Devil (Imp)",
+    "external_ability_refs": [],
+    "key": "beastiary:companion:devil_imp",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Devil, Imp",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Imp"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|2"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Knowledge (Arcana)|Spellcraft"
+      },
+      {
+        "key": "DR",
+        "value": "5/Good or Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Devil (Imp)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Outsider ~ Imp"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,50"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Imp"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      }
+    ],
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.78",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Outsider"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Devil (Imp)",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

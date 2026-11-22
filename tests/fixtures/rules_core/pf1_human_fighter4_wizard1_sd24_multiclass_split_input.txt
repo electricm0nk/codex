@@ -1,0 +1,55 @@
+# SD-24 Epic 5 (criterion 5.1) deterministic Human Fighter 4 / Wizard 1
+# multiclass split-transition fixture.
+#
+# Represents the exact "split-class transition" the criterion's own RED
+# description names: a character that advanced levels 1-4 as a solo Fighter,
+# then took its first Wizard level at total character level 5 (Fighter 4 /
+# Wizard 1). It names selections only; it does not contain derived,
+# computed, or parity values.
+#
+# Built by combining the already-accepted deterministic Fighter feat/choice
+# posture (`pf1_human_fighter_level4_sd13_deterministic_input.txt`'s own
+# level-2/level-4 bonus-feat selections) with the already-accepted
+# deterministic Wizard school-specialization posture
+# (`pf1_human_wizard_level1_sd13_deterministic_input.txt`'s own canonical
+# Evocation-specialist / Necromancy-and-Transmutation-opposed selections),
+# under a single consistent ability-score array (the Fighter fixture's own
+# scores, since Fighter is the majority class here) rather than re-deriving
+# either posture. The character's own single `feat:dodge` selection already
+# covers Wizard's Scribe Scroll grant's own free-standing recognition (Scribe
+# Scroll is not itself a chosen `feat=` selection anywhere in this codebase's
+# grounding -- it is an unconditional recognition once Wizard's own level
+# gate is met, per `pilot_compute.rs`'s own `explain_wizard_level1_prepared_spell_baseline`).
+case_id=pf1-crb-human-fighter4-wizard1-sd24-multiclass-split
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:4
+class_level=class:wizard:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:13
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+provenance=docs/release/SD-24-beta-readiness-and-multiclass/epic-breakdown.md#criterion-5.1

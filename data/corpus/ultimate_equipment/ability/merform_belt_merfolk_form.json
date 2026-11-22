@@ -1,0 +1,40 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Merform Belt Merfolk Form",
+    "name": "Merform Belt Merfolk Form",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,30,Walk,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_abilities.lst",
+    "record_key": "Merform Belt Merfolk Form",
+    "sha256": "b81e4185e6ebbd0656ae80a103f4f5a7d7b27e1c98ed536ef981dabf8d04be2a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "total_hits": 14,
+  "total_files": 8,
+  "by_root": {
+    "src/rules_core": 14
+  },
+  "by_group": {
+    "corpus_json_boundary": 1,
+    "renderer": 5,
+    "lst_parser_types": 0,
+    "ingest_record_tokens": 2,
+    "trait_and_pool_tokens": 3,
+    "ir_converter": 0,
+    "source_content_payload": 3,
+    "provenance_prose": 0,
+    "unclassified": 0
+  },
+  "rows": [
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/class_feature_pool_catalog.rs",
+      "line": 114,
+      "hits": 1,
+      "group": "trait_and_pool_tokens",
+      "why": "Per-row token readers for racial traits, feature pools and bonus chains. CYCLE 7 cleared `skinwalker_change_shape.rs` whole: it asked which kin pool a record owns and imported the converter only to strip the ingest pool-name prefix off grants it already had from a live accessor; `RaceTraitRecord::skinwalker_change_shape_kin` answers it now, pinned over the live bestiary_5 population against the previous reading as oracle. CYCLE 7 also RE-MEASURED the `class_feature_pool_catalog` hit and CORRECTED cycle 6's reason for it: `ABILITY:` does NOT map to a prerequisite -- `sheet_rule/convert.rs:1266` converts it as a GRANT EDGE exactly as `mapping-table.v1.json` specifies, folded onto the TARGET rule's `granted_by` in a different file, and `BONUS:`/`DEFINE:` land as `_vars/<var>.json` contributor rows citing their `rule_id`. Cycle 6's probe read neither. Corrected: P1 disagrees on 1,870 of 18,043 (was 6,494), P2 on 864 (direction flipped -- `is_archetype_locked` reads `PREABILITY` only and misses `CATEGORY=Archetype` nested in a `PREMULT`), P3 on 89. STILL REFUSED, on the number, not on effort. `race_resolver`'s two hits are the home of this grammar's live consumer and ride on the race-trait rule shape this epic's remaining piece produces. Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle7_pool_guard_parity.py`.",
+      "text": "use crate::pcgen_import::pool_member_tokens;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/corpus_loader.rs",
+      "line": 96,
+      "hits": 1,
+      "group": "corpus_json_boundary",
+      "why": "THE INGEST BOUNDARY, and after cycle 13 it is ONE call. `rules_core::corpus_loader::load_equipment_corpus` reads an already-converted `data/corpus/<book>/equipment/**/*.json` record's `data` object and asks `pcgen_import::corpus_equipment_json::corpus_equipment_source_record` what canonical record that object stands for. BEFORE CYCLE 13 the live loader did that work itself: it read the record's own ingest token array and bonus-chain array through `ingest_record::token_pairs` / `bonus_chain_qualifiers` / `rebuild_bonus_token`, assembled an ingest-format `EquipmentRecord` out of them, and ran `ir_converter::convert_equipment_record` over that row -- FIVE hits. The rebuild moved verbatim to the converter side, where the field names, the traversal and the `BONUS:` re-spelling are the converter's own vocabulary (`decisions.md` \u00a711). THIS ONE HIT IS BOOKED AS A RELABEL, NOT A CLOSURE: the other five are gone from live code entirely, this one changed which group names it. It clears when `data/corpus/` equipment JSON carries the settled fields itself -- an ingest-side generator cycle, the same shape `data/sheet_rules/` already has -- so the live loader deserializes settled values and never needs an ingest array rebuilt at all. Re-derive: `grep -rn 'corpus_equipment_json' --include=*.rs src/rules_core/`.",
+      "text": "match crate::pcgen_import::corpus_equipment_json::corpus_equipment_source_record(data) {"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+      "line": 29,
+      "hits": 1,
+      "group": "ingest_record_tokens",
+      "why": "Run-time token-string reads. CYCLE 13 CLOSED `corpus_loader`'s THREE: `token_pairs`, `bonus_chain_qualifiers` and `rebuild_bonus_token` are read on the converter side now, inside `corpus_equipment_json::equipment_record_from_json`, which is the same function body moved whole. TWO REMAIN, neither of them a corpus-equipment read: `race_resolver`'s `RaceCacheData`/`RaceTraitCacheData` payload shapes, which ride on the race-trait rule shape this epic's remaining piece produces, and `derived_evaluator_fixture_check.rs`, which stays MEASURED non-relocatable (cycle 3) -- three desktop catalogs import live rendering functions out of it and its token reads sit inside the private corpus sweeps those imports reach. Re-derive: `grep -rn 'ingest_record\\|ingest_payload' --include=*.rs src/rules_core/`.",
+      "text": "use crate::pcgen_import::ingest_record;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/equipment_resolver.rs",
+      "line": 18,
+      "hits": 1,
+      "group": "source_content_payload",
+      "why": "Payload types imported or re-exported by the live side. THREE HITS, unchanged by cycle 13, and all three are `SourceContentPayload` itself: `equipment_resolver`, `source_content`'s re-export, and `spell_resolver`. The trim -- repointing an import at `rules_core::source_content`'s own re-export of the same enum -- is REFUSED NOW FOR THE SEVENTH CYCLE RUNNING on the same reasoning cycles 7 through 12 gave: it takes the gate down by one and changes nothing about what the module depends on. CYCLE 13 MOVED THE REAL THING INSTEAD: the `Equipment` variant no longer borrows a parser entry type, so equipment joins cycle 8's spell as a kind whose canonical payload names no `pcgen_import` type. FOUR of the enum's seven variants still borrow one (`Class`, `SpellcastingClass`, `Race`/`Ability`, `Metadata`), which is why the enum itself cannot move yet. Re-derive: `grep -rn 'source_content_payload\\|equipment_bonus_reader' --include=*.rs src/rules_core/`.",
+      "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/race_resolver.rs",
+      "line": 86,
+      "hits": 1,
+      "group": "trait_and_pool_tokens",
+      "why": "Per-row token readers for racial traits, feature pools and bonus chains. CYCLE 7 cleared `skinwalker_change_shape.rs` whole: it asked which kin pool a record owns and imported the converter only to strip the ingest pool-name prefix off grants it already had from a live accessor; `RaceTraitRecord::skinwalker_change_shape_kin` answers it now, pinned over the live bestiary_5 population against the previous reading as oracle. CYCLE 7 also RE-MEASURED the `class_feature_pool_catalog` hit and CORRECTED cycle 6's reason for it: `ABILITY:` does NOT map to a prerequisite -- `sheet_rule/convert.rs:1266` converts it as a GRANT EDGE exactly as `mapping-table.v1.json` specifies, folded onto the TARGET rule's `granted_by` in a different file, and `BONUS:`/`DEFINE:` land as `_vars/<var>.json` contributor rows citing their `rule_id`. Cycle 6's probe read neither. Corrected: P1 disagrees on 1,870 of 18,043 (was 6,494), P2 on 864 (direction flipped -- `is_archetype_locked` reads `PREABILITY` only and misses `CATEGORY=Archetype` nested in a `PREMULT`), P3 on 89. STILL REFUSED, on the number, not on effort. `race_resolver`'s two hits are the home of this grammar's live consumer and ride on the race-trait rule shape this epic's remaining piece produces. Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle7_pool_guard_parity.py`.",
+      "text": "use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/race_resolver.rs",
+      "line": 87,
+      "hits": 1,
+      "group": "trait_and_pool_tokens",
+      "why": "Per-row token readers for racial traits, feature pools and bonus chains. CYCLE 7 cleared `skinwalker_change_shape.rs` whole: it asked which kin pool a record owns and imported the converter only to strip the ingest pool-name prefix off grants it already had from a live accessor; `RaceTraitRecord::skinwalker_change_shape_kin` answers it now, pinned over the live bestiary_5 population against the previous reading as oracle. CYCLE 7 also RE-MEASURED the `class_feature_pool_catalog` hit and CORRECTED cycle 6's reason for it: `ABILITY:` does NOT map to a prerequisite -- `sheet_rule/convert.rs:1266` converts it as a GRANT EDGE exactly as `mapping-table.v1.json` specifies, folded onto the TARGET rule's `granted_by` in a different file, and `BONUS:`/`DEFINE:` land as `_vars/<var>.json` contributor rows citing their `rule_id`. Cycle 6's probe read neither. Corrected: P1 disagrees on 1,870 of 18,043 (was 6,494), P2 on 864 (direction flipped -- `is_archetype_locked` reads `PREABILITY` only and misses `CATEGORY=Archetype` nested in a `PREMULT`), P3 on 89. STILL REFUSED, on the number, not on effort. `race_resolver`'s two hits are the home of this grammar's live consumer and ride on the race-trait rule shape this epic's remaining piece produces. Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle7_pool_guard_parity.py`.",
+      "text": "use crate::pcgen_import::race_trait_tokens;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/race_resolver.rs",
+      "line": 95,
+      "hits": 1,
+      "group": "ingest_record_tokens",
+      "why": "Run-time token-string reads. CYCLE 13 CLOSED `corpus_loader`'s THREE: `token_pairs`, `bonus_chain_qualifiers` and `rebuild_bonus_token` are read on the converter side now, inside `corpus_equipment_json::equipment_record_from_json`, which is the same function body moved whole. TWO REMAIN, neither of them a corpus-equipment read: `race_resolver`'s `RaceCacheData`/`RaceTraitCacheData` payload shapes, which ride on the race-trait rule shape this epic's remaining piece produces, and `derived_evaluator_fixture_check.rs`, which stays MEASURED non-relocatable (cycle 3) -- three desktop catalogs import live rendering functions out of it and its token reads sit inside the private corpus sweeps those imports reach. Re-derive: `grep -rn 'ingest_record\\|ingest_payload' --include=*.rs src/rules_core/`.",
+      "text": "use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/source_content.rs",
+      "line": 50,
+      "hits": 1,
+      "group": "source_content_payload",
+      "why": "Payload types imported or re-exported by the live side. THREE HITS, unchanged by cycle 13, and all three are `SourceContentPayload` itself: `equipment_resolver`, `source_content`'s re-export, and `spell_resolver`. The trim -- repointing an import at `rules_core::source_content`'s own re-export of the same enum -- is REFUSED NOW FOR THE SEVENTH CYCLE RUNNING on the same reasoning cycles 7 through 12 gave: it takes the gate down by one and changes nothing about what the module depends on. CYCLE 13 MOVED THE REAL THING INSTEAD: the `Equipment` variant no longer borrows a parser entry type, so equipment joins cycle 8's spell as a kind whose canonical payload names no `pcgen_import` type. FOUR of the enum's seven variants still borrow one (`Class`, `SpellcastingClass`, `Race`/`Ability`, `Metadata`), which is why the enum itself cannot move yet. Re-derive: `grep -rn 'source_content_payload\\|equipment_bonus_reader' --include=*.rs src/rules_core/`.",
+      "text": "pub use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/spell_resolver.rs",
+      "line": 25,
+      "hits": 1,
+      "group": "source_content_payload",
+      "why": "Payload types imported or re-exported by the live side. THREE HITS, unchanged by cycle 13, and all three are `SourceContentPayload` itself: `equipment_resolver`, `source_content`'s re-export, and `spell_resolver`. The trim -- repointing an import at `rules_core::source_content`'s own re-export of the same enum -- is REFUSED NOW FOR THE SEVENTH CYCLE RUNNING on the same reasoning cycles 7 through 12 gave: it takes the gate down by one and changes nothing about what the module depends on. CYCLE 13 MOVED THE REAL THING INSTEAD: the `Equipment` variant no longer borrows a parser entry type, so equipment joins cycle 8's spell as a kind whose canonical payload names no `pcgen_import` type. FOUR of the enum's seven variants still borrow one (`Class`, `SpellcastingClass`, `Race`/`Ability`, `Metadata`), which is why the enum itself cannot move yet. Re-derive: `grep -rn 'source_content_payload\\|equipment_bonus_reader' --include=*.rs src/rules_core/`.",
+      "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+      "line": 1008,
+      "hits": 1,
+      "group": "renderer",
+      "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Cycle 2 MEASURED the converted candidate against it: `class_feature_grant_consumer::tests::class_feature_prose_parity_census` renders every class_feature record both ways at every level 1..=20 under two ability probes, and the two disagree on 97,332 of 660,320 comparisons across 2,443 distinct record keys. The gap is CONVERTER-side (a converted rule carries Desc segments the stored description never had; for some records the converter settled a hole to plain text the stored `DESC:` still states as a number), so the converted candidate ships when the converter closes that gap, not before. CYCLE 4: the two `leaked_pcgen_syntax` calls in this group were NOT part of that gap and are gone -- that predicate reads rendered OUTPUT text, never a record, so it moved to the live side as `resolved_prose::leaked_markup` and `pcgen_desc::leaked_pcgen_syntax` now delegates to it. What is left in this group is the renderer itself: `PcgenDisplayValues`, `render_pcgen_desc_with_values`, `desc_token_arguments`.",
+      "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+      "line": 1012,
+      "hits": 1,
+      "group": "renderer",
+      "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Cycle 2 MEASURED the converted candidate against it: `class_feature_grant_consumer::tests::class_feature_prose_parity_census` renders every class_feature record both ways at every level 1..=20 under two ability probes, and the two disagree on 97,332 of 660,320 comparisons across 2,443 distinct record keys. The gap is CONVERTER-side (a converted rule carries Desc segments the stored description never had; for some records the converter settled a hole to plain text the stored `DESC:` still states as a number), so the converted candidate ships when the converter closes that gap, not before. CYCLE 4: the two `leaked_pcgen_syntax` calls in this group were NOT part of that gap and are gone -- that predicate reads rendered OUTPUT text, never a record, so it moved to the live side as `resolved_prose::leaked_markup` and `pcgen_desc::leaked_pcgen_syntax` now delegates to it. What is left in this group is the renderer itself: `PcgenDisplayValues`, `render_pcgen_desc_with_values`, `desc_token_arguments`.",
+      "text": "let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values("
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+      "line": 1083,
+      "hits": 1,
+      "group": "renderer",
+      "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Cycle 2 MEASURED the converted candidate against it: `class_feature_grant_consumer::tests::class_feature_prose_parity_census` renders every class_feature record both ways at every level 1..=20 under two ability probes, and the two disagree on 97,332 of 660,320 comparisons across 2,443 distinct record keys. The gap is CONVERTER-side (a converted rule carries Desc segments the stored description never had; for some records the converter settled a hole to plain text the stored `DESC:` still states as a number), so the converted candidate ships when the converter closes that gap, not before. CYCLE 4: the two `leaked_pcgen_syntax` calls in this group were NOT part of that gap and are gone -- that predicate reads rendered OUTPUT text, never a record, so it moved to the live side as `resolved_prose::leaked_markup` and `pcgen_desc::leaked_pcgen_syntax` now delegates to it. What is left in this group is the renderer itself: `PcgenDisplayValues`, `render_pcgen_desc_with_values`, `desc_token_arguments`.",
+      "text": "let args = crate::pcgen_import::pcgen_desc::desc_token_arguments(&record.raw_description);"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+      "line": 1115,
+      "hits": 1,
+      "group": "renderer",
+      "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Cycle 2 MEASURED the converted candidate against it: `class_feature_grant_consumer::tests::class_feature_prose_parity_census` renders every class_feature record both ways at every level 1..=20 under two ability probes, and the two disagree on 97,332 of 660,320 comparisons across 2,443 distinct record keys. The gap is CONVERTER-side (a converted rule carries Desc segments the stored description never had; for some records the converter settled a hole to plain text the stored `DESC:` still states as a number), so the converted candidate ships when the converter closes that gap, not before. CYCLE 4: the two `leaked_pcgen_syntax` calls in this group were NOT part of that gap and are gone -- that predicate reads rendered OUTPUT text, never a record, so it moved to the live side as `resolved_prose::leaked_markup` and `pcgen_desc::leaked_pcgen_syntax` now delegates to it. What is left in this group is the renderer itself: `PcgenDisplayValues`, `render_pcgen_desc_with_values`, `desc_token_arguments`.",
+      "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+    },
+    {
+      "root": "src/rules_core",
+      "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+      "line": 1128,
+      "hits": 1,
+      "group": "renderer",
+      "why": "The PCGen description renderer called at run time on a corpus record's stored `description`. Cycle 2 MEASURED the converted candidate against it: `class_feature_grant_consumer::tests::class_feature_prose_parity_census` renders every class_feature record both ways at every level 1..=20 under two ability probes, and the two disagree on 97,332 of 660,320 comparisons across 2,443 distinct record keys. The gap is CONVERTER-side (a converted rule carries Desc segments the stored description never had; for some records the converter settled a hole to plain text the stored `DESC:` still states as a number), so the converted candidate ships when the converter closes that gap, not before. CYCLE 4: the two `leaked_pcgen_syntax` calls in this group were NOT part of that gap and are gone -- that predicate reads rendered OUTPUT text, never a record, so it moved to the live side as `resolved_prose::leaked_markup` and `pcgen_desc::leaked_pcgen_syntax` now delegates to it. What is left in this group is the renderer itself: `PcgenDisplayValues`, `render_pcgen_desc_with_values`, `desc_token_arguments`.",
+      "text": "let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values("
+    }
+  ],
+  "closed_by_cycle13": [
+    [
+      "src/rules_core/corpus_loader.rs",
+      "ingest_record::token_pairs"
+    ],
+    [
+      "src/rules_core/corpus_loader.rs",
+      "ingest_record::bonus_chain_qualifiers"
+    ],
+    [
+      "src/rules_core/corpus_loader.rs",
+      "ingest_record::rebuild_bonus_token"
+    ],
+    [
+      "src/rules_core/corpus_loader.rs",
+      "lst_parser::equipment::"
+    ],
+    [
+      "src/rules_core/equipment_resolver.rs",
+      "lst_parser::equipment::EquipmentRecord"
+    ]
+  ],
+  "relabelled_by_cycle13": [
+    [
+      "src/rules_core/corpus_loader.rs",
+      "ir_converter",
+      "corpus_json_boundary"
+    ]
+  ],
+  "cleared_files_by_cycle13": []
+}

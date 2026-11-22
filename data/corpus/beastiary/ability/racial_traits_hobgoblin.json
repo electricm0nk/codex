@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Hobgoblin",
+    "name": "Racial Traits ~ Hobgoblin",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Hobgoblin_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hobgoblin Racial Trait|AUTOMATIC|Hobgoblin ~ Ability Scores|PREVAREQ:Hobgoblin_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Hobgoblin",
+    "sha256": "4f00a7983fc059fd7e9d3e9291eaa4f42be34a89c5808c3aae85f20340c2a05d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

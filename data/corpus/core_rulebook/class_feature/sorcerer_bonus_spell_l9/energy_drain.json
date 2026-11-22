@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L9 ~ Energy Drain",
+    "name": "Energy Drain",
+    "class": "Sorcerer",
+    "description": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L9 ~ Energy Drain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_EnergyDrain_L9,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,19"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Energy Drain"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ray"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2164,
+    "record_key": "Sorcerer Bonus Spell L9 ~ Energy Drain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

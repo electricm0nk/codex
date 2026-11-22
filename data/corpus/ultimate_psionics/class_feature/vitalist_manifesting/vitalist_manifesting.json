@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Manifesting",
+    "name": "Vitalist Manifesting",
+    "class": "Vitalist",
+    "description": "Vitalist Powers Known: %1; Vitalist Maximum Power Level Known: %2|VitalistPowersKnown|VitalistMaxPowerLevel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Vitalist Powers Known: %1; Vitalist Maximum Power Level Known: %2|VitalistPowersKnown|VitalistMaxPowerLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Vitalist Manifesting Variables|Vitalist Power Points"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 946,
+    "record_key": "Vitalist Manifesting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

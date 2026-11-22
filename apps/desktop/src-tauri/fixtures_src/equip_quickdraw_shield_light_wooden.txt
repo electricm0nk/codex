@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Quickdraw Shield (Light/Wooden)
+Quickdraw Shield (Light/Wooden)	OUTPUTNAME:Quickdraw Shield, Light Wooden	PROFICIENCY:SHIELD|Quickdraw Shield (Light)	TYPE:Shield.Light.Standard.Close			COST:53	WT:6		ACCHECK:-2		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d3	EQMOD:Material ~ Wood						WIELD:Light					SIZE:M	SOURCEPAGE:p.180	SPELLFAILURE:5		BONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0

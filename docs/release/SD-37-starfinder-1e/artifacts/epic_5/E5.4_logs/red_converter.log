@@ -1,0 +1,167 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.95s
+     Running tests/sf_drone_companion.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_drone_companion-04e2450f1667edc7)
+
+running 5 tests
+test each_chassis_prints_its_kits_base_ability_scores ... FAILED
+test the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level ... FAILED
+test the_level_one_special_abilities_are_granted_by_the_modifier ... FAILED
+test the_drone_race_holds_the_drone_class_and_prints_no_zero_speed ... FAILED
+test the_drone_picks_offer_the_oracle_members ... FAILED
+
+failures:
+
+---- each_chassis_prints_its_kits_base_ability_scores stdout ----
+
+thread 'each_chassis_prints_its_kits_base_ability_scores' (2792294) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:35:66:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../data/starfinder-1e/sheet_rules/core/pool_option/drone_chassis_selection_combat.json: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level stdout ----
+
+thread 'the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level' (2792295) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:35:66:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../data/starfinder-1e/sheet_rules/core/companion_mod/drone.json: No such file or directory (os error 2)
+
+---- the_level_one_special_abilities_are_granted_by_the_modifier stdout ----
+
+thread 'the_level_one_special_abilities_are_granted_by_the_modifier' (2792298) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:126:32:
+core:ability:basic_mods: not granted by core:companion_mod:drone: {
+  "applies": "Always",
+  "id": "core:ability:basic_mods",
+  "label": "Basic Mods",
+  "pool": "class_feature",
+  "print": true,
+  "prose": [
+    {
+      "family": "Desc",
+      "pick_last": false,
+      "pieces": [
+        {
+          "Text": "You can choose any of the mods on the basic mod list whenever your drone gains a new mod. Unless otherwise specified, you cannot install a single mod more than once. The list of basic mods appears starting on page 77."
+        }
+      ],
+      "suppress_when_all_zero": false
+    }
+  ],
+  "provenance": {
+    "book": "core",
+    "closure_rows": [
+      "starfinder/paizo/core/scr_abilities.lst:1403"
+    ],
+    "converter_version": "sheet_rule_convert/0.15.0",
+    "kind": "ability",
+    "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6"
+  },
+  "repeatable": false,
+  "subject": "Character",
+  "tags": [
+    "Class Feature",
+    "Drone Special Ability LVL 1"
+  ],
+  "value": "Text"
+}
+
+---- the_drone_race_holds_the_drone_class_and_prints_no_zero_speed stdout ----
+
+thread 'the_drone_race_holds_the_drone_class_and_prints_no_zero_speed' (2792297) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:111:5:
+{
+  "applies": "Always",
+  "bonus_type": {
+    "mode": "Replace",
+    "name": "Base"
+  },
+  "closure_complete": true,
+  "grants": [
+    {
+      "FactDeclare": {
+        "name": "ClassType",
+        "value": "Monster"
+      }
+    }
+  ],
+  "id": "core:class:drone",
+  "label": "Drone",
+  "pool": "",
+  "print": true,
+  "prose": [
+    {
+      "family": {
+        "StatBlock": "Hit die"
+      },
+      "pick_last": false,
+      "pieces": [
+        {
+          "Text": "d1"
+        }
+      ],
+      "suppress_when_all_zero": false
+    }
+  ],
+  "provenance": {
+    "book": "core",
+    "closure_rows": [
+      "starfinder/paizo/core/scr_classes.lst:201",
+      "starfinder/paizo/core/scr_classes.lst:202"
+    ],
+    "converter_version": "sheet_rule_convert/0.15.0",
+    "kind": "class",
+    "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
+    "undeclared_in_pinned_tree": [
+      "UseAlternateBABProgression",
+      "UseAlternateSaveProgression",
+      "UseFractionalBAB",
+      "UseFractionalSave"
+    ]
+  },
+  "repeatable": false,
+  "subject": "Character",
+  "tags": [
+    "Monster"
+  ],
+  "target": "BaseAttack",
+  "value": {
+    "Number": {
+      "Div": [
+        {
+          "Mul": [
+            {
+              "Sum": [
+                {
+                  "Var": "vffdc2007b9b2a56e"
+                },
+                {
+                  "Const": 1
+                }
+              ]
+            },
+            {
+              "Const": 3
+            }
+          ]
+        },
+        {
+          "Const": 4
+        }
+      ]
+    }
+  }
+}
+
+---- the_drone_picks_offer_the_oracle_members stdout ----
+
+thread 'the_drone_picks_offer_the_oracle_members' (2792296) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:90:5:
+assertion `left == right` failed
+  left: {}
+ right: {"core:pool_option:drone_chassis_selection_combat", "core:pool_option:drone_chassis_selection_hover", "core:pool_option:drone_chassis_selection_stealth"}
+
+
+failures:
+    each_chassis_prints_its_kits_base_ability_scores
+    the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level
+    the_drone_picks_offer_the_oracle_members
+    the_drone_race_holds_the_drone_class_and_prints_no_zero_speed
+    the_level_one_special_abilities_are_granted_by_the_modifier
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_drone_companion`

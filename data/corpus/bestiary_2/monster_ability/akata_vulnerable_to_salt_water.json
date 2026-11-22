@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Akata ~ Vulnerable to Salt Water",
+    "delivery": "Extraordinary",
+    "description": "Salt water acts as an extremely strong acid to akatas.  A splash of salt water deals 1d6 points of damage to an akata, and full immersion in salt water deals 4d6 points of damage per round.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:akata_vulnerable_to_salt_water",
+    "name": "Vulnerable to Salt Water",
+    "owners": [
+      "bestiary_2:monster:akata"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Salt water acts as an extremely strong acid to akatas.  A splash of salt water deals 1d6 points of damage to an akata, and full immersion in salt water deals 4d6 points of damage per round."
+      },
+      {
+        "key": "KEY",
+        "value": "Akata ~ Vulnerable to Salt Water"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.23",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Akata ~ Vulnerable to Salt Water",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

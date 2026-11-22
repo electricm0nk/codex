@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Twin Thunders",
+    "name": "Twin Thunders",
+    "description": "You can spend 2 stamina points to gain the benefits of this feat against a creature at least one size category larger than you that does not have the giant subtype. You gain this benef it until the start of your next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Twin Thunders"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 2 stamina points to gain the benefits of this feat against a creature at least one size category larger than you that does not have the giant subtype. You gain this benef it until the start of your next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 176,
+    "record_key": "Combat Trick ~ Twin Thunders"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

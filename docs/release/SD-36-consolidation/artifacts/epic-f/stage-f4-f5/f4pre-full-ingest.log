@@ -1,0 +1,334 @@
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/codex_ingest-06e24ac7d271e507)
+test result: ok. 659 passed; 0 failed; 11 ignored; 0 measured; 0 filtered out; finished in 46.93s
+     Running unittests src/bin/bonus_stack_reader.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/bonus_stack_reader-a632f2de39995775)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/corpus_literal_sweep.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/corpus_literal_sweep-12b852cbea91766b)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.83s
+     Running unittests src/bin/declared_pi_shipping_audit.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/declared_pi_shipping_audit-93014eb1982dce63)
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/derived_evaluator_fixture_check.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/derived_evaluator_fixture_check-e3498bbda8d66851)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_class_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_class_raw_tokens-d949ed4ab73e08ee)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_companion_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_companion_raw_tokens-56a5a0185ae2e96b)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+     Running unittests src/bin/enrich_equipment_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_equipment_raw_tokens-1d0d4a676af0f309)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running unittests src/bin/enrich_monster_ability_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_monster_ability_raw_tokens-62bff68e0fa6b950)
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running unittests src/bin/enrich_monster_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_monster_raw_tokens-d748720c5bac584f)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running unittests src/bin/enrich_pu_class_feature_mod_closure.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_pu_class_feature_mod_closure-e7a2f44a00402260)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_spell_raw_tokens.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/enrich_spell_raw_tokens-bca53ee2353ef586)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running unittests src/bin/formula_interpreter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/formula_interpreter-929e9d3511c1637c)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_book_cache.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_book_cache-4c2c42b77948f29d)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_acg.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_acg-b8405288d132c08e)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_apg.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_apg-e9d995bc75466244)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_beastiary.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_beastiary-934ea0e166b26126)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_class_feature.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_class_feature-63efe37bd1460ae3)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_equipment_gap.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_equipment_gap-35234b4404e0edb9)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_feat_gap.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_feat_gap-c01d35584ea046a9)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_equipment.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_hand_authored_equipment-66437ad628ea4a91)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_feat_dump.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_hand_authored_feat_dump-fa30808718e795d6)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_lane_dump.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_spell_lane_dump-a232d1209d136c24)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_mod_access.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_spell_mod_access-76f58762540fdb3d)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_ultimate_equipment.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_cache_ultimate_equipment-ad176cdbcc4830ee)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_class_feature_grants.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_class_feature_grants-dffa18512484a43e)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_core_rulebook_cache.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_core_rulebook_cache-e8e421e247b3f163)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_desktop_fixture_corpus.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_desktop_fixture_corpus-c4c86fd010f2e23a)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_equipment_gap_tables.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_equipment_gap_tables-82abe5a64a04b456)
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_feat_gap_tables.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_feat_gap_tables-30c17773e1a4c819)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_record_vars.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_record_vars-37ab1bdba53dcfce)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_settled_corpus.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/gen_settled_corpus-ca670a95f854edaa)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_apg_race_traits.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_apg_race_traits-f69e083286f14584)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running unittests src/bin/ingest_class_spell_levels_arg.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_class_spell_levels_arg-193d42a373f2667f)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_pu_classes.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_pu_classes-de6d164e6fd53e30)
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_race_traits.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_race_traits-2da26baea44eac4a)
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running unittests src/bin/ingest_races.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_races-7bf8c75aec633d8c)
+test result: ok. 44 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running unittests src/bin/ingest_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ingest_spells-609739876c1db929)
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/reconcile_description_pi_stamps.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/reconcile_description_pi_stamps-42617c24d435408d)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running unittests src/bin/repair_equipment_copy_citations.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/repair_equipment_copy_citations-555521d43b37d29f)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_lst_provenance.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/repair_lst_provenance-a2bacfe40da99375)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_spell_citations.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/repair_spell_citations-c0250a7363709341)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+     Running unittests src/bin/restamp_wiring_class.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/restamp_wiring_class-f55eb5aaabf5b34b)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running unittests src/bin/sheet_rule_bucket_v_render.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_bucket_v_render-08d3c7fceea3e786)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_convert.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_convert-67f2176243580cd0)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_parity-42958011334bca55)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_corpus_trap_report.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/v06_corpus_trap_report-e3fa254348dcc5fd)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ability_pool_picks.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ability_pool_picks-7023597f060c129a)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 259.62s
+     Running tests/class_proficiency_line_gate.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/class_proficiency_line_gate-f59b08bf85c42006)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 746.95s
+     Running tests/class_records_and_closure_attestation.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/class_records_and_closure_attestation-62598a61ef8f2b03)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.58s
+     Running tests/class_weapon_proficiency_grant_by_type.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/class_weapon_proficiency_grant_by_type-2e72569a8b3d75ca)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.92s
+     Running tests/class_weapon_proficiency_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/class_weapon_proficiency_via_converter-3fb51cf7eca4c1da)
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 71.26s
+     Running tests/derived_evaluator_fixture_check.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/derived_evaluator_fixture_check-8cf917545b06eb0f)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.03s
+     Running tests/derived_evaluator_fixture_check_class_feature_description.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/derived_evaluator_fixture_check_class_feature_description-3de69cadda62d265)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.84s
+     Running tests/derived_evaluator_fixture_check_monster_ability.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/derived_evaluator_fixture_check_monster_ability-c7bec1da864eaf2d)
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+     Running tests/feat_gap_tables.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/feat_gap_tables-6dab115b1fda88db)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+     Running tests/formula_interpreter_family_fixture_check.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/formula_interpreter_family_fixture_check-c04aac6b77ae5b2f)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+     Running tests/ge05_vendored_pcg_fixtures.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ge05_vendored_pcg_fixtures-eb8990bf52d5e33f)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/ge06_selected_parity_dimensions.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/ge06_selected_parity_dimensions-4f50c8b7163b92a1)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.12s
+     Running tests/golden_case_fixture_schema.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/golden_case_fixture_schema-bef579d6c6056f7b)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcc_entry_parse.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/pcc_entry_parse-ab0b4fa990142665)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcgen_runner_smoke.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/pcgen_runner_smoke-4cbff8cc826fa3c7)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.20s
+     Running tests/rules_core_class_feature_grant_consumer_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_class_feature_grant_consumer_via_converter-df7b8cb37b5ef2b8)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.06s
+     Running tests/rules_core_class_feature_pool_catalog_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_class_feature_pool_catalog_via_converter-b521eb6162f290b3)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.49s
+     Running tests/rules_core_class_skill_tables_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_class_skill_tables_via_converter-7040d26b1a746c69)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_companion_chassis_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_companion_chassis_via_converter-dc5a62c4a46fa865)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.20s
+     Running tests/rules_core_damage_total_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_damage_total_via_converter-d13eecfa6b7d5042)
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_derived_evaluator_fixture_check_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_derived_evaluator_fixture_check_via_converter-85f2d66faadcafc0)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_domain_power_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_domain_power_via_converter-1313feda918b2c27)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_encumbrance_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_encumbrance_via_converter-2b8da7096b8deb1a)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_arms_armor_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_arms_armor_via_converter-16798ad8fba9cb02)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_equipmods_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_equipmods_via_converter-1b7c72b3d0c8fa3b)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_general_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_general_via_converter-5cffb9029e69d400)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_intelligent_item_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_intelligent_item_via_converter-a95b401c5ef8c4bf)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_magic_items_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_magic_items_via_converter-7700c91ad2225127)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_effects_via_converter-d877077412d307ea)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_record_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_record_via_converter-3263ebc0e233c84a)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.33s
+     Running tests/rules_core_equipment_resolver_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_equipment_resolver_via_converter-b81470b71cd845fb)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_feats_all_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_feats_all_via_converter-4e5400c277297b7d)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_pi_screening_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_pi_screening_via_converter-9545a39ac64c32a4)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_pilot_compute_corpus_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_pilot_compute_corpus_via_converter-479565d2c80c83f4)
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.99s
+     Running tests/rules_core_pu_barbarian_features_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_pu_barbarian_features_via_converter-8b2a669987d4510e)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/rules_core_pu_monk_features_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_pu_monk_features_via_converter-645ae26ea419e572)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/rules_core_pu_rogue_features_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_pu_rogue_features_via_converter-1cd79f6bff5c09c9)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_creation_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_race_creation_via_converter-d9e18131ee058815)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_resolver_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_race_resolver_via_converter-16d03d22fefef2d3)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+     Running tests/rules_core_um_feat_tables_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_um_feat_tables_via_converter-c75b0e08fbaa1f38)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_weapon_tables_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_weapon_tables_via_converter-f851372d70861486)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_wizard_spell_list_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/rules_core_wizard_spell_list_via_converter-d0bcec520130144e)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_a_include_graph.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_a_include_graph-7492659f6fb1e3c2)
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b1_martial_class.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b1_martial_class-62756371db8cd261)
+test result: ok. 14 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b5_equipment.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b5_equipment-82be8047939b5bd4)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.10s
+     Running tests/sd17_b_metadata_kinds.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b_metadata_kinds-8fbca0472a414f9b)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b_monster_stat_block.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b_monster_stat_block-22187382f2520725)
+test result: ok. 0 passed; 0 failed; 7 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_races_and_abilities.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b_races_and_abilities-ff670e139868d316)
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_spellcasting_class.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b_spellcasting_class-fd8dca6f73a30c71)
+test result: ok. 13 passed; 0 failed; 14 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_b_spells-2fb47d96f1898076)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_c_ir_convert.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_c_ir_convert-8af83ecf3e6c7635)
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd17_d_record_aggregate.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_d_record_aggregate-6a0f256669992eaf)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_e_source_ir_shape.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd17_e_source_ir_shape-459c13899e2ead01)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd18_preloop_consumer_compose.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd18_preloop_consumer_compose-c76e30f8d018a87b)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.62s
+     Running tests/sd19_equipment_arms_armor.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_equipment_arms_armor-0a81d0862e84d480)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_equipmods.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_equipment_equipmods-9f7a083a37698285)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_general.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_equipment_general-b6cda19b582f5b8a)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_magic_items.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_equipment_magic_items-f78e842f1b077318)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_abjuration.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_abjuration-9eb0decac4cf835b)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_conjuration.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_conjuration-c33c8232d3e041c4)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_divination.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_divination-047516ef61fc7682)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_enchantment.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_enchantment-3095d97c8e507cab)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_evocation.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_evocation-aa5d176b75ba4ca2)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_illusion.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_illusion-0bd67ec49bcee548)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_necromancy.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_necromancy-153f46c5f8c1de98)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_transmutation.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_transmutation-8d63d33d5767154d)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_universal.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_school_universal-394c04ed4523e948)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_seam_shapes_correctness.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd19_seam_shapes_correctness-769bf33a9003348c)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/sd20_contract_damage_wiring.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_contract_damage_wiring-b5fb6f1e252fe204)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.07s
+     Running tests/sd20_contract_equipment_wiring.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_contract_equipment_wiring-016d1c04ee320cf4)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.15s
+     Running tests/sd20_contract_spellbook_wiring.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_contract_spellbook_wiring-06949175fea00cb8)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.11s
+     Running tests/sd20_damage_aggregate_weapons.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_aggregate_weapons-1d31a48e33ffb2a9)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_base_dice.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_base_dice-bcd659b1621e2124)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_critical_multiplier.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_critical_multiplier-02aa2184367c9a66)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_critical_threat_range.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_critical_threat_range-954aad51112ef1b8)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_str_modifier.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_str_modifier-09b48f4b6e4e74ce)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_total_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_total_parity-7c3c7c6a4ab57b5e)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_damage_weapon_enhancement.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_damage_weapon_enhancement-e66cf49b937321e2)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_equipment_arms_armor.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_equipment_arms_armor-4ff08ffacbc0b1dd)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_equipment_effects_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_equipment_effects_parity-279ded4e9dda33e7)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_equipment_equipmods.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_equipment_equipmods-f15ef51a5c263428)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_equipment_general.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_equipment_general-d93ea51df0780e1b)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_equipment_magic_items.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_equipment_magic_items-99432bcbda69df86)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_abjuration.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_abjuration-ee06437663d82b66)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_conjuration.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_conjuration-43d49e600e54b7c8)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_divination.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_divination-1167f21389dd5224)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_enchantment.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_enchantment-6d7809548afee2aa)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_evocation.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_evocation-c816709ebd9ab8e8)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_illusion.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_illusion-95acc9667e0ab7d2)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_necromancy.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_necromancy-4c66cc2bb9e3de47)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_parity-3907fec9fd4fb5cf)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_transmutation.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_transmutation-856912155e07f551)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_spellbook_universal.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_spellbook_universal-66f8ac59ae3530a9)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_tabletop_readiness_integration.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd20_tabletop_readiness_integration-9c0dd68dad034349)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.76s
+     Running tests/sd26_cache_acg.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_cache_acg-9fb9d64326fcb357)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd26_cache_apg.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_cache_apg-57ad7e34e946d3c3)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+     Running tests/sd26_cache_beastiary.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_cache_beastiary-f3ca39792aa507f7)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+     Running tests/sd26_comparator.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_comparator-3a8cf821ee606245)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.78s
+     Running tests/sd26_normalization.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_normalization-35679f2bc4d04c41)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_parity_report.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_parity_report-0156192693671de6)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_pcgen_runner.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_pcgen_runner-55e2531ebb097d78)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.33s
+     Running tests/sd26_pilot_case_verification.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd26_pilot_case_verification-de409703778c4bc8)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.70s
+     Running tests/sd27_advanced_race_guide_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd27_advanced_race_guide_parity-604ef36d0474ffe6)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.68s
+     Running tests/sd27_feat_prerequisite_enforcement.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd27_feat_prerequisite_enforcement-63a05f37fcd049ee)
+test result: ok. 9 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 20.26s
+     Running tests/sd27_pathfinder_unchained_parity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd27_pathfinder_unchained_parity-0beca27f0489fd3f)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.47s
+     Running tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd27_pu_class_feature_descriptions_carry_the_characters_numbers-ac220d33f1eaf6e0)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.48s
+     Running tests/sd27_resolved_racial_trait_display_values.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd27_resolved_racial_trait_display_values-2f3b768d25cf1ab2)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.20s
+     Running tests/sd31_e2_ground_truth_agreement.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd31_e2_ground_truth_agreement-42ad35c9aa38bcc5)
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd35_race_trait_prose_comes_from_the_converted_package.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd35_race_trait_prose_comes_from_the_converted_package-6043a32f5377a895)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.39s
+     Running tests/sheet_rule_convert_gate.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_convert_gate-6a3c0d4e2aa7d11c)
+test result: ok. 48 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 567.19s
+     Running tests/sheet_rule_gated_fact_grants.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_gated_fact_grants-eaeccd2032d87b44)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 245.12s
+     Running tests/sheet_rule_link_repair.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_link_repair-82e5e4562c8444ca)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 384.77s
+     Running tests/sheet_rule_natural_attack_suffix_collision.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_natural_attack_suffix_collision-671851ae5804c93c)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 247.83s
+     Running tests/sheet_rule_weapon_selectors.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sheet_rule_weapon_selectors-5125603db519bc40)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 247.57s
+     Running tests/spell_cross_book_identity.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/spell_cross_book_identity-0396afcf901aaaf3)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/v06_apg_acg_feat_catalog.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/v06_apg_acg_feat_catalog-9b8db240825f52e2)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/v06_corpus_trap_report.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/v06_corpus_trap_report-624751ba714af02a)
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 50.68s
+     Running tests/v06_encumbrance.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/v06_encumbrance-bf963dd88af7d9f4)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/v06_wizard_pilot_case_verification.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/v06_wizard_pilot_case_verification-e3d98d2ada9d9b5c)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.54s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+EXIT=0

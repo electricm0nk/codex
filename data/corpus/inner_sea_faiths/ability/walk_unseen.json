@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Achaekek ~ Walk Unseen",
+    "name": "Walk Unseen",
+    "description": "If you have performed your daily obedience, you are constantly under the effects of a pass without trace spell, unless you wish to be followed. You also gain a +2 profane bonus on Stealth checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Achaekek ~ Walk Unseen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you are constantly under the effects of a pass without trace spell, unless you wish to be followed. You also gain a +2 profane bonus on Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 17,
+    "record_key": "Evangelist Boon ~ Achaekek ~ Walk Unseen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

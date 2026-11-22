@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Possessed Creature",
+    "name": "Possessed Creature",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Possessed Creature"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "record_key": "Possessed Creature",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

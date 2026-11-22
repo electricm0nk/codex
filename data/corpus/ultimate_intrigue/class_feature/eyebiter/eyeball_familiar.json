@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eyebiter ~ Eyeball Familiar",
+    "name": "Eyeball Familiar",
+    "class": "Mesmerist",
+    "description": "An eyebiter imbues one of his eyes with limited sentience, so that he can pluck it out and allow it to move on its own. The eyeball familiar functions similarly to the tumor familiar alchemist discovery (Ultimate Magic) except as follows. The eyeball familiar does not have fast healing. The eyeball familiar doesn't resemble an animal, and its size is Fine for a Medium or smaller eyebiter (or one size category larger for every size category the eyebiter is larger than Medium). It has a fly speed of 20 feet (perfect maneuverability) and no physical attacks (though it can still deliver touch spells once the eyebiter has reached 3rd level). The eyeball has a Strength score of 1, a Dexterity score of 12, and Constitution, Wisdom, and Charisma scores of 10. It has no set Hit Die, base saves, or skill ranks of its own, though it uses its master's when a familiar normally would. It doesn't grant its master any familiar bonus, nor can it ever be an improved familiar. Whenever the eyebiter's eyeball familiar leaves his body, he is dazzled until it returns (if it is destroyed, the eyebiter loses that eye until he gains the effects of a regeneration). An eyebiter must have at least one eye to use this ability, and an eyebiter with only one eye is blinded instead of dazzled until his familiar returns.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eyebiter ~ Eyeball Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An eyebiter imbues one of his eyes with limited sentience, so that he can pluck it out and allow it to move on its own. The eyeball familiar functions similarly to the tumor familiar alchemist discovery (Ultimate Magic) except as follows. The eyeball familiar does not have fast healing. The eyeball familiar doesn't resemble an animal, and its size is Fine for a Medium or smaller eyebiter (or one size category larger for every size category the eyebiter is larger than Medium). It has a fly speed of 20 feet (perfect maneuverability) and no physical attacks (though it can still deliver touch spells once the eyebiter has reached 3rd level). The eyeball has a Strength score of 1, a Dexterity score of 12, and Constitution, Wisdom, and Charisma scores of 10. It has no set Hit Die, base saves, or skill ranks of its own, though it uses its master's when a familiar normally would. It doesn't grant its master any familiar bonus, nor can it ever be an improved familiar. Whenever the eyebiter's eyeball familiar leaves his body, he is dazzled until it returns (if it is destroyed, the eyebiter loses that eye until he gains the effects of a regeneration). An eyebiter must have at least one eye to use this ability, and an eyebiter with only one eye is blinded instead of dazzled until his familiar returns."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 61,
+    "record_key": "Eyebiter ~ Eyeball Familiar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

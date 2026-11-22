@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Mythic Companion",
+    "name": "Mythic Companion",
+    "description": "Select one animal companion, cohort, eidolon, familiar, or bonded mount. That creature can use the surge ability %1 times per day. Its surge ability uses the same bonus die type as you do when you use your surge ability.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Mythic Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Select one animal companion, cohort, eidolon, familiar, or bonded mount. That creature can use the surge ability %1 times per day. Its surge ability uses the same bonus die type as you do when you use your surge ability.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29, 34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 210,
+    "record_key": "Mythic Path Ability ~ Mythic Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

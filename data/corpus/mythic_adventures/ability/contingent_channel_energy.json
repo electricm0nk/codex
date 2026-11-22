@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Contingent Channel Energy",
+    "name": "Contingent Channel Energy",
+    "description": "You can simultaneously expend one use of mythic power and one use of your channel energy ability to delay your channel energy so that it comes into effect under some condition you dictate. The conditions needed to bring the channel energy into effect must be clear, although they can be general. In all cases, the channel effect occurs instantaneously when the prescribed circumstances occur. For example, you could create a trigger that uses your channel positive energy if you are reduced to 0 or fewer hit points. If you prescribe complicated or convoluted conditions, your contingent channel energy ability could fail to trigger. The ability triggers based solely on the stated conditions, regardless of whether you want it to. You make all decisions about the ability when you expend the use of mythic power, according to what you can normally do with your channel energy ability; if you wish to exclude targets, you must name them at that time. You can have only one use of this ability waiting to be triggered at a time; if you use this ability again, the previous use expires. This use also expires after %1 days if it hasn't been triggered. This use of channel energy can't be regained until after the contingent channel energy ability is triggered or expires.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Contingent Channel Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can simultaneously expend one use of mythic power and one use of your channel energy ability to delay your channel energy so that it comes into effect under some condition you dictate. The conditions needed to bring the channel energy into effect must be clear, although they can be general. In all cases, the channel effect occurs instantaneously when the prescribed circumstances occur. For example, you could create a trigger that uses your channel positive energy if you are reduced to 0 or fewer hit points. If you prescribe complicated or convoluted conditions, your contingent channel energy ability could fail to trigger. The ability triggers based solely on the stated conditions, regardless of whether you want it to. You make all decisions about the ability when you expend the use of mythic power, according to what you can normally do with your channel energy ability; if you wish to exclude targets, you must name them at that time. You can have only one use of this ability waiting to be triggered at a time; if you use this ability again, the previous use expires. This use also expires after %1 days if it hasn't been triggered. This use of channel energy can't be regained until after the contingent channel energy ability is triggered or expires.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 137,
+    "record_key": "Mythic Path Ability ~ Contingent Channel Energy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

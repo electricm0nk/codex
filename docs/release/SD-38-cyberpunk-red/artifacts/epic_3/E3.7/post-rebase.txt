@@ -1,0 +1,7 @@
+== root --lib rules_core::cpr::
+test result: ok. 125 passed; 0 failed; 0 ignored; 0 measured; 2892 filtered out; finished in 0.19s
+== desktop --bins cpr_
+test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 808 filtered out; finished in 20.07s
+
+typecheck exit 0
+model test exit 0

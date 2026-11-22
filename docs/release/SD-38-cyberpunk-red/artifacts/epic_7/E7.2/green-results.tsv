@@ -1,0 +1,5 @@
+suite	result
+apps/desktop/src-tauri cargo test --locked -j 8 --no-fail-fast -- --test-threads=8	ok: main.rs 891 passed 0 failed 2 ignored; packaged_resources 1 passed; FAILED lines 0
+PF render hashes	PF_SHA_EQUAL
+SF seed lines	SF_SHA_EQUAL (42/72/51/63)
+CPR seed loaded.json	CPR_SHA_EQUAL

@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Frightful Presence",
+    "name": "Frightful Presence",
+    "class": "Aegis",
+    "description": "You gain the frightful presence ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Frightful Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialAttack"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisFrightfulPresenceRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisFrightfulPresenceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the frightful presence ability."
+      },
+      {
+        "key": "DESC",
+        "value": "The aegis makes his astral suit unsettling to his foes, gaining the frightful presence ability.  The aegis can activate this ability as part of an offensive action, such as a charge or attack.  Opponents within %1 feet of the aegis must make a %2 Will save or become shaken for 3d6 rounds.  If the aegis has at least 4 more Hit Dice than an opponent, that opponent becomes frightened instead.  Foes with more HD than the aegis are immune to this effect.|AegisFrightfulPresenceRange|AegisFrightfulPresenceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisFrightfulPresenceRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisFrightfulPresenceDC|10+AstralSuitLVL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisFrightfulPresenceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Frightful Presence)"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 140,
+    "record_key": "Aegis ~ Frightful Presence"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

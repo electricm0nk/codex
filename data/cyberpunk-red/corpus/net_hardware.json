@@ -1,0 +1,125 @@
+[
+  {
+    "name": "Backup Drive",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 2,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "While installed on a Cyberdeck, a Backup Drive \"saves\" Non-Black ICE Attacker, Defender, or Booster Programs that are destroyed by pulling them into the Backup Drive the instant before they meet their end. As a Meat Action, a Netrunner can re-install all Programs \"saved\" by the Backup Drive onto their deck, if they have the Slots for them. If removed from a Cyberdeck, the Backup Drive erases its contents automatically. Restored Programs with once-per-Netrun restrictions and the like are restored in the exact state they were saved in, so you can't kill your own Armor to refresh it. Yeah, that means you. Takes 2 Hardware Option Slots.",
+    "slots_printed": true,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "DNA Lock",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 2,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "A Cyberdeck with a DNA Lock can be locked and unlocked using a thumbprint, iris scan, blood sample, or any other biometric method desired. The method varies depending on the model of the DNA Lock. A locked Cyberdeck cannot be accessed without either its biometric key or a DV 17 Electronics/Security Tech Check. Takes 2 Hardware Option Slots.",
+    "slots_printed": true,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "Hardened Circuitry",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 1,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "A Cyberdeck with Hardened Circuitry cannot be rendered temporarily disabled, rendered inoperable, or destroyed by EMP effects, like Microwaver pulses, or Non-Black ICE Program Effects.",
+    "transcription_note": "Slots: 1 by the p209 default 'All Hardware takes up 1 Option Slot unless otherwise noted'.",
+    "slots_printed": false,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "Insulated Wiring",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 1,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "A Cyberdeck with Insulated Wiring cannot catch fire or cause the user's clothing to catch fire as the result of a Program effect.",
+    "transcription_note": "Slots: 1 by the p209 default 'All Hardware takes up 1 Option Slot unless otherwise noted'.",
+    "slots_printed": false,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "KRASH Barrier",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 2,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "A Cyberdeck with a KRASH Barrier is immune to any Program Effect that forces the Netrunner to Jack Out, safely or unsafely. Takes 2 Hardware Option Slots.",
+    "slots_printed": true,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "Range Upgrade",
+    "source_page": "p209",
+    "also_on": [
+      "p369"
+    ],
+    "hardware_type": "Hardware",
+    "slots": 1,
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "text": "A Cyberdeck with a Range Upgrade can connect to an access point from up to 8m away.",
+    "transcription_note": "Slots: 1 by the p209 default 'All Hardware takes up 1 Option Slot unless otherwise noted'. Default access-point range is 6 m/yds (p199).",
+    "slots_printed": false,
+    "kind": "net_hardware"
+  },
+  {
+    "name": "Bodyweight Suit",
+    "source_page": "p209",
+    "also_on": [
+      "p351"
+    ],
+    "hardware_type": "Miscellaneous Upgrade",
+    "cost_eb": 1000,
+    "price_category": "Very Expensive",
+    "slots": null,
+    "slot_bonus": {
+      "hardware_only": 1,
+      "any": 0
+    },
+    "text": "SP11 armor for head and body with storage space for Cyberdeck and cords for Interface Plugs. Adds 1 extra Hardware only Option Slot. See the full listing on pg. 350.",
+    "transcription_note": "p209 prints 'storage space forf Cyberdeck' (typo in the book text); transcribed as 'for'. A-7: both the Bodyweight Suit hardware-only slot and the Cyberarm deck slot apply to one deck (p351, p365; nothing prohibits it); a loadout over the deck's slot total is refused.",
+    "kind": "net_hardware"
+  },
+  {
+    "name": "Cyberdeck Cyberarm Option",
+    "source_page": "p209",
+    "also_on": [
+      "p365"
+    ],
+    "hardware_type": "Miscellaneous Upgrade",
+    "cost_eb": 500,
+    "price_category": "Expensive",
+    "slots": null,
+    "slot_bonus": {
+      "hardware_only": 0,
+      "any": 1
+    },
+    "text": "A Cyberdeck installed directly into a Cyberarm. Adds 1 extra Program/Hardware Slot. See the full listing on pg. 364.",
+    "transcription_note": "A-7: both the Bodyweight Suit hardware-only slot and the Cyberarm deck slot apply to one deck (p351, p365; nothing prohibits it); a loadout over the deck's slot total is refused.",
+    "kind": "net_hardware"
+  }
+]

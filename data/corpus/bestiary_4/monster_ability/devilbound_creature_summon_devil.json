@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devilbound Creature ~ Summon Devil",
+    "delivery": "Supernatural",
+    "description": "The creature gains the summon universal monster ability and can summon a devil once per day with a 100%% chance of success. The devil remains for 1 hour. The creature's caster level or Hit Dice, whichever is higher, determines the most powerful kind of devil it can summon and the effective spell level of this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devilbound_creature_summon_devil",
+    "name": "Summon Devil",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature gains the summon universal monster ability and can summon a devil once per day with a 100%% chance of success. The devil remains for 1 hour. The creature's caster level or Hit Dice, whichever is higher, determines the most powerful kind of devil it can summon and the effective spell level of this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Devilbound Creature ~ Summon Devil"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster II (Devilbound)|PREVARGTEQ:TL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster IX (Devilbound)|PREVARGTEQ:TL,17"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster V (Devilbound)|PREVARGTEQ:TL,9"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster VI (Devilbound)|PREVARGTEQ:TL,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster VII (Devilbound)|PREVARGTEQ:TL,13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Summon Monster VIII (Devilbound)|PREVARGTEQ:TL,15"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 481,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devilbound Creature ~ Summon Devil",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

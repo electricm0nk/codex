@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Infernian (firedrake-class)",
+    "name": "Infernian, firedrake-class",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Small Arms.Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "starfinder/paizo/near_space/sns_equip.lst",
+    "record_key": "Infernian (firedrake-class)",
+    "sha256": "597c20e87a811ffff6ea542d4aa1c33f55106c844cdd978829fd0f3e002dedfd"
+  },
+  "unit_id": "near_space:equipment:infernian_firedrake_class"
+}

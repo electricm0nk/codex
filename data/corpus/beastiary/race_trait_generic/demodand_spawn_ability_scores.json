@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "These boorish tieflings enjoy violating taboos and breaking laws. They often bear hideous physical oddities or deformities.",
+    "key": "Demodand-Spawn ~ Ability Scores",
+    "name": "+2 Constitution, +2 Wisdom, -2 Intelligence",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demodand-Spawn ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tiefling ~ Demodand-Spawn"
+      },
+      {
+        "key": "DESC",
+        "value": "These boorish tieflings enjoy violating taboos and breaking laws. They often bear hideous physical oddities or deformities."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "record_key": "Demodand-Spawn ~ Ability Scores",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

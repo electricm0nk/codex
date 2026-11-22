@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:57:27Z",
+  "data": {
+    "key": "Redistributed Might",
+    "name": "Redistributed Might",
+    "description": "You've gained enough control over your body to translate strength into swiftness.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "4"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_CON,13],[PREVARGTEQ:PreStatScore_WIS,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "You've gained enough control over your body to translate strength into swiftness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Whenever an effect would grant you an enhancement or morale bonus to your Strength score (such as via bull's strength or a skald's inspired rage performance), you can instead apply that bonus to your Dexterity score. You make this choice when you first gain the bonus. The bonus type does not change."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 50,
+    "record_key": "Redistributed Might"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

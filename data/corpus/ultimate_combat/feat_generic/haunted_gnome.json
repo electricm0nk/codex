@@ -1,0 +1,65 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You use your gnome magic to take on an eerie illusory appearance.",
+    "key": "Haunted Gnome",
+    "name": "Haunted Gnome",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gnome ~ Gnome Magic"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=1"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Haunted Fey Aspect,10+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your gnome magic to take on an eerie illusory appearance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You add haunted fey aspect (page 230) to your list of gnome magic spell-like abilities, and you can use this spell-like ability twice per day."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 165,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "record_key": "Haunted Gnome",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Steal Power",
+    "name": "Steal Power",
+    "description": "By attempting a melee touch attack as a standard action, you can try to steal mythic power from another creature. The target must have at least one use of mythic power available. If the attack hits, attempt an opposed d20 roll against the target, adding your tier. If your total exceeds that of the target, the target loses one use of mythic power and you gain one use. You can use this ability on a given creature only once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Steal Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "By attempting a melee touch attack as a standard action, you can try to steal mythic power from another creature. The target must have at least one use of mythic power available. If the attack hits, attempt an opposed d20 roll against the target, adding your tier. If your total exceeds that of the target, the target loses one use of mythic power and you gain one use. You can use this ability on a given creature only once per day."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 401,
+    "record_key": "Mythic Path Ability ~ Steal Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,135 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+warning: constant `LEDGER` is never used
+  --> src/sf_oracle_parity.rs:41:22
+   |
+41 |     pub(crate) const LEDGER: &str = "scripts/oracle_harness/sf_parity/explained.tsv";
+   |                      ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `Explained` is never constructed
+   --> src/sf_oracle_parity.rs:313:23
+    |
+313 |     pub(crate) struct Explained {
+    |                       ^^^^^^^^^
+
+warning: function `ledger` is never used
+   --> src/sf_oracle_parity.rs:322:19
+    |
+322 |     pub(crate) fn ledger() -> Vec<Explained> {
+    |                   ^^^^^^
+
+warning: `codex-desktop` (bin "codex-desktop" test) generated 3 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 54.35s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+104 differences over 19 fields
+DIFF	SF-Soldier-3	attack.melee	absent	6
+DIFF	SF-Soldier-3	attack.ranged	absent	5
+DIFF	SF-Soldier-3	bulk	4	4.3
+DIFF	SF-Soldier-3	skill.Acrobatics	-2	2
+DIFF	SF-Soldier-3	skill.Athletics	6	10
+DIFF	SF-Soldier-3	skill.Stealth	-2	2
+DIFF	SF-Soldier-3	weapon.Baton, tactical.attack	absent	6
+DIFF	SF-Soldier-3	weapon.Baton, tactical.damage	absent	4
+DIFF	SF-Soldier-3	weapon.Laser rifle, azimuth.attack	absent	5
+DIFF	SF-Soldier-3	weapon.Laser rifle, azimuth.damage	absent	3
+DIFF	SF-Mystic-5	attack.melee	absent	3
+DIFF	SF-Mystic-5	attack.ranged	absent	5
+DIFF	SF-Mystic-5	bulk	1	1.5
+DIFF	SF-Mystic-5	skill.Diplomacy	12	10
+DIFF	SF-Mystic-5	skill.Medicine	12	10
+DIFF	SF-Mystic-5	spells.mystic.0.per_day	absent	0
+DIFF	SF-Mystic-5	weapon.Baton, tactical.attack	absent	5
+DIFF	SF-Mystic-5	weapon.Baton, tactical.damage	absent	2
+DIFF	SF-Mystic-5	weapon.Laser pistol, azimuth.attack	absent	5
+DIFF	SF-Mystic-5	weapon.Laser pistol, azimuth.damage	absent	2
+DIFF	SF-Technomancer-5	attack.melee	absent	3
+DIFF	SF-Technomancer-5	attack.ranged	absent	6
+DIFF	SF-Technomancer-5	bulk	1	1.4
+DIFF	SF-Technomancer-5	spells.technomancer.0.per_day	absent	0
+DIFF	SF-Technomancer-5	weapon.Laser pistol, azimuth.attack	absent	6
+DIFF	SF-Technomancer-5	weapon.Laser pistol, azimuth.damage	absent	2
+DIFF	SF-Envoy-3	attack.melee	absent	1
+DIFF	SF-Envoy-3	attack.ranged	absent	3
+DIFF	SF-Envoy-3	bulk	1	1.4
+DIFF	SF-Envoy-3	skill.Acrobatics	0	1
+DIFF	SF-Envoy-3	skill.Athletics	-2	-1
+DIFF	SF-Envoy-3	skill.Stealth	8	9
+DIFF	SF-Envoy-3	weapon.Baton, tactical.attack	absent	3
+DIFF	SF-Envoy-3	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Envoy-3	weapon.Semi-auto pistol, tactical.attack	absent	3
+DIFF	SF-Envoy-3	weapon.Semi-auto pistol, tactical.damage	absent	1
+DIFF	SF-Mechanic-1	attack.melee	absent	0
+DIFF	SF-Mechanic-1	attack.ranged	absent	2
+DIFF	SF-Envoy-1	attack.melee	absent	0
+DIFF	SF-Envoy-1	attack.ranged	absent	1
+DIFF	SF-Envoy-1	bulk	0	0.3
+DIFF	SF-Envoy-1	weapon.Baton, tactical.attack	absent	1
+DIFF	SF-Envoy-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Envoy-1	weapon.Laser pistol, azimuth.attack	absent	1
+DIFF	SF-Envoy-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Mystic-1	attack.melee	absent	0
+DIFF	SF-Mystic-1	attack.ranged	absent	1
+DIFF	SF-Mystic-1	bulk	0	0.3
+DIFF	SF-Mystic-1	spells.mystic.0.per_day	absent	0
+DIFF	SF-Mystic-1	weapon.Baton, tactical.attack	absent	1
+DIFF	SF-Mystic-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Mystic-1	weapon.Laser pistol, azimuth.attack	absent	1
+DIFF	SF-Mystic-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Operative-1	attack.melee	absent	0
+DIFF	SF-Operative-1	attack.ranged	absent	4
+DIFF	SF-Operative-1	bulk	0	0.3
+DIFF	SF-Operative-1	weapon.Baton, tactical.attack	absent	4
+DIFF	SF-Operative-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Operative-1	weapon.Laser pistol, azimuth.attack	absent	4
+DIFF	SF-Operative-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Solarian-1	attack.melee	absent	2
+DIFF	SF-Solarian-1	attack.ranged	absent	1
+DIFF	SF-Solarian-1	bulk	0	0.3
+DIFF	SF-Solarian-1	weapon.Baton, tactical.attack	absent	2
+DIFF	SF-Solarian-1	weapon.Baton, tactical.damage	absent	1
+DIFF	SF-Solarian-1	weapon.Laser pistol, azimuth.attack	absent	1
+DIFF	SF-Solarian-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Soldier-1	attack.melee	absent	2
+DIFF	SF-Soldier-1	attack.ranged	absent	5
+DIFF	SF-Soldier-1	bulk	0	0.3
+DIFF	SF-Soldier-1	weapon.Baton, tactical.attack	absent	5
+DIFF	SF-Soldier-1	weapon.Baton, tactical.damage	absent	1
+DIFF	SF-Soldier-1	weapon.Laser pistol, azimuth.attack	absent	5
+DIFF	SF-Soldier-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Technomancer-1	attack.melee	absent	0
+DIFF	SF-Technomancer-1	attack.ranged	absent	1
+DIFF	SF-Technomancer-1	bulk	0	0.3
+DIFF	SF-Technomancer-1	spells.technomancer.0.per_day	absent	0
+DIFF	SF-Technomancer-1	weapon.Baton, tactical.attack	absent	1
+DIFF	SF-Technomancer-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Technomancer-1	weapon.Laser pistol, azimuth.attack	absent	1
+DIFF	SF-Technomancer-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Biohacker-1	attack.melee	absent	0
+DIFF	SF-Biohacker-1	attack.ranged	absent	2
+DIFF	SF-Biohacker-1	bulk	0	0.3
+DIFF	SF-Biohacker-1	weapon.Baton, tactical.attack	absent	2
+DIFF	SF-Biohacker-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Biohacker-1	weapon.Laser pistol, azimuth.attack	absent	2
+DIFF	SF-Biohacker-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Vanguard-1	attack.melee	absent	2
+DIFF	SF-Vanguard-1	attack.ranged	absent	2
+DIFF	SF-Vanguard-1	bulk	0	0.3
+DIFF	SF-Vanguard-1	weapon.Baton, tactical.attack	absent	2
+DIFF	SF-Vanguard-1	weapon.Baton, tactical.damage	absent	1
+DIFF	SF-Vanguard-1	weapon.Laser pistol, azimuth.attack	absent	2
+DIFF	SF-Vanguard-1	weapon.Laser pistol, azimuth.damage	absent	0
+DIFF	SF-Witchwarper-1	attack.melee	absent	0
+DIFF	SF-Witchwarper-1	attack.ranged	absent	2
+DIFF	SF-Witchwarper-1	bulk	0	0.3
+DIFF	SF-Witchwarper-1	spells.witchwarper.0.per_day	absent	0
+DIFF	SF-Witchwarper-1	weapon.Baton, tactical.attack	absent	2
+DIFF	SF-Witchwarper-1	weapon.Baton, tactical.damage	absent	0
+DIFF	SF-Witchwarper-1	weapon.Laser pistol, azimuth.attack	absent	2
+DIFF	SF-Witchwarper-1	weapon.Laser pistol, azimuth.damage	absent	0
+test sf_oracle_parity::tests::sf_oracle_parity_dump ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 696 filtered out; finished in 2.73s
+

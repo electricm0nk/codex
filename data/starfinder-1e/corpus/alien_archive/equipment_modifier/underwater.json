@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Underwater",
+    "name": "Underwater"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "starfinder/paizo/alien_archive/saa_equipmods.lst",
+    "record_key": "Underwater",
+    "sha256": "99cec8717ed925c84b3463c3d331fd312afad845921162a589b8780a9566b841"
+  },
+  "unit_id": "alien_archive:equipment_modifier:underwater"
+}

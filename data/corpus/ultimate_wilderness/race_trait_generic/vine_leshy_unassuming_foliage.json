@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Vine leshys gain a +4 racial bonus on Stealth checks in forests.",
+    "key": "Vine Leshy ~ Unassuming Foliage",
+    "name": "Unassuming Foliage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Unassuming Foliage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default"
+      },
+      {
+        "key": "DESC",
+        "value": "Vine leshys gain a +4 racial bonus on Stealth checks in forests."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In forests|4|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 123,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Vine Leshy ~ Unassuming Foliage",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

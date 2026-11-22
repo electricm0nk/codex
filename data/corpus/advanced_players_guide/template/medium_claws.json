@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Medium Claws",
+    "name": "Medium Claws",
+    "raw_tokens": [
+      {
+        "key": "PRESIZEGTEQ",
+        "value": "M"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claws,Weapon.Natural.Weapon Group Natural.Melee.Slashing,*2,1d4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst",
+    "record_key": "Medium Claws",
+    "sha256": "b6eb4cd001ab2ad02bfa2dc2f6935d539bd988d8538a1656518a52e402924e99"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

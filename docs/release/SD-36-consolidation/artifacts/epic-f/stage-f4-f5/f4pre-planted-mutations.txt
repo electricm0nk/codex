@@ -1,0 +1,21 @@
+control (unmodified): exit=0 verdict=PASS
+M1 the cleric's domain choice withdrawn: exit=1 verdict=FAIL (unexpected field deltas: 1732)
+    unexpected field deltas: 1732
+M2 the cleric's domain count becomes 3 (not the record's ClericDomainCount): exit=1 verdict=FAIL (unexpected field deltas: 1; F4pre pin failures: 1)
+    F4pre pinned offer withdrawn or moved: core_rulebook:class:cleric#bonus1
+    unexpected field deltas: 1
+M3 the shaman spirit choice offers another category's members: exit=1 verdict=FAIL (unexpected field deltas: 1; F4pre pin failures: 1)
+    F4pre pinned offer withdrawn or moved: advanced_class_guide:class_feature:shaman_spirit
+    unexpected field deltas: 1
+M4 the shaman spirit pick offers the domains: exit=1 verdict=FAIL (unexpected field deltas: 1; F4pre pin failures: 1)
+    F4pre pinned offer withdrawn or moved: advanced_class_guide:class_feature:shaman_spirit
+    unexpected field deltas: 1
+M5 the shaman spirit choice keyed under another rule: exit=1 verdict=FAIL (unexpected field deltas: 1; F4pre pin failures: 1)
+    F4pre pinned offer withdrawn or moved: advanced_class_guide:class_feature:shaman_spirit
+    unexpected field deltas: 1
+M6 an unpinned offer planted on a rule that is no pick: exit=1 verdict=FAIL (unexpected field deltas: 1)
+    unexpected field deltas: 1
+M7 the shaman spirit option set gains a requirement: exit=1 verdict=FAIL (unexpected field deltas: 1; F4pre pin failures: 1)
+    F4pre pinned offer withdrawn or moved: advanced_class_guide:class_feature:shaman_spirit
+    unexpected field deltas: 1
+control (restored): exit=0 verdict=PASS

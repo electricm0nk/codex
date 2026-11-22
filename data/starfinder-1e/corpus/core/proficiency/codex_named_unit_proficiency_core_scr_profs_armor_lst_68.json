@@ -1,0 +1,23 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (proficiency_core_scr_profs_armor_lst_68)",
+    "name": "Codex-Named Unit (proficiency_core_scr_profs_armor_lst_68)"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "core:scr_profs_armor.lst:68",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "starfinder/paizo/core/scr_profs_armor.lst",
+    "record_key": "Codex-Named Unit (proficiency_core_scr_profs_armor_lst_68)",
+    "sha256": "4193bb041d9670b31528c111671efc20dc7d860e6da3c1dcbae7ae86e27665ed"
+  },
+  "unit_id": "core:proficiency:skyfire_armor_pinion"
+}

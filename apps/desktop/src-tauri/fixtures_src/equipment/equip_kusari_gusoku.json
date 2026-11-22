@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Kusari Gusoku",
+    "name": "Kusari Gusoku",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Kusari Gusoku"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "350"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_kusari_gusoku.txt",
+    "record_key": "Kusari Gusoku"
+  }
+}

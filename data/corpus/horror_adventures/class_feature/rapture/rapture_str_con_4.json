@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rapture ~ STR/CON",
+    "name": "Rapture (Str/Con +4)",
+    "class": "Rapture",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rapture ~ STR/CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaptureSelection"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Rapture,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rapture|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaptureACPenalty|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureStrBonus,RaptureConBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureACPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureSaveBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureDuration|2+var(\"STAT.2.MOD.NOTEMP\")+(2*RaptureLVL)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|RaptureACPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|RaptureSaveBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|RaptureStrBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|RaptureConBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD|RaptureACPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Rapture|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 310,
+    "record_key": "Rapture ~ STR/CON"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

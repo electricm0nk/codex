@@ -1,0 +1,452 @@
+[
+  {
+    "key": "Divine Hunter ~ Aura of Care",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Distant Mercy",
+    "class": "Paladin",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Divine Bond",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Hunter's Blessing",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Precise Shot",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Righteous Hunter",
+    "class": "Paladin",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Divine Hunter ~ Shared Precision",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1440
+    }
+  },
+  {
+    "key": "Empyreal Knight ~ Celestial Ally",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1441
+    }
+  },
+  {
+    "key": "Empyreal Knight ~ Celestial Heart",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1441
+    }
+  },
+  {
+    "key": "Empyreal Knight ~ Divine Bond",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1441
+    }
+  },
+  {
+    "key": "Empyreal Knight ~ Empyreal Champion",
+    "class": "Paladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1441
+    }
+  },
+  {
+    "key": "Empyreal Knight ~ Voices of the Spheres",
+    "class": "Paladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1441
+    }
+  },
+  {
+    "key": "Holy Gun ~ Divine Bond",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Divine Deed",
+    "class": "Paladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Have Gun",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Holy Grit",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Holy Slinger",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Smiting Shot",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Gun ~ Weapon and Armor Proficiency",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1442
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Battlefield Presence",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Guide the Battle",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Masterful Presence",
+    "class": "Paladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Tactical Acumen",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Weal's Champion",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Holy Tactician ~ Weal's Wrath",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1443
+    }
+  },
+  {
+    "key": "Sacred Shield ~ Bastion of Good",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1444
+    }
+  },
+  {
+    "key": "Sacred Shield ~ Divine Bond",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1444
+    }
+  },
+  {
+    "key": "Sacred Shield ~ Holy Shield",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1444
+    }
+  },
+  {
+    "key": "Sacred Shield ~ Improved Bastion",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1444
+    }
+  },
+  {
+    "key": "Sacred Shield ~ Perfect Bastion",
+    "class": "Paladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1444
+    }
+  }
+]

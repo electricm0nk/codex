@@ -1,0 +1,89 @@
+2026-08-25T10:15:50.958754236 INFO main Main:105 Starting PCGen v6.09.08.RC1
+2026-08-25T10:15:52.877102959 INFO main LanguageBundle:134 Initialising language bundle with locale en.
+2026-08-25T10:16:01.884585197 INFO main BatchExporter:117 Started export of /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/improved_mind_armor_medium.pcg using /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-check.txt.ftl to /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-oracle-txt/improved_mind_armor_medium.txt
+2026-08-25T10:16:01.943620529 SEVERE main Globals:130 Could not find campaign: Ultimate Psionics
+2026-08-25T10:16:01.954170120 INFO main BatchExporter:122 Loading sources [Core Rulebook] using game mode Pathfinder_RPG
+2026-08-25T10:16:02.023352183 INFO main SourceFileLoader:507 Loading game Pathfinder_RPG and sources [Core Rulebook].
+2026-08-25T10:16:12.981175873 LSTERROR main LstUtils:145 Illegal FACT subtoken 'IsOrc' 'True' for pcgen.core.PCTemplate IsOrc (Source: file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst )
+2026-08-25T10:16:12.983058803 LSTERROR main LstUtils:145 Failed in parsing typeStr: FACT IsOrc|True for pcgen.core.PCTemplate IsOrc
+2026-08-25T10:16:12.983530348 LSTERROR main LstUtils:145 Illegal Token 'FACT' 'IsOrc|True' for pcgen.core.PCTemplate IsOrc in file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+2026-08-25T10:16:23.730678629 WARNING main CharacterManager:252 The following warnings were encountered while loading improved_mind_armor_medium.pcg
+2026-08-25T10:16:23.736816219 WARNING main CharacterManager:260 * Could not add equipment: Improved Mind Armor (Medium). Check loaded campaigns.
+2026-08-25T10:16:23.743784254 WARNING main CharacterManager:260 * Could not find equipment: Improved Mind Armor (Medium)
+2026-08-25T10:16:23.748350253 WARNING main ConsoleUIDelegate:70 improved_mind_armor_medium.pcg - The following warnings were encountered
+Could not add equipment: Improved Mind Armor (Medium). Check loaded campaigns.
+Could not find equipment: Improved Mind Armor (Medium)
+Do you still wish to load the character?
+2026-08-25T10:16:23.749238182 INFO main CharacterManager:193 Loaded character E5 R3 improved_mind_armor_medium - /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/improved_mind_armor_medium.pcg
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number

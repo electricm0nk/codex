@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Sharpshoot FIGHTING STYLE ~ Focus Fire",
+    "name": "Focus Fire",
+    "type": "Class Feature.Sharpshoot FIGHTING STYLE.Sharpshoot FIGHTING STYLE LVL 5.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2024,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Sharpshoot FIGHTING STYLE ~ Focus Fire",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:sharpshoot_fighting_style_focus_fire"
+}

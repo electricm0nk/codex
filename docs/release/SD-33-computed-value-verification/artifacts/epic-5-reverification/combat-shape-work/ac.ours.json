@@ -1,0 +1,322 @@
+{
+  "advanced_class_guide:equipment:full_plate_of_the_corpse": [
+    "full_plate_of_the_corpse.AC.TOTAL_DELTA",
+    9
+  ],
+  "advanced_class_guide:equipment:hero_s_hauberk": [
+    "hero_s_hauberk.AC.TOTAL_DELTA",
+    4
+  ],
+  "advanced_class_guide:equipment:stalking_armor_cold": [
+    "stalking_armor_cold.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_desert": [
+    "stalking_armor_desert.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_forest": [
+    "stalking_armor_forest.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_jungle": [
+    "stalking_armor_jungle.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_mountain": [
+    "stalking_armor_mountain.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_plains": [
+    "stalking_armor_plains.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_swamp": [
+    "stalking_armor_swamp.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_underground": [
+    "stalking_armor_underground.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_urban": [
+    "stalking_armor_urban.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:stalking_armor_water": [
+    "stalking_armor_water.AC.TOTAL_DELTA",
+    3
+  ],
+  "advanced_class_guide:equipment:tireless_tracking_hide": [
+    "tireless_tracking_hide.AC.TOTAL_DELTA",
+    4
+  ],
+  "advanced_race_guide:equipment:sea_knife": [
+    "sea_knife.AC.TOTAL_DELTA",
+    -2
+  ],
+  "core_rulebook:equipment:amulet_of_natural_armor_1": [
+    "amulet_of_natural_armor_1.AC.TOTAL_DELTA",
+    1
+  ],
+  "core_rulebook:equipment:amulet_of_natural_armor_2": [
+    "amulet_of_natural_armor_2.AC.TOTAL_DELTA",
+    2
+  ],
+  "core_rulebook:equipment:amulet_of_natural_armor_3": [
+    "amulet_of_natural_armor_3.AC.TOTAL_DELTA",
+    3
+  ],
+  "core_rulebook:equipment:amulet_of_natural_armor_4": [
+    "amulet_of_natural_armor_4.AC.TOTAL_DELTA",
+    4
+  ],
+  "core_rulebook:equipment:amulet_of_natural_armor_5": [
+    "amulet_of_natural_armor_5.AC.TOTAL_DELTA",
+    5
+  ],
+  "core_rulebook:equipment:bracers_of_armor_1": [
+    "bracers_of_armor_1.AC.TOTAL_DELTA",
+    1
+  ],
+  "core_rulebook:equipment:bracers_of_armor_2": [
+    "bracers_of_armor_2.AC.TOTAL_DELTA",
+    2
+  ],
+  "core_rulebook:equipment:bracers_of_armor_3": [
+    "bracers_of_armor_3.AC.TOTAL_DELTA",
+    3
+  ],
+  "core_rulebook:equipment:bracers_of_armor_4": [
+    "bracers_of_armor_4.AC.TOTAL_DELTA",
+    4
+  ],
+  "core_rulebook:equipment:bracers_of_armor_5": [
+    "bracers_of_armor_5.AC.TOTAL_DELTA",
+    5
+  ],
+  "core_rulebook:equipment:bracers_of_armor_6": [
+    "bracers_of_armor_6.AC.TOTAL_DELTA",
+    6
+  ],
+  "core_rulebook:equipment:bracers_of_armor_7": [
+    "bracers_of_armor_7.AC.TOTAL_DELTA",
+    7
+  ],
+  "core_rulebook:equipment:bracers_of_armor_8": [
+    "bracers_of_armor_8.AC.TOTAL_DELTA",
+    8
+  ],
+  "core_rulebook:equipment:ioun_stone_dusty_rose_prism": [
+    "ioun_stone_dusty_rose_prism.AC.TOTAL_DELTA",
+    1
+  ],
+  "core_rulebook:equipment:ring_of_force_shield": [
+    "ring_of_force_shield.AC.TOTAL_DELTA",
+    2
+  ],
+  "core_rulebook:equipment:ring_of_protection_1": [
+    "ring_of_protection_1.AC.TOTAL_DELTA",
+    1
+  ],
+  "core_rulebook:equipment:ring_of_protection_2": [
+    "ring_of_protection_2.AC.TOTAL_DELTA",
+    2
+  ],
+  "core_rulebook:equipment:ring_of_protection_3": [
+    "ring_of_protection_3.AC.TOTAL_DELTA",
+    3
+  ],
+  "core_rulebook:equipment:ring_of_protection_4": [
+    "ring_of_protection_4.AC.TOTAL_DELTA",
+    4
+  ],
+  "core_rulebook:equipment:ring_of_protection_5": [
+    "ring_of_protection_5.AC.TOTAL_DELTA",
+    5
+  ],
+  "inner_sea_gods:equipment:knight_inheritor_s_ring": [
+    "knight_inheritor_s_ring.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_gods:equipment:profane_seal_signet": [
+    "profane_seal_signet.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_gods:equipment:red_hound_ring": [
+    "red_hound_ring.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_gods:equipment:ring_of_seven_lovely_colors": [
+    "ring_of_seven_lovely_colors.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_gods:equipment:ring_of_unquenchable_passions": [
+    "ring_of_unquenchable_passions.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_races:equipment:armor_of_grim_triumph": [
+    "armor_of_grim_triumph.AC.TOTAL_DELTA",
+    6
+  ],
+  "inner_sea_races:equipment:coat_of_shells": [
+    "coat_of_shells.AC.TOTAL_DELTA",
+    5
+  ],
+  "inner_sea_races:equipment:gnome_scrap_armor": [
+    "gnome_scrap_armor.AC.TOTAL_DELTA",
+    3
+  ],
+  "inner_sea_races:equipment:goblin_plate": [
+    "goblin_plate.AC.TOTAL_DELTA",
+    9
+  ],
+  "inner_sea_races:equipment:hallowed_chain": [
+    "hallowed_chain.AC.TOTAL_DELTA",
+    6
+  ],
+  "inner_sea_races:equipment:hallowed_chain_greater": [
+    "hallowed_chain_greater.AC.TOTAL_DELTA",
+    6
+  ],
+  "inner_sea_races:equipment:hide_of_grim_triumph": [
+    "hide_of_grim_triumph.AC.TOTAL_DELTA",
+    4
+  ],
+  "inner_sea_races:equipment:mail_of_sly_steps": [
+    "mail_of_sly_steps.AC.TOTAL_DELTA",
+    4
+  ],
+  "inner_sea_races:equipment:panoply_of_the_fierani_knight": [
+    "panoply_of_the_fierani_knight.AC.TOTAL_DELTA",
+    9
+  ],
+  "inner_sea_world_guide:equipment:field_plate": [
+    "field_plate.AC.TOTAL_DELTA",
+    7
+  ],
+  "inner_sea_world_guide:equipment:klar_as_shield": [
+    "klar_as_shield.AC.TOTAL_DELTA",
+    1
+  ],
+  "inner_sea_world_guide:equipment:leaf_armor": [
+    "leaf_armor.AC.TOTAL_DELTA",
+    3
+  ],
+  "inner_sea_world_guide:equipment:stoneplate": [
+    "stoneplate.AC.TOTAL_DELTA",
+    9
+  ],
+  "ultimate_equipment:equipment:bracers_of_defenselessness": [
+    "bracers_of_defenselessness.AC.TOTAL_DELTA",
+    -5
+  ],
+  "ultimate_equipment:equipment:cape_of_bravado": [
+    "cape_of_bravado.AC.TOTAL_DELTA",
+    1
+  ],
+  "ultimate_equipment:equipment:guardian_gorget": [
+    "guardian_gorget.AC.TOTAL_DELTA",
+    2
+  ],
+  "ultimate_equipment:equipment:jingasa_of_the_fortunate_soldier": [
+    "jingasa_of_the_fortunate_soldier.AC.TOTAL_DELTA",
+    1
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_dark_naga": [
+    "naga_scale_bindi_dark_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_guardian_naga": [
+    "naga_scale_bindi_guardian_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_lunar_naga": [
+    "naga_scale_bindi_lunar_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_royal_naga": [
+    "naga_scale_bindi_royal_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_spirit_naga": [
+    "naga_scale_bindi_spirit_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:naga_scale_bindi_water_naga": [
+    "naga_scale_bindi_water_naga.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_equipment:equipment:snakeskin_tunic": [
+    "snakeskin_tunic.AC.TOTAL_DELTA",
+    1
+  ],
+  "ultimate_equipment:equipment:vambraces_of_defense": [
+    "vambraces_of_defense.AC.TOTAL_DELTA",
+    1
+  ],
+  "ultimate_intrigue:equipment:diviner_s_blight": [
+    "diviner_s_blight.AC.TOTAL_DELTA",
+    2
+  ],
+  "ultimate_magic:equipment:scroll_shield": [
+    "scroll_shield.AC.TOTAL_DELTA",
+    1
+  ],
+  "ultimate_psionics:equipment:goggles_of_far_sight": [
+    "goggles_of_far_sight.AC.TOTAL_DELTA",
+    -1
+  ],
+  "ultimate_psionics:equipment:improved_mind_armor_heavy": [
+    "improved_mind_armor_heavy.AC.TOTAL_DELTA",
+    9
+  ],
+  "ultimate_psionics:equipment:improved_mind_armor_light": [
+    "improved_mind_armor_light.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_psionics:equipment:improved_mind_armor_medium": [
+    "improved_mind_armor_medium.AC.TOTAL_DELTA",
+    6
+  ],
+  "ultimate_psionics:equipment:leather_of_confined_spaces": [
+    "leather_of_confined_spaces.AC.TOTAL_DELTA",
+    2
+  ],
+  "ultimate_psionics:equipment:mind_armor_heavy": [
+    "mind_armor_heavy.AC.TOTAL_DELTA",
+    7
+  ],
+  "ultimate_psionics:equipment:mind_armor_light": [
+    "mind_armor_light.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_psionics:equipment:mind_armor_medium": [
+    "mind_armor_medium.AC.TOTAL_DELTA",
+    6
+  ],
+  "ultimate_psionics:equipment:mind_shield": [
+    "mind_shield.AC.TOTAL_DELTA",
+    2
+  ],
+  "ultimate_psionics:equipment:mind_shield_heavy": [
+    "mind_shield_heavy.AC.TOTAL_DELTA",
+    2
+  ],
+  "ultimate_psionics:equipment:mind_shield_tower": [
+    "mind_shield_tower.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_psionics:equipment:plate_of_the_juggernaut": [
+    "plate_of_the_juggernaut.AC.TOTAL_DELTA",
+    9
+  ],
+  "ultimate_psionics:equipment:shadow_shirt": [
+    "shadow_shirt.AC.TOTAL_DELTA",
+    4
+  ],
+  "ultimate_psionics:equipment:skinwalker_s_leather": [
+    "skinwalker_s_leather.AC.TOTAL_DELTA",
+    3
+  ]
+}

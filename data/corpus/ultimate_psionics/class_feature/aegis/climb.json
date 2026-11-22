@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Climb",
+    "name": "Climb",
+    "class": "Aegis",
+    "description": "Gain a climb speed equal to half your base speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Climb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a climb speed equal to half your base speed."
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Climb,/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|AegisSpeed/2"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "SITUATION",
+        "value": "On ship"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 95,
+    "record_key": "Aegis ~ Climb"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

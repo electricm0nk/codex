@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Acid lancer (corroder-class)",
+    "name": "Acid lancer (corroder-class)",
+    "type": "HEAVY WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "starfinder/paizo/alien_archive/saa_profs_weapon.lst",
+    "record_key": "Acid lancer (corroder-class)",
+    "sha256": "5caee6834000e0b9338356a6f64c959da077516114ecd28051d5d76d7ed52bac"
+  },
+  "unit_id": "alien_archive:proficiency:acid_lancer_corroder_class"
+}

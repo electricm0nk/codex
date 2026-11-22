@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You summon one or more wafting seeds, which have a measure of intelligence and make for excellent spies. When they are in your presence, the seeds obey your mental commands, and you can issue orders to any number of them as a single standard action, provided that you issue the same orders to each one. In order to issue different orders to different seeds, you must spend a separate standard action for each set of orders. A seed in physical contact with you can answer simple questions about what it has observed, at a rate of one question per round. The seeds can hear but not see. It can relate only what it perceived with its senses, and can't repeat speech. It has difficulty making subjective judgments, and questions that demand such reasoning are unlikely to yield a clear answer. For example, a seed is unable to relay someone's emotional state or determine who among several people it heard might be in charge. Each seeds' size is Fine. Each seed has 1 hit point, AC 20, and a fly speed of 10 feet (good maneuverability). They can't crawl or climb, although they can cling to rough, soft, or sticky creatures or surfaces. The seeds use your saving throw bonuses, have a Perception skill bonus of %1, and can't make attacks. They can make Stealth checks to avoid being noticed even if they lack a source of cover or concealment, and they have a Stealth skill bonus of %2. The seeds can even cling onto creatures of Tiny or larger size while using Stealth, possibly riding on those creatures unnoticed. A Tiny creature gains a +16 bonus on Perception checks made to notice one of these seeds currently clinging to it. For each size category larger than Tiny the creature being clung to, this bonus is reduced by 4 (to a minimum of +0 for Huge or larger creatures). You also maintain a faint mystical connection with these seeds, which allows you to sense where they are. As a full-round action, you can concentrate on the spell in order to learn the direction and relative distance of each of the seeds.",
+    "key": "Seed Spies",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Occultist,Ranger=2|Shaman,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon one or more wafting seeds, which have a measure of intelligence and make for excellent spies. When they are in your presence, the seeds obey your mental commands, and you can issue orders to any number of them as a single standard action, provided that you issue the same orders to each one. In order to issue different orders to different seeds, you must spend a separate standard action for each set of orders. A seed in physical contact with you can answer simple questions about what it has observed, at a rate of one question per round. The seeds can hear but not see. It can relate only what it perceived with its senses, and can't repeat speech. It has difficulty making subjective judgments, and questions that demand such reasoning are unlikely to yield a clear answer. For example, a seed is unable to relay someone's emotional state or determine who among several people it heard might be in charge. Each seeds' size is Fine. Each seed has 1 hit point, AC 20, and a fly speed of 10 feet (good maneuverability). They can't crawl or climb, although they can cling to rough, soft, or sticky creatures or surfaces. The seeds use your saving throw bonuses, have a Perception skill bonus of %1, and can't make attacks. They can make Stealth checks to avoid being noticed even if they lack a source of cover or concealment, and they have a Stealth skill bonus of %2. The seeds can even cling onto creatures of Tiny or larger size while using Stealth, possibly riding on those creatures unnoticed. A Tiny creature gains a +16 bonus on Perception checks made to notice one of these seeds currently clinging to it. For each size category larger than Tiny the creature being clung to, this bonus is reduced by 4 (to a minimum of +0 for Huge or larger creatures). You also maintain a faint mystical connection with these seeds, which allows you to sense where they are. As a full-round action, you can concentrate on the spell in order to learn the direction and relative distance of each of the seeds.|(CASTERLEVEL/2)+5|(CASTERLEVEL/2)+18"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGathlain=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL/4) seed spies"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Seed Spies",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ]
+}

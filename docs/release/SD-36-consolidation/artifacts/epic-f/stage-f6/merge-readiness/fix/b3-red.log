@@ -1,0 +1,23 @@
+   Compiling codex-desktop v0.16.0 (/home/ubuntu/workspace/worktrees/codex-epic-f6/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.30s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/codex_desktop-6d87602443bc0111)
+
+running 1 test
+test corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus ... FAILED
+
+failures:
+
+---- corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus stdout ----
+
+thread 'corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus' (877246) panicked at src/corpus_bundle_parity_test.rs:242:5:
+intelligent item catalog differs between data/corpus/ (152 served) and the sanitised bundle (0 served)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 632 filtered out; finished in 10.95s
+
+error: test failed, to rerun pass `--bin codex-desktop`
+EXIT=101

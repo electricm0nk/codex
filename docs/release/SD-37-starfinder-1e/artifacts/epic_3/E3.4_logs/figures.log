@@ -1,0 +1,15 @@
+# A (Python):
+report records 3105 converted 3105 refused 0 rules_written 3758 var_tables 139 degraded_records 11
+degraded_by_token_type {"BONUS:HP|ALTHP (no Starfinder mapping-table term)": 1, "BONUS:HP|CURRENTMAX (no Starfinder mapping-table term)": 2, "BONUS:SITUATION (target shape)": 1, "FORMULA:CL-no-owner": 3, "FORMULA:identifier DEFINEd nowhere (TechnomacerLVL inside a function or under * /)": 1, "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 2, "unmapped:XTRASKILLPTSPERLVL": 1}
+rule files under core/ 3105
+rule files by kind {'ability': 983, 'class': 8, 'deity': 39, 'equipment': 998, 'equipment_modifier': 158, 'feat': 97, 'language': 66, 'proficiency': 341, 'race': 14, 'skill': 114, 'spell': 228, 'template': 59}
+rule objects 3758
+corpus records 3105 license {'OGL': 3009, 'PI-REDACTED': 96} pi_field {None: 3009, 'name': 53, 'description': 32, 'description,name': 11}
+LICENSE.json {'records_processed': 3105, 'records_redacted': 96, 'records_renamed': 64}
+inventory paizo/core units 3105
+# B (find/awk):
+rule files under core/ 3105
+template=59 deity=39 proficiency=341 race=14 language=66 feat=97 class=8 spell=228 equipment=998 equipment_modifier=158 ability=983 skill=114 
+corpus records 3105
+corpus PI-REDACTED 96
+inventory paizo/core units 3105

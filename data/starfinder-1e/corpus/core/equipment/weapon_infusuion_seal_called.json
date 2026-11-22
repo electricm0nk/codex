@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon Infusuion Seal (CALLED)",
+    "name": "Weapon Infusuion Seal (CALLED)",
+    "type": "Weapon Infusion Seal"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 305,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Weapon Infusuion Seal (CALLED)",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:weapon_infusuion_seal_called"
+}

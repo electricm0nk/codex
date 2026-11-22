@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_27)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_27)",
+    "cost_gp": 10000.0,
+    "weight_lbs": 150.0,
+    "description": "This altar is usually built around the lip of a pit that resembles a linked ring of claws and fangs made from copper. praying at the altar grants a +1 bonus on damage rolls and a +2 bonus on attack rolls to confirm critical threats."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74",
+    "line": 27,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_27)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_equip.lst:27"
+  }
+}

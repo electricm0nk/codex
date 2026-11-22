@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Ogre ~ Iron Resilience",
+    "name": "Iron Resilience",
+    "description": "Once per round, a mythic ogre can ignore an attack that would reduce it to negative hit points or kill it. The ogre takes no damage from the attack. As an immediate action, a mythic ogre can expend one use of mythic power to use this ability to ignore all attacks from one creature for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Ogre ~ Iron Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Ogre Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, a mythic ogre can ignore an attack that would reduce it to negative hit points or kill it. The ogre takes no damage from the attack. As an immediate action, a mythic ogre can expend one use of mythic power to use this ability to ignore all attacks from one creature for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 223,
+    "record_key": "Mythic Ogre ~ Iron Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

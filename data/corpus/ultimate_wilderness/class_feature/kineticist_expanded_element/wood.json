@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kineticist Expanded Element ~ Wood",
+    "name": "Wood",
+    "class": "Kineticist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Expanded Element ~ Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Expanded Element"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Wood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Wood|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1|PREVAREQ:ElementTracker_Wood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Wood|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Wood|KineticistLVL_Base-2|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 40,
+    "record_key": "Kineticist Expanded Element ~ Wood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

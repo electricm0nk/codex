@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Advanced Creature (Heavy Horse)",
+    "name": "Advanced Creature (Heavy Horse)",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Horse),Horse"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CON,WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|DAMAGESIZE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|TOHIT|-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Bludgeoning.Piercing,*1,1d4"
+      },
+      {
+        "key": "FACT",
+        "value": "AppliedName|Advanced"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1056,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Advanced Creature (Heavy Horse)",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

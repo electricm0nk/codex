@@ -1,0 +1,56 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You learn secrets best kept from mortal minds.",
+    "key": "Hellbound Corruption ~ Fiendish Tutelage",
+    "name": "Fiendish Tutelage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Fiendish Tutelage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HellboundManifestation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn secrets best kept from mortal minds."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hellbound Fiendish Tutelage Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hellbound Fiendish Tutelage Stain Choice|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 329,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hellbound Corruption ~ Fiendish Tutelage",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyrwood ~ Size",
+    "name": "Small",
+    "description": "Wyrwoods are Small creatures and gain a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, a +2 bonus on Fly checks, and a +4 size bonus on Stealth checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyrwood_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyrwoods are Small creatures and gain a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, a +2 bonus on Fly checks, and a +4 size bonus on Stealth checks."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 16,
+    "record_key": "Wyrwood ~ Size"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Rogue Talent ~ Minor Psionics",
+    "name": "Minor Psionics",
+    "class": "Rogue",
+    "description": "You can manifest %1. This power can be manifested three times a day as a psi-like ability. The manifester level for this ability is %2. The save DC for this power is %3.|%CHOICE|RogueManifesterLevel|MinorPsionicsDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Rogue Talent ~ Minor Psionics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.PsiLike.RogueTalent"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=10"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "IsPsionic,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueManifesterLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MinorPsionicsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest %1. This power can be manifested three times a day as a psi-like ability. The manifester level for this ability is %2. The save DC for this power is %3.|%CHOICE|RogueManifesterLevel|MinorPsionicsDC"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Psion[LEVELMAX=0;LEVELMIN=0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueManifesterLevel|RogueTalentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MinorPsionicsDC|10+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1086,
+    "record_key": "Psionic Rogue Talent ~ Minor Psionics"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

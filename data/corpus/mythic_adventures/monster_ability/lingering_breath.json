@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:11:45Z",
+  "data": {
+    "corpus_key": "Lingering Breath",
+    "delivery": "Supernatural",
+    "description": "The creature can expend one use of mythic power as a free action when it uses its breath weapon to make the area radiate energy damage (of the same type as the breath weapon) for 1 round per mythic rank. Any creature in, entering, or passing through the breath weapon's area during this duration takes damage according to the creature's size. This ability has no effect on breath weapons that do not deal energy damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "mythic_adventures:monster_ability:lingering_breath",
+    "name": "Lingering Breath",
+    "owners": [],
+    "source_page": "p.227",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 350,
+    "record_key": "Lingering Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

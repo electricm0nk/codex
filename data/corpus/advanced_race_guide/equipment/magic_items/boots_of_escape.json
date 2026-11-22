@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 8000.0,
+    "description": "Once per day, when the wearer of the boots is grappled, pinned, or entangled, he may transfer himself to any spot within 30 feet. This acts as if the wearer had used a dimension door spell. A gnome wearing these boots may instead transfer himself up to 400 feet.",
+    "key": "Boots of Escape",
+    "name": "Boots of Escape",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, when the wearer of the boots is grappled, pinned, or entangled, he may transfer himself to any spot within 30 feet. This acts as if the wearer had used a dimension door spell. A gnome wearing these boots may instead transfer himself up to 400 feet."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Boots of Escape",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Default",
+    "name": "Default",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Traits|1|PRECHARACTERTYPE:1,PC|PREABILITY:1,CATEGORY=Special Ability,TYPE.Drawback"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/_pfs/pfs_uca_abilities_drawbacks.lst",
+    "record_key": "Default",
+    "sha256": "b8c7743a4802abc2afddfa9c6ff47adf54fa3ca93943e2ff75dda27dd821e969"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

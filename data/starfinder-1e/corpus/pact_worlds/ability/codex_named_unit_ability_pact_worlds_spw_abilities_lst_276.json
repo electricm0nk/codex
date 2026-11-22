@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "Archetype",
+    "key": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_276)",
+    "name": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_276)",
+    "type": "Archetype.Envoy Archetype"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "pact_worlds:spw_abilities.lst:276",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 276,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_276)",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:envoy_archetype_skyfire_centurion"
+}

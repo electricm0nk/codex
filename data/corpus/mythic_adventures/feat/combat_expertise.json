@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Combat Expertise",
+    "category": "Mythic",
+    "name": "Combat Expertise (Mythic)",
+    "description": "You can dart out of the way of attacks with skill and defiance. Whenever you use Combat Expertise, you gain an additional +2 dodge bonus to your Armor Class. You can expend one use of mythic power to negate the penalties on melee attack rolls and combat maneuver checks caused by using Combat Expertise for 1 minute.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 59,
+    "record_key": "Combat Expertise"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": "enhancement of mind shield is increased by +%, up to +5|DisruptorShieldBonus",
+    "key": "Disruptor",
+    "name": "Disruptor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "DisruptorShieldBonus",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary.CrystallineFocus"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptorShieldBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.434"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptor Attunement|PREMULT:4,[PREABILITY:1,CATEGORY=FEAT,Shield Focus],[PRESKILL:1,Knowledge (Psionics)=4],[PREABILITY:1,CATEGORY=Special Ability,Blade Skill ~ Mind Shield],[PREVARGTEQ:TL,4]"
+      },
+      {
+        "key": "SPROP",
+        "value": "enhancement of mind shield is increased by +%, up to +5|DisruptorShieldBonus"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 466,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Disruptor",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

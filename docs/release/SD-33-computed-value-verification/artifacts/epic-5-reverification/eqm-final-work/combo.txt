@@ -1,0 +1,8 @@
+EQ.0.NAME=SD33R6 Leather Dragonhide
+EQ.0.ACCHECK=0
+EQ.1.NAME=SD33R6 Shield Spiked
+EQ.2.NAME=SD33R6 Outfit Darkleaf
+EQ.2.WT=4
+WEAPON.0.NAME=SD33R6 Shield Spiked
+WEAPON.0.DAMAGE=1d6+3
+VAR.ArmorCheckPenalty=-1

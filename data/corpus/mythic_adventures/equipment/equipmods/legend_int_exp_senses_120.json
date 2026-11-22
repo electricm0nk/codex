@@ -1,0 +1,89 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 1000.0,
+    "description": "The range of this item's senses increases to 120 feet. The item must have expanded senses (60 ft.) to have this ability.",
+    "key": "LEGEND_INT_EXP_SENSES_120",
+    "name": "LEGEND_INT_EXP_SENSES_120",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "1000"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "INTITEMSENSERANGE",
+          "60"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Sense / Range 120"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent.Senses"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Item Has Alignment"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Mythic,Intelligent"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Legendary Item ~ Intelligent Item ~ Sense / Range 60"
+      },
+      {
+        "key": "DESC",
+        "value": "The range of this item's senses increases to 120 feet. The item must have expanded senses (60 ft.) to have this ability."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 191,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "LEGEND_INT_EXP_SENSES_120",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

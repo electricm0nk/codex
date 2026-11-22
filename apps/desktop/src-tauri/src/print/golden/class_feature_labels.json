@@ -1,0 +1,309 @@
+{
+  "aldric": {
+    "characterId": "00000000-0000-0000-0000-000000000001",
+    "classSummary": "class:fighter:3",
+    "heldClasses": [
+      {
+        "classId": "class:fighter",
+        "classLabel": "Fighter"
+      }
+    ],
+    "features": [
+      {
+        "id": "class_chassis.base_attack_bonus",
+        "value": 3,
+        "classLabel": null,
+        "label": "Base Attack Bonus"
+      },
+      {
+        "id": "class_chassis.base_save.fortitude",
+        "value": 3,
+        "classLabel": null,
+        "label": "Base Save Fortitude"
+      },
+      {
+        "id": "class_chassis.base_save.reflex",
+        "value": 1,
+        "classLabel": null,
+        "label": "Base Save Reflex"
+      },
+      {
+        "id": "class_chassis.base_save.will",
+        "value": 1,
+        "classLabel": null,
+        "label": "Base Save Will"
+      },
+      {
+        "id": "class_feature.fighter.bravery",
+        "value": 1,
+        "classLabel": "Fighter",
+        "label": "Bravery"
+      },
+      {
+        "id": "class_feature.fighter.armor_training",
+        "value": 1,
+        "classLabel": "Fighter",
+        "label": "Armor Training"
+      },
+      {
+        "id": "class_feature.fighter.weapon_and_armor_proficiency",
+        "value": 0,
+        "classLabel": "Fighter",
+        "label": "Weapon And Armor Proficiency"
+      },
+      {
+        "id": "class_chassis.skill_points",
+        "value": 12,
+        "classLabel": null,
+        "label": "Skill Points"
+      },
+      {
+        "id": "class_feature.fighter.corpus_record.bonus_feats",
+        "value": 1,
+        "classLabel": "Fighter",
+        "label": "Bonus Feats"
+      }
+    ],
+    "notComputed": []
+  },
+  "elowen": {
+    "characterId": "00000000-0000-0000-0000-000000000002",
+    "classSummary": "class:wizard:5",
+    "heldClasses": [
+      {
+        "classId": "class:wizard",
+        "classLabel": "Wizard"
+      }
+    ],
+    "features": [
+      {
+        "id": "class_chassis.base_attack_bonus",
+        "value": 2,
+        "classLabel": null,
+        "label": "Base Attack Bonus"
+      },
+      {
+        "id": "class_chassis.base_save.fortitude",
+        "value": 1,
+        "classLabel": null,
+        "label": "Base Save Fortitude"
+      },
+      {
+        "id": "class_chassis.base_save.reflex",
+        "value": 1,
+        "classLabel": null,
+        "label": "Base Save Reflex"
+      },
+      {
+        "id": "class_chassis.base_save.will",
+        "value": 4,
+        "classLabel": null,
+        "label": "Base Save Will"
+      },
+      {
+        "id": "class_feature.wizard.weapon_and_armor_proficiency",
+        "value": 0,
+        "classLabel": "Wizard",
+        "label": "Weapon And Armor Proficiency"
+      },
+      {
+        "id": "class_chassis.spell_baseline.wizard",
+        "value": 0,
+        "classLabel": null,
+        "label": "Spell Baseline Wizard"
+      },
+      {
+        "id": "class_chassis.wizard.base_attack_bonus",
+        "value": 2,
+        "classLabel": "Wizard",
+        "label": "Base Attack Bonus"
+      },
+      {
+        "id": "class_chassis.wizard.base_save.fortitude",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Base Save Fortitude"
+      },
+      {
+        "id": "class_chassis.wizard.base_save.reflex",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Base Save Reflex"
+      },
+      {
+        "id": "class_chassis.wizard.base_save.will",
+        "value": 4,
+        "classLabel": "Wizard",
+        "label": "Base Save Will"
+      },
+      {
+        "id": "class_chassis.wizard.spell_save_dc.spell_level_1",
+        "value": 15,
+        "classLabel": "Wizard",
+        "label": "Spell Save Dc Spell Level 1"
+      },
+      {
+        "id": "class_chassis.wizard.spell_save_dc.spell_level_2",
+        "value": 16,
+        "classLabel": "Wizard",
+        "label": "Spell Save Dc Spell Level 2"
+      },
+      {
+        "id": "class_chassis.wizard.spell_save_dc.spell_level_3",
+        "value": 17,
+        "classLabel": "Wizard",
+        "label": "Spell Save Dc Spell Level 3"
+      },
+      {
+        "id": "class_chassis.wizard.scribe_scroll",
+        "value": 0,
+        "classLabel": "Wizard",
+        "label": "Scribe Scroll"
+      },
+      {
+        "id": "class_chassis.wizard.specialization_choice",
+        "value": 0,
+        "classLabel": "Wizard",
+        "label": "Specialization Choice"
+      },
+      {
+        "id": "class_chassis.wizard.specialist_bonus_slot",
+        "value": 3,
+        "classLabel": "Wizard",
+        "label": "Specialist Bonus Slot"
+      },
+      {
+        "id": "class_chassis.wizard.intense_bonus_damage",
+        "value": 2,
+        "classLabel": "Wizard",
+        "label": "Intense Bonus Damage"
+      },
+      {
+        "id": "class_chassis.wizard.force_missile_uses_per_day",
+        "value": 7,
+        "classLabel": "Wizard",
+        "label": "Force Missile Uses Per Day"
+      },
+      {
+        "id": "class_chassis.wizard.caster_level",
+        "value": 5,
+        "classLabel": "Wizard",
+        "label": "Caster Level"
+      },
+      {
+        "id": "class_chassis.skill_points",
+        "value": 30,
+        "classLabel": null,
+        "label": "Skill Points"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.arcane_bond",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Arcane Bond"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.bonus_feats",
+        "value": 5,
+        "classLabel": "Wizard",
+        "label": "Bonus Feats"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.bonus_languages",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Bonus Languages"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.cantrips",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Cantrips"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.class_skills",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Class Skills"
+      },
+      {
+        "id": "class_feature.wizard.corpus_record.spells",
+        "value": 1,
+        "classLabel": "Wizard",
+        "label": "Spells"
+      }
+    ],
+    "notComputed": []
+  },
+  "tomas": {
+    "characterId": "00000000-0000-0000-0000-000000000003",
+    "classSummary": "class:cleric:3,class:fighter:2",
+    "heldClasses": [
+      {
+        "classId": "class:cleric",
+        "classLabel": "Cleric"
+      },
+      {
+        "classId": "class:fighter",
+        "classLabel": "Fighter"
+      }
+    ],
+    "features": [
+      {
+        "id": "class_chassis.base_attack_bonus",
+        "value": 4,
+        "classLabel": null,
+        "label": "Base Attack Bonus"
+      },
+      {
+        "id": "class_chassis.base_save.fortitude",
+        "value": 6,
+        "classLabel": null,
+        "label": "Base Save Fortitude"
+      },
+      {
+        "id": "class_chassis.base_save.reflex",
+        "value": 1,
+        "classLabel": null,
+        "label": "Base Save Reflex"
+      },
+      {
+        "id": "class_chassis.base_save.will",
+        "value": 4,
+        "classLabel": null,
+        "label": "Base Save Will"
+      },
+      {
+        "id": "class_feature.fighter.bravery",
+        "value": 1,
+        "classLabel": "Fighter",
+        "label": "Bravery"
+      },
+      {
+        "id": "class_feature.cleric.weapon_and_armor_proficiency",
+        "value": 0,
+        "classLabel": "Cleric",
+        "label": "Weapon And Armor Proficiency"
+      },
+      {
+        "id": "class_feature.fighter.weapon_and_armor_proficiency",
+        "value": 0,
+        "classLabel": "Fighter",
+        "label": "Weapon And Armor Proficiency"
+      },
+      {
+        "id": "class_feature.cleric.aura.strength_level",
+        "value": 3,
+        "classLabel": "Cleric",
+        "label": "Aura Strength Level"
+      },
+      {
+        "id": "class_feature.domain.good_touch_of_good_not_active",
+        "value": 0,
+        "classLabel": null,
+        "label": "Domain Good Touch Of Good Not Active"
+      }
+    ],
+    "notComputed": []
+  }
+}

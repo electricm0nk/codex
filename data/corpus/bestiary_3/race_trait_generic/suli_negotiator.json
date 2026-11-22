@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Sulis are keen negotiators, and gain a +2 racial bonus on Diplomacy and Sense Motive checks.",
+    "key": "Suli ~ Negotiator",
+    "name": "Negotiator",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Negotiator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceNegotiator=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sulis are keen negotiators, and gain a +2 racial bonus on Diplomacy and Sense Motive checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Sense Motive|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Diplomacy, +2 Sense Motive"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "record_key": "Suli ~ Negotiator",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,5 @@
+$ git -C $PCGEN_REPO_DIR rev-parse HEAD
+7f818006e371188e5717fd18d74d18a420747fc6
+$ python3 scripts/token_coverage.py --sf-formula
+sf_tokens_all_trees=1954 in_scope=1954 outside_registered_books=0 mapped=1954 refused=0 refused_in_scope=0 refused_outside_registered_books=0 verdict=PASS
+exit=0

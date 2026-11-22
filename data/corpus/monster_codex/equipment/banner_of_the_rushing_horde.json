@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 60000.0,
+    "description": "Allies within 60 feet of the banner gain the benefits of the Improved Bull Rush and Improved Overrun feats.",
+    "key": "Banner of the Rushing Horde",
+    "name": "Banner of the Rushing Horde",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "60000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "165"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allies within 60 feet of the banner gain the benefits of the Improved Bull Rush and Improved Overrun feats."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_magic_items.lst",
+    "record_key": "Banner of the Rushing Horde",
+    "sha256": "4d003130ab6779fb9fb6cc9afbf04b88e568e0eb61fdd5886320c182aea374d9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

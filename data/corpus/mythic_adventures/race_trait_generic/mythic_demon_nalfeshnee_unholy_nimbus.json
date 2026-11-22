@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Demon (Nalfeshnee) ~ Unholy Nimbus",
+    "name": "Unholy Nimbus",
+    "description": "Three times per day as a free action, the demon can create writhing colored lights on its body. One round later, the light bursts in a 60-foot radius. Any non-demon caught within this area must succeed at a DC 24 Will save or be dazed for 1d10 rounds as visions of madness hound it. The save DC is Charisma-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Demon (Nalfeshnee) ~ Unholy Nimbus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Demon (Nalfeshnee) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a free action, the demon can create writhing colored lights on its body. One round later, the light bursts in a 60-foot radius. Any non-demon caught within this area must succeed at a DC 24 Will save or be dazed for 1d10 rounds as visions of madness hound it. The save DC is Charisma-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 98,
+    "record_key": "Mythic Demon (Nalfeshnee) ~ Unholy Nimbus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

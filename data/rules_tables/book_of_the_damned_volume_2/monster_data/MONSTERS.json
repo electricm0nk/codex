@@ -1,0 +1,534 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_2/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_2",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Demon (Vermlek)",
+      "name": "Demon (Vermlek)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 20
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "3",
+      "monster_class": "Outsider (Fort/Will):4",
+      "source_page": "p.54",
+      "natural_attacks": [
+        {
+          "name": "Bite (Primary)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Bite (with weapon attack)",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": true,
+      "sla_cl_token": "3",
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Inflict Light Wounds (Mass)",
+          "save_dc_token": "15+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Spider Climb",
+          "save_dc_token": "12+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Gentle Repose",
+          "save_dc_token": "13+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Summon Monster II (Vermlek)",
+          "save_dc_token": "12+CHA"
+        }
+      ],
+      "ability_keys": [
+        "Vermlek ~ Abandon Flesh",
+        "Vermlek ~ Flesh Armor",
+        "Vermlek ~ Inhabit Body",
+        "Vermlek ~ Negative Energy Affinity"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "source_file": "botd2_races",
+      "source_line": 7
+    },
+    {
+      "key": "Demon (Brimorak)",
+      "name": "Demon (Brimorak)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar|Fire",
+      "challenge_rating": "5",
+      "monster_class": "Outsider (Fort/Ref):6",
+      "source_page": "p.56",
+      "natural_attacks": [
+        {
+          "name": "Hoof",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": true,
+      "sla_cl_token": "HD",
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Dispel Magic",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Heat Metal",
+          "save_dc_token": "12+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Produce Flame",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Air Walk",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Fireball",
+          "save_dc_token": "13+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Summon Monster III (Brimorak)",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Teleport (Greater/self plus objects)",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Brimorak ~ Boiling Blood",
+        "Brimorak ~ Breath Weapon",
+        "Brimorak ~ Burning Hooves",
+        "Brimorak ~ Flaming Weapon",
+        "Brimorak ~ Smoke Breath"
+      ],
+      "external_ability_refs": [],
+      "source_file": "botd2_races",
+      "source_line": 8
+    },
+    {
+      "key": "Demon (Seraptis)",
+      "name": "Demon (Seraptis)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Will):15",
+      "source_page": "p.58",
+      "natural_attacks": [
+        {
+          "name": "Claw (Primary)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Claw (with weapon attack)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Gore (primary)",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Gore (with weapon attack)",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 18
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": true,
+      "sla_cl_token": "HD",
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Crushing Despair",
+          "save_dc_token": "13+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Dispel Magic",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Telekinesis",
+          "save_dc_token": "15+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Teleport (Greater/self plus objects)",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Confusion",
+          "save_dc_token": "14+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Demand",
+          "save_dc_token": "18+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Dominate Person",
+          "save_dc_token": "14+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Fly",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Summon Monster V (Seraptis)",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Symbol of Insanity",
+          "save_dc_token": "18+CHA"
+        }
+      ],
+      "ability_keys": [
+        "Seraptis ~ Bloodless",
+        "Seraptis ~ Compelling Domination",
+        "Seraptis ~ Gaze of Despair",
+        "Seraptis ~ Grab",
+        "Seraptis ~ Ravenous Embrace"
+      ],
+      "external_ability_refs": [
+        "Deathwatch ~ Constant",
+        "True Seeing ~ Constant",
+        "Unholy Aura ~ Constant"
+      ],
+      "source_file": "botd2_races",
+      "source_line": 9
+    },
+    {
+      "key": "Demon (Vavakia)",
+      "name": "Demon (Vavakia)",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "18",
+      "monster_class": "Outsider (Fort/Will):18",
+      "source_page": "p.60",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "3d6"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": "2d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "CON",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": true,
+      "sla_cl_token": "HD",
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Enervation",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Telekinesis",
+          "save_dc_token": "15+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Teleport (Greater/self plus objects)",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Blasphemy",
+          "save_dc_token": "17+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Power Word Stun",
+          "save_dc_token": "18+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Quickened Enervation",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Earthquake",
+          "save_dc_token": "18+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "TL",
+          "spell": "Summon Monster VI (Vavakia)",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Vavakia ~ Breath Weapon",
+        "Vavakia ~ Smoking Wound",
+        "Vavakia ~ Stun"
+      ],
+      "external_ability_refs": [
+        "Frightful Presence",
+        "Immunity to Fire",
+        "Trample",
+        "True Seeing ~ Constant",
+        "Unholy Aura ~ Constant"
+      ],
+      "source_file": "botd2_races",
+      "source_line": 10
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+fn mcp_hand(root: &Path, keys: &[&str]) {
+    let mut envelope = SavedCharacterStore::load(root).unwrap();
+    for s in &mut envelope.character_input.chosen.equipment_selections {
+        if s.active_state == ActiveState::EquippedActive && s.item_id != FEAT_TOGGLE_ITEM_ID { s.active_state = ActiveState::SelectedInactive; }
+    }
+    for k in keys {
+        envelope.character_input.chosen.equipment_selections.push(codex::rules_core::character_input::EquipmentSelection { item_id: (*k).to_owned(), active_state: ActiveState::EquippedActive, applied_modifiers: vec![], equipped_or_active: true });
+    }
+    SavedCharacterStore::save(&envelope, root).unwrap();
+}
+fn mcp_rows(loaded: &LoadSavedCharacterResponse) -> Vec<(String, i64, String)> {
+    loaded.explanations.iter().filter(|r| r.id.starts_with("combat.weapon_attack_bonus.")).map(|r| (r.id.clone(), r.value as i64, r.detail.clone())).collect()
+}
+fn mcp_deities() -> Vec<(String, String)> {
+    let mut out = vec![];
+    for book in std::fs::read_dir(pcg_repo_root().join("data/sheet_rules")).unwrap().flatten() {
+        let dir = book.path().join("deity");
+        let Ok(files) = std::fs::read_dir(&dir) else { continue };
+        for f in files.flatten() {
+            let v: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(f.path()).unwrap()).unwrap();
+            for r in v.as_array().unwrap() {
+                let slug = f.path().file_stem().unwrap().to_string_lossy().to_string();
+                for g in r["grants"].as_array().into_iter().flatten() {
+                    if g["FactDeclare"]["name"] == "DeityFavoredWeapon" { out.push((slug.clone(), g["FactDeclare"]["value"].as_str().unwrap().to_owned())); }
+                }
+            }
+        }
+    }
+    out.sort(); out
+}
+#[test]
+fn mcq_p1_deity_census() {
+    use codex::rules_core::rules_catalog::crb::weapon_tables::WEAPON_TABLE;
+    let root = race_weapon_proficiency_cleric("mcp-p1");
+    let mut ok=0; let mut off=vec![]; let mut bad=vec![]; let mut multi=std::collections::BTreeMap::<String,Vec<String>>::new();
+    for (slug, w) in mcp_deities() {
+        multi.entry(slug.clone()).or_default().push(w.clone());
+        let Some(e)=WEAPON_TABLE.iter().find(|e| e.proficiency_name.is_some_and(|p| p.eq_ignore_ascii_case(&w)) || e.key.eq_ignore_ascii_case(&w)) else { off.push(format!("{slug}={w}")); continue };
+        race_weapon_proficiency_deity(&root, &slug);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let gap = override_gap(&input, &format!("{} (Base)", e.key));
+        if gap==codex::rules_core::equipment_resolver::ItemProficiencyGap::None { ok+=1 } else { bad.push(format!("{slug}={w} via {} -> {gap:?}", e.key)); }
+    }
+    println!("MCP p1 ok {ok} bad {} {:?}", bad.len(), &bad[..bad.len().min(40)]);
+    println!("MCP p1 off-table {} {:?}", off.len(), off);
+    println!("MCP p1 deity slugs with 2+ weapons {:?}", multi.iter().filter(|(_,v)| { let mut u=(*v).clone(); u.sort(); u.dedup(); u.len()>1 }).take(40).collect::<Vec<_>>());
+}
+#[test]
+fn mcq_p2_market_row_vs_refusal() {
+    use crate::equipment_catalog::{list_market, MarketFilter, MarketCategory};
+    let rows: Vec<String> = list_market(MarketFilter{category: MarketCategory::Weapon, name_contains: None, book: None}).entries.iter().map(|e| e.entry.key.clone()).collect();
+    println!("MCP p2 market weapons {}", rows.len());
+    let core: Vec<&String> = rows.iter().filter(|k| k.ends_with(" (Base)") ).collect();
+    println!("MCP p2 (Base) {}", core.len());
+    for (race,deity,class) in [("race:half-elf","","wizard"),("race:half-orc","","wizard"),("race:halfling","","wizard"),("race:human","Iomedae","cleric"),("race:human","","cleric")] {
+        let (dir, root) = if class=="wizard" { override_wizard_of_race(&format!("mcp-p2-{race}"), race, "Dagger") } else { let r = race_weapon_proficiency_cleric(&format!("mcp-p2c-{deity}")); (r.clone(), r) };
+        if !deity.is_empty() { race_weapon_proficiency_deity(&root, deity); }
+        let (mut same, mut mismatch, mut norow, mut blocked)=(0,vec![],vec![],vec![]);
+        let base = SavedCharacterStore::load(&root).unwrap();
+        for key in &core {
+            SavedCharacterStore::save(&base,&root).unwrap();
+            mcp_hand(&root,&[key.as_str()]);
+            let input = SavedCharacterStore::load(&root).unwrap().character_input;
+            let gap = override_gap(&input,key);
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            if loaded.snapshot.is_none() { blocked.push((key.to_string(), loaded.diagnostics.first().map(|d| d.id.clone()))); continue; }
+            let rows = mcp_rows(&loaded);
+            let Some(row)=rows.first() else { norow.push(key.to_string()); continue };
+            let pen = row.2.contains("nonproficiency penalty:");
+            let refused = gap==codex::rules_core::equipment_resolver::ItemProficiencyGap::Weapon;
+            if pen==refused { same+=1 } else { mismatch.push(format!("{key} pen={pen} gap={gap:?} :: {}", &row.2.chars().take(120).collect::<String>())); }
+        }
+        println!("MCP p2 {race} {deity} {class}: same {same} mismatch {} norow {} blocked {}\n  mismatch {:?}\n  norow {:?}\n  blocked {:?}", mismatch.len(), norow.len(), blocked.len(), &mismatch[..mismatch.len().min(25)], &norow[..norow.len().min(30)], &blocked[..blocked.len().min(15)]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+}
+#[test]
+fn mcp_p3_hands() {
+    for (label, mk) in [("aldric", true), ("elowen", false)] {
+        let (dir, root) = if mk { enhancement_rows_aldric("mcp-p3a") } else { overrides_wizard("mcp-p3w","Dagger") };
+        let base = SavedCharacterStore::load(&root).unwrap();
+        for hand in [vec![], vec!["Heavy Steel Shield (Base)"], vec!["Heavy Wooden Shield (Base)","Longsword (Base)"], vec!["Longsword (Base)","Heavy Steel Shield (Base)"], vec!["Longbow (Base)"], vec!["Longbow (Base)","Dagger (Base)"], vec!["Armor Spikes (Base)"], vec!["Gauntlet (Base)"], vec!["Greatsword (Base)"], vec!["Dagger (Base)","Dagger (Base)"], vec!["Rapier (Base)"], vec!["Arrow (Base)"], vec!["Sling (Base)"],vec!["Javelin (Base)"], vec!["Unarmed Strike (Base)"]] {
+            SavedCharacterStore::save(&base,&root).unwrap();
+            mcp_hand(&root,&hand);
+            let l = load_saved_character_at_root(&root).unwrap();
+            let melee = l.explanations.iter().find(|r| r.id=="combat.baseline_melee_attack_bonus").map(|r| (r.value, r.detail.chars().take(170).collect::<String>()));
+            println!("MCP p3 {label} {hand:?}: snap={} tile={:?}\n   melee={melee:?}\n   rows={:?}\n   dmg={:?} diag={:?}", l.snapshot.is_some(), l.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), mcp_rows(&l).iter().map(|r| (r.0.clone(), r.1)).collect::<Vec<_>>(), l.weapon_damage.iter().map(|d| format!("{d:?}").chars().take(90).collect::<String>()).collect::<Vec<_>>(), l.diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>());
+        }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+}
+#[test]
+fn mcp_p4_ledger_deity() {
+    let root = race_weapon_proficiency_cleric("mcp-p4");
+    race_weapon_proficiency_deity(&root, "Iomedae");
+    let r = level_up_character_at_root(&root, "class:cleric", Vec::new(), None, "2026-11-05T00:00:00Z");
+    println!("MCP p4 levelup {:?}", r.as_ref().map(|x| matches!(x, CreateCharacterResponse::Saved{..})));
+    set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, "2026-11-05T00:01:00Z").unwrap();
+    let ledger = serde_json::to_string(&list_progression_ledger_at_root(&root).unwrap()).unwrap();
+    println!("MCP p4 ledger mentions deity: {} ", ledger.to_lowercase().contains("deity"));
+    let f = std::fs::read_to_string(root.join("ledger.json")).unwrap_or_default();
+    println!("MCP p4 ledger.json deity: {} :: {}", f.to_lowercase().contains("deity"), f.chars().take(600).collect::<String>());
+    let l = load_saved_character_at_root(&root).unwrap();
+    println!("MCP p4 load json has deity {} , diag {:?}", serde_json::to_string(&l.explanations.iter().map(|e| e.id.clone()).collect::<Vec<_>>()).unwrap_or_default().contains("deity"), l.diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>());
+}
+fn mcp_pcg_files() -> Vec<PathBuf> {
+    fn walk(d:&Path,o:&mut Vec<PathBuf>){ let Ok(es)=std::fs::read_dir(d) else {return}; for e in es.flatten(){ let p=e.path(); if p.is_dir(){walk(&p,o)} else if p.extension().is_some_and(|x| x=="pcg"){o.push(p)} } }
+    let mut v=vec![]; walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"),&mut v);
+    walk(Path::new(&format!("{}/workspace/repos/pcgen",std::env::var("HOME").unwrap())),&mut v); v.sort(); v
+}
+#[test]
+fn mcp_p5_every_fixture() {
+    let files = mcp_pcg_files();
+    println!("MCP p5 files {}", files.len());
+    let (mut saved,mut blocked,mut refused,mut unload)=(0,0,0,0);
+    for f in &files {
+        let chars = tempdir("mcp-p5"); let root = chars.join("imported");
+        let name = f.file_name().unwrap().to_string_lossy().to_string();
+        let text = std::fs::read(f).map(|b| String::from_utf8_lossy(&b).to_string()).unwrap_or_default();
+        let deity_line = text.lines().find(|l| l.starts_with("DEITY:")).map(|l| l.chars().take(40).collect::<String>());
+        match pcg_import_via_sidecar(f,&root) {
+            Err(e)=>{refused+=1; println!("MCP p5 {name}: REFUSED {}", e.chars().take(120).collect::<String>())},
+            Ok(r)=>match &r.outcome {
+                CreateCharacterResponse::Saved{snapshot, ..}=>{
+                    saved+=1;
+                    let l=load_saved_character_at_root(&root).unwrap();
+                    if l.snapshot.is_none(){unload+=1}
+                    let melee_first=snapshot.baseline_melee_attack_bonus;
+                    let melee=l.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus);
+                    let long = r.report.lines.iter().filter(|x| x.to.contains("Longsword") && x.outcome.to_lowercase().contains("add")).count();
+                    println!("MCP p5 {name}: SAVED deity={deity_line:?} bio={:?} first_melee={melee_first} load_melee={melee:?} snapshot_on_load={} addedLongsword={long} diag={:?}", load_character_bio_at_root(&root).unwrap().deity, l.snapshot.is_some(), l.diagnostics.iter().take(3).map(|d| d.id.clone()).collect::<Vec<_>>());
+                }
+                CreateCharacterResponse::Blocked{diagnostics}=>{blocked+=1; println!("MCP p5 {name}: BLOCKED deity={deity_line:?} {:?} rootexists={}", diagnostics.iter().take(3).map(|d| d.id.clone()).collect::<Vec<_>>(), root.exists())}
+                #[allow(unreachable_patterns)] other=>println!("MCP p5 {name}: other {other:?}"),
+            }
+        }
+        std::fs::remove_dir_all(&chars).ok();
+    }
+    println!("MCP p5 totals saved {saved} blocked {blocked} refused {refused} saved-not-loading {unload}");
+}
+#[test]
+fn mcp_p6_every_class_no_gear() {
+    let classes: Vec<String> = codex::rules_core::class_census::census().keys().map(|c| c.to_string()).collect();
+    println!("MCP p6 classes {}", classes.len());
+    let (mut created,mut stowed_ok,mut left_ok,mut none_ok, mut gs_ok)=(0,0,0,0,0);
+    for c in &classes {
+        let root=tempdir("mcp-p6");
+        let r=create_character_at_root(&root,&request_for_class("race:human",c,1),"t".to_owned());
+        if !matches!(r,Ok(CreateCharacterResponse::Saved{..})) { println!("MCP p6 {c}: create not saved {}", format!("{r:?}").chars().take(160).collect::<String>()); std::fs::remove_dir_all(&root).ok(); continue }
+        created+=1;
+        let base=SavedCharacterStore::load(&root).unwrap();
+        let start = load_saved_character_at_root(&root).unwrap();
+        // stow all
+        mcp_hand(&root,&[]);
+        let l=load_saved_character_at_root(&root).unwrap();
+        if l.snapshot.is_some(){stowed_ok+=1}else{println!("MCP p6 {c}: stowed blocked {:?}", l.diagnostics.iter().take(3).map(|d| (d.id.clone(),d.message.chars().take(100).collect::<String>())).collect::<Vec<_>>())}
+        // left behind
+        let mut e=base.clone(); for s in &mut e.character_input.chosen.equipment_selections { if s.item_id!=FEAT_TOGGLE_ITEM_ID { s.active_state=ActiveState::Absent; } }
+        SavedCharacterStore::save(&e,&root).unwrap();
+        let l=load_saved_character_at_root(&root).unwrap();
+        if l.snapshot.is_some(){left_ok+=1}else{println!("MCP p6 {c}: left blocked {:?}", l.diagnostics.iter().take(3).map(|d| d.id.clone()).collect::<Vec<_>>())}
+        // no items
+        let mut e=base.clone(); e.character_input.chosen.equipment_selections.retain(|s| s.item_id==FEAT_TOGGLE_ITEM_ID);
+        SavedCharacterStore::save(&e,&root).unwrap();
+        let l=load_saved_character_at_root(&root).unwrap();
+        if l.snapshot.is_some(){none_ok+=1}else{println!("MCP p6 {c}: none blocked {:?}", l.diagnostics.iter().take(3).map(|d| d.id.clone()).collect::<Vec<_>>())}
+        // Greatsword in hand
+        SavedCharacterStore::save(&base,&root).unwrap();
+        mcp_hand(&root,&["Greatsword (Base)"]);
+        let l=load_saved_character_at_root(&root).unwrap();
+        if l.snapshot.is_some(){gs_ok+=1}else{println!("MCP p6 {c}: greatsword blocked {:?}", l.diagnostics.iter().take(3).map(|d| (d.id.clone(),d.message.chars().take(140).collect::<String>())).collect::<Vec<_>>())}
+        let _=start;
+        std::fs::remove_dir_all(&root).ok();
+    }
+    println!("MCP p6 totals created {created} stowed {stowed_ok} left {left_ok} none {none_ok} greatsword {gs_ok}");
+}
+#[test]
+fn mcq_p7_pf_cleric() {
+    let f = mcp_pcg_files().into_iter().find(|f| f.file_name().unwrap()=="pf_Cleric.pcg").unwrap();
+    let chars=tempdir("mcq-p7"); let root=chars.join("imported");
+    pcg_import_via_sidecar(&f,&root).unwrap();
+    let l=load_saved_character_at_root(&root).unwrap();
+    for r in l.explanations.iter().filter(|r| r.id.starts_with("combat.")) { if r.id.contains("melee")||r.id.contains("attack_bonus")||r.id.contains("base_attack") { println!("MCQ p7 {} = {} :: {}", r.id, r.value, r.detail.chars().take(600).collect::<String>()); } }
+    std::fs::remove_dir_all(&chars).ok();
+}
+#[test]
+fn mcq_p8_holders() {
+    for class in ["class:cleric","class:inquisitor","class:warpriest","class:oracle","class:paladin"] {
+        let root=tempdir("mcq-p8");
+        let r=create_character_at_root(&root,&request_for_class("race:human",class,1),"t".to_owned());
+        println!("MCQ p8 {class} created {}", matches!(r,Ok(CreateCharacterResponse::Saved{..})));
+        if !matches!(r,Ok(CreateCharacterResponse::Saved{..})) { println!("  {}", format!("{r:?}").chars().take(300).collect::<String>()); continue }
+        let base=SavedCharacterStore::load(&root).unwrap();
+        for (deity,item) in [("","Scimitar (Base)"),("Sarenrae","Scimitar (Base)"),("Sarenrae","Morningstar (Base)"),("Desna","Starknife (Base)"),("Asmodeus","Heavy Mace (Base)"),("Norgorber","Short Sword (Base)"),("Zon-Kuthon","Spiked Chain (Base)"),("Calistria","Whip (Base)"),("Irori","Unarmed Strike (Base)"),("Abadar","Light Crossbow (Base)")] {
+            SavedCharacterStore::save(&base,&root).unwrap();
+            mcp_hand(&root,&[item]);
+            race_weapon_proficiency_deity(&root,deity);
+            let l=load_saved_character_at_root(&root).unwrap();
+            let input=SavedCharacterStore::load(&root).unwrap().character_input;
+            let rows=mcp_rows(&l);
+            println!("MCQ p8 {class} {deity:?} {item}: snap={} gap={:?} row={:?}", l.snapshot.is_some(), override_gap(&input,item), rows.first().map(|r| (r.1, r.2.contains("nonproficiency penalty:"), r.2.chars().skip(r.2.find("The character").or(r.2.find("nonprof")).unwrap_or(0)).take(90).collect::<String>())));
+        }
+        std::fs::remove_dir_all(&root).ok();
+    }
+}
+#[test]
+fn mcq_p9_mutations_with_nothing() {
+    let (dir,root)=enhancement_rows_aldric("mcq-p9");
+    let mut e=SavedCharacterStore::load(&root).unwrap();
+    e.character_input.chosen.equipment_selections.retain(|s| s.item_id==FEAT_TOGGLE_ITEM_ID);
+    SavedCharacterStore::save(&e,&root).unwrap();
+    let r=level_up_character_at_root(&root,"class:fighter",Vec::new(),None,"2026-11-05T00:00:00Z");
+    println!("MCQ p9 level up {:?}", r.as_ref().map(|x| matches!(x,CreateCharacterResponse::Saved{..})));
+    let p=purchase_equipment_priced_at_root(&root,"Greatsword (Base)",ActiveState::EquippedActive,"2026-11-05T00:01:00Z",PriceMode::Cashless);
+    println!("MCQ p9 buy {}", format!("{p:?}").chars().take(160).collect::<String>());
+    let l=load_saved_character_at_root(&root).unwrap();
+    println!("MCQ p9 rows {:?} snap {}", mcp_rows(&l).iter().map(|r| (r.0.clone(),r.1)).collect::<Vec<_>>(), l.snapshot.is_some());
+    let file=export_character_to_json(&root).unwrap();
+    let imp=tempdir("mcq-p9i");
+    println!("MCQ p9 import {:?}", import_character_from_json(&file,&imp,"x","2026-11-05T00:02:00Z","t").map(|o| matches!(o,CreateCharacterResponse::Saved{..})));
+    std::fs::remove_dir_all(&dir).ok(); std::fs::remove_dir_all(&imp).ok();
+}

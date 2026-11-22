@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Craft (Wood)",
+    "name": "Craft (Wood)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Wood)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Wood)|PRESKILL:1,Craft (Wood)=1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Craft skill checks are made with a -2 circumstance penalty if improvised tools are used"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Craft (Wood)|-2|TYPE=Circumstance|!PREITEM:1,TYPE=CraftToolsWood"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_skills.lst",
+    "record_key": "Craft (Wood)",
+    "sha256": "d85e7841d73065b1a8acf15bf780106c58c5ddff5549ba59f75cc07c85a44ada"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

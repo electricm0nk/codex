@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger ~ Favored Enemy ~ Vermin",
+    "name": "Vermin",
+    "class": "Hate-Monger",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Intimidate, Perception, Sense Motive, and Survival checks when using these skills against vermins. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|HateMonger_FE_Vermin",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger ~ Favored Enemy ~ Vermin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HateMongerFavoredEnemy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HateMonger_FE_Vermin|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HateMonger_FE_Vermin|2*((MesmeristLVL-1)/4)"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Intimidate, Perception, Sense Motive, and Survival checks when using these skills against vermins. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|HateMonger_FE_Vermin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 256,
+    "record_key": "Hate-Monger ~ Favored Enemy ~ Vermin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,724 @@
+[
+  {
+    "name": "Night Market Type Table",
+    "kind": "night_market_table",
+    "source_page": "p339",
+    "table": "type_of_goods_sold",
+    "die": "1d6 twice",
+    "rows": [
+      {
+        "roll": 1,
+        "type_of_goods_sold": "Food and Drugs",
+        "description": "Processed foods, fresh vegetable, live animals, and sometimes fresh street drugs."
+      },
+      {
+        "roll": 2,
+        "type_of_goods_sold": "Personal Electronics",
+        "description": "Gizmos and gadgets galore. You can even find Black ICE if you hit the shadier stalls."
+      },
+      {
+        "roll": 3,
+        "type_of_goods_sold": "Weapons and Armor",
+        "description": "Everything you need to cause some chaos on The Street."
+      },
+      {
+        "roll": 4,
+        "type_of_goods_sold": "Cyberware",
+        "description": "The best cybertech on Street; probably not stolen or harvested. If you roll a Cyberware Option, any Foundational Cyberware (for example, a Cybereye or Neural Processor) required to install that Option is also available at the Night Market. Cyberware bought at a Night Market is not installed at the Night Market but the seller will send you to their preferred local Ripperdoc for a free installation."
+      },
+      {
+        "roll": 5,
+        "type_of_goods_sold": "Clothing and Fashionware",
+        "description": "All the hottest street fashion in one place plus some chrome to accent. Fashionware can be installed at the Night Market."
+      },
+      {
+        "roll": 6,
+        "type_of_goods_sold": "Survival Gear",
+        "description": "All the practical gear you need to survive the Time of the Red."
+      }
+    ],
+    "intro_text": "Use the following tables to generate a Night Market on the spot. First, roll 1d6 twice on the table below to determine what is found at the Night Market. If you roll the same result twice, reroll until you get a different result.",
+    "text": "Use the following tables to generate a Night Market on the spot. First, roll 1d6 twice on the table below to determine what is found at the Night Market. If you roll the same result twice, reroll until you get a different result."
+  },
+  {
+    "name": "Night Market On the Shelves Table",
+    "kind": "night_market_table",
+    "source_page": "p339",
+    "continues_on": "p340",
+    "table": "on_the_shelves",
+    "die": "d100 (two d10s)",
+    "columns": [
+      "Food and Drugs",
+      "Personal Electronics",
+      "Weapons and Armor",
+      "Cyberware",
+      "Clothing and Fashionware",
+      "Survival Gear"
+    ],
+    "rows": [
+      {
+        "roll": "0-5",
+        "Food and Drugs": {
+          "item": "Canned Goods",
+          "price": "10eb (Cheap)",
+          "text": "Canned Goods 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Agent",
+          "price": "100eb (Premium)",
+          "text": "Agent 100eb (Premium)"
+        },
+        "Weapons and Armor": {
+          "item": "Medium Pistol",
+          "price": "50eb (Costly)",
+          "text": "Medium Pistol 50eb (Costly)"
+        },
+        "Cyberware": {
+          "item": "Cybereye",
+          "price": "100eb (Premium)",
+          "text": "Cybereye 100eb (Premium)"
+        },
+        "Clothing and Fashionware": {
+          "item": "Bag Lady Chic",
+          "price": null,
+          "text": "Bag Lady Chic"
+        },
+        "Survival Gear": {
+          "item": "Anti-Smog Breathing Mask",
+          "price": "20eb (Everyday)",
+          "text": "Anti-Smog Breathing Mask 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "6-10",
+        "Food and Drugs": {
+          "item": "Packaged goods",
+          "price": "10eb (Cheap)",
+          "text": "Packaged goods 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Programs or Hardware of 100eb or less",
+          "price": null,
+          "text": "Programs or Hardware of 100eb or less"
+        },
+        "Weapons and Armor": {
+          "item": "Heavy Pistol or Very Heavy Pistol",
+          "price": "100eb (Premium)",
+          "text": "Heavy Pistol or Very Heavy Pistol 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Cyberaudio Suite",
+          "price": "500eb (Expensive)",
+          "text": "Cyberaudio Suite 500eb (Expensive)"
+        },
+        "Clothing and Fashionware": {
+          "item": "Gang Colors",
+          "price": null,
+          "text": "Gang Colors"
+        },
+        "Survival Gear": {
+          "item": "Auto Level Dampening Ear Protectors",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Auto Level Dampening Ear Protectors 1,000eb (Very Expensive)"
+        }
+      },
+      {
+        "roll": "11-15",
+        "Food and Drugs": {
+          "item": "Frozen Goods",
+          "price": "10eb (Cheap)",
+          "text": "Frozen Goods 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Audio Recorder",
+          "price": "100eb (Premium)",
+          "text": "Audio Recorder 100eb (Premium)"
+        },
+        "Weapons and Armor": {
+          "item": "SMG",
+          "price": "100eb (Premium)",
+          "text": "SMG 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Neural Link",
+          "price": "500eb (Expensive)",
+          "text": "Neural Link 500eb (Expensive)"
+        },
+        "Clothing and Fashionware": {
+          "item": "Generic Chic",
+          "price": null,
+          "text": "Generic Chic"
+        },
+        "Survival Gear": {
+          "item": "Binoculars",
+          "price": "50eb (Costly)",
+          "text": "Binoculars 50eb (Costly)"
+        }
+      },
+      {
+        "roll": "16-20",
+        "Food and Drugs": {
+          "item": "Bags of Grain",
+          "price": "20eb (Everyday)",
+          "text": "Bags of Grain 20eb (Everyday)"
+        },
+        "Personal Electronics": {
+          "item": "Bug Detector",
+          "price": "500eb (Expensive)",
+          "text": "Bug Detector 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Heavy SMG",
+          "price": "100eb (Premium)",
+          "text": "Heavy SMG 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Cyberarm",
+          "price": "500eb (Expensive)",
+          "text": "Cyberarm 500eb (Expensive)"
+        },
+        "Clothing and Fashionware": {
+          "item": "Bohemian",
+          "price": null,
+          "text": "Bohemian"
+        },
+        "Survival Gear": {
+          "item": "Carryall",
+          "price": "20eb (Everyday)",
+          "text": "Carryall 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "21-25",
+        "Food and Drugs": {
+          "item": "Kibble Pack",
+          "price": "10eb (Cheap)",
+          "text": "Kibble Pack 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Chemical Analyzer",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Chemical Analyzer 1,000eb (Very Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Shotgun",
+          "price": "500eb (Expensive)",
+          "text": "Shotgun 500eb (Expensive)"
+        },
+        "Cyberware": {
+          "item": "Cyberleg",
+          "price": "100eb (Premium)",
+          "text": "Cyberleg 100eb (Premium)"
+        },
+        "Clothing and Fashionware": {
+          "item": "Leisurewear",
+          "price": null,
+          "text": "Leisurewear"
+        },
+        "Survival Gear": {
+          "item": "Flashlight",
+          "price": "20eb (Everyday)",
+          "text": "Flashlight 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "26-30",
+        "Food and Drugs": {
+          "item": "Bags of Prepak",
+          "price": "20eb (Everyday)",
+          "text": "Bags of Prepak 20eb (Everyday)"
+        },
+        "Personal Electronics": {
+          "item": "Computer",
+          "price": "50eb (Costly)",
+          "text": "Computer 50eb (Costly)"
+        },
+        "Weapons and Armor": {
+          "item": "Assault Rifle",
+          "price": "500eb (Expensive)",
+          "text": "Assault Rifle 500eb (Expensive)"
+        },
+        "Cyberware": {
+          "item": "External Cyberware of exactly 1,000eb",
+          "price": null,
+          "text": "External Cyberware of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "Nomad Leathers",
+          "price": null,
+          "text": "Nomad Leathers"
+        },
+        "Survival Gear": {
+          "item": "Duct Tape",
+          "price": "20eb (Everyday)",
+          "text": "Duct Tape 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "31-35",
+        "Food and Drugs": {
+          "item": "Street Drugs of 20eb or less",
+          "price": null,
+          "text": "Street Drugs of 20eb or less"
+        },
+        "Personal Electronics": {
+          "item": "Cyberdeck",
+          "price": "500eb (Expensive)",
+          "text": "Cyberdeck 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Sniper Rifle",
+          "price": "500eb (Expensive)",
+          "text": "Sniper Rifle 500eb (Expensive)"
+        },
+        "Cyberware": {
+          "item": "External Cyberware of 500eb or less",
+          "price": null,
+          "text": "External Cyberware of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "Asia Pop",
+          "price": null,
+          "text": "Asia Pop"
+        },
+        "Survival Gear": {
+          "item": "Inflatable Bed & Sleep-bag",
+          "price": "20eb (Everyday)",
+          "text": "Inflatable Bed & Sleep-bag 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "36-40",
+        "Food and Drugs": {
+          "item": "Poor Quality Alcohol",
+          "price": "10eb (Cheap)",
+          "text": "Poor Quality Alcohol 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Disposable Cell Phone",
+          "price": "50eb (Costly)",
+          "text": "Disposable Cell Phone 50eb (Costly)"
+        },
+        "Weapons and Armor": {
+          "item": "Bows or Crossbow",
+          "price": "100eb (Premium)",
+          "text": "Bows or Crossbow 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Internal Cyberware of exactly 1,000eb",
+          "price": null,
+          "text": "Internal Cyberware of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "Urban Flash",
+          "price": null,
+          "text": "Urban Flash"
+        },
+        "Survival Gear": {
+          "item": "Lock Picking Set",
+          "price": "20eb (Everyday)",
+          "text": "Lock Picking Set 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "41-45",
+        "Food and Drugs": {
+          "item": "Alcohol",
+          "price": "20eb (Everyday)",
+          "text": "Alcohol 20eb (Everyday)"
+        },
+        "Personal Electronics": {
+          "item": "Electric Guitar or Other Instrument",
+          "price": "500eb (Expensive)",
+          "text": "Electric Guitar or Other Instrument 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Grenade Launcher or Rocket Launcher",
+          "price": "500eb (Expensive)",
+          "text": "Grenade Launcher or Rocket Launcher 500eb (Expensive)"
+        },
+        "Cyberware": {
+          "item": "Internal Cyberware of 500eb or less",
+          "price": null,
+          "text": "Internal Cyberware of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "Businesswear",
+          "price": null,
+          "text": "Businesswear"
+        },
+        "Survival Gear": {
+          "item": "Handcuffs",
+          "price": "50eb (Costly)",
+          "text": "Handcuffs 50eb (Costly)"
+        }
+      },
+      {
+        "roll": "46-50",
+        "Food and Drugs": {
+          "item": "Excellent Quality Alcohol",
+          "price": "100eb (Premium)",
+          "text": "Excellent Quality Alcohol 100eb (Premium)"
+        },
+        "Personal Electronics": {
+          "item": "Programs or Hardware of exactly 500eb",
+          "price": null,
+          "text": "Programs or Hardware of exactly 500eb"
+        },
+        "Weapons and Armor": {
+          "item": "Ammunition of 500eb or less",
+          "price": null,
+          "text": "Ammunition of 500eb or less"
+        },
+        "Cyberware": {
+          "item": "Cybereye Option of exactly 1,000eb",
+          "price": null,
+          "text": "Cybereye Option of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "High Fashion",
+          "price": null,
+          "text": "High Fashion"
+        },
+        "Survival Gear": {
+          "item": "Medtech Bag",
+          "price": "100eb (Premium)",
+          "text": "Medtech Bag 100eb (Premium)"
+        }
+      },
+      {
+        "roll": "51-55",
+        "Food and Drugs": {
+          "item": "MRE",
+          "price": "10eb (Cheap)",
+          "text": "MRE 10eb (Cheap)"
+        },
+        "Personal Electronics": {
+          "item": "Medscanner",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Medscanner 1,000eb (Very Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "A Single Exotic Weapon of GM's choice",
+          "price": null,
+          "text": "A Single Exotic Weapon of GM's choice"
+        },
+        "Cyberware": {
+          "item": "Cybereye Option of 500eb or less",
+          "price": null,
+          "text": "Cybereye Option of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "Biomonitor",
+          "price": "100eb (Premium)",
+          "text": "Biomonitor 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Tent and Camping Equipment",
+          "price": "50eb (Costly)",
+          "text": "Tent and Camping Equipment 50eb (Costly)"
+        }
+      },
+      {
+        "roll": "56-60",
+        "Food and Drugs": {
+          "item": "Live Chicken",
+          "price": "50eb (Costly)",
+          "text": "Live Chicken 50eb (Costly)"
+        },
+        "Personal Electronics": {
+          "item": "Homing Tracer",
+          "price": "500eb (Expensive)",
+          "text": "Homing Tracer 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Light Melee Weapon",
+          "price": "50eb (Costly)",
+          "text": "Light Melee Weapon 50eb (Costly)"
+        },
+        "Cyberware": {
+          "item": "Cyberaudio Option of exactly 1,000eb",
+          "price": null,
+          "text": "Cyberaudio Option of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "Chemskin",
+          "price": "100eb (Premium)",
+          "text": "Chemskin 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Rope (60m/yds)",
+          "price": "20eb (Everyday)",
+          "text": "Rope (60m/yds) 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "61-65",
+        "Food and Drugs": {
+          "item": "Live Fish",
+          "price": "50eb (Costly)",
+          "text": "Live Fish 50eb (Costly)"
+        },
+        "Personal Electronics": {
+          "item": "Radio Communicator",
+          "price": "100eb (Premium)",
+          "text": "Radio Communicator 100eb (Premium)"
+        },
+        "Weapons and Armor": {
+          "item": "Medium Melee Weapon",
+          "price": "50eb (Costly)",
+          "text": "Medium Melee Weapon 50eb (Costly)"
+        },
+        "Cyberware": {
+          "item": "Cyberaudio Option of 500eb or less",
+          "price": null,
+          "text": "Cyberaudio Option of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "EMP Threading",
+          "price": "10eb (Cheap)",
+          "text": "EMP Threading 10eb (Cheap)"
+        },
+        "Survival Gear": {
+          "item": "Techtool",
+          "price": "100eb (Premium)",
+          "text": "Techtool 100eb (Premium)"
+        }
+      },
+      {
+        "roll": "66-70",
+        "Food and Drugs": {
+          "item": "Fresh Fruits",
+          "price": "50eb (Costly)",
+          "text": "Fresh Fruits 50eb (Costly)"
+        },
+        "Personal Electronics": {
+          "item": "Techscanner",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Techscanner 1,000eb (Very Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Heavy Melee Weapon",
+          "price": "100eb (Premium)",
+          "text": "Heavy Melee Weapon 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Neuralware Option of exactly 1,000eb",
+          "price": null,
+          "text": "Neuralware Option of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "Light Tattoo",
+          "price": "100eb (Premium)",
+          "text": "Light Tattoo 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Personal CarePak",
+          "price": "20eb (Everyday)",
+          "text": "Personal CarePak 20eb (Everyday)"
+        }
+      },
+      {
+        "roll": "71-75",
+        "Food and Drugs": {
+          "item": "Fresh Vegetables",
+          "price": "50eb (Costly)",
+          "text": "Fresh Vegetables 50eb (Costly)"
+        },
+        "Personal Electronics": {
+          "item": "Smart Glasses",
+          "price": "500eb (Expensive)",
+          "text": "Smart Glasses 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Very Heavy Melee Weapon",
+          "price": "100eb (Premium)",
+          "text": "Very Heavy Melee Weapon 100eb (Premium)"
+        },
+        "Cyberware": {
+          "item": "Neuralware Option of 500eb or less",
+          "price": null,
+          "text": "Neuralware Option of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "Shift Tacts",
+          "price": "100eb (Premium)",
+          "text": "Shift Tacts 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Radiation Suit",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Radiation Suit 1,000eb (Very Expensive)"
+        }
+      },
+      {
+        "roll": "76-80",
+        "Food and Drugs": {
+          "item": "Root Vegetables",
+          "price": "20eb (Everyday)",
+          "text": "Root Vegetables 20eb (Everyday)"
+        },
+        "Personal Electronics": {
+          "item": "Radar Detector",
+          "price": "500eb (Expensive)",
+          "text": "Radar Detector 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Armor of 100eb or less",
+          "price": null,
+          "text": "Armor of 100eb or less"
+        },
+        "Cyberware": {
+          "item": "Cyberlimb Option of exactly 1,000eb",
+          "price": null,
+          "text": "Cyberlimb Option of exactly 1,000eb"
+        },
+        "Clothing and Fashionware": {
+          "item": "Skinwatch",
+          "price": "100eb (Premium)",
+          "text": "Skinwatch 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Road Flare",
+          "price": "10eb (Cheap)",
+          "text": "Road Flare 10eb (Cheap)"
+        }
+      },
+      {
+        "roll": "81-85",
+        "Food and Drugs": {
+          "item": "Live Pigs",
+          "price": "100eb (Premium)",
+          "text": "Live Pigs 100eb (Premium)"
+        },
+        "Personal Electronics": {
+          "item": "Scrambler/Descrambler",
+          "price": "500eb (Expensive)",
+          "text": "Scrambler/Descrambler 500eb (Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Armor of exactly 500eb",
+          "price": null,
+          "text": "Armor of exactly 500eb"
+        },
+        "Cyberware": {
+          "item": "Cyberlimb Option of 500eb or less",
+          "price": null,
+          "text": "Cyberlimb Option of 500eb or less"
+        },
+        "Clothing and Fashionware": {
+          "item": "Techhair",
+          "price": "100eb (Premium)",
+          "text": "Techhair 100eb (Premium)"
+        },
+        "Survival Gear": {
+          "item": "Grapple Gun",
+          "price": "100eb (Premium)",
+          "text": "Grapple Gun 100eb (Premium)"
+        }
+      },
+      {
+        "roll": "86-90",
+        "Food and Drugs": {
+          "item": "Exotic Fruits",
+          "price": "100eb (Premium)",
+          "text": "Exotic Fruits 100eb (Premium)"
+        },
+        "Personal Electronics": {
+          "item": "Radio Scanner/Music Player",
+          "price": "50eb (Costly)",
+          "text": "Radio Scanner/Music Player 50eb (Costly)"
+        },
+        "Weapons and Armor": {
+          "item": "Armor of exactly 1,000eb",
+          "price": null,
+          "text": "Armor of exactly 1,000eb"
+        },
+        "Cyberware": {
+          "item": "Fashionware of GM's Choice",
+          "price": null,
+          "text": "Fashionware of GM's Choice"
+        },
+        "Clothing and Fashionware": {
+          "item": "Generic Chic",
+          "price": null,
+          "text": "Generic Chic"
+        },
+        "Survival Gear": {
+          "item": "Tech Bag",
+          "price": "500eb (Expensive)",
+          "text": "Tech Bag 500eb (Expensive)"
+        }
+      },
+      {
+        "roll": "91-95",
+        "Food and Drugs": {
+          "item": "Exotic Vegetables",
+          "price": "100eb (Premium)",
+          "text": "Exotic Vegetables 100eb (Premium)"
+        },
+        "Personal Electronics": {
+          "item": "Braindance Viewer",
+          "price": "1,000eb (Very Expensive)",
+          "text": "Braindance Viewer 1,000eb (Very Expensive)"
+        },
+        "Weapons and Armor": {
+          "item": "Weapon Attachments of 100eb or less",
+          "price": null,
+          "text": "Weapon Attachments of 100eb or less"
+        },
+        "Cyberware": {
+          "item": "Borgware of GM's Choice",
+          "price": null,
+          "text": "Borgware of GM's Choice"
+        },
+        "Clothing and Fashionware": {
+          "item": "Leisurewear",
+          "price": null,
+          "text": "Leisurewear"
+        },
+        "Survival Gear": {
+          "item": "Shovel or Axe",
+          "price": "50eb (Costly)",
+          "text": "Shovel or Axe 50eb (Costly)"
+        }
+      },
+      {
+        "roll": "96-100",
+        "Food and Drugs": {
+          "item": "Street Drugs of exactly 50eb",
+          "price": null,
+          "text": "Street Drugs of exactly 50eb"
+        },
+        "Personal Electronics": {
+          "item": "Virtuality Goggles",
+          "price": "100eb (Premium)",
+          "text": "Virtuality Goggles 100eb (Premium)"
+        },
+        "Weapons and Armor": {
+          "item": "Weapon Attachments of 500eb or higher",
+          "price": null,
+          "text": "Weapon Attachments of 500eb or higher"
+        },
+        "Cyberware": {
+          "item": "Any Cyberware of GM's Choice",
+          "price": null,
+          "text": "Any Cyberware of GM's Choice"
+        },
+        "Clothing and Fashionware": {
+          "item": "Gang Colors",
+          "price": null,
+          "text": "Gang Colors"
+        },
+        "Survival Gear": {
+          "item": "Airhypo",
+          "price": "50eb (Costly)",
+          "text": "Airhypo 50eb (Costly)"
+        }
+      }
+    ],
+    "intro_text": "Next, roll 1d10 for each category included in the Night Market to determine how many types of items are available. Then roll d100 that many times on the appropriate columns below to see what's there. If you roll the same result twice, reroll until you get a different result. If you roll an item that has multiple Quality Ratings, all Quality Ratings are present in the Night Market. This is not the total inventory, but a general listing of types of things available in the Market.",
+    "text": "Next, roll 1d10 for each category included in the Night Market to determine how many types of items are available. Then roll d100 that many times on the appropriate columns below to see what's there. If you roll the same result twice, reroll until you get a different result. If you roll an item that has multiple Quality Ratings, all Quality Ratings are present in the Night Market. This is not the total inventory, but a general listing of types of things available in the Market.",
+    "transcription_note": "Transcribed from the page images of p339 and p340 (CUI section 4); the table header is printed once, on p339. Roll ranges are printed 0-5, 6-10, ... 96-100. A cell holds the item text as printed; price is split off where the cell prints a price."
+  }
+]

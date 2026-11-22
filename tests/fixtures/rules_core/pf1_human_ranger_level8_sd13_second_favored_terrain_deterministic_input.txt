@@ -1,0 +1,54 @@
+# SD13-E5 Ranger level 8 SECOND-favored-terrain selection fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 8 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It is the level-8 hybrid chassis baseline fixture with exactly two
+# additional chosen selections, exercising the level-8 "2nd favored terrain"
+# burden that the level-8 chassis slice deliberately deferred (verified
+# independently against d20pfsrd and legacy.aonprd.com: "At 8th level and
+# every five levels thereafter, the ranger may select an additional favored
+# terrain. In addition, at each such interval, the skill bonus and initiative
+# bonus in any one favored terrain (including the one just selected, if so
+# desired), increases by +2."):
+#
+#   choice=choice:ranger_favored_terrain_2:terrain:mountain
+#     -- the additional favored terrain selected at the 8th-level interval,
+#        mirroring choice:ranger_favored_enemy_2's open-ended recognition idiom
+#   choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+#     -- the one favored terrain whose skill/initiative bonus increases by +2
+#        at this interval (the first, forest), mirroring
+#        choice:ranger_favored_enemy_bonus_increase_target's restricted-pair
+#        idiom (terrain:first | terrain:second)
+#
+# Everything else carries over from the level-8 baseline fixture unchanged. No
+# terrain-detection engine exists in this codebase, so neither terrain's bonus
+# is ever applied to an Initiative or skill total; the fixture makes no such
+# claim.
+case_id=pf1-crb-human-ranger-level8-second-favored-terrain
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:8
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kinslayer ~ Favored Enemy",
+    "name": "Favored Enemy",
+    "class": "Kinslayer",
+    "description": "You must choose humanoid (giant) as your favored enemy.  In addition, when you make trip attempts against creatures of the humanoid (giant) subtype, you double your favored enemy bonus for the trip attempt and can make trip attempts regardless of the creature's size compared to your own.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinslayer ~ Favored Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You must choose humanoid (giant) as your favored enemy.  In addition, when you make trip attempts against creatures of the humanoid (giant) subtype, you double your favored enemy bonus for the trip attempt and can make trip attempts regardless of the creature's size compared to your own."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Favored Enemy|NORMAL|Favored Enemy ~ Humanoid (Giant)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2588,
+    "record_key": "Kinslayer ~ Favored Enemy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Equipment ~ Deliquescent Gloves",
+    "name": "Equipment ~ Deliquescent Gloves",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Melee attacks deal 1d6 points of acid damage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_abilities.lst",
+    "sha256": "b81e4185e6ebbd0656ae80a103f4f5a7d7b27e1c98ed536ef981dabf8d04be2a",
+    "line": 75,
+    "record_key": "Equipment ~ Deliquescent Gloves"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blasting Wilder ~ Chained Blast",
+    "name": "Chained Blast",
+    "class": "Wilder",
+    "description": "You can chain the effect of your surge blast to another nearby target at a reduced capacity. Any time you use your surge blast, you can select a secondary target within %1 ft. of the original target.  The secondary target takes half the damage of the original target if you make a successful ranged touch attack against the secondary target.  If the original target took no damage, you cannot chain the blast.|ChainedBlastRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blasting Wilder ~ Chained Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChainedBlastRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can chain the effect of your surge blast to another nearby target at a reduced capacity. Any time you use your surge blast, you can select a secondary target within %1 ft. of the original target.  The secondary target takes half the damage of the original target if you make a successful ranged touch attack against the secondary target.  If the original target took no damage, you cannot chain the blast.|ChainedBlastRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChainedBlastRange|15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2372,
+    "record_key": "Blasting Wilder ~ Chained Blast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

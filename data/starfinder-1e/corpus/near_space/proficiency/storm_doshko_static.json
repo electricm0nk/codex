@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Storm doshko (static)",
+    "name": "Storm doshko (static)",
+    "type": "ADVANCED MELEE.ADVANCED MELEE WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "starfinder/paizo/near_space/sns_profs_weapon.lst",
+    "record_key": "Storm doshko (static)",
+    "sha256": "399b317c5a8649912af7fd6133e730d7c704caaf51396c860e83d8ad6ba57082"
+  },
+  "unit_id": "near_space:proficiency:storm_doshko_static"
+}

@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You imbue your blood with corrosive acid. Any time you take piercing or slashing damage, a spray of acidic blood spurts from your body in the direction of the opponent who inflicted the wound, dealing 1 d6 points of acid damage per caster level (maximum 15d6, Reflex half). This spurt travels in a 10-foot line, damaging the first creature or object it touches, with no splash damage. After it contacts a creature or object, your acidic blood continues to burn that creature for 1 round, dealing 1d6 points of acid damage per 2 caster levels (maximum 7d6). A second successful Reflex save negates this additional damage.",
+    "key": "Caustic Blood",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Druid,Magus=4|Cleric,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue your blood with corrosive acid. Any time you take piercing or slashing damage, a spray of acidic blood spurts from your body in the direction of the opponent who inflicted the wound, dealing 1 d6 points of acid damage per caster level (maximum 15d6, Reflex half). This spurt travels in a 10-foot line, damaging the first creature or object it touches, with no splash damage. After it contacts a creature or object, your acidic blood continues to burn that creature for 1 round, dealing 1d6 points of acid damage per 2 caster levels (maximum 7d6). A second successful Reflex save negates this additional damage."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Acid"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(vial of black adder venom)"
+      },
+      {
+        "key": "KEY",
+        "value": "Caustic Blood"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half or negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Caustic Blood",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

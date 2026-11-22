@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Gaze",
+    "delivery": "Supernatural",
+    "description": "Your gaze special attack takes effect when foes look at the attacking creature's eyes.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gaze",
+    "name": "Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Gaze"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %2)|GazeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GazeDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your gaze special attack takes effect when foes look at the attacking creature's eyes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.300",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1381,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Gaze",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

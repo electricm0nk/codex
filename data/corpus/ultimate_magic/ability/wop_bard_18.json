@@ -1,0 +1,40 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "WOP Bard 18",
+    "name": "WOP Bard 18",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|6th-Level Bard Word|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bard;LEVEL=6|-1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "record_key": "WOP Bard 18",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

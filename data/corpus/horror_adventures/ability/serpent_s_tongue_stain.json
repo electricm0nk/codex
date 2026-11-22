@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Serpent's Tongue Stain",
+    "name": "Serpent's Tongue Stain",
+    "description": "Your tongue takes on a serpentlike fork that can't be hidden by magic, though you can attempt a Disguise check to conceal it. Attempt one Disguise check per interaction, opposed by your opponent's Perception. Your devil tongue rebels when you work against infernal interests. When you attempt to cast a spell for a chaotic or good cause (as determined by the GM), you have a 20%% spell failure chance if it has a verbal components and a -5 penalty on concentration checks if it has a thought component (Occult Adventures 144) .",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Serpent's Tongue Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundSerpentsTongueStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "Your tongue takes on a serpentlike fork that can't be hidden by magic, though you can attempt a Disguise check to conceal it. Attempt one Disguise check per interaction, opposed by your opponent's Perception. Your devil tongue rebels when you work against infernal interests. When you attempt to cast a spell for a chaotic or good cause (as determined by the GM), you have a 20%% spell failure chance if it has a verbal components and a -5 penalty on concentration checks if it has a thought component (Occult Adventures 144) ."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 357,
+    "record_key": "Hellbound Corruption ~ Serpent's Tongue Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

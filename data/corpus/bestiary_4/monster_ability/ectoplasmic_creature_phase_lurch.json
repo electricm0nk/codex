@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ectoplasmic Creature ~ Phase Lurch",
+    "delivery": "Supernatural",
+    "description": "An ectoplasmic creature has the ability to pass through walls or material obstacles. In order to use this ability, the ectoplasmic creature must begin and end its turn outside of whatever wall or obstacle it's moving through. An ectoplasmic creature cannot move through corporeal creatures with this ability, and its movement speed is halved while moving through a wall or obstacle. Any surface it moves through is coated with a thin, silvery mucus that lingers for 1 minute.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:ectoplasmic_creature_phase_lurch",
+    "name": "Phase Lurch",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ectoplasmic creature has the ability to pass through walls or material obstacles. In order to use this ability, the ectoplasmic creature must begin and end its turn outside of whatever wall or obstacle it's moving through. An ectoplasmic creature cannot move through corporeal creatures with this ability, and its movement speed is halved while moving through a wall or obstacle. Any surface it moves through is coated with a thin, silvery mucus that lingers for 1 minute."
+      },
+      {
+        "key": "KEY",
+        "value": "Ectoplasmic Creature ~ Phase Lurch"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 598,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Ectoplasmic Creature ~ Phase Lurch",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

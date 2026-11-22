@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skirnir ~ Diminished Spellcasting",
+    "name": "Diminished Spellcasting",
+    "class": "Skirnir",
+    "description": "A skirnir casts one fewer spell of each level than normal. If this reduces the number to 0, he may cast spells of that level only if his Intelligence allows bonus spells of that level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirnir ~ Diminished Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirnir casts one fewer spell of each level than normal. If this reduces the number to 0, he may cast spells of that level only if his Intelligence allows bonus spells of that level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Magus SpellCasting Reduction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 48,
+    "record_key": "Skirnir ~ Diminished Spellcasting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

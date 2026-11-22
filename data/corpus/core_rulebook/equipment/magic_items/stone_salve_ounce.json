@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 4000.0,
+    "description": "This ointment has two uses. If an ounce of it is applied to the flesh of a petrified creature, it returns the creature to flesh as the stone to flesh spell. If an ounce of it is applied to the flesh of a nonpetrified creature, it protects the creature as a stoneskin spell.",
+    "key": "Stone Salve (Ounce)",
+    "name": "Stone Salve",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stone Salve (Ounce)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Stone Salve"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.530"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration and transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, stone to flesh, stoneskin"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|Ounces of"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Single|Ounce pf"
+      },
+      {
+        "key": "DESC",
+        "value": "This ointment has two uses. If an ounce of it is applied to the flesh of a petrified creature, it returns the creature to flesh as the stone to flesh spell. If an ounce of it is applied to the flesh of a nonpetrified creature, it protects the creature as a stoneskin spell."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 330,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Stone Salve (Ounce)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

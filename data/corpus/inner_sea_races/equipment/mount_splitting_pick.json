@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 8.0,
+    "description": null,
+    "key": "Mount-Splitting Pick",
+    "name": "Mount-Splitting Pick",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Pick (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Magic.Resizable.Melee.OneHanded.Martial.Specific.Piercing.Pick.Axe"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|17000.Special Ability ~ +1 ~ Weapon.Material ~ Adamantine ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+    "record_key": "Mount-Splitting Pick",
+    "sha256": "8bab5c93e80b95941384620665b3bcc691bebf1b540dd94323573020b736d0a7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Frozen Shadow ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Ninja",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frozen Shadow ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ninja Class Features.FrozenShadowClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Appraise|Bluff|Climb|TYPE=Craft|Disable Device|Disguise|Escape Artist|Intimidate|Knowledge (Local)|Knowledge (Nobility)|Linguistics|Perception|TYPE=Perform|TYPE=Profession|Sense Motive|Sleight of Hand|Stealth|Survival|Swim|Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 217,
+    "record_key": "Frozen Shadow ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

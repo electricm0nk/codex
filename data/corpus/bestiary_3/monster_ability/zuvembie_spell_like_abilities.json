@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Zuvembie ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 4th; concentration +6) At will-darkness 3/day-ghoul touch, scare (DC 14) 1/day-animate dead, ray of exhaustion, summon (level 3, 1d3 bat or bird swarms [use the same stats], 1d2 constrictor snakes, 1d3 venomous snakes, or 1d4 wolves)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:zuvembie_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:zuvembie"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 4th; concentration +6) At will-darkness 3/day-ghoul touch, scare (DC 14) 1/day-animate dead, ray of exhaustion, summon (level 3, 1d3 bat or bird swarms [use the same stats], 1d2 constrictor snakes, 1d3 venomous snakes, or 1d4 wolves)"
+      },
+      {
+        "key": "KEY",
+        "value": "Zuvembie ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "ZuvembieRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ZuvembieRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1703,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Zuvembie ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

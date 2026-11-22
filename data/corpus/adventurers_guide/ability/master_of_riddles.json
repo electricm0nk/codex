@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Master of Riddles",
+    "name": "Master of Riddles",
+    "description": "Bluff is a class skill for the student of perfection. When he makes a successful opposed Bluff check, the student of perfection can spend 1 ki point as a standard action to give the target a suggestion (as per the spell suggestion). His caster level is equal to his class level, and the save DC is %1.|StudentOfPerfectionKiDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Master of Riddles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnblinkingFlameStudent,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "DESC",
+        "value": "Bluff is a class skill for the student of perfection. When he makes a successful opposed Bluff check, the student of perfection can spend 1 ki point as a standard action to give the target a suggestion (as per the spell suggestion). His caster level is equal to his class level, and the save DC is %1.|StudentOfPerfectionKiDC"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 28,
+    "record_key": "Student of Perfection ~ Master of Riddles"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

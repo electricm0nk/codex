@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Discern Lies",
+    "name": "Discern Lies",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "starfinder/paizo/core/scr_spells.lst",
+    "record_key": "Discern Lies",
+    "sha256": "bd534089632a9eb35acedf7ae2929082955187898f81ee098fd1d71978f686c2"
+  },
+  "unit_id": "core:spell:discern_lies"
+}

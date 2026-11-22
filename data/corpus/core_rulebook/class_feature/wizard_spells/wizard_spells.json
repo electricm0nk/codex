@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wizard Spells",
+    "name": "Wizard Spells",
+    "class": "Wizard",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Abjuration Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Abjuration Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Conjuration Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Conjuration Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Divination Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Divination Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Enchantment Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Enchantment Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Evocation Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Evocation Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Illusion Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Illusion Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Necromancy Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Necromancy Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Transmutation Wizard Spells|!PREABILITY:1,CATEGORY=Special Ability,Transmutation Opposition School"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Universal Wizard Spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2620,
+    "record_key": "Wizard Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

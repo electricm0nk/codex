@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Grant Standard Unchained Rage Benefits",
+    "name": "Grant Standard Unchained Rage Benefits",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|RageACPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Melee|RageBonus|TYPE=Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Melee,DAMAGE.Thrown|RageBonus|TYPE=Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|RageBonus|TYPE=Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|RageACPenalty"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 309,
+    "record_key": "Grant Standard Unchained Rage Benefits"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

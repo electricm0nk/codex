@@ -1,0 +1,275 @@
+[
+ {
+  "unit_id": "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
+  "ours": 14,
+  "oracle": 14,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_2",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_4",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_6",
+  "ours": 20,
+  "oracle": 20,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_2",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_4",
+  "ours": 20,
+  "oracle": 20,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_6",
+  "ours": 22,
+  "oracle": 22,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_2",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_4",
+  "ours": 20,
+  "oracle": 20,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_6",
+  "ours": 22,
+  "oracle": 22,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_2",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_4",
+  "ours": 20,
+  "oracle": 20,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_6",
+  "ours": 22,
+  "oracle": 22,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_2",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_4",
+  "ours": 14,
+  "oracle": 14,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_6",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_2",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_4",
+  "ours": 14,
+  "oracle": 14,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_6",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_2",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_4",
+  "ours": 14,
+  "oracle": 14,
+  "verdict": "agree",
+  "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_6",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_2",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_4",
+  "ours": 14,
+  "oracle": 14,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_6",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=6"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_deep_red_sphere",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_incandescent_blue_sphere",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=WIS (first named of \"WIS\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pale_blue_rhomboid",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pink_and_green_sphere",
+  "ours": 10,
+  "oracle": 10,
+  "verdict": "agree",
+  "note": "target_ability=CHA (first named of \"CHA\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pink_rhomboid",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=CON (first named of \"CON\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_scarlet_and_blue_sphere",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:rod_splendor",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=CHA (first named of \"CHA\"), declared_bonus=4"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:gauntlets_of_fumbling",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-2"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:headband_of_mental_resilience",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:monkey_belt_greater",
+  "ours": 18,
+  "oracle": 18,
+  "verdict": "agree",
+  "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_jackass",
+  "ours": 10,
+  "oracle": 10,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-4"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:plague_rat_belt_greater",
+  "ours": 16,
+  "oracle": 16,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=2"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_clumsiness",
+  "ours": 10,
+  "oracle": 10,
+  "verdict": "agree",
+  "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-4"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:staff_of_mithral_might",
+  "ours": 12,
+  "oracle": 12,
+  "verdict": "agree",
+  "note": "target_ability=INT (first named of \"INT\"), declared_bonus=2"
+ }
+]

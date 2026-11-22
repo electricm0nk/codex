@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: arg_equip_arms_armor.lst, KEY: Jolting Dart
+Jolting Dart										PROFICIENCY:WEAPON|Dart					TYPE:Weapon.Resizable.Simple.Ranged.Standard.Piercing.Electricity.Thrown.Dart									COST:100	WT:0.5					CRITMULT:x2	CRITRANGE:1	DAMAGE:1d3	EQMOD:Material ~ Steel																								SIZE:S	SOURCEPAGE:p.205															SPROP:1d6 Electricity

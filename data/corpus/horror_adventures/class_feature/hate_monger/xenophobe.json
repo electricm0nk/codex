@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger ~ Xenophobe",
+    "name": "Xenophobe",
+    "class": "Mesmerist",
+    "description": "A hate-monger can choose one favored enemy, as per the ranger class feature. His favored enemy bonus begins at +2 and increases by 2 for every 4 mesmerist levels after 5th, but he does not gain additional favored enemies. His favored enemy bonus also applies on Intimidate checks against his favored enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger ~ Xenophobe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "A hate-monger can choose one favored enemy, as per the ranger class feature. His favored enemy bonus begins at +2 and increases by 2 for every 4 mesmerist levels after 5th, but he does not gain additional favored enemies. His favored enemy bonus also applies on Intimidate checks against his favored enemy."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hate-Monger Favored Enemy|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 184,
+    "record_key": "Hate-Monger ~ Xenophobe"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

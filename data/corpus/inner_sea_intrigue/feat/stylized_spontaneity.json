@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Stylized Spontaneity",
+    "category": "General",
+    "name": "Stylized Spontaneity",
+    "description": "You can modify your spells' apparent components and characteristics at a moment's notice. When you cast a spell, you can apply any number of the stylized magic modifications; however, you must succeed at a caster level check (DC = 5 + twice the spell's level + 5 per modification) or the magic is too badly warped to function and the spell is wasted with no effect.",
+    "prerequisites": [
+      "PRESKILL:2,Bluff=5,Spellcraft=5",
+      "PRETEXT:Bluff 5 ranks, Spellcraft 5 ranks."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst",
+    "sha256": "bf848df0e5343241cdaea1562d1bef5d7f09362af28cf315e22c5eff69eb9418",
+    "line": 17,
+    "record_key": "Stylized Spontaneity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

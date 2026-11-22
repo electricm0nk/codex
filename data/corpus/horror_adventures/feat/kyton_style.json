@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Kyton Style",
+    "category": "Combat",
+    "name": "Kyton Style",
+    "description": "Your fighting style emulates the disciplined nature of the kytons, with passion and pain held tightly in chains. When using this style, you treat spiked chains as if they had the monk special weapon feature. Additionally, if you have Stunning Fist, you can spend 1 point from your ki pool to make a Stunning Fist attack with your spiked chain instead of an unarmed strike. This still costs a use of Stunning Fist as normal.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Exotic Weapon Proficiency (Chain (Spiked))",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Ki Pool",
+      "PRESKILL:1,Knowledge (planes)=3",
+      "PREVARGTEQ:PreStatScore_WIS,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 35,
+    "record_key": "Kyton Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

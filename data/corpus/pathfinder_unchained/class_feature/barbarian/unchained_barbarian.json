@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Barbarian ~ Unchained Class",
+    "name": "Unchained Barbarian",
+    "class": "Barbarian",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Selection.AltBarbarianChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Unchained Barbarian|PREVAREQ:Barbarian_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class|AUTOMATIC|Barbarian ~ Unchained Class Full|PREMULT:1,[!PRECLASS:1,Ex-Barbarian=1],[PREVAREQ:Class_BarbarianExClass,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class|AUTOMATIC|Barbarian ~ Unchained Ex-Class|PREMULT:1,[PRECLASS:1,Ex-Barbarian=1],[PREVAREQ:Class_BarbarianExClass,1]"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 114,
+    "record_key": "Barbarian ~ Unchained Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Archetype",
+    "key": "Mechanic Archetype ~ Starfinder Forerunner",
+    "name": "Starfinder Forerunner",
+    "type": "Archetype.Mechanic Archetype"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2106,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Mechanic Archetype ~ Starfinder Forerunner",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:mechanic_archetype_starfinder_forerunner"
+}

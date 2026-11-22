@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_mighty_hurling_greater",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_mighty_hurling_lesser",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_2",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_4",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_6",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_2",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_4",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_6",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_2",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_4",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_6",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Phantom",
+    "name": "Phantom",
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff|TYPE=Craft|Fly|Intimidate|Knowledge (planes)|Perception|Sense Motive|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Phantom"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Phantom:1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Phantom"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Phantom Default"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst",
+    "record_key": "Phantom",
+    "sha256": "e71f81ae154977c520a7c032dc48145a70bf4aec85e65fa05808ab7816f9114c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

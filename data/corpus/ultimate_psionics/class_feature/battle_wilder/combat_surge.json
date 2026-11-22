@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Battle Wilder ~ Combat Surge",
+    "name": "Combat Surge",
+    "class": "Wilder",
+    "description": "You channel your emotions into a physical boost of energy that strengthens your body.  You can invoke a combat surge in two possible manners.  You can invoke a combat surge while manifesting a power or by spending 1 power point as a swift action.  In either case, you gain a +%1 enhancement bonus to your Strength|CombatSurgeSTRBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Wilder ~ Combat Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatSurgeSTRBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatSurgeCONBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicEnervationDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You channel your emotions into a physical boost of energy that strengthens your body.  You can invoke a combat surge in two possible manners.  You can invoke a combat surge while manifesting a power or by spending 1 power point as a swift action.  In either case, you gain a +%1 enhancement bonus to your Strength|CombatSurgeSTRBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " and a +%1 enhancement bonus to your Constitution|CombatSurgeCONBonus|PREVARGT:CombatSurgeCONBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": " for one round after invoking a combat surge."
+      },
+      {
+        "key": "DESC",
+        "value": " Psychic enervation: %1 hit point damage, dazed 1 round.|PsychicEnervationDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeSTRBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeSTRBonus|2|PRECLASS:1,Wilder=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeSTRBonus|2|PRECLASS:1,Wilder=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeCONBonus|2|PRECLASS:1,Wilder=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeCONBonus|2|PRECLASS:1,Wilder=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatSurgeCONBonus|2|PRECLASS:1,Wilder=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicEnervationDamage|2*WilderLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|CombatSurgeSTRBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|CombatSurgeCONBonus|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2360,
+    "record_key": "Battle Wilder ~ Combat Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

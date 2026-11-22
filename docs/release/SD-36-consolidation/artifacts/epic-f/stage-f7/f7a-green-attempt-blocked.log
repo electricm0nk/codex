@@ -1,0 +1,6 @@
+# SD-36 F7a: first GREEN attempt, seeds carrying ranks outside Climb/Intimidate/Swim, before the
+# engine stopped refusing out-of-slice ranks. Command (worktree codex-epic-f7, 2026-09-27):
+#   cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- aldric_loads_with_zero --test-threads=8
+# (the seed's error message was widened in the same step to name the blocking diagnostic ids)
+seeding succeeds: "starter character 'Aldric Ironhand' did not compute (blocking: [\"skill.selected_modifier.unsupported\"]); not seeding; starter character 'Elowen Ashgrave' did not compute (blocking: [\"skill.selected_modifier.unsupported\"]); not seeding"
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 636 filtered out; finished in 12.32s

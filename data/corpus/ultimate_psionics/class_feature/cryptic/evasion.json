@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Evasion",
+    "name": "Evasion",
+    "class": "Cryptic",
+    "description": "If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.  Evasion can only be used ifyou are wearing light armor or no armor.  A helpless cryptic does not gain the benefit of evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.  Evasion can only be used ifyou are wearing light armor or no armor.  A helpless cryptic does not gain the benefit of evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 176,
+    "record_key": "Cryptic ~ Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

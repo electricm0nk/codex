@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Roots",
+    "name": "Roots",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Su); Level 1; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Roots"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Su); Level 1; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Your body sinks roots into soft surfaces, making it hard to move you. This functions as the earth walk wild talent (Occult Adventures 24), except it works only on soft surfaces (like soil or snow) and not on stone. If you have both roots and earth walk, the bonuses stack while you're on soft earth surfaces."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 81,
+    "record_key": "Wild Talent ~ Roots"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

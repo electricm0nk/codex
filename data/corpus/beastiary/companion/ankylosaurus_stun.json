@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ankylosaurus ~ Stun",
+    "delivery": "Extraordinary",
+    "description": "The ankylosaurus's tail can deliver a powerful, stunning blow. A creature struck by this attack must make a DC %1 save or be dazed for 1 round. If the strike is a critical hit and the target fails its save, it is instead stunned for 1d4 rounds.",
+    "description_variables": [
+      "StunDC"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:ankylosaurus_stun",
+    "name": "Stun",
+    "owners": [
+      "beastiary:companion:companion_dinosaur_ankylosaurus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stun"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|StunDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stun)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ankylosaurus's tail can deliver a powerful, stunning blow. A creature struck by this attack must make a DC %1 save or be dazed for 1 round. If the strike is a critical hit and the target fails its save, it is instead stunned for 1d4 rounds.|StunDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Ankylosaurus ~ Stun"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.83",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Ankylosaurus ~ Stun",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

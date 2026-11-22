@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 12000.0,
+    "description": "this can obtain answers to specific questions regarding a dead creature if the user has access to at least a fragment of bone from the deceased's body. The device can be used up to 3 times per day.",
+    "key": "Spirit Slate",
+    "name": "Spirit Slate",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Slate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 3|CHARGES[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "SPROP",
+        "value": "this can obtain answers to specific questions regarding a dead creature if the user has access to at least a fragment of bone from the deceased's body. The device can be used up to 3 times per day."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 103,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Spirit Slate",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 30000.0,
+    "description": null,
+    "key": "Staff of the Master",
+    "name": "Staff of the Master",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Quarterstaff"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Weapon.Resizable.Simple.Melee.Bludgeoning.Specific.Double.Quarterstaff.LesserMajor"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Melee.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Staff"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10].Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=1|TIMEUNIT=Charge|CASTERLEVEL=8|Ray of Enfeeblement|Spectral Hand"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=2|TIMEUNIT=Charges|CASTERLEVEL=8|Vampiric Touch"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 417,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Staff of the Master",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

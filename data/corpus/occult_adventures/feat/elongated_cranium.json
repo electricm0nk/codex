@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Elongated Cranium",
+    "category": "General",
+    "name": "Elongated Cranium",
+    "description": "You have undergone the painful and ancient art of cranial binding, deforming your skull to unlock the hidden potential of your psychic self. Your cranium has been tightly bound with boards and wrappings to change its shape and attune your mind to your psychic discipline. If you take this feat after 1st level, you must undergo a painful 6-month regimen of increased tightening and head binding, during which you take a -1 penalty on Intelligence, Wisdom, and Charisma checks and on Intelligence-, Wisdom-, and Charisma-based skill checks. Once the binding is completed, your skull takes on one of three shapes of your choosing, each with a specific benefit. Once chosen, this shape cannot be changed.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 18,
+    "record_key": "Elongated Cranium"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

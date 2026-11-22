@@ -1,0 +1,9 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 39.85s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-346f4bf97ce644fa)
+
+running 1 test
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1235 filtered out; finished in 1.29s
+

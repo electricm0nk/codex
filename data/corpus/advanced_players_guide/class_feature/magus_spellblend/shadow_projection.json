@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Shadow Projection",
+    "name": "Shadow Projection",
+    "class": "Magus",
+    "description": "With this spell, you infuse your life force and psyche into your shadow, giving it independent life and movement as if it were an undead shadow (see Pathfinder RPG Bestiary 245). Your physical body lies comatose while you are projecting your shadow, and your body has no shadow or reflection while the spell is in effect.  While projecting your shadow, you gain a shadow's darkvision, defensive abilities, fly speed, racial stealth modifier, and strength damage attack. You do not gain the creature's create spawn ability, nor its skill ranks or Hit Dice.  Your shadow has Hit Dice and hit points equal to your own.  Your shadow projection has the undead type and may be turned or affected as undead.  If your shadow projection is slain, you return to your physical body and are immediately reduced to -1 hit points.  Your condition becomes dying, and you must begin making Constitution checks to stabilize.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Shadow Projection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=4|Shadow Projection"
+      },
+      {
+        "key": "DESC",
+        "value": "With this spell, you infuse your life force and psyche into your shadow, giving it independent life and movement as if it were an undead shadow (see Pathfinder RPG Bestiary 245). Your physical body lies comatose while you are projecting your shadow, and your body has no shadow or reflection while the spell is in effect.  While projecting your shadow, you gain a shadow's darkvision, defensive abilities, fly speed, racial stealth modifier, and strength damage attack. You do not gain the creature's create spawn ability, nor its skill ranks or Hit Dice.  Your shadow has Hit Dice and hit points equal to your own.  Your shadow projection has the undead type and may be turned or affected as undead.  If your shadow projection is slain, you return to your physical body and are immediately reduced to -1 hit points.  Your condition becomes dying, and you must begin making Constitution checks to stabilize.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3609,
+    "record_key": "Magus Spellblend ~ Shadow Projection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

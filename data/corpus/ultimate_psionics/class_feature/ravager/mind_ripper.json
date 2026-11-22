@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ravager ~ Mind Ripper",
+    "name": "Mind Ripper",
+    "class": "Ravager",
+    "description": "When using your disrupt pattern ability, you always deal standard damage against creatures with an Intelligence score, but half-damage to creatures immune to mind-affecting effects, and minimized damage to mindless creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ravager ~ Mind Ripper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When using your disrupt pattern ability, you always deal standard damage against creatures with an Intelligence score, but half-damage to creatures immune to mind-affecting effects, and minimized damage to mindless creatures."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1847,
+    "record_key": "Ravager ~ Mind Ripper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

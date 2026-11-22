@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Display ~ Profession (Cook)",
+    "name": "Profession (Cook)",
+    "type": "DSBase.DSProfession"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "starfinder/paizo/core/scr_skills.lst",
+    "record_key": "Display ~ Profession (Cook)",
+    "sha256": "d2e4c4e86971a2f1f9d7607e134b81e41c34f51b0f7c54db0b5e821fcff74094"
+  },
+  "unit_id": "core:skill:display_profession_cook"
+}

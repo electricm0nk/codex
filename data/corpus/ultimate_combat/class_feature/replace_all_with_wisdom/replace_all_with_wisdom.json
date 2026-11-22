@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Replace All with Wisdom",
+    "name": "Replace All with Wisdom",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.AttackStatChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Ranged|WIS-DEX|TYPE=Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Melee|WIS-STR|TYPE=Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|WIS-STR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1346,
+    "record_key": "Replace All with Wisdom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

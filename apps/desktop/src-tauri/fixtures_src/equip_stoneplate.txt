@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Stoneplate
+Stoneplate								PROFICIENCY:ARMOR|Stoneplate			TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard						COST:1800	WT:75		ACCHECK:-6		EQMOD:Material ~ Stone																					MAXDEX:1											SOURCEPAGE:p.14	SPELLFAILURE:35																															BONUS:COMBAT|AC|9|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

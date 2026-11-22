@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Weapon Specialization",
+    "category": "Combat",
+    "name": "Greater Weapon Specialization",
+    "description": "You deal extra damage when using your chosen weapon.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Greater Weapon Focus,Weapon Focus,Weapon Specialization",
+      "PREVARGTEQ:GreatWeapSpecQualify,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 89,
+    "record_key": "Greater Weapon Specialization"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

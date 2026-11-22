@@ -1,0 +1,14 @@
+CARD_BASE=9646a423ce HEAD=481718c99a
+# identifier
+OK_NO_BUNDLE_TAGS
+# 1 tokens
+OK_NO_TOKENS
+# 2
+OK_NO_NOOP_HANDLERS
+# 3
+OK_NO_MOCK_LEAKS
+# 4
+OK_NO_WOULD_STRINGS
+# .rs files in diff
+# shipping-code files in diff
+apps/desktop/scripts/ui-smoke/spec.json

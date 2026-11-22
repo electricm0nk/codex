@@ -1,0 +1,81 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/BOOK_OF_THE_DAMNED_VOLUME_2_GAP_ROWS",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 4,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "book": "BOTD2",
+      "key": "Demon Blood",
+      "name": "Demon Blood",
+      "category": "General",
+      "cost_gp": 800.0,
+      "weight_lbs": 1.0,
+      "description": "+2 bonus on CL checks to penetrate a demon's SR, plus demons suffer -2 penalty on saves against user's spells and SLAs for 1 hour",
+      "name_pi_citation": null
+    },
+    {
+      "book": "BOTD2",
+      "key": "Demon Senses",
+      "name": "Demon Senses",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "BOTD2",
+      "key": "Demon Talon",
+      "name": "Demon Talon",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "BOTD2",
+      "key": "Amulet of the Abyss",
+      "name": "Amulet of the Abyss",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Functions as holy symbol of attuned demon lord, worshiper is aware of any action or item that could adversely affect his alignment and his standing with demon lord, all 3 SLAs from first demonic boon 1/day each",
+      "name_pi_citation": null
+    },
+    {
+      "book": "BOTD2",
+      "key": "Codex-Named Unit (equipment_book_of_the_damned_volume_2_botd2_equip_lst_15)",
+      "name": "Codex-Named Unit (equipment_book_of_the_damned_volume_2_botd2_equip_lst_15)",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "botd2_equip",
+        15
+      ]
+    },
+    {
+      "book": "BOTD2",
+      "key": "Book of the Damned (Demonic)",
+      "name": "Book of the Damned (Demonic)",
+      "category": "General",
+      "cost_gp": 0.0,
+      "weight_lbs": 12.0,
+      "description": "Contains every [Evil] spell plus SLAs, +4 bonus on Knowledge (planes) after consulting for 1 hr, teleporting to Abyss always arrives at exact location, permanent unhallow & sympathy to CE, +2 bonus to Charisma checks vs CE creatures, 3/day can cast one of variety of SLAs, 1/day as standard action gain any one demonic boon",
+      "name_pi_citation": null
+    }
+  ]
+}

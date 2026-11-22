@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devil (Drowning) ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Slam-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Str; cure 2 con",
+    "description_variables": [
+      "14+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devil_drowning_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:monster:devil_drowning"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Slam-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Str; cure 2 con|14+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Devil (Drowning) ~ Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 463,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devil (Drowning) ~ Poison",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

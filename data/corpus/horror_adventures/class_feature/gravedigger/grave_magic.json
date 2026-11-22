@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Grave Magic",
+    "name": "Grave Magic",
+    "class": "Investigator",
+    "description": "A gravedigger can sacrifice unused extract slots of the level given below or higher to use the following spells as spell-like abilities, using her investigator level as her caster level and her Intelligence to determine DCs: 1st-expeditious excavation; 2nd-calm spirit; 3rd-speak with dead; 4th-rest eternal; 5th-call spirit; 6th-undeath to death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Grave Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger can sacrifice unused extract slots of the level given below or higher to use the following spells as spell-like abilities, using her investigator level as her caster level and her Intelligence to determine DCs: 1st-expeditious excavation; 2nd-calm spirit; 3rd-speak with dead; 4th-rest eternal; 5th-call spirit; 6th-undeath to death."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Grave Magic|TIMES=1|TIMEUNIT=Spent Extract|CASTERLEVEL=InvestigatorLVL|Expeditious Excavation,11+INT|Calm Spirit,12+INT|Speak with Dead,13+INT|Rest Eternal|Call Spirit,15+INT|Undeath to Death,16+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 35,
+    "record_key": "Gravedigger ~ Grave Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

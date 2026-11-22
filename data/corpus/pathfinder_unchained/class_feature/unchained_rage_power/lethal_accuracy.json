@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Lethal Accuracy",
+    "name": "Lethal Accuracy",
+    "class": "Unchained Barbarian",
+    "description": "When using her surprise accuracy rage power, the barbarian's critical multiplier for damage increases by 1 (a ?2 multiplier becomes ?3, a 19-20/?2 multiplier becomes 19-20/?3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5). A barbarian must have the surprise accuracy and deadly accuracy rage powers and be 16th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Lethal Accuracy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Unchained Rage Power ~ Accurate Stance,Unchained Rage Power ~ Deadly Accuracy"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,16"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Lethal Accuracy"
+      },
+      {
+        "key": "DESC",
+        "value": "When using her surprise accuracy rage power, the barbarian's critical multiplier for damage increases by 1 (a ?2 multiplier becomes ?3, a 19-20/?2 multiplier becomes 19-20/?3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5). A barbarian must have the surprise accuracy and deadly accuracy rage powers and be 16th level before selecting this rage power."
+      },
+      {
+        "key": "DESC",
+        "value": "While in the accurate stance, your critical multiplier for damage increases by 1 (a x2 multiplier becomes x3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 365,
+    "record_key": "Unchained Rage Power ~ Lethal Accuracy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

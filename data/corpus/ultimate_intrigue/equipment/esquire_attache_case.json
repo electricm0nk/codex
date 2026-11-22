@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 100.0,
+    "description": null,
+    "key": "Esquire Attache Case",
+    "name": "Esquire Attache Case",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      }
+    ],
+    "weight_lbs": 8.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_general.lst",
+    "record_key": "Esquire Attache Case",
+    "sha256": "9d6286b856677f00d123eba26e6b4662c403dc79461dcaa5289ea793ecaea5e2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

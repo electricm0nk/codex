@@ -1,0 +1,14 @@
+mutB planted: BookRegistry::pathfinder_only(CLASS_FAMILY_BOOKS.split_at(14).0); // E1.MC planted: CRB+APG dropped
+diff --git a/src/rules_core/pilot_compute/generic_class_chassis.rs b/src/rules_core/pilot_compute/generic_class_chassis.rs
+index a21565c9e3..1e212fa87a 100644
+--- a/src/rules_core/pilot_compute/generic_class_chassis.rs
++++ b/src/rules_core/pilot_compute/generic_class_chassis.rs
+@@ -86,7 +86,7 @@ const CLASS_FAMILY_BOOKS: [&str; 16] = [
+ 
+ /// [`CLASS_FAMILY_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+ /// [`GameSystem::Pathfinder1e`] entry; no other system registers a class-family book yet.
+-const CLASS_FAMILY_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(&CLASS_FAMILY_BOOKS);
++const CLASS_FAMILY_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(CLASS_FAMILY_BOOKS.split_at(14).0); // E1.MC planted: CRB+APG dropped
+ 
+ pub(crate) struct GenericChassisRow {
+     pub(crate) display_name: String,

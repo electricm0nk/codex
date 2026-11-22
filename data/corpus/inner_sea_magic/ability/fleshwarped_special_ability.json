@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Fleshwarped Special Ability",
+    "name": "Fleshwarped Special Ability",
+    "description": "A fleshwarped creature gains a single special attack, defense, or quality chosen by its creator-typically a physical ability, such as +2 to natural armor, a new natural attack like a bite or tentacle attack, a new movement mode, a new sense, or an ability such as a breath weapon, ferocity, or grab. The new ability should be comparable to those of other monsters of the base creature's CR.&nl; %1.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.FleshwarpedAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "A fleshwarped creature gains a single special attack, defense, or quality chosen by its creator-typically a physical ability, such as +2 to natural armor, a new natural attack like a bite or tentacle attack, a new movement mode, a new sense, or an ability such as a breath weapon, ferocity, or grab. The new ability should be comparable to those of other monsters of the base creature's CR.&nl; %1.|%LIST"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Fleshwarped Special Ability"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 8,
+    "record_key": "Fleshwarped Special Ability"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

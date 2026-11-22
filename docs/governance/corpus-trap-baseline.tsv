@@ -1,0 +1,36 @@
+# Corpus-trap baseline for tests/v06_corpus_trap_report.rs's four
+# corpus-invariant tests over `data/corpus/**` (audit_ingested_cache).
+#
+# Format: trap_id<TAB>count<TAB>note
+# trap_id is the stable `Trap::id()` string; count is the exact number of
+# `Finding`s of that trap the live corpus carries.
+#
+# Every row here is SD-33's already-verified, already-out-of-DoD inherited
+# debt (`../release/SD-34-book-completion/forward-scope-register.md` D1.1's
+# `v06_corpus_trap_report` target; ruled on in
+# `../release/SD-34-book-completion/decisions.md` §13). §13: "AT-34-E1-008's
+# bar is `wiring-class-mismatch = 0`, with the other four trap kinds
+# reported at their unchanged counts" — these four rows are that unchanged
+# count, registered so a test asserting `violations.is_empty()` (informative
+# never, since it is red forever against known debt) can instead assert
+# "the live count equals its registered baseline" (informative always: it
+# fails the moment either side moves).
+#
+# The bar is symmetric, exactly as `pi_sweep_rules_tables` / `pi-sweep`
+# already enforces it in this repo (`src/rules_core/pi_table_sweep.rs`):
+# a live count ABOVE its row is an unbaselined regression (AT-34-E1-008's
+# `wiring-class-mismatch = 0` scope is these four kinds' sibling, not these
+# four themselves — a live increase here is still a hard stop, not silently
+# absorbed into that other bar) and a live count BELOW its row is a stale
+# row (the debt shrank — driving it further to zero remains
+# AT-34-E1-008's scope per `decisions.md` §13, not this file's to
+# celebrate quietly; update the row deliberately when it happens).
+#
+# Derived 2026-09-01 by
+# `cargo test --locked --test v06_corpus_trap_report <test_name> -- --nocapture 2>&1 | grep -c "Finding {"`,
+# one command per row, re-confirming wave-24/26's own identical figures
+# exactly (`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave26_cycle_receipt.md`).
+shared-name-distinct-records	249	no_two_ingested_records_share_a_record_key — SD-33 inherited debt, trap 3/5 collision shape
+key-differs-from-name	650	ingested_record_keys_match_their_cited_line — record_key != cited KEY: (beyond the enumerated ACG/equipment debt already paid to zero in-file)
+mod-record	2117	every_mod_sourced_ingest_has_a_live_base_declaration — Severity::Defect subset only (a .MOD-cited record manufactured with no live base declaration); the Severity::Trap subset (legitimate .MOD usage) is untouched by this baseline
+disabled-line	165	no_ingested_record_is_sourced_from_a_disabled_line — ingested record cites a #-disabled corpus line

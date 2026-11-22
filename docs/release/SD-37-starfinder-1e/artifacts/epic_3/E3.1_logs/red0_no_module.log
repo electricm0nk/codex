@@ -1,0 +1,11 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error[E0432]: unresolved import `codex_ingest::pcgen_import::system_books`
+  --> crates/codex-ingest/tests/sf_license_registry.rs:17:33
+   |
+17 | use codex_ingest::pcgen_import::system_books::{
+   |                                 ^^^^^^^^^^^^ could not find `system_books` in `pcgen_import`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `codex-ingest` (test "sf_license_registry") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

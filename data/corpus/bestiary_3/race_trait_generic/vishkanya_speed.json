@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Vishkanyas have a base speed of 30 feet.",
+    "key": "Vishkanya ~ Speed",
+    "name": "Normal Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vishkanya_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Vishkanyas have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MOVEBASE|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Vishkanya ~ Speed",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

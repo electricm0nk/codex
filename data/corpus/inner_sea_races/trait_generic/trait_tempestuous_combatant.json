@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Tempestuous Combatant",
+    "name": "Tempestuous Combatant",
+    "description": "Once per day as a swift action, you can choose one opponent. You and your mount (if any) do not provoke attacks of opportunity from that opponent for moving within or exiting his threatened area.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Tempestuous Combatant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.KeleshiteRaceTrait"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Background,Keleshite"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Tempestuous Combatant]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, you can choose one opponent. You and your mount (if any) do not provoke attacks of opportunity from that opponent for moving within or exiting his threatened area."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 115,
+    "record_key": "Trait ~ Tempestuous Combatant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

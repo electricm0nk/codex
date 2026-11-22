@@ -1,0 +1,13 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-LAfFvy
+---------------------------------------------------------------
+==> sf-sheet-rules-check — sheet_rule_convert --system starfinder-1e --check; sf_corpus --check  (repo root)
+    PASS  sf-sheet-rules-check  (package: records=8582 converted=8582 refused=0 rules=11317 var_tables=236 verdict=PASS (30.5s); corpus: records=8582 redacted=289 renamed=137 description_redacted=192 files=8590 verdict=PASS)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  sf-sheet-rules-check
+
+RESULT: PASS
+logs in /tmp/codex-verify-LAfFvy
+exit=0

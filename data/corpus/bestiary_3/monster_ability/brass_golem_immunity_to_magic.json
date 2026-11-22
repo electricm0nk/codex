@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brass Golem ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A brass golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. . A magical attack that deals cold damage slows a brass golem (as per the slow spell) for 1d6 rounds, with no saving throw. . A magical attack that deals fire damage breaks any slow effect on the golem and heals 1 point of damage for each 3 points of damage the attack would otherwise deal. If the amount of healing would cause the golem to exceed its full normal hit points, it gains any excess as temporary hit points. A brass golem gets no save against fire effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:brass_golem_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A brass golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. . A magical attack that deals cold damage slows a brass golem (as per the slow spell) for 1d6 rounds, with no saving throw. . A magical attack that deals fire damage breaks any slow effect on the golem and heals 1 point of damage for each 3 points of damage the attack would otherwise deal. If the amount of healing would cause the golem to exceed its full normal hit points, it gains any excess as temporary hit points. A brass golem gets no save against fire effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Brass Golem ~ Immunity to Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrassGolemRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.134",
+    "traits": [
+      "BrassGolemRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 942,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Brass Golem ~ Immunity to Magic",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

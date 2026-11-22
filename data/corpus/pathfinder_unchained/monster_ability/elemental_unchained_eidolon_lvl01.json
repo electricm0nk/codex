@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Elemental ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "At 1st level, all elemental eidolons gain immunity to paralysis and sleep. In addition,  Air elemental eidolons gain the immunity (electricity) evolution.  Earth elemental eidolons gain the immunity (acid) evolution.  Fire elemental eidolons gain the immunity (fire) evolution.  Water elemental eidolons gain the immunity (cold) evolution.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": " Air elemental eidolons gain the immunity (electricity) evolution.|PREVAREQ:EidolonElementalAir,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Earth elemental eidolons gain the immunity (acid) evolution.|PREVAREQ:EidolonElementalEarth,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Fire elemental eidolons gain the immunity (fire) evolution.|PREVAREQ:EidolonElementalFire,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Water elemental eidolons gain the immunity (cold) evolution.|PREVAREQ:EidolonElementalWater,1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, all elemental eidolons gain immunity to paralysis and sleep. In addition,"
+      },
+      {
+        "key": "KEY",
+        "value": "Elemental ~ Unchained Eidolon LVL01"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElementalLVL1"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "ElementalLVL1"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 154,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Elemental ~ Unchained Eidolon LVL01",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

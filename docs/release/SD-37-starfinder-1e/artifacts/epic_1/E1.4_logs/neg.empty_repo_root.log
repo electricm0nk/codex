@@ -1,0 +1,19 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.02s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+
+thread 'character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically' (53879) panicked at src/pf_seed_render_hash.rs:93:9:
+aldric: sheet rules unavailable: "no sheet rules under /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e14/empty_root/data/sheet_rules (1 file diagnostics; regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`)"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... FAILED
+
+failures:
+
+failures:
+    character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 639 filtered out; finished in 11.09s
+
+error: test failed, to rerun pass `--bin codex-desktop`

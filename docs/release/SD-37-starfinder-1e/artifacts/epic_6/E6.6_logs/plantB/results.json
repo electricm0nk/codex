@@ -1,0 +1,34 @@
+[
+  {
+    "id": "open-starfinder-soldier",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/plantB/open-starfinder-soldier.FAILED.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSAVING TH",
+    "reason": "expected string missing: 'Survival\t+6'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-plantB-pVClNY/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c31389a3-db20-4ca2-b95e-6de038d5c078"
+      ],
+      "deleted": [
+        "c31389a3-db20-4ca2-b95e-6de038d5c078"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/plantB/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-plantB-pVClNY/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Wish Peddler Stain",
+    "name": "Wish Peddler Stain",
+    "description": "If you cast or use a harmless spell or spell-like ability when you are in combat, you must succeed at a concentration check (DC = 20 + double the spell level) or lose the spell. This also applies to nonharmless spells you cast that target only allies. Additionally, you must attempt saves against your allies' spells and spell-like abilities, even if they are harmless.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Wish Peddler Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedWishPeddlerStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "If you cast or use a harmless spell or spell-like ability when you are in combat, you must succeed at a concentration check (DC = 20 + double the spell level) or lose the spell. This also applies to nonharmless spells you cast that target only allies. Additionally, you must attempt saves against your allies' spells and spell-like abilities, even if they are harmless."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 100,
+    "record_key": "Accursed Corruption ~ Wish Peddler Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

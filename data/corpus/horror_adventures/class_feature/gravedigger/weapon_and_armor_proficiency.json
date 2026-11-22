@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Investigator",
+    "description": "A gravedigger is proficient with simple weapons and scythes, and can fight with gravediggers' tools such as a shovel or lantern as if she had the Catch Off-Guard feat. A gravedigger is proficient with light armor, but not with shields.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger is proficient with simple weapons and scythes, and can fight with gravediggers' tools such as a shovel or lantern as if she had the Catch Off-Guard feat. A gravedigger is proficient with light armor, but not with shields."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE.Simple|Scythe"
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|ARMORTYPE=Light"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 33,
+    "record_key": "Gravedigger ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

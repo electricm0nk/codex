@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ostentatious Weakness",
+    "category": "Combat",
+    "name": "Ostentatious Weakness",
+    "description": "You use knowledge of your hated foes to please onlookers. When you spend a swift action to attempt a performance combat check, you may add your favored enemy bonus to the check if you're fighting a favored enemy.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Favored Enemy",
+      "PRETEXT:Prerequisites: Base attack bonus +5, favored enemy class feature.",
+      "PRETOTALAB:5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 16,
+    "record_key": "Ostentatious Weakness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

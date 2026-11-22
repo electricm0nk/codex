@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Inevitable Strike",
+    "name": "Inevitable Strike",
+    "class": "Mystic Archer",
+    "description": "%1/day|InevitableStrikeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Inevitable Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialAttack.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InevitableStrikeTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=InevitableStrikeTimes|Inevitable Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day|InevitableStrikeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InevitableStrikeTimes|(MysticArcherLVL+1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InevitableStrikeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1315,
+    "record_key": "Mystic Archer ~ Inevitable Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

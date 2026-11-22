@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lost Mind ~ Insight of the Madman",
+    "name": "Insight of the Madman",
+    "class": "Lost Mind",
+    "description": "Gain +%1 bonus on Perception and Sense Motive.|InsightOfTheMadmanBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lost Mind ~ Insight of the Madman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InsightOfTheMadmanBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 bonus on Perception and Sense Motive.|InsightOfTheMadmanBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Sense Motive|InsightOfTheMadmanBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InsightOfTheMadmanBonus|max(1,floor(CrypticLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1823,
+    "record_key": "Lost Mind ~ Insight of the Madman"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

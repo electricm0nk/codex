@@ -1,0 +1,165 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Warpriest ~ Sacred Weapon",
+    "name": "Sacred Weapon",
+    "class": "Warpriest",
+    "description": "Sacred weapons (including his deities favored weapon and all weapons with Weapon Focus) can do base %1d%2 damage instead of the weapons normal base damage.|WarpriestSacredWeaponBaseDice|WarpriestSacredWeaponBaseDiceSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Sacred Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponBaseDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponBaseDiceSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Sacred weapons (including his deities favored weapon and all weapons with Weapon Focus) can do base %1d%2 damage instead of the weapons normal base damage.|WarpriestSacredWeaponBaseDice|WarpriestSacredWeaponBaseDiceSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(1,WarpriestSacredWeaponLVL/20)|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(1,WarpriestSacredWeaponLVL/15)|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(2,((WarpriestSacredWeaponLVL+5)/10))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,4,if(WarpriestSacredWeaponLVL<10,6,if(WarpriestSacredWeaponLVL<15,8,if(WarpriestSacredWeaponLVL<20,10,6))))|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,6,if(WarpriestSacredWeaponLVL<10,8,if(WarpriestSacredWeaponLVL<15,10,if(WarpriestSacredWeaponLVL<20,6,8))))|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,8,if(WarpriestSacredWeaponLVL<10,6,if(WarpriestSacredWeaponLVL<15,8,if(WarpriestSacredWeaponLVL<20,6,8))))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponLVL|WarpriestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestSacredWeaponEnhancementUses"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponEnhancementUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": " Enhance one weapon with divine power as a swift action, granting a +%1 enhancement bonus for %2 rounds per day. These bonuses stack with any existing bonuses the weapon might have, to a maximum of +5. The weapon must have at least a +1 enhancement bonus before any other special abilities can be added. Special abilities replace an amount of bonus equal to the special ability's base cost. The warpriest can enhance a weapon with any of the following weapon special abilities: Defending, Flaming, Frost, Keen, Shock,|WarpriestSacredWeaponEnhancement|WarpriestSacredWeaponEnhancementUses"
+      },
+      {
+        "key": "DESC",
+        "value": "Vicious,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Merciful,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost touch,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mighty cleaving,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Spell storing, Thundering,|PREMULT:2,[PREALIGN:TN],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Disruption,|PREVARGTEQ:WarpriestSacredWeaponEnhancement,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Anarchic,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Axiomatic,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Holy,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unholy,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Brilliant energy|PREVARGTEQ:WarpriestSacredWeaponEnhancement,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponEnhancement|min(5,WarpriestLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponEnhancementUses|WarpriestLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponLVL|HalflingWarpriestFavClassBonus/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2149,
+    "record_key": "Warpriest ~ Sacred Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

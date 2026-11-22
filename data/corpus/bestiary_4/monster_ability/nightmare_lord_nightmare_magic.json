@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightmare Lord ~ Nightmare Magic",
+    "delivery": "Supernatural",
+    "description": "The nightmare lord gains a +4 bonus to the DCs of its spells and spell-like abilities of the phantasm and shadow subschools.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nightmare_lord_nightmare_magic",
+    "name": "Nightmare Magic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The nightmare lord gains a +4 bonus to the DCs of its spells and spell-like abilities of the phantasm and shadow subschools."
+      },
+      {
+        "key": "KEY",
+        "value": "Nightmare Lord ~ Nightmare Magic"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1127,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Nightmare Lord ~ Nightmare Magic",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

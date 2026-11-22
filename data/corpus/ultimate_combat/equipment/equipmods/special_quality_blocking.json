@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": "blocking",
+    "key": "Special Quality ~ Blocking",
+    "name": "Blocking",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Blocking"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Blocking"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "SPROP",
+        "value": "blocking"
+      },
+      {
+        "key": "INFO",
+        "value": "SPROP|When you use this weapon to fight defensively, you gain a +1 shield bonus to AC."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst",
+    "record_key": "Special Quality ~ Blocking",
+    "sha256": "74c6f604d044b7bd0487c13c03d4aefad9eab3f2f7b814b54d424da334adedcc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

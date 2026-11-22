@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kineticist Primary Element ~ Wood",
+    "name": "Wood",
+    "class": "Kineticist",
+    "description": "Kineticists who focus on the concept of wood as an element are known as phytokineticists. Phytokineticists share a strong bond with the First World and channel the power of primordial life. As there is no \"Elemental Plane of Wood,\" the phytokineticist draws upon pockets of vital energy that form when the Elemental Planes grind against the borders of the First World.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Primary Element ~ Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Element.Element ~ Wood"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Wood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Wood|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Kineticists who focus on the concept of wood as an element are known as phytokineticists. Phytokineticists share a strong bond with the First World and channel the power of primordial life. As there is no \"Elemental Plane of Wood,\" the phytokineticist draws upon pockets of vital energy that form when the Elemental Planes grind against the borders of the First World."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Class Skills: A telekineticist adds Handle Animal and Knowledge (nature) to her list of class skills."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Wild Talents: 1st-basic phytokinesis, kinetic cover, pushing infusion, roots, wood healer, woodland step; 2nd-entangling infusion, merciful foliage; 3rd-brachiation, foxfire infusion, impale, thorn flesh, warp wood; 4th-greensight, healing burst, herbal antivenom, plant disguise, shape wood, toxic infusion; 5th-plant puppet, spore infusion, wild growth, woodland step (greater); 6th-deadly earth, green tongue; 7th-green tongue (greater), toxic infusion (greater), tree step; 8th-wood soldiers; 9th-forest siege."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Element ~ Universal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ Basic Phytokinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Wood|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Wood|KineticistLVL_Base|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Handle Animal|Knowledge (nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 39,
+    "record_key": "Kineticist Primary Element ~ Wood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

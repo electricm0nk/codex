@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Experimenter ~ Craft Construct",
+    "name": "Craft Construct",
+    "class": "Vigilante",
+    "description": "An experimenter gains Craft Construct as a bonus feat. He treats his vigilante level as his caster level and can use Knowledge (engineering) instead of Spellcraft to craft a construct.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimenter ~ Craft Construct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "An experimenter gains Craft Construct as a bonus feat. He treats his vigilante level as his caster level and can use Knowledge (engineering) instead of Spellcraft to craft a construct."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Craft Construct"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 18,
+    "record_key": "Experimenter ~ Craft Construct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,14 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/repos/codex)
+   Compiling codex-desktop v0.16.0 (/home/ubuntu/workspace/repos/codex/apps/desktop/src-tauri)
+    Checking codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/crates/codex-ingest)
+error: the borrowed expression implements the required traits
+   --> src/intelligent_item_catalog.rs:389:39
+    |
+389 |     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+    |                                       ^^^^^^^^^^^^ help: change this to: `corpus_root`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#needless_borrows_for_generic_args
+    = note: `-D clippy::needless-borrows-for-generic-args` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrows_for_generic_args)]`
+
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 1 previous error

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pukwudgie ~ Spawn Undead",
+    "delivery": "Supernatural",
+    "description": "Any creature slain by a pukwudgie's poisonous quills rises in 24 hours as a zombie. Undead created by this ability are not immediately under the control of a pukwudgie, but they receive a -4 penalty on saves against a pukwudgie's control undead spell-like ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:pukwudgie_spawn_undead",
+    "name": "Spawn Undead",
+    "owners": [
+      "bestiary_3:monster:pukwudgie"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature slain by a pukwudgie's poisonous quills rises in 24 hours as a zombie. Undead created by this ability are not immediately under the control of a pukwudgie, but they receive a -4 penalty on saves against a pukwudgie's control undead spell-like ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Pukwudgie ~ Spawn Undead"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "TYPE",
+        "value": "PukwudgieRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.223",
+    "traits": [
+      "PukwudgieRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1435,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Pukwudgie ~ Spawn Undead",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,139 @@
+== seed 1 Aldric Ironhand warnings=0
+skill.total rows: 35; printed with their total: 35; missing: 0
+  missing: 
+other explanation rows: 50; value token absent from basic PDF: 0
+explanation rows cited by no basic-sheet row: 19 of 85
+  uncited race.human.ability_bonus_applied=19
+  uncited class_chassis.base_save.fortitude=3
+  uncited class_chassis.base_save.reflex=1
+  uncited class_chassis.base_save.will=1
+  uncited skill.selected_modifier.climb=7
+  uncited skill.selected_modifier.intimidate=3
+  uncited skill.selected_modifier.swim=7
+  uncited feat.standalone.weapon_focus.longsword=1
+  uncited class_feature.fighter.bravery=1
+  uncited class_feature.fighter.armor_training=1
+  uncited class_feature.fighter.weapon_and_armor_proficiency=0
+  uncited race.human.ability_bonus_target=4
+  uncited race.human.bonus_feat_grant=1
+  uncited race.human.trait_bundle.size=0
+  uncited race.human.trait_bundle.speed=30
+  uncited race.human.trait_bundle.senses=0
+  uncited race.human.trait_bundle.extra_skill_ranks=1
+  uncited class_chassis.skill_points=12
+  uncited class_feature.fighter.corpus_record.bonus_feats=1
+damage_reduction on screen: None; 'Damage Reduction' printed: false
+money printed (PP/GP/Platinum/Gold): true
+size/vision printed: Size=true Vision/Darkvision/Low-Light=true
+== seed 2 Elowen Ashgrave warnings=0
+skill.total rows: 35; printed with their total: 35; missing: 0
+  missing: 
+other explanation rows: 85; value token absent from basic PDF: 3
+  class_chassis.wizard.force_missile_uses_per_day=7
+  class_spell.wizard.spellbook_size.spell_level_0=21
+  class_spell.wizard.spellbook_size.spell_level_2_and_higher=6
+explanation rows cited by no basic-sheet row: 46 of 120
+  uncited race.human.ability_bonus_applied=18
+  uncited class_chassis.base_save.fortitude=1
+  uncited class_chassis.base_save.reflex=1
+  uncited class_chassis.base_save.will=4
+  uncited skill.selected_modifier.climb=-2
+  uncited skill.selected_modifier.intimidate=1
+  uncited skill.selected_modifier.swim=-2
+  uncited feat.standalone.weapon_focus.longsword=1
+  uncited class_feature.wizard.weapon_and_armor_proficiency=0
+  uncited class_chassis.spell_baseline.wizard=0
+  uncited class_chassis.wizard.base_attack_bonus=2
+  uncited class_chassis.wizard.base_save.fortitude=1
+  uncited class_chassis.wizard.base_save.reflex=1
+  uncited class_chassis.wizard.base_save.will=4
+  uncited class_chassis.wizard.scribe_scroll=0
+  uncited class_chassis.wizard.specialization_choice=0
+  uncited class_chassis.wizard.specialist_bonus_slot=3
+  uncited class_chassis.wizard.intense_bonus_damage=2
+  uncited class_chassis.wizard.force_missile_uses_per_day=7
+  uncited class_spell.wizard.spellbook_size.spell_level_0=21
+  uncited class_spell.wizard.spellbook_size.spell_level_1_and_higher=15
+  uncited class_spell.wizard.spellbook_size.spell_level_2_and_higher=6
+  uncited class_spell.wizard.spellbook_size.spell_level_3_and_higher=2
+  uncited class_spell.wizard.spellbook_contents=2
+  uncited class_spell.wizard.daily_preparation=2
+  uncited class_spell.wizard.base_spells_per_day.spell_level_0=4
+  uncited class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_0=0
+  uncited class_spell.wizard.base_spells_per_day.spell_level_1=3
+  uncited class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_1=1
+  uncited class_spell.wizard.base_spells_per_day.spell_level_2=2
+  uncited class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_2=1
+  uncited class_spell.wizard.base_spells_per_day.spell_level_3=1
+  uncited class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_3=1
+  uncited race.human.ability_bonus_target=4
+  uncited race.human.bonus_feat_grant=1
+  uncited race.human.trait_bundle.size=0
+  uncited race.human.trait_bundle.speed=30
+  uncited race.human.trait_bundle.senses=0
+  uncited race.human.trait_bundle.extra_skill_ranks=1
+  uncited class_chassis.skill_points=30
+  uncited class_feature.wizard.corpus_record.arcane_bond=1
+  uncited class_feature.wizard.corpus_record.bonus_feats=5
+  uncited class_feature.wizard.corpus_record.bonus_languages=1
+  uncited class_feature.wizard.corpus_record.cantrips=1
+  uncited class_feature.wizard.corpus_record.class_skills=1
+  uncited class_feature.wizard.corpus_record.spells=1
+damage_reduction on screen: None; 'Damage Reduction' printed: false
+money printed (PP/GP/Platinum/Gold): true
+size/vision printed: Size=true Vision/Darkvision/Low-Light=true
+== seed 3 Brother Tomas Vane warnings=0
+skill.total rows: 35; printed with their total: 35; missing: 0
+  missing: 
+other explanation rows: 81; value token absent from basic PDF: 0
+explanation rows cited by no basic-sheet row: 47 of 116
+  uncited race.human.ability_bonus_applied=18
+  uncited class_chassis.base_save.fortitude=6
+  uncited class_chassis.base_save.reflex=1
+  uncited class_chassis.base_save.will=4
+  uncited skill.selected_modifier.climb=4
+  uncited skill.selected_modifier.intimidate=5
+  uncited skill.selected_modifier.swim=4
+  uncited feat.standalone.weapon_focus.longsword=1
+  uncited class_feature.fighter.bravery=1
+  uncited class_feature.cleric.weapon_and_armor_proficiency=0
+  uncited class_feature.fighter.weapon_and_armor_proficiency=0
+  uncited class_feature.cleric.aura.strength_level=3
+  uncited class_feature.domain.good_touch_of_good_not_active=0
+  uncited class_spell.cleric.daily_preparation=2
+  uncited race.human.ability_bonus_target=4
+  uncited race.human.bonus_feat_grant=1
+  uncited race.human.trait_bundle.size=0
+  uncited race.human.trait_bundle.speed=30
+  uncited race.human.trait_bundle.senses=0
+  uncited race.human.trait_bundle.extra_skill_ranks=1
+  uncited multiclass.hit_points=40
+  uncited multiclass.skill_points=10
+  uncited multiclass.cleric.class_chassis.spell_baseline.cleric=0
+  uncited multiclass.cleric.class_chassis.cleric.base_attack_bonus=2
+  uncited multiclass.cleric.class_chassis.cleric.base_save.fortitude=3
+  uncited multiclass.cleric.class_chassis.cleric.base_save.reflex=1
+  uncited multiclass.cleric.class_chassis.cleric.base_save.will=3
+  uncited multiclass.cleric.class_chassis.cleric.channel_energy_dice=2
+  uncited multiclass.cleric.class_chassis.cleric.channel_energy_uses_per_day=4
+  uncited multiclass.cleric.class_chassis.cleric.domain_spell_slot=2
+  uncited multiclass.cleric.class_feature.domain.good_touch_of_good_bonus=1
+  uncited multiclass.cleric.class_feature.domain.good_touch_of_good_uses_per_day=7
+  uncited multiclass.cleric.class_chassis.cleric.base_spells_per_day.spell_level_0=4
+  uncited multiclass.cleric.class_chassis.cleric.base_spells_per_day.spell_level_1=2
+  uncited multiclass.cleric.class_chassis.cleric.base_spells_per_day.spell_level_2=1
+  uncited multiclass.cleric.class_chassis.cleric.spell_save_dc.spell_level_1=15
+  uncited multiclass.cleric.class_chassis.cleric.spell_save_dc.spell_level_2=16
+  uncited multiclass.cleric.class_chassis.cleric.bonus_spells_per_day.spell_level_1=1
+  uncited multiclass.cleric.class_chassis.cleric.bonus_spells_per_day.spell_level_2=1
+  uncited multiclass.cleric.class_chassis.cleric.total_spells_per_day.spell_level_0=4
+  uncited multiclass.cleric.class_chassis.cleric.total_spells_per_day.spell_level_1=3
+  uncited multiclass.cleric.class_chassis.cleric.total_spells_per_day.spell_level_2=2
+  uncited multiclass.cleric.class_chassis.cleric.caster_level=3
+  uncited multiclass.cleric.class_feature.cleric.corpus_record.aura=1
+  uncited multiclass.cleric.class_feature.cleric.corpus_record.orisons=1
+  uncited multiclass.cleric.class_feature.cleric.corpus_record.spontaneous_casting=1
+  uncited multiclass.fighter.class_feature.fighter.corpus_record.bonus_feats=1
+damage_reduction on screen: None; 'Damage Reduction' printed: false
+money printed (PP/GP/Platinum/Gold): true
+size/vision printed: Size=true Vision/Darkvision/Low-Light=true

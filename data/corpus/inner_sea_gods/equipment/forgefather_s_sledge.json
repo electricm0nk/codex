@@ -1,0 +1,71 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 4312.0,
+    "description": null,
+    "key": "Forgefather's Sledge",
+    "name": "Forgefather's Sledge",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FireResistanceBonus",
+          "1",
+          "TYPE=Base"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +1 ~ Weapon.Special Ability ~ Enhancement Cost|2000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire"
+      },
+      {
+        "key": "DESC",
+        "value": "This hefty +1 warhammer is crafted to resemble a dwarven face and is decorated with lavish gems. By speaking a command word, the wielder can transform the Forgefather's sledge into a blacksmithing hammer of any size suitable for the wielder's size and strength or back into its weapon form. The weapon grants the wielder fire resistance 1. If the wielder places the Forgefather's sledge in a Small or larger fire (such as a campfire, forge, or wood-burning stove) for at least 1 minute, the hammer's head glows bright red from the heat for 1d4 minutes, though the handle remains cool to the touch. If used in combat during this time, the hammer deals 1 point of fire damage to creatures struck in addition to the regular damage dealt."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 77,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Forgefather's Sledge",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

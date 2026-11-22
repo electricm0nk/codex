@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L8 ~ Polymorph Any Object",
+    "name": "Polymorph Any Object",
+    "class": "Sorcerer",
+    "description": "This spell functions like greater polymorph, except that it changes one object or creature into another. You can use this spell to transform all manner of objects and creatures into new forms-you aren't limited to transforming a living creature into another living form. The duration of the spell depends on how radical a change is made from the original state to its transmuted state. The duration is determined by using the following guidelines. &nl;Changed Subject Is. &pipe; Increase to Duration Factor* &nl;Same kingdom [animal, vegetable, mineral] &pipe; +5 &nl;Same class [mammals, fungi, metals, etc.] &pipe; +2 &nl;Changed Subject Is. &pipe; Increase to Duration Factor* &nl;Same size &pipe; +2 &nl;Related [twig is to tree, wolf fur is to wolf, etc.] &pipe; +2 &nl;Same or lower Intelligence &pipe; +2 &nl;*Add all that apply. Look up the total on the next table. &nl;Duration Factor Duration Example &nl;0 &pipe; 20 minutes &pipe; Pebble to human &nl;2 &pipe; 1 hour &pipe; Marionette to human &nl;4 &pipe; 3 hours &pipe; Human to marionette &nl;5 &pipe; 12 hours &pipe; Lizard to manticore &nl;6 &pipe; 2 days &pipe; Sheep to wool coat &nl;7 &pipe; 1 week &pipe; Shrew to manticore &nl;9+ Permanent Manticore to shrew &nl;If the target of the spell does not have physical ability scores [Strength, Dexterity, or Constitution], this spell grants a base score of 10 to each missing ability score. If the target of the spell does not have mental ability scores [Intelligence, Wisdom, or Charisma], this spell grants a score of 5 to such scores. Damage taken by the new form can result in the injury or death of the polymorphed creature. In general, damage occurs when the new form is changed through physical force. A nonmagical object cannot be made into a magic item with this spell. Magic items aren't affected by this spell. This spell cannot create material of great intrinsic value, such as copper, silver, gems, silk, gold, platinum, mithral, or adamantine. It also cannot reproduce the special properties of cold iron in order to overcome the damage reduction of certain creatures. This spell can also be used to duplicate the effects of baleful polymorph, greater polymorph, flesh to stone, stone to flesh, transmute mud to rock, transmute metal to wood, or transmute rock to mud.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L8 ~ Polymorph Any Object"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_PolymorphAnyObject_L8,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Polymorph Any Object"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like greater polymorph, except that it changes one object or creature into another. You can use this spell to transform all manner of objects and creatures into new forms-you aren't limited to transforming a living creature into another living form. The duration of the spell depends on how radical a change is made from the original state to its transmuted state. The duration is determined by using the following guidelines. &nl;Changed Subject Is. &pipe; Increase to Duration Factor* &nl;Same kingdom [animal, vegetable, mineral] &pipe; +5 &nl;Same class [mammals, fungi, metals, etc.] &pipe; +2 &nl;Changed Subject Is. &pipe; Increase to Duration Factor* &nl;Same size &pipe; +2 &nl;Related [twig is to tree, wolf fur is to wolf, etc.] &pipe; +2 &nl;Same or lower Intelligence &pipe; +2 &nl;*Add all that apply. Look up the total on the next table. &nl;Duration Factor Duration Example &nl;0 &pipe; 20 minutes &pipe; Pebble to human &nl;2 &pipe; 1 hour &pipe; Marionette to human &nl;4 &pipe; 3 hours &pipe; Human to marionette &nl;5 &pipe; 12 hours &pipe; Lizard to manticore &nl;6 &pipe; 2 days &pipe; Sheep to wool coat &nl;7 &pipe; 1 week &pipe; Shrew to manticore &nl;9+ Permanent Manticore to shrew &nl;If the target of the spell does not have physical ability scores [Strength, Dexterity, or Constitution], this spell grants a base score of 10 to each missing ability score. If the target of the spell does not have mental ability scores [Intelligence, Wisdom, or Charisma], this spell grants a score of 5 to such scores. Damage taken by the new form can result in the injury or death of the polymorphed creature. In general, damage occurs when the new form is changed through physical force. A nonmagical object cannot be made into a magic item with this spell. Magic items aren't affected by this spell. This spell cannot create material of great intrinsic value, such as copper, silver, gems, silk, gold, platinum, mithral, or adamantine. It also cannot reproduce the special properties of cold iron in order to overcome the damage reduction of certain creatures. This spell can also be used to duplicate the effects of baleful polymorph, greater polymorph, flesh to stone, stone to flesh, transmute mud to rock, transmute metal to wood, or transmute rock to mud.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2231,
+    "record_key": "Sorcerer Bonus Spell L8 ~ Polymorph Any Object"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

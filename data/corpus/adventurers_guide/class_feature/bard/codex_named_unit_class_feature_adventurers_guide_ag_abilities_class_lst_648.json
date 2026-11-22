@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_648)",
+    "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_648)",
+    "class": "Bard",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.BrazenDeceiverClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=0|Bleed,Touch of Fatigue|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=2|Darkness,Darkvision|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=4|Shadow Conjuration,Shadow Step|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=5|Shadow Evocation,Shadow Walk|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=6|Shadow Conjuration (Greater),Shadow Evocation (Greater)|PRECLASS:1,Bard=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 648,
+    "record_key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_648)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_abilities_class.lst:648"
+  }
+}

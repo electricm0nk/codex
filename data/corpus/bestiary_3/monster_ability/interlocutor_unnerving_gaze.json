@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Interlocutor ~ Unnerving Gaze",
+    "delivery": "Extraordinary",
+    "description": "A creature that succumbs to an eremite's unnerving gaze becomes staggered for 1 round as it becomes convinced that it recognizes some of its own body parts entangled in the interlocutor's body.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:interlocutor_unnerving_gaze",
+    "name": "Unnerving Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that succumbs to an eremite's unnerving gaze becomes staggered for 1 round as it becomes convinced that it recognizes some of its own body parts entangled in the interlocutor's body."
+      },
+      {
+        "key": "KEY",
+        "value": "Interlocutor ~ Unnerving Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "TYPE",
+        "value": "InterlocutorRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.174",
+    "traits": [
+      "InterlocutorRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1177,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Interlocutor ~ Unnerving Gaze",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

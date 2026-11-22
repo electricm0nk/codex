@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Relic Focus",
+    "name": "Relic Focus",
+    "class": "Investigator",
+    "description": "A gravedigger can form a psychic bond with a skull or bone that she has personally exhumed or recovered from a burial site, using it as an occultist necromancy implement (Occult Adventures p47) and gaining its base focus power. The gravedigger cannot invest mental focus into the implement and thus doesn't receive any resonant powers. However, %1 times per day she can expend one use of inspiration to use any focus power she knows that has a cost of 1 point of mental focus (Occult Adventures p47). To activate a focus power that costs more than 1 point of mental focus, the gravedigger can expend that number of daily uses of this ability (as well as uses of inspiration) at the same time. In addition, any number of times per day, she can expend 1 use of inspiration to use grave words as spell-like ability.|1+InvestigatorLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Relic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger can form a psychic bond with a skull or bone that she has personally exhumed or recovered from a burial site, using it as an occultist necromancy implement (Occult Adventures p47) and gaining its base focus power. The gravedigger cannot invest mental focus into the implement and thus doesn't receive any resonant powers. However, %1 times per day she can expend one use of inspiration to use any focus power she knows that has a cost of 1 point of mental focus (Occult Adventures p47). To activate a focus power that costs more than 1 point of mental focus, the gravedigger can expend that number of daily uses of this ability (as well as uses of inspiration) at the same time. In addition, any number of times per day, she can expend 1 use of inspiration to use grave words as spell-like ability.|1+InvestigatorLVL/3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Relic Focus|TIMES=1|TIMEUNIT=Inspiration|CASTERLEVEL=InvestigatorLVL|Grave Words"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravedigger ~ Base Focus Power ~ Mind Fear"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 36,
+    "record_key": "Gravedigger ~ Relic Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

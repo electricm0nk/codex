@@ -1,0 +1,177 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+      "ultimate_wilderness:companion:leopard_slug_slime_strand",
+      "ultimate_wilderness:companion:leopard_slug_suction"
+    ],
+    "corpus_key": "Familiar (Leopard Slug)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Compression"
+    ],
+    "key": "ultimate_wilderness:companion:familiar_leopard_slug",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Leopard Slug)",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Body Type ~ Unusual (Plant and Vermin)|TYPE=LeopardSlugRacialTrait|Can't Be Tripped|Compression"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/8"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Leopard Slug"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Climb,10"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Familiar|Augmented Magical Beast|FamiliarBase"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Vermin"
+      }
+    ],
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "D",
+    "source_page": "p.200",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -10
+      },
+      {
+        "ability": "DEX",
+        "amount": -6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": -4
+      },
+      {
+        "ability": "CHA",
+        "amount": -2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Vermin"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 96,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "record_key": "Familiar (Leopard Slug)",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You alter the fundamental substance of a single object up to %1 cubic feet in size and at least one size category smaller than the target creature, causing it to become shadowy and intangible, as though made out of quasi-real shadowstuff. You link the intangible item to the target's flesh by making a brand shaped like the item on the target's skin. The intangible item merges with the target's flesh and is contained within the target's body, moving with the target wherever it goes. The creature can retrieve the item or reabsorb it as a full-round action, and can do so as many times as it wants. When worn or wielded by the target, the item regains its solidity and functions normally, though the target can't drop or remove the item (other than by using the full-round action), nor can it be disarmed or stolen. If the item is destroyed, the spell ends. If the ghost brand spell is dispelled while the object is inside the target's body, the object bursts out of the target's flesh, dealing 3d6 points of piercing and slashing damage to the target that bypasses DR, as well as 1d6 points of bleed damage. Material component; a branding iron and a strip of white silk worth 10 gp|CASTERLEVEL*2|PRERULE:1,DisplayFullSpell",
+    "key": "Ghost Brand",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Occultist=3|Bard,Spiritualist,Witch=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Allow an item to transform into a brand and back.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You alter the fundamental substance of a single object up to %1 cubic feet in size and at least one size category smaller than the target creature, causing it to become shadowy and intangible, as though made out of quasi-real shadowstuff. You link the intangible item to the target's flesh by making a brand shaped like the item on the target's skin. The intangible item merges with the target's flesh and is contained within the target's body, moving with the target wherever it goes. The creature can retrieve the item or reabsorb it as a full-round action, and can do so as many times as it wants. When worn or wielded by the target, the item regains its solidity and functions normally, though the target can't drop or remove the item (other than by using the full-round action), nor can it be disarmed or stolen. If the item is destroyed, the spell ends. If the ghost brand spell is dispelled while the object is inside the target's body, the object bursts out of the target's flesh, dealing 3d6 points of piercing and slashing damage to the target that bypasses DR, as well as 1d6 points of bleed damage. Material component; a branding iron and a strip of white silk worth 10 gp|CASTERLEVEL*2|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Shadow"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Ghost Brand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One willing creature and one object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Ghost Brand",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ]
+}

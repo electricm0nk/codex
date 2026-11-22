@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman Archetype ~ Shroud",
+    "name": "Shroud",
+    "class": "Marksman",
+    "description": "The best hunter is one who is not seen before taking down his prey.  You are just such a hunter, using your psionic prowess to hide from view and track silently.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman Archetype ~ Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MarksmanArchetype.MarksmanWindReader.MarksmanEvadeArrows.MarksmanDisengage.MarksmanDefensiveShot"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Marksman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Marksman Archetype ~ Shroud],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanWindReader,TYPE.MarksmanEvadeArrows,TYPE.MarksmanDisengage,TYPE.MarksmanDefensiveShot,TYPE.MarksmanEvadeArrows1]"
+      },
+      {
+        "key": "DESC",
+        "value": "The best hunter is one who is not seen before taking down his prey.  You are just such a hunter, using your psionic prowess to hide from view and track silently."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Shroud ~ Unseen|PRECLASS:1,Marksman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Shroud ~ Hidden Hunter|PRECLASS:1,Marksman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Shroud ~ Hide in Plain Sight|PRECLASS:1,Marksman=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Shroud ~ Unseen Assault|PRECLASS:1,Marksman=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1897,
+    "record_key": "Marksman Archetype ~ Shroud"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

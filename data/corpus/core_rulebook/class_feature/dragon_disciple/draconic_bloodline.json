@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dragon Disciple ~ Draconic Bloodline",
+    "name": "Draconic Bloodline",
+    "class": "Dragon Disciple",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Draconic Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dragon Disciple Bloodline Choice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dragon Disciple ~ Blood of Dragons"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,Sorcerer Archetype ~ Crossblooded"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Blood of Dragons Bloodline|!PC,QUALIFIED[TYPE=SorcererBloodlineChoice]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Blood of Dragons Bloodline|AUTOMATIC|%LIST"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodline Tracker"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2975,
+    "record_key": "Dragon Disciple ~ Draconic Bloodline"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

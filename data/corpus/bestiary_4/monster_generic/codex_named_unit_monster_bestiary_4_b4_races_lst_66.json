@@ -1,0 +1,187 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_66)",
+    "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_66)",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Druid|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|26|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeBonusDamage|13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GoreSize|2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Knowledge (geography)|Knowledge (nature)|Knowledge (planes)|Perception|Ride|Sense Motive|Stealth|Survival"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal|Sylvan"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "SR",
+        "value": "41"
+      },
+      {
+        "key": "DR",
+        "value": "15/Epic and Evil"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):34"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Azata|Chaotic|Extraplanar|Good"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "CR",
+        "value": "30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Druid"
+      },
+      {
+        "key": "KIT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "bestiary_4:b4_races.lst:66",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_66)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

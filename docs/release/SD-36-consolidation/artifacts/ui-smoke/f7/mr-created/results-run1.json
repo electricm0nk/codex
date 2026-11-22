@@ -1,0 +1,178 @@
+[
+  {
+    "id": "create-character-render",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/create-character-render.FAILED.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nLoading classes from the rules engine…",
+    "reason": "expected string missing: 'Character name'; expected string missing: 'Player name'; expected string missing: 'Race'; expected string missing: 'Class'; expected string missing: 'Create character'; 'Loading' still present after the row's wait budget; select not found: 'character-race'; select not found: 'character-class'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-aldric-abilities",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-aldric-abilities.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nPROGRESSION\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nLevel 1 Fighter\nSkill points: Unknown\nFeat\nLevel 2 Fighter\nSkill points: Unknown\nLevel 3 Fighter\nSkill points: Unknown\nFeat\nNEXT\nLevel 4 Fighter\nSkill points: Unknown\nAbility score increase\nCharacter Name\nAldric Ironhand\nCampaign\n—\nABILITIES\n\nSTR\n19\n+4\nDEX\n13\n+1\nCON\n14\n+2\nINT\n14\n+2\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+1\nHIT POINTS\nUnknown\nARMOR CLASS\n\nAC\n16\nTOUCH\n12\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+3\nMELEE\n+8\nCMB\n+7\nCMD\n18\nSAVING THROWS\n\nFORTITUDE\n+5\nREFLEX\n+2\nWILL\n+2\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✓ Simple Weapons\n✓ Martial Weapons\n✗ Exotic Weapons\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+4\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nskill points Unknown\n+1\nAcrobatics\n+2\nAppraise\n-1\nBluff\n+7\nClimb\n(1)\n+2\nCraft\n-1\nDiplomacy\n+1\nDisable Device\n-1\nDisguise\n+1\nEscape Artist\n+1\nFly\n-1\nHandle Animal\n+1\nHeal\n+3\nIntimidate\n(1)\n+2\nKnowledge (Arcana)\n+8\nKnowledge (Dungeoneering)\n(3)\n+8\nKnowledge (Engineering)\n(3)\n+2\nKnowledge (Geography)\n+2\nKnowledge (History)\n+2\nKnowledge (Local)\n+2\nKnowledge (Nature)\n+2\nKnowledge (Nobility)\n+2\nKnowledge (Planes)\n+2\nKnowledge (Religion)\n+2\nLinguistics\n+1\nPerception\n-1\nPerform\n+1\nProfession\n+7\nRide\n(3)\n+1\nSense Motive\n+1\nSleight of Hand\n+2\nSpellcraft\n+1\nStealth\n+7\nSurvival\n(3)\n+7\nSwim\n(1)\n-1\nUse Magic Device\nLANGUAGES\nCommon, +2 bonus language slots (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-elowen-abilities",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-elowen-abilities.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: Unknown\nFeat\nLevel 2 Wizard\nSkill points: Unknown\nLevel 3 Wizard\nSkill points: Unknown\nFeat\nLevel 4 Wizard\nSkill points: Unknown\nAbility score increase\nLevel 5 Wizard\nSkill points: Unknown\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: Unknown\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n14\n+2\nCON\n13\n+1\nINT\n18\n+4\nWIS\n12\n+1\nCHA\n10\n+0\nINITIATIVE\n+2\nHIT POINTS\nUnknown\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+2\nMELEE\n-2\nCMB\n+1\nCMD\n13\nSAVING THROWS\n\nFORTITUDE\n+2\nREFLEX\n+3\nWILL\n+5\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✗ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Club, Crossbow (Heavy), Crossbow (Light), Dagger, Quarterstaff\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n-1\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nskill points Unknown\n+2\nAcrobatics\n+4\nAppraise\n+0\nBluff\n-2\nClimb\n(1)\n+4\nCraft\n+0\nDiplomacy\n+2\nDisable Device\n+0\nDisguise\n+2\nEscape Artist\n+10\nFly\n(5)\n+0\nHandle Animal\n+1\nHeal\n+1\nIntimidate\n(1)\n+12\nKnowledge (Arcana)\n(5)\n+12\nKnowledge (Dungeoneering)\n(5)\n+4\nKnowledge (Engineering)\n+4\nKnowledge (Geography)\n+4\nKnowledge (History)\n+4\nKnowledge (Local)\n+4\nKnowledge (Nature)\n+4\nKnowledge (Nobility)\n+12\nKnowledge (Planes)\n(5)\n+12\nKnowledge (Religion)\n(5)\n+9\nLinguistics\n(2)\n+1\nPerception\n+0\nPerform\n+1\nProfession\n+2\nRide\n+1\nSense Motive\n+2\nSleight of Hand\n+12\nSpellcraft\n(5)\n+2\nStealth\n+1\nSurvival\n-2\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon, +4 bonus language slots (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-elowen-skills",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'Skills (no element named 'Skills')'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-elowen-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-elowen-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n14\n+2\nCON\n13\n+1\nINT\n18\n+4\nWIS\n12\n+1\nCHA\n10\n+0\nINITIATIVE\n+2\nHIT POINTS\n27 / 27\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+2\nMELEE\n-2\nCMB\n+1\nCMD\n13\nSAVING THROWS\n\nFORTITUDE\n+2\nREFLEX\n+3\nWILL\n+5\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✗ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Club, Crossbow (Heavy), Crossbow (Light), Dagger, Quarterstaff\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n-1\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+4\nAppraise\n+0\nBluff\n-2\nClimb\n(1)\n+4\nCraft\n+0\nDiplomacy\n+2\nDisable Device\n+0\nDisguise\n+2\nEscape Artist\n+10\nFly\n(5)\n+0\nHandle Animal\n+1\nHeal\n+1\nIntimidate\n(1)\n+12\nKnowledge (Arcana)\n(5)\n+12\nKnowledge (Dungeoneering)\n(5)\n+4\nKnowledge (Engineering)\n+4\nKnowledge (Geography)\n+4\nKnowledge (History)\n+4\nKnowledge (Local)\n+4\nKnowledge (Nature)\n+4\nKnowledge (Nobility)\n+12\nKnowledge (Planes)\n(5)\n+12\nKnowledge (Religion)\n(5)\n+9\nLinguistics\n(2)\n+1\nPerception\n+0\nPerform\n+1\nProfession\n+2\nRide\n+1\nSense Motive\n+2\nSleight of Hand\n+12\nSpellcraft\n(5)\n+2\nStealth\n+1\nSurvival\n-2\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon, +4 bonus language slots (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-dwarf",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-create-dwarf.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR Dwarf — Fighter 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nDwarf\nCLASS\nFighter 1\nLevel 1 Fighter\nSkill points: 2\nFeat\nNEXT\nLevel 2 Fighter\nSkill points: 2\nCharacter Name\nF7MR Dwarf\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n15\n+2\nCON\n15\n+2\nINT\n10\n+0\nWIS\n13\n+1\nCHA\n7\n-2\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n16\nTOUCH\n12\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVING THROWS\n\nFORTITUDE\n+4\nREFLEX\n+2\nWILL\n+1\nSPEED\n\nLAND\n20 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✓ Simple Weapons\n✓ Martial Weapons\n✗ Exotic Weapons\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+3\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nDarkvision 60 ft.\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+0\nAppraise\n-2\nBluff\n+5\nClimb\n(1)\n+0\nCraft\n-2\nDiplomacy\n+2\nDisable Device\n-2\nDisguise\n+2\nEscape Artist\n+2\nFly\n-2\nHandle Animal\n+1\nHeal\n+2\nIntimidate\n(1)\n+0\nKnowledge (Arcana)\n+0\nKnowledge (Dungeoneering)\n+0\nKnowledge (Engineering)\n+0\nKnowledge (Geography)\n+0\nKnowledge (History)\n+0\nKnowledge (Local)\n+0\nKnowledge (Nature)\n+0\nKnowledge (Nobility)\n+0\nKnowledge (Planes)\n+0\nKnowledge (Religion)\n+0\nLinguistics\n+1\nPerception\n-2\nPerform\n+1\nProfession\n+2\nRide\n+1\nSense Motive\n+2\nSleight of Hand\n+0\nSpellcraft\n+2\nStealth\n+1\nSurvival\n+5\nSwim\n(1)\n-2\nUse Magic Device\nLANGUAGES\nCommon",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "80ec7478-5240-4f58-bdc2-5d14e1bea850"
+      ],
+      "deleted": [
+        "80ec7478-5240-4f58-bdc2-5d14e1bea850"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-elf",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-create-elf.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR Elf — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF7MR Elf\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n17\n+3\nCON\n11\n+0\nINT\n12\n+1\nWIS\n11\n+0\nCHA\n9\n-1\nINITIATIVE\n+3\nHIT POINTS\n8 / 8\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+4\nCMB\n+3\nCMD\n16\nSAVING THROWS\n\nFORTITUDE\n+2\nREFLEX\n+3\nWILL\n+2\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✓ Simple Weapons\n✓ Martial Weapons\n✗ Exotic Weapons\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+3\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nLow-light vision\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+3\nAcrobatics\n+1\nAppraise\n-1\nBluff\n+5\nClimb\n(1)\n+1\nCraft\n-1\nDiplomacy\n+3\nDisable Device\n-1\nDisguise\n+3\nEscape Artist\n+3\nFly\n-1\nHandle Animal\n+0\nHeal\n+3\nIntimidate\n(1)\n+1\nKnowledge (Arcana)\n+1\nKnowledge (Dungeoneering)\n+1\nKnowledge (Engineering)\n+1\nKnowledge (Geography)\n+1\nKnowledge (History)\n+1\nKnowledge (Local)\n+1\nKnowledge (Nature)\n+1\nKnowledge (Nobility)\n+1\nKnowledge (Planes)\n+1\nKnowledge (Religion)\n+1\nLinguistics\n+0\nPerception\n-1\nPerform\n+0\nProfession\n+3\nRide\n+0\nSense Motive\n+3\nSleight of Hand\n+1\nSpellcraft\n+3\nStealth\n+0\nSurvival\n+5\nSwim\n(1)\n-1\nUse Magic Device\nLANGUAGES\nCommon, +1 bonus language slot (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ee6ef8bf-2c7b-4e7b-bbc2-043b0e20f9b2"
+      ],
+      "deleted": [
+        "ee6ef8bf-2c7b-4e7b-bbc2-043b0e20f9b2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-halfling",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'character-level (no element named 'character-level')'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-gnome",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'character-level (no element named 'character-level')'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-halforc",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'character-level (no element named 'character-level')'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-human",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'character-level (no element named 'character-level')'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-elowen-spells",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr-out/mr-elowen-spells.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n14\n+2\nCON\n13\n+1\nINT\n18\n+4\nWIS\n12\n+1\nCHA\n10\n+0\nINITIATIVE\n+2\nHIT POINTS\n27 / 27\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+2\nMELEE\n-2\nCMB\n+1\nCMD\n13\nSAVING THROWS\n\nFORTITUDE\n+2\nREFLEX\n+3\nWILL\n+5\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\nSpells this character knows, from the real spell catalog. Save DCs and slot totals are not computed for this build yet.\n\nSPELLS PER DAY\n\nWizardCantrips4\nWizard level 5 total spells per day at spell level 0: base 4 + specialist bonus slot 0 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 0 = 4\nWizardLevel 15\nWizard level 5 total spells per day at spell level 1: base 3 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 5\nWizardLevel 24\nWizard level 5 total spells per day at spell level 2: base 2 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 4\nWizardLevel 33\nWizard level 5 total spells per day at spell level 3: base 1 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 3\nEach level is the level for that spell’s own source class. Rows reading “Lowest class level” are classes with no spell list ingested yet — that number is the spell’s lowest level across all classes, not this one’s.\n\nAdd Spell\nLightCRB · Evocation · Wizard level 0\nForget\nKnown · Wizard\nThis spell causes a touched object to glow like a torch, shedding normal light in a 20-foot radius, and increasing the light level for an additional 20 feet by one step, up to normal light (darkness becomes dim light, and dim light becomes normal light). In an area of normal or bright light, this spell has no effect. The effect is immobile, but it can be cast on a movable object. You can only have one light spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent (through permanency or a similar effect), it does not count against this limit. Light can be used to counter or dispel any darkness spell of equal or lower spell level.\nLightCRB · Evocation · Wizard level 0\nForget\nPrepared · Wizard\nThis spell causes a touched object to glow like a torch, shedding normal light in a 20-foot radius, and increasing the light level for an additional 20 feet by one step, up to normal light (darkness becomes dim light, and dim light becomes normal light). In an area of normal or bright light, this spell has no effect. The effect is immobile, but it can be cast on a movable object. You can only have one light spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent (through permanency or a similar effect), it does not count against this limit. Light can be used to counter or dispel any darkness spell of equal or lower spell level.\nFireballCRB · Evocation · Wizard level 3\nForget\nKnown · Wizard\nA fireball spell generates a searing explosion of flame that detonates with a low roar and deals 1d6 points of fire damage per caster level (maximum 10d6) to every creature within the area. Unattended objects also take this damage. The explosion creates almost no pressure. You point your finger and determine the range (distance and height) at which the fireball is to burst. A glowing, pea-sized bead streaks from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the prescribed range, blossoms into the fireball at that point. An early impact results in an early detonation. If you attempt to send the bead through a narrow passage, such as through an arrow slit, you must \"hit\" the opening with a ranged touch attack, or else the bead strikes the barrier and detonates prematurely. The fireball sets fire to combustibles and damages objects in the area. It can melt metals with low melting points, such as lead, gold, copper, silver, and bronze. If the damage caused to an interposing barrier shatters or breaks through it, the fireball may continue beyond the barrier if the area permits; otherwise it stops at the barrier just as any other spell effect does.\nFireballCRB · Evocation · Wizard level 3\nForget\nPrepared · Wizard\nA fireball spell generates a searing explosion of flame that detonates with a low roar and deals 1d6 points of fire damage per caster level (maximum 10d6) to every creature within the area. Unattended objects also take this damage. The explosion creates almost no pressure. You point your finger and determine the range (distance and height) at which the fireball is to burst. A glowing, pea-sized bead streaks from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the prescribed range, blossoms into the fireball at that point. An early impact results in an early detonation. If you attempt to send the bead through a narrow passage, such as through an arrow slit, you must \"hit\" the opening with a ranged touch attack, or else the bead strikes the barrier and detonates prematurely. The fireball sets fire to combustibles and damages objects in the area. It can melt metals with low melting points, such as lead, gold, copper, silver, and bronze. If the damage caused to an interposing barrier shatters or breaks through it, the fireball may continue beyond the barrier if the area permits; otherwise it stops at the barrier just as any other spell effect does.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+4\nAppraise\n+0\nBluff\n-2\nClimb\n(1)\n+4\nCraft\n+0\nDiplomacy\n+2\nDisable Device\n+0\nDisguise\n+2\nEscape Artist\n+10\nFly\n(5)\n+0\nHandle Animal\n+1\nHeal\n+1\nIntimidate\n(1)\n+12\nKnowledge (Arcana)\n(5)\n+12\nKnowledge (Dungeoneering)\n(5)\n+4\nKnowledge (Engineering)\n+4\nKnowledge (Geography)\n+4\nKnowledge (History)\n+4\nKnowledge (Local)\n+4\nKnowledge (Nature)\n+4\nKnowledge (Nobility)\n+12\nKnowledge (Planes)\n(5)\n+12\nKnowledge (Religion)\n(5)\n+9\nLinguistics\n(2)\n+1\nPerception\n+0\nPerform\n+1\nProfession\n+2\nRide\n+1\nSense Motive\n+2\nSleight of Hand\n+12\nSpellcraft\n(5)\n+2\nStealth\n+1\nSurvival\n-2\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon, +4 bonus language slots (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-IvMsde/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

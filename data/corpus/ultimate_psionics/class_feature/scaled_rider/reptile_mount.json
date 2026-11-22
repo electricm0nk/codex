@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Scaled Rider ~ Reptile Mount",
+    "name": "Reptile Mount",
+    "class": "Scaled Rider",
+    "description": "You gain a karaan as an animal companion, but the karaan gains the share powers abilty of a psicrystal instead of the share spells ability of an animal companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scaled Rider ~ Reptile Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CanHaveKaraan|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a karaan as an animal companion, but the karaan gains the share powers abilty of a psicrystal instead of the share spells ability of an animal companion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CanHaveKaraan|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVL|PsychicWarriorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|PsychicWarriorLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Karaan)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.337"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2126,
+    "record_key": "Scaled Rider ~ Reptile Mount"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

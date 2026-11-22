@@ -1,0 +1,27 @@
+# SD13-E2 deterministic Half-Orc Fighter level 1 race-semantics recognition
+# fixture. Represents a deterministic PF1 Core Rulebook Half-Orc Fighter level 1
+# identity as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values.
+#
+# Like Half-Elf, PF1 Core Half-Orc grants a player-chosen +2 to any one ability
+# score, mirroring the Human ability-bonus mechanic's shape (a named choice, not
+# a fixed pair).
+#
+# The Fighter combat baseline, total saves, and selected-skill modifiers stay
+# claim-blocked on this input because the bounded GE-06 Fighter compute path is
+# grounded only for race:human; that is expected and unrelated to this fixture's
+# purpose, which is to make the bounded Half-Orc race-semantics recognition
+# legible. It deliberately avoids every unproven Half-Orc family: no
+# Intimidating skill bonus, no Orc Ferocity, and no weapon familiarity grant.
+case_id=pf1-crb-half-orc-fighter-level1-recognition
+source_package_id=pf1.core_rulebook
+race_id=race:half-orc
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:8
+choice=choice:half_orc_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

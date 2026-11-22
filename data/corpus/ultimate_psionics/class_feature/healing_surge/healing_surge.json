@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Healing Surge",
+    "name": "Healing Surge",
+    "class": null,
+    "description": "Psychic enervation: sickened for one round per point of wild surge, and sickens target of healing ability (DC %1); also lose %2 pp.|HealingDC|HealingPPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HealingDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HealingPPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic enervation: sickened for one round per point of wild surge, and sickens target of healing ability (DC %1); also lose %2 pp.|HealingDC|HealingPPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Healing Surge Bond|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Healing Surge"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Healing Surge Feat|ImpSurgeBond|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealingDC|10+SurgeLVL/2+WilderPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealingPPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1051,
+    "record_key": "Healing Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

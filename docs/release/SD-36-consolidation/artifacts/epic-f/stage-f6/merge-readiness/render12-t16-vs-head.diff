@@ -1,0 +1,20 @@
+== bloodrager_3.txt
+== cleric_5.txt
+== fighter_4-wizard_4.txt
+== fighter_5.txt
+== kineticist_5.txt
+== magus_5.txt
+== monk_4-rogue_3.txt
+27a28
+> EXPL| id=multiclass.hit_points value=52 detail=Multiclass hit points 52: maximized hit die at character level 1 (the first-listed class), the non-rolling average (die/2 + 1) at every other level, + Constitution modifier per level (at least 1) (class:monk 4: 31; class:rogue 3: 21)
+84d84
+< DIAG| id=class_chassis.hit_points.unknown claim_blocking=false message=class:monk: no converted class chassis record (a class record whose base attack bonus and save progressions converted, the record the fold reads a hit die from), so its hit points are Unknown
+== monk_5.txt
+== samurai_5.txt
+== shaman_5.txt
+50d49
+< LINE| id=advanced_class_guide:class:shaman#bonus1 kind=class label=Shaman (domains) printed=+1 condition=-
+64d62
+< LINE| id=advanced_class_guide:domain:life_spirit kind=domain label=Life (Spirit) printed= condition=-
+== unchained_rogue_5.txt
+== wizard_5.txt

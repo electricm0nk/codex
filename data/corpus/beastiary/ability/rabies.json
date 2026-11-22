@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Disease, injury; Fort DC 14; Onset 2d6 weeks; Frequency 1/day; Effect 1 Con damage plus 1d3 Wis damage (minimum reduction to 1 Wis); Cure 2 consecutive saves",
+    "key": "Rabies",
+    "name": "Rabies",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "Disease.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "Disease, injury; Fort DC 14; Onset 2d6 weeks; Frequency 1/day; Effect 1 Con damage plus 1d3 Wis damage (minimum reduction to 1 Wis); Cure 2 consecutive saves"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities.lst",
+    "record_key": "Rabies",
+    "sha256": "d948972c403c035bdc9bb6a574faf66fd4353c53437d53ae151c02be07d9f157"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

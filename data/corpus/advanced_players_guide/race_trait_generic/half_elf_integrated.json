@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Many half-elves are skilled in the art of ingratiating themselves into a community as if they were natives. Half-elves with this racial trait gain a +1 bonus on Bluff, Disguise, and Knowledge (local) checks.",
+    "key": "Half-Elf ~ Integrated",
+    "name": "Integrated",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Integrated"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Integrated],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many half-elves are skilled in the art of ingratiating themselves into a community as if they were natives. Half-elves with this racial trait gain a +1 bonus on Bluff, Disguise, and Knowledge (local) checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the adaptability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Integrated"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise,Knowledge (Local)|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Half-Elf ~ Integrated",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

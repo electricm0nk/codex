@@ -1,0 +1,59 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Awakened Tree",
+    "name": "Awakened Tree",
+    "raw_tokens": [
+      {
+        "key": "DEFINESTAT",
+        "value": "STAT|INT"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Inanimate Tree"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|-1"
+      },
+      {
+        "key": "ADD",
+        "value": "LANGUAGE|TYPE=Spoken"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Awakened Tree"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "TYPE=Spoken"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Awakened"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1272,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "record_key": "Awakened Tree",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

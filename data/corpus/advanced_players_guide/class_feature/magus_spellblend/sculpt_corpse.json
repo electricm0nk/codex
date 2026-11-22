@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Sculpt Corpse",
+    "name": "Sculpt Corpse",
+    "class": "Magus",
+    "description": "With a clammy caress and a word to the powers lurking beyond death, you can reshape a dead body look like another creature or even a specific person so long as you have firsthand knowledge of how that creature or person actually looks.  You can make the corpse one size larger or smaller and change anything else about it including its apparent type, gender, or age. Creatures with a reason to suspect deception may make a Will saving throw to realize that the corpse was altered. If you chose to make the corpse look like a specific individual anyone who knows that individual can make a Will save to realize that the corpse is not actually that person. However, if a creature fails its Will save by 5 or less they believe the corpse is that of someone who closely resembled the person they knew rather than a deliberate fake. This spell merely changes the appearance of the corpse. Any spell or effect that targets the corpse (such as speak with dead or raise dead) treats it as if it still had its original appearance.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Sculpt Corpse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=1|Sculpt Corpse"
+      },
+      {
+        "key": "DESC",
+        "value": "With a clammy caress and a word to the powers lurking beyond death, you can reshape a dead body look like another creature or even a specific person so long as you have firsthand knowledge of how that creature or person actually looks.  You can make the corpse one size larger or smaller and change anything else about it including its apparent type, gender, or age. Creatures with a reason to suspect deception may make a Will saving throw to realize that the corpse was altered. If you chose to make the corpse look like a specific individual anyone who knows that individual can make a Will save to realize that the corpse is not actually that person. However, if a creature fails its Will save by 5 or less they believe the corpse is that of someone who closely resembled the person they knew rather than a deliberate fake. This spell merely changes the appearance of the corpse. Any spell or effect that targets the corpse (such as speak with dead or raise dead) treats it as if it still had its original appearance.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3606,
+    "record_key": "Magus Spellblend ~ Sculpt Corpse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

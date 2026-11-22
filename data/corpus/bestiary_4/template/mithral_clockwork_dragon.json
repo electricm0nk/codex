@@ -1,0 +1,51 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Mithral Clockwork Dragon",
+    "name": "Mithral Clockwork Dragon",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Fly|100"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Clockwork Dragon ~ Mithral Construction"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "record_key": "Mithral Clockwork Dragon",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

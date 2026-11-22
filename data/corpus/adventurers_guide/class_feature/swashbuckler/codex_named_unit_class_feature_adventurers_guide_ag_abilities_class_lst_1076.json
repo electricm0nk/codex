@@ -1,0 +1,144 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1076)",
+    "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1076)",
+    "class": "Swashbuckler",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ShieldProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_ShieldProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1076,
+    "record_key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1076)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_abilities_class.lst:1076"
+  }
+}

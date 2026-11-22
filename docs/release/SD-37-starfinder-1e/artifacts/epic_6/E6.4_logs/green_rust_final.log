@@ -1,0 +1,16 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.24s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 8 tests
+test sf_catalog::tests::no_starfinder_catalog_imports_the_pathfinder_tables ... ok
+test sf_catalog::tests::the_frontend_catalog_fixtures_are_the_commands_responses ... ok
+test sf_catalog::tests::no_starfinder_catalog_prints_a_hit_die ... ok
+test sf_catalog::tests::a_rows_description_is_the_engines_catalog_prose ... ok
+test sf_catalog::tests::the_command_serves_each_catalog ... ok
+test sf_catalog::tests::the_catalogs_carry_core_rulebook_records_by_name_and_no_pathfinder_record ... ok
+test sf_catalog::tests::a_rows_totals_are_the_records_own_rows_that_feed_a_sheet_total ... ok
+test sf_catalog::tests::every_starfinder_catalog_lists_the_records_of_its_kind_from_the_starfinder_package ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 677 filtered out; finished in 1.77s
+

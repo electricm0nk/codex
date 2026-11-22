@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Quickling ~ Slow Susceptibility",
+    "delivery": "Extraordinary",
+    "description": "A quickling that succumbs to a slow effect loses its supernatural speed ability and is sickened as long as the effect persists.  This sickened condition persists for 1 round after the slow effect ends.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:quickling_slow_susceptibility",
+    "name": "Slow Susceptibility",
+    "owners": [
+      "bestiary_2:monster:quickling"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A quickling that succumbs to a slow effect loses its supernatural speed ability and is sickened as long as the effect persists.  This sickened condition persists for 1 round after the slow effect ends."
+      },
+      {
+        "key": "KEY",
+        "value": "Quickling ~ Slow Susceptibility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.227",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1037,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Quickling ~ Slow Susceptibility",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

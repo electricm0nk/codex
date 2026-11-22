@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fleet",
+    "category": "Mythic",
+    "name": "Fleet (Mythic)",
+    "description": "You're fantastically light on your feet. Your base land speed increases by 5 feet, regardless of what armor you wear or whether you're encumbered. This bonus stacks with the bonus gained from Fleet.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Fleet",
+      "PREVARGTEQ:MythicTierLevel,1",
+      "PREVARLT:count(\"ABILITIES\",\"CATEGORY=Mythic Feat\",\"KEY=Fleet\"),count(\"ABILITIES\",\"CATEGORY=FEAT\",\"KEY=Fleet\")"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 92,
+    "record_key": "Fleet"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

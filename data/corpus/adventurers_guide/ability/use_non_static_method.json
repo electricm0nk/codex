@@ -1,0 +1,44 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Rule ~ Wayfinder uses Non-Static Method",
+    "name": "Use Non-Static Method",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rule ~ Wayfinder uses Non-Static Method"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WayfinderIounStonesUsed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slotted Ioun Stone Resonant Power|WayfinderIounStonesUsed"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 60,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "record_key": "Rule ~ Wayfinder uses Non-Static Method",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

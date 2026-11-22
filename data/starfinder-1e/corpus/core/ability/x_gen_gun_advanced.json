@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "X-gen gun (advanced)",
+    "name": "X-gen gun (advanced)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1184,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "X-gen gun (advanced)",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:x_gen_gun_advanced"
+}

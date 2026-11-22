@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thais ~ Armor of Valor",
+    "delivery": "Supernatural",
+    "description": "Thais adds her Charisma modifier as a deflection bonus to her AC and gains a +1 luck bonus on all saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:thais_armor_of_valor",
+    "name": "Armor of Valor",
+    "owners": [
+      "inner_sea_gods:monster:thais"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|CHA|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|1|TYPE=Luck"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Thais adds her Charisma modifier as a deflection bonus to her AC and gains a +1 luck bonus on all saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Thais ~ Armor of Valor"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Defensive"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Thais ~ Armor of Valor",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

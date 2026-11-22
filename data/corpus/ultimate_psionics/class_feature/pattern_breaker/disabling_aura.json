@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pattern Breaker ~ Disabling Aura",
+    "name": "Disabling Aura",
+    "class": "Pattern Breaker",
+    "description": "You can expend your psionic focus as a full round action to suppress only harmful effects around you in a %1 ft. aura for %2 rounds.  This functions similarly to a null psionics field, but it only affects harmful effects.  This includes suppressing magical or psionic weapons being used in attacks against the pattern breaker, although such items would still work against other targets.  You do not need to be awre of the effect to be suppressed.|DisablingAuraRadius|DisablingAuraDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern Breaker ~ Disabling Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisablingAuraDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisablingAuraRadius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus as a full round action to suppress only harmful effects around you in a %1 ft. aura for %2 rounds.  This functions similarly to a null psionics field, but it only affects harmful effects.  This includes suppressing magical or psionic weapons being used in attacks against the pattern breaker, although such items would still work against other targets.  You do not need to be awre of the effect to be suppressed.|DisablingAuraRadius|DisablingAuraDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisablingAuraRadius|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisablingAuraDuration|CrypticPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1842,
+    "record_key": "Pattern Breaker ~ Disabling Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

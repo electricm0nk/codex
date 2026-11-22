@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Immunity to Death Effects",
+    "delivery": "Extraordinary",
+    "description": "You are never subject to death effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:immunity_to_death_effects",
+    "name": "Immunity to Death Effects",
+    "owners": [
+      "beastiary:monster:demon_nabasu"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Death Effects"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You are never subject to death effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1404,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Immunity to Death Effects",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

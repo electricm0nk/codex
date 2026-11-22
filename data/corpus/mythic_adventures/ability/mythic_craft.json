@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Mythic Craft",
+    "name": "Mythic Craft",
+    "description": "When you use the Craft skill to create an item, you double the progress each check provides. In addition, you can make an item masterwork simply by paying for the cost, and don't need to increase the time to create the item or attempt additional checks. Add +%1 to any skill checks associated with making magic items.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Mythic Craft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use the Craft skill to create an item, you double the progress each check provides. In addition, you can make an item masterwork simply by paying for the cost, and don't need to increase the time to create the item or attempt additional checks. Add +%1 to any skill checks associated with making magic items.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 211,
+    "record_key": "Mythic Path Ability ~ Mythic Craft"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

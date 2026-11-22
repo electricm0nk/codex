@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skirnir ~ Spellshield",
+    "name": "Spellshield",
+    "class": "Skirnir",
+    "description": "At 7th level, as a standard action, a skirnir may store a magus spell in his shield by spending 1 point from his arcane pool per level of the spell. This functions as the spell storing weapon special ability, but activates only on a successful shield bash by the skirnir and is not limited to spells of 3rd level or less. This ability replaces knowledge pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirnir ~ Spellshield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, as a standard action, a skirnir may store a magus spell in his shield by spending 1 point from his arcane pool per level of the spell. This functions as the spell storing weapon special ability, but activates only on a successful shield bash by the skirnir and is not limited to spells of 3rd level or less. This ability replaces knowledge pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 54,
+    "record_key": "Skirnir ~ Spellshield"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

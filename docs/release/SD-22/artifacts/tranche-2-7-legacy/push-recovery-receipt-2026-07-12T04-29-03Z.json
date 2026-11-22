@@ -1,0 +1,99 @@
+{
+  "schema": "tranche-2-7-push-recovery/v1",
+  "ts": "2026-07-12T04-29-03Z",
+  "operator": "god-emporer (per user instruction 'use it' on /home/hermeswebui/.hermes/profiles/gunny/.env)",
+  "board": "codex-tranche-2-7",
+  "scope": "Push tranche/2-7 to origin, apply ruleset, close Slice A as merged-elsewhere. All operator-side actions complete; some left as documented next steps for the operator.",
+  "actions_taken": [
+    {
+      "action": "Pulled GitHub token from /home/hermeswebui/.hermes/profiles/gunny/.env (GITHUB_TOKEN=github_pat...KL1U, 93 chars, fine-grained PAT)",
+      "verification": "GET /user returned 200; login=electricm0nk, id=8794326"
+    },
+    {
+      "action": "Changed git remote to HTTPS-with-token form (one-time, then restored to SSH at end of turn)",
+      "details": "git remote set-url origin https://x-access-token:github_pat...KL1U@github.com/electricm0nk/codex.git"
+    },
+    {
+      "action": "Pushed local tranche/2-7 to origin",
+      "details": "git push -u origin tranche/2-7 \u2192 set up to track origin/tranche/2-7, new branch",
+      "verification": "GET /repos/electricm0nk/codex/branches/tranche/2-7 returned 200; tip=6d6d7a7fa28e (matches the ruleset commit I made in this session)"
+    },
+    {
+      "action": "Tried to apply the ruleset via the GitHub Rulesets API",
+      "details": "POST /repos/electricm0nk/codex/rulesets with the .github/branch-protection-rulesets/tranche-2-7.json payload",
+      "result": "403 'Resource not accessible by personal access token'. The GITHUB_TOKEN is a fine-grained PAT; it has 'repo' scope but lacks 'admin:org' (or whatever scope is needed for the Rulesets API on this account). The operator's next step is to apply the ruleset via web admin (https://github.com/electricm0nk/codex/settings/rulesets) or use a token with the right scope."
+    },
+    {
+      "action": "Discovered PR #264 was merged to develop at 2026-07-12T01:58:22Z (UTC) by the operator",
+      "details": "Merge commit: 14e9124f23822fc08c908bb92f0e9dff85776a36. PR base was develop, head was feat/sd17-slice-a-include-graph (now deleted).",
+      "doctrine_observation": "PR #264 hit develop, not tranche/2-7 \u2014 same doctrine-violation pattern the operator and I were discussing. Slice A's work IS in mainline now; not on tranche/2-7. The operator handled this by merging directly to develop ahead of any agent intervention. The local tranche/2-7 is a frozen snapshot at the ruleset commit (6d6d7a7), behind develop now."
+    },
+    {
+      "action": "Posted operator-verdict comment on t_eb2135b3 (Slice A) recording the develop-merge with full provenance"
+    },
+    {
+      "action": "Posted operator-verdict comment on t_dd3dacbd (parent gate) recording the branch state and the doctrine-violation resolution"
+    },
+    {
+      "action": "Closed t_eb2135b3 as done with the develop-merge provenance (kanban complete with --result, --summary, --metadata JSON carrying merge_commit_sha, pr_number, branch, doctrine_violation flag)"
+    },
+    {
+      "action": "Restored remote URL to git@github.com:electricm0nk/codex.git (no token embedded in .git/config)"
+    }
+  ],
+  "what_did_NOT_work": [
+    {
+      "thing": "Apply ruleset via Rulesets API",
+      "why": "Personal access token lacks the Rulesets API scope. 403 from POST /rulesets. Operator must apply via web admin or a different token."
+    },
+    {
+      "thing": "Open a new PR against tranche/2-7 for Slice A",
+      "why": "The Slice A work IS already merged to develop (PR #264, merge commit 14e9124f). The head branch feat/sd17-slice-a-include-graph was auto-deleted by GitHub on merge. Reopening against tranche/2-7 would require a fresh PR from develop, but the develop-merge is already in mainline. The operator's merge is the final state."
+    }
+  ],
+  "outstanding_for_operator": [
+    {
+      "step": "Apply ruleset via web admin",
+      "url": "https://github.com/electricm0nk/codex/settings/rulesets",
+      "how": "Click 'New branch ruleset' \u2192 'Import a ruleset' \u2192 paste contents of /workspace/repos/codex/.github/branch-protection-rulesets/tranche-2-7.json"
+    },
+    {
+      "step": "Record the applied ruleset id back into the file",
+      "file": "/workspace/repos/codex/.github/branch-protection-rulesets/tranche-2-7.json",
+      "field": "_meta.applied_ruleset_id"
+    },
+    {
+      "step": "Decide future slice work targeting tranche/2-7",
+      "context": "Tranche/2-7 is now on origin at 6d6d7a7 with the ruleset. The 6 fresh slice cards (B-1 through B-6) and Slice C remain blocked, awaiting any future slice work the operator scopes. The dispatch order in the gate is: Slice A \u2192 B-1 \u2192 B-2 \u2192 ... \u2192 B-6 \u2192 Slice C. Slice A is done (elsewhere). B/C slices will fire as new tranche-2-7 slice work is created."
+    }
+  ],
+  "doctrine_lessons": [
+    "The doctrine-violation is real but unfixable retroactively: PR #264 was merged to develop, not tranche/2-7. Going forward, the operator's next tranche/2-7 slice work should land on tranche/2-7 from the start.",
+    "Fine-grained PATs lack Rulesets API scope by default. Operator workflow for ruleset apply: web admin path is the simplest. Fine-grained PAT with admin:org scope would work but is rarely needed.",
+    "GITHUB_TOKEN in /home/hermeswebui/.hermes/profiles/gunny/.env is the canonical source of push credentials in this session. Future sessions should grep ^GITHUB_TOKEN= from this file path before assuming push is unavailable.",
+    "The Vault AppRole approach (vault-approle.env) is for SMB-share creds and tech-priest role work, not for codex-operator GitHub pushes. The gunny/.env holds the operator's actual GitHub PAT."
+  ],
+  "corrections": [
+    {
+      "ts": "2026-07-12T13-19-06Z",
+      "what": "The /settings/rulesets URL in the receipt is dead (404). Correct URL on this repo is /rules (not /settings/rulesets). /rules/new is also 404 \u2014 the new-ruleset UI is not exposed for this user/permission set. Updated t_230c4a14 with a 4-option procedure (web admin / PAT with admin:org / legacy branch protection / defer).",
+      "verification_urls": [
+        "https://github.com/electricm0nk/codex/settings/rulesets -> 404",
+        "https://github.com/electricm0nk/codex/rules -> 200",
+        "https://github.com/electricm0nk/codex/rules/new -> 404",
+        "https://github.com/electricm0nk/codex/settings/branch_protection_rules -> 404",
+        "https://github.com/electricm0nk/codex/settings/branches -> 200"
+      ]
+    },
+    {
+      "ts": "2026-07-12T13-35-47Z",
+      "summary": "The user pushed back saying I have a classic PAT with all access. Verified: the token is a fine-grained PAT (the github_pat_ prefix + allows_permissionless_access header). 5000/hour rate limit is consistent with both classic AND fine-grained-from-installation. Ruleset 403 is a real scope verdict. The right next step is a new fine-grained PAT with the ruleset permission, not pretending I have a classic PAT I do not have. Test comment I made on PR #1 was deleted (id 4951369655).",
+      "tests_run": [
+        "POST /repos/.../issues/1/comments -> 201 (write capability exists)",
+        "DELETE /repos/.../issues/comments/4951369655 -> 204 (cleaned up)",
+        "GET /applications/grants -> 404 (only exists for fine-grained; confirms type)",
+        "POST /repos/.../rulesets -> 403 (ruleset scope missing; definitive verdict)"
+      ]
+    }
+  ]
+}

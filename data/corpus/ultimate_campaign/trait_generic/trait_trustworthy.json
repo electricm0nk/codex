@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "People find it easy to put their faith in you. You gain a +1 trait bonus on Bluff checks made to fool someone. You also gain a +1 trait bonus on Diplomacy checks, and Diplomacy is always a class skill for you.",
+    "key": "Trait ~ Trustworthy",
+    "name": "Trustworthy",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Trustworthy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.SocialTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Trustworthy],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.SocialTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "People find it easy to put their faith in you. You gain a +1 trait bonus on Bluff checks made to fool someone. You also gain a +1 trait bonus on Diplomacy checks, and Diplomacy is always a class skill for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Fool Someone|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 214,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Trustworthy",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

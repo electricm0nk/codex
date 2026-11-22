@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bestial Werewolf ~ Feral Counter",
+    "delivery": "Extraordinary",
+    "description": "While in animal form, the first time each round that a creature damages a bestial werewolf, the bestial werewolf can take an attack of opportunity against the creature. The werewolf must threaten the triggering creature to use this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:bestial_werewolf_feral_counter",
+    "name": "Feral Counter",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "While in animal form, the first time each round that a creature damages a bestial werewolf, the bestial werewolf can take an attack of opportunity against the creature. The werewolf must threaten the triggering creature to use this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Bestial Werewolf ~ Feral Counter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.BestialWerewolf"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": [
+      "BestialWerewolf"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 247,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Bestial Werewolf ~ Feral Counter",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

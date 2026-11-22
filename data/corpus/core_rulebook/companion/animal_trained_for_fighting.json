@@ -1,0 +1,68 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "An animal trained to engage in combat knows the tricks attack, down, and stay. Training an animal for fighting takes 3 weeks.",
+    "key": "Animal Training ~ Fighting",
+    "name": "Animal Trained for Fighting",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Training ~ Fighting"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick.AnimalTraining.General.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.AnimalTraining"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal trained to engage in combat knows the tricks attack, down, and stay. Training an animal for fighting takes 3 weeks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Animal Trick|AUTOMATIC|Animal Trick ~ Attack|Animal Trick ~ Down|Animal Trick ~ Stay"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 153,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Animal Training ~ Fighting",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

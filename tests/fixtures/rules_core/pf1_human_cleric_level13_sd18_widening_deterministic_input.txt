@@ -1,0 +1,47 @@
+# SD18 deterministic Human Cleric level 13 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Cleric
+# level-1..level-12 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_cleric_level12_sd18_widening_deterministic_input.txt)
+# to level 13 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-12 fixtures, and the
+# same canonical domain selections (Good, Healing), adding only the level
+# bump this bounded slice needs.
+#
+# It deliberately avoids every later Cleric burden surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, no domain
+# power execution beyond the flat facets already grounded at levels 1-12, no
+# domain spell-list contents, and no level-14+ progression. The PF1 CRB
+# Cleric class table's level-13 "Special" column reads "Channel energy 7d6"
+# (verified independently against d20pfsrd, Archives of Nethys aonprd.com,
+# and legacy.aonprd.com, all three byte-for-byte identical): Channel Energy's
+# die count genuinely rises to 7d6 ((13 + 1) / 2 = 7, up from 6d6 at level
+# 12) via the same pre-existing formula, not re-derived; base attack bonus
+# stays +9 (13 * 3 / 4 = 9, an integer-division coincidence with level 12),
+# base Fortitude/Will (good saves) stay +8 (13 / 2 + 2 = 8), base Reflex
+# (poor save) stays +4 (13 / 3 = 4), and the Good domain's Touch of Good
+# sacred bonus stays 6 (13 / 2 = 6) — all four integer-division coincidences
+# with level 12, checked rather than assumed. Level 13 is exactly when a
+# cleric first casts 7th-level cleric spells (verified independently against
+# all three primary sources' raw spells-per-day table rows, which all show
+# the 7th-level spell column newly opening at level 13 with a 1+1 slot), so
+# the flat domain spell slot count genuinely rises to 7 (one each of
+# 1st-through-7th-level domain slots), via the same pre-existing table-lookup
+# idiom already used at levels 3/5/7/9/11 — no new formula invented.
+case_id=pf1-crb-human-cleric-level13
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:cleric:13
+ability=strength:10
+ability=dexterity:12
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:14
+feat=feat:dodge
+choice=choice:cleric_domain:domain:good
+choice=choice:cleric_domain:domain:healing
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

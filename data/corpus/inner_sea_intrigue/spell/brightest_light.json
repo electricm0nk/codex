@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Brightest Light",
+    "school": "Evocation",
+    "level": 4,
+    "description": "[redacted PI]"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 10,
+    "record_key": "Brightest Light"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,19 @@
+cpr | cpr.cyberware.piece.0.name | Cyberware | words | Grafted Muscle and Bone Lace | Grafted Muscle and Bone Lace: installed cyberware (Cyberpunk RED core rulebook p. 112-117, p. 359-368) | 
+cpr | cpr.critical.body.0 | Body | words | Collapsed Lung | Collapsed Lung: Critical Injury to the Body; raises the Base Death Save Penalty by 1 (Cyberpunk RED core rulebook p. 221-222) | 
+cpr | cpr.critical.body.1 | Body | words | Broken Ribs | Broken Ribs: Critical Injury to the Body; does not raise the Base Death Save Penalty (Cyberpunk RED core rulebook p. 221-222) | 
+cpr | cpr.reputation.facedown_roll | Facedown | dice | 7 + 1d10 | Facedown: COOL + Reputation + 1d10, 7 + 1d10 (p. 194) | 
+cpr | cpr.reputation.event.0 | Reputation event | words | Level 3 deed: Held the bridge (defining) | Level 3 deed: Held the bridge; the defining Reputation Event (Cyberpunk RED core rulebook p. 193) | 
+cpr | cpr.reputation.event.1 | Reputation event | words | Level 2 cowardice: Ran from the Maelstrom | Level 2 cowardice: Ran from the Maelstrom; not higher than Level 3, so the earlier defining event stays (Cyberpunk RED core rulebook p. 193) | 
+cpr | cpr.weapon.0.damage | Heavy Pistol damage | dice | 3d6 | Heavy Pistol: 3d6 single shot damage (p342) | 
+cpr | cpr.weapon.0.name | Weapon | words | Heavy Pistol | Heavy Pistol: ranged weapon (p342) | 
+cpr | cpr.weapon.0.concealable | Heavy Pistol concealable | words | Yes | Heavy Pistol can be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.0.range_dv.6 | Heavy Pistol range DV at 201 to 400 m/yds | words | N/A | Heavy Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.0.range_dv.7 | Heavy Pistol range DV at 401 to 800 m/yds | words | N/A | Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.lifepath.0 | Cultural Origins: Your (General) Cultural Region | words | North American | North American: Chinese, Cree, Creole, English, French, Navajo, Spanish (Lifepath, Cyberpunk RED core rulebook p. 45-70) | 
+cpr | cpr.lifepath.1 | Your Personality: What Are You Like? | words | Shy and secretive | Shy and secretive (Lifepath, Cyberpunk RED core rulebook p. 45-70) | 
+cpr | cpr.lifepath.2 | Your Friends: Friend's Relationship to You | words | Like an older sibling to you. | Like an older sibling to you. (Lifepath, Cyberpunk RED core rulebook p. 45-70) | 
+cpr | cpr.lifepath.3 | Your Friends: Friend's Relationship to You | words | Like a younger sibling to you. | Like a younger sibling to you. (Lifepath, Cyberpunk RED core rulebook p. 45-70) | 
+cpr | cpr.lifepath.4 | Solo: What Kind of Solo are You?: Type | words | Bodyguard | Bodyguard (Lifepath, Cyberpunk RED core rulebook p. 45-70) | 
+role_ability | cpr.print.role_ability.solo | Combat Awareness | words |  | When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147) | Combat Awareness Rank 4; Combat Awareness points 4
+cyberware | cpr.print.cyberware.0 | Grafted Muscle and Bone Lace | words |  | User increases their BODY by 2. This increase in BODY changes a Character's HP and Death Save. This cannot increase the user's BODY to 11 or higher. (Cyberpunk RED core rulebook p364) | Humanity Loss 14
+humanity | cpr.print.humanity_loss | Humanity Loss | words |  | Humanity Loss 14 from installed cyberware: Humanity 66 = EMP 8 x 10 - 14. EMP 6: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81). | Humanity Loss 14; Humanity 66; EMP 6

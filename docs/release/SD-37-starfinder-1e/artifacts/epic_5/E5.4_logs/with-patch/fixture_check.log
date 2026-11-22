@@ -1,0 +1,8 @@
+DIFFERS: fixture 116 rows, walk 116 rows
+   | SF-Envoy-3 | `core:feat:mobility` | Mobility | Rule core:pool_option:drone_feat_mobility |
+   | SF-Envoy-3 | `core:feat:mobility` | Mobility | seed root |
+   | SF-Soldier-3 | `core:feat:deadly_aim` | Deadly Aim | Rule core:pool_option:drone_feat_deadly_aim |
+   | SF-Soldier-3 | `core:feat:deadly_aim` | Deadly Aim | seed root |
+   | SF-Technomancer-5 | `core:feat:mobility` | Mobility | Rule core:pool_option:drone_feat_mobility |
+   | SF-Technomancer-5 | `core:feat:mobility` | Mobility | seed root |
+exit=1

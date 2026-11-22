@@ -1,0 +1,15 @@
+PASS  sheet-market-starfinder-open
+PASS  sheet-market-starfinder-buy
+PASS  sheet-market-starfinder-sell
+PASS  sheet-market-starfinder-cashless
+PASS  sheet-market-starfinder-refused
+PASS  sheet-market-cyberpunk-open
+PASS  sheet-market-cyberpunk-buy
+PASS  sheet-market-cyberpunk-sell
+PASS  sheet-market-cyberpunk-refused
+PASS  sheet-market-cyberpunk-cashless
+PASS  sheet-market-restore-pathfinder
+PASS  sheet-market-open-weapons
+PASS  sheet-market-enhancement-ac
+PASS  open-starfinder-soldier
+14/14 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 14 rows)

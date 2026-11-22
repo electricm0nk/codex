@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Pilferer ~ Nondetection",
+    "name": "Nondetection",
+    "description": "A pilferer is under the constant effect of nondetection with a caster level of %1. The DC of the caster level check to penetrate the nondetection effect is %2.|MasterLevel|MasterLevel+15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pilferer ~ Nondetection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A pilferer is under the constant effect of nondetection with a caster level of %1. The DC of the caster level check to penetrate the nondetection effect is %2.|MasterLevel|MasterLevel+15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 602,
+    "record_key": "Pilferer ~ Nondetection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

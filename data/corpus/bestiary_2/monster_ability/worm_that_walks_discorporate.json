@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Worm that Walks ~ Discorporate",
+    "delivery": "Supernatural",
+    "description": "A worm that walks can collapse into a shapeless swarm of worms as a free action.  All held, worn, and carried items fall and its Strength score drops to 1.  The worm that walks functions as a true swarm while discorporated, with a reach of 0 feet (its space remains unchanged).  While discorporated, the worm that walks loses all of its defensive abilities and gains all of the standard swarm traits.  It loses its slam attacks and all special abilities and special attacks, but can make a swarm attack that deals damage equal to its engulf attack.  A worm that walks can reform into its true form (including equipping all gear in reach) as a full-round action as long as it has at least 1 hit point.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:worm_that_walks_discorporate",
+    "name": "Discorporate",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A worm that walks can collapse into a shapeless swarm of worms as a free action.  All held, worn, and carried items fall and its Strength score drops to 1.  The worm that walks functions as a true swarm while discorporated, with a reach of 0 feet (its space remains unchanged).  While discorporated, the worm that walks loses all of its defensive abilities and gains all of the standard swarm traits.  It loses its slam attacks and all special abilities and special attacks, but can make a swarm attack that deals damage equal to its engulf attack.  A worm that walks can reform into its true form (including equipping all gear in reach) as a full-round action as long as it has at least 1 hit point."
+      },
+      {
+        "key": "KEY",
+        "value": "Worm that Walks ~ Discorporate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.287",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1382,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Worm that Walks ~ Discorporate",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

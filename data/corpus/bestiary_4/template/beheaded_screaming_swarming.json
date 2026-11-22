@@ -1,0 +1,47 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Beheaded (Screaming/Swarming)",
+    "name": "Beheaded (Screaming/Swarming)",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "%+1"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beheaded ~ Screaming|Beheaded ~ Swarming|Distraction ~ Swarm|Can't Be Tripped"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Swarm"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates_companion.lst",
+    "record_key": "Beheaded (Screaming/Swarming)",
+    "sha256": "bb33a0dc8f285d6f3cd4e05e16c210e6efe9e55c9f17f210b13b50d355dd711e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

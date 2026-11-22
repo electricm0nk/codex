@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cultivator ~ Plant Magic",
+    "name": "Plant Magic",
+    "class": "Bard",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cultivator ~ Plant Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.CultivatorClassFeatures"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Bard=1|Entangle|Bard=2|Greensight|Bard=3|Plant Growth|Bard=4|Antiplant Shell|Bard=5|Tree Stride|Bard=6|Green Caress"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 252,
+    "record_key": "Cultivator ~ Plant Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

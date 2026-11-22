@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Trompe l'Oeil ~ Enter Painting",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a trompe l'oeil can enter a painting it touches. When it does so, its physical body disappears, and its image appears in the painting. The trompe l'oeil can use its normal senses and attempt Perception checks to notice anything occurring near the painting. While within a painting, the trompe l'oeil can talk and move anywhere within the picture or even temporarily alter it (such as by picking a flower in the painting). It cannot use any spells or other abilities while within an image. In addition, the trompe l'oeil gains the freeze universal monster ability to appear as part of the painting. The trompe l'oeil can leave the painting as a move action. Once it leaves the painting, the image immediately reverts to the appearance it had before the trompe l'oeil entered. If someone destroys or damages the painting, the trompe l'oeil is unharmed, but exits the image.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:trompe_l_oeil_enter_painting",
+    "name": "Enter Painting",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a trompe l'oeil can enter a painting it touches. When it does so, its physical body disappears, and its image appears in the painting. The trompe l'oeil can use its normal senses and attempt Perception checks to notice anything occurring near the painting. While within a painting, the trompe l'oeil can talk and move anywhere within the picture or even temporarily alter it (such as by picking a flower in the painting). It cannot use any spells or other abilities while within an image. In addition, the trompe l'oeil gains the freeze universal monster ability to appear as part of the painting. The trompe l'oeil can leave the painting as a move action. Once it leaves the painting, the image immediately reverts to the appearance it had before the trompe l'oeil entered. If someone destroys or damages the painting, the trompe l'oeil is unharmed, but exits the image."
+      },
+      {
+        "key": "KEY",
+        "value": "Trompe l'Oeil ~ Enter Painting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TrompeLOeil"
+      }
+    ],
+    "source_page": "p.243",
+    "traits": [
+      "TrompeLOeil"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 334,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Trompe l'Oeil ~ Enter Painting",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

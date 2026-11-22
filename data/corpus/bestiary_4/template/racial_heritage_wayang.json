@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Racial Heritage ~ Wayang",
+    "name": "Wayang",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Heritage ~ Wayang"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsWayang|Wayang"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Heritage"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_templates.lst",
+    "record_key": "Racial Heritage ~ Wayang",
+    "sha256": "bdfb72b82612039f908d403ace1ab7affd680e3eb5bf31ffb1cfb521a7f5fce1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

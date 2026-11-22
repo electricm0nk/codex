@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You focus the energy of your mind, body, and spirit into a specific part of your being, granting yourself an exceptional ability to perform certain tasks. When you cast the spell, choose one of the following portions of your self as your focus target. Thereafter, you may change the focus target as a move action. You can gain the benefit of only one channel vigor spell at a time. Limbs: You gain the benefits of a haste spell. Mind: You gain a +4 competence bonus on Knowledge and Perception skill checks and on ranged attack rolls. Spirit: You gain a +6 competence bonus on Will saving throws and Bluff and Intimidate checks. Torso: You gain a +6 competence bonus on Fortitude saving throws and concentration checks.",
+    "key": "Channel Vigor",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Cleric,Inquisitor,Magus=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You focus the energy of your mind, body, and spirit into a specific part of your being, granting yourself an exceptional ability to perform certain tasks. When you cast the spell, choose one of the following portions of your self as your focus target. Thereafter, you may change the focus target as a move action. You can gain the benefit of only one channel vigor spell at a time. Limbs: You gain the benefits of a haste spell. Mind: You gain a +4 competence bonus on Knowledge and Perception skill checks and on ranged attack rolls. Spirit: You gain a +6 competence bonus on Will saving throws and Bluff and Intimidate checks. Torso: You gain a +6 competence bonus on Fortitude saving throws and concentration checks."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Channel Vigor"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Channel Vigor",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

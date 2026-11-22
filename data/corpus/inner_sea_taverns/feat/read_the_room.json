@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Read the Room",
+    "category": "General",
+    "name": "Read the Room",
+    "description": "You can gain some insight into the mood of a crowd with just a look. Before you use the Drunken Sing-Along feat, you can attempt a DC 20 Sense Motive check as a free action to pick the exact right song for that crowd. If you are successful, you gain a +4 circumstance bonus on your next Diplomacy check to gather information in that tavern.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Drunken Sing-Along",
+      "PRESKILL:3,Diplomacy=1,Perform (Sing)=1,Sense Motive=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 10,
+    "record_key": "Read the Room"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

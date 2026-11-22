@@ -1,0 +1,1143 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ULTIMATE_PSIONICS_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "UPSI",
+      "key": "PSIBLADE",
+      "name": "PSIBLADE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "CRYS_MUN",
+      "name": "CRYS_MUN",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "25hp/inch and 8 hardness",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "CRYS_DEEP",
+      "name": "CRYS_DEEP",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "CRYS_MUN_ITEM",
+      "name": "CRYS_MUN_ITEM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "25hp/inch and 8 hardness",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "CRYS_DEEP_ITEM",
+      "name": "CRYS_DEEP_ITEM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "30hp/inch and 10 hardness",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "APORT",
+      "name": "APORT",
+      "category": "Equipmods",
+      "cost_gp": 40320.0,
+      "weight_lbs": null,
+      "description": "2/day transports wearer and equipment to any spot within 800 feet as Fold Space",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "AVERT",
+      "name": "AVERT",
+      "category": "Equipmods",
+      "cost_gp": 12960.0,
+      "weight_lbs": null,
+      "description": "3/day Aversion to shield, DC 14",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DETERM",
+      "name": "DETERM",
+      "category": "Equipmods",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "1/day automatic breath of life at 0 hp",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ECTOPLAS",
+      "name": "ECTOPLAS",
+      "category": "Equipmods",
+      "cost_gp": 10800.0,
+      "weight_lbs": null,
+      "description": "1/day ectoplasmic form for up to 5 minutes",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FLOAT",
+      "name": "FLOAT",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "negates normal penalty for swimming in armor; additionally a +4 circumstance bonus for Swim checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FUSE_ARMR_HVY",
+      "name": "FUSE_ARMR_HVY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FUSE_ARMR_LT",
+      "name": "FUSE_ARMR_LT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FUSE_ARMR_MED",
+      "name": "FUSE_ARMR_MED",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FUSE_ARMR_SHLD",
+      "name": "FUSE_ARMR_SHLD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "GLEAM",
+      "name": "GLEAM",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "flashes and gleams give wearer a 'fuzzy' appearance granting concealment",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "HEART",
+      "name": "HEART",
+      "category": "Equipmods",
+      "cost_gp": 720.0,
+      "weight_lbs": null,
+      "description": "grants 5 temporary hit points a day for up to 4 minutes",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "LANDI",
+      "name": "LANDI",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "wearer takes no damage from the first 60' of a fall; target lands on feet no matter the distance of a fall",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "LNKED",
+      "name": "LNKED",
+      "category": "Equipmods",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "wearer forms a bond with other wearers of linked armor or shields in 10 miles; as mindlink power",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MANIF_SHLD",
+      "name": "MANIF_SHLD",
+      "category": "Equipmods",
+      "cost_gp": 10800.0,
+      "weight_lbs": null,
+      "description": "generates 3 power points per day that the wielder can use when manifesting a power; all must be used at once",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MNDARMR",
+      "name": "MNDARMR",
+      "category": "Equipmods",
+      "cost_gp": 24000.0,
+      "weight_lbs": null,
+      "description": "wearer gains a +3 insight bonus to Will saves vs. mind affecting and compulsion effects",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MURMR",
+      "name": "MURMR",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "-5 penalty to others' concentration checks within 30 ft.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MURMR_G",
+      "name": "MURMR_G",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "-5 penalty to others' concentration checks within 30 ft.; failed concentration check does 1d6 bleed damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PHASING",
+      "name": "PHASING",
+      "category": "Equipmods",
+      "cost_gp": 65520.0,
+      "weight_lbs": null,
+      "description": "phase through wood, plaster, or stone for total of 60' per day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWRRST_13",
+      "name": "PWRRST_13",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWRRST_15",
+      "name": "PWRRST_15",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWRRST_17",
+      "name": "PWRRST_17",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWRRST_19",
+      "name": "PWRRST_19",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "QUICKN",
+      "name": "QUICKN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "armor adds 5' to wearer's movement after armor reduction",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "RADIANT",
+      "name": "RADIANT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "resistance 10 to energy attacks; radiates light in 60' radius for rounds equal to points absorbed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "RNGD",
+      "name": "RNGD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can be thrown with a range increment of 30 ft by those proficient in its use; returns just before wielder's next turn",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SEEING",
+      "name": "SEEING",
+      "category": "Equipmods",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "flanking only gains +1 bonus; gains +1 enhancement to Perception checks, but a -2 save vs. gaze attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "TIMEBUT",
+      "name": "TIMEBUT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day Timeless Body",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "VANISH",
+      "name": "VANISH",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "2/day cloud mind",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WALL",
+      "name": "WALL",
+      "category": "Equipmods",
+      "cost_gp": 20160.0,
+      "weight_lbs": null,
+      "description": "1/day drop to form Wall of Ectoplasm for 7 minutes",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "AGILE",
+      "name": "AGILE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Add Dexterity bonus, instead of Strength bonus, to weapon damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "BODYFEED",
+      "name": "BODYFEED",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "adds damage as temporary hit points on a critical hit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "CHALL",
+      "name": "CHALL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "attack and use Intimidate to give target penalties to attack others",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COLLI_A",
+      "name": "COLLI_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COLLI_M",
+      "name": "COLLI_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COLLI_R",
+      "name": "COLLI_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COUPGR_A",
+      "name": "COUPGR_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COUPGR_M",
+      "name": "COUPGR_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "COUPGR_R",
+      "name": "COUPGR_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_A",
+      "name": "DISLOC_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "teleport target 1-100 miles randomly, DC 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_M",
+      "name": "DISLOC_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day teleport target 1-100 miles randomly, DC 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_R",
+      "name": "DISLOC_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day teleport target 1-100 miles randomly, DC 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISSIP",
+      "name": "DISSIP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "ignores damage reduction and hardness of ectoplasm creatures and items and treats all successful hits as critical hits",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DUEL",
+      "name": "DUEL",
+      "category": "Equipmods",
+      "cost_gp": 14000.0,
+      "weight_lbs": null,
+      "description": "Gain luck bonus to CMB and CMD double the enchantment bonus with maneuvers when using weapon",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_C",
+      "name": "ENRGY_C",
+      "category": "Equipmods",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates cold energy ammunition",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_E",
+      "name": "ENRGY_E",
+      "category": "Equipmods",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates electricity energy ammunition",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_F",
+      "name": "ENRGY_F",
+      "category": "Equipmods",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates fire energy ammunition",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_GC",
+      "name": "ENRGY_GC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to cold energy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_GE",
+      "name": "ENRGY_GE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to electricity energy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "ENRGY_GF",
+      "name": "ENRGY_GF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to fire energy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "FTLST",
+      "name": "FTLST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "for 1 minute, target gets -2 to AC and Will saves; Intimidate checks against target get +3",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_GRT_A",
+      "name": "DISLOC_GRT_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_GRT_M",
+      "name": "DISLOC_GRT_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DISLOC_GRT_R",
+      "name": "DISLOC_GRT_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "GUARDN",
+      "name": "GUARDN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Transfer some or all of enhancement bonus to saves",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "INVDR",
+      "name": "INVDR",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Can forcibly add target to collective",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "KNOUT",
+      "name": "KNOUT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Target falls asleep for 3 rounds, new save every round (DC 13 Fort)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "LNKST",
+      "name": "LNKST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Add 2 to enhancement bonus and +2d6 damage on subsequent hits vs. an enemy",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "LUCKY",
+      "name": "LUCKY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day reroll failed attack roll as free action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MANIF_WPN_A",
+      "name": "MANIF_WPN_A",
+      "category": "Equipmods",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MANIF_WPN_M",
+      "name": "MANIF_WPN_M",
+      "category": "Equipmods",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MANIF_WPN_R",
+      "name": "MANIF_WPN_R",
+      "category": "Equipmods",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MINDCRU",
+      "name": "MINDCRU",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "drains half base damage in power points; if no power points or non-psionic, 1d2 Wisdom Damage, DC 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "MINDFEED",
+      "name": "MINDFEED",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on a critical hit gives wielder temporary power points equal to damage dealt; points overlap, don't stack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PARRYING",
+      "name": "PARRYING",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "provides a +1 insight bonus to AC and saves when wielded",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWRSTOR",
+      "name": "PWRSTOR",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can store one power up to 5PP and discharge on successful hit as a swift action if desired",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSIBANE_A",
+      "name": "PSIBANE_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSIBANE_M",
+      "name": "PSIBANE_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSIBANE_R",
+      "name": "PSIBANE_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures bestowed on ammunition",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSISET",
+      "name": "PSISET",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "psicrystal can be docked to weapon like a psicrystal staff; while docked, the weapon can be charged like deep crystal",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSYCHIC",
+      "name": "PSYCHIC",
+      "category": "Equipmods",
+      "cost_gp": 35000.0,
+      "weight_lbs": null,
+      "description": "enhancement bonus varies depending on Power Point reserve of character; see text",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PSYDIS",
+      "name": "PSYDIS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "disrupts psionic and magical abilities",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_A",
+      "name": "PKIN_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_M",
+      "name": "PKIN_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_R",
+      "name": "PKIN_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_BR_A",
+      "name": "PKIN_BR_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_BR_M",
+      "name": "PKIN_BR_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PKIN_BR_R",
+      "name": "PKIN_BR_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR) bestowed on ammunition; On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "RBDNG",
+      "name": "RBDNG",
+      "category": "Equipmods",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Use iterative attacks with single thrown weapon",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SCGBN",
+      "name": "SCGBN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SOULBREAK",
+      "name": "SOULBREAK",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on a critical hit bestows one negative level on target; FORT Save (DC:18) day later or permanent",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SUNDERING",
+      "name": "SUNDERING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder treated as if has Improved Sunder Feat",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SUPPRESS_A",
+      "name": "SUPPRESS_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielder's manifester level, max 15) vs DC of 11+manifester level of power",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SUPPRESS_M",
+      "name": "SUPPRESS_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielders manifester level, max 15) vs DC of 11+manifester level of power",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SUPPRESS_R",
+      "name": "SUPPRESS_R",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielders manifester level, max 15) vs DC of 11+manifester level of power",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "TPORTING",
+      "name": "TPORTING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "when thrown will return, by teleporting through Astral Plane, back to thrower's hand just before thrower's next turn",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WHSTL",
+      "name": "WHSTL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WRNCH",
+      "name": "WRNCH",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reposition target towards wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_DRJ",
+      "name": "PWR_DRJ",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_PT",
+      "name": "PWR_PT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_CRWL",
+      "name": "PWR_CRWL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_PS",
+      "name": "PWR_PS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_PCWN_L",
+      "name": "PWR_PCWN_L",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_PCWN_G",
+      "name": "PWR_PCWN_G",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_PCWN_T",
+      "name": "PWR_PCWN_T",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_ERNG",
+      "name": "PWR_ERNG",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_GWI",
+      "name": "PWR_GWI",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_MDST",
+      "name": "PWR_MDST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_MDST_G",
+      "name": "PWR_MDST_G",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PWR_THRDI",
+      "name": "PWR_THRDI",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WPN_CALL",
+      "name": "WPN_CALL",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PLUSN_DRS",
+      "name": "PLUSN_DRS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DancingRobesArmorBonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "DETERM_DRS",
+      "name": "DETERM_DRS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day automatic breath of life at 0 hp",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PLUSN_DIS_M",
+      "name": "PLUSN_DIS_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DissonanceEnhancementBonusMain",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PLUSN_DIS_A",
+      "name": "PLUSN_DIS_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DissonanceEnhancementBonusAlt",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WHSTL_DIS_M",
+      "name": "WHSTL_DIS_M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "WHSTL_DIS_A",
+      "name": "WHSTL_DIS_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "PLUSN_SVS",
+      "name": "PLUSN_SVS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|Severis",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UPSI",
+      "key": "SCGBN_SVS",
+      "name": "SCGBN_SVS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures",
+      "name_pi_citation": null
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 82000.0,
+    "description": "This simple blue robe appears plain during the day but sparkles in starlight or moonlight. The wearer is constantly protected as if wearing a necklace of adaptation. On command, the robe sprouts pale moth wings, allowing the wearer to fly as if using wings of flying. In the vacuum of space, the wearer can fly at an incredible speed. Although exact travel times vary, a trip within a single solar system normally takes 3d20 months, while a trip beyond should take 3d20 years (or more, at the GM's discretion), provided the wearer knows the way to its destination. While flying in this fashion, the wearer can enter a state of hibernation (similar to temporal stasis), waking instantly if attacked, upon reaching his destination, or after a set time period (such as a month or year).",
+    "key": "Starfaring Robe",
+    "name": "Starfaring Robe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      },
+      {
+        "key": "DESC",
+        "value": "This simple blue robe appears plain during the day but sparkles in starlight or moonlight. The wearer is constantly protected as if wearing a necklace of adaptation. On command, the robe sprouts pale moth wings, allowing the wearer to fly as if using wings of flying. In the vacuum of space, the wearer can fly at an incredible speed. Although exact travel times vary, a trip within a single solar system normally takes 3d20 months, while a trip beyond should take 3d20 years (or more, at the GM's discretion), provided the wearer knows the way to its destination. While flying in this fashion, the wearer can enter a state of hibernation (similar to temporal stasis), waking instantly if attacked, upon reaching his destination, or after a set time period (such as a month or year)."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 226,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Starfaring Robe",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

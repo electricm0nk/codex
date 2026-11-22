@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A whip of cracking magical might appears in your hand, allowing you lash spells from the mind of enemy spellcasters. With a lash of bluish-purple energy, you strip many protective spells and effects from a single creature. If the target of this spell is currently under the effects of any harmless spells or effects, it must succeed at a Will save or all of those spells and effects end, stripping the target of the benefit of those spells. If the target is not currently under the effect of least one harmless spell, the target is instead confused for 1d4 rounds.",
+    "key": "Spell Scourge",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Witch,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "A whip of cracking magical might appears in your hand, allowing you lash spells from the mind of enemy spellcasters. With a lash of bluish-purple energy, you strip many protective spells and effects from a single creature. If the target of this spell is currently under the effects of any harmless spells or effects, it must succeed at a Will save or all of those spells and effects end, stripping the target of the benefit of those spells. If the target is not currently under the effect of least one harmless spell, the target is instead confused for 1d4 rounds."
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous or 1d4 rounds; see text"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Spell Scourge"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Spell Scourge",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

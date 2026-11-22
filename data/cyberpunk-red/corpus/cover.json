@@ -1,0 +1,206 @@
+[
+  {
+    "kind": "cover",
+    "name": "Steel",
+    "source_page": "p183",
+    "text": "Steel 50 HP 25 HP",
+    "material": "Steel",
+    "thick_hp": 50,
+    "thin_hp": 25,
+    "thin_is_cover": true,
+    "examples": [
+      {
+        "example": "Bank Vault Door",
+        "thickness": "Thick",
+        "hp": 50
+      },
+      {
+        "example": "Car Door",
+        "thickness": "Thin",
+        "hp": 25
+      },
+      {
+        "example": "Engine Block",
+        "thickness": "Thick",
+        "hp": 50
+      },
+      {
+        "example": "Hydrant",
+        "thickness": "Thick",
+        "hp": 50
+      },
+      {
+        "example": "Metal Door",
+        "thickness": "Thin",
+        "hp": 20
+      },
+      {
+        "example": "Refrigerator",
+        "thickness": "Thin",
+        "hp": 25
+      },
+      {
+        "example": "Shipping Container",
+        "thickness": "Thin",
+        "hp": 25
+      }
+    ],
+    "examples_source_page": "p184",
+    "special_rule": "Steel cover cannot be damaged by Martial Arts or Brawling attacks except those made by Characters with a Cyberarm or BODY 10 or higher.",
+    "transcription_note": "Printed inconsistency kept: the p184 example 'Metal Door' is Thin Steel at 20 HP while the p183 table gives Thin Steel 25 HP. Recorded as printed."
+  },
+  {
+    "kind": "cover",
+    "name": "Stone",
+    "source_page": "p183",
+    "text": "Stone 40 HP 20 HP",
+    "material": "Stone",
+    "thick_hp": 40,
+    "thin_hp": 20,
+    "thin_is_cover": true,
+    "examples": [
+      {
+        "example": "Boulder",
+        "thickness": "Thick",
+        "hp": 40
+      },
+      {
+        "example": "Statue",
+        "thickness": "Thin",
+        "hp": 20
+      }
+    ],
+    "examples_source_page": "p184"
+  },
+  {
+    "kind": "cover",
+    "name": "Bulletproof Glass",
+    "source_page": "p183",
+    "text": "Bulletproof Glass 30 HP 15 HP",
+    "material": "Bulletproof Glass",
+    "thick_hp": 30,
+    "thin_hp": 15,
+    "thin_is_cover": true,
+    "examples": [
+      {
+        "example": "Bank Window Glass",
+        "thickness": "Thick",
+        "hp": 30
+      },
+      {
+        "example": "Bulletproof Windshield",
+        "thickness": "Thin or Thick",
+        "hp": null,
+        "hp_text": "15 or 30 HP"
+      },
+      {
+        "example": "Prison Visitation Glass",
+        "thickness": "Thin",
+        "hp": 15
+      }
+    ],
+    "examples_source_page": "p184"
+  },
+  {
+    "kind": "cover",
+    "name": "Concrete",
+    "source_page": "p183",
+    "text": "Concrete 25 HP 10 HP",
+    "material": "Concrete",
+    "thick_hp": 25,
+    "thin_hp": 10,
+    "thin_is_cover": true,
+    "examples": [
+      {
+        "example": "Data Term",
+        "thickness": "Thick",
+        "hp": 25
+      },
+      {
+        "example": "Utility Pole",
+        "thickness": "Thick",
+        "hp": 25
+      }
+    ],
+    "examples_source_page": "p184"
+  },
+  {
+    "kind": "cover",
+    "name": "Wood",
+    "source_page": "p183",
+    "text": "Wood 20 HP 5 HP",
+    "material": "Wood",
+    "thick_hp": 20,
+    "thin_hp": 5,
+    "thin_is_cover": true,
+    "examples": [
+      {
+        "example": "Bar",
+        "thickness": "Thick",
+        "hp": 20
+      },
+      {
+        "example": "Log Cabin Wall",
+        "thickness": "Thick",
+        "hp": 20
+      },
+      {
+        "example": "Overturned Table",
+        "thickness": "Thin",
+        "hp": 5
+      },
+      {
+        "example": "Tree",
+        "thickness": "Thick",
+        "hp": 20
+      },
+      {
+        "example": "Wardrobe",
+        "thickness": "Thin",
+        "hp": 5
+      },
+      {
+        "example": "Wooden Door",
+        "thickness": "Thin",
+        "hp": 5
+      }
+    ],
+    "examples_source_page": "p184"
+  },
+  {
+    "kind": "cover",
+    "name": "Plaster/Foam/Plastic",
+    "source_page": "p183",
+    "text": "Plaster/Foam/Plastic 15 HP 0 HP (Not Cover)",
+    "material": "Plaster/Foam/Plastic",
+    "thick_hp": 15,
+    "thin_hp": 0,
+    "thin_is_cover": false,
+    "examples": [
+      {
+        "example": "Office Wall",
+        "thickness": "Thick",
+        "hp": 15
+      },
+      {
+        "example": "Sofa",
+        "thickness": "Thick",
+        "hp": 15
+      }
+    ],
+    "examples_source_page": "p184",
+    "not_cover_examples": [
+      {
+        "example": "Office Cubicle",
+        "material_and_thickness": "0 HP (Not Cover)",
+        "hp": 0
+      },
+      {
+        "example": "Windshield",
+        "material_and_thickness": "0 HP (Not Cover)",
+        "hp": 0
+      }
+    ],
+    "transcription_note": "Thin Plaster/Foam/Plastic is printed '0 HP (Not Cover)'. The two p184 examples that print no material (Office Cubicle, Windshield) are kept in not_cover_examples. Examples across all six records: 24 (p184 table rows)."
+  }
+]

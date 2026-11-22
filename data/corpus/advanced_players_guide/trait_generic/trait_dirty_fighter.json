@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Dirty Fighter",
+    "name": "Dirty Fighter",
+    "description": "You wouldn't have lived to make it out of childhood without the aid of a sibling, friend, or companion on whom you could always count to distract your enemies long enough to do a little bit more damage than normal. When you hit a foe you are flanking, you deal an additional 1 point of damage (this damage is added to your base damage, and is multiplied on a critical hit). This additional damage is a trait bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Dirty Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.CombatTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Dirty Fighter],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.CombatTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You wouldn't have lived to make it out of childhood without the aid of a sibling, friend, or companion on whom you could always count to distract your enemies long enough to do a little bit more damage than normal. When you hit a foe you are flanking, you deal an additional 1 point of damage (this damage is added to your base damage, and is multiplied on a critical hit). This additional damage is a trait bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 19,
+    "record_key": "Trait ~ Dirty Fighter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

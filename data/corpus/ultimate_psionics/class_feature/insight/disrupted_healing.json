@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Disrupted Healing",
+    "name": "Disrupted Healing",
+    "class": "Insight",
+    "description": "When you use your disrupt pattern ability, if the creature struck is of your active type, any healing that creature receives for %1 rounds is reduced by half (minimum 1).|DisruptedHealingDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Disrupted Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptedHealingDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your disrupt pattern ability, if the creature struck is of your active type, any healing that creature receives for %1 rounds is reduced by half (minimum 1).|DisruptedHealingDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptedHealingDuration|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptedHealingDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 197,
+    "record_key": "Insight ~ Disrupted Healing"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

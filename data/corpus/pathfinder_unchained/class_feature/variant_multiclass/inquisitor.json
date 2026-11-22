@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Inquisitor",
+    "name": "Inquisitor",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses inquisitor as her secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Inquisitor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses inquisitor as her secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Deity: At 1st level, she must select a deity within one alignment step of her alignment. She gains the inquisitor's code of conduct and restriction on casting spells of opposed alignments."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Stern Gaze: At 3rd level, she gains the stern gaze class feature, treating her character level as her effective inquisitor level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Judgment: At 7th level, once per day, she can use the judgment class feature as an inquisitor of her character level - 3."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Solo Tactics: At 11th level, she gains the solo tactics class feature."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Additional Judgment: At 15th level, she can use the judgment class feature twice per day."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Second Judgment: At 19th level, she gains the second judgment ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 864,
+    "record_key": "Variant Multiclass ~ Inquisitor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

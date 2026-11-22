@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Dhampir ~ Moroi-Born",
+    "name": "Moroi-Born",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Moroi-Born"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Moroi-Born"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_templates_subrace.lst",
+    "record_key": "Dhampir ~ Moroi-Born",
+    "sha256": "e16a5e385502f5341eed1ddb426b9bcb6c04f9a0cfa468c986585a22aa672248"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Similar to leather armor, this suit is reinforced with small metal studs.",
+    "key": "Studded Leather (Base)",
+    "name": "Studded Leather Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "3",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-1",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "1",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-1",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Studded Leather (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Studded Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-1"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "15"
+      },
+      {
+        "key": "DESC",
+        "value": "Similar to leather armor, this suit is reinforced with small metal studs."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_studded_leather_base.txt",
+    "record_key": "Studded Leather (Base)"
+  }
+}

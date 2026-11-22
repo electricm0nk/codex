@@ -1,0 +1,79 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Unknown",
+    "name": "Unknown",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Humanoid"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NE"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Unknown|Claw"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Augmented Humanoid"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON,INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "DR",
+        "value": "10/cold iron"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo (cannot speak)"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "record_key": "Unknown",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

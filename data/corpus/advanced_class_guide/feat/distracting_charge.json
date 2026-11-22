@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Distracting Charge",
+    "category": "Combat",
+    "name": "Distracting Charge",
+    "description": "When your ally with this feat uses the charge action and hits, you gain a +2 bonus on your next attack roll against the target of that charge. This bonus must be used before your ally's next turn, or it is lost.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 40,
+    "record_key": "Distracting Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

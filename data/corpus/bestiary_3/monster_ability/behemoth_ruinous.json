@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Behemoth ~ Ruinous",
+    "delivery": "Supernatural",
+    "description": "A behemoth's natural attacks penetrate damage reduction as if they were epic and magic, and ignore up to 20 points of hardness on objects struck. As a swift action, whenever it strikes a creature or object with a spell effect in place, it can attempt to dispel one randomly determined spell effect on that creature as if with a greater dispel magic (CL 20th).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:behemoth_ruinous",
+    "name": "Ruinous",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A behemoth's natural attacks penetrate damage reduction as if they were epic and magic, and ignore up to 20 points of hardness on objects struck. As a swift action, whenever it strikes a creature or object with a spell effect in place, it can attempt to dispel one randomly determined spell effect on that creature as if with a greater dispel magic (CL 20th)."
+      },
+      {
+        "key": "KEY",
+        "value": "Behemoth ~ Ruinous"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2320,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Behemoth ~ Ruinous",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

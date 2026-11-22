@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 8000.0,
+    "description": "Allows wearer to see through magical and normal fogs, mists, and similar obscurement.",
+    "key": "Fog-Cutting Lenses",
+    "name": "Fog-Cutting Lenses",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Eyegear"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "69"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows wearer to see through magical and normal fogs, mists, and similar obscurement."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_magic_items.lst",
+    "record_key": "Fog-Cutting Lenses",
+    "sha256": "4d003130ab6779fb9fb6cc9afbf04b88e568e0eb61fdd5886320c182aea374d9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

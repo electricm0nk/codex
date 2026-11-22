@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sheet-market-cyberpunk-open",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/scripts/ui-smoke/.out/sd39-e3.5/sheet-market-cyberpunk-open.png",
+    "rendered_excerpt": "⚙\nJax Moreno\nCyberpunk RED\nImprove\nMarket\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t5\t—\nREF\t8\t8\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t7\t—\nWILL\t7\t—\nLUCK\t6\t—\nMOVE\t7\t7\nBODY\t8\t8\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t9\nConceal/Reveal Object (INT)\t0\t5\nLip Reading (INT)\t0\t5\nPerception (INT)\t6\t11\nTracking (INT)\t0\t5\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t7\nResist",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e3_5-v998kI/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-restore-pathfinder",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/scripts/ui-smoke/.out/sd39-e3.5/sheet-market-restore-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catal",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e3_5-v998kI/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-open-weapons",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/scripts/ui-smoke/.out/sd39-e3.5/sheet-market-open-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nUnknown\nSIZE\nUnknown\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e3_5-v998kI/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-buy",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/scripts/ui-smoke/.out/sd39-e3.5/sheet-market-buy.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nUnknown\nSIZE\nUnknown\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e3_5-v998kI/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-tab-gear",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-sf-cpr/apps/desktop/scripts/ui-smoke/.out/sd39-e3.5/sheet-tab-gear.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'character-name (no element named 'character-name')' at setup create-character-fill-and-submit step 1/10 (click \"character-name\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e3_5-v998kI/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

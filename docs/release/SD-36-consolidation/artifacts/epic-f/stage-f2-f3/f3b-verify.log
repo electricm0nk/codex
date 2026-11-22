@@ -1,0 +1,23 @@
+# F3b verify log (worktree codex-epic-f2, sd36/epic-f2-f3), 2026-09-24
+## cargo clippy --locked --tests -j 8 -- -D warnings (root), then desktop manifest; desktop cargo test; F3b set
+EXIT_CLIPPY_ROOT=0
+EXIT_CLIPPY_DESKTOP=0
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 360.51s
+EXIT_DESKTOP=0
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.26s
+EXIT_NEW=0
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.55s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.73s
+EXIT_F34=0
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 2686 filtered out; finished in 16.12s
+EXIT_LIBMC=0
+## full root: cargo test --locked -j 8 --no-fail-fast -- --test-threads=8
+EXIT_ROOT=0
+root test binaries reporting: 288  ok, 0 FAILED
+## negative-control suites (before the union fix; re-covered by full root run)
+test result: ok. 891 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.47s
+EXIT_SD18=0
+test result: ok. 1136 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.61s
+EXIT_SD13=0
+## python3 scripts/pcgen_residue_gate.py --check --closure
+verdict=PASS

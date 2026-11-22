@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Denizen of Leng ~ Unusual Anatomy",
+    "delivery": "Extraordinary",
+    "description": "A denizen's internal anatomy varies from individual to individual, and has a 50%% change to treat any critical hit or sneak attack against it as a normal hit.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:denizen_of_leng_unusual_anatomy",
+    "name": "Unusual Anatomy",
+    "owners": [
+      "bestiary_2:monster:denizen_of_leng"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A denizen's internal anatomy varies from individual to individual, and has a 50%% change to treat any critical hit or sneak attack against it as a normal hit."
+      },
+      {
+        "key": "KEY",
+        "value": "Denizen of Leng ~ Unusual Anatomy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.82",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 378,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Denizen of Leng ~ Unusual Anatomy",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

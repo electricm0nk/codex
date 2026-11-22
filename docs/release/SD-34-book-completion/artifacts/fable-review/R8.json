@@ -1,0 +1,127 @@
+{
+  "lane": "R8",
+  "findings": [
+    {
+      "id": "R8-01",
+      "file": "src/bin/enrich_spell_raw_tokens.rs",
+      "line_start": 129,
+      "line_end": 135,
+      "severity": "P2",
+      "category": "bug",
+      "title": "book_dir_of drift: 3 of 6 duplicated copies missing the dreamscarred_press fix",
+      "evidence": "`book_dir_of` is hand-duplicated in 6 places: the canonical src/bin/corpus_literal_sweep.rs:605-614, plus 5 sibling copies. SD-31 wave 20 fixed a real bug in it (segments.len()==4 && segments[1]==\"dreamscarred_press\" -> 3-segment book dir, documented live in src/bin/enrich_monster_raw_tokens.rs:408-421's own test comment: 'this function's pre-fix segments.len() < 5 -> None rule silently refused to enrich 21 ultimate_psionics monster records corpus-wide (SD-31 wave 20)'). The fix landed in 3 of the 6 copies (corpus_literal_sweep.rs:605, enrich_monster_raw_tokens.rs:124, enrich_monster_ability_raw_tokens.rs:102) but NOT in the other 3 (enrich_companion_raw_tokens.rs:118, enrich_spell_raw_tokens.rs:129, repair_spell_citations.rs:98), which still carry the old `if segments.len() < 5 { return None }` body with zero mention of 'dreamscarred' anywhere in the file (grep confirms 0 hits in all three). Currently 0 of 56 bins' output is wrong today only because no dreamscarred_press book ships a spell/ or companion/ directory yet (verified: data/corpus/ultimate_psionics has no spell or companion subdirectory, and path_of_war/psionics_expanded/psionics_unleashed have no data/corpus/<book> directory at all) -- but the moment such a book is onboarded (the exact scenario that triggered the original fix for monster/monster_ability), these 3 tools will silently reproduce the identical, already-diagnosed defect instead of enriching those records.",
+      "fix_description": "Extract book_dir_of into a small shared library function (e.g. codex::rules_core::corpus_paths::book_dir_of) and have all 6 duplicated call sites (corpus_literal_sweep.rs, the 4 enrich_*_raw_tokens.rs siblings that have their own copy, and repair_spell_citations.rs) call the single implementation, eliminating the class of drift entirely; at minimum, backport the dreamscarred_press branch into enrich_companion_raw_tokens.rs, enrich_spell_raw_tokens.rs, and repair_spell_citations.rs.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Not currently live-impacting (denominator: 0 of the dreamscarred_press-published books in data/corpus today ship a spell or companion kind), so no urgent data-loss, but it is a real, provable logic bug waiting on the next book onboard; low risk to fix since the corrected 3-file version already exists twice in-tree as a reference implementation."
+    },
+    {
+      "id": "R8-02",
+      "file": "src/bin/e5_ac_isolator.rs",
+      "line_start": 1,
+      "line_end": 231,
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "11 e5_*/e6_* SD-33 remediation probe binaries are one-shot-obsolete with zero references anywhere",
+      "evidence": "e5_ac_isolator.rs, e5_combat_ac_ours.rs, e5_disagreement_fixes_ours.rs, e5_eqm_final_ours.rs, e5_equipment_remainder_skill_ours.rs, e5_last39_skill_combat_ours.rs, e5_last67_weapon_ours.rs, e5_literal_stat_ours.rs, e5_statsave_skill_ours.rs, e5_var_shape_ours.rs, e6_identity_rerun_ours.rs (11 of 58 bins in src/bin, ~1,748 combined lines) each carry a doc comment naming a specific closed SD-33 Epic-5/Epic-6 remediation wave (e.g. 'SD-33 remediation wave 6', 'AT-33-E5-002 remainder') and take manifest.json/output.json CLI args meant for one-time oracle-harness batch runs. grep across scripts/, tests/, Cargo.toml and verify.sh for every one of the 11 binary names returns 0 hits outside each file's own source; SD-33 itself closed 2026-08-25 per docs/release/SD-33-computed-value-verification (memory: 'SD-33 launch readiness LAUNCH-READY... merged'). No source file in src/ or tests/ imports or invokes any of the 11.",
+      "fix_description": "Move the 11 files to docs/release/SD-33-computed-value-verification/artifacts/ (as historical scripts, matching how other closed-SD one-shot artifacts are archived in this repo) or delete them outright from src/bin; nothing in the build or test graph references them.",
+      "proposed_action": "auto_fix",
+      "confidence": "high",
+      "risk_notes": "Pure deletion of unreferenced binary crates -- cargo check/build would remain green with all 11 removed since none is a lib dependency and none is invoked by any script or test. Zero functional risk; the only loss is historical/forensic value already fully captured in the closed SD-33 release docs."
+    },
+    {
+      "id": "R8-03",
+      "file": "src/bin/ingest_apg_race_traits.rs",
+      "line_start": 1,
+      "line_end": 875,
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "ingest_apg_race_traits.rs is a completed one-shot ingest, explicitly superseded and already fully applied",
+      "evidence": "src/bin/ingest_race_traits.rs:13-14's own module doc says the generic ingest tool replaced 'a per-book copy of the same 1,100 lines, of which the repo already carries one (src/bin/ingest_apg_race_traits.rs)', and its BOOK_SOURCES table (ingest_race_traits.rs:277-292) explicitly documents investigating and declining to add advanced_players_guide as a source: 49 of APG's 50 in-scope rows are byte-identical reprints already ingested under advanced_race_guide, and the 50th (Half-Orc ~ Plagueborn) 'was ALREADY ingested outside this binary' -- confirmed on disk at data/corpus/advanced_players_guide/race_trait/half_orc/half_orc_plagueborn.json (the exact, only output this 875-line binary ever produces). grep across the whole repo (excluding .claude/worktrees/ scratch checkouts) finds zero references to ingest_apg_race_traits by name outside its own file and comments inside ingest_race_traits.rs describing why it was superseded.",
+      "fix_description": "Archive src/bin/ingest_apg_race_traits.rs to the SD-28/SD-31 release docs (or delete) now that its single output record is committed and the generic ingest_race_traits.rs deliberately does not re-cover APG.",
+      "proposed_action": "auto_fix",
+      "confidence": "high",
+      "risk_notes": "Pure deletion; the one artifact it produces already exists on disk and is not regenerated from this binary by anything else. cargo build stays green."
+    },
+    {
+      "id": "R8-04",
+      "file": "src/bin/enrich_companion_raw_tokens.rs",
+      "line_start": 61,
+      "line_end": 581,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "enrich_*_raw_tokens family: 4 of 6 files are near-byte-identical, differing only by kind name/book list",
+      "evidence": "enrich_companion_raw_tokens.rs (581 lines), enrich_monster_raw_tokens.rs (633), enrich_monster_ability_raw_tokens.rs (642) and enrich_spell_raw_tokens.rs (634) share an identical function inventory -- pcgen_data_root, find_<kind>_json_files, book_dir_of, mod_index_for_book, split_token_field, screen_field_value, enrich_one, main -- built on the same imports (corpus_literal_sweep::token_closure, pi_screening, wiring_class::build_mod_index, BTreeMap/BTreeSet). A line-by-line diff of companion vs monster_ability's bodies (post-doc-comment) is ~360 diff lines out of ~520 body lines, almost all of which are kind-name substitutions or the book_dir_of drift already reported (R8-01). The other 2 family members (enrich_class_raw_tokens.rs, 6 of 6, uses WiringClassIndex::closure_rows instead of token_closure; enrich_equipment_raw_tokens.rs, 6 of 6, uses a typed lst_parser::equipment reader) are legitimately different because they predate the token_closure-based approach and are documented as such.",
+      "fix_description": "Parameterize the 4 near-identical files into one generic binary (or one shared library engine function) taking a small per-kind config: {kind_name, corpus_subdir, find_files fn, extra name/description-only screening flags}. Estimated line delta: ~2,490 combined lines (companion+monster+monster_ability+spell) collapsible to roughly one ~550-line generic engine plus 4 thin ~40-line per-kind entry points (~700 lines total), a reduction of roughly 1,700-1,800 lines.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Medium risk: each file has accumulated small, hard-won fixes over multiple SD-31 waves (dreamscarred_press book_dir_of, PI-screening wiring per SD31-E6-F9-005, monster's extra NAMEISPI handling on its own KEY: identity column) that a careless merge could silently regress; any consolidation needs the corrected book_dir_of (R8-01) folded in first and a diff-based behavior-parity check per kind before landing."
+    },
+    {
+      "id": "R8-05",
+      "file": "src/bin/gen_cache_apg.rs",
+      "line_start": 1,
+      "line_end": 72,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "11 of 16 gen_cache_*/gen_class_feature_grants binaries are thin, near-identical CLI shells around one lib call",
+      "evidence": "gen_cache_acg.rs (70 lines, read in full) and gen_cache_apg.rs/beastiary.rs/class_feature.rs/equipment_gap.rs/feat_gap.rs/hand_authored_equipment.rs/hand_authored_feat_dump.rs/spell_lane_dump.rs/spell_mod_access.rs/ultimate_equipment.rs (11 of 56 total src/bin files) all duplicate the same ~25-line skeleton verbatim: a `real_now_iso8601()` helper shelling out to `date -u`, a `PCGEN_CORPUS_ROOT`-or-`$HOME/workspace/repos/pcgen/data` resolver, and a main() that calls exactly one `cache_gen::<module>::generate(&corpus_root, &out_dir, &ingested_at)` and prints a report. Diffing gen_cache_acg.rs against each of the other 10 shows only the module path, out_dir string, and print-message text differ in the common ~40-line core (module doc comments differ substantively and legitimately). 5 of these 11 (class_feature, equipment_gap, hand_authored_equipment, hand_authored_feat_dump, spell_lane_dump, spell_mod_access) add extra, non-duplicated `--coordinates <file>` CLI parsing on top of the same shared shell.",
+      "fix_description": "Extract the shared skeleton (corpus_root resolution + real_now_iso8601 + the standard success/failure report loop) into a small `codex::rules_core::cache_gen::cli_common` helper, letting each of the 11 binaries shrink to ~15-20 lines (module import + a call to cli_common::run(name, module::generate, out_dir)). Estimated line delta: roughly -300 to -400 lines across the family (11 files averaging ~90 lines each, of which ~30 lines is the duplicated shell).",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Low functional risk (pure refactor of boilerplate), but touches 11 separate generation entry points that this repo's own conventions treat as sensitive one-off tools re-run only on rule-table changes; a shared helper's own bug would then affect all 11 at once instead of one, so worth a human sign-off rather than blind auto-fix."
+    },
+    {
+      "id": "R8-06",
+      "file": "src/bin/gen_cache_beastiary.rs",
+      "line_start": 44,
+      "line_end": 65,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "count_on_disk_records walk helper duplicated verbatim between gen_cache_beastiary.rs and gen_book_cache.rs",
+      "evidence": "gen_cache_beastiary.rs:44's own doc comment states outright: 'Identical logic to gen_book_cache.rs's own count_on_disk_records, duplicated here rather than shared across two separate src/bin/ binaries.' Confirmed: gen_book_cache.rs:453 defines the same function (recursive read_dir walk counting non-LICENSE.json files) with only cosmetic naming differences (fs:: vs std::fs::).",
+      "fix_description": "Move count_on_disk_records into a small shared corpus-utility module (e.g. codex::rules_core::cache_gen::records_processed) and have both binaries import it.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Trivial, low-risk extraction of a ~20-line pure function; report_only only because gen_book_cache.rs is named as a sensitive SD-27 file-touch-partition binary in its own module doc, so any edit to it should go through that project's own review path rather than a blind auto-fix."
+    },
+    {
+      "id": "R8-07",
+      "file": "src/bin/repair_lst_provenance.rs",
+      "line_start": 1,
+      "line_end": 109,
+      "severity": "P3",
+      "category": "census",
+      "title": "repair_*.rs family (3 files) are one-shot remediation tools for closed SD-31/SD-32 defects, not invoked by any script/CI",
+      "evidence": "repair_equipment_copy_citations.rs (81 lines), repair_lst_provenance.rs (109), repair_spell_citations.rs (455) each document a single named, already-closed defect (SD-32 T9, SD-31 epic-6-ingest-lanes F5, SD31-E6-F2-001 respectively) and a fixed, small BOOKS list. None of the 3 names appears in scripts/verify.sh, any file under scripts/, or any test. All 3 are referenced only inside historical docs/release/*/kanban.md, progress.md and retrospective artifacts (9, 4, and 3 doc hits respectively, all under docs/release/, none under scripts/ or tests/).",
+      "fix_description": "Once an operator confirms (by a --check re-run, which this read-only lane could not perform) that each tool now finds 0 records left to repair against the current corpus, archive the 3 files to their owning SD-N release package's artifacts/ directory alongside the closure receipts that already describe their one-time run.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Unlike R8-02/R8-03, idempotency was not verified by an actual --check run (this lane is read-only and may not execute repo binaries), so this is flagged as an archival CANDIDATE pending that confirmation, not a proven-safe deletion."
+    },
+    {
+      "id": "R8-08",
+      "file": "src/bin/gen_feat_gap_tables.rs",
+      "line_start": 287,
+      "line_end": 302,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "gen_equipment_gap_tables.rs / gen_feat_gap_tables.rs share low-level LST-parsing helpers by name and shape",
+      "evidence": "Both files independently define tab_fields, token_value, rust_string and a corpus_root/main shape (gen_feat_gap_tables.rs:287-499, gen_equipment_gap_tables.rs:626-894), with gen_equipment_gap_tables.rs's superset additionally handling .COPY=/.MOD base-record inheritance that gen_feat_gap_tables.rs's own corpus does not need (verified: gen_feat_gap_tables.rs's own comments confirm 0 .COPY= rows across its 19 input files). The core tab-token helpers (tab_fields/token_value/rust_string) are, however, identical in shape across both and are exactly the same primitives corpus_literal_sweep.rs and several enrich_*_raw_tokens.rs siblings already reimplement under different names (tab_tokens, split_token_field).",
+      "fix_description": "Factor the LST tab-field primitives (split-on-tab, split-on-first-colon, escape-to-rust-string-literal) into one shared parsing-utility module reused by both gap_tables generators and, longer-term, by the enrich_* family's own token_closure/tab_tokens helpers.",
+      "proposed_action": "report_only",
+      "confidence": "low",
+      "risk_notes": "Low-priority, cosmetic-shape-only overlap; the two files' higher-level logic (COPY=/MOD inheritance) is legitimately different and should not be merged, only the small leaf helpers."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 42,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "book_dir_of duplicated 6x across src/bin/corpus_literal_sweep.rs, enrich_companion_raw_tokens.rs, enrich_monster_raw_tokens.rs, enrich_monster_ability_raw_tokens.rs, enrich_spell_raw_tokens.rs, repair_spell_citations.rs -- 3 carry a real, already-diagnosed fix (SD-31 wave 20) the other 3 lack (R8-01)",
+      "count_on_disk_records duplicated between gen_book_cache.rs and gen_cache_beastiary.rs (R8-06)",
+      "The enrich_*_raw_tokens (R8-04) and gen_cache_* (R8-05) near-duplicate families both trace back to the same underlying pattern: this repo's per-book/per-kind onboarding convention deliberately favors copy-paste-and-adapt over shared abstraction (several module doc comments say so explicitly, e.g. 'duplicated here ... rather than reinvented' / 'per this package's disjoint-file-touch convention'), so any consolidation fix must be proposed with that convention in mind rather than assumed to be an oversight"
+    ],
+    "notes": "Scope: 42 of 58 files under src/bin (56 named in the brief; ls shows 58 as of 2026-08-31, 2 more than the brief's count). Reviewed fully or via full-content diff: all 6 enrich_*_raw_tokens.rs, 11 of the gen_cache_*.rs + gen_class_feature_grants.rs family, 1 exemplar of gen_*_gap_tables.rs read in structural depth against its sibling via grep-based function-inventory diff (both files too large, 1655+803 lines, for full pairwise diff within budget), all 3 repair_*.rs (2 read in full, 1 in the first 40 lines plus function inventory), 1 e5_* exemplar (e5_var_shape_ours.rs) read fully with the remaining 9 e5_*/e6_* files checked via header + grep for RuleSetId/manifest-shape structural parity (methodology and one-shot-obsolete conclusion, R8-02, does not depend on full-body diffs since it rests on the zero-external-reference finding, which was checked file-by-file). The ingest_*.rs family (6 files, 439-3076 lines) was reviewed at the module-doc-comment level only: this family shows LOW duplication risk on that evidence -- ingest_spells.rs and ingest_race_traits.rs are themselves already the product of a prior consolidation (their own doc comments name 7 and ~4 formerly-separate per-book binaries they replaced), and the remaining 4 (ingest_apg_race_traits.rs, ingest_class_spell_levels_arg.rs, ingest_pu_classes.rs, ingest_races.rs) are legitimately book-specific one-shot ingests with divergent corpus shapes, except ingest_apg_race_traits.rs which is fully superseded (R8-03). No file in the 42-file scope had a 'GENERATED FILE' header in its opening lines, so 0 of 42 were skipped on that basis. Investigated a false lead: several e5_*/e6_* probes hardcode RuleSetId::Crb into equipment_id_resolve() regardless of the manifest's per-item book field; traced into src/rules_core/equipment_resolver.rs and confirmed rule_set only feeds the discarded table_cell_for() citation return value, never the returned record itself, so this is NOT a correctness bug and was not reported."
+  }
+}

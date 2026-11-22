@@ -1,0 +1,43 @@
+# SD13-E5 Ranger level 4 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 4 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-4 hybrid baseline, mirroring the
+# level-3 fixture's shape with the class level swapped.
+#
+# Level 4 adds one new deterministic choice selection: Hunter's Bond
+# (choice:ranger_hunters_bond -> form:bond), the PF1 Core Rulebook's 4th-level Ranger
+# "Special" column entry. Hunter's Bond offers the ranger a one-time, permanent choice
+# between two mutually exclusive forms: a bond to his hunting companions (granting
+# allies within 30 feet who can see or hear him half the ranger's favored-enemy bonus
+# against a single target, via a move action) or an animal companion. The "bond" form
+# is the arbitrary but deterministic pick for this fixture, since it is the form with a
+# flat-shaped magnitude component (half the already-grounded favored-enemy bonus); the
+# "companion" form would require a full animal-companion stat block/advancement
+# subsystem that does not exist in this codebase. This fixture carries forward the same
+# favored-enemy, combat-style, and favored-terrain selections from the level-3 fixture
+# unchanged, since none of those are re-granted at 4th level.
+case_id=pf1-crb-human-ranger-level4
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:4
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_hunters_bond:form:bond
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

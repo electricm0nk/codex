@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Trilobite ~ Curl",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a trilobite can curl into a ball, increasing its natural armor bonus by 2 but preventing it from taking any move actions. Uncurling is a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:companion:trilobite_curl",
+    "name": "Curl",
+    "owners": [
+      "bestiary_5:companion:familiar_trilobite"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a trilobite can curl into a ball, increasing its natural armor bonus by 2 but preventing it from taking any move actions. Uncurling is a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Trilobite ~ Curl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TrilobiteRacialTrait"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.113",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "TrilobiteRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
+    "record_key": "Trilobite ~ Curl",
+    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

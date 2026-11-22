@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Melding Exchange",
+    "name": "Melding Exchange",
+    "class": "Body Snatcher",
+    "description": "During a mind switch, your mind briefly interfaces with that of your target, resulting in a one-way exchange of information.  In addition to rudimentary or instinctive knowledge of the subject as normal for the power, you also learn the subject's name, where he lives, and who his principal associates and enemies are.  While you remain in the subject's body, you also gain knowledge of all of the subject's languages (written and spoken), treat any Knowledge check made with a skill with which the subject had ranks as a trained check, and gains a +%1 competence bonus on any skill check used to impersonate the subject.|MeldingExchangeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Melding Exchange"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeldingExchangeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "During a mind switch, your mind briefly interfaces with that of your target, resulting in a one-way exchange of information.  In addition to rudimentary or instinctive knowledge of the subject as normal for the power, you also learn the subject's name, where he lives, and who his principal associates and enemies are.  While you remain in the subject's body, you also gain knowledge of all of the subject's languages (written and spoken), treat any Knowledge check made with a skill with which the subject had ranks as a trained check, and gains a +%1 competence bonus on any skill check used to impersonate the subject.|MeldingExchangeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeldingExchangeBonus|2*BodySnatcherLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1152,
+    "record_key": "Body Snatcher ~ Melding Exchange"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

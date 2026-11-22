@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devil ~ Unchained Eidolon LVL08",
+    "delivery": null,
+    "description": "At 8th level, devil eidolons gain the skilled (Diplomacy) evolution and gain immunity to poison.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl08",
+    "name": "Eidolon Progession Lv.8",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Skilled (Diplomacy)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, devil eidolons gain the skilled (Diplomacy) evolution and gain immunity to poison."
+      },
+      {
+        "key": "KEY",
+        "value": "Devil ~ Unchained Eidolon LVL08"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DevilLVL8"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "DevilLVL8"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 142,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Devil ~ Unchained Eidolon LVL08",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

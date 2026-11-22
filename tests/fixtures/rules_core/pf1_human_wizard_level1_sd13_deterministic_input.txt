@@ -1,0 +1,30 @@
+# SD13-E4-R3 wizard level 1 prepared arcane spell-burden baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Wizard level 1 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and bonus-feat)
+# and stays a single-class, level-1-only prepared spell-bearing baseline.
+#
+# It deliberately avoids every spell-support surface: no spellbook, no spells prepared,
+# no spell slots, no spell DCs, no bonus spells, no school specialization mechanic,
+# no arcane bond resolution, no opposed-school bookkeeping, and no general spell totals.
+# It adds only the minimum choice data needed to make the Wizard class identity, the
+# school specialization burden, and the prepared spellbook / spells-prepared / spell-slot
+# posture burden legible; those burdens are intentionally left for the runtime and matrix
+# to name as still blocking.
+case_id=pf1-crb-human-wizard-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:1
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e4-r3-wizard-level1-prepared-spell-baseline-execution-handoff-2026-07-06.md

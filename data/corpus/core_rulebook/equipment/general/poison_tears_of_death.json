@@ -1,0 +1,86 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 6500.0,
+    "description": null,
+    "key": "Poison (Tears of Death)",
+    "name": "Poison, Tears of Death",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Tears of Death)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Tears of Death"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tears of Death"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "6500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Contact; Fort DC 22; Onset: 1 min; Freq 1 min (6); Effect 1d6 Con dmg and paralyzed for 1 minute; Cure none"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, contact"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 22"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 minute"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d6 Con damage and paralyzed for 1 minute"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 522,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Tears of Death)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

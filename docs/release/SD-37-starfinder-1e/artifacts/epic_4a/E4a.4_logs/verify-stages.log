@@ -1,0 +1,24 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-jDOvoL
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=9 verdict=PASS)
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    PASS  rules-schema-check  (3 schemas regenerate byte-equal; 3 schema tests pass)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_catalog + data/rules_tables
+    PASS  pi-sweep  (12 hits over src/rules_core/rules_catalog (1) + data/rules_tables (11), 11 baseline rows, 0 package stamps disagree)
+---------------------------------------------------------------
+==> crate-wall — codex-ingest reaches codex-desktop only via [dev-dependencies]
+    PASS  crate-wall  (0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 8  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+SUMMARY
+  passed:  5  tauri-resources-tracked rules-schema-check pi-sweep crate-wall clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-jDOvoL

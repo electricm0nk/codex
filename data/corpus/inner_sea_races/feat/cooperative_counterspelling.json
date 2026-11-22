@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Cooperative Counterspelling",
+    "category": "Teamwork",
+    "name": "Cooperative Counterspelling",
+    "description": "Thanks to your heritage, you can thwart magical attacks almost instinctively. When you and an ally who also has this feat both ready an action to counterspell, you can counter a spell if you both expend any spell of the same level and school as the spell you wish to counter. If you both attempt to counterspell with dispel magic, you each gain a +2 bonus on your caster level checks. If you have more than one ally readying an action to counterspell, you can select only one of those allies for the purpose of this feat, and that ally must also select you.",
+    "prerequisites": [
+      "PRESKILL:1,Spellcraft=5",
+      "PRETEXT:Spellcraft 5 ranks, racial spell-like ability replicating a spell of 1st level or higher."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 23,
+    "record_key": "Cooperative Counterspelling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

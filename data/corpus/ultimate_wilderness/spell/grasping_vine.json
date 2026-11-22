@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause a long, thin vine to sprout from your body-typically from the center of your chest or from the palm of an outstretched hand. As a standard action, you can direct the end of the vine to move to any square within 20 feet of you and perform one of the following tasks: deliver a touch spell that you cast after the vine has grown, pick up an unattended object weighing 20 pounds or less, give a held object to another creature, attempt to disable a trap or lock using your Disable Device modifier with a -2 penalty, or perform any other task that the GM deems reasonable. The vine does not threaten squares and cannot make attacks of opportunity, nor can it wield weapons.",
+    "key": "Grasping Vine",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Druid,Occultist,Ranger,Shaman,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a long, thin vine to sprout from your body-typically from the center of your chest or from the palm of an outstretched hand. As a standard action, you can direct the end of the vine to move to any square within 20 feet of you and perform one of the following tasks: deliver a touch spell that you cast after the vine has grown, pick up an unattended object weighing 20 pounds or less, give a held object to another creature, attempt to disable a trap or lock using your Disable Device modifier with a -2 penalty, or perform any other task that the GM deems reasonable. The vine does not threaten squares and cannot make attacks of opportunity, nor can it wield weapons."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PRERACE:1,Vine Leshy]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 131,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Grasping Vine",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

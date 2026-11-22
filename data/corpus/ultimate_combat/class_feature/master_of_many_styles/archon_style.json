@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Master of Many Styles ~ Archon Style",
+    "name": "Archon Style",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master of Many Styles ~ Archon Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterOfManyStylesBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Archon Style"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Archon Style"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_boa.lst",
+    "sha256": "eb1f8159bb1105f757ad11810ea25d039cb0e73421381dd690783abf8cfc0fc1",
+    "line": 22,
+    "record_key": "Master of Many Styles ~ Archon Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

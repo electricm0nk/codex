@@ -1,0 +1,3 @@
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/settings/featPickerPreference' imported from /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/settings/featPickerPreference.test.ts
+  code: 'ERR_MODULE_NOT_FOUND',
+SyntaxError: The requested module './itemPickerFilter' does not provide an export named 'HIDE_UNMET_FEATS_LABEL'

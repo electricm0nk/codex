@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Valkyrie ~ Battle Trained",
+    "delivery": "Extraordinary",
+    "description": "A valkyrie is proficient with all armor. Armor never impacts a valkyrie's speed, nor does a valkyrie take armor check penalties on Ride checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:valkyrie_battle_trained",
+    "name": "Battle Trained",
+    "owners": [
+      "bestiary_3:monster:valkyrie"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|-ACCHECK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A valkyrie is proficient with all armor. Armor never impacts a valkyrie's speed, nor does a valkyrie take armor check penalties on Ride checks."
+      },
+      {
+        "key": "KEY",
+        "value": "Valkyrie ~ Battle Trained"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "TYPE",
+        "value": "ValkyrieRacialAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "HeavyArmor"
+      }
+    ],
+    "source_page": "p.277",
+    "traits": [
+      "ValkyrieRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1653,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Valkyrie ~ Battle Trained",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

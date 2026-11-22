@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Pattern Designs",
+    "name": "Pattern Designs",
+    "class": "Cryptic",
+    "description": "Cryptic powers show up on your body in the form of tattoos. Your known powers can be identified via Spellcraft checks with a DC equal to 10 + double the power's level. These tattoos do not count against the number of psionic tattoos that you can safely wear. When you manifest one of your powers, it creates a visual pattern of energy during the action taken to manifest the pattern. While your powers have the normal displays for psionic powers - auditory, mental, and the like - this visual pattern unique to the cryptic cannot be suppressed as normal displays can be suppressed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Pattern Designs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Cryptic powers show up on your body in the form of tattoos. Your known powers can be identified via Spellcraft checks with a DC equal to 10 + double the power's level. These tattoos do not count against the number of psionic tattoos that you can safely wear. When you manifest one of your powers, it creates a visual pattern of energy during the action taken to manifest the pattern. While your powers have the normal displays for psionic powers - auditory, mental, and the like - this visual pattern unique to the cryptic cannot be suppressed as normal displays can be suppressed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 169,
+    "record_key": "Cryptic ~ Pattern Designs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

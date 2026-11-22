@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Ranger Trap ~ Sleet Trap",
+    "name": "Sleet Trap",
+    "class": "Cryptic",
+    "description": "The detonating trap creates a 20-foot-radius burst of sleet with the effects of a sleet storm. The driving sleet lasts for 1 round, but the icy ground persists for %1 rounds.|SleetTrapDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Ranger Trap ~ Sleet Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.CrypticRangerTrap.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SleetTrapDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The detonating trap creates a 20-foot-radius burst of sleet with the effects of a sleet storm. The driving sleet lasts for 1 round, but the icy ground persists for %1 rounds.|SleetTrapDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SleetTrapDuration|CrypticInsightLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 250,
+    "record_key": "Cryptic Ranger Trap ~ Sleet Trap"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sepid ~ Rain of Debris",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a standard action, a sepid can call forth a hail of stones, wood, metal, and similar debris. The debris rains down and pelts all creatures in a 10-foot-high, 40-foot-radius cylinder centered on the sepid, dealing 15d6 points of bludgeoning damage (Reflex DC 25 for half ). This attack does not harm the sepid, and counts as an evil attack for the purpose of damage reduction. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sepid_rain_of_debris",
+    "name": "Rain of Debris",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a standard action, a sepid can call forth a hail of stones, wood, metal, and similar debris. The debris rains down and pelts all creatures in a 10-foot-high, 40-foot-radius cylinder centered on the sepid, dealing 15d6 points of bludgeoning damage (Reflex DC 25 for half ). This attack does not harm the sepid, and counts as an evil attack for the purpose of damage reduction. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Sepid ~ Rain of Debris"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "TYPE",
+        "value": "SepidRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.89",
+    "traits": [
+      "SepidRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 742,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sepid ~ Rain of Debris",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

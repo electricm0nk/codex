@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Pummeling Bully",
+    "category": "Combat",
+    "name": "Pummeling Bully",
+    "description": "Your combo has the chance to trip or move your target.",
+    "prerequisites": [
+      "PREABILITY:4,CATEGORY=FEAT,Improved Reposition,Improved Trip,Improved Unarmed Strike,Pummeling Style",
+      "PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:MonkFeatQualify,5],[PRECLASS:1,Monk=5,Brawler=5]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 121,
+    "record_key": "Pummeling Bully"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

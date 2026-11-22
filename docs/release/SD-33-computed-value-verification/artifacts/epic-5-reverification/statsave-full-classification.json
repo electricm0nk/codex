@@ -1,0 +1,4664 @@
+{
+ "results": [
+  {
+   "unit_id": "advanced_class_guide:equipment:cape_of_daring_deeds",
+   "book": "advanced_class_guide",
+   "corpus_path": "data/corpus/advanced_class_guide/equipment/cape_of_daring_deeds.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "2",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+   "book": "advanced_class_guide",
+   "corpus_path": "data/corpus/advanced_class_guide/equipment/hunter_s_sight.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "-2"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "-2"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_class_guide:equipment:ring_of_eloquence",
+   "book": "advanced_class_guide",
+   "corpus_path": "data/corpus/advanced_class_guide/equipment/ring_of_eloquence.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff,Diplomacy,Intimidate,Perform (Oratory)",
+      "2",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff,Diplomacy,Intimidate,Perform (Oratory)",
+     "2",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+   "book": "advanced_players_guide",
+   "corpus_path": "data/corpus/advanced_players_guide/equipment/fork_of_the_forgotten_one.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy,Intimidate",
+      "10"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy,Intimidate",
+     "10"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+   "book": "advanced_players_guide",
+   "corpus_path": "data/corpus/advanced_players_guide/equipment/ring_of_maniacal_devices.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Craft (Traps),Disable Device",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Craft (Traps),Disable Device",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
+   "book": "advanced_players_guide",
+   "corpus_path": "data/corpus/advanced_players_guide/equipment/spindle_of_perfect_knowledge.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Spindle of Perfect Knowledge",
+      "2"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS,CHA",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:cloak_of_fangs",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/cloak_of_fangs.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex,Will",
+      "1",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/cloak_of_the_diplomat.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy,Sense Motive",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy,Sense Motive",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:dilettante_s_outfit",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/general/dilettante_s_outfit.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "SKILL=xxx,Conceal Small Object",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:elixir_of_darksight",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/elixir_of_darksight.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "VISION",
+      "Darkvision",
+      "60"
+     ]
+    }
+   ],
+   "labels": [
+    "VISION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:gloves_of_elvenkind",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/gloves_of_elvenkind.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Spellcraft=Cast Defensively",
+      "5",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "SKILL=Concentrate,Concentrate (Cast Defensively)",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:half_orc_disguise_kit",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/general/half_orc_disguise_kit.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Disguise=to appear human",
+      "3",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:mask_of_stony_demeanor",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/mask_of_stony_demeanor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Lie",
+      "10",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Feint",
+      "5",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Pass Hidden Message",
+      "-5",
+      "TYPE=Competence.STACK"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/magic_items/ring_of_the_sophisticate.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Sense Motive,Knowledge (Local)",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Sense Motive,Knowledge (Local)",
+     "4",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:star_charts",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/general/star_charts.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Survival=Avoid Getting Lost",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:whip_training",
+   "book": "advanced_race_guide",
+   "corpus_path": "data/corpus/advanced_race_guide/equipment/general/whip_training.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Handle Animal=Push Animal",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Intimidate=Demoralize Animal",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "bestiary:equipment:heartstone_night_hag",
+   "book": "bestiary",
+   "corpus_path": "data/corpus/beastiary/equipment/heartstone_night_hag.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+   "book": "book_of_the_damned_volume_2",
+   "corpus_path": "data/corpus/book_of_the_damned_volume_2/equipment/demon_senses.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "8",
+      "TYPE=Racial"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "8",
+     "TYPE=Racial"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_dex_con_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX,CON",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_dex_con_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX,CON",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_dex_con_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX,CON",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_con_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,CON",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_con_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,CON",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_con_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,CON",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_dex_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_dex_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_might_str_dex_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_perfection_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX,CON",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_perfection_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX,CON",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/belt_of_physical_perfection_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX,CON",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:boots_of_striding_and_springing",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/boots_of_striding_and_springing.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "POSTMOVEADD",
+      "TYPE=Walk",
+      "10",
+      "TYPE=Enhancement"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Acrobatics=When Jumping",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "POSTMOVEADD",
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/circlet_of_persuasion.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device",
+      "3",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device",
+     "3",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/gloves_of_swimming_and_climbing.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Swim,Climb",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Swim,Climb",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:hand_of_glory",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/hand_of_glory.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "RING",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_cha_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "1"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,CHA",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_cha_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "2"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,CHA",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_cha_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "3"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,CHA",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_wis_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "1"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_wis_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "2"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_int_wis_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "3"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_wis_cha_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "WIS,CHA",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_wis_cha_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "WIS,CHA",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_prowess_wis_cha_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "WIS,CHA",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "WIS,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_2",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_superiority_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "1"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS,CHA",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_4",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_superiority_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "2"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS,CHA",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_6",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/headband_of_mental_superiority_6.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Headband of Intellect Skill Choice",
+      "3"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS,CHA",
+      "6",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:helm_of_comprehend_languages_and_read_magic",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/helm_of_comprehend_languages_and_read_magic.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Linguistics=Linguistics (Understand exotic written messages)",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:horseshoes_of_speed",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/horseshoes_of_speed.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "POSTMOVEADD",
+      "TYPE.Walk",
+      "30",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "POSTMOVEADD"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_deep_red_sphere",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_deep_red_sphere.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_incandescent_blue_sphere",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_incandescent_blue_sphere.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "WIS",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "WIS",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pale_blue_rhomboid",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_pale_blue_rhomboid.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pink_and_green_sphere",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_pink_and_green_sphere.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "CHA",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pink_rhomboid",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_pink_rhomboid.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "CON",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_scarlet_and_blue_sphere",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ioun_stone_scarlet_and_blue_sphere.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Scarlet and blue Sphere Ioun Stone Skill Choice",
+      "1"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "INT",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_i",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_i.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_ii",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_ii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_iii",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_iii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_iv",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_iv.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_v",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_v.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_vi",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_vi.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_vii",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/necklace_of_fireballs_vii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SLOTS",
+      "Neck",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SLOTS"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_jumping",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_jumping.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Acrobatics=When Jumping",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_jumping_improved",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_jumping_improved.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Acrobatics=When Jumping",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_i",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_wizardry_i.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLCASTMULT",
+      "TYPE=Arcane;LEVEL=1",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLCASTMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_ii",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_wizardry_ii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLCASTMULT",
+      "TYPE=Arcane;LEVEL=2",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLCASTMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_iii",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_wizardry_iii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLCASTMULT",
+      "TYPE=Arcane;LEVEL=3",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLCASTMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_iv",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/ring_of_wizardry_iv.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLCASTMULT",
+      "TYPE=Arcane;LEVEL=4",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLCASTMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:robe_of_stars",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/robe_of_stars.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "1+Global_LuckBonus",
+      "TYPE=Luck"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:rod_splendor",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/rod_splendor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "CHA",
+      "4",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "core_rulebook:equipment:staff_of_the_magi",
+   "book": "core_rulebook",
+   "corpus_path": "data/corpus/core_rulebook/equipment/magic_items/staff_of_the_magi.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MISC",
+      "SR",
+      "23"
+     ]
+    }
+   ],
+   "labels": [
+    "MISC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "horror_adventures:equipment:pain_ward_of_the_ostiarius",
+   "book": "horror_adventures",
+   "corpus_path": "data/corpus/horror_adventures/equipment/pain_ward_of_the_ostiarius.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "HP",
+      "CURRENTMAX",
+      "-1",
+      "PRERULE:1,DAMAGE_HP"
+     ]
+    }
+   ],
+   "labels": [
+    "HP"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/besmara_s_bicorne.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Acrobatics,Climb",
+      "2",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Acrobatics,Climb",
+     "2",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/besmara_s_tricorne.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Profession (Sailor),Swim",
+      "2",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Profession (Sailor),Swim",
+     "2",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/deadeye_s_spotter_ring.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception,Survival",
+      "2",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception,Survival",
+     "2",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:gray_gambler_s_hat",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/gray_gambler_s_hat.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SUBSCHOOL.Compulsion",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:hero_s_release_pendant",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/hero_s_release_pendant.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "2",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:mask_of_cutting_flash",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/mask_of_cutting_flash.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude",
+      "2",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:tankard_of_the_drunken_hero",
+   "book": "inner_sea_gods",
+   "corpus_path": "data/corpus/inner_sea_gods/equipment/tankard_of_the_drunken_hero.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Will",
+      "1",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories",
+   "book": "inner_sea_races",
+   "corpus_path": "data/corpus/inner_sea_races/equipment/scarf_of_glorious_histories.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Intimidate,Perform (dance)",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Intimidate,Perform (dance)",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "monster_codex:equipment:hunter_s_nose_ring",
+   "book": "monster_codex",
+   "corpus_path": "data/corpus/monster_codex/equipment/hunter_s_nose_ring.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Survival=Track by scent,Perception=Scent-based",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_1",
+   "book": "mythic_adventures",
+   "corpus_path": "data/corpus/mythic_adventures/equipment/cape_of_free_will_1.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex",
+      "1",
+      "TYPE=Resistance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "2",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_2",
+   "book": "mythic_adventures",
+   "corpus_path": "data/corpus/mythic_adventures/equipment/cape_of_free_will_2.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex",
+      "2",
+      "TYPE=Resistance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "3",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_3",
+   "book": "mythic_adventures",
+   "corpus_path": "data/corpus/mythic_adventures/equipment/cape_of_free_will_3.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex",
+      "3",
+      "TYPE=Resistance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "4",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_4",
+   "book": "mythic_adventures",
+   "corpus_path": "data/corpus/mythic_adventures/equipment/cape_of_free_will_4.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex",
+      "4",
+      "TYPE=Resistance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "5",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_5",
+   "book": "mythic_adventures",
+   "corpus_path": "data/corpus/mythic_adventures/equipment/cape_of_free_will_5.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Fortitude,Reflex",
+      "5",
+      "TYPE=Resistance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "6",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "occult_adventures:equipment:lucky_horseshoe",
+   "book": "occult_adventures",
+   "corpus_path": "data/corpus/occult_adventures/equipment/lucky_horseshoe.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "1+Global_LuckBonus",
+      "TYPE=Luck"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:area_map",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/area_map.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Survival=Navigate",
+      "1",
+      "TYPE=Circumstance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Knowledge (Dungeoneering)=Navigate",
+      "1",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:belt_of_fallen_heroes",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/belt_of_fallen_heroes.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "1",
+      "TYPE=Insight"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:book_of_letters",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/book_of_letters.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Diplomacy=City Officials",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Linguistics=Forgery",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/bracelet_of_bargaining.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff,Diplomacy,Sense Motive",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff,Diplomacy,Sense Motive",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:burglar_boots_major",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/burglar_boots_major.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Perception=Trapfinding",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:burglar_boots_minor",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/burglar_boots_minor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Perception=Trapfinding",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cassock_of_the_clergy",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/cassock_of_the_clergy.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLCAST",
+      "TYPE=Divine;LEVEL=0",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLCAST"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cat_s_eye_crown",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/cat_s_eye_crown.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "VISION",
+      "Darkvision",
+      "60"
+     ]
+    }
+   ],
+   "labels": [
+    "VISION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cloak_of_fangs",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/cloak_of_fangs.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "1",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/cloak_of_the_diplomat.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy,Sense Motive",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy,Sense Motive",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:darklands_goggles",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/darklands_goggles.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Perception=Underground",
+      "4",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Survival=Underground",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:forger_s_kit",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/forger_s_kit.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Linguistics=Forgery",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:gauntlets_of_fumbling",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/gauntlets_of_fumbling.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX",
+      "-2"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX",
+     "-2"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:glyphbane_gloves",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/glyphbane_gloves.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Disable Device=Magical Traps",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:goggles_of_elvenkind",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/goggles_of_elvenkind.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Spellcraft=Identify Magic Auras and Items",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:headband_of_fortune_s_favor",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/headband_of_fortune_s_favor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "ALL",
+      "1+Global_LuckBonus",
+      "TYPE=Luck"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:headband_of_mental_resilience",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/headband_of_mental_resilience.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "INT,WIS,CHA",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT,WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:heavyload_belt",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/heavyload_belt.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "LOADMULT",
+      "TYPE=SIZE",
+      "3"
+     ]
+    }
+   ],
+   "labels": [
+    "LOADMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:heritage_book",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/heritage_book.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Knowledge (Nobility)",
+      "2",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Knowledge (Nobility)",
+     "2",
+     "TYPE=Circumstance"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/judge_s_wig.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy,Intimidate",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy,Intimidate",
+     "4",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/juggler_s_kit.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perform (Act),Perform (Comedy)",
+      "1",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perform (Act),Perform (Comedy)",
+     "1",
+     "TYPE=Circumstance"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mask_of_stony_demeanor",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/mask_of_stony_demeanor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Lie",
+      "10",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Feint",
+      "5",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Pass Hidden Message",
+      "-5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/mask_of_ugliness.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff,Diplomacy",
+      "-4"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Intimidate",
+      "2"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff,Diplomacy",
+     "-4"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:medusa_mask",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/medusa_mask.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SPELL.Medusa Mask Gaze",
+      "5"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mock_armor",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/mock_armor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Conceal Identity",
+      "4",
+      "TYPE=Circumstance"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:monkey_belt_greater",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/monkey_belt_greater.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "STR,DEX",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "STR,DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mummer_s_ruff",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/mummer_s_ruff.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Bluff=Imitate Voice",
+      "10"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:musical_staff",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/musical_staff.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perform (String Instruments),Perform (Wind Instruments)",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perform (String Instruments),Perform (Wind Instruments)",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_jackass",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/pauldrons_of_the_jackass.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MOVEADD",
+      "TYPE.All",
+      "-10"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX",
+      "-4"
+     ]
+    }
+   ],
+   "labels": [
+    "MOVEADD",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX",
+     "-4"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/pirate_s_eye_patch.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Swim,Climb",
+      "2",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Swim,Climb",
+     "2",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:plague_rat_belt_greater",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/plague_rat_belt_greater.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX,CON",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/pliant_gloves.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Escape Artist,Acrobatics",
+      "5",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Escape Artist,Acrobatics",
+     "5",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_clumsiness",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_clumsiness.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MISC",
+      "SPELLFAILURE",
+      "20"
+     ]
+    },
+    {
+     "qualifiers": [
+      "STAT",
+      "DEX",
+      "-4"
+     ]
+    }
+   ],
+   "labels": [
+    "MISC",
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "DEX",
+     "-4"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_maniacal_devices.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Craft (Traps),Disable Device",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Craft (Traps),Disable Device",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_devouring",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_spell_devouring.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MISC",
+      "SPELLFAILURE",
+      "25"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Spellcraft=Counterspell",
+      "-4"
+     ]
+    }
+   ],
+   "labels": [
+    "MISC",
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_i",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_spell_knowledge_i.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLKNOWN",
+      "TYPE=Arcane;LEVEL=1",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLKNOWN"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_ii",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_spell_knowledge_ii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLKNOWN",
+      "TYPE=Arcane;LEVEL=2",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLKNOWN"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_iii",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_spell_knowledge_iii.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLKNOWN",
+      "TYPE=Arcane;LEVEL=3",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLKNOWN"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_iv",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_spell_knowledge_iv.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SPELLKNOWN",
+      "TYPE=Arcane;LEVEL=4",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "SPELLKNOWN"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_the_ecclesiarch.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy,Knowledge (Religion)",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy,Knowledge (Religion)",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/ring_of_the_sophisticate.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Sense Motive,Knowledge (Local)",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Sense Motive,Knowledge (Local)",
+     "4",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:rod_balance",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_balance.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Acrobatics=When Jumping",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/rod_beguiling.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff,Sleight of Hand",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff,Sleight of Hand",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:spectacles_of_understanding",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/spectacles_of_understanding.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Linguistics=Identify Forgery",
+      "5"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:staff_of_mithral_might",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/staff_of_mithral_might.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "STAT",
+      "INT",
+      "2",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "STAT_multi_or_other_slot"
+   ],
+   "resolver_hits": [
+    "stat"
+   ],
+   "resolver_hit_detail": {
+    "stat": [
+     "STAT",
+     "INT",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:staff_of_travel",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/staff_of_travel.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "POSTMOVEADD",
+      "TYPE=Walk",
+      "10",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "POSTMOVEADD"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:stone_of_weight_loadstone",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/stone_of_weight_loadstone.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MOVEMULT",
+      "TYPE.All",
+      "0.5"
+     ]
+    }
+   ],
+   "labels": [
+    "MOVEMULT"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/suzerain_scepter.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Knowledge (Nobility),Diplomacy",
+      "5",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Knowledge (Nobility),Diplomacy",
+     "5",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:wyvern_cloak",
+   "book": "ultimate_equipment",
+   "corpus_path": "data/corpus/ultimate_equipment/equipment/wyvern_cloak.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "4",
+      "TYPE=Resistance"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:boots_of_skating",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/boots_of_skating.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "MOVEADD",
+      "TYPE=Walk",
+      "15",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "MOVEADD"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/companion_stone_diplomacy.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Diplomacy",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Diplomacy",
+     "4",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_detection.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_discernment.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Sense Motive",
+      "10",
+      "TYPE=Insight"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Sense Motive",
+     "10",
+     "TYPE=Insight"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_dread.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Intimidate",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Intimidate",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_insightful_detection.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "9",
+      "TYPE=Insight"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Sense Motive",
+      "9",
+      "TYPE=Insight"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "9",
+     "TYPE=Insight"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_knowledge",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_knowledge.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "ABILITYPOOL",
+      "Crystal Mask",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "ABILITYPOOL"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_mindarmor",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_mindarmor.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SAVE",
+      "Will",
+      "4",
+      "TYPE=Insight"
+     ]
+    }
+   ],
+   "labels": [
+    "SAVE"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/crystal_mask_psionic_craft.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Spellcraft",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Spellcraft",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/eyes_of_expanded_vision.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "1",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "1",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_alchemist.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Craft (Alchemy)",
+      "8",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Appraise,Use Magic Device",
+      "6",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Knowledge (Arcana)",
+      "4",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Craft (Alchemy)",
+     "8",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_inflitrator.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Linguistics=Forgery",
+      "6",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Diplomacy=Gather information",
+      "4",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Bluff",
+      "8",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Disguise",
+      "6",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION",
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Bluff",
+     "8",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/meld_stone_nimble_trickster.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Acrobatics=Tumble",
+      "8",
+      "TYPE=Competence"
+     ]
+    },
+    {
+     "qualifiers": [
+      "SKILL",
+      "Escape Artist,Stealth",
+      "6",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION",
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Escape Artist,Stealth",
+     "6",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_clairsentience",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_clairsentience.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Clairsentience",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_metacreativity",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_metacreativity.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Metacreativity",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychokinesis",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_psychokinesis.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Psychokinesis",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychometabolism",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_psychometabolism.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Psychometabolism",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychoportation",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_psychoportation.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Psychoportation",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_telepathy",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psionatrix_telepathy.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "DC",
+      "SCHOOL.Telepathy",
+      "1"
+     ]
+    }
+   ],
+   "labels": [
+    "DC"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_chameleon.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Stealth",
+      "10",
+      "TYPE=Enhancement"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Stealth",
+     "10",
+     "TYPE=Enhancement"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_nimbleness.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Acrobatics",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Acrobatics",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/psychoactive_skin_spider.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Climb",
+      "20",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Climb",
+     "20",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/ring_self_sufficiency.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Autohypnosis",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Autohypnosis",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:third_eye_aware",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/third_eye_aware.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SKILL",
+      "Perception",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SKILL"
+   ],
+   "resolver_hits": [
+    "skill"
+   ],
+   "resolver_hit_detail": {
+    "skill": [
+     "SKILL",
+     "Perception",
+     "10",
+     "TYPE=Competence"
+    ]
+   },
+   "has_arms_armor_tokens": false,
+   "has_any_probe": true,
+   "stack_mult_fields": {}
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:third_eye_gather",
+   "book": "ultimate_psionics",
+   "corpus_path": "data/corpus/ultimate_psionics/equipment/third_eye_gather.json",
+   "chains": [
+    {
+     "qualifiers": [
+      "SITUATION",
+      "Diplomacy=Gather information",
+      "10",
+      "TYPE=Competence"
+     ]
+    }
+   ],
+   "labels": [
+    "SITUATION"
+   ],
+   "resolver_hits": [],
+   "resolver_hit_detail": {},
+   "has_arms_armor_tokens": false,
+   "has_any_probe": false,
+   "stack_mult_fields": {}
+  }
+ ]
+}

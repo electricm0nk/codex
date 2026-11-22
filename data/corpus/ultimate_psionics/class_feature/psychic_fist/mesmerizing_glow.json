@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Fist ~ Mesmerizing Glow",
+    "name": "Mesmerizing Glow",
+    "class": "Psychic Fist",
+    "description": "Spend 1 ki point to daze %1 targets, DC %2.|MesmerizingGlowTargets|MesmerizingGlowDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Fist ~ Mesmerizing Glow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicFistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MesmerizingGlowTargets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MesmerizingGlowDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 1 ki point to daze %1 targets, DC %2.|MesmerizingGlowTargets|MesmerizingGlowDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmerizingGlowTargets|PsychicFistLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmerizingGlowDC|14+PsychicFistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.374"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1437,
+    "record_key": "Psychic Fist ~ Mesmerizing Glow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

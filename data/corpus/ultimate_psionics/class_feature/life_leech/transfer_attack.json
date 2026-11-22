@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Life Leech ~ Transfer Attack",
+    "name": "Transfer Attack",
+    "class": "Life Leech",
+    "description": "You can expend your psionic focus as an immediate action to redirect damage being taken by one member of the collective to another member of the collective.  Calculate the damage as if the original target would have taken it.  The damage transferred is empathic in nature, so damage reduction or other means to block the damage to the final target are not effective.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Leech ~ Transfer Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus as an immediate action to redirect damage being taken by one member of the collective to another member of the collective.  Calculate the damage as if the original target would have taken it.  The damage transferred is empathic in nature, so damage reduction or other means to block the damage to the final target are not effective."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2318,
+    "record_key": "Life Leech ~ Transfer Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

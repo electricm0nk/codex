@@ -1,0 +1,31 @@
+5d669f779eee7e3b527612d6a96c9730f9bf357ab93c0d6a8147efb5573ce25a  data/rules_tables/bestiary/monster_data/MONSTERS.json
+0687c9cf46e487bfcd12d8fc86aaf6ba4e82e8f130e666cee4bf93d11e653903  data/rules_tables/bestiary/monster_data/MONSTERS.json
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest ... FAILED
+
+failures:
+
+---- rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest stdout ----
+
+thread 'rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest' (1415664) panicked at src/rules_core/rules_catalog/golden_tests.rs:613:5:
+transcripts whose digest moved: [
+    "bestiary/monster_data/MONSTERS",
+    "bestiary/monsters_static",
+    "bestiary/monsters",
+    "lookup:book_registries",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2843 filtered out; finished in 5.46s
+
+error: test failed, to rerun pass `--lib`
+5d669f779eee7e3b527612d6a96c9730f9bf357ab93c0d6a8147efb5573ce25a  data/rules_tables/bestiary/monster_data/MONSTERS.json
+golden_rc_under_mutation=101
+exit=0

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Archetype ~ Thunderjarl",
+    "name": "Thunderjarl",
+    "class": "Psychic Warrior",
+    "description": "You hold the thunder of the storm in your hand.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior Archetype ~ Thunderjarl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsychicWarriorArchetype.PsychicWarriorWarriorPath.PsychicWarriorMartialPower.PsychicWarriorSecondaryPath.PsychicWarriorTwistingPath.PsychicWarriorPathweaving"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic Warrior=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Warrior Archetype ~ Thunderjarl],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsychicWarriorWarriorsPath,TYPE.PsychicWarriorMartialPower,TYPE.PsychicWarriorSecondaryPath,TYPE.PsychicWarriorTwistingPath,TYPE.PsychicWarriorPathweaving]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Half-Giant"
+      },
+      {
+        "key": "DESC",
+        "value": "You hold the thunder of the storm in your hand."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Psionic Weapon|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Stomp|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Large and In Charge|PRECLASS:1,Psychic Warrior=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Thundering Charge|PRECLASS:1,Psychic Warrior=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Greater Psionic Weapon|PRECLASS:1,Psychic Warrior=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Thundering Smash|PRECLASS:1,Psychic Warrior=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Opportunistic Stomp|PRECLASS:1,Psychic Warrior=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Thunderjarl ~ Empowered Strike|PRECLASS:1,Psychic Warrior=15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Intimidate"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2028,
+    "record_key": "Psychic Warrior Archetype ~ Thunderjarl"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

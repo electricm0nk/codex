@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Meditant ~ Psionic Armor",
+    "name": "Psionic Armor",
+    "class": "Meditant",
+    "description": "If you maintain psionic focus and are unarmored and unencumbered, you add your Wisdom bonus (+%1) to your AC and CMD.  If you gain your Wisdom bonus to your AC or CMD from other source, it does not stack.|MeditantWISBonusToAC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meditant ~ Psionic Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantWISBonusToAC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeditantBonusToAC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If you maintain psionic focus and are unarmored and unencumbered, you add your Wisdom bonus (+%1) to your AC and CMD.  If you gain your Wisdom bonus to your AC or CMD from other source, it does not stack.|MeditantWISBonusToAC"
+      },
+      {
+        "key": "DESC",
+        "value": " In addition, you gain an additional +%1 bonus to AC and CMD.|MeditantBonusToAC|PRECLASS:1,Psychic Warrior=4"
+      },
+      {
+        "key": "DESC",
+        "value": " These bonuses to AC apply even against touch attacks or when you are flat-footed.  You lose these bonuses when you are immobilized or helpless, when you wear any armor, when you carry a shield, when you carry a medium or heavy load, or when you are not focused."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|MeditantBonusToAC*PsionicFocusActive|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|MeditantWISBonusToAC*PsionicFocusActive|TYPE=WisToAC|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantWISBonusToAC|max(0,WIS)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeditantBonusToAC|min(5,floor(PsychicWarriorLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|MeditantBonusToAC*PsionicFocusActive|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|MeditantWISBonusToAC*PsionicFocusActive|TYPE=WisToAC|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2060,
+    "record_key": "Meditant ~ Psionic Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

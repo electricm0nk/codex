@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dragon Traits Output",
+    "delivery": "Extraordinary",
+    "description": "Dragons have Immunity to magic sleep effects and paralysis effects. Dragons breathe, eat, and sleep.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:dragon_traits_output",
+    "name": "Dragon Traits Output",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Dragons have Immunity to magic sleep effects and paralysis effects. Dragons breathe, eat, and sleep."
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Dragon Traits"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.307",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1742,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Dragon Traits Output",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

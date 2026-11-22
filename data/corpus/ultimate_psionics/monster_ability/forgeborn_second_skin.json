@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Forgeborn ~ Second Skin",
+    "delivery": null,
+    "description": "You reduce any armor check penalty from armor worn by 1 and can sleep in medium or heavy metal armor without suffering ill effects from sleeping in armor.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:forgeborn_second_skin",
+    "name": "Second Skin",
+    "owners": [
+      "ultimate_psionics:monster:forgeborn"
+    ],
+    "source_page": "p.324",
+    "traits": [
+      "RacialTraits",
+      "ForgebornRacialTrait",
+      "ForgebornNaturalArmor"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 195,
+    "record_key": "Forgeborn ~ Second Skin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

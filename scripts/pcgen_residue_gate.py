@@ -1,0 +1,999 @@
+#!/usr/bin/env python3
+"""Count the PCGen surface on the LIVE side of the repo and fail when it rises
+-- `AT-35-E1-005` (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`),
+enforcing `decisions.md` §11 and `technical-design.md` §0.
+
+Why this exists
+----------------
+Operator ruling (SD-35 `decisions.md` §11): PCGen is a converter input and a
+test oracle. Nothing on the live side -- the code that computes and prints a
+character sheet -- may read a PCGen token, a PCGen formula string, or a
+record's `raw_tokens` at run time. SD-31 Decision 20 permitted a run-time
+interpreter "for now" to get a build in front of users; nothing since ruled
+it back out, and by 2026-09-07 a coarse grep found 78 live-side files naming
+the PCGen surface (`content-unit-inventory.md` §6). A permission with no
+counter never expires (`decisions.md` §9 L13). This script is the counter.
+
+What it counts
+--------------
+Under the live roots (`technical-design.md` §0's boundary table)::
+
+    src/rules_core/**   (in full -- AT-35-E6-002 relocated cache_gen/ to
+                         src/pcgen_import/cache_gen/, so the carve-out that
+                         used to sit here is gone; nothing under a live root
+                         is exempt any more)
+    src/saved_character/**
+    src/campaign/**
+    src/homebrew_authoring/**
+    apps/desktop/**     (the Tauri crate AND the frontend)
+
+every source file (`.rs .ts .tsx .js .jsx .mjs .cjs`; never `node_modules/`,
+`dist/`, `target/`) is scanned for the PCGen surface:
+
+    identifiers   raw_tokens  raw_bonus_chains  PcgenFormulaEvaluator
+                  render_pcgen_desc  bonus_stack_reader  pre_tokens
+    token syntax  BONUS:  DEFINE:  PRE[A-Z]+:  SAB:  DESC:  %CHOICE  %LIST  TYPE=
+    run-time      pcgen_import        (ruling B16, below)
+
+A hit is one regex match; a file counts once however many hits it carries.
+The five-identifier subset is reported separately (`identifier_files=` /
+`identifier_hits=`) because that is the population the authoring-time "78
+files" figure was counting; quote the gate's line, not 78, from now on.
+
+Comments do not count -- operator ruling B14, 2026-09-11
+--------------------------------------------------------
+A line whose left-stripped form starts with `//` -- a `//!` module doc, a
+`///` item doc, or a plain `//` line comment -- is skipped. Every other line
+is scanned in full, trailing comment or not, so a real read can never hide
+behind a `// ...` tail, and a provenance comment can never mask a read on
+another line of the same file.
+
+This gate used to count comments, on the premise that "a comment explaining a
+PCGen token on the live side is a sign the code next to it still needs one".
+That premise stopped holding. Epics 1-6 drained the code side and left the
+prose: by 2026-09-11 the census in
+`docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_residue_shape_census.py`
+measured `comment_hits=2686 code_hits=3628` over 197 live files, of which
+`files_comment_only=114` -- 114 files whose code reads nothing and whose only
+remaining hits are doc comments. The "sign" was false in 58% of the files it
+was firing on, and `max_files_clearable_by_code_work_alone=10` proved
+`live_files=0` unreachable by code work at all. That is the
+`validate-proxies-against-known-truth` failure shape: a proxy still making a
+confident claim in a region where it was never tested.
+
+The ruling: the rule was always "not one line of PCGen in our live code", and
+a comment does not execute. The converter now owns the token; the comment
+beside the converted number is the receipt for where that number came from --
+provenance, which `AGENTS.md` rule 9 demands and which is kept.
+
+This is an INSTRUMENT CORRECTION, not closure (`instrument-correction-is-not-
+closure`). The drop it causes -- 197 live files to ~83 -- clears no file and
+closes no unit; the 83 code-bearing files are exactly as unfinished as they
+were before. It is not an exclusion list: no path is exempted, no regex is
+weakened, and the baseline is untouched. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestCommentAwareness`.
+
+`#[cfg(test)]` regions do not count -- operator ruling B15, 2026-09-12
+-----------------------------------------------------------------------
+A `#[cfg(test)]` region is NOT live code. It is compiled out of the shipping
+binary. The verbatim corpus token text inside one is how a rewrite is proved
+to survive real PCGen-shaped input -- the same asset reason the operator KEEPS
+the converter and the oracle harness (`decisions.md` §11). This follows B14
+directly: the rule is "not one line of PCGen in our live code", and a
+`#[cfg(test)]` block never ships.
+
+The skip is REGION-aware, not line-aware: everything from the `#[cfg(test)]`
+attribute to the end of the item it annotates -- the closing brace of the
+module or function, or the `;` of a braceless item such as
+`#[cfg(test)] use ...;`. Code after that item ships and still counts, and a
+`#[cfg(test)]` module elsewhere in a file never masks a real read in that
+file's shipping code. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestCfgTestRegionsAreNotLiveCode`.
+
+The same holds one file over (SD-42 E4.19): a child module a parent declares
+at top level as `#[cfg(test)] #[path = "x.rs"] mod x;` is compiled only into
+the test binary, so the whole of `x.rs` is a `#[cfg(test)]` region. The skip
+is DERIVED from that declaration, never a path list; a child declared without
+`#[cfg(test)]`, not declared, or declared inside an inline block still counts.
+Pinned by `TestCfgTestPathChildrenAreNotLiveCode`.
+
+Like B14 this is an INSTRUMENT CORRECTION, not closure. At the ruling it
+removed all 300 then-counted hits across 45 files
+(`AT-35-E6-003-FINISH_cycle3_receipt.md`: `class_A_in_cfg_test_hits=300
+files=45`, `class_B_executable_hits=0`). Not one line of shipping code
+changed because of it; it is never to be reported as progress, and never
+netted against the rise B16 causes.
+
+Run-time reads of the converter DO count -- operator ruling B16, 2026-09-12
+---------------------------------------------------------------------------
+The gate's blind spot was the real residue. Live code that calls
+`src/pcgen_import::` at run time reads the converter without ever spelling a
+literal PCGen token: the renderer, `ingest_record::token_pairs` /
+`bonus_chain_qualifiers` / `rebuild_bonus_token`, `lst_parser::*`,
+`ir_converter::*`, `race_trait_tokens`, `pool_member_tokens`. No token-syntax
+pattern fires on those lines, and no identifier pattern matches either --
+`\brender_pcgen_desc\b` never matched `render_pcgen_desc_with_values`
+(`AT-35-E6-003-FINISH_cycle1_receipt.md`, class C). So the gate was counting
+code that does not ship and missing code that does, and `apps/desktop/`
+printed `files=0 hits=0` while 17 lines under it called the converter.
+
+The ruling: naming `pcgen_import` in shipping code under a live root is a
+hit. This is a NEW PATTERN CLASS, not a relaxation -- the number RISES when it
+is added, and that rise is a DEFECT THAT WAS ALWAYS THERE, not a regression
+this gate introduced. It is deliberately kept out of the `identifier_*`
+subset, which remains the authoring-time "78 files" population. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestRuntimeConverterImportsAreCounted`.
+
+Shipped DATA counts too -- operator ruling B17, 2026-09-13
+-----------------------------------------------------------
+Every rule above is about source code. `AT-35-E7-001`'s final-acceptance scan
+found what that can structurally never see: PCGen token text inside files that
+go into the installer and onto a user's disk. This gate scanned `.rs`/`.ts`
+and printed `root apps/desktop files=0 hits=0` -- truthfully, and uselessly --
+while six files under
+`apps/desktop/src-tauri/resources/corpus_fixtures/` shipped raw `.lst` rows and
+`data.raw_tokens` arrays. A green gate that does not measure what actually
+ships is a false green (`validate-proxies-against-known-truth`, `AGENTS.md`
+rule 7 -- the same failure shape as B16, one layer out).
+
+The ruling: fix the instrument first, then clean the data. A second file class
+is scanned -- every file that SHIPS, derived from the Tauri bundle manifest
+(`apps/desktop/src-tauri/tauri.conf.json`, `bundle.resources`), with directory
+entries walked recursively the way the bundler copies them. The set is
+DERIVED, never a hard-coded path list: a list would reproduce the very blind
+spot this closes, and a resource entry added tomorrow has to be covered with
+no edit here. Data files are scanned WHOLE -- there is no code/comment split in
+a `.lst` row or a JSON document -- for the identifier and token-syntax
+vocabulary above, plus `"raw_tokens"` and `"raw_bonus_chains"` as JSON keys.
+A shipped file that is also a live source file is counted once, by the source
+class.
+
+`shipped_data_files=` / `shipped_data_hits=` are reported on their own line and
+folded into `live_files=` / `live_hits=`, so `--check --closure` measures what
+ships. The count RISES when this class is added; that rise is an INSTRUMENT
+CORRECTION of a defect that was always there, never a regression, and it is
+never netted against the cleanup that follows it. Pinned RED->GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestShippedDataIsScanned`, which
+also pins that B14 and B15 are unchanged.
+
+The tool side -- `src/pcgen_import/**`, `src/bin/**`, `src/oracle_validation/**`,
+`scripts/**`, `tests/**` -- is never scanned. It is KEPT for Starfinder
+(`decisions.md` §11); a cycle that deletes it is a defect, not a win. So are
+the converter INPUTS the desktop fixtures are produced from: they live at
+`apps/desktop/src-tauri/fixtures_src/`, outside `bundle.resources`, because a
+converter input is not a shipped file.
+
+Modes
+-----
+    --check         live_files=<n> live_hits=<n> baseline_files=<n> baseline_hits=<n> verdict=PASS|FAIL_INCREASED
+                    exit 0 on PASS; 1 when EITHER count is above the baseline in
+                    scripts/pcgen-residue-baseline.env; 2 when no baseline exists.
+    --check --closure
+                    live_files=0 live_hits=0 verdict=PASS   (anything else: verdict=FAIL, exit 1)
+                    the closure mode, wired from AT-35-E6-004 on.
+    --rebaseline    writes scripts/pcgen-residue-baseline.env from the live count --
+                    allowed only when no baseline exists yet (the first recording) or
+                    when the count went DOWN on both axes and up on neither.
+                    Refused otherwise (rebaseline=REFUSED, exit 1): the baseline is a
+                    ratchet, never a reset.
+
+`--root <dir>` and `--baseline <file>` exist so the unit tests
+(`scripts/tests/test_pcgen_residue_gate.py`) can run the real CLI against a
+synthetic tree; the defaults are the repository this file lives in.
+"""
+
+import argparse
+import datetime as _dt
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+from dataclasses import dataclass, field
+
+# --- the boundary (technical-design.md §0) ---------------------------------
+# Changing either tuple is a change to the ruling's enforcement surface;
+# test_pcgen_residue_gate.py pins both so it cannot happen quietly
+# (acceptance-and-verification.md §3a: "a live path quietly added to its
+# allow-list is a defect").
+LIVE_ROOTS = (
+    "src/rules_core",
+    "src/saved_character",
+    "src/campaign",
+    "src/homebrew_authoring",
+    "apps/desktop",
+)
+# AT-35-E6-002 emptied this. `src/rules_core/cache_gen/` was the one carve-out;
+# the directory now lives at `src/pcgen_import/cache_gen/`, which is tool side and
+# never scanned in the first place. An empty tuple is the point: no live path is
+# exempt (`acceptance-and-verification.md` §3a -- "a live path quietly added to
+# its allow-list is a defect"). test_pcgen_residue_gate.py pins it empty.
+EXCLUDED_PREFIXES: tuple[str, ...] = ()
+EXCLUDED_DIR_NAMES = frozenset({"node_modules", "dist", "target", ".git"})
+SOURCE_EXTENSIONS = frozenset({".rs", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"})
+
+# --- the surface (technical-design.md §0) ----------------------------------
+IDENTIFIER_PATTERNS = {
+    "raw_tokens": r"\braw_tokens\b",
+    # SD-35 AT-35-E6-002 cycle 5. The ingest format has TWO verbatim arrays,
+    # and until this line the gate named one. `raw_bonus_chains` stood at 31
+    # hits across 11 `src/rules_core/` files -- including an open-coded
+    # production traversal -- invisible to cycles 1-4 and to the criterion's
+    # own Evidence sentence (`correction 1789082356496-at-35-e6-002-65186a`).
+    # A population nothing measures is a population nothing closes.
+    "raw_bonus_chains": r"\braw_bonus_chains\b",
+    "PcgenFormulaEvaluator": r"\bPcgenFormulaEvaluator\b",
+    "render_pcgen_desc": r"\brender_pcgen_desc\b",
+    "bonus_stack_reader": r"\bbonus_stack_reader\b",
+    "pre_tokens": r"\bpre_tokens\b",
+    # SD-36 Epic A / operator ruling D6. `SourceRef.lst_file` leaked PCGen
+    # vocabulary onto the live side (`src/rules_core/source_content.rs`) the
+    # same way `raw_tokens` does: a plain identifier, no literal token, no
+    # converter import. Renamed to `source_path`; this pattern is the ratchet
+    # that keeps it from coming back. Deliberately NOT `\.lst\b` -- the 8,592
+    # table-citation strings in `rules_tables/**` are provenance, not residue.
+    "lst_file": r"\blst_file\b",
+}
+TOKEN_SYNTAX_PATTERNS = {
+    "BONUS:": r"\bBONUS:",
+    "DEFINE:": r"\bDEFINE:",
+    "PRE[A-Z]+:": r"\bPRE[A-Z]+:",
+    "SAB:": r"\bSAB:",
+    "DESC:": r"\bDESC:",
+    "%CHOICE": r"%CHOICE",
+    "%LIST": r"%LIST",
+    "TYPE=": r"\bTYPE=",
+}
+# Operator ruling B16, 2026-09-12. Deliberately NOT in IDENTIFIER_PATTERNS:
+# `identifier_files=`/`identifier_hits=` is the authoring-time "78 files"
+# population, and silently widening it would change what every earlier
+# receipt's figure means.
+RUNTIME_IMPORT_PATTERNS = {
+    "pcgen_import": r"\bpcgen_import\b",
+    # SD-36 Epic A (D1/D6): the converter and oracle move into their own
+    # crate, `crates/codex-ingest`. A live-root import of it is the same B16
+    # shape one crate over -- `use codex_ingest::pcgen_import::...` reads the
+    # converter from inside `codex`'s own tree without ever spelling
+    # `pcgen_import` there. `codex_ingest::pcgen_import::x` fires both
+    # patterns, which is intended: it is both a crate-wall breach and a
+    # converter read.
+    "codex_ingest": r"\bcodex_ingest\b",
+}
+PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **RUNTIME_IMPORT_PATTERNS}
+_COMPILED = {name: re.compile(rx) for name, rx in PATTERNS.items()}
+
+# --- the shipped-data class (operator ruling B17, 2026-09-13) --------------
+# The bundle manifests whose resource lists define "what ships". Adding a
+# second installer means adding its manifest here; a resource ENTRY never
+# needs an edit, which is the whole point (the set is derived, not listed).
+DATA_MANIFESTS = ("apps/desktop/src-tauri/tauri.conf.json",)
+# `raw_tokens` / `raw_bonus_chains` already have word patterns above, which fire
+# on a JSON key too. These name the key form explicitly so a census can say
+# "this is an ingest-format document", not merely "this text occurs".
+JSON_KEY_PATTERNS = {
+    '"raw_tokens" (JSON key)': r'"raw_tokens"\s*:',
+    '"raw_bonus_chains" (JSON key)': r'"raw_bonus_chains"\s*:',
+}
+DATA_PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **JSON_KEY_PATTERNS}
+_DATA_COMPILED = {name: re.compile(rx) for name, rx in DATA_PATTERNS.items()}
+# SD-36 Epic F7b (2026-09-28). A source FORMULA written into a converted rule's
+# printed words -- `(min(10,CASTERLEVEL))d6`, `(CASTERLEVEL) rounds` -- carries
+# none of the token heads above, so this gate read 0 while 2,300-odd printed
+# strings of `data/sheet_rules/` spelled the ingest format's arithmetic. The
+# converter now lowers every one (`sheet_rule/prose.rs::lower_prose_formulas`);
+# this class keeps it that way. It reads a shipped JSON document that is a list
+# of converted rules and counts, in each printed string (a prose `Text` piece and
+# the rule's `label`), every formula-shaped group -- the converter's own
+# structural test, restated below (`formula.rs::is_prose_formula`). An
+# instrument extension: it measured 0 on the tree it was added with.
+PROSE_FORMULA_PATTERN = "prose formula (converted rule text)"
+_PF_FUNCS = {"min", "max", "floor", "ceil"}
+_PF_LEAVES = {
+    "CASTERLEVEL", "SPELLLEVEL", "CL", "TL", "HD", "BAB", "CR", "SIZE", "SIZEMOD",
+    "STR", "DEX", "CON", "INT", "WIS", "CHA",
+}
+_PF_TOK = re.compile(r"\s*(?:(\d+(?:\.\d+)?)|([A-Za-z_%][A-Za-z0-9_%.]*)|(>=|<=|==|!=|&&|\|\||[-+*/(),<>\"]))")
+
+
+def _pf_tokens(s):
+    out, i = [], 0
+    while i < len(s):
+        if s[i] in " \t":
+            i += 1
+            continue
+        m = _PF_TOK.match(s, i)
+        if not m or m.end() == i:
+            return None
+        out.append(m.groups())
+        i = m.end()
+    return out
+
+
+def _pf_parses(toks):
+    pos = [0]
+
+    def peek():
+        return toks[pos[0]] if pos[0] < len(toks) else None
+
+    def primary():
+        t = peek()
+        if t is None:
+            raise ValueError
+        pos[0] += 1
+        if t[0]:
+            return
+        if t[2] == "(":
+            expr()
+            if peek() is None or peek()[2] != ")":
+                raise ValueError
+            pos[0] += 1
+            return
+        if t[1]:
+            if peek() is not None and peek()[2] == "(":
+                pos[0] += 1
+                if peek() is not None and peek()[2] == ")":
+                    pos[0] += 1
+                    return
+                while True:
+                    expr()
+                    if peek() is not None and peek()[2] == ",":
+                        pos[0] += 1
+                        continue
+                    break
+                if peek() is None or peek()[2] != ")":
+                    raise ValueError
+                pos[0] += 1
+            return
+        raise ValueError
+
+    def unary():
+        t = peek()
+        if t is not None and t[2] in ("-", "+"):
+            pos[0] += 1
+            return unary()
+        primary()
+
+    def term():
+        unary()
+        while peek() is not None and peek()[2] in ("*", "/"):
+            pos[0] += 1
+            unary()
+
+    def expr():
+        term()
+        while peek() is not None and peek()[2] in ("+", "-"):
+            pos[0] += 1
+            term()
+
+    try:
+        expr()
+        return pos[0] == len(toks)
+    except ValueError:
+        return False
+
+
+def is_prose_formula(span, arithmetic_context=False):
+    """A formula the source wrote into words, not an aside the book wrote."""
+    toks = _pf_tokens(span)
+    if not toks or not _pf_parses(toks):
+        return False
+    tight = not any(c.isspace() for c in span)
+    has_op = arithmetic_context or (tight and any(t[2] in ("+", "-", "*", "/") for t in toks))
+    marked = False
+    for i, t in enumerate(toks):
+        if t[1]:
+            name = t[1]
+            if i + 1 < len(toks) and toks[i + 1][2] == "(":
+                one_case = name == name.lower() or name == name.upper()
+                if not one_case or name.lower() not in _PF_FUNCS:
+                    return False
+                marked = True
+            elif name in _PF_LEAVES or (len(name) > 5 and name.endswith("SCORE") and name[:-5] in _PF_LEAVES):
+                marked |= len(name) >= 4 or has_op
+            elif (sum(c.isupper() for c in name) >= 4 and all(c.isupper() or c.isdigit() or c == "_" for c in name)) or (
+                name[:1].isalpha() and name.isalnum() and re.search(r"[a-z][A-Z]", name)
+            ):
+                marked = True
+            else:
+                return False
+        elif t[2] and t[2] not in ("+", "-", "*", "/", "(", ")", ","):
+            return False
+    return marked
+
+
+def prose_formula_count(text):
+    """How many formula-shaped groups one printed string carries."""
+    n, i = 0, 0
+    while i < len(text):
+        prev = text[i - 1] if i else " "
+        boundary = not (prev.isascii() and (prev.isalnum() or prev == "_"))
+        open_ = None
+        if text[i] == "(":
+            open_ = i
+        elif boundary and text[i].isascii() and text[i].isalpha():
+            j = i
+            while j < len(text) and text[j].isascii() and (text[j].isalnum() or text[j] == "_"):
+                j += 1
+            if j < len(text) and text[j] == "(":
+                open_ = j
+        if open_ is not None:
+            depth, close = 0, None
+            for j in range(open_, len(text)):
+                if text[j] == "(":
+                    depth += 1
+                elif text[j] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        close = j
+                        break
+            if close is not None and is_prose_formula(text[i : close + 1], text[:i].rstrip().endswith(("+", "-"))):
+                n += 1
+                i = close + 1
+                continue
+        i += 1
+    return n
+
+
+def prose_formula_hits(document):
+    """Formula-shaped groups in the printed strings of a converted-rule list."""
+    if not isinstance(document, list):
+        return 0
+    hits = 0
+    for rule in document:
+        if not isinstance(rule, dict) or not isinstance(rule.get("prose"), list):
+            continue
+        hits += prose_formula_count(rule.get("label") or "")
+        for segment in rule["prose"]:
+            for piece in (segment or {}).get("pieces") or []:
+                if isinstance(piece, dict) and isinstance(piece.get("Text"), str):
+                    hits += prose_formula_count(piece["Text"])
+    return hits
+
+
+DATA_CLASS_NAMES = list(DATA_PATTERNS) + [PROSE_FORMULA_PATTERN]
+
+# A shipped asset larger than this is not a rules document; reading it whole to
+# regex it would be the gate's own performance bug.
+MAX_DATA_FILE_BYTES = 8 * 1024 * 1024
+
+# `#[cfg(test)]`, with the whitespace rustfmt permits inside the attribute.
+_CFG_TEST_ATTR = re.compile(r"^\s*#!?\[\s*cfg\(\s*test\s*\)\s*\]")
+
+DEFAULT_BASELINE_REL = os.path.join("scripts", "pcgen-residue-baseline.env")
+KEY_FILES = "PCGEN_RESIDUE_BASELINE_FILES"
+KEY_HITS = "PCGEN_RESIDUE_BASELINE_HITS"
+KEY_SHA = "PCGEN_RESIDUE_BASELINE_SHA"
+KEY_DATE = "PCGEN_RESIDUE_BASELINE_DATE"
+
+
+@dataclass
+class ScanResult:
+    live_files: int = 0
+    live_hits: int = 0
+    identifier_files: int = 0
+    identifier_hits: int = 0
+    files: list = field(default_factory=list)
+    files_by_pattern: dict = field(default_factory=dict)
+    hits_by_pattern: dict = field(default_factory=dict)
+    files_by_root: dict = field(default_factory=dict)
+    hits_by_root: dict = field(default_factory=dict)
+    # Ruling B17: the shipped-data class, reported on its own line and folded
+    # into live_files/live_hits.
+    shipped_data_files: int = 0
+    shipped_data_hits: int = 0
+    shipped_scanned: int = 0
+    shipped_data_file_list: list = field(default_factory=list)
+    data_files_by_pattern: dict = field(default_factory=dict)
+    data_hits_by_pattern: dict = field(default_factory=dict)
+
+
+def _iter_live_source_files(root):
+    for live_root in LIVE_ROOTS:
+        top = os.path.join(root, live_root)
+        if not os.path.isdir(top):
+            continue
+        for dirpath, dirnames, filenames in os.walk(top):
+            dirnames[:] = sorted(d for d in dirnames if d not in EXCLUDED_DIR_NAMES)
+            for name in sorted(filenames):
+                if os.path.splitext(name)[1] not in SOURCE_EXTENSIONS:
+                    continue
+                abs_path = os.path.join(dirpath, name)
+                rel = os.path.relpath(abs_path, root).replace(os.sep, "/")
+                if any(rel.startswith(p) for p in EXCLUDED_PREFIXES):
+                    continue
+                yield live_root, rel, abs_path
+
+
+def code_only(text):
+    """Drop the provenance-comment lines, keep the executable ones.
+
+    Operator ruling B14 (2026-09-11), and the same comment/code split the
+    cycle-1 census used to measure the remainder: a line is prose when its
+    left-stripped form starts with `//`. Everything else is code and is
+    scanned whole -- a trailing `// ...` never shields the code before it.
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.lstrip().startswith("//")
+    )
+
+
+def mask_non_code(text):
+    """`text` with every comment and every string/char literal body blanked to
+    spaces, newlines and length preserved.
+
+    Brace matching has to run over CODE characters only. A line-level counter
+    is fooled in both directions, and `AT-35-E6-004`'s independent census
+    caught the dangerous one in the real tree:
+    `apps/desktop/src-tauri/src/update/transaction.rs` holds
+    `b"not-json-{garbage"` inside a `#[cfg(test)]` module, leaving the counter
+    one `{` deep at that module's closing brace -- so the B15 skip ran on to
+    the next test module and blanked **618 lines of shipping code**. Nothing
+    in that window read PCGen, so the verdict was right by luck; a skip that
+    CAN hide shipping code is a false green waiting to happen
+    (`validate-proxies-against-known-truth`, `AGENTS.md` rule 7). The mirror
+    case -- a `// }` in prose ending the region early -- over-counts test code
+    as live, which is safe but equally wrong about where the item ends.
+    """
+    n = len(text)
+    out = list(text)
+    i = 0
+
+    def blank(a, b):
+        for k in range(a, min(b, n)):
+            if out[k] != "\n":
+                out[k] = " "
+
+    while i < n:
+        c = text[i]
+        if c == "/" and i + 1 < n and text[i + 1] == "/":
+            j = text.find("\n", i)
+            j = n if j < 0 else j
+            blank(i, j)
+            i = j
+        elif c == "/" and i + 1 < n and text[i + 1] == "*":
+            j = text.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            blank(i, j)
+            i = j
+        elif c == "r" and i + 1 < n and text[i + 1] in '#"':
+            k = i + 1
+            while k < n and text[k] == "#":
+                k += 1
+            if k < n and text[k] == '"':
+                term = '"' + "#" * (k - i - 1)
+                j = text.find(term, k + 1)
+                j = n if j < 0 else j + len(term)
+                blank(i, j)
+                i = j
+            else:
+                i += 1
+        elif c == '"':
+            j = i + 1
+            while j < n:
+                if text[j] == "\\":
+                    j += 2
+                    continue
+                if text[j] == '"':
+                    j += 1
+                    break
+                j += 1
+            blank(i, j)
+            i = j
+        elif c == "'":
+            # A char literal closes within a few characters; a lifetime
+            # (`'static`, `'a`) never closes and must stay code.
+            k, closed = i + 1, -1
+            while k < n and k < i + 5:
+                if text[k] == "\\":
+                    k += 2
+                    continue
+                if text[k] == "'":
+                    closed = k
+                    break
+                k += 1
+            if closed > 0:
+                blank(i, closed + 1)
+                i = closed + 1
+            else:
+                i += 1
+        else:
+            i += 1
+    return "".join(out)
+
+
+def cfg_test_ranges(lines):
+    """0-based inclusive line ranges covered by a `#[cfg(test)]` item.
+
+    Operator ruling B15 (2026-09-12): a `#[cfg(test)]` region is not live
+    code. The region runs from the attribute to the end of the item it
+    annotates -- the closing brace of a `mod`/`fn` block, or the `;` of a
+    braceless item such as `#[cfg(test)] use ...;`. A braceless item must NOT
+    swallow the rest of the file, which is why the `;` case is handled first.
+
+    Braces, semicolons and the attribute itself are read off `mask_non_code`,
+    so a brace inside a string or a comment can neither extend the region over
+    shipping code nor end it early (`AT-35-E6-004`).
+    """
+    lines = mask_non_code("\n".join(lines)).splitlines()
+    out, i, n = [], 0, len(lines)
+    while i < n:
+        if not _CFG_TEST_ATTR.match(lines[i]):
+            i += 1
+            continue
+        j, depth, started = i, 0, False
+        while j < n:
+            line = lines[j]
+            if not started and "{" not in line and ";" in line and j > i:
+                break  # a braceless item: `#[cfg(test)]` over `use ...;`
+            depth += line.count("{") - line.count("}")
+            if "{" in line:
+                started = True
+            if started and depth <= 0:
+                break
+            j += 1
+        j = min(j, n - 1)
+        out.append((i, j))
+        i = j + 1
+    return out
+
+
+_PATH_ATTR = re.compile(r'#\[\s*path\s*=\s*"([^"]+)"\s*\]')
+_MOD_DECL = re.compile(r"\bmod\s+\w+\s*;")
+
+
+def cfg_test_path_children(rel, text):
+    """Files a top-level `#[cfg(test)] #[path = "x.rs"] mod x;` in `rel` declares.
+
+    B15 one file over (SD-42 E4.19): such a module is compiled only into the
+    test binary, so the whole child file is a `#[cfg(test)]` region. Derived
+    from the declaration, never a path list. Only a declaration at brace depth
+    0 counts: inside an inline block `#[path]` resolves elsewhere, so that
+    child stays live (over-counting is the safe direction).
+    """
+    lines = text.splitlines()
+    masked = mask_non_code(text).splitlines()
+    depth, depth_at = 0, []
+    for line in masked:
+        depth_at.append(depth)
+        depth += line.count("{") - line.count("}")
+    out = set()
+    for a, b in cfg_test_ranges(lines):
+        if depth_at[a] != 0 or any("{" in m for m in masked[a:b + 1]):
+            continue
+        attr = _PATH_ATTR.search("\n".join(lines[a:b + 1]))
+        if attr and _MOD_DECL.search(masked[b]):
+            child = os.path.join(os.path.dirname(rel), attr.group(1))
+            out.add(os.path.normpath(child).replace(os.sep, "/"))
+    return out
+
+
+def _live_lines(text):
+    """The shipping lines of one source file: comments dropped (B14),
+    `#[cfg(test)]` regions dropped (B15), everything else scanned whole."""
+    lines = text.splitlines()
+    skip = set()
+    for a, b in cfg_test_ranges(lines):
+        skip.update(range(a, b + 1))
+    return [
+        line
+        for i, line in enumerate(lines)
+        if i not in skip and not line.lstrip().startswith("//")
+    ]
+
+
+def shipped_resource_files(root):
+    """Every file that goes into an installer, DERIVED from the bundle manifests.
+
+    Operator ruling B17 (2026-09-13). The set comes from `bundle.resources` in
+    each manifest in `DATA_MANIFESTS`, resolved relative to that manifest's own
+    directory -- never from a hard-coded path list, because a list is exactly
+    the blind spot this class closes: a resource entry added next month must be
+    covered with no edit to this file.
+
+    A directory entry is walked RECURSIVELY, which is what the Tauri bundler
+    does with a directory resource; a glob entry is expanded; a file entry is
+    taken as itself. Returns repo-relative paths, sorted and de-duplicated
+    (the manifest may list a directory and its children both).
+    """
+    found = set()
+    for manifest_rel in DATA_MANIFESTS:
+        manifest = os.path.join(root, manifest_rel)
+        if not os.path.isfile(manifest):
+            continue
+        try:
+            with open(manifest, encoding="utf-8") as fh:
+                conf = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        base = os.path.dirname(manifest)
+        bundle = conf.get("bundle") or {}
+        entries = bundle.get("resources") or []
+        # Tauri accepts either a list of paths or a {source: target} map.
+        if isinstance(entries, dict):
+            entries = list(entries.keys())
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, str):
+                continue
+            pattern = os.path.join(base, entry)
+            matches = glob.glob(pattern) if glob.has_magic(pattern) else [pattern]
+            for match in matches:
+                if os.path.isdir(match):
+                    for dirpath, dirnames, filenames in os.walk(match):
+                        dirnames[:] = sorted(
+                            d for d in dirnames if d not in EXCLUDED_DIR_NAMES
+                        )
+                        for name in filenames:
+                            found.add(os.path.join(dirpath, name))
+                elif os.path.isfile(match):
+                    found.add(match)
+    return sorted(
+        os.path.relpath(p, root).replace(os.sep, "/") for p in found
+    )
+
+
+def _scan_shipped_data(root, res, source_rels):
+    """Count the PCGen vocabulary in what ships (ruling B17).
+
+    Data is scanned WHOLE: there is no code/comment split in a `.lst` row or a
+    JSON document, so B14's and B15's source-side skips have nothing to apply
+    to here. A shipped file that is also a live source file was already scanned
+    by the source class and is skipped so it is never counted twice.
+    """
+    for rel in shipped_resource_files(root):
+        if rel in source_rels:
+            continue
+        abs_path = os.path.join(root, rel)
+        try:
+            if os.path.getsize(abs_path) > MAX_DATA_FILE_BYTES:
+                continue
+            with open(abs_path, "rb") as fh:
+                raw = fh.read()
+        except OSError:
+            continue
+        if b"\0" in raw:
+            continue  # a binary asset (icon, font); not a rules document
+        text = raw.decode("utf-8", errors="replace")
+        res.shipped_scanned += 1
+        file_hits = 0
+        for name, rx in _DATA_COMPILED.items():
+            n = len(rx.findall(text))
+            if n:
+                res.data_files_by_pattern[name] += 1
+                res.data_hits_by_pattern[name] += n
+                file_hits += n
+        # SD-36 F7b: the prose-formula class, on a converted-rule list only.
+        if rel.endswith(".json") and '"prose"' in text:
+            try:
+                n = prose_formula_hits(json.loads(text))
+            except ValueError:
+                n = 0
+            if n:
+                res.data_files_by_pattern[PROSE_FORMULA_PATTERN] += 1
+                res.data_hits_by_pattern[PROSE_FORMULA_PATTERN] += n
+                file_hits += n
+        if file_hits:
+            res.shipped_data_files += 1
+            res.shipped_data_hits += file_hits
+            res.shipped_data_file_list.append(rel)
+
+
+def scan(root):
+    """Scan the live side under `root`; pure, no baseline involved."""
+    res = ScanResult()
+    res.files_by_pattern = {n: 0 for n in PATTERNS}
+    res.hits_by_pattern = {n: 0 for n in PATTERNS}
+    res.files_by_root = {r: 0 for r in LIVE_ROOTS}
+    res.hits_by_root = {r: 0 for r in LIVE_ROOTS}
+    res.data_files_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
+    res.data_hits_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
+    source_rels = set()
+    sources = []
+    for live_root, rel, abs_path in _iter_live_source_files(root):
+        try:
+            with open(abs_path, encoding="utf-8", errors="replace") as fh:
+                sources.append((live_root, rel, fh.read()))
+        except OSError:
+            continue
+    test_children = set()
+    for _, rel, raw in sources:
+        if rel.endswith(".rs"):
+            test_children |= cfg_test_path_children(rel, raw)
+    for live_root, rel, raw in sources:
+        source_rels.add(rel)
+        if rel in test_children:
+            continue
+        text = "\n".join(_live_lines(raw))
+        file_hits = 0
+        ident_hits = 0
+        for name, rx in _COMPILED.items():
+            n = len(rx.findall(text))
+            if n:
+                res.files_by_pattern[name] += 1
+                res.hits_by_pattern[name] += n
+                file_hits += n
+                if name in IDENTIFIER_PATTERNS:
+                    ident_hits += n
+        if file_hits:
+            res.files.append(rel)
+            res.live_files += 1
+            res.live_hits += file_hits
+            res.files_by_root[live_root] += 1
+            res.hits_by_root[live_root] += file_hits
+        if ident_hits:
+            res.identifier_files += 1
+            res.identifier_hits += ident_hits
+    # Ruling B17: the shipped-data class, folded into the totals the closure
+    # bar reads. An instrument correction when it first fires, never a
+    # regression and never netted against the cleanup it forces.
+    _scan_shipped_data(root, res, source_rels)
+    res.live_files += res.shipped_data_files
+    res.live_hits += res.shipped_data_hits
+    return res
+
+
+def read_baseline(path):
+    """Return {'files': int, 'hits': int, 'sha': str, 'date': str} or None."""
+    if not os.path.isfile(path):
+        return None
+    values = {}
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            values[key.strip()] = value.strip()
+    if KEY_FILES not in values or KEY_HITS not in values:
+        return None
+    return {
+        "files": int(values[KEY_FILES]),
+        "hits": int(values[KEY_HITS]),
+        "sha": values.get(KEY_SHA, "unknown"),
+        "date": values.get(KEY_DATE, "unknown"),
+    }
+
+
+def _head_sha(root):
+    try:
+        out = subprocess.run(
+            ["git", "-C", root, "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=False, timeout=10,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    sha = out.stdout.strip()
+    return sha if out.returncode == 0 and sha else "unknown"
+
+
+def write_baseline(path, res, root):
+    sha = _head_sha(root)
+    today = _dt.date.today().isoformat()
+    lines = [
+        "# scripts/pcgen-residue-baseline.env -- written by scripts/pcgen_residue_gate.py --rebaseline",
+        "#",
+        "# The live-side PCGen surface (technical-design.md §0) at the moment it was",
+        "# last recorded. `--check` fails when EITHER count is above these values;",
+        "# `--rebaseline` rewrites this file only after a cycle that REDUCED the",
+        "# count. Never edit by hand: the numbers are a ratchet, not a target.",
+        "# Re-derive: python3 scripts/pcgen_residue_gate.py --check",
+        "#",
+        "# Breakdown at the recording (informational; the gate compares the totals):",
+    ]
+    for name in PATTERNS:
+        lines.append(f"#   pattern {name} files={res.files_by_pattern[name]} hits={res.hits_by_pattern[name]}")
+    for live_root in LIVE_ROOTS:
+        lines.append(f"#   root {live_root} files={res.files_by_root[live_root]} hits={res.hits_by_root[live_root]}")
+    lines.append(f"#   identifier_files={res.identifier_files} identifier_hits={res.identifier_hits}")
+    lines.append(
+        f"#   shipped_data_files={res.shipped_data_files} "
+        f"shipped_data_hits={res.shipped_data_hits} shipped_scanned={res.shipped_scanned}"
+    )
+    lines += [
+        f"{KEY_FILES}={res.live_files}",
+        f"{KEY_HITS}={res.live_hits}",
+        f"{KEY_SHA}={sha}",
+        f"{KEY_DATE}={today}",
+        "",
+    ]
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+
+
+def print_breakdown(res):
+    for name in PATTERNS:
+        print(f"pattern {name} files={res.files_by_pattern[name]} hits={res.hits_by_pattern[name]}")
+    for live_root in LIVE_ROOTS:
+        print(f"root {live_root} files={res.files_by_root[live_root]} hits={res.hits_by_root[live_root]}")
+    print(f"identifier_files={res.identifier_files} identifier_hits={res.identifier_hits}")
+    for name in DATA_CLASS_NAMES:
+        if res.data_hits_by_pattern.get(name):
+            print(
+                f"data pattern {name} files={res.data_files_by_pattern[name]} "
+                f"hits={res.data_hits_by_pattern[name]}"
+            )
+    print(
+        f"shipped_data_files={res.shipped_data_files} "
+        f"shipped_data_hits={res.shipped_data_hits} "
+        f"shipped_scanned={res.shipped_scanned}"
+    )
+
+
+def run_check(root, baseline_path, closure=False, list_files=False):
+    res = scan(root)
+    print_breakdown(res)
+    if list_files:
+        for rel in res.files:
+            print(f"file {rel}")
+    if closure:
+        verdict = "PASS" if (res.live_files == 0 and res.live_hits == 0) else "FAIL"
+        print(f"live_files={res.live_files} live_hits={res.live_hits} verdict={verdict}")
+        return 0 if verdict == "PASS" else 1
+    base = read_baseline(baseline_path)
+    if base is None:
+        print(
+            f"live_files={res.live_files} live_hits={res.live_hits} "
+            f"baseline_files=- baseline_hits=- verdict=FAIL_NO_BASELINE"
+        )
+        print(f"no baseline at {baseline_path}; record the first one with --rebaseline", file=sys.stderr)
+        return 2
+    increased = res.live_files > base["files"] or res.live_hits > base["hits"]
+    verdict = "FAIL_INCREASED" if increased else "PASS"
+    print(
+        f"live_files={res.live_files} live_hits={res.live_hits} "
+        f"baseline_files={base['files']} baseline_hits={base['hits']} verdict={verdict}"
+    )
+    return 1 if increased else 0
+
+
+def run_rebaseline(root, baseline_path):
+    res = scan(root)
+    print_breakdown(res)
+    base = read_baseline(baseline_path)
+    if base is not None:
+        went_up = res.live_files > base["files"] or res.live_hits > base["hits"]
+        went_down = res.live_files < base["files"] or res.live_hits < base["hits"]
+        if went_up or not went_down:
+            print(
+                f"rebaseline=REFUSED live_files={res.live_files} live_hits={res.live_hits} "
+                f"baseline_files={base['files']} baseline_hits={base['hits']} verdict=FAIL_NOT_REDUCED"
+            )
+            print("--rebaseline is allowed only after a cycle that reduced the count", file=sys.stderr)
+            return 1
+    write_baseline(baseline_path, res, root)
+    prev = "none" if base is None else f"{base['files']}/{base['hits']}"
+    print(
+        f"rebaseline=RECORDED live_files={res.live_files} live_hits={res.live_hits} "
+        f"previous={prev} path={baseline_path}"
+    )
+    return 0
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    parser.add_argument("--check", action="store_true", help="compare the live count against the baseline")
+    parser.add_argument("--closure", action="store_true", help="with --check: pass only at zero")
+    parser.add_argument("--rebaseline", action="store_true", help="record the baseline (first time, or after a reduction)")
+    parser.add_argument("--list-files", action="store_true", help="with --check: also print every live-side file that hit")
+    parser.add_argument("--root", default=None, help="repository root (default: the repo this script lives in)")
+    parser.add_argument("--baseline", default=None, help="baseline file (default: <root>/scripts/pcgen-residue-baseline.env)")
+    args = parser.parse_args(argv)
+
+    root = os.path.abspath(args.root) if args.root else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    baseline_path = args.baseline or os.path.join(root, DEFAULT_BASELINE_REL)
+
+    if args.rebaseline and (args.check or args.closure):
+        parser.error("--rebaseline cannot be combined with --check/--closure")
+    if args.rebaseline:
+        return run_rebaseline(root, baseline_path)
+    if args.check or args.closure:
+        return run_check(root, baseline_path, closure=args.closure, list_files=args.list_files)
+    parser.error("one of --check, --check --closure, or --rebaseline is required")
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

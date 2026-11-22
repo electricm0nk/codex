@@ -1,0 +1,64 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Light Blindness",
+    "delivery": "Extraordinary",
+    "description": "Creatures with light blindness are blinded for 1 round if exposed to bright light, such as sunlight or the daylight spell. Such creatures are dazzled as long as they remain in areas of bright light.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_light_blindness",
+    "name": "Light Blindness",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_LightBlindness_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Abrupt exposure to bright light blinds drow for 1 round; on subsequent rounds, they are dazzled as long as they remain in the affected area.|PREABILITY:1,CATEGORY=Special Ability,Drow ~ Light Blindness"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures with light blindness are blinded for 1 round if exposed to bright light, such as sunlight or the daylight spell. Such creatures are dazzled as long as they remain in areas of bright light.|PREVAREQ:UMR_LightBlindness_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Light Blindness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Extraordinary.Weakness"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "Weakness"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2374,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Light Blindness",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

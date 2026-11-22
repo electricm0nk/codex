@@ -1,0 +1,38 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Thyrlien ~ Starlight Blast",
+    "delivery": "Supernatural",
+    "description": "[redacted PI]",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:thyrlien_starlight_blast",
+    "name": "Starlight Blast",
+    "owners": [
+      "inner_sea_gods:monster:azata_thyrlien"
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T19:41:15Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Thyrlien ~ Starlight Blast",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hodag ~ Trackless",
+    "delivery": "Extraordinary",
+    "description": "A hodag sweeps its tail behind itself in a way that obscures its tracks. Attempts to track a hodag have their normal DC increased by +10.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hodag_trackless",
+    "name": "Trackless",
+    "owners": [
+      "bestiary_3:monster:hodag"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hodag sweeps its tail behind itself in a way that obscures its tracks. Attempts to track a hodag have their normal DC increased by +10."
+      },
+      {
+        "key": "KEY",
+        "value": "Hodag ~ Trackless"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "TYPE",
+        "value": "HodagRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.148",
+    "traits": [
+      "HodagRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1045,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hodag ~ Trackless",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

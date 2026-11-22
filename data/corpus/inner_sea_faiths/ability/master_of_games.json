@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Kurgess ~ Master of Games",
+    "name": "Master of Games",
+    "description": "Each day, upon performing your obedience, choose one of the following spell-like abilities: True Strike 3/day, Bear's Endurance 2/day, or Heroism 1/day",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Kurgess ~ Master of Games"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day, upon performing your obedience, choose one of the following spell-like abilities: True Strike 3/day, Bear's Endurance 2/day, or Heroism 1/day"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Sentinel of Kurgess|PREMULT:2,[PREVARGTEQ:DeificObedienceActive,1],[PRECLASS:1,Sentinel=1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 259,
+    "record_key": "Sentinel Boon ~ Kurgess ~ Master of Games"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

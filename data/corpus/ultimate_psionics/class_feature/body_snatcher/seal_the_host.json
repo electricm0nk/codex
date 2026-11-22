@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Seal the Host",
+    "name": "Seal the Host",
+    "class": "Body Snatcher",
+    "description": "You learn to augment your mind switch power in a unique fashion, potentially sealing the subject's higher mind from taking control of your body.  You add the following augment to mind switch: If you spend 2 additional power points, the subject's higher mind may be sealed away when it arrives in your body.  If your mind switch is successful, the subject must make a second Will save or be dazed for as long as it remains in your body, similar to the brain lock power.  This is in addition to your traumatic transfer ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Seal the Host"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn to augment your mind switch power in a unique fashion, potentially sealing the subject's higher mind from taking control of your body.  You add the following augment to mind switch: If you spend 2 additional power points, the subject's higher mind may be sealed away when it arrives in your body.  If your mind switch is successful, the subject must make a second Will save or be dazed for as long as it remains in your body, similar to the brain lock power.  This is in addition to your traumatic transfer ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1157,
+    "record_key": "Body Snatcher ~ Seal the Host"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

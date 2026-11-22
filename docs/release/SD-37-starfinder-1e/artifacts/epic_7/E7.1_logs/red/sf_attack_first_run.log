@@ -1,0 +1,11 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 15s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 3 tests
+test rules_core::pilot_compute::sf_attack::sf_seed::sf_seed_a_weapon_without_proficiency_takes_minus_four ... ok
+test rules_core::pilot_compute::sf_attack::sf_seed::sf_seed_the_envoy_uses_dexterity_with_an_operative_weapon ... ok
+test rules_core::pilot_compute::sf_attack::sf_seed::sf_seed_the_soldier_attacks ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2827 filtered out; finished in 0.64s
+

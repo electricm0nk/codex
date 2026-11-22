@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Battle Wilder ~ Combat Euphoria",
+    "name": "Combat Euphoria",
+    "class": "Wilder",
+    "description": "When you use your combat surge ability, you gain a +%1 morale bonus on attack rolls, damage rolls, and saving throws for %2 rounds.  If you are overcome by psychic enervation following your combat surge, you do not gain the morale bonus for this use of your combat surge ability.|CombatEuphoriaBonus|CombatEuphoriaDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Wilder ~ Combat Euphoria"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatEuphoriaBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatEuphoriaDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your combat surge ability, you gain a +%1 morale bonus on attack rolls, damage rolls, and saving throws for %2 rounds.  If you are overcome by psychic enervation following your combat surge, you do not gain the morale bonus for this use of your combat surge ability.|CombatEuphoriaBonus|CombatEuphoriaDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatEuphoriaBonus|floor((WilderLVL+4)/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatEuphoriaDuration|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|CombatEuphoriaBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|CombatEuphoriaBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|CombatEuphoriaBonus|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2363,
+    "record_key": "Battle Wilder ~ Combat Euphoria"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

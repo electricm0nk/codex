@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 40.0,
+    "description": null,
+    "key": "Flying Blade",
+    "name": "Flying Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Flying Blade"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.GladiatorWeapon.Melee.Exotic.Slashing.Performance.Reach.Sword.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "40"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d12"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Performance.Special Quality ~ Reach.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      }
+    ],
+    "weight_lbs": 12.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Flying Blade",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

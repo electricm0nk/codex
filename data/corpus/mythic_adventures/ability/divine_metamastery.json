@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Divine Metamastery",
+    "name": "Divine Metamastery",
+    "description": "As a swift action, you can expend one use of mythic power and pick any one metamagic feat you know that increases the slot level of the spell by 0 levels or 1 level. For the next 10 rounds, you can apply this metamagic feat to any divine spell you cast without increasing the spell slot used or casting time. You can also use this ability on a divine spell cast from a scroll, staff, orwand. You can't have more than one use of this ability active at a time. If you use this ability again, any previous use immediately ends (though any metamagic effects on spells already cast remain). You can select this ability more than once. Each time you select it, the maximum spell slot level increase of the metamagic feat goes up by 1 to a maximum of 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Divine Metamastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power and pick any one metamagic feat you know that increases the slot level of the spell by 0 levels or 1 level. For the next 10 rounds, you can apply this metamagic feat to any divine spell you cast without increasing the spell slot used or casting time. You can also use this ability on a divine spell cast from a scroll, staff, orwand. You can't have more than one use of this ability active at a time. If you use this ability again, any previous use immediately ends (though any metamagic effects on spells already cast remain). You can select this ability more than once. Each time you select it, the maximum spell slot level increase of the metamagic feat goes up by 1 to a maximum of 4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 311,
+    "record_key": "Mythic Path Ability ~ Divine Metamastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

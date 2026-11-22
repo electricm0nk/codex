@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mobile Knife ~ Mobile Combat",
+    "name": "Mobile Combat",
+    "class": "Mobile Knife",
+    "description": "You deal an extra %1d6 points of damage on any thrown attack with a dagger or xephyr knife you make during any round in which you have moved at least 10 feet.  This extra damage only applies on your turn.|MobileCombatDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mobile Knife ~ Mobile Combat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MobileCombatDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MobileCombatACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You deal an extra %1d6 points of damage on any thrown attack with a dagger or xephyr knife you make during any round in which you have moved at least 10 feet.  This extra damage only applies on your turn.|MobileCombatDice"
+      },
+      {
+        "key": "DESC",
+        "value": " You gain a +%1 competence bonus to AC on your turn as long as you have moved at least 10 feet during your turn.  This bonus only applies after you have moved 10 feet and lasts until the beginning of your next turn.|MobileCombatACBonus|PRECLASS:1,Marksman=4"
+      },
+      {
+        "key": "DESC",
+        "value": " This ability does not function if you are wearing medium or heavy armor or when carrying a medium or heavy load."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MobileCombatDice|floor((MarksmanLVL+2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MobileCombatACBonus|floor(MarksmanLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1922,
+    "record_key": "Mobile Knife ~ Mobile Combat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Pain Strike",
+    "name": "Pain Strike",
+    "class": "Magus",
+    "description": "Pain strike racks the targeted creature with agony, inflicting 1d6 points of nonlethal damage per round for 1 round per level (maximum 10 rounds). Additionally, the affected creature is sickened for the spell's duration, and the caster gains a +4 circumstance bonus on Intimidate checks against the target.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Pain Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Pain Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "Pain strike racks the targeted creature with agony, inflicting 1d6 points of nonlethal damage per round for 1 round per level (maximum 10 rounds). Additionally, the affected creature is sickened for the spell's duration, and the caster gains a +4 circumstance bonus on Intimidate checks against the target.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3598,
+    "record_key": "Magus Spellblend ~ Pain Strike"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

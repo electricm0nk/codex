@@ -1,0 +1,1601 @@
+{
+  "summary": {
+    "characterId": "00000000-0000-0000-0000-000000000002",
+    "displayLabel": "Elowen Ashgrave",
+    "gameSystem": "pf1",
+    "schemaVersion": 2,
+    "savedAt": "2026-01-01T00:00:00.000Z",
+    "raceId": "race:human",
+    "classSummary": "class:wizard:5"
+  },
+  "snapshot": {
+    "abilityModifiers": {
+      "strength": -1,
+      "dexterity": 2,
+      "constitution": 1,
+      "intelligence": 4,
+      "wisdom": 1,
+      "charisma": 0
+    },
+    "baseAttackBonus": 2,
+    "baseSaves": {
+      "fortitude": 1,
+      "reflex": 1,
+      "will": 4
+    },
+    "baselineMeleeAttackBonus": -2,
+    "baselineArmorClass": 17,
+    "totalSaves": {
+      "fortitude": 2,
+      "reflex": 3,
+      "will": 5
+    },
+    "selectedSkillModifiers": {
+      "climb": -2,
+      "intimidate": 1,
+      "swim": -2
+    }
+  },
+  "diagnostics": [],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [
+      {
+        "itemId": "item:longsword",
+        "equipmentRecordName": "Longsword",
+        "equipmentRecordKey": "Longsword (Base)",
+        "grounded": true,
+        "appliedModifiers": []
+      },
+      {
+        "itemId": "item:chain_shirt",
+        "equipmentRecordName": "Chain Shirt",
+        "equipmentRecordKey": "Chain Shirt (Base)",
+        "grounded": true,
+        "appliedModifiers": []
+      }
+    ],
+    "equipmentEffects": {
+      "perItem": [
+        {
+          "itemId": "item:longsword",
+          "equipmentRecordKey": "Longsword (Base)",
+          "category": "ArmsArmor"
+        },
+        {
+          "itemId": "item:chain_shirt",
+          "equipmentRecordKey": "Chain Shirt (Base)",
+          "category": "ArmsArmor",
+          "armorClassBonus": 4,
+          "maxDex": 4,
+          "spellFailure": 20.0,
+          "armorCheckPenalty": -2
+        }
+      ],
+      "armorClassDelta": 4,
+      "armorCheckPenaltyTotal": -2,
+      "maxDexCap": 4,
+      "spellFailureChance": 20.0,
+      "attackBonusDelta": 0
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 29.0,
+      "totalCarriedCostGp": 115.0,
+      "lightMaxLbs": 26.0,
+      "mediumMaxLbs": 53.0,
+      "heavyMaxLbs": 80.0,
+      "level": "Medium",
+      "loadMaxDexCap": 3,
+      "loadArmorCheckPenalty": -3,
+      "perItem": [
+        {
+          "itemId": "item:longsword",
+          "weightLbs": 4.0,
+          "costGp": 15.0
+        },
+        {
+          "itemId": "item:chain_shirt",
+          "weightLbs": 25.0,
+          "costGp": 100.0
+        }
+      ],
+      "unresolvedItemIds": [
+        "power_attack"
+      ]
+    },
+    "unresolvedSpellIds": [
+      "Light",
+      "Light",
+      "Fireball",
+      "Fireball"
+    ],
+    "unresolvedEquipmentItemIds": [
+      "item:shield",
+      "power_attack"
+    ]
+  },
+  "selectedFeats": [
+    "feat:power_attack",
+    "feat:dodge",
+    "feat:weapon_focus"
+  ],
+  "spellsSelected": [
+    {
+      "spellId": "Light",
+      "sourceClassId": "class:wizard",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "Light",
+      "sourceClassId": "class:wizard",
+      "acquisitionMode": "Prepared"
+    },
+    {
+      "spellId": "Fireball",
+      "sourceClassId": "class:wizard",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "Fireball",
+      "sourceClassId": "class:wizard",
+      "acquisitionMode": "Prepared"
+    }
+  ],
+  "chosenFeatTargets": [
+    {
+      "featId": "feat:weapon_focus",
+      "targetKind": "Weapon",
+      "targets": [
+        "longsword"
+      ]
+    }
+  ],
+  "explanations": [
+    {
+      "id": "race.human.ability_bonus_applied",
+      "value": 18,
+      "detail": "Human ability-bonus selection (choice:human_ability_bonus -> ability:intelligence) applies the PF1 Core Rulebook Standard Human +2 racial bonus to intelligence BEFORE ability modifiers are derived: base chosen score 16 + 2 racial = 18. This differs from Dwarf/Half-Elf/etc., whose fixtures pre-bake their own racial adjustment into the chosen score itself (no arithmetic performed on those seams); Human's chosen score is confirmed PRE-bonus by both the deterministic pilot fixture and the real PCGen oracle output."
+    },
+    {
+      "id": "ability_modifier.strength",
+      "value": -1,
+      "detail": "strength ability modifier from chosen score 8: floor(8 / 2) - 5 = -1"
+    },
+    {
+      "id": "ability_modifier.dexterity",
+      "value": 2,
+      "detail": "dexterity ability modifier from chosen score 14: floor(14 / 2) - 5 = 2"
+    },
+    {
+      "id": "ability_modifier.constitution",
+      "value": 1,
+      "detail": "constitution ability modifier from chosen score 13: floor(13 / 2) - 5 = 1"
+    },
+    {
+      "id": "ability_modifier.intelligence",
+      "value": 4,
+      "detail": "intelligence ability modifier from chosen score 18: floor(18 / 2) - 5 = 4"
+    },
+    {
+      "id": "ability_modifier.wisdom",
+      "value": 1,
+      "detail": "wisdom ability modifier from chosen score 12: floor(12 / 2) - 5 = 1"
+    },
+    {
+      "id": "ability_modifier.charisma",
+      "value": 0,
+      "detail": "charisma ability modifier from chosen score 10: floor(10 / 2) - 5 = 0"
+    },
+    {
+      "id": "class_chassis.base_attack_bonus",
+      "value": 2,
+      "detail": "Wizard level 5 base attack bonus from rules_tables::crb::class_tables::class_tables()'s Wizard row (1/2 BAB, PF1 Core Rulebook Wizard class table): 2"
+    },
+    {
+      "id": "class_chassis.base_save.fortitude",
+      "value": 1,
+      "detail": "Wizard level 5 base Fortitude save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 1"
+    },
+    {
+      "id": "class_chassis.base_save.reflex",
+      "value": 1,
+      "detail": "Wizard level 5 base Reflex save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 1"
+    },
+    {
+      "id": "class_chassis.base_save.will",
+      "value": 4,
+      "detail": "Wizard level 5 base Will save (good) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 4"
+    },
+    {
+      "id": "combat.baseline_melee_attack_bonus",
+      "value": -2,
+      "detail": "Baseline melee attack bonus for the Longsword: Wizard base attack bonus (+2) + Strength modifier (+-1) + Weapon Focus (Longsword) (+1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the same size modifier as Armor Class) -4 nonproficiency penalty (this class has no Longsword proficiency in the corpus); Power Attack is selected but inactive (+0) = -2"
+    },
+    {
+      "id": "defense.baseline_armor_class",
+      "value": 17,
+      "detail": "Baseline armor class: base 10 + Chain Shirt armor bonus (+4) + Dexterity contribution (+2, DEX modifier +2 within MAXDEX:4) + Medium size modifier (+0, PF1 Table 8-1) + Dodge (+1, only for a character actually carrying feat:dodge) + Barbarian Rage penalty (0, only while actively, validly raging) + Skald Inspired Rage penalty (0, only while actively, validly singing) + Bloodrager Bloodrage penalty (0, only while actively, validly bloodraging) + Brawler AC Bonus (+0, while wearing light or no armor) + Alchemist Mutagen natural armor bonus (+0, only while actively, validly mutated) + Inquisitor Protection judgment sacred/profane bonus (+0, only while actively, validly judging Protection) + Oracle Nature's Whispers Charisma-for-Dexterity substitution (+0, only for a Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty (0, only while actively challenging) + Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus (+0, only for a Draconic-bloodline Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus (+0, only for a character holding that feat who did NOT take the Scaled Skin alternate racial trait); shield is absent (+0) = 17"
+    },
+    {
+      "id": "defense.touch_armor_class",
+      "value": 13,
+      "detail": "Touch armor class: the armor class above (17) with the contributors a touch attack ignores removed -- Chain Shirt armor bonus (-4), Alchemist Mutagen natural armor (-0), Sorcerer Draconic Bloodline natural armor (-0), ARG Armor of the Pit natural armor (-0); shield is absent (-0). The Dexterity contribution (+2), the Medium size modifier (+0, PF1 Table 8-1) and every dodge/sacred/ability bonus and penalty are all retained = 13"
+    },
+    {
+      "id": "defense.flat_footed_armor_class",
+      "value": 14,
+      "detail": "Flat-footed armor class: the armor class above (17) with the contributors a flat-footed character is denied removed -- the Dexterity contribution (-2, bonus only; a Dexterity penalty is kept) including the Oracle Nature's Whispers Charisma-for-Dexterity substitution (-0, which stands in for that bonus), and every dodge-typed bonus (-1: Dodge's +1, per PF1 \"any situation that denies you your Dexterity bonus to Armor Class also denies you dodge bonuses\"). The Chain Shirt armor bonus (+4), the Medium size modifier (+0), every natural armor and sacred/profane bonus, every penalty, and Brawler's AC Bonus (+0, whose own rule text applies it even when flat-footed) are all retained = 14"
+    },
+    {
+      "id": "combat.combat_maneuver_bonus",
+      "value": 1,
+      "detail": "Combat Maneuver Bonus: Wizard base attack bonus (+2) + Strength modifier (+-1) + Medium special size modifier (+0) = 1. The special size modifier runs OPPOSITE to Table 8-1's Armor Class column: being smaller makes a creature worse at combat maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is modelled by this engine, so none is summed here"
+    },
+    {
+      "id": "defense.combat_maneuver_defense",
+      "value": 13,
+      "detail": "Combat Maneuver Defense: base 10 + Wizard base attack bonus (+2) + Strength modifier (+-1) + Dexterity modifier (+2) + Medium special size modifier (+0) = 13. These are exactly the terms PF1's published CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses to Armor Class that also apply to CMD in real PF1 are NOT folded in here yet, and are named rather than silently implied"
+    },
+    {
+      "id": "combat.weapon_attack_bonus.longsword",
+      "value": -2,
+      "detail": "Attack bonus with the equipped Longsword: base attack bonus (+2) + governing ability modifier (-1) + weapon feats (+1) + nonproficiency penalty (-4) + size modifier (+0) = -2. Weapon Focus / Greater Weapon Focus name this weapon, adding +1 to the attack roll. -4 nonproficiency penalty: nothing this character holds grants proficiency with this weapon -- neither a class grant nor Simple/Martial/Exotic Weapon Proficiency naming it. Only the Focus feats reach this total -- the Specialization feats are damage and Improved Critical is threat range, both grounded separately. Separate from combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 fixture total until task #80 generalises it"
+    },
+    {
+      "id": "combat.weapon_damage_bonus.longsword",
+      "value": 0,
+      "detail": "Feat damage bonus with the equipped Longsword: +0. No Weapon Specialization or Greater Weapon Specialization names this weapon, so no feat bonus applies to its damage rolls. This is the feat contribution alone, NOT a damage total: the weapon's own 1d8 damage die and the Strength-to-damage contribution are excluded, because Strength applies at 1x one-handed, 1.5x two-handed and 0.5x off-hand and this engine does not record how a weapon is being wielded"
+    },
+    {
+      "id": "combat.weapon_threat_range_low.longsword",
+      "value": 19,
+      "detail": "Critical threat range with the equipped Longsword: 19-20/x2. Improved Critical does not name this weapon, so its threat range is the weapon's printed one. The value grounded here is the LOW end of the range; the corpus stores CRITRANGE as a width, so the range is 21-width..=20"
+    },
+    {
+      "id": "defense.total_save.fortitude",
+      "value": 2,
+      "detail": "Total Fortitude save: Wizard base Fortitude save (+1) + Constitution modifier (+1) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 2"
+    },
+    {
+      "id": "defense.total_save.reflex",
+      "value": 3,
+      "detail": "Total Reflex save: Wizard base Reflex save (+1) + Dexterity modifier (+2) + feat bonus (+0, Lightning Reflexes if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-Dexterity substitution (+0, only for a Lore-Mystery Oracle who took that revelation) + alternate racial trait (+0, only for a character who took one that declares a Reflex modifier -- this one can be NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait (+0, no ultimate_campaign trait currently declares a Reflex bonus, so always 0) = 3"
+    },
+    {
+      "id": "defense.total_save.will",
+      "value": 5,
+      "detail": "Total Will save: Wizard base Will save (+4) + Wisdom modifier (+1) + feat bonus (+0, Iron Will if selected) + Barbarian Rage morale bonus (+0, only while actively, validly raging) + Skald Inspired Rage morale bonus (+0, only while actively, validly singing) + Bloodrager Bloodrage morale bonus (+0, only while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual Minded is the one such trait in the corpus today) + character trait (+0, Indomitable Faith if selected) = 5"
+    },
+    {
+      "id": "skill.selected_modifier.climb",
+      "value": -2,
+      "detail": "Selected Climb modifier: rank 1 + Strength modifier (-1) + no class-skill bonus (Climb is not a class skill for this character's class) + Chain Shirt armor-check penalty (-2) + feat bonus (+0, Athletic if selected) = -2"
+    },
+    {
+      "id": "skill.selected_modifier.intimidate",
+      "value": 1,
+      "detail": "Selected Intimidate modifier: rank 1 + Charisma modifier (+0) + no class-skill bonus (Intimidate is not a class skill for this character's class) + feat bonus (+0, Persuasive and/or Intimidating Prowess if selected) = 1"
+    },
+    {
+      "id": "skill.selected_modifier.swim",
+      "value": -2,
+      "detail": "Selected Swim modifier: rank 1 + Strength modifier (-1) + no class-skill bonus (Swim is not a class skill for this character's class) + Chain Shirt armor-check penalty (-2) + feat bonus (+0, Athletic if selected) + Witch Flight hex (+0) = -2"
+    },
+    {
+      "id": "feat.standalone.weapon_focus.longsword",
+      "value": 1,
+      "detail": "Weapon Focus (longsword) grants a +1 bonus on attack rolls with that weapon (+2 when Greater Weapon Focus names it too). This bonus is also carried inside combat.weapon_attack_bonus.<weapon> whenever that weapon is equipped; this record is the component fact, that one is the total, and the two agreeing is expected rather than a double-count. It still grounds standalone, because the feat's bonus is real whether or not the chosen weapon happens to be equipped. Requires an explicit recorded weapon choice -- nothing is seeded, per the same no-silent-seeding design as Skill Focus"
+    },
+    {
+      "id": "class_feature.wizard.weapon_and_armor_proficiency",
+      "value": 0,
+      "detail": "Wizard Weapon and Armor Proficiency (corpus KEY:Wizard ~ Weapon and Armor Proficiency): \"Wizards are proficient with the club, dagger, heavy crossbow, light crossbow, and quarterstaff, but not with any type of armor or shield. The weapon half's real mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is already grounded separately by `weapon_tables::class_weapon_proficiency(\"class:wizard\")`, which this record does not duplicate. No armor-nonproficiency-penalty mechanic exists anywhere in this engine"
+    },
+    {
+      "id": "class_chassis.spell_baseline.wizard",
+      "value": 0,
+      "detail": "Recognized deterministic Human Wizard level 5 prepared arcane spell-bearing baseline: the class:wizard:5 class identity is acknowledged as a prepared arcane spell-bearing class on the rules-core seam rather than an undocumented packet placeholder. This is a bounded recognition record only; it grounds no spellbook content, no spells prepared per day, no spell slots per day, no bonus spell slots from a high Intelligence, no school specialization mechanics, no opposed-school bookkeeping, and no specialty school bonus, so it carries no fabricated mechanical value (+0). (v0.6 alpha swarm: the base spell save DC formula is now grounded separately, in its own class_chassis.wizard.spell_save_dc.spell_level_* records below.)"
+    },
+    {
+      "id": "class_chassis.wizard.base_attack_bonus",
+      "value": 2,
+      "detail": "Wizard level 5 base attack bonus from the PF1 Core Rulebook Wizard class table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = 2. This is a standalone explanation record; it is not wired into the integrated base_attack_bonus field or into compute_combat_baseline"
+    },
+    {
+      "id": "class_chassis.wizard.base_save.fortitude",
+      "value": 1,
+      "detail": "Wizard level 5 base Fortitude save (poor save) from the PF1 Core Rulebook Wizard class table: classlevel/3 = 1. This is a standalone explanation record; it is not wired into compute_total_saves"
+    },
+    {
+      "id": "class_chassis.wizard.base_save.reflex",
+      "value": 1,
+      "detail": "Wizard level 5 base Reflex save (poor save) from the PF1 Core Rulebook Wizard class table: classlevel/3 = 1. This is a standalone explanation record; it is not wired into compute_total_saves"
+    },
+    {
+      "id": "class_chassis.wizard.base_save.will",
+      "value": 4,
+      "detail": "Wizard level 5 base Will save (good save) from the PF1 Core Rulebook Wizard class table: classlevel/2+2 = 4. This is a standalone explanation record; it is not wired into compute_total_saves"
+    },
+    {
+      "id": "class_chassis.wizard.spell_save_dc.spell_level_1",
+      "value": 15,
+      "detail": "Wizard spell save DC at wizard level 5, spell level 1: 10 + 1 + Intelligence modifier 4 = 15 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT token: \"The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier\" — Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed"
+    },
+    {
+      "id": "class_chassis.wizard.spell_save_dc.spell_level_2",
+      "value": 16,
+      "detail": "Wizard spell save DC at wizard level 5, spell level 2: 10 + 2 + Intelligence modifier 4 = 16 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT token: \"The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier\" — Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed"
+    },
+    {
+      "id": "class_chassis.wizard.spell_save_dc.spell_level_3",
+      "value": 17,
+      "detail": "Wizard spell save DC at wizard level 5, spell level 3: 10 + 3 + Intelligence modifier 4 = 17 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT token: \"The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier\" — Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed"
+    },
+    {
+      "id": "class_chassis.wizard.scribe_scroll",
+      "value": 0,
+      "detail": "Recognized Wizard level 5 Scribe Scroll bonus feat grant: every Wizard, regardless of arcane school specialization, is granted Scribe Scroll as a bonus feat at 1st level (PF1 Core Rulebook Wizard class feature), letting the Wizard create scrolls of spells they know. This is a one-time grant recognized once and kept thereafter, not re-granted at 2nd level or later. This is a bounded grant-only recognition: it carries no fabricated mechanical value (+0) and computes no scroll creation cost, no crafting time, no spellbook content, and no spell-slot machinery"
+    },
+    {
+      "id": "class_chassis.wizard.specialization_choice",
+      "value": 0,
+      "detail": "Recognized Wizard level 5 school specialization choice: the canonical deterministic selections choose Evocation as the specialty arcane school (choice:wizard_school_specialization -> school:evocation) with Necromancy and Transmutation as the two opposed schools (choice:wizard_opposed_schools -> school:necromancy, school:transmutation), per the PF1 Core Rulebook arcane school class feature. A wizard's chosen school does not change by level, so this recognition is not level-gated. This is a bounded recognition record of the choice identity only: it carries no fabricated mechanical value (+0) and computes no school power, no opposed-school preparation cost, and no spell math"
+    },
+    {
+      "id": "class_chassis.wizard.specialist_bonus_slot",
+      "value": 3,
+      "detail": "Wizard level 5 specialist bonus spell slot: a specialist wizard gains one additional Evocation-only spell slot of each spell level she can cast, 1st and up, usable only for spells of the chosen school (PF1 Core Rulebook arcane school class feature). At levels 1-2 a wizard casts only 1st-level spells, so the flat count is exactly one 1st-level Evocation-only bonus slot (+1); at level 3+ a wizard also casts 2nd-level spells for the first time (verified against both primary sources' raw spells-per-day table rows), so the flat count becomes +2 (one 1st-level Evocation-only bonus slot plus one 2nd-level Evocation-only bonus slot); at level 5+ a wizard also casts 3rd-level spells for the first time (verified against both primary sources' raw spells-per-day table rows), so the flat count becomes +3 (one 1st-level, one 2nd-level, and one 3rd-level Evocation-only bonus slot); at level 7+ a wizard also casts 4th-level spells for the first time (verified against both primary sources' raw spells-per-day table rows), so the flat count becomes +4 (one 1st-level, one 2nd-level, one 3rd-level, and one 4th-level Evocation-only bonus slot); at level 9+ a wizard also casts 5th-level spells for the first time (verified against both primary sources' raw spells-per-day table rows), so the flat count becomes +5; at level 11+ a wizard also casts 6th-level spells for the first time (verified independently against both primary sources' raw spells-per-day table rows: the level-10 row is \"4/4/4/3/3/2\" with a still-\"—\" 6th-level column, the level-11 row is \"4/4/4/4/3/2/1\", the first non-\"—\" 6th-level column), so the flat count becomes +6 (one bonus slot of each spell level 1st through 6th); at level 13+ a wizard also casts 7th-level spells for the first time (verified independently against both primary sources' raw spells-per-day table rows: the level-12 row is \"4/4/4/4/3/3/2\" with a still-\"—\" 7th-level column, the level-13 row is \"4/4/4/4/4/3/2/1\", the first non-\"—\" 7th-level column), so the flat count becomes +7 (one bonus slot of each spell level 1st through 7th); at level 15+ a wizard also casts 8th-level spells for the first time (verified independently against both primary sources' raw spells-per-day table rows: the level-14 row is \"4/4/4/4/4/3/3/2\" with a still-\"—\" 8th-level column, the level-15 row is \"4/4/4/4/4/4/3/2/1\", the first non-\"—\" 8th-level column), so the flat count becomes +8 (one bonus slot of each spell level 1st through 8th); at level 17+ a wizard also casts 9th-level spells for the first time (verified independently against both primary sources' raw spells-per-day table rows: the level-16 row is \"4/4/4/4/4/4/3/3/2\" with a still-\"—\" 9th-level column, the level-17 row is \"4/4/4/4/4/4/4/3/2/1\", the first non-\"—\" 9th-level column), so the flat count becomes +9 (one bonus slot of each spell level 1st through 9th). At level 5 this is +3 flat count; there is no cantrip-level bonus slot. This grounds the flat count only: no slot contents, no spells prepared per day, no per-day slot totals, and no bonus slots from a high Intelligence are computed"
+    },
+    {
+      "id": "class_chassis.wizard.intense_bonus_damage",
+      "value": 2,
+      "detail": "Wizard level 5 Evocation school power Intense Spells bonus-damage magnitude (PF1 Core Rulebook Evocation School): whenever an evocation spell that deals hit point damage is cast, add half wizard level (minimum 1) to the damage. At Wizard level 5 this is max(5 / 2, 1) = 2. This grounds only the flat bonus-damage magnitude; it applies no bonus to any actual spell-damage roll and implements no spell-damage-application engine"
+    },
+    {
+      "id": "class_chassis.wizard.force_missile_uses_per_day",
+      "value": 7,
+      "detail": "Wizard level 5 Evocation school power Force Missile uses per day (PF1 Core Rulebook Evocation School): 3 + Intelligence modifier, floored at 0. At Intelligence modifier 4 this is max(3 + 4, 0) = 7. This grounds only the flat daily-use count; it casts no force missile, applies no 1d4 damage roll, resolves no automatic-hit magic-missile-style targeting, and tracks no action economy or per-use consumption"
+    },
+    {
+      "id": "class_spell.wizard.spellbook_contents",
+      "value": 2,
+      "detail": "Wizard level 5 recorded spellbook contents (2 spells, AcquisitionMode::Known): Light, Fireball. This grounds which spells are recorded as real, chosen input; it does not verify against any corpus that a named spell genuinely exists or genuinely belongs to the school/level its own identifier claims"
+    },
+    {
+      "id": "class_spell.wizard.daily_preparation",
+      "value": 2,
+      "detail": "Wizard level 5 daily preparation selection (2 spells, AcquisitionMode::Prepared, each already verified recorded in the spellbook above): Light, Fireball. This grounds the prepared-vs-known distinction for real: every prepared spell is drawn from the recorded spellbook, consuming its spell level's slot budget (opposed-school spells costing 2 slots instead of 1). It computes no spell save DC and no casting execution"
+    },
+    {
+      "id": "class_spell.wizard.base_spells_per_day.spell_level_0",
+      "value": 4,
+      "detail": "Wizard level 5 base spells per day at spell level 0: 4, read directly from the PF1 Core Rulebook Wizard class table's spells-per-day row (verified against the raw table rows of both primary sources; a literal table lookup, not a derived formula)"
+    },
+    {
+      "id": "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_0",
+      "value": 0,
+      "detail": "Wizard level 5 Intelligence bonus spells per day at spell level 0: 0 from Intelligence modifier 4 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)"
+    },
+    {
+      "id": "class_spell.wizard.total_spells_per_day.spell_level_0",
+      "value": 4,
+      "detail": "Wizard level 5 total spells per day at spell level 0: base 4 + specialist bonus slot 0 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 0 = 4"
+    },
+    {
+      "id": "class_spell.wizard.base_spells_per_day.spell_level_1",
+      "value": 3,
+      "detail": "Wizard level 5 base spells per day at spell level 1: 3, read directly from the PF1 Core Rulebook Wizard class table's spells-per-day row (verified against the raw table rows of both primary sources; a literal table lookup, not a derived formula)"
+    },
+    {
+      "id": "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_1",
+      "value": 1,
+      "detail": "Wizard level 5 Intelligence bonus spells per day at spell level 1: 1 from Intelligence modifier 4 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)"
+    },
+    {
+      "id": "class_spell.wizard.total_spells_per_day.spell_level_1",
+      "value": 5,
+      "detail": "Wizard level 5 total spells per day at spell level 1: base 3 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 5"
+    },
+    {
+      "id": "class_spell.wizard.base_spells_per_day.spell_level_2",
+      "value": 2,
+      "detail": "Wizard level 5 base spells per day at spell level 2: 2, read directly from the PF1 Core Rulebook Wizard class table's spells-per-day row (verified against the raw table rows of both primary sources; a literal table lookup, not a derived formula)"
+    },
+    {
+      "id": "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_2",
+      "value": 1,
+      "detail": "Wizard level 5 Intelligence bonus spells per day at spell level 2: 1 from Intelligence modifier 4 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)"
+    },
+    {
+      "id": "class_spell.wizard.total_spells_per_day.spell_level_2",
+      "value": 4,
+      "detail": "Wizard level 5 total spells per day at spell level 2: base 2 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 4"
+    },
+    {
+      "id": "class_spell.wizard.base_spells_per_day.spell_level_3",
+      "value": 1,
+      "detail": "Wizard level 5 base spells per day at spell level 3: 1, read directly from the PF1 Core Rulebook Wizard class table's spells-per-day row (verified against the raw table rows of both primary sources; a literal table lookup, not a derived formula)"
+    },
+    {
+      "id": "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_3",
+      "value": 1,
+      "detail": "Wizard level 5 Intelligence bonus spells per day at spell level 3: 1 from Intelligence modifier 4 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)"
+    },
+    {
+      "id": "class_spell.wizard.total_spells_per_day.spell_level_3",
+      "value": 3,
+      "detail": "Wizard level 5 total spells per day at spell level 3: base 1 + specialist bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count, decomposed here per spell level) + Intelligence bonus 1 = 3"
+    },
+    {
+      "id": "class_chassis.wizard.caster_level",
+      "value": 5,
+      "detail": "Wizard caster level at Wizard level 5: 5, transcribed from the book's own caster-level rule (core_rulebook/cr_classes.lst:281). The book's rule routes the caster level through an intermediate variable that resolves to the class level: the two terms that could raise it are both 0 for a base-class character — one is raised only by opt-in item and trait content, the other only by bloodline and archetype records. The rule carries no level gate, so it applies from class level 1. The class's declared spellcasting ability (INT) is named for reference only. This grounds the caster level and nothing else: no spells known, no spells per day, no bonus spell slots from a high INT, no spell save DC, and no per-spell dice counts are computed from it. The Spells tab already renders each spell's own description text, which is where a \"per caster level\" scaling clause and its cap live"
+    },
+    {
+      "id": "race.human.ability_bonus_target",
+      "value": 4,
+      "detail": "Human ability-bonus selection (choice:human_ability_bonus -> ability:intelligence) targets intelligence; the racial-bonus-adjusted intelligence score (base chosen score + the +2 Human racial bonus, applied before ability modifiers were derived) yields modifier +4"
+    },
+    {
+      "id": "race.human.bonus_feat_grant",
+      "value": 1,
+      "detail": "Human bonus-feat selection (choice:human_bonus_feat -> feat:dodge) grants Dodge, the deterministic Dodge feat contributing +1 to the baseline armor class"
+    },
+    {
+      "id": "race.human.trait_bundle.size",
+      "value": 0,
+      "detail": "Human racial trait bundle — size: PF1 Standard Human is Medium size (cr_races.lst race:human SIZE:MEDIUM). This is a bounded recognition record naming the Human size category on the deterministic pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, ability checks, or any other computed value, so it carries no fabricated mechanical value (+0)"
+    },
+    {
+      "id": "race.human.trait_bundle.speed",
+      "value": 30,
+      "detail": "Human racial trait bundle — speed: PF1 Standard Human has a base land speed of 30 ft (cr_races.lst race:human GAIT:WALK|30). This is a grounded recognition value carrying the human base-speed identity on the deterministic pilot seam; it contributes no computed speed-derived effect to any chassis output, skill modifier, attack roll, or combat baseline"
+    },
+    {
+      "id": "race.human.trait_bundle.senses",
+      "value": 0,
+      "detail": "Human racial trait bundle — senses: PF1 Standard Human grants no special senses (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, low-light vision, scent, and other sense bonuses are absent). This is a bounded no-effect classification record on the deterministic pilot seam; it carries no fabricated sense bonus and contributes no computed value (+0)"
+    },
+    {
+      "id": "race.human.trait_bundle.extra_skill_ranks",
+      "value": 1,
+      "detail": "Human racial trait bundle — extra skill ranks: PF1 Standard Human gains 4 extra skill points at 1st level and 1 extra skill rank per additional level thereafter (cr_races.lst race:human). The recognition value (+1) carries the per-additional-level extra-rank identity on the deterministic pilot seam; this slice does not propagate these extra skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected skill-modifier computation, so the bounded fighter-posture skill totals remain grounded by the canonical rank-1 posture rather than by the unbounded Human extra skill-rank rule"
+    },
+    {
+      "id": "class_chassis.skill_points",
+      "value": 30,
+      "detail": "class:wizard 5 skill points 30: 2 skill ranks per level + Intelligence modifier (+4), at least 1, times 5 level(s) (core_rulebook:class:wizard); class term only -- racial and favored-class ranks are not the class's"
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.arcane_bond",
+      "value": 1,
+      "detail": "wizard level 5: `Wizard ~ Arcane Bond` (\"Arcane Bond\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.bonus_feats",
+      "value": 5,
+      "detail": "wizard level 5: `Wizard ~ Bonus Feats` (\"Bonus Feats\") is a class feature of this character, granted from class level 5, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.bonus_languages",
+      "value": 1,
+      "detail": "wizard level 5: `Wizard ~ Bonus Languages` (\"Bonus Languages\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.cantrips",
+      "value": 1,
+      "detail": "wizard level 5: `Wizard ~ Cantrips` (\"Cantrips\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.class_skills",
+      "value": 1,
+      "detail": "wizard level 5: `Wizard ~ Class Skills` (\"Class Skills\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    },
+    {
+      "id": "class_feature.wizard.corpus_record.spells",
+      "value": 1,
+      "detail": "wizard level 5: `Wizard ~ Spells` (\"Spells\") is a class feature of this character, granted from class level 1, per a grant fact ingested from PCGen's own class-progression tokens (data/class_feature_grants). The record's real rulebook description is served separately by the character sheet's Class Features section."
+    }
+  ],
+  "weaponDamage": [
+    {
+      "weaponItemId": "item:longsword",
+      "weaponRecordKey": "Longsword (Base)",
+      "baseDice": {
+        "count": 1,
+        "dieSize": 8
+      },
+      "strDamageModifier": -1,
+      "wieldCategory": "OneHanded",
+      "enhancementAttackBonus": 0,
+      "enhancementDamageBonus": 0,
+      "criticalThreatRange": [
+        19,
+        20
+      ],
+      "criticalMultiplier": 2,
+      "featEffects": []
+    }
+  ],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "Human",
+    "raceKey": "Human",
+    "raceName": "Human",
+    "book": "CRB",
+    "appliedTraits": [
+      {
+        "key": "Human ~ Ability Scores",
+        "name": "+2 to One Ability Score",
+        "book": "CRB",
+        "role": "default",
+        "description": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature."
+      },
+      {
+        "key": "Human ~ Bonus Feat",
+        "name": "Bonus Feat",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans select one extra feat at 1st level."
+      },
+      {
+        "key": "Human ~ Languages",
+        "name": "Languages",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic)."
+      },
+      {
+        "key": "Human ~ Size",
+        "name": "Medium",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans are Medium creatures and have no bonuses or penalties due to their size."
+      },
+      {
+        "key": "Human ~ Skilled",
+        "name": "Skilled",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level."
+      },
+      {
+        "key": "Human ~ Speed",
+        "name": "Normal Speed",
+        "book": "CRB",
+        "role": "default",
+        "description": "Humans have a base speed of 30 feet."
+      }
+    ],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [
+      {
+        "key": "Adopted Race ~ Human",
+        "name": "Human",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human Ethnicity ~ None",
+        "name": "None",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human Ethnicity ~ Unknown",
+        "name": "Unknown",
+        "text": "",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Ability Scores",
+        "name": "+2 to One Ability Score",
+        "text": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Adoptive Parentage",
+        "name": "Adoptive Parentage",
+        "text": "Humans are sometimes orphaned and adopted by other races. Choose one humanoid race without the human subtype. You start play with that race's languages and gain that race's weapon familiarity racial trait (if any). If the race does not have weapon familiarity, you gain either Skill Focus or Weapon Focus as a bonus feat that is appropriate for that race instead. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Aquatic Ancestry",
+        "name": "Aquatic Ancestry",
+        "text": "Humans with deep one or skum ancestry may exhibit prominent round eyes or webbed fingers and toes. They gain a racial bonus equal to half their character level on Swim checks and Swim is always a class skill for them. In addition, they can hold their breath for twice as long as normal. When the racial bonus on Swim checks from this ability becomes +8 or higher, they can always take 10 on Swim checks, even when threatened or distracted. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Awareness",
+        "name": "Awareness",
+        "text": "Humans raised within monastic traditions or communities that encourage mindfulness seem to shrug off many dangers more easily than other humans. They gain a +1 racial bonus on all saving throws and concentration checks. This racial trait replaces humans' bonus feat.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Bonus Feat",
+        "name": "Bonus Feat",
+        "text": "Humans select one extra feat at 1st level.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Comprehensive Education",
+        "name": "Comprehensive Education",
+        "text": "Humans raised with skilled teachers draw upon vast swathes of knowledge gained over centuries of civilization. They gain all Knowledge skills as class skills, and they gain a +1 racial bonus on skill checks for each Knowledge skill that they gain as a class skill from their class levels. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Dual Talent",
+        "name": "Dual Talent",
+        "text": "Some humans are uniquely skilled at maximizing their natural gifts. These humans pick two ability scores and gain a +2 racial bonus in each of those scores. This racial trait replaces the +2 bonus to any one ability score, the bonus feat, and the skilled traits.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Eye for Talent",
+        "name": "Eye for Talent",
+        "text": "Humans have great intuition for hidden potential. They gain a +2 racial bonus on Sense Motive checks. In addition, when they acquire an animal companion, bonded mount, cohort, or familiar, that creature gains a +2 bonus to one ability score of the character's choice. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Focused Study",
+        "name": "Focused Study",
+        "text": "All humans are skillful, but some focus on a specialized set of skills even more closely. At 1st, 8th, and 16th level, such humans gain Skill Focus in a skill of their choice as a bonus feat. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Giant Ancestry",
+        "name": "Giant Ancestry",
+        "text": "Humans with ogre or troll ancestry end up having hulking builds and asymmetrical features. Such humans gain a +1 bonus on combat maneuver checks and to CMD, but a -2 penalty on Stealth checks. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Fields",
+        "name": "Heart of the Fields",
+        "text": "Humans born in rural areas are used to hard labor. They gain a racial bonus equal to half their character level to any one Craft or Profession skill, and once per day they may ignore an effect that would cause them to become fatigued or exhausted. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Mountain",
+        "name": "Heart of the Mountains",
+        "text": "Humans born in the mountains are skilled at negotiating heights and precipices. They gain a +2 racial bonus on Climb checks and Acrobatics checks to move on narrow surfaces and uneven ground. Furthermore, they are considered acclimated to the effects of high altitude (Core Rulebook 430). This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Sea",
+        "name": "Heart of the Sea",
+        "text": "Humans born near the sea are always drawn to it. They gain a +2 racial bonus on Profession (sailor) and Swim checks, and these are always class skills for them. They can hold their breath twice as long as normal, and spellcasters gain a +4 racial bonus on concentration checks when attempting to cast spells underwater. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Slums",
+        "name": "Heart of the Slums",
+        "text": "Humans who eke out a life in a city's teeming slums must be quick and clever. They gain a +2 racial bonus on Sleight of Hand and Stealth checks, and a +4 racial bonus on Survival checks in urban and underground settings. In addition, they may roll twice when saving against disease, taking the better roll. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Snows",
+        "name": "Heart of the Snows",
+        "text": "Humans born in chilly climes treat cold climates as one category less severe. They gain a +2 racial bonus on Fortitude saving throws against the effects of cold climates, on any check or saving throw to avoid slipping and falling, and to CMD against trip combat maneuvers. This bonus applies on Acrobatics and Climb checks made in slippery conditions. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Streets",
+        "name": "Heart of the Streets",
+        "text": "Humans from bustling cities are skilled with crowds. They gain a +1 racial bonus on Reflex saves and a +1 dodge bonus to Armor Class when adjacent to at least two other allies. Crowds do not count as difficult terrain for them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Sun",
+        "name": "Heart of the Sun",
+        "text": "Humans born in tropical climates treat hot climates as one category less severe. They also gain a +2 racial bonus on Fortitude saving throws against the effects of a hot climate, as well as against the poison and distraction ability of swarms and vermin. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heart of the Wilderness",
+        "name": "Heart of the Wilderness",
+        "text": "Humans raised in the wild learn the hard way that only the strong survive. They gain a racial bonus equal to half their character level on Survival checks. They also gain a +5 racial bonus on Constitution checks to stabilize when dying and add half their character level to their Constitution score when determining the negative hit point total necessary to kill them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Heroic",
+        "name": "Heroic",
+        "text": "Some humans are born heroes. In campaigns that use the optional hero point system (Advanced Player's Guide 322-325), each time these humans gain a level, they gain 2 hero points instead of 1. If they take the Blood of Heroes feat, they gain 3 hero points each level instead of 2. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Industrious",
+        "name": "Industrious",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Innovative",
+        "name": "Innovative",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Institutional Memory",
+        "name": "Institutional Memory",
+        "text": "Humans rely on their institutions to remember the distant past and to preserve their own memories for the distant future. They gain a +4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which they belong, and they can attempt such skill checks untrained. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Languages",
+        "name": "Languages",
+        "text": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Military Tradition",
+        "name": "Military Tradition",
+        "text": "Several human cultures raise all children (or all children of a certain social class) to serve in the military or defend themselves with force of arms. They gain proficiency with up to two martial or exotic weapons appropriate to their culture. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Mixed Heritage",
+        "name": "Mixed Heritage",
+        "text": "Often human civilization is defined by more than one characteristic. A human with this trait may select a second \"Heart of the\" racial trait. This replaces the bonus feat racial trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Piety",
+        "name": "Piety",
+        "text": "Humans place great trust in the gods to protect them. Humans with this trait receive a +2 racial bonus on Knowledge (religion) checks and Knowledge (religion) is always a class skill for them. In addition, once per day before attempting an attack roll, saving throw, ability check, or skill check, such a human can call out to his deity in order to receive a +2 racial bonus on that roll; he can use this ability only if he is able to speak. This racial trait replaces the bonus feat racial trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Practiced Hunter",
+        "name": "Practiced Hunter",
+        "text": "Members of some human cultures train from youth to find and follow the trails of vital game and at the same time hide the evidence of their own passage. These humans gain a +2 racial bonus on Stealth and Survival checks, and Stealth and Survival are always class skills for them. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Psychic Defense",
+        "name": "Psychic Defense",
+        "text": "Humans from cultures steeped in the occult sometimes train their minds to resist outside influence. They gain a +2 racial bonus on saving throws against psychic spells and spell-like abilities, including those that originate from the psychic magic ability (Pathfinder RPG Bestiary 5 297). This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Rationalize",
+        "name": "Rationalize",
+        "text": "Humans have the ability to assuage their own fears by convincing themselves that what they saw or read is not real. Humans with this trait gain a +3 bonus on saving throws against effects that cause sanity damage (see page 12). This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Reptilian Ancestry",
+        "name": "Reptilian Ancestry",
+        "text": "Humans with reptoid or serpentfolk ancestry sometimes have nictitating membranes or patches of scaly skin. They gain a +2 racial bonus on saving throws against mind-affecting effects and poisons. This racial trait replaces the bonus feat trait.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Self-Made Fate",
+        "name": "Self-Made Fate",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Silver Tongued",
+        "name": "Silver Tongued",
+        "text": "Human are often adept at subtle manipulation and putting even sworn foes at ease. Humans with this trait gain a +2 bonus on Diplomacy and Bluff checks. In addition, when they use Diplomacy to shift a creature's attitude, they can shift up to three steps up rather than just two. This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Size",
+        "name": "Medium",
+        "text": "Humans are Medium creatures and have no bonuses or penalties due to their size.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Skilled",
+        "name": "Skilled",
+        "text": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Social Ties",
+        "name": "Social Ties",
+        "text": "Some human societies run on complex webs of favors and loyalties that canny members can intuitively exploit with relative ease. These humans gain a +2 racial bonus on Diplomacy checks, and on any skill checks to recruit members and teams for an organization. They also add a +1 racial bonus to their Leadership scores (if they gain the Leadership feat). This racial trait replaces skilled.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Speed",
+        "name": "Normal Speed",
+        "text": "Humans have a base speed of 30 feet.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Tribalistic",
+        "name": "Tribalistic",
+        "text": "Many humans naturally form into cliques or tribes, and these humans work exceptionally well with those they view as fellow tribe members. Such humans gain a +2 racial bonus on attack rolls and skill checks to use the aid another action to aid humans of the same ethnicity. Humans with this racial trait must hail from an ethnicity that has its own language other than Common, and they only start with that language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling. This racial trait alters starting and bonus languages.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Tribalistic Languages",
+        "name": "Languages",
+        "text": "Tribalistic humans only start with their ethnic language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling.",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Unstoppable Magic",
+        "name": "Unstoppable Magic",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      },
+      {
+        "key": "Human ~ Wayfarer",
+        "name": "Wayfarer",
+        "text": "[redacted PI]",
+        "droppedArgs": [],
+        "movedByFeats": false
+      }
+    ],
+    "displayValueFeats": [],
+    "errors": []
+  },
+  "abilityScores": {
+    "strength": 8,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 18,
+    "wisdom": 12,
+    "charisma": 10
+  },
+  "skillAllocations": [
+    {
+      "skillId": "skill:climb",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:intimidate",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:swim",
+      "ranks": 1
+    },
+    {
+      "skillId": "skill:spellcraft",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:knowledge_arcana",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:knowledge_planes",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:knowledge_dungeoneering",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:knowledge_religion",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:fly",
+      "ranks": 5
+    },
+    {
+      "skillId": "skill:linguistics",
+      "ranks": 2
+    }
+  ],
+  "equipmentSelections": [
+    {
+      "itemId": "item:longsword",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "item:chain_shirt",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "item:shield",
+      "activeState": "Absent"
+    },
+    {
+      "itemId": "power_attack",
+      "activeState": "SelectedInactive"
+    }
+  ],
+  "sheetLines": [
+    {
+      "id": "core_rulebook:ability:appraise",
+      "kind": "ability",
+      "label": "Appraise",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:craft",
+      "kind": "ability",
+      "label": "Craft",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:fly",
+      "kind": "ability",
+      "label": "Fly",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:knowledge",
+      "kind": "ability",
+      "label": "Knowledge",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:linguistics",
+      "kind": "ability",
+      "label": "Linguistics",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:profession",
+      "kind": "ability",
+      "label": "Profession",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:racial_traits_human",
+      "kind": "ability",
+      "label": "Racial Traits ~ Human",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:ability:spellcraft",
+      "kind": "ability",
+      "label": "Spellcraft",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard",
+      "kind": "class",
+      "label": "Wizard",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Hit die: d6\nSkill ranks per level: 2",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard#bonus2",
+      "kind": "class",
+      "label": "Wizard (base Fortitude save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard#bonus3",
+      "kind": "class",
+      "label": "Wizard (base Reflex save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard#bonus1",
+      "kind": "class",
+      "label": "Wizard (base Will save)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard#bonus0",
+      "kind": "class",
+      "label": "Wizard (base attack)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class:wizard#bonus4",
+      "kind": "class",
+      "label": "Wizard (caster level)",
+      "form": "number",
+      "value": "+5",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:abjuration_wizard_spells",
+      "kind": "class_feature",
+      "label": "Abjuration Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_arcane_bond",
+      "kind": "class_feature",
+      "label": "Arcane Bond",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "At 1st level, wizards form a powerful bond with an object or a creature. This bond can take one of two forms: a familiar or a bonded object. A familiar is a magical pet that enhances the wizard's skills and senses and can aid him in magic, while a bonded object is an item a wizard can use to cast additional spells or to serve as a magical item. Once a wizard makes this choice, it is permanent and cannot be changed.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_arcane_school",
+      "kind": "class_feature",
+      "label": "Arcane School",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "A wizard can choose to specialize in one school of magic, gaining additional spells and powers based on that school. This choice must be made at 1st level, and once made, it cannot be changed. A wizard that does not select a school receives the universalist school instead.\nA wizard that chooses to specialize in one school of magic must select two other schools as his opposition schools, representing knowledge sacrificed in one area of arcane lore to gain mastery in another. A wizard who prepares spells from his opposition schools must use two spell slots of that level to prepare the spell. In addition, a specialist takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools as a prerequisite. A universalist wizard can prepare spells from any school without restriction.\nEach arcane school gives the wizard a number of school powers. In addition, specialist wizards receive an additional spell slot of each spell level he can cast, from 1st on up. Each day, a wizard can prepare a spell from his specialty school in that slot. This spell must be in the wizard's spellbook. A wizard can select a spell modified by a metamagic feat to prepare in his school slot, but it uses up a higher-level spell slot. Wizards with the universalist school do not receive a school slot.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:arcane_school_tracker",
+      "kind": "class_feature",
+      "label": "Arcane School Tracker",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "advanced_players_guide:class_feature:cmb",
+      "kind": "class_feature",
+      "label": "CMB",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_cantrips",
+      "kind": "class_feature",
+      "label": "Cantrips",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Wizards can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again. A wizard can prepare a cantrip from an opposed school, but it uses up two of his available slots.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:conjuration_wizard_spells",
+      "kind": "class_feature",
+      "label": "Conjuration Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:divination_wizard_spells",
+      "kind": "class_feature",
+      "label": "Divination Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:enchantment_wizard_spells",
+      "kind": "class_feature",
+      "label": "Enchantment Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:evocation_wizard_spells",
+      "kind": "class_feature",
+      "label": "Evocation Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:illusion_wizard_spells",
+      "kind": "class_feature",
+      "label": "Illusion Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:necromancy_wizard_spells",
+      "kind": "class_feature",
+      "label": "Necromancy Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+      "kind": "class_feature",
+      "label": "Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "A wizard casts arcane spells drawn from the sorcerer/wizard spell list presented in Chapter 10. A wizard must choose and prepare his spells ahead of time.\nTo learn, prepare, or cast a spell, the wizard must have an Intelligence score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier.\nA wizard can cast only a certain number of spells of each spell level per day. His base daily spell allotment is given on Table 3-16. In addition, he receives bonus spells per day if he has a high Intelligence score (see Table 1-3).\nA wizard may know any number of spells. He must choose and prepare his spells ahead of time by getting 8 hours of sleep and spending 1 hour studying his spellbook. While studying, the wizard decides which spells to prepare.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:transmutation_wizard_spells",
+      "kind": "class_feature",
+      "label": "Transmutation Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:universal_wizard_spells",
+      "kind": "class_feature",
+      "label": "Universal Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:weapon_prof_auto",
+      "kind": "class_feature",
+      "label": "Weapon Prof ~ Auto",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+      "kind": "class_feature",
+      "label": "Wizard",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_spells__be003b3984191a51",
+      "kind": "class_feature",
+      "label": "Wizard Spells",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:chain_shirt",
+      "kind": "equipment",
+      "label": "Chain Shirt",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Covering the torso, this shirt is made up of thousands of interlocking metal rings.\nArmor check penalty: -2\nMax Dex bonus: 4\nArcane spell failure: 20%",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:chain_shirt#bonus0",
+      "kind": "equipment",
+      "label": "Chain Shirt (AC)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:equipment:longsword",
+      "kind": "equipment",
+      "label": "Longsword",
+      "form": "dice",
+      "value": "1d8",
+      "also": [],
+      "prose": "This sword is about 3-1/2 feet in length.\nCritical multiplier: x2\nCritical threat: 19-20",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:dodge",
+      "kind": "feat",
+      "label": "Dodge",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Your training and reflexes allow you to react swiftly to avoid an opponent's attack.\nYou gain a +1 dodge bonus to your AC. A condition that makes you lose your Dex bonus to AC also makes you lose the benefits of this feat.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:power_attack",
+      "kind": "feat",
+      "label": "Power Attack",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.\nYou can choose to take a -1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (-50%) if you are making an attack with an off-hand weapon or secondary natural weapon. You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:feat:weapon_focus",
+      "kind": "feat",
+      "label": "Weapon Focus",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "You are especially good at using your chosen weapon.\nYou gain a +1 bonus on all attack rolls you make using the selected weapon.",
+      "condition": null
+    },
+    {
+      "id": "advanced_race_guide:race:human",
+      "kind": "race",
+      "label": "Human",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Speed: Walk 30 ft.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:race_trait:human_bonus_feat",
+      "kind": "race_trait",
+      "label": "Bonus Feat",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Humans select one extra feat at 1st level.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:race_trait:human_skilled",
+      "kind": "race_trait",
+      "label": "Skilled",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:climb",
+      "kind": "skill",
+      "label": "Climb (Climb)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:climb#bonus0",
+      "kind": "skill",
+      "label": "Climb (Climb)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Climb as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:fly",
+      "kind": "skill",
+      "label": "Fly (Fly)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:fly#bonus0",
+      "kind": "skill",
+      "label": "Fly (Fly)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Fly as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:intimidate",
+      "kind": "skill",
+      "label": "Intimidate (Intimidate)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:intimidate#bonus0",
+      "kind": "skill",
+      "label": "Intimidate (Intimidate)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Intimidate as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_arcana",
+      "kind": "skill",
+      "label": "Knowledge (Arcana) (Knowledge (Arcana))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_arcana#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Arcana) (Knowledge (Arcana))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Arcana) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (Dungeoneering))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (Dungeoneering))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Dungeoneering) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering#bonus1",
+      "kind": "skill",
+      "label": "Knowledge (Dungeoneering) (Knowledge (dungeoneering) (underground))",
+      "form": "number",
+      "value": "+0",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_planes",
+      "kind": "skill",
+      "label": "Knowledge (Planes) (Knowledge (Planes))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_planes#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Planes) (Knowledge (Planes))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Planes) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_religion",
+      "kind": "skill",
+      "label": "Knowledge (Religion) (Knowledge (Religion))",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_religion#bonus0",
+      "kind": "skill",
+      "label": "Knowledge (Religion) (Knowledge (Religion))",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Knowledge (Religion) as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:linguistics",
+      "kind": "skill",
+      "label": "Linguistics (Linguistics)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:linguistics#bonus0",
+      "kind": "skill",
+      "label": "Linguistics (Linguistics)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Linguistics as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:spellcraft",
+      "kind": "skill",
+      "label": "Spellcraft (Spellcraft)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:spellcraft#bonus0",
+      "kind": "skill",
+      "label": "Spellcraft (Spellcraft)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Spellcraft as a class skill"
+    },
+    {
+      "id": "core_rulebook:skill:swim",
+      "kind": "skill",
+      "label": "Swim (Swim)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:skill:swim#bonus0",
+      "kind": "skill",
+      "label": "Swim (Swim)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": "requires Swim as a class skill"
+    },
+    {
+      "id": "core_rulebook:spell:fireball",
+      "kind": "spell",
+      "label": "Fireball",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "A fireball spell generates a searing explosion of flame that detonates with a low roar and deals 1d6 points of fire damage per caster level (maximum 10d6) to every creature within the area. Unattended objects also take this damage. The explosion creates almost no pressure. You point your finger and determine the range (distance and height) at which the fireball is to burst. A glowing, pea-sized bead streaks from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the prescribed range, blossoms into the fireball at that point. An early impact results in an early detonation. If you attempt to send the bead through a narrow passage, such as through an arrow slit, you must \"hit\" the opening with a ranged touch attack, or else the bead strikes the barrier and detonates prematurely. The fireball sets fire to combustibles and damages objects in the area. It can melt metals with low melting points, such as lead, gold, copper, silver, and bronze. If the damage caused to an interposing barrier shatters or breaks through it, the fireball may continue beyond the barrier if the area permits; otherwise it stops at the barrier just as any other spell effect does.\nCasting time: 1 standard action\nComponents: V, S, M\nDescriptor: Fire\nDuration: Instantaneous\nRange: 400 ft.\nSaving throw: Reflex half\nSchool: Evocation\nSpell resistance: Yes\nTarget or area: 20-ft.-radius spread\nSchool: FireSchool",
+      "condition": null
+    },
+    {
+      "id": "core_rulebook:spell:light",
+      "kind": "spell",
+      "label": "Light",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "This spell causes a touched object to glow like a torch, shedding normal light in a 20-foot radius, and increasing the light level for an additional 20 feet by one step, up to normal light (darkness becomes dim light, and dim light becomes normal light). In an area of normal or bright light, this spell has no effect. The effect is immobile, but it can be cast on a movable object. You can only have one light spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If you make this spell permanent (through permanency or a similar effect), it does not count against this limit. Light can be used to counter or dispel any darkness spell of equal or lower spell level.\nCasting time: 1 standard action\nComponents: V, M/DF\nDescriptor: Light\nDuration: 0 minutes\nRange: Touch\nSaving throw: None\nSchool: Evocation\nSpell resistance: No\nTarget or area: Object touched\nDescriptor: WoodSchool",
+      "condition": null
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

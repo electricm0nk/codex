@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Amphisbaena ~ Split",
+    "delivery": "Supernatural",
+    "description": "An amphisbaena functions normally even if cut in half.  If dealt a critical hit with a slashing weapon, the creature is cut in half but continues to function as two separate creatures, each with half the original amphisbaena's current hit points (rounded down) after the damage from the critical hit is applied.  Once split, an amphisbaena cannot be split again.  If left alone for 1 minute, the split amphisbaena can rejoin its two halves and become a single whole creature again (add the two creatures' hit points together).  If one of the split creatures is slain, the amphisbaena can regrow the lost portion over the course of 1d3 weeks.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:amphisbaena_split",
+    "name": "Split",
+    "owners": [
+      "bestiary_2:monster:amphisbaena"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An amphisbaena functions normally even if cut in half.  If dealt a critical hit with a slashing weapon, the creature is cut in half but continues to function as two separate creatures, each with half the original amphisbaena's current hit points (rounded down) after the damage from the critical hit is applied.  Once split, an amphisbaena cannot be split again.  If left alone for 1 minute, the split amphisbaena can rejoin its two halves and become a single whole creature again (add the two creatures' hit points together).  If one of the split creatures is slain, the amphisbaena can regrow the lost portion over the course of 1d3 weeks."
+      },
+      {
+        "key": "KEY",
+        "value": "Amphisbaena ~ Split"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.25",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Amphisbaena ~ Split",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

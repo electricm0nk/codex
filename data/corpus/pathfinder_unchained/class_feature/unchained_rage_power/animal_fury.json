@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Animal Fury",
+    "name": "Animal Fury",
+    "class": "Unchained Barbarian",
+    "description": "You gain a bite attack. This is a primary natural attack that deals 1d%1+%2 points of damage. If made as part of a full-attack action with manufactured weapons, the bite attack is made at your base attack bonus - 5, and you add +%3 to the damage roll. You can make a bite attack as part of the action to maintain or break free from a grapple. If the bite attack hits, grapple checks you attempt against the target until the end of the round gain a +2 bonus.|if(SIZE==4,4,3)|STR|floor(STR/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Animal Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Animal Fury"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bite attack. This is a primary natural attack that deals 1d%1+%2 points of damage. If made as part of a full-attack action with manufactured weapons, the bite attack is made at your base attack bonus - 5, and you add +%3 to the damage roll. You can make a bite attack as part of the action to maintain or break free from a grapple. If the bite attack hits, grapple checks you attempt against the target until the end of the round gain a +2 bonus.|if(SIZE==4,4,3)|STR|floor(STR/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 342,
+    "record_key": "Unchained Rage Power ~ Animal Fury"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

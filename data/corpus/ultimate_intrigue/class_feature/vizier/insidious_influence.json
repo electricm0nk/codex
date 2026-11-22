@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vizier ~ Insidious Influence",
+    "name": "Insidious Influence",
+    "class": "Mesmerist",
+    "description": "A vizier subtly influences his allies and others who trust him, making it more likely they will follow his suggestions. Allies with mesmerist tricks implanted by the vizier take penalties on Will saves made to resist the vizier's abilities and spells, and on Diplomacy, Intimidate, Sense Motive checks attempted against the vizier. This penalty equals that imposed by the vizier's hypnotic stare. If the vizier uses his hypnotic stare against such an ally, these penalties stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vizier ~ Insidious Influence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.VizierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A vizier subtly influences his allies and others who trust him, making it more likely they will follow his suggestions. Allies with mesmerist tricks implanted by the vizier take penalties on Will saves made to resist the vizier's abilities and spells, and on Diplomacy, Intimidate, Sense Motive checks attempted against the vizier. This penalty equals that imposed by the vizier's hypnotic stare. If the vizier uses his hypnotic stare against such an ally, these penalties stack."
+      },
+      {
+        "key": "DESC",
+        "value": " The vizier automatically gains the susceptibility bold stare improvement, and it also applies to the DCs of any influence check (see Ultimate Intrigue page 102) to manipulate the target (even if it isn't Diplomacy or Intimidate).|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bold Stare ~ Susceptibility|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 84,
+    "record_key": "Vizier ~ Insidious Influence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

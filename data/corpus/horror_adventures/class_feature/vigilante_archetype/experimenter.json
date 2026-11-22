@@ -1,0 +1,160 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Experimenter",
+    "name": "Experimenter",
+    "class": "Vigilante",
+    "description": "Some vigilantes adopt lives of secrecy to hide their strange experiments from public view.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Experimenter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vigilantes adopt lives of secrecy to hide their strange experiments from public view."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Experimenter],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_WeaponProficiencies=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_SocialTalent1=True,Vigilante_Archetype_Unshakable=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_FrighteningAppearance=True,Vigilante_Archetype_StunningAppearance=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Experimenter ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Experimenter ~ Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Forbidden Science|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Mutagenic Change|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Brew Potion|PRECLASS:1,Vigilante=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Lore Master|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Craft Construct|PRECLASS:1,Vigilante=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Experimenter ~ Mutable Mutagen|PRECLASS:1,Vigilante=17"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StunningAppearance|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 7,
+    "record_key": "Vigilante Archetype ~ Experimenter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

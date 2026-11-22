@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_237)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_237)",
+    "description": "If you have performed your daily obedience, you hover several inches off the ground as if levitating. This doesn't affect your speed, and makes you immune to most kinds of difficult terrain, traps triggered by pressure, and potentially other effects. You can levitate over solid surfaces only, so you fall if you step off a cliff or over a liquid. You can, however, raise or lower yourself as levitate. If you make an attack while hovering, you are not subject to the attack and damage penalties listed in the  levitate spell description. However, if you move yourself higher in the air using a move action, you become subject to the attack and damage penalties until you return to the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 237,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_237)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:237"
+  }
+}

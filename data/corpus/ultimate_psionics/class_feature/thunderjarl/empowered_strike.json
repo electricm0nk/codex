@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Empowered Strike",
+    "name": "Empowered Strike",
+    "class": "Thunderjarl",
+    "description": "When making a melee attack as part of an attack action, you can expend your psionic focus and empower your attack with the energy of your stomp ability.  If the attack is successful, you can make a free bull rush, reposition, or trip combat maneuver against that opponent.  This combat maneuver does not provoke attacks of opportunity.  If you expend a daily use of your stomp psi-like ability while using this ability and choose to make the free bull rush attempt, you do not need to follow the target as it is pushed back.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Empowered Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When making a melee attack as part of an attack action, you can expend your psionic focus and empower your attack with the energy of your stomp ability.  If the attack is successful, you can make a free bull rush, reposition, or trip combat maneuver against that opponent.  This combat maneuver does not provoke attacks of opportunity.  If you expend a daily use of your stomp psi-like ability while using this ability and choose to make the free bull rush attempt, you do not need to follow the target as it is pushed back."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2122,
+    "record_key": "Thunderjarl ~ Empowered Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

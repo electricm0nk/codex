@@ -1,0 +1,10 @@
+deity-row rc=101 test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measur :: race_weapon_proficiency_a_deity_survives_a_clone ... FAILED race_weapon_proficiency_a_clerics_deity_comes_from_the_bio ... FAILED 
+owned-shield rc=101 test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measu :: left_behind_the_loadout_shield_was_never_owned ... FAILED 
+encumbrance-absent rc=101 test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measu :: left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned ... FAILED 
+bio-copy rc=101 test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measur :: race_weapon_proficiency_a_deity_survives_a_clone ... FAILED 
+stand-in rc=101 test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measu :: no_required_gear_a_shield_is_not_the_melee_number ... FAILED 
+corpus-rows rc=101 test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measu :: no_required_gear_a_weapon_off_the_table_has_its_own_attack_row ... FAILED 
+skill-rank rc=0 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; :: 
+importer-longsword rc=0 test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured;  :: 
+MUTDONE
+skill-rank-root rc=101 

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Martial Psionics",
+    "name": "Martial Psionics",
+    "class": "Kineticist",
+    "description": "You learn how to use psionics to fight in melee combat. As long as you have at least one power point remaining or are maintaining focus, you gain a +%1 deflection bonus to AC. You lose this bonus if wearing medium or heavy armor.  In addition, you gain energy ray as a power known.  This power does not count against your number of powers known.  When manifesting this power, you can either choose to manifest it for no cost by expending your psionic focus, in which case it cannot be augmented, or you can choose to manifest it normally, in which case your effective manifester level is treated as one higher than normal.|MartialPsionicsACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Martial Psionics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MartialPsionicsACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to use psionics to fight in melee combat. As long as you have at least one power point remaining or are maintaining focus, you gain a +%1 deflection bonus to AC. You lose this bonus if wearing medium or heavy armor.  In addition, you gain energy ray as a power known.  This power does not count against your number of powers known.  When manifesting this power, you can either choose to manifest it for no cost by expending your psionic focus, in which case it cannot be augmented, or you can choose to manifest it normally, in which case your effective manifester level is treated as one higher than normal.|MartialPsionicsACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MartialPsionicsACBonus|1+floor(PsychicWarriorLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic Warrior=1|Energy Ray"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|MartialPsionicsACBonus|TYPE=Deflection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2038,
+    "record_key": "Martial Kineticist ~ Martial Psionics"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

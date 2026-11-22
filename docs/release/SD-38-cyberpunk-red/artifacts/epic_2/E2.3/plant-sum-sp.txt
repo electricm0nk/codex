@@ -1,0 +1,48 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-a)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 24.61s
+     Running unittests src/lib.rs (/home/ubuntu/cargo-target/sd38-a/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 9 tests
+test rules_core::cpr::armor::tests::refusals_name_their_reason ... ok
+test rules_core::cpr::armor::tests::the_catalog_equals_the_p351_master_armor_list ... ok
+test rules_core::cpr::armor::tests::light_armorjack_head_and_flak_body_give_body_sp_15_head_sp_11_and_minus_4_once ... ok
+test rules_core::cpr::armor::tests::move_3_with_minus_4_floors_at_0 ... ok
+test rules_core::cpr::armor::tests::sp_does_not_stack_the_highest_source_in_a_location_wins ... FAILED
+test rules_core::cpr::armor::tests::other_sp_sources_compete_with_worn_armour_highest_wins ... FAILED
+test rules_core::cpr::armor::tests::rows_cite_the_page_and_the_stat_order_is_ref_dex_move ... ok
+test rules_core::cpr::armor::tests::the_bodyweight_suit_covers_both_locations_at_sp_11 ... FAILED
+test rules_core::cpr::armor::tests::the_single_worst_penalty_applies_once_across_both_locations ... ok
+
+failures:
+
+---- rules_core::cpr::armor::tests::sp_does_not_stack_the_highest_source_in_a_location_wins stdout ----
+
+thread 'rules_core::cpr::armor::tests::sp_does_not_stack_the_highest_source_in_a_location_wins' (336568) panicked at src/rules_core/cpr/armor.rs:321:9:
+assertion `left == right` failed: max(7, 11, 4), never 7 + 11 + 4
+  left: 22
+ right: 11
+
+---- rules_core::cpr::armor::tests::other_sp_sources_compete_with_worn_armour_highest_wins stdout ----
+
+thread 'rules_core::cpr::armor::tests::other_sp_sources_compete_with_worn_armour_highest_wins' (336565) panicked at src/rules_core/cpr/armor.rs:358:9:
+assertion `left == right` failed
+  left: 18
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rules_core::cpr::armor::tests::the_bodyweight_suit_covers_both_locations_at_sp_11 stdout ----
+
+thread 'rules_core::cpr::armor::tests::the_bodyweight_suit_covers_both_locations_at_sp_11' (336569) panicked at src/rules_core/cpr/armor.rs:348:9:
+assertion `left == right` failed
+  left: 26
+ right: 15
+
+
+failures:
+    rules_core::cpr::armor::tests::other_sp_sources_compete_with_worn_armour_highest_wins
+    rules_core::cpr::armor::tests::sp_does_not_stack_the_highest_source_in_a_location_wins
+    rules_core::cpr::armor::tests::the_bodyweight_suit_covers_both_locations_at_sp_11
+
+test result: FAILED. 6 passed; 3 failed; 0 ignored; 0 measured; 2945 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

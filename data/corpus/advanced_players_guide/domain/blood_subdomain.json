@@ -1,0 +1,43 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Blood Subdomain",
+    "name": "Blood Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Blood Subdomain],[PREVARLT:WarDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Blood Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Blood Subdomain=1|Magic Weapon|Blood Subdomain=2|Spiritual Weapon|Blood Subdomain=3|Vampiric Touch|Blood Subdomain=4|Divine Power|Blood Subdomain=5|Wall of Thorns|Blood Subdomain=6|Blade Barrier|Blood Subdomain=7|Inflict Serious Wounds (Mass)|Blood Subdomain=8|Power Word Stun|Blood Subdomain=9|Power Word Kill"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "record_key": "Blood Subdomain",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

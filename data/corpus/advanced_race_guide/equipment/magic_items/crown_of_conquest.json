@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 24600.0,
+    "description": "Whenever a critical hit is confirmed, the crown creates a prayer effect centered on the crown's wearer (caster level 5th).; Any follower or cohort of the wearer gains a +1 bonus on attack rolls and saving throws against fear effects while within line of sight of the wearer.",
+    "key": "Crown of Conquest",
+    "name": "Crown of Conquest",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Intimidate",
+          "4",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "LeadershipScore",
+          "1",
+          "PREABILITY:1,CATEGORY=FEAT,Leadership"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "24600"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "SPROP",
+        "value": "Whenever a critical hit is confirmed, the crown creates a prayer effect centered on the crown's wearer (caster level 5th)."
+      },
+      {
+        "key": "SPROP",
+        "value": "Any follower or cohort of the wearer gains a +1 bonus on attack rolls and saving throws against fear effects while within line of sight of the wearer.|PREABILITY:1,CATEGORY=FEAT,Leadership"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Crown of Conquest",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

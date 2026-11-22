@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Martial Mastery",
+    "name": "Martial Mastery",
+    "description": "You broaden your study of weapons to encompass multiple similar weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Martial Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Martial Versatility"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHuman=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterWeaponQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "You broaden your study of weapons to encompass multiple similar weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Martial Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Each combat feat you have that applies to a specific weapon (e.g., Weapon Focus) can be used with all weapons in the same weapon group."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 31,
+    "record_key": "Warpriest Bonus Feat ~ Martial Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

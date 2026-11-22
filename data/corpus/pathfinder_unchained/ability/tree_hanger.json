@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Tree Hanger",
+    "name": "Tree Hanger",
+    "description": "When you jump upward to use your tail to hang from an object, you can spend up to 5 stamina points. You gain a bonus on the Acrobatics check equal to the number of stamina points you spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Tree Hanger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you jump upward to use your tail to hang from an object, you can spend up to 5 stamina points. You gain a bonus on the Acrobatics check equal to the number of stamina points you spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ARG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_arg.lst",
+    "sha256": "b41ac3a17891f22fc0609b12ce383abe454fb693714e9e3d5dc8e4481b7f6965",
+    "line": 56,
+    "record_key": "Combat Trick ~ Tree Hanger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

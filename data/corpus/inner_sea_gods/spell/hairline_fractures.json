@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "With a single touch, you create temporary hairline fractures in a piece of stone or a creature with the earth subtype. If you cast this spell on a section of stone, you reduce its hardness to 5 and its hit points to 10/inch of thickness. If you cast this spell on a creature with the earth subtype, that creature takes a -2 penalty to AC for the spell's duration. Make whole reverses this spell's effect.",
+    "key": "Hairline Fractures",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "With a single touch, you create temporary hairline fractures in a piece of stone or a creature with the earth subtype. If you cast this spell on a section of stone, you reduce its hardness to 5 and its hit points to 10/inch of thickness. If you cast this spell on a creature with the earth subtype, that creature takes a -2 penalty to AC for the spell's duration. Make whole reverses this spell's effect."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a broken twig)"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Hairline Fractures"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "5-foot-square section of stone or a creature with the earth subtype"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Hairline Fractures",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

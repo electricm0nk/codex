@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Glowing Glove",
+    "category": "MagicItems",
+    "name": "Glowing Glove",
+    "cost_gp": 2000.0,
+    "weight_lbs": 0.0,
+    "description": "As a standard action, you may press this glove against any surface or object and cause a luminous handprint to appear. The print is the color you wish, sheds light as a candle, and lasts 1 day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 11,
+    "record_key": "Glowing Glove"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

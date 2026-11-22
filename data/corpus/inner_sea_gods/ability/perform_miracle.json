@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Perform Miracle",
+    "name": "Perform Miracle",
+    "description": "The exalted at the pinnacle of her abilities can create effects that are nothing short of miraculous. At 10th level, once per day the exalted can do one of the following things.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Perform Miracle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The exalted at the pinnacle of her abilities can create effects that are nothing short of miraculous. At 10th level, once per day the exalted can do one of the following things."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Duplicate any cleric spell of 6th level or lower."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Duplicate any other spell of 5th level or lower."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Potentially undo the harmful effects of certain spells, such as feeblemind or insanity, that require miracle to counteract. To attempt to undo such a spell, the exalted must make a caster level check using her level in the spellcasting class to which she added her exalted levels (including the increases in spellcasting from her exalted levels) against a DC of 11 + the caster level of the targeted effect. On a success, the exalted counters the spell or effect. On a failure, the exalted does not counter the spell or effect, though she can try again after 24 hours."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Make a request of her chosen deity in line with the above effects. Doing so requires a sacrifice of 10,000gp in powdered diamond or another appropriate precious material based on the teachings of the deity's faith. Examples of potential effects include returning a fallen ally to life and full health, teleporting the exalted and her allies to a location with no chance of error, or protecting a town from a wildfire. In any event, a request that is out of line with the deity's nature is refused."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A duplicated spell allows saving throws and spell resistance as normal, but the save DCs are calculated as if it were a 7th-level spell. When an exalted uses this ability to duplicate a spell with a material component that costs more than 100 gp, she must provide that component."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 102,
+    "record_key": "Exalted ~ Perform Miracle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

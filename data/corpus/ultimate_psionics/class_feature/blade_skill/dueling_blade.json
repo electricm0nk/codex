@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Blade Skill ~ Dueling Blade",
+    "name": "Dueling Blade",
+    "class": "Blade Skill",
+    "description": "When you are fighting defensively, or using the Combat Expertise feat, with a mind blade, and an opponent misses you in melee, you may expend your psionic focus to make an attack of opportunity against that opponent with your mind blade.  You ignore the penalty to attack rolls from fighting defensively for this attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Dueling Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are fighting defensively, or using the Combat Expertise feat, with a mind blade, and an opponent misses you in melee, you may expend your psionic focus to make an attack of opportunity against that opponent with your mind blade.  You ignore the penalty to attack rolls from fighting defensively for this attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 762,
+    "record_key": "Blade Skill ~ Dueling Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

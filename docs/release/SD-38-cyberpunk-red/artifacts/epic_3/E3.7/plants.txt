@@ -1,0 +1,18 @@
+== p1_hl_plus_one
+test cpr_creation::tests::complete_package_cyberware_is_bought_placed_and_saved ... FAILED
+test cpr_creation::tests::ten_of_ten_role_packs_give_their_printed_humanity_loss ... FAILED
+test cpr_creation::tests::the_humanity_and_emp_preview_is_the_engine_row ... FAILED
+test cpr_creation::tests::the_preview_carries_the_engines_stat_and_derived_rows ... FAILED
+test result: FAILED. 31 passed; 4 failed; 0 ignored; 0 measured; 824 filtered out; finished in 23.32s
+== p2_slot_refusal_off
+test cpr_creation::tests::an_over_slot_cyberware_purchase_is_refused_and_nothing_saves ... FAILED
+test result: FAILED. 34 passed; 1 failed; 0 ignored; 0 measured; 824 filtered out; finished in 21.22s
+== p3_installs_dropped
+test cpr_creation::tests::an_over_slot_cyberware_purchase_is_refused_and_nothing_saves ... FAILED
+test cpr_creation::tests::complete_package_cyberware_is_bought_placed_and_saved ... FAILED
+test cpr_creation::tests::ten_of_ten_role_packs_give_their_printed_humanity_loss ... FAILED
+test cpr_creation::tests::the_humanity_and_emp_preview_is_the_engine_row ... FAILED
+test result: FAILED. 31 passed; 4 failed; 0 ignored; 0 measured; 824 filtered out; finished in 20.31s
+== p4_fixed_purchase_allowed
+test cpr_creation::tests::complete_package_cyberware_is_bought_placed_and_saved ... FAILED
+test result: FAILED. 34 passed; 1 failed; 0 ignored; 0 measured; 824 filtered out; finished in 20.15s

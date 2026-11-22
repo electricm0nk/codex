@@ -1,0 +1,90 @@
+name: Linux build check
+
+# Proves the Linux publish job's build before a release: the same container, the same apt list
+# (tools/release/test_check_glibc_floor.py asserts both), the same build steps and the glibc gate.
+# Uploads nothing, publishes nothing. `push` with `paths:` runs it on any branch that changes the
+# build (workflow_dispatch alone cannot run a workflow that is not yet on the default branch).
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/publish-tester-release.yml'
+      - '.github/workflows/linux-build-check.yml'
+      - 'tools/release/check_glibc_floor.py'
+  push:
+    paths:
+      - '.github/workflows/publish-tester-release.yml'
+      - '.github/workflows/linux-build-check.yml'
+      - 'tools/release/check_glibc_floor.py'
+
+permissions:
+  contents: read
+
+jobs:
+  linux-build-check:
+    name: Linux build check (container, glibc gate)
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+    env:
+      APPIMAGE_EXTRACT_AND_RUN: 1
+    steps:
+      - name: Install Linux build dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt-get update -y
+          apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libdbus-1-dev \
+            build-essential \
+            pkg-config \
+            curl \
+            ca-certificates \
+            git \
+            file \
+            xdg-utils \
+            python3 \
+            python3-pip \
+            python-is-python3
+
+      - uses: actions/checkout@v7
+
+      # Root in the container does not own the runner-owned workspace, and checkout's safe.directory lives in a temporary HOME; without this every git call fails "dubious ownership".
+      - name: Mark the workspace git-safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+          key: ubuntu-22.04-container
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Build the PCGen import sidecar
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/release/pcg_import apps/desktop/src-tauri/binaries/pcg_import-x86_64-unknown-linux-gnu
+
+      - name: Build Linux artifact set
+        working-directory: apps/desktop
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --bundles deb,appimage --ci
+
+      - name: Gate Linux glibc floor
+        run: |
+          DEB=$(find apps/desktop/src-tauri/target/release/bundle/deb -maxdepth 1 -name '*.deb' | head -1)
+          APPIMAGE=$(find apps/desktop/src-tauri/target/release/bundle/appimage -maxdepth 1 -name '*.AppImage' | head -1)
+          python3 tools/release/check_glibc_floor.py --deb "$DEB" --appimage "$APPIMAGE"

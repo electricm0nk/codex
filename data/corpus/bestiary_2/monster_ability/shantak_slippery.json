@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shantak ~ Slippery",
+    "delivery": "Extraordinary",
+    "description": "A shantak's scales seep slippery slime.  This grants the creature a +8 bonus on all Escape Artist checks and to its CMD against grapples, and imparts a -5 penalty on all Ride checks made by creatures attempting to ride a shantak.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:shantak_slippery",
+    "name": "Slippery",
+    "owners": [
+      "bestiary_2:monster:shantak"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_GRAPPLE|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shantak's scales seep slippery slime.  This grants the creature a +8 bonus on all Escape Artist checks and to its CMD against grapples, and imparts a -5 penalty on all Ride checks made by creatures attempting to ride a shantak."
+      },
+      {
+        "key": "KEY",
+        "value": "Shantak ~ Slippery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.244",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1136,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Shantak ~ Slippery",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Soulknife ~ Quick Draw",
+    "name": "Quick Draw",
+    "class": "Soulknife",
+    "description": "Manifest mind blade as a free action %1/round.|QuickDrawTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife ~ Quick Draw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuickDrawTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Manifest mind blade as a free action %1/round.|QuickDrawTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickDrawTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 740,
+    "record_key": "Soulknife ~ Quick Draw"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

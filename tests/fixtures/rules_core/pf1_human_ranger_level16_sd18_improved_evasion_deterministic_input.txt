@@ -1,0 +1,58 @@
+# SD18 deterministic Human Ranger level 16 Improved Evasion widening
+# fixture.
+# Widens the accepted SD18 deterministic Human Ranger level-1..level-15
+# hybrid chassis (tests/sd18_ranger_level15_widening.rs, the loop's most
+# recent Ranger ceiling) to Ranger level 16 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It is
+# the level-15 fixture with the class level bumped -- no new choice
+# selections are exercised, since the level-16 "Special" column entry
+# (Improved Evasion, verified independently against d20pfsrd and the
+# Archives of Nethys aonprd.com mirror, both byte-for-byte identical: "At
+# 16th level, a ranger's evasion improves. This ability works like evasion,
+# except that while the ranger still takes no damage on a successful Reflex
+# saving throw against attacks, he henceforth takes only half damage on a
+# failed save.") is an automatic, no-choice grant mirroring Monk's own
+# Improved Evasion and Ranger's own base Evasion idiom exactly: a bounded
+# +0 identity/recognition record only, since no saving-throw-resolution or
+# damage-resolution engine exists anywhere in this codebase.
+#
+# Everything else carries over from the level-15 fixture unchanged. No
+# saving-throw-resolution or damage-resolution engine exists in this
+# codebase, so no damage math is fabricated; the fixture makes no such
+# claim.
+case_id=pf1-crb-human-ranger-level16-sd18-improved-evasion
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:16
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_favored_enemy_4:enemy:construct
+choice=choice:ranger_favored_enemy_bonus_increase_target_3:enemy:fourth
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_combat_style_bonus_feat_4:feat:improved_precise_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_favored_terrain_3:terrain:swamp
+choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

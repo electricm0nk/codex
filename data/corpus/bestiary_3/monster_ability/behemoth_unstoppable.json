@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Behemoth ~ Unstoppable",
+    "delivery": "Extraordinary",
+    "description": "If a behemoth starts its turn suffering from any or all of the following conditions, it recovers from them at the end of its turn: blind, confused, dazed, deafened, dazzled, exhausted, fatigued, nauseated, sickened, slowed, staggered, and stunned.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:behemoth_unstoppable",
+    "name": "Unstoppable",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a behemoth starts its turn suffering from any or all of the following conditions, it recovers from them at the end of its turn: blind, confused, dazed, deafened, dazzled, exhausted, fatigued, nauseated, sickened, slowed, staggered, and stunned."
+      },
+      {
+        "key": "KEY",
+        "value": "Behemoth ~ Unstoppable"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2321,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Behemoth ~ Unstoppable",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

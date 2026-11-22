@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Some changelings have an innate talent for magic. They can choose one 1st- or 0-level spell from the witch spell list that does not have a material component costing more than 1 gp. They can use the chosen spell as a spell-like ability once per day if it is a 1st-level spell or three times per day if it is a 0-level spell (caster level equal to the changeling's character level).",
+    "key": "Changeling ~ Hag Magic",
+    "name": "Hag Magic",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Hag Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Changeling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Changeling ~ Hag Magic],[!PREFACT:1,ABILITIES,Changeling_ReplaceNaturalArmor=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some changelings have an innate talent for magic. They can choose one 1st- or 0-level spell from the witch spell list that does not have a material component costing more than 1 gp. They can use the chosen spell as a spell-like ability once per day if it is a 1st-level spell or three times per day if it is a 0-level spell (caster level equal to the changeling's character level)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces natural armor.|!PREABILITY:1,CATEGORY=Special Ability,Changeling ~ Hag Magic"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SPELLS|CLASSLIST=Witch[LEVELMIN=0;LEVELMAX=1]"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "FACT",
+        "value": "Changeling_ReplaceNaturalArmor|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 418,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Changeling ~ Hag Magic",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

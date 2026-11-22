@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Elemental Caller",
+    "name": "Elemental Caller",
+    "description": "Treat your caster level as 1 higher to determine the duration of spells you cast that call or summon genies or outsiders with the elemental subtype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Elemental Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Suli Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Elemental Caller]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSuli=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat your caster level as 1 higher to determine the duration of spells you cast that call or summon genies or outsiders with the elemental subtype."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 54,
+    "record_key": "Trait ~ Elemental Caller"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Ifrit ~ Ability Scores",
+    "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "Ifrit Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Ifrit_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Ifrits are passionate and quick, but also impetuous and destructive.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ifrit_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits are passionate and quick, but also impetuous and destructive."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "DEX,CHA",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "WIS",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_abilities_race.lst",
+    "sha256": "d6fc2affc3f9c65ca0fe05c1c32eb3ad7baa5783e2ba641bb113c12a1b2a3305",
+    "line": 14,
+    "record_key": "Ifrit ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

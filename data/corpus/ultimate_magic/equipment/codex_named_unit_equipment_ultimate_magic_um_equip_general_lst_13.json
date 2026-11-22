@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_13)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_13)",
+    "cost_gp": 195.0,
+    "weight_lbs": null,
+    "description": "Level 2 Diviner; Opposition Schools - Illusion, transmutation; Spells - 1.comprehend languages(S), detect secret doors(S), detect undead(S), identify(S), protection from evil, protection from law, summon monster I, true strike(S)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 13,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_13)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:13"
+  }
+}

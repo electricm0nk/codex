@@ -1,0 +1,62 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 0.2,
+    "description": null,
+    "key": "Parchment (Sheet)",
+    "name": "Parchment (Sheet)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Parchment (Sheet)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Paper, Parchment"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Parchment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Writing.Documents"
+      },
+      {
+        "key": "COST",
+        "value": "0.2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|Sheets of"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Single|Sheet of"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Parchment (Sheet)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

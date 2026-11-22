@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "channel": "alpha",
+  "version": "0.0.0",
+  "tag": "alpha/v0.0.0-deadbeef",
+  "tranche_id": "STC-CODEX-SD-16",
+  "source_branch": "develop",
+  "source_commit": "0000000000000000000000000000000000000000",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
+  "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha/v0.0.0-deadbeef",
+  "release_notes_hash": "f6ea1e33cea6aff4faf52ac4646ee03fd3079d5e403b460f264c01eda70554ed",
+  "linux_appimage": {
+    "name": "codex_0.0.0_amd64.AppImage",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.0-deadbeef/codex_0.0.0_amd64.AppImage",
+    "sha256": "ef8f846cb6a1455d7457f017ed8c1a50d9720693b7a72f40644eeac0e366d0a5",
+    "size_bytes": 31
+  },
+  "workflow_provenance": {
+    "workflow": ".github/workflows/publish-tester-release.yml",
+    "run_id": "1",
+    "run_attempt": 1
+  },
+  "eligibility": {
+    "min_supported_version": "0.0.0",
+    "appimage_install": true,
+    "required_install_kind": "appimage"
+  },
+  "promotion_lineage": {
+    "source_branch": "develop",
+    "source_commit": "0000000000000000000000000000000000000000",
+    "promoted_at": "2026-07-03T00:00:00Z"
+  },
+  "signature": null
+}

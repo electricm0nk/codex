@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Horned Devil ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "5 Ft., DC %1",
+    "description_variables": [
+      "FearAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:horned_devil_fear_aura",
+    "name": "Fear Aura",
+    "owners": [
+      "beastiary:monster:devil_horned"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(5 Ft., DC %1)|FearAuraDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearAuraDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "5 Ft., DC %1|FearAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Horned Devil ~ Fear Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": "p.76",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 354,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Horned Devil ~ Fear Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

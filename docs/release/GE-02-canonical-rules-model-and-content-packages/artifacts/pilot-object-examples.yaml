@@ -1,0 +1,136 @@
+---
+title: GE-02 Pilot Object Examples
+stc_id: STC-CODEX-GE-02
+artifact_type: generated-documentary-output
+status: accepted
+scope: programs/codex/requirements/GE-02-canonical-rules-model-and-content-packages/artifacts
+source_stc: ../README.md
+note: These examples are documentary skeletons, not final production schemas.
+---
+
+# These examples are illustrative canonical-model skeletons.
+# They are intentionally not final production schemas.
+
+source_package:
+  id: pf1.crb
+  game_system: pathfinder_1e
+  title: Core Rulebook
+  version: unresolved
+  imported_from:
+    pcgen_pcc: data/pathfinder/paizo/roleplaying_game/core_rulebook/core_rulebook.pcc
+  dependency_edges:
+    - conversion_support.pcc
+    - core_essentials/_core_essentials.pcc
+  validation_state: pending
+
+race:
+  id: pf1.crb.race.human
+  package: pf1.crb
+  display_name: Human
+  traits:
+    - ref: pf1.crb.race_trait.human.default_traits
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_essentials/races/human/human_races.lst
+    source_entry: Human
+    source_span: line 6
+
+class:
+  id: pf1.crb.class.fighter
+  package: pf1.crb
+  display_name: Fighter
+  levels:
+    1:
+      effects:
+        - ref: pf1.crb.effect.fighter.level1.bab
+        - ref: pf1.crb.effect.fighter.level1.saves
+        - ref: pf1.crb.effect.fighter.level1.proficiencies
+      formulas:
+        - ref: pf1.crb.formula.fighter.skill_points
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst
+    source_entry: Fighter
+    source_span: lines 139-143
+
+equipment:
+  - id: pf1.crb.equipment.chain_shirt
+    kind: armor
+    package: pf1.crb
+    proficiency_ref: pf1.crb.proficiency.armor.light
+    fields:
+      armor_check_penalty: unresolved_from_import
+      max_dex_bonus: unresolved_from_import
+      spell_failure: unresolved_from_import
+    provenance:
+      source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst
+      source_span: line 40
+  - id: pf1.crb.equipment.longsword
+    kind: weapon
+    package: pf1.crb
+    proficiency_ref: pf1.crb.proficiency.weapon.longsword
+    fields:
+      damage: unresolved_from_import
+      critical: unresolved_from_import
+    provenance:
+      source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst
+      source_span: line 165
+
+effect:
+  id: pf1.crb.effect.fighter.level1.proficiencies
+  owner: pf1.crb.class.fighter
+  kind: grant
+  target_kind: proficiency
+  target_selector: fighter_standard_weapon_armor_shield_proficiencies
+  condition:
+    status: unresolved_structured_predicate
+    reason: archetype-conditioned suppression exists in GE-01 ledger
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst
+    source_span: lines 236-242
+
+prerequisite:
+  id: pf1.crb.prereq.martial_weapon_proficiency.choice
+  status: deferred_structured_predicate
+  source_text_policy: preserve legacy predicate text until converted
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst
+    source_span: line 120 and adjacent prerequisite rows
+  diagnostics:
+    - ref: diag.ge02.choice_model_deferred
+
+formula:
+  id: pf1.crb.formula.fighter.bab.level_progression
+  target: base_attack_bonus
+  status: deferred_value_expression
+  source_text_policy: preserve formula text and bound variables
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst
+    source_span: lines 139-141
+  downstream_owner: GE-04 engine
+
+choice_set:
+  id: pf1.crb.choice.martial_weapon_proficiency
+  owner: pf1.crb.feat.martial_weapon_proficiency
+  repeatable: true
+  cardinality: one_per_selection
+  selector: martial_weapon_proficiency_catalog
+  status: deferred_selector_semantics
+  provenance:
+    source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst
+    source_span: line 120
+
+source_map_entry:
+  source_package: pf1.crb
+  source_file: data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst
+  source_span: lines 139-143
+  legacy_construct: CLASS Fighter with BONUS/DEFINE progression tokens
+  canonical_targets:
+    - pf1.crb.class.fighter
+    - pf1.crb.formula.fighter.bab.level_progression
+  disposition: deferred
+  lossiness: unknown-risk
+
+diagnostic:
+  id: diag.ge02.formula_model_deferred
+  severity: blocking_for_engine_execution
+  linked_source_map: cr_classes.lst:139-141
+  message: Fighter formula model is captured as structured deferred value expression; evaluator semantics belong to downstream GE-04 work.

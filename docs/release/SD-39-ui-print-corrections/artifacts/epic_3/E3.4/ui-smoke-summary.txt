@@ -1,0 +1,13 @@
+PASS  sheet-tab-weapons
+PASS  sheet-tab-gear
+PASS  sheet-market-open-weapons
+PASS  sheet-market-open-defense
+PASS  sheet-market-filter-armor
+PASS  sheet-market-buy-refused
+PASS  sheet-market-buy
+PASS  sheet-market-sell
+PASS  sheet-market-buy-weapon-carried
+PASS  sheet-market-cashless
+PASS  sheet-market-enhancement-ac
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+11/11 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 11 rows)

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Tireless Avenger",
+    "name": "Tireless Avenger",
+    "description": "You restlessly pursue your enemies. When you're in pursuit of one of your favored enemies, the DC for the Constitution check to avoid taking lethal damage during a forced march is 10 + 1 per extra hour, instead of 10 + 2 per extra hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Tireless Avenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Tireless Avenger],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You restlessly pursue your enemies. When you're in pursuit of one of your favored enemies, the DC for the Constitution check to avoid taking lethal damage during a forced march is 10 + 1 per extra hour, instead of 10 + 2 per extra hour."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 96,
+    "record_key": "Trait ~ Tireless Avenger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

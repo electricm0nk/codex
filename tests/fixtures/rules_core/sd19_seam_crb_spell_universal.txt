@@ -1,0 +1,2 @@
+# Fixture for §2.4 Universal, source: cr_spells.lst, spell name: Arcane Mark
+Arcane Mark			TYPE:Arcane			CLASSES:Sorcerer,Wizard=0								SCHOOL:Universal																		COMPS:V, S			CASTTIME:1 standard action	RANGE:Touch				TARGETAREA:One personal rune or mark, all of which must fit within 1 sq. ft.					DURATION:Permanent								SAVEINFO:None					SPELLRES:No					SOURCEPAGE:p.244	SOURCELINK:http://paizo.com/pathfinderRPG/prd/spells/arcaneMark.html#_arcane-mark			DESC:This spell allows you to inscribe your personal rune or mark.|!PRERULE:1,DisplayFullSpell

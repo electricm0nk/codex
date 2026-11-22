@@ -1,0 +1,1299 @@
+{
+ "source": "Cyberpunk RED core rulebook v1.22: Streetrat skill tables p087-p088 (printed pp. 86-87), transcribed from the SD-38 inventory creation.md section 2d and image-checked against the p087 page image (Rockerboy..Medtech) and the p088 page text (Media..Nomad); worked examples transcribed from p088, p090 and p091. Never built from data/cyberpunk-red/corpus.",
+ "budget": 86,
+ "cultural_language_free_level": 4,
+ "basic_skills": [
+  "Athletics",
+  "Brawling",
+  "Concentration",
+  "Conversation",
+  "Education",
+  "Evasion",
+  "First Aid",
+  "Human Perception",
+  "Language (Streetslang)",
+  "Local Expert (Your Home)",
+  "Perception",
+  "Persuasion",
+  "Stealth"
+ ],
+ "streetrat_lists": [
+  {
+   "role": "Rockerboy",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 6
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 6
+    },
+    {
+     "name": "Human Perception",
+     "level": 6
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 4
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 6
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Composition",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Personal Grooming",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Play Instrument (choose 1)",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Streetwise",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Wardrobe & Style",
+     "level": 4,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Solo",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 6
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 6
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Autofire",
+     "level": 6,
+     "printed_x2": true
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Interrogation",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Resist Torture/Drugs",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Tactics",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Netrunner",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 6
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 6
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Basic Tech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Conceal/Reveal Object",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Cryptography",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Cybertech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Electronics/Security Tech",
+     "level": 6,
+     "printed_x2": true
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Library Search",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Tech",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 6
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 6
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Basic Tech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Cybertech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Electronics/Security Tech",
+     "level": 6,
+     "printed_x2": true
+    },
+    {
+     "name": "Land Vehicle Tech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Science (choose 1)",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Weaponstech",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Medtech",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 6
+    },
+    {
+     "name": "Education",
+     "level": 6
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 6
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Basic Tech",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Cybertech",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Deduction",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Paramedic",
+     "level": 6,
+     "printed_x2": true
+    },
+    {
+     "name": "Resist Torture/Drugs",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Science (choose 1)",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Media",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 6
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 6
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 6
+    },
+    {
+     "name": "Perception",
+     "level": 6
+    },
+    {
+     "name": "Persuasion",
+     "level": 6
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Bribery",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Composition",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Deduction",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Library Search",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Lip Reading",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Photography/Film",
+     "level": 4,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Lawman",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 6
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 6
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Autofire",
+     "level": 6,
+     "printed_x2": true
+    },
+    {
+     "name": "Criminology",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Deduction",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Interrogation",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Tracking",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Exec",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 6
+    },
+    {
+     "name": "Education",
+     "level": 6
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 6
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 6
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Accounting",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Bureaucracy",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Business",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Deduction",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Lip Reading",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Personal Grooming",
+     "level": 4,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Fixer",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 6
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 6
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 4
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 6
+    },
+    {
+     "name": "Perception",
+     "level": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 4
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Bribery",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Business",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Forgery",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Pick Lock",
+     "level": 4,
+     "printed_x2": false
+    },
+    {
+     "name": "Streetwise",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Trading",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  },
+  {
+   "role": "Nomad",
+   "basic": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 6
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 6
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 4
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 6
+    }
+   ],
+   "role_skills": [
+    {
+     "name": "Animal Handling",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Drive Land Vehicle",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Handgun",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Tracking",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Trading",
+     "level": 6,
+     "printed_x2": false
+    },
+    {
+     "name": "Wilderness Survival",
+     "level": 6,
+     "printed_x2": false
+    }
+   ]
+  }
+ ],
+ "worked_examples": {
+  "streetrat_solo_p088": {
+   "role": "Solo",
+   "method": "streetrat",
+   "cultural_language": "Language (Cultural Origin)",
+   "skills": [
+    {
+     "name": "Athletics",
+     "level": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2
+    },
+    {
+     "name": "Education",
+     "level": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 6
+    },
+    {
+     "name": "Human Perception",
+     "level": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2
+    },
+    {
+     "name": "Perception",
+     "level": 6
+    },
+    {
+     "name": "Persuasion",
+     "level": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2
+    },
+    {
+     "name": "Autofire",
+     "level": 6
+    },
+    {
+     "name": "Handgun",
+     "level": 6
+    },
+    {
+     "name": "Interrogation",
+     "level": 6
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 6
+    },
+    {
+     "name": "Resist Torture/Drugs",
+     "level": 6
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 6
+    },
+    {
+     "name": "Tactics",
+     "level": 6
+    }
+   ]
+  },
+  "edgerunner_solo_p090": {
+   "role": "Solo",
+   "method": "edgerunner",
+   "printed_total_cost": 86,
+   "note": "p090 prints 'Melee Weapons'; the Solo list and the Master Skill List name it 'Melee Weapon'",
+   "cultural_language": "Language (Cultural Origin)",
+   "skills": [
+    {
+     "name": "Athletics",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Brawling",
+     "level": 6,
+     "cost": 6
+    },
+    {
+     "name": "Concentration",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Education",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Evasion",
+     "level": 6,
+     "cost": 6
+    },
+    {
+     "name": "First Aid",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Human Perception",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Perception",
+     "level": 6,
+     "cost": 6
+    },
+    {
+     "name": "Persuasion",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Stealth",
+     "level": 6,
+     "cost": 6
+    },
+    {
+     "name": "Autofire",
+     "level": 2,
+     "cost": 4
+    },
+    {
+     "name": "Handgun",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Interrogation",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 6,
+     "cost": 6
+    },
+    {
+     "name": "Resist Torture/Drugs",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Tactics",
+     "level": 4,
+     "cost": 4
+    }
+   ]
+  },
+  "complete_package_solo_p091": {
+   "role": "Solo",
+   "method": "complete_package",
+   "printed_total_cost": 86,
+   "cultural_language": "Language (Cultural Origin)",
+   "skills": [
+    {
+     "name": "Athletics",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Brawling",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Concentration",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Conversation",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Education",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Evasion",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "First Aid",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Human Perception",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Language (Streetslang)",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Local Expert (Your Home)",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Perception",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Persuasion",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Stealth",
+     "level": 2,
+     "cost": 2
+    },
+    {
+     "name": "Autofire",
+     "level": 6,
+     "cost": 12
+    },
+    {
+     "name": "Deduction",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Drive Land Vehicle",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Endurance",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Handgun",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Interrogation",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Martial Arts (Karate)",
+     "level": 2,
+     "cost": 4
+    },
+    {
+     "name": "Melee Weapon",
+     "level": 5,
+     "cost": 5
+    },
+    {
+     "name": "Resist Torture/Drugs",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Shoulder Arms",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Tactics",
+     "level": 3,
+     "cost": 3
+    },
+    {
+     "name": "Tracking",
+     "level": 4,
+     "cost": 4
+    },
+    {
+     "name": "Wilderness Survival",
+     "level": 4,
+     "cost": 4
+    }
+   ],
+   "note": "p091 prints 'Martial Arts (x2)' without a form; the fixture names the form Karate, one of the forms the Martial Arts skill description lists, because the skill requires one"
+  }
+ }
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Medium Pistol",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 12,
+    "extended": 18,
+    "drum": 36,
+    "text": "Medium Pistol: Standard 12; Extended 18; Drum 36"
+  },
+  {
+    "name": "Heavy Pistol",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 8,
+    "extended": 14,
+    "drum": 28,
+    "text": "Heavy Pistol: Standard 8; Extended 14; Drum 28"
+  },
+  {
+    "name": "Very Heavy Pistol",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 8,
+    "extended": 14,
+    "drum": 28,
+    "text": "Very Heavy Pistol: Standard 8; Extended 14; Drum 28"
+  },
+  {
+    "name": "SMG",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 30,
+    "extended": 40,
+    "drum": 50,
+    "text": "SMG: Standard 30; Extended 40; Drum 50"
+  },
+  {
+    "name": "Heavy SMG",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 40,
+    "extended": 50,
+    "drum": 60,
+    "text": "Heavy SMG: Standard 40; Extended 50; Drum 60"
+  },
+  {
+    "name": "Shotgun",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 4,
+    "extended": 8,
+    "drum": 16,
+    "text": "Shotgun: Standard 4; Extended 8; Drum 16"
+  },
+  {
+    "name": "Assault Rifle",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 25,
+    "extended": 35,
+    "drum": 45,
+    "text": "Assault Rifle: Standard 25; Extended 35; Drum 45"
+  },
+  {
+    "name": "Sniper Rifle",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 4,
+    "extended": 8,
+    "drum": 12,
+    "text": "Sniper Rifle: Standard 4; Extended 8; Drum 12"
+  },
+  {
+    "name": "Grenade Launcher",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 2,
+    "extended": 4,
+    "drum": 6,
+    "text": "Grenade Launcher: Standard 2; Extended 4; Drum 6"
+  },
+  {
+    "name": "Rocket Launcher",
+    "kind": "clip_chart",
+    "source_page": "p345",
+    "standard": 1,
+    "extended": 2,
+    "drum": 3,
+    "text": "Rocket Launcher: Standard 1; Extended 2; Drum 3"
+  }
+]

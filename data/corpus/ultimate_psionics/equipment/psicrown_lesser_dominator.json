@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 14400.0,
+    "description": "Power Points - 30; Manifester Level - 9; Powers - Empathic Connection, Mind Control, Compelling Voice; Recharge Cost 9 pp, Gain 3 pp",
+    "key": "Psicrown (Lesser Dominator)",
+    "name": "Lesser Psicrown of the Dominator",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Lesser Psicrown of the Dominator"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Psicrown"
+      },
+      {
+        "key": "COST",
+        "value": "14400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Psicrown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.403"
+      },
+      {
+        "key": "SPROP",
+        "value": "Power Points - 30; Manifester Level - 9; Powers - Empathic Connection, Mind Control, Compelling Voice; Recharge Cost 9 pp, Gain 3 pp"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 163,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psicrown (Lesser Dominator)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

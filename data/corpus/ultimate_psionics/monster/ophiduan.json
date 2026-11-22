@@ -1,0 +1,131 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/2",
+    "corpus_key": "Ophiduan",
+    "external_ability_refs": [
+      "Psionic"
+    ],
+    "key": "ultimate_psionics:monster:ophiduan",
+    "monster_class": null,
+    "name": "Ophiduan",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Ophiduan"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionic"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Ophiduan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsPsionic|1"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsPsionic|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|true"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Reptilian"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid.Base.PC"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.21",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-13T02:27:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "record_key": "Ophiduan",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

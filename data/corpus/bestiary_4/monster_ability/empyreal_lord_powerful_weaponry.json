@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Empyreal Lord ~ Powerful Weaponry",
+    "delivery": null,
+    "description": "An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction. If the empyreal lord is chaotic or lawful, these attacks also count as that alignment for the purpose of overcoming damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:empyreal_lord_powerful_weaponry",
+    "name": "Powerful Weaponry",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction. If the empyreal lord is chaotic or lawful, these attacks also count as that alignment for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Empyreal Lord ~ Powerful Weaponry"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Empyreal Lord ~ Powerful Weaponry",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

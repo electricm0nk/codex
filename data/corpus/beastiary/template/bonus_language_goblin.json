@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Bonus Language ~ Goblin",
+    "name": "Bonus Language ~ Goblin",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Goblin"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_templates_language.lst",
+    "record_key": "Bonus Language ~ Goblin",
+    "sha256": "c9ba4a4ea05302ca10f29d60a5199c535ead9cbb2f638c846f346477e2d091a0"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

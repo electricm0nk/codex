@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Feral Path",
+    "category": "Psionic",
+    "name": "Advanced Feral Path",
+    "description": "When using the Feral trance, you gain a +%1 competence bonus to your damage rolls from natural attacks.  In addition, when using the Feral maneuver, if two natural attacks in the same charge are successful, your natural weapon deal extra damage equal to the damage dealt by one natural attack plus 1-1/2 times your Strength modifier (if the two natural addacks deal different amounts of damage, use the lesser of the two).|AdvancedFeralPathBonus",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Feral Path ~ First,Feral Path ~ Second",
+      "PREABILITY:2,CATEGORY=FEAT,Psionic Fist,Unavoidable Strike",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 26,
+    "record_key": "Advanced Feral Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

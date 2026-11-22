@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Crystal Dragon ~ Ray Reflection",
+    "name": "Ray Reflection",
+    "description": "An ancient crystal dragon's scales reflect ray spells back upon the ray's source if the ray fails to overcome the dragon's spell resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crystal Dragon ~ Ray Reflection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient crystal dragon's scales reflect ray spells back upon the ray's source if the ray fails to overcome the dragon's spell resistance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 488,
+    "record_key": "Crystal Dragon ~ Ray Reflection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

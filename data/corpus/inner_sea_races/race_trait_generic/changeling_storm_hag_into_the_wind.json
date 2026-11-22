@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The changeling gains a +1 racial bonus on ranged damage rolls.",
+    "key": "Changeling ~ Storm Hag Into the Wind",
+    "name": "Into the Wind (Storm Hag)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Storm Hag Into the Wind"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Into the Wind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling gains a +1 racial bonus on ranged damage rolls."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Ranged|1|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 414,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Changeling ~ Storm Hag Into the Wind",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

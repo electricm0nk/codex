@@ -1,0 +1,37 @@
+# desktop: cargo test --locked -j 8 --bins cpr_creation -- --test-threads=8 (before implementation)
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 45 previous errors
+      7 error[E0422]: cannot find struct, variant or union type `CprLifepathPick` in this scope
+      1 error[E0425]: cannot find function `skill_slug` in this scope
+      2 error[E0425]: cannot find type `CprLifepathTableDto` in this scope
+      1 error[E0425]: cannot find value `REFUSED_CULTURAL_LANGUAGE` in this scope
+      1 error[E0425]: cannot find value `REFUSED_LIFEPATH_COUNT` in this scope
+      2 error[E0425]: cannot find value `REFUSED_LIFEPATH_ROLL` in this scope
+      1 error[E0425]: cannot find value `REFUSED_LIFEPATH_SKIP` in this scope
+      1 error[E0425]: cannot find value `REFUSED_LIFEPATH_TABLE` in this scope
+      1 error[E0433]: cannot find type `CprLifepathRequest` in this scope
+      1 error[E0560]: struct `cpr_creation::CprCreationRequest` has no field named `lifepath`
+      1 error[E0599]: no associated function or constant named `load_choices` found for struct `codex::rules_core::cpr::store::CprCharacterStore` in the current scope
+      2 error[E0609]: no field `cultural_language` on type `cpr_creation::CprCreationPreview`
+      1 error[E0609]: no field `lifepath` on type `&'a cpr_creation::CprCreationPreview`
+      9 error[E0609]: no field `lifepath` on type `cpr_creation::CprCreationPreview`
+     14 error[E0609]: no field `lifepath` on type `cpr_creation::CprCreationRequest`
+
+# root: cargo test --locked -j 8 --lib cpr:: -- --test-threads=8 (before implementation)
+      1 error: could not compile `codex` (lib test) due to 18 previous errors
+      2 error[E0422]: cannot find struct, variant or union type `CprLifepathAnswer` in this scope
+      1 error[E0422]: cannot find struct, variant or union type `CprLifepath` in this scope
+      3 error[E0425]: cannot find function `lifepath_text_ok` in this scope
+      3 error[E0425]: cannot find function `parse_cpr_lifepath` in this scope
+      2 error[E0425]: cannot find function `render_cpr_lifepath` in this scope
+      1 error[E0432]: unresolved imports `crate::rules_core::cpr::input::CprLifepath`, `crate::rules_core::cpr::input::CprLifepathAnswer`
+      2 error[E0433]: cannot find type `CprLifepath` in this scope
+      2 error[E0599]: no associated function or constant named `load_lifepath` found for struct `store::CprCharacterStore` in the current scope
+      2 error[E0599]: no associated function or constant named `save_lifepath` found for struct `store::CprCharacterStore` in the current scope
+
+# frontend: npx tsx src/characterHub/cyberpunkCreationModel.test.ts (before implementation)
+/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src/characterHub/cyberpunkCreationModel.test.ts:19
+  culturalLanguageOptions,
+  ^
+SyntaxError: The requested module './cyberpunkCreationModel' does not provide an export named 'culturalLanguageOptions'
+
+Node.js v22.23.2

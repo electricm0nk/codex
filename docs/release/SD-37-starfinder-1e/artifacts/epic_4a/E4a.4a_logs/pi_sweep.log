@@ -1,0 +1,13 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-fAzjFe
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_catalog + data/rules_tables
+    PASS  pi-sweep  (12 hits over src/rules_core/rules_catalog (1) + data/rules_tables (11), 11 baseline rows, 0 package stamps disagree)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  pi-sweep
+
+RESULT: PASS
+logs in /tmp/codex-verify-fAzjFe
+exit=0

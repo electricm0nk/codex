@@ -1,0 +1,3 @@
+PASS scripts/ui-smoke/lib/rowSelection.test.mjs
+
+164/164 test files passed.

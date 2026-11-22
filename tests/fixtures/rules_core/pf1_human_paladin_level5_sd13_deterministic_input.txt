@@ -1,0 +1,43 @@
+# SD13-E5 deterministic Human Paladin level 5 progression fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Paladin
+# level-1/level-2/level-3/level-4 hybrid chassis baseline to level 5 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic Longsword / Chain Shirt /
+# no-shield / Power Attack posture, and the level-3/level-4 fixture's
+# choice=choice:paladin_mercy selection (mercy:shaken) unchanged -- Mercy is
+# granted once, at 3rd level, and stays granted at 5th level; it is not
+# re-derived by this level bump.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy EFFECT
+# resolution (curing the chosen condition when lay on hands is used -- no
+# lay-on-hands execution engine exists in this codebase), no channel positive
+# energy healing/damage-resolution execution, no Divine Bond (weapon bond /
+# mount bond) selection or execution -- Divine Bond is the PF1 CRB's OTHER
+# 5th-level paladin class feature, checked against a primary source and
+# confirmed to require an activation/resource-consumption engine plus either
+# a weapon-enhancement subsystem or a full mount stat-block/advancement
+# subsystem, neither of which exists in this codebase, so it is deliberately
+# left named-but-unproven rather than fabricated -- and no alignment-target or
+# healing-resource accounting.
+case_id=pf1-crb-human-paladin-level5
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:5
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

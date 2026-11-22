@@ -1,0 +1,8 @@
+test rules_core::cpr::reputation::tests::a_new_event_replaces_the_defining_one_only_when_its_level_is_higher ... ok
+test rules_core::cpr::reputation::tests::an_event_outside_level_1_to_10_is_refused ... ok
+test rules_core::cpr::reputation::tests::a_negative_facedown_base_prints_with_its_sign ... ok
+test rules_core::cpr::reputation::tests::a_new_character_starts_at_reputation_0 ... ok
+test rules_core::cpr::reputation::tests::a_cowardice_reputation_3_with_cool_6_faces_down_at_3_plus_1d10 ... ok
+test rules_core::cpr::reputation::tests::every_level_1_to_10_carries_the_printed_who_knows_about_you_text ... ok
+test rules_core::cpr::reputation::tests::cool_6_and_reputation_3_face_down_at_9_plus_1d10 ... ok
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 2980 filtered out; finished in 0.00s

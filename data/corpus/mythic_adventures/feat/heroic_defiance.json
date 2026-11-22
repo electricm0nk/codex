@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Heroic Defiance",
+    "category": "Mythic",
+    "name": "Heroic Defiance (Mythic)",
+    "description": "You ignore harmful effects that would bring others down. Once per day as an immediate action, you can attempt to negate the onset of one harmful condition or affliction (such as panicked, paralyzed, stunned, and so on) that allowed a saving throw for its onset, not including permanent and instantaneous conditions. When you do so, attempt a Will saving throw with a bonus against the original DC of the effect. If you succeed, the condition is negated. If you fail, the onset is delayed until the end of your next turn, after which it takes its normal effect. This feat has no effect on hit point damage or ability damage.\nThis effect is separate from the use of non-mythic Heroic Defiance.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Heroic Defiance",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 98,
+    "record_key": "Heroic Defiance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

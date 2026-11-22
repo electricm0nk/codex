@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Afflicted Wereshark",
+    "name": "Afflicted Wereshark",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Afflicted Lycanthrope"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Afflicted Wereshark"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 138,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "record_key": "Afflicted Wereshark",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Royal Naga ~ Dual Gaze",
+    "delivery": "Supernatural",
+    "description": "A royal naga has a piercing stare capable of crippling those that meet its gazes. The creature has two gaze attacks and can switch between them as a move action. One gaze causes those that succumb to it to become permanently blinded, while the other causes those that succumb to be permanently deafened. A DC 21 Fortitude save negates the effects of either gaze; otherwise, the effects are permanent until cured. Royal nagas generally prefer to keep their deafening gaze active, switching to the blindness gaze once combat begins and some of their foes have already been deafened, since those who are blinded can no longer be harmed by gaze attacks. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:royal_naga_dual_gaze",
+    "name": "Dual Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A royal naga has a piercing stare capable of crippling those that meet its gazes. The creature has two gaze attacks and can switch between them as a move action. One gaze causes those that succumb to it to become permanently blinded, while the other causes those that succumb to be permanently deafened. A DC 21 Fortitude save negates the effects of either gaze; otherwise, the effects are permanent until cured. Royal nagas generally prefer to keep their deafening gaze active, switching to the blindness gaze once combat begins and some of their foes have already been deafened, since those who are blinded can no longer be harmed by gaze attacks. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Royal Naga ~ Dual Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "TYPE",
+        "value": "RoyalNagaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.198",
+    "traits": [
+      "RoyalNagaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1293,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Royal Naga ~ Dual Gaze",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,1 @@
+{"var":"v6628da798516c76e","label":"Deific Obedience Active","declared_by":["inner_sea_gods:ability:deific_obedience_benefits"],"contributions":[{"rule_id":"inner_sea_gods:ability:deific_obedience_benefits","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

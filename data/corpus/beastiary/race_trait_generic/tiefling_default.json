@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Tiefling ~ Default",
+    "name": "Tiefling",
+    "description": "Regardless of where their fiendish blood comes from, most tieflings exhibit similar traits and abilities. The unpredictable manner in which fiendish essence combines with a mortal soul often makes it nearly impossible for the average person to tell a tiefling's heritage simply by looking.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Default"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tiefling Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Default],[!PREABILITY:1,CATEGORY=Special Ability,TYPE=Tiefling Subrace]"
+      },
+      {
+        "key": "DESC",
+        "value": "Regardless of where their fiendish blood comes from, most tieflings exhibit similar traits and abilities. The unpredictable manner in which fiendish essence combines with a mortal soul often makes it nearly impossible for the average person to tell a tiefling's heritage simply by looking."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Int, -2 Cha"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Skill Modifiers|Bluff, Stealth"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Spell-Like Ability|Darkness."
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Int, -2 Cha"
+      },
+      {
+        "key": "INFO",
+        "value": "Skill Modifiers|Bluff, Stealth"
+      },
+      {
+        "key": "INFO",
+        "value": "Spell-Like Ability|Darkness."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race.lst",
+    "sha256": "00e5df2aea67ee05c75a64f8116a0da2aacf03252d8dae24073ea196365c1960",
+    "line": 11,
+    "record_key": "Tiefling ~ Default"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

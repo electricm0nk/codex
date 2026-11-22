@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon (NANITE)",
+    "name": "NANITE",
+    "type": "Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/pact_worlds/spw_equipmods.lst",
+    "record_key": "Weapon (NANITE)",
+    "sha256": "fc52b9df65b5ef871c1a504a3e8158f1f25c1317ac181d44588f047a2ad617b5"
+  },
+  "unit_id": "pact_worlds:equipment_modifier:weapon_nanite"
+}

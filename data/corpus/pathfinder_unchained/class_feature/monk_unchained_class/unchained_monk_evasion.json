@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:07Z",
+  "data": {
+    "key": "Unchained Monk ~ Evasion",
+    "name": "Evasion",
+    "class_key": "Monk ~ Unchained Class",
+    "base_class_key": "Monk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Extraordinary",
+      "Evasion"
+    ],
+    "min_level": 2,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 2nd level, a monk can avoid damage from many area-effect attacks. If a monk succeeds at a Reflex saving throw against an attack that normally deals half damage on a successful save, he instead takes no damage. Evasion can be used only if a monk is wearing light armor or no armor. A helpless monk does not gain the benefit of evasion.",
+    "source_page": "p.15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk ~ Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Evasion"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Monk ~ Evasion"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a monk can avoid damage from many area-effect attacks. If a monk succeeds at a Reflex saving throw against an attack that normally deals half damage on a successful save, he instead takes no damage. Evasion can be used only if a monk is wearing light armor or no armor. A helpless monk does not gain the benefit of evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 465,
+    "record_key": "Unchained Monk ~ Evasion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

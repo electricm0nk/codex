@@ -1,0 +1,117 @@
+PCGVERSION:2.0
+
+# System Information
+CAMPAIGN:Core Rulebook
+CAMPAIGN:Advanced Player's Guide
+CAMPAIGN:Advanced Class Guide
+CAMPAIGN:Advanced Race Guide
+CAMPAIGN:Ultimate Combat
+CAMPAIGN:Ultimate Equipment
+CAMPAIGN:Ultimate Magic
+CAMPAIGN:Ultimate Intrigue
+CAMPAIGN:Ultimate Wilderness
+CAMPAIGN:Occult Adventures
+CAMPAIGN:Bestiary
+CAMPAIGN:Bestiary 2
+CAMPAIGN:Bestiary 3
+VERSION:6.09.08.RC1
+GAMEMODE:Pathfinder_RPG
+CHARACTERTYPE:PC
+PURCHASEPOINTS:N
+AUTOSPELLS:N
+
+# Character Bio
+CHARACTERNAME:E5 Spell Batch Wizard
+PLAYERNAME:sd-33-e5-fixture
+
+# Character Attributes
+# AT-33-E5-003 harness fix: all THREE possible casting-ability stats
+# (INT/WIS/CHA) are pinned to 18, matching `fixture_verified_oracle_probe.rs`'s
+# own `SPELL_PROBE_ABILITY_SCORE=18` used uniformly for whichever ability
+# `casting_ability_for_class` (`src/rules_core/spellbook.rs`) selects for the
+# class being probed. This cycle found WIS was left at 10 -- correct by
+# accident for Wizard/Bard/Paladin/Sorcerer (INT/CHA-cast) but wrong for
+# Cleric/Druid/Ranger (WIS-cast), producing a uniform ours-oracle=4 DC
+# delta (the un-applied +4 WIS modifier) for every Cleric/Druid/Ranger
+# spell that grants a save -- 103 of 103 AT-33-E5-001 "disagreements" this
+# cycle, all traced to this one line, none a real engine defect.
+STAT:STR|SCORE:10
+STAT:DEX|SCORE:10
+STAT:CON|SCORE:10
+STAT:INT|SCORE:18
+STAT:WIS|SCORE:18
+STAT:CHA|SCORE:18
+ALIGN:LN
+RACE:Human
+
+# Character Class(es)
+CLASS:Wizard|LEVEL:20|SKILLPOOL:0
+
+# Character Experience
+EXPERIENCE:0
+EXPERIENCETABLE:Medium
+
+# Character Spells Information
+SPELLNAME:Memorize Page|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Mirror Polish|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Stricken Heart|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Thunderstomp (Greater)|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Time Shudder|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Wave Shield|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Accelerate Poison|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Blood Biography|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Create Treasure Map|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Hydraulic Torrent|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Sculpt Corpse|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Arcane Mark|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:0|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Bestow Curse|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Clone|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Color Spray|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Contact Other Plane|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Contagion|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Continual Flame|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Control Weather|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Demand|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Detect Scrying|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Discern Location|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Dream|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Endure Elements|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Explosive Runes|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Freedom|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:9|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Ghoul Touch|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Gust of Wind|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Imprisonment|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:9|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Instant Summons|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Irresistible Dance|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:6|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Legend Lore|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Limited Wish|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Mage's Lucubration|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:6|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Mnemonic Enhancer|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Permanency|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Phantom Trap|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Planar Binding|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:6|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Planar Binding (Greater)|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Plane Shift|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Prestidigitation|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:0|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Prismatic Spray|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Refuge|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Remove Curse|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Resistance|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:0|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Secret Page|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Sending|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Shades|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:9|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Shadow Conjuration|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Shadow Conjuration (Greater)|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Shadow Evocation|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Shadow Evocation (Greater)|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Simulacrum|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Symbol of Stunning|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Teleport (Greater)|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Temporal Stasis|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:8|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Time Stop|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:9|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:True Strike|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Waves of Exhaustion|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:7|SOURCE:[TYPE:CLASS|NAME:Wizard]
+SPELLNAME:Waves of Fatigue|TIMES:1|CLASS:Wizard|BOOK:Known Spells|SPELLLEVEL:5|SOURCE:[TYPE:CLASS|NAME:Wizard]
+
+# Character Equipment
+MONEY:0

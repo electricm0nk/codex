@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 900.0,
+    "description": "Level 5 Evoker; Protection - Average lock (DC 25); Opposition Schools - Divination, transmutation; Spells - 3.fireball(S), lightning bolt(S); 2.acid arrow, darkness(S), ghoul touch, gust of wind(S); 1.burning hands(S), color spray, corrosive touch, hydraulic push(S), hypnotism, magic missile(S), ray of enfeeblement, shocking grasp(S); Preparation Ritual - Harmful Surge",
+    "key": "Book of Harms",
+    "name": "Book of Harms",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "900"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Harmful Surge"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 5 Evoker"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Average lock (DC 25)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Divination, transmutation"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 3.fireball(S), lightning bolt(S); 2.acid arrow, darkness(S), ghoul touch, gust of wind(S); 1.burning hands(S), color spray, corrosive touch, hydraulic push(S), hypnotism, magic missile(S), ray of enfeeblement, shocking grasp(S)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Harmful Surge"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Book of Harms",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Squid ~ Jet",
+    "delivery": "Extraordinary",
+    "description": "A squid can jet in a straight line as a full-round action. It does not provoke attacks of opportunity while jetting.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:companion:squid_jet",
+    "name": "Jet",
+    "owners": [
+      "beastiary:companion:companion_squid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A squid can jet in a straight line as a full-round action. It does not provoke attacks of opportunity while jetting."
+      },
+      {
+        "key": "KEY",
+        "value": "Squid ~ Jet"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Squid ~ Jet",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

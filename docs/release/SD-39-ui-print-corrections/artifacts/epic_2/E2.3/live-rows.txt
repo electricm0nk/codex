@@ -1,0 +1,6 @@
+PASS  tmp-drawer-open
+PASS  tmp-drawer-x
+PASS  tmp-drawer-escape
+3/3 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 3 rows)
+PASS  tmp-drawer-open
+1/1 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)

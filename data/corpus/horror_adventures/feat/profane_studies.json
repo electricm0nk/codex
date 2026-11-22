@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Profane Studies",
+    "category": "General",
+    "name": "Profane Studies",
+    "description": "Your study of fiends grants you advantages when summoning or fighting them. You gain a +5 bonus on Knowledge (planes) checks involving evil outsiders. Additionally, when you cast a summon monster spell to summon an evil outsider, treat your caster level as 2 levels higher for the purpose of determining the duration.",
+    "prerequisites": [
+      "PRESKILL:1,Knowledge (planes)=4",
+      "PREVARGTEQ:PreStatScore_INT,13",
+      "PRETEXT:Ability to cast a summon monster spell."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 43,
+    "record_key": "Profane Studies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

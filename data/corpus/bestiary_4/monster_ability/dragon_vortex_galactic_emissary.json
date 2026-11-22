@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dragon (Vortex) ~ Galactic Emissary",
+    "delivery": "Supernatural",
+    "description": "A young or older vortex dragon halves the time of any starflight journey. In addition, it's immune to any effect that bars extradimensional travel.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dragon_vortex_galactic_emissary",
+    "name": "Galactic Emissary",
+    "owners": [
+      "bestiary_4:monster:dragon_vortex"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A young or older vortex dragon halves the time of any starflight journey. In addition, it's immune to any effect that bars extradimensional travel."
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon (Vortex) ~ Galactic Emissary"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 547,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dragon (Vortex) ~ Galactic Emissary",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

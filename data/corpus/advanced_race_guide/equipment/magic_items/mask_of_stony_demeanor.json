@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 8000.0,
+    "description": "This mask transforms the wearer's face into a stone statue and its voice into an emotionless monotone. Though it allows the wearer to speak, its facial expressions and voice betray little emotion. At 4th level, a quinggong monk (Ultimate Magic) may select this spell as a ki power costing 1 ki point to activate",
+    "key": "Mask of Stony Demeanor",
+    "name": "Mask of Stony Demeanor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Lie",
+          "10",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Feint",
+          "5",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Pass Hidden Message",
+          "-5",
+          "TYPE=Competence.STACK"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "SPROP",
+        "value": "This mask transforms the wearer's face into a stone statue and its voice into an emotionless monotone. Though it allows the wearer to speak, its facial expressions and voice betray little emotion. At 4th level, a quinggong monk (Ultimate Magic) may select this spell as a ki power costing 1 ki point to activate"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Mask of Stony Demeanor",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

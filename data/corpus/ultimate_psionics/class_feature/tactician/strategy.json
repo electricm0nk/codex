@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician ~ Strategy",
+    "name": "Strategy",
+    "class": "Tactician",
+    "description": "You can use strategies %1/day.|StrategyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician ~ Strategy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural.Strategy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrategyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrategyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use strategies %1/day.|StrategyTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Strategy|(StrategyLVL-1)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrategyLVL|TacticianLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrategyTimes|3+TacticianSecondaryStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StrategyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 916,
+    "record_key": "Tactician ~ Strategy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

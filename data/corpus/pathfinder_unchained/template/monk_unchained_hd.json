@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Monk ~ Unchained HD",
+    "name": "Monk ~ Unchained HD",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "10|CLASS=Monk"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_templates.lst",
+    "record_key": "Monk ~ Unchained HD",
+    "sha256": "5cb6120901f734a66b36c0615321e1075c05fe8c5d06bdbcc9bf698c7628817b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

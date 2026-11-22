@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Critical Versatility",
+    "name": "Critical Versatility",
+    "description": "An open mind and combat training grant versatility to your critical hits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Critical Versatility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHuman=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterWeaponQualifyLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "An open mind and combat training grant versatility to your critical hits."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Critical Versatility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Once per day, you can spend 1 hour practicing maneuvers to gain one single critical feat that you meet the prerequisites for. You gain the benefits of the chosen critical feat until you choose to practice a different critical feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 30,
+    "record_key": "Warpriest Bonus Feat ~ Critical Versatility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

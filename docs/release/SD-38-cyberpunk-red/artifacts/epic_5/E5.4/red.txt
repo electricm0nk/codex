@@ -1,0 +1,32 @@
+## root: cargo test --locked -j 8 --lib rules_core::cpr -- --test-threads=8 (tests only)
+error[E0560]: struct `input::CprSheetChoices` has no field named `humanity_regained`
+error[E0560]: struct `input::CprSheetChoices` has no field named `humanity_regained`
+error[E0609]: no field `humanity_regained` on type `input::CprSheetChoices`
+error[E0609]: no field `humanity_regained` on type `input::CprSheetChoices`
+error[E0599]: no method named `therapies` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+error[E0599]: no method named `therapy` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+error[E0599]: no method named `therapy` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+error[E0599]: no method named `therapy` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+error[E0599]: no method named `therapy` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+error: could not compile `codex` (lib test) due to 9 previous errors
+## desktop: cargo test --locked -j 8 --bins cpr_improve -- --test-threads=8 (tests only)
+error[E0599]: no variant named `Therapy` found for enum `cpr_improve::CprPurchase`
+error[E0609]: no field `humanity_regained` on type `codex::rules_core::cpr::input::CprSheetChoices`
+error[E0609]: no field `humanity_regained` on type `codex::rules_core::cpr::input::CprSheetChoices`
+error[E0609]: no field `humanity_regained` on type `codex::rules_core::cpr::input::CprSheetChoices`
+error[E0609]: no field `therapy` on type `CprImprovePreview`
+error[E0609]: no field `therapy` on type `CprImprovePreview`
+error[E0609]: no field `therapy` on type `CprImprovePreview`
+error[E0609]: no field `therapy` on type `CprImprovePreview`
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 8 previous errors
+## frontend: npm run typecheck (tests only)
+src/boundary/cprImprove.test.ts(51,5): error TS2353: Object literal may only specify known properties, and 'therapy' does not exist in type 'CyberpunkImprovePreview'.
+src/boundary/cprImprove.test.ts(123,11): error TS2322: Type '"therapy"' is not assignable to type '"cyberware" | "skill" | "roleRank" | "roleSwitch"'.
+src/boundary/cprImprove.test.ts(124,11): error TS2322: Type '"therapy"' is not assignable to type '"cyberware" | "skill" | "roleRank" | "roleSwitch"'.
+src/characterHub/cyberpunkImproveModel.test.ts(14,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'purchaseHumanityRegained'.
+src/characterHub/cyberpunkImproveModel.test.ts(20,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'therapyOptionLabel'.
+src/characterHub/cyberpunkImproveModel.test.ts(21,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'therapyRegainedFromText'.
+src/characterHub/cyberpunkImproveModel.test.ts(101,3): error TS2353: Object literal may only specify known properties, and 'therapy' does not exist in type 'CyberpunkImprovePreview'.
+src/characterHub/cyberpunkImproveModel.test.ts(181,61): error TS2322: Type '"therapy"' is not assignable to type '"cyberware" | "skill" | "roleRank" | "roleSwitch"'.
+src/characterHub/cyberpunkImproveModel.test.ts(182,38): error TS2322: Type '"therapy"' is not assignable to type '"cyberware" | "skill" | "roleRank" | "roleSwitch"'.
+src/characterHub/cyberpunkImproveModel.test.ts(187,3): error TS2353: Object literal may only specify known properties, and 'therapy' does not exist in type 'CyberpunkImprovePreview'.

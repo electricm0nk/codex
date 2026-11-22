@@ -1,0 +1,55 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Wererat_STATS",
+    "name": "Wererat_STATS",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|STR|10"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|DEX|17"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CON|13"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|INT|2"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|WIS|13"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CHA|4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "record_key": "Wererat_STATS",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Deep One Hybrid ~ Final Change",
+    "name": "Final Change",
+    "description": "A deep one hybrid ages at the same rate as a half-orc. A mere 1d12 months after a deep one hybrid reaches venerable age (at 60 years old), it dies a painful, agonizing death, only to have its body transform into that of a mature deep one. This transformation functions as the reincarnate spell, with the newly formed deep one gaining the following modifications to its physical ability scores: +6 Strength, -2 Dexterity, and +6 Constitution.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Hybrid ~ Final Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A deep one hybrid ages at the same rate as a half-orc. A mere 1d12 months after a deep one hybrid reaches venerable age (at 60 years old), it dies a painful, agonizing death, only to have its body transform into that of a mature deep one. This transformation functions as the reincarnate spell, with the newly formed deep one gaining the following modifications to its physical ability scores: +6 Strength, -2 Dexterity, and +6 Constitution."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 100,
+    "record_key": "Deep One Hybrid ~ Final Change"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 1000.0,
+    "description": "When smoked in any pipe, a halfling who puffs the pipe as a full-round action can shape the smoke into an object weighing no more than 5 pounds and having a maximum volume of 1 cubic foot.  The halfling can, on following rounds, spend additional full-round actions to increase the object's weight by 2 additional pounds and its volume by another cubic foot. The halfling must succeed at an appropriate Craft check to make a complex item. Objects created by solidsmoke pipeweed last for 24 hours",
+    "key": "Solidsmoke Pipeweed",
+    "name": "Solidsmoke Pipeweed",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "SPROP",
+        "value": "When smoked in any pipe, a halfling who puffs the pipe as a full-round action can shape the smoke into an object weighing no more than 5 pounds and having a maximum volume of 1 cubic foot.  The halfling can, on following rounds, spend additional full-round actions to increase the object's weight by 2 additional pounds and its volume by another cubic foot. The halfling must succeed at an appropriate Craft check to make a complex item. Objects created by solidsmoke pipeweed last for 24 hours"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 83,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Solidsmoke Pipeweed",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

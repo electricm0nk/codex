@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Arcane Strike",
+    "category": "Combat",
+    "name": "Arcane Strike",
+    "description": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus",
+    "prerequisites": [
+      "PREMULT:1,[PREMULT:1,[PRECLASS:1,SPELLCASTER.Arcane=1],[PREVARGTEQ:Caster_Level_Highest__Arcane,1]],[PREABILITY:1,CATEGORY=Special Ability,TYPE.SpellLike]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 18,
+    "record_key": "Arcane Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

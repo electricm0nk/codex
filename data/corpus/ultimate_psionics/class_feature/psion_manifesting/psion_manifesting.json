@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Manifesting",
+    "name": "Psion Manifesting",
+    "class": "Psion",
+    "description": "Psion Powers Known: %1; Psion Maximum Power Level Known: %2|PsionPowersKnown|PsionMaxPowerLevel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Psion Powers Known: %1; Psion Maximum Power Level Known: %2|PsionPowersKnown|PsionMaxPowerLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psion Manifesting Variables|Psion Power Points"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 390,
+    "record_key": "Psion Manifesting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

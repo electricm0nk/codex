@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ravener ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A ravener keeps the breath weapon of the base creature - the save DC for this breath weapon is now Charisma-based.  In addition, a ravener's breath weapon bestows 2 negative levels on all creatures in the area.  A successful Reflex save halves the damage and reduces the energy drain to 1 level.  The save DC to remove these negative levels is equal to the ravener's breath weapon DC.  The ravener adds 1 hit point to its soul ward ability for each negative level bestowed in this way.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:ravener_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2 negative levels)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|(CHA-CON)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A ravener keeps the breath weapon of the base creature - the save DC for this breath weapon is now Charisma-based.  In addition, a ravener's breath weapon bestows 2 negative levels on all creatures in the area.  A successful Reflex save halves the damage and reduces the energy drain to 1 level.  The save DC to remove these negative levels is equal to the ravener's breath weapon DC.  The ravener adds 1 hit point to its soul ward ability for each negative level bestowed in this way."
+      },
+      {
+        "key": "KEY",
+        "value": "Ravener ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.231",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1054,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ravener ~ Breath Weapon",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

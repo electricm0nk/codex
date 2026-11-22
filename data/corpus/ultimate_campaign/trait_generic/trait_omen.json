@@ -1,0 +1,64 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You are the harbinger of some future event. Whether this event bodes good or ill, you exude an ominous presence.",
+    "key": "Trait ~ Omen",
+    "name": "Omen",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Omen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Omen],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are the harbinger of some future event. Whether this event bodes good or ill, you exude an ominous presence."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Intimidate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You are the harbinger of some future event. Whether this event bodes good or ill, you exude an ominous presence. You gain a +1 trait bonus on Intimidate checks, and Intimidate is always a class skill for you. Once per day, you may attempt to demoralize an opponent as a swift action."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Omen",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

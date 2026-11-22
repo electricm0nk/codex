@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5000.0,
+    "description": "gain scent to 10 feet as wolf aspect of the hunter's animal focus class feature; if wearer is a hunter, increase wearer's effective hunter level for the wolf aspect by 8",
+    "key": "Headband of the Wolf",
+    "name": "Headband of the Wolf",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPROP",
+        "value": "gain scent to 10 feet as wolf aspect of the hunter's animal focus class feature; if wearer is a hunter, increase wearer's effective hunter level for the wolf aspect by 8"
+      }
+    ],
+    "weight": 0.5
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 375,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Headband of the Wolf",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Klar
+Klar																PROFICIENCY:SHIELD|Shield (Light)	TYPE:Shield.Light.Standard.Close									COST:12	WT:6		ACCHECK:-1																																									SOURCEPAGE:p.12	SPELLFAILURE:5																																	BONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0

@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "When casting this spell, you designate a type or type and subtype of creature (using the ranger's favored enemy categories; Pathfinder RPG Core Rulebook 64) and a type of terrain (using the list of ranger's favored terrain categories, Core Rulebook 65). Targets of the spell gain a +2 sacred bonus on Bluff, Perception, Sense Motive, and Survival checks attempted against creatures of the selected type, and a +2 sacred bonus on attack rolls and damage rolls made against creatures of that type. Furthermore, they gain a +2 sacred bonus on initiative checks, Perception, Stealth, and Survival checks while they are in the type of terrain you designate. Lastly, when tracking the designated creature type in the chosen terrain, the targets can follow the tracks of such creatures untrained, even if the DC for the task is 11 or higher.",
+    "key": "Hunter's Blessing",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Inquisitor=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting this spell, you designate a type or type and subtype of creature (using the ranger's favored enemy categories; Pathfinder RPG Core Rulebook 64) and a type of terrain (using the list of ranger's favored terrain categories, Core Rulebook 65). Targets of the spell gain a +2 sacred bonus on Bluff, Perception, Sense Motive, and Survival checks attempted against creatures of the selected type, and a +2 sacred bonus on attack rolls and damage rolls made against creatures of that type. Furthermore, they gain a +2 sacred bonus on initiative checks, Perception, Stealth, and Survival checks while they are in the type of terrain you designate. Lastly, when tracking the designated creature type in the chosen terrain, the targets can follow the tracks of such creatures untrained, even if the DC for the task is 11 or higher."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Hunter's Blessing"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures, no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Hunter's Blessing",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

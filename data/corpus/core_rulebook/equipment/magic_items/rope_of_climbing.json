@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 3000.0,
+    "description": "A 60-foot-long rope of climbing is no thicker than a wand, but it is strong enough to support 3,000 pounds. Upon command, the rope snakes forward, upward, downward, or in any other direction at 10 feet per round, attaching itself securely wherever its owner desires. It can unfasten itself and return in the same manner.\nA rope of climbing can be commanded to knot or unknot itself. This causes large knots to appear at 1-foot intervals along the rope. Knotting shortens the rope to a 50-foot length until the knots are untied, but lowers the DC of Climb checks while using it by 10. A creature must hold one end of the rope when its magic is invoked.",
+    "key": "Rope of Climbing",
+    "name": "Rope of Climbing",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rope of Climbing"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rope of Climbing"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.529"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, animate rope"
+      },
+      {
+        "key": "DESC",
+        "value": "A 60-foot-long rope of climbing is no thicker than a wand, but it is strong enough to support 3,000 pounds. Upon command, the rope snakes forward, upward, downward, or in any other direction at 10 feet per round, attaching itself securely wherever its owner desires. It can unfasten itself and return in the same manner.&nl;A rope of climbing can be commanded to knot or unknot itself. This causes large knots to appear at 1-foot intervals along the rope. Knotting shortens the rope to a 50-foot length until the knots are untied, but lowers the DC of Climb checks while using it by 10. A creature must hold one end of the rope when its magic is invoked."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rope of Climbing",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

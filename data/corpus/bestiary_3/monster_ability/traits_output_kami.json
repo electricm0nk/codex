@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Kami",
+    "delivery": "Extraordinary",
+    "description": "Immunity to bleed, mind-affecting effects, petrification, and polymorph effects. &nl; Resist acid 10, electricity 10, fire 10 &nl; Although they are native outsiders, kami do not eat, drink, or breathe. &nl; Telepathy. &nl; Fast Healing (Ex) As long as a kami is within 120 feet of its ward, it gains fast healing. The amount of fast healing it gains depends on the type of kami. &nl; Merge with Ward (Su) As a standard action, a kami can merge its body and mind with its ward. When merged, the kami can observe the surrounding region with its senses as if it were using its own body, as well as via any senses its ward might have. It has no control over its ward, nor can it communicate or otherwise take any action other than to emerge from its ward as a standard action. A kami must be adjacent to its ward to merge with or emerge from it. If its ward is a creature, plant, or object, the kami can emerge mounted on the creature provided the kami's body is at least one size category smaller than the creature. If its ward is a location, the kami may emerge at any point within that location. &nl; Ward (Su) A kami has a specific ward-a creature with a 2 or lower Intelligence (usually an animal or vermin), a plant (not a plant creature), an object, or a location. The type of ward is listed in parentheses in the kami's stat block. Several of a kami's abilities function only when it is either merged with its ward or within 120 feet of it. If a kami's ward is portable and travels with the kami to another plane, the kami does not gain the extraplanar subtype on that other plane as long as its ward remains within 120 feet. If a ward is destroyed while a kami is merged with it, the kami dies (no save). If a ward is destroyed while a kami is not merged with it, the kami loses its merge with ward ability and its fast healing, and becomes permanently sickened.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:traits_output_kami",
+    "name": "Kami Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Although they are native outsiders, kami do not eat, drink, or breathe."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Fast Healing (Ex) As long as a kami is within 120 feet of its ward, it gains fast healing. The amount of fast healing it gains depends on the type of kami."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Merge with Ward (Su) As a standard action, a kami can merge its body and mind with its ward. When merged, the kami can observe the surrounding region with its senses as if it were using its own body, as well as via any senses its ward might have. It has no control over its ward, nor can it communicate or otherwise take any action other than to emerge from its ward as a standard action. A kami must be adjacent to its ward to merge with or emerge from it. If its ward is a creature, plant, or object, the kami can emerge mounted on the creature provided the kami's body is at least one size category smaller than the creature. If its ward is a location, the kami may emerge at any point within that location."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Resist acid 10, electricity 10, fire 10"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Telepathy."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Ward (Su) A kami has a specific ward-a creature with a 2 or lower Intelligence (usually an animal or vermin), a plant (not a plant creature), an object, or a location. The type of ward is listed in parentheses in the kami's stat block. Several of a kami's abilities function only when it is either merged with its ward or within 120 feet of it. If a kami's ward is portable and travels with the kami to another plane, the kami does not gain the extraplanar subtype on that other plane as long as its ward remains within 120 feet. If a ward is destroyed while a kami is merged with it, the kami dies (no save). If a ward is destroyed while a kami is not merged with it, the kami loses its merge with ward ability and its fast healing, and becomes permanently sickened."
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to bleed, mind-affecting effects, petrification, and polymorph effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Kami"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2310,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Traits Output ~ Kami",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

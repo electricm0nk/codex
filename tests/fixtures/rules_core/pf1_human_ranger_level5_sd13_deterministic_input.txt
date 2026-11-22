@@ -1,0 +1,49 @@
+# SD13-E5 Ranger level 5 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 5 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-5 hybrid baseline, mirroring the
+# level-4 fixture's shape with the class level swapped.
+#
+# Level 5 adds two new deterministic choice selections tied to the PF1 Core Rulebook
+# Favored Enemy rule's 5th-level interval ("At 5th level and every five levels
+# thereafter... the ranger may select an additional favored enemy. In addition, at
+# each such interval, the bonus against any one favored enemy (including the one just
+# selected, if so desired) increases by 2."):
+#   - choice:ranger_favored_enemy_2 -> enemy:undead (the second favored-enemy type;
+#     an arbitrary but deterministic pick, distinct from the level-1 first favored
+#     enemy, humanoid_orc)
+#   - choice:ranger_favored_enemy_bonus_increase_target -> enemy:first (the
+#     arbitrary but deterministic pick of WHICH of the two favored enemies receives
+#     the +2 magnitude increase this interval -- the rule leaves this choice open to
+#     either the newly selected enemy or an already-held one, so this fixture names
+#     the already-held first favored enemy, humanoid_orc, as the target)
+# This fixture carries forward the same favored-enemy, combat-style, favored-terrain,
+# and hunter's-bond selections from the level-4 fixture unchanged, since none of those
+# are re-granted at 5th level.
+case_id=pf1-crb-human-ranger-level5
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:5
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_hunters_bond:form:bond
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

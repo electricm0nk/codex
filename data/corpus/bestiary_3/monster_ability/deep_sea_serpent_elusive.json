@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Deep Sea Serpent ~ Elusive",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action while in water, a deep sea serpent can move up to its run speed (200 feet) without leaving any trace of its passing (identical in effect to pass without trace). An elusive deep sea serpent gains a +40 circumstance bonus on its Stealth check. In addition, except when in combat, a sea serpent is considered to be under the effects of a nondetection spell. Both of these effects function at caster level 20th and cannot be dispelled.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:deep_sea_serpent_elusive",
+    "name": "Elusive",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action while in water, a deep sea serpent can move up to its run speed (200 feet) without leaving any trace of its passing (identical in effect to pass without trace). An elusive deep sea serpent gains a +40 circumstance bonus on its Stealth check. In addition, except when in combat, a sea serpent is considered to be under the effects of a nondetection spell. Both of these effects function at caster level 20th and cannot be dispelled."
+      },
+      {
+        "key": "KEY",
+        "value": "Deep Sea Serpent ~ Elusive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "TYPE",
+        "value": "DeepSeaSerpentRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.240",
+    "traits": [
+      "DeepSeaSerpentRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1507,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Deep Sea Serpent ~ Elusive",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

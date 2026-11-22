@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulthief ~ Swift Aid",
+    "name": "Swift Aid",
+    "class": "Soulthief",
+    "description": "Transfer wounds of collective member to enemy within 15 ft. of collective member (DC %1).|SwiftAidDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulthief ~ Swift Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwiftAidDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Transfer wounds of collective member to enemy within 15 ft. of collective member (DC %1).|SwiftAidDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwiftAidDC|10+VitalistPrimeStat+(MethodLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1017,
+    "record_key": "Soulthief ~ Swift Aid"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

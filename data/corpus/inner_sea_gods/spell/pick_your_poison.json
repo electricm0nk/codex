@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell temporarily converts even the deadliest poison affecting a creature into an intoxicating alcohol. If the subject is affected by a poison effect while under the effects of this spell, instead of the poison's normal effect, she feels intoxicated as if she'd just had a very strong drink and takes a -2 penalty on attacks, saves, and checks for the duration of the spell. When the spell's duration expires, the penalty ends and the poison's normal effects apply. Pick your poison does not affect any poison effects that occurred before the spell was cast.",
+    "key": "Pick Your Poison",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Inquisitor,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell temporarily converts even the deadliest poison affecting a creature into an intoxicating alcohol. If the subject is affected by a poison effect while under the effects of this spell, instead of the poison's normal effect, she feels intoxicated as if she'd just had a very strong drink and takes a -2 penalty on attacks, saves, and checks for the duration of the spell. When the spell's duration expires, the penalty ends and the poison's normal effects apply. Pick your poison does not affect any poison effects that occurred before the spell was cast."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Pick Your Poison"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Pick Your Poison",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

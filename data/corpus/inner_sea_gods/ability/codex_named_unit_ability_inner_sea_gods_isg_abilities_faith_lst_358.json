@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_358)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_358)",
+    "description": "If you have performed your daily obedience, your fingernails grow into thick, jagged talons, unevenly matched and vaguely resembling the spurs of a giant insect or the fangs of some unspeakable beast. You gain a pair of claw attacks. These are primary natural attacks that deal 1d8 points of slashing damage if you're Medium or 1d6 points of damage if you're Small.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, your fingernails grow into thick, jagged talons, unevenly matched and vaguely resembling the spurs of a giant insect or the fangs of some unspeakable beast. You gain a pair of claw attacks. These are primary natural attacks that deal 1d8 points of slashing damage if you're Medium or 1d6 points of damage if you're Small."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 358,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_358)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:358"
+  }
+}

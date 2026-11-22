@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Wall of Blindness/Deafness",
+    "name": "Wall of Blindness/Deafness",
+    "class": "Magus",
+    "description": "Translucent wall blinds or deafens creatures that pass through it.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Wall of Blindness/Deafness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellBlend.MagusSpellBlendLVL4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=4|Wall of Blindness/Deafness"
+      },
+      {
+        "key": "DESC",
+        "value": "Translucent wall blinds or deafens creatures that pass through it.|!PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4122,
+    "record_key": "Magus Spellblend ~ Wall of Blindness/Deafness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Faun ~ Panpipes",
+    "delivery": "Supernatural",
+    "description": "Three times per day, a faun can use its masterwork panpipes to augment its spell-like abilities. Doing so is a swift action that increases the DC of the next spell-like ability it uses on its turn by +2.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:faun_panpipes",
+    "name": "Panpipes",
+    "owners": [
+      "bestiary_3:monster:faun"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, a faun can use its masterwork panpipes to augment its spell-like abilities. Doing so is a swift action that increases the DC of the next spell-like ability it uses on its turn by +2."
+      },
+      {
+        "key": "KEY",
+        "value": "Faun ~ Panpipes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "TYPE",
+        "value": "FaunRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.114",
+    "traits": [
+      "FaunRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 834,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Faun ~ Panpipes",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

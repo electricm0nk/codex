@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Barathu Default ~ FLOATERS",
+    "name": "FLOATERS",
+    "type": "Racial Trait.Barathu Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Barathu Default ~ FLOATERS",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:barathu_default_floaters"
+}

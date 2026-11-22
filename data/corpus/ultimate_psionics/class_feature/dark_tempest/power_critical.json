@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dark Tempest ~ Power Critical",
+    "name": "Power Critical",
+    "class": "Dark Tempest",
+    "description": "Any time you successfully confirm a critical hit, you can manifest a power as a swift action, or expend psychic strike to power the power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tempest ~ Power Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DarkTempestClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you successfully confirm a critical hit, you can manifest a power as a swift action, or expend psychic strike to power the power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.356"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1197,
+    "record_key": "Dark Tempest ~ Power Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

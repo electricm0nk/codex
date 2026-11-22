@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Headband of Intellect Knowledge Skill Selection",
+    "name": "Headband of Intellect Knowledge Skill Selection",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HeadbandKnowledgeSkill"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Knowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|%LIST|TL"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_abilities.lst",
+    "record_key": "Headband of Intellect Knowledge Skill Selection",
+    "sha256": "b81e4185e6ebbd0656ae80a103f4f5a7d7b27e1c98ed536ef981dabf8d04be2a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ]
+}

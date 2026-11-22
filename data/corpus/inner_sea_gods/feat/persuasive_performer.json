@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Persuasive Performer",
+    "category": "General",
+    "name": "Persuasive Performer",
+    "description": "For you, performance is the heart of negotiation. You can use any of your Perform skills in place of Diplomacy, not just Perform (keyboard instruments, oratory, string, or wind). If you do use Perform (keyboard instruments, oratory, string, or wind), you gain a +2 bonus on your check.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,TYPE.Versatile Performance",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 69,
+    "record_key": "Persuasive Performer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

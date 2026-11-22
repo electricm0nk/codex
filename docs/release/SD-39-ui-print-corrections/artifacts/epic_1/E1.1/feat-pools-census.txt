@@ -1,0 +1,117 @@
+Feat pools: target Pool(p), value Number, p == feat or offers from pool feat or a whole word feat/feats in p and not companion.
+Held = a census class at level 1, 2, 5 or 20 evaluates the pool above 0 with no archetype or choice beyond its seeds.
+
+HELD by a census class (29 pools, 245 rules):
+bloodrager_bloodline_feat: ['bloodrager']
+bonus_psionic_feat: ['psicrystal_imprinter']
+brawler_bonus_feat: ['brawler']
+cavalier_feat: ['cavalier']
+death_slayer_bonus_feat: ['death_slayer']
+dread_bonus_feat: ['dread']
+fighter_bonus_feat: ['eldritch_knight', 'fighter', 'student_of_war']
+hunter_teamwork_feats: ['hunter']
+inquisitor_teamwork_feat: ['ex_inquisitor', 'inquisitor']
+magus_bonus_feat: ['magus']
+mammoth_rider_born_survivor_feat: ['mammoth_rider']
+master_craftsman_feat: ['aegis']
+monk_bonus_feat: ['monk']
+psion_feat: ['psion']
+psychic_fist_feat: ['psychic_fist']
+psychic_warrior_feat: ['psychic_warrior']
+ranged_feat: ['soul_archer']
+ranger_combat_style_feat: ['ranger']
+samurai_feat: ['samurai']
+sorcerer_bloodline_feat: ['sorcerer']
+soulknife_feat: ['soulknife']
+student_of_perfection_bonus_feat_selection: ['student_of_perfection']
+tactician_bonus_teamwork_feat: ['tactician']
+tactician_teamwork_feat: ['cavalier']
+teamwork_feat: ['battle_herald', 'bellflower_tiller']
+unchained_monk_bonus_feat: ['unchained_monk']
+vitalist_feat: ['vitalist']
+warpriest_bonus_feat: ['warpriest']
+wizard_bonus_feat: ['wizard']
+
+NOT HELD by any census class (82 pools, 135 rules; archetype, template, mythic or ability records):
+adaptability_bonus_feat (1): core_rulebook:race_trait:half_elf_adaptability
+amateur_gunslinger_feat (3): ultimate_psionics:ability:grammaton_pattern_of_the_gun
+antihero_feat (1): advanced_players_guide:ability:antihero
+ape_shaman_feat (1): ultimate_combat:class_feature:ape_shaman_bonus_feat
+arcanist_item_creation_feat (1): advanced_class_guide:class_feature:arcanist_exploit_item_crafting
+arcanist_metamagic_feat (2): advanced_class_guide:class_feature:arcanist_exploit_metamagic_knowledge
+armiger_bonus_feat (2): adventurers_guide:class_feature:armiger_bonus_feats
+artificer_s_surge_feat (2): ultimate_psionics:class_feature:artificer_s_surge#bonus0
+aspis_agent_bonus_feat (1): adventurers_guide:class_feature:aspis_agency_secret_bonus_feat
+bat_shaman_feat (1): ultimate_combat:class_feature:bat_shaman_bonus_feat
+boar_shaman_feat (1): ultimate_combat:class_feature:boar_shaman_bonus_feat
+bonus_masterpiece (1): adventurers_guide:class_feature:dramaturgical_flourish_masterpiece
+brazen_disciple_feat (1): adventurers_guide:class_feature:brazen_disciple_bonus_feat
+canine_ferocity_feat (1): advanced_race_guide:class_feature:order_of_the_paw_canine_ferocity
+champion_feat_choice (3): occult_adventures:class_feature:medium_trickster_s_edge#bonus1
+cloaked_wolf_bonus_feat (1): ultimate_intrigue:class_feature:cloaked_wolf_unleashed_fury
+codex_named_unit_feat_adventurers_guide_ag_feats_lst_37_training (1): adventurers_guide:feat:gray_maiden_initiate
+codex_named_unit_feat_inner_sea_world_guide_iswg_feats_lst_30 (1): inner_sea_world_guide:feat:hermean_blood
+combat_feat (1): ultimate_intrigue:class_feature:rage_power_combat_feat
+combat_trick_feat (6): pathfinder_unchained:class_feature:unchained_rogue_talent_combat_trick
+contact_specialist_feat (1): advanced_class_guide:class_feature:blood_conduit_contact_specialist
+contemplative_knowledge_bonus_feat (1): ultimate_psionics:class_feature:contemplative_contemplative_knowledge
+contemplative_psionic_meditation_bonus_feat (1): ultimate_psionics:class_feature:contemplative_psionic_meditation
+crusader_feat (1): ultimate_combat:class_feature:crusader_bonus_feat
+disciple_of_the_raging_sea_feat_or_rage_power (1): ultimate_psionics:class_feature:disciple_of_the_raging_sea_eye_of_the_storm
+disenchanter_bonus_feat (1): advanced_class_guide:class_feature:disenchanter_bonus_feats
+divine_commander_teamwork_feat (2): advanced_class_guide:class_feature:divine_commander_battle_tactician
+dragon_shaman_bonus_feat (1): ultimate_magic:class_feature:dragon_shaman_bonus_feats
+druid_bear_shaman_feat (1): advanced_players_guide:class_feature:bear_shaman_bonus_feat
+druid_eagle_shaman_feat (1): advanced_players_guide:class_feature:eagle_shaman_bonus_feat
+druid_lion_shaman_feat (1): advanced_players_guide:class_feature:lion_shaman_bonus_feat
+druid_serpent_shaman_feat (1): advanced_players_guide:class_feature:serpent_shaman_bonus_feat
+druid_wolf_shaman_feat (1): advanced_players_guide:class_feature:wolf_shaman_bonus_feat
+elemental_annihilator_feat (1): occult_adventures:class_feature:elemental_annihilator_bonus_feats
+emissary_bonus_feat (1): ultimate_combat:class_feature:emissary_bonus_feats
+enlightened_bloodrager_feat_choice (1): adventurers_guide:class_feature:enlightened_bloodrager_bloodline_feat_ag
+feat (16): inner_sea_bestiary:monster:vespergaunt
+finesse_marksman_bonus_feat (3): ultimate_psionics:class_feature:marksman_finesse_style
+flowing_monk_bonus_feat (11): ultimate_combat:class_feature:flowing_monk_bonus_feat
+forgepriest_bonus_feat_type (1): advanced_class_guide:class_feature:forgepriest_bonus_feats
+forgepriest_bonus_item_creation_feat (1): advanced_class_guide:class_feature:forgepriest_bonus_item_feats
+forgesteed_rider_bonus_feat (1): ultimate_psionics:ability:forgesteed_rider_bonus_feat
+gendarme_bonus_feat (1): ultimate_combat:class_feature:gendarme_bonus_feats
+gladiator_bonus_feat (1): ultimate_combat:class_feature:gladiator_bonus_feats
+grit_feat (1): ultimate_combat:class_feature:rogue_talent_grit#bonus1
+healing_surge_feat (1): ultimate_psionics:class_feature:healing_surge#bonus0
+house_of_perfection_feat (1): adventurers_guide:ability:student_of_perfection_house_bonus_feat
+majordomo_teamwork_feat (1): ultimate_intrigue:class_feature:majordomo_delegate
+martial_kineticist_feat (1): ultimate_psionics:class_feature:psychic_warrior_archetype_martial_kineticist
+master_of_many_styles_bonus_feat (1): ultimate_combat:class_feature:master_of_many_styles_bonus_feat
+mendevian_priest_teamwork_feat (2): inner_sea_magic:class_feature:mendevian_priest_teamwork_feat
+mindwright_feat (1): ultimate_psionics:class_feature:mindwright_abilities
+mobile_knife_bonus_feat (1): ultimate_psionics:class_feature:mobile_knife_shot_on_the_run
+mythic_feat (6): mythic_adventures:ability:mythic_tier_09
+pathmaster_advanced_path_feat (1): ultimate_psionics:class_feature:pathmaster_advanced_path
+psionic_fighter_bonus_feat (1): ultimate_psionics:class_feature:psionic_fighter_psionic_feats#bonus2
+psionic_fighter_starting_feat (1): ultimate_psionics:class_feature:psionic_fighter_psionic_feats
+psychic_bloodline_feat (1): ultimate_psionics:class_feature:psychic_bloodline
+psychic_mage_bonus_feat (1): ultimate_psionics:class_feature:psychic_mage_bonus_feats
+rapid_reload_feat (1): ultimate_psionics:ability:marksman_archetype_cannoneer#bonus1
+saurian_shaman_bonus_feat (1): ultimate_magic:class_feature:saurian_shaman_bonus_feats
+shaman_secret (1): advanced_class_guide:class_feature:shaman_hex_secret
+shark_shaman_bonus_feat (1): ultimate_magic:class_feature:shark_shaman_bonus_feats
+sniper_marksman_bonus_feat (3): ultimate_psionics:class_feature:marksman_sniper_style
+sohei_bonus_feat (1): ultimate_combat:class_feature:sohei_bonus_feat
+soulbolt_feat (1): ultimate_psionics:class_feature:soulbolt_soulbolt_bonus_feat
+student_s_surge_feat (1): ultimate_psionics:class_feature:student_s_surge#bonus0
+style_feat (1): advanced_class_guide:class_feature:sacred_fist_bonus_style_feat
+swashbuckler_weapon_proficiency (1): advanced_players_guide:class_feature:swashbuckler_martial_training
+tactical_leader_teamwork_feat (1): ultimate_intrigue:class_feature:tactical_leader_tactician
+tactician_bonus_feat (1): ultimate_combat:class_feature:tactician_bonus_feats
+tactician_feat (1): ultimate_combat:class_feature:tactician_tactician
+teamwork_feat_selection (1): ultimate_combat:class_feature:holy_tactician_tactical_acumen
+unarmed_fighter_bonus_style_feat (1): ultimate_combat:class_feature:fighter_archetype_unarmed_fighter#bonus1
+undead_lord_bonus_feat (1): ultimate_magic:class_feature:cleric_archetype_undead_lord#bonus0
+unlocked_talent_feat (1): ultimate_psionics:monster_ability:blue_psionic_prodigy
+vexing_daredevil_bonus_stare_feat (1): occult_adventures:class_feature:vexing_daredevil_bonus_feats#bonus0
+viking_bonus_feat (1): ultimate_wilderness:class_feature:viking_rage_powers
+volley_marksman_bonus_feat (3): ultimate_psionics:class_feature:marksman_volley_style
+wave_warden_bonus_feat (1): advanced_race_guide:class_feature:wave_warden_aquatic_prowess_feat
+weapon_training (4): pathfinder_unchained:class_feature:unchained_rogue_talent_weapon_training
+zen_archer_feat (1): advanced_players_guide:class_feature:zen_archer_bonus_feats

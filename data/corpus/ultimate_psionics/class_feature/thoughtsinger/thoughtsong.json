@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Thoughtsong",
+    "name": "Thoughtsong",
+    "class": "Thoughtsinger",
+    "description": "For %1 rounds/day, you can use the thoughtsong, activating it as a|ThoughtsongRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Thoughtsong"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoughtsongRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoughtsongLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "For %1 rounds/day, you can use the thoughtsong, activating it as a|ThoughtsongRounds"
+      },
+      {
+        "key": "DESC",
+        "value": " standard|!PRECLASS:1,Bard=7"
+      },
+      {
+        "key": "DESC",
+        "value": " move|PREMULT:2,[PRECLASS:1,Bard=7],[!PRECLASS:1,Bard=13]"
+      },
+      {
+        "key": "DESC",
+        "value": " swift|PRECLASS:1,Bard=13"
+      },
+      {
+        "key": "DESC",
+        "value": " action.  Only members of your collective are affected by the thoughtsong."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Inspire Courage|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Concert of Minds|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Cooperation|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Strength of Many|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Mindlink|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Inspire Competence|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Inspire Greatness|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Soothing Performance|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Inspire Heroics|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsongRounds|2+2*BardLVL+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsongLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2432,
+    "record_key": "Thoughtsinger ~ Thoughtsong"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tzitzimitl ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 19th; concentration +29) Constant-arcane sight, fly, true seeing At will-bestow curse (DC 24), deeper darkness 3/day-animate dead, contagion (DC 23), greater teleport, haste 1/day-create undead, temporal stasis (DC 28), wail of the banshee (DC 29)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tzitzimitl_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:tzitzimitl"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 19th; concentration +29) Constant-arcane sight, fly, true seeing At will-bestow curse (DC 24), deeper darkness 3/day-animate dead, contagion (DC 23), greater teleport, haste 1/day-create undead, temporal stasis (DC 28), wail of the banshee (DC 29)"
+      },
+      {
+        "key": "KEY",
+        "value": "Tzitzimitl ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "TzitzimitlRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "TzitzimitlRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1650,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tzitzimitl ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

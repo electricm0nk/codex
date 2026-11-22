@@ -1,0 +1,27 @@
+RED, tests written before the implementation (E5.3, CARD_BASE 5173890751).
+
+1. Root: cargo test --locked -j 8 --lib rules_core::cpr -- --test-threads=8   (tests only: cyberware.rs, input.rs, sheet.rs)
+      1 error: could not compile `codex` (lib test) due to 9 previous errors
+      3 error[E0433]: cannot find type `CprHumanityLossDice` in this scope
+      3 error[E0560]: struct `cyberware::CprCyberwareInstall` has no field named `humanity_loss`
+      2 error[E0599]: no method named `humanity_loss_dice` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+      1 error[E0609]: no field `humanity_loss` on type `&mut cyberware::CprCyberwareInstall`
+   Failing reason: an install carried no Humanity Loss of its own (the preset was the only loss) and the
+   catalog had no dice reader.
+
+2. Desktop: the 5 new cpr_improve tests were written in the same pass as the command change and first run
+   after it (retro incident tdd-red-not-observed). Their failing power is shown by a mutation instead
+   (mutation.txt): engine range check `|| true` and slot check `&& false` ->
+      an_entered_humanity_loss_outside_the_dice_is_refused_and_nothing_is_saved ... FAILED
+      an_over_slot_install_is_refused_and_nothing_is_saved ... FAILED
+      test result: FAILED. 14 passed; 2 failed
+   restored from the kept copy (git diff of cyberware.rs vs the kept copy: none). On base the tests cannot
+   compile: CprPurchase::Cyberware, CprImproveRequest.seed and CprImprovePreview.{cyberware,seed} do not exist.
+
+3. Frontend: npm run typecheck with the new tests only -> 11 `error TS` lines, e.g.
+      TS2305 Module '"./cyberpunkImproveModel"' has no exported member 'cyberwareOptionLabel' (also humanityLossFromText,
+             improveHumanity, pinSeed, purchaseHumanityLoss)
+      TS2353 'cyberware' does not exist in type 'CyberpunkImprovePreview'
+      TS2322 Type '"cyberware"' is not assignable to type '"skill" | "roleRank" | "roleSwitch"'
+      TS2345 ... Property 'role' is missing in type '{ kind: "cyberware"; ... }'
+   then npm test: cyberpunkImproveModel.test.ts FAILED once on its own array compare (fixed in the test: join).

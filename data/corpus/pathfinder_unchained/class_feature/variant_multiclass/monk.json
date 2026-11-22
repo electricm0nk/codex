@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Variant Multiclass ~ Monk",
+    "name": "Monk",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses monk as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses monk as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Armor: At 1st level, he loses all his secondary monk abilities when wearing armor, using a shield, or carrying a medium or heavy load."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Unarmed Strike: At 3rd level, he gains the Improved Unarmed Strike feat and the unarmed damage of a monk of his character level - 2."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Evasion: At 7th level, he gains evasion."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Ki Pool: At 11th level, he gains the ki pool class feature of a monk of his character level - 2, with a number of ki points equal to 1/2 his character level. He only ever gains ki pool (lawful) if he is of lawful alignment."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;AC Bonus: At 15th level, he gains a +3 dodge bonus to AC."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Improved Evasion: At 19th level, he gains improved evasion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Monk_Class_Selection|1|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 855,
+    "record_key": "Variant Multiclass ~ Monk"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

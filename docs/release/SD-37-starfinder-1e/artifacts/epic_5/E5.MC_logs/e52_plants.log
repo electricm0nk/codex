@@ -1,0 +1,39 @@
+P1_detect_thoughts_misdecoded_again: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character ... FAILED
+    test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... FAILED
+    thread 'sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character' (3918695) panicked at src/sf_sheet_print.rs:577:13:
+    thread 'sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue' (3918716) panicked at src/sf_sheet_print.rs:441:21:
+    test result: FAILED. 19 passed; 2 failed; 0 ignored; 0 measured; 644 filtered out; finished in 2.34s
+P2_command_off_the_mystic_list: check=desktop exit=101 -> FAIL
+    test sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known ... FAILED
+    test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... FAILED
+    test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... FAILED
+    test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... FAILED
+    test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... FAILED
+P3_quick_draw_not_printed: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... FAILED
+    test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... FAILED
+    thread 'sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats' (3920997) panicked at src/sf_sheet_print.rs:521:13:
+    thread 'sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant' (3921000) panicked at src/sf_sheet_print.rs:398:13:
+    test result: FAILED. 19 passed; 2 failed; 0 ignored; 0 measured; 644 filtered out; finished in 2.18s
+P4_spell_evaluated_with_no_caster: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms ... FAILED
+    thread 'sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms' (3922079) panicked at src/sf_sheet_print.rs:561:9:
+    test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 644 filtered out; finished in 2.42s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P5_rule_id_spell_parse_reverted: check=desktop exit=101 -> FAIL
+    test sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known ... FAILED
+    thread 'sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known' (3923610) panicked at src/sf_adapter.rs:1316:13:
+    test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 644 filtered out; finished in 2.23s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P6_unclassified_package_move: check=delta exit=1 -> FAIL
+    verdict=FAIL
+P7_converter_repair_disabled: check=sf_check exit=1 -> FAIL
+    records=8582 converted=8582 refused=0 rules=11318 var_tables=236 verdict=FAIL problems=88
+    stale on disk: core/deity/abadar.json
+    stale on disk: core/deity/oras.json
+    stale on disk: core/deity/sarenrae.json
+    stale on disk: core/deity/urgathoa.json
+restored: desktop exit=0 delta exit=1 sf_check exit=0
+plants_red=7/7 verdict=FAIL
+exit=1

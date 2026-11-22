@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Valkyrie ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 12th; concentration +18) Constant-deathwatch, tongues At will-aid, death ward, gentle repose, plane shift (self and mount only) 3/day-call lightning storm (DC 21), divine power, geas/quest 1/day-breath of life, heal, summon (level 8, 1 sleipnir 100%%)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:valkyrie_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:valkyrie"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 12th; concentration +18) Constant-deathwatch, tongues At will-aid, death ward, gentle repose, plane shift (self and mount only) 3/day-call lightning storm (DC 21), divine power, geas/quest 1/day-breath of life, heal, summon (level 8, 1 sleipnir 100%%)"
+      },
+      {
+        "key": "KEY",
+        "value": "Valkyrie ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "ValkyrieRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ValkyrieRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1656,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Valkyrie ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

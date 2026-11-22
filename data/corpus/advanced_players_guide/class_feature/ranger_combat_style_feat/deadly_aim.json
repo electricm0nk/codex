@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Deadly Aim",
+    "name": "Deadly Aim",
+    "class": "Ranger",
+    "description": "&nl;[Zen Archer Flurry] You can make exceptionally deadly ranged attacks by pinpointing a foe's weak spot, at the expense of making the attack less likely to succeed.|PREABILITY:1,CATEGORY=Special Ability,Zen Archer ~ Flurry of Blows",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Deadly Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Deadly Aim"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Aim,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deadly Aim|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryDeadlyAimModifier|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BABTotal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;[Zen Archer Flurry] You can make exceptionally deadly ranged attacks by pinpointing a foe's weak spot, at the expense of making the attack less likely to succeed.|PREABILITY:1,CATEGORY=Special Ability,Zen Archer ~ Flurry of Blows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryDeadlyAimModifier|floor(BABTotal/4)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BABTotal|BAB+(FlurryLVL-MonkBAB)"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "&nl;[Zen Archer Flurry] You can choose to take a -%1 penalty on all ranged attack rolls to gain a +%2 bonus on all ranged damage rolls. You must choose to use this feat before making an attack roll and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.|FlurryDeadlyAimModifier|2*FlurryDeadlyAimModifier|PREABILITY:1,CATEGORY=Special Ability,Zen Archer ~ Flurry of Blows"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2618,
+    "record_key": "Ranger Combat Style Feat ~ Deadly Aim"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

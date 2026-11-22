@@ -1,0 +1,36 @@
+OK SF-Soldier-3 | Initiative | fixture 2 | re-derived 2
+OK SF-Mystic-5 | Initiative | fixture 2 | re-derived 2
+OK SF-Technomancer-5 | Initiative | fixture 3 | re-derived 3
+OK SF-Envoy-3 | Initiative | fixture 1 | re-derived 1
+OK SF-Mystic-5 | Spell DC: 0 | fixture 15 | re-derived 15
+OK SF-Mystic-5 | Spell DC: 1st | fixture 16 | re-derived 16
+OK SF-Mystic-5 | Spell DC: 2nd | fixture 17 | re-derived 17
+OK SF-Technomancer-5 | Spell DC: 0 | fixture 15 | re-derived 15
+OK SF-Technomancer-5 | Spell DC: 1st | fixture 16 | re-derived 16
+OK SF-Technomancer-5 | Spell DC: 2nd | fixture 17 | re-derived 17
+OK SF-Soldier-3 | Starting credits | fixture 4000 | re-derived 4000
+OK SF-Soldier-3 | Credits spent | fixture 1955 | re-derived 1955
+OK SF-Soldier-3 | Credits remaining | fixture 2045 | re-derived 2045
+OK SF-Soldier-3 | Bulk | fixture 4 | re-derived 4
+OK SF-Soldier-3 | Bulk limit unencumbered | fixture 8 | re-derived 8
+OK SF-Soldier-3 | Bulk limit overburdened | fixture 16 | re-derived 16
+OK SF-Mystic-5 | Starting credits | fixture 9000 | re-derived 9000
+OK SF-Mystic-5 | Credits spent | fixture 2650 | re-derived 2650
+OK SF-Mystic-5 | Credits remaining | fixture 6350 | re-derived 6350
+OK SF-Mystic-5 | Bulk | fixture 1 | re-derived 1
+OK SF-Mystic-5 | Bulk limit unencumbered | fixture 5 | re-derived 5
+OK SF-Mystic-5 | Bulk limit overburdened | fixture 10 | re-derived 10
+OK SF-Technomancer-5 | Starting credits | fixture 9000 | re-derived 9000
+OK SF-Technomancer-5 | Credits spent | fixture 3650 | re-derived 3650
+OK SF-Technomancer-5 | Credits remaining | fixture 5350 | re-derived 5350
+OK SF-Technomancer-5 | Bulk | fixture 1 | re-derived 1
+OK SF-Technomancer-5 | Bulk limit unencumbered | fixture 5 | re-derived 5
+OK SF-Technomancer-5 | Bulk limit overburdened | fixture 10 | re-derived 10
+OK SF-Envoy-3 | Starting credits | fixture 4000 | re-derived 4000
+OK SF-Envoy-3 | Credits spent | fixture 1670 | re-derived 1670
+OK SF-Envoy-3 | Credits remaining | fixture 2330 | re-derived 2330
+OK SF-Envoy-3 | Bulk | fixture 1 | re-derived 1
+OK SF-Envoy-3 | Bulk limit unencumbered | fixture 4 | re-derived 4
+OK SF-Envoy-3 | Bulk limit overburdened | fixture 8 | re-derived 8
+rows=34 expected_keys=34 mismatches=0
+exit=0

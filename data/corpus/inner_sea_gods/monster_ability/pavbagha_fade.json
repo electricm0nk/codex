@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pavbagha ~ Fade",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a pavbagha can fade from sight, as invisibility, for up to 10 rounds per day. These rounds need not be consecutive.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:pavbagha_fade",
+    "name": "Fade",
+    "owners": [
+      "inner_sea_gods:monster:pavbagha"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a pavbagha can fade from sight, as invisibility, for up to 10 rounds per day. These rounds need not be consecutive."
+      },
+      {
+        "key": "KEY",
+        "value": "Pavbagha ~ Fade"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 196,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Pavbagha ~ Fade",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

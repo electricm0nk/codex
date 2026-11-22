@@ -1,0 +1,4 @@
+TYPECHECK EXIT=0
+PASS scripts/ui-smoke/lib/rowSelection.test.mjs
+
+132/132 test files passed.

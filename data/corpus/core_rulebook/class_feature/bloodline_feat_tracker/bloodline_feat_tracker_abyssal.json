@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodline Feat Tracker ~ Abyssal",
+    "name": "Bloodline Feat Tracker ~ Abyssal",
+    "class": "Bloodline Feat Tracker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_AugmentSummoning|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Cleave|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_EmpowerSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_GreatFortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_ImprovedBullRush|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_ImprovedSunder|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_PowerAttack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_SkillFocusKnowledgePlanes|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2354,
+    "record_key": "Bloodline Feat Tracker ~ Abyssal"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

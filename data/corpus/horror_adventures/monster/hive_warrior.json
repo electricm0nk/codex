@@ -1,0 +1,161 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "horror_adventures:monster_ability:hive_warrior_acid_spit",
+      "horror_adventures:monster_ability:hive_warrior_rending_mandibles"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Hive Warrior",
+    "external_ability_refs": [],
+    "key": "horror_adventures:monster:hive_warrior",
+    "monster_class": "Aberration:8",
+    "name": "Hive Warrior",
+    "natural_attacks": [
+      {
+        "damage_dice": "7d6",
+        "name": "Acid Spit"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Hive",
+    "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Hive Warrior|Bite|Claw|Tail Slap"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|8|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Hive Warrior"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Acid Spit,Natural.Ranged.Weapon.Touch,*1,7d6,SPROP=20 ft. range"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Hive"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.237",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+    "record_key": "Hive Warrior",
+    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

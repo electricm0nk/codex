@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You are often struck with epiphanies about alchemical processes and substances. Once per day as a free action, you may gain a trait bonus equal to your Charisma modifier (minimum 0) on a Craft (alchemy) check you make. You can apply this bonus after you roll the check, possibly turning a failure into a success.",
+    "key": "Trait ~ Alchemical Intuition",
+    "name": "Alchemical Intuition",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Alchemical Intuition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Alchemical Intuition],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are often struck with epiphanies about alchemical processes and substances. Once per day as a free action, you may gain a trait bonus equal to your Charisma modifier (minimum 0) on a Craft (alchemy) check you make. You can apply this bonus after you roll the check, possibly turning a failure into a success."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Alchemical Intuition",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

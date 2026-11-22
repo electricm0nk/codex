@@ -1,0 +1,49 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Shadowbound Manifestation Count",
+    "name": "Shadowbound Manifestation Count",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Shadowbound Manifestation Count"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowboundManifestationCount|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|ShadowboundManifestationCount|%CHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shadowbound Manifestation Choice|ShadowboundManifestationCount"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 798,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Shadowbound Manifestation Count",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ]
+}

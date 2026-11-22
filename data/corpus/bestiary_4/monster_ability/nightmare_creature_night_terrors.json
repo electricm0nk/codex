@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nightmare Creature ~ Night Terrors",
+    "delivery": "Supernatural",
+    "description": "Once a nightmare creature enters a target's mind with its dream or nightmare spell-like ability, it can attempt to control the target's dream. If the target fails a Will (DC %1) saving throw, it remains asleep and trapped in the dream world with the nightmare creature. Thereafter, the nightmare creature controls all aspects of the dream. Each hour that passes, the target can attempt another saving throw to try to awaken (it automatically awakens after 8 hours or if the nightmare creature releases it). The target takes 1d4 points of Charisma damage each hour it is trapped in the dream; if it takes any Charisma damage, it is fatigued and unable to regain arcane spells for the next 24 hours. The target dies if this Charisma damage equals or exceeds its actual Charisma score.",
+    "description_variables": [
+      "10+HD+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nightmare_creature_night_terrors",
+    "name": "Night Terrors",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once a nightmare creature enters a target's mind with its dream or nightmare spell-like ability, it can attempt to control the target's dream. If the target fails a Will (DC %1) saving throw, it remains asleep and trapped in the dream world with the nightmare creature. Thereafter, the nightmare creature controls all aspects of the dream. Each hour that passes, the target can attempt another saving throw to try to awaken (it automatically awakens after 8 hours or if the nightmare creature releases it). The target takes 1d4 points of Charisma damage each hour it is trapped in the dream; if it takes any Charisma damage, it is fatigued and unable to regain arcane spells for the next 24 hours. The target dies if this Charisma damage equals or exceeds its actual Charisma score.|10+HD+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Nightmare Creature ~ Night Terrors"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1123,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Nightmare Creature ~ Night Terrors",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

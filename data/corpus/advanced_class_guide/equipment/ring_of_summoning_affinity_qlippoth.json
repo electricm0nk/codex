@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 8600.0,
+    "description": "add to summon monster list: cythnigot (3rd), shoggti (6th), nygogoth (7th), chernobue (8th), augnagar (9th); 1/day summon cythnigot",
+    "key": "Ring of Summoning Affinity (Qlippoth)",
+    "name": "Ring of Summoning Affinity (Qlippoth)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "8600"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon monster list: cythnigot (3rd), shoggti (6th), nygogoth (7th), chernobue (8th), augnagar (9th); 1/day summon cythnigot"
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Summoning Affinity (Qlippoth)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

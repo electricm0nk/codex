@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Psionic Riposte",
+    "name": "Psionic Riposte",
+    "class": "Kineticist",
+    "description": "You can expend your psionic focus and a number of power points as an immediate action to reflect a power back at its manifester.  This functions as reddopsi, but only if you spend a number of power points that exceeds or is equal to the number of power points the manifester expended.  If insufficient power points are expended, they instead grant an insight bonus on any saving throws allowed by the power, equal to one-half the number of power points spent.  You can only expend %1 power points.|PsionicRiposteMaxPP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Psionic Riposte"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicRiposteMaxPP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus and a number of power points as an immediate action to reflect a power back at its manifester.  This functions as reddopsi, but only if you spend a number of power points that exceeds or is equal to the number of power points the manifester expended.  If insufficient power points are expended, they instead grant an insight bonus on any saving throws allowed by the power, equal to one-half the number of power points spent.  You can only expend %1 power points.|PsionicRiposteMaxPP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicRiposteMaxPP|PsychicWarriorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2044,
+    "record_key": "Martial Kineticist ~ Psionic Riposte"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

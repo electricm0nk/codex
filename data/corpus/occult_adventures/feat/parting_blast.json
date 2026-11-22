@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Parting Blast",
+    "category": "General",
+    "name": "Parting Blast",
+    "description": "When you die, your body explodes in one final, destructive kinetic blast. You can accept 1 point of burn to prepare a kinetic blast that automatically triggers upon your death. If you are killed at any point before your burn is removed, your body instantly erupts in an explosion that deals an amount of damage equal to that of your simple blast to all creatures in a 5-foot radius. A parting blast destroys your body, which might prevent any magic that requires an intact corpse.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Kineticist ~ Kinetic Blast"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 49,
+    "record_key": "Parting Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Bladed Dash (Greater)",
+    "school": "Transmutation",
+    "level": 5,
+    "description": "This spell functions like bladed dash, save that you can make a single melee attack against every creature you pass during the 30 feet of your dash. You cannot attack an individual creature more than once with spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 11,
+    "record_key": "Bladed Dash (Greater)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

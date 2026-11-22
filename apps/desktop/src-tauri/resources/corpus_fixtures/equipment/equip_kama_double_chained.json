@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Kama (Double-Chained)",
+    "name": "Kama (Double-Chained)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_kama_double_chained.txt",
+    "record_key": "Kama (Double-Chained)"
+  }
+}

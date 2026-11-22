@@ -1,0 +1,481 @@
+# key	book	blocked	attack_rows	weapon_damage_rows	types  -- one load per Market Weapons row, Aldric, Longsword stowed, at eedbd8a831 (pre-change), probe e77probe_census (not committed)
+Arrow (Base)	CRB	false	0	0	Ammunition,Resizable,Arrow
+Bolt (Base)	CRB	false	0	0	Ammunition,Resizable,Bolt
+Repeating Bolt (Base)	CRB	false	0	0	Ammunition,Resizable,Bolt
+Sling Bullet (Base)	CRB	false	0	0	Ammunition,Resizable,Bullet
+Blowgun Dart (Base)	CRB	false	0	0	Ammunition,Resizable,Dart
+Bolt (Crossbow)	CRB	false	0	0	Ammunition,Resizable,Bolt
+Bolt (Crossbow/Repeating)	CRB	false	0	0	Ammunition,Resizable,Bolt
+Bullet (Sling)	CRB	false	0	0	Ammunition,Resizable,Bullet
+Dart (Blowgun)	CRB	false	0	0	Ammunition,Resizable,Dart
+Arrows (20)	CRB	false	0	0	Stack
+Bolts (Crossbow/10)	CRB	false	0	0	Stack
+Bolts (Crossbow/Repeating/5)	CRB	false	0	0	Stack
+Bullets (Sling/10)	CRB	false	0	0	Stack
+Darts (Blowgun/10)	CRB	false	0	0	Stack
+Bolt (Screaming)	CRB	false	0	0	Ammunition,Resizable,Bolt
+Arrow (Slaying)	CRB	false	0	0	Ammunition,Resizable,Arrow
+Arrow (Slaying/Greater)	CRB	false	0	0	Ammunition,Resizable,Arrow
+Arrow (Sleep)	CRB	false	0	0	Ammunition,Resizable,Arrow
+Demon Armor Claw Attack	CRB	false	1	1	Weapon,Melee,Simple,Unarmed,Piercing,Slashing
+Armor Spikes	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Piercing,Unarmed,Accessories,Weapon Group Natural
+Gauntlet (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Unarmed,Finesseable,Bludgeoning,Gauntlet,Close,Weapon Group Close,Weapon Group Natural
+Dagger (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Ranged,Thrown,Piercing,Slashing,Dagger,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Punching Dagger (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Piercing,Dagger,Close,Weapon Group Close
+Spiked Gauntlet (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Unarmed,Finesseable,Piercing,Gauntlet,Close,Weapon Group Close,Weapon Group Natural
+Light Mace (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Sickle (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Slashing,Sickle,BladeLight,Weapon Group Blades Light
+Club (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Ranged,Thrown,Bludgeoning,Club,Hammer,Weapon Group Hammers,Weapon Group Thrown
+Heavy Mace (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Morningstar (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Bludgeoning,Piercing,Mace,Flail,Weapon Group Flails
+Shortspear (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Ranged,Thrown,Piercing,Spear,Weapon Group Spears,Weapon Group Thrown
+Longspear (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,TwoHanded,Piercing,Spear,Weapon Group Spears
+Quarterstaff (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Double,Bludgeoning,Quarterstaff,Polearm,Weapon Group Double,Weapon Group Monk
+Spear (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,TwoHanded,Ranged,Thrown,Piercing,Spear,Weapon Group Spears,Weapon Group Thrown
+Throwing Axe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Ranged,Thrown,Slashing,Axe,Weapon Group Axes
+Light Hammer (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Ranged,Thrown,Bludgeoning,Hammer,Weapon Group Hammers,Weapon Group Thrown
+Handaxe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Slashing,Axe,Weapon Group Axes
+Kukri (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Slashing,BladeLight,Weapon Group Blades Light
+Light Pick (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,MeleePiercing,Pick,Axe,Weapon Group Axes
+Sap (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Bludgeoning,Sap,Close,Weapon Group Close
+Spiked Armor (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Accessories,Piercing,Spiked,Close
+Starknife (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Ranged,Thrown,Piercing,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Short Sword (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Battleaxe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Axe,Weapon Group Axes
+Light Flail (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Bludgeoning,Flail,Weapon Group Flails
+Longsword (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Heavy Pick (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Piercing,Pick,Axe,Weapon Group Axes
+Rapier (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Finesseable,Piercing,MeleePiercing,Sword,BladeLight,Weapon Group Blades Light,Weapon Group Melee OneHanded Piercing
+Scimitar (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Trident (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Ranged,Thrown,Piercing,Trident,Spear,Weapon Group Spears,Weapon Group Melee OneHanded Piercing
+Warhammer (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Bludgeoning,Hammer,Weapon Group Hammers
+Falchion (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Glaive (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Polearm,Weapon Group Polearms
+Greataxe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Axe,Weapon Group Axes
+Greatclub (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Bludgeoning,Club,Hammer,Weapon Group Hammers
+Heavy Flail (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Bludgeoning,Flail,Weapon Group Flails
+Greatsword (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Guisarme (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Polearm,Weapon Group Polearms
+Halberd (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Piercing,Slashing,Polearm,Weapon Group Polearms
+Lance (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Piercing,Lance,Spear,Weapon Group Spears
+Ranseur (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Piercing,Polearm,Weapon Group Polearms
+Scythe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Piercing,Slashing,Scythe,BladeHeavy,Weapon Group Blades Heavy
+Kama (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Slashing,Kama,BladeLight,Weapon Group Blades Light,Weapon Group Monk
+Nunchaku (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Bludgeoning,Nunchaku
+Sai (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Bludgeoning,Sai,Weapon Group Monk
+Siangham (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Piercing,Siangham
+Bastard Sword (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Dwarven Waraxe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Martial,OneHanded,Dwarven,Slashing,Axe,Weapon Group Axes
+Whip (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Finesseable,Slashing,Flail,Weapon Group Flails
+Orc Double Axe (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Orc,Slashing,Axe,Weapon Group Axes,Weapon Group Double
+Spiked Chain (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,TwoHanded,Finesseable,Piercing,Chain,Flail,Weapon Group Flails
+Elven Curve Blade (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,TwoHanded,Finesseable,Elven,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Dire Flail (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Bludgeoning,Flail,Weapon Group Double,Weapon Group Flails
+Gnome Hooked Hammer (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Gnome,Bludgeoning,Hammer,Weapon Group Double
+Two-Bladed Sword (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy,Weapon Group Double
+Dwarven Urgrosh (Base)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Dwarven,Slashing,Weapon Group Double
+Gauntlet (Part of Armor Suit)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Unarmed,Finesseable,Bludgeoning,Gauntlet,Close,Weapon Group Close,Weapon Group Natural
+Dagger (Punching)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Piercing,Dagger,Close,Weapon Group Close
+Gauntlet (Spiked)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Unarmed,Finesseable,Piercing,Gauntlet,Close,Weapon Group Close,Weapon Group Natural
+Mace (Light)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Mace (Heavy)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Axe (Throwing)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Ranged,Thrown,Slashing,Axe,Weapon Group Axes
+Hammer (Light)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Ranged,Thrown,Bludgeoning,Hammer,Weapon Group Hammers,Weapon Group Thrown
+Pick (Light)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,MeleePiercing,Pick,Axe,Weapon Group Axes
+Sword (Short)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Flail	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Bludgeoning,Flail,Weapon Group Flails
+Pick (Heavy)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Piercing,Pick,Axe,Weapon Group Axes
+Flail (Heavy)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Bludgeoning,Flail,Weapon Group Flails
+Nunchaku (Metal)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Bludgeoning,Nunchaku
+Sword (Bastard)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Waraxe (Dwarven)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,Martial,OneHanded,Dwarven,Slashing,Axe,Weapon Group Axes
+Axe (Orc Double)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Orc,Slashing,Axe,Weapon Group Axes,Weapon Group Double
+Chain (Spiked)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,TwoHanded,Finesseable,Piercing,Chain,Flail,Weapon Group Flails
+Curve Blade (Elven)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,TwoHanded,Finesseable,Elven,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Flail (Dire)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Bludgeoning,Flail,Weapon Group Double,Weapon Group Flails
+Hammer (Gnome Hooked)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Gnome,Bludgeoning,Hammer,Weapon Group Double
+Sword (Two-Bladed)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy,Weapon Group Double
+Urgrosh (Dwarven)	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Dwarven,Slashing,Weapon Group Double
+Battleaxe (Adamantine)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Axe,Weapon Group Axes
+Dagger (Adamantine)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Ranged,Thrown,Piercing,Slashing,Dagger,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Dagger (Assassin's)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Ranged,Thrown,Piercing,Slashing,Dagger,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Dagger of Venom	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Ranged,Thrown,Piercing,Slashing,Dagger,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Flame Tongue	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Holy Avenger	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Life-Drinker	CRB	false	1	1	Weapon,Resizable,Melee,Martial,TwoHanded,Slashing,Axe,Weapon Group Axes
+Longsword (Cold Iron/Masterwork)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Luck Blade (0 wishes)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Luck Blade (1 wish)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Luck Blade (2 wishes)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Luck Blade (3 wishes)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Mace of Smiting	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Mace of Terror	CRB	false	1	1	Weapon,Resizable,Melee,Simple,OneHanded,Bludgeoning,Mace,Hammer,Weapon Group Hammers
+Nine Lives Stealer	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Rapier of Puncturing	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Finesseable,Piercing,MeleePiercing,Sword,BladeLight,Weapon Group Blades Light,Weapon Group Melee OneHanded Piercing
+Shatterspike	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Shifter's Sorrow	CRB	false	1	1	Weapon,Resizable,Melee,Exotic,OneHanded,Double,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy,Weapon Group Double
+Dagger (Silver/Masterwork)	CRB	false	1	1	Weapon,Resizable,Melee,Simple,Light,Finesseable,Ranged,Thrown,Piercing,Slashing,Dagger,BladeLight,Weapon Group Blades Light,Weapon Group Thrown
+Sword of Life Stealing	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Sword of the Planes	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Sword of Subtlety	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Piercing,Sword,BladeLight,Weapon Group Blades Light
+Sylvan Scimitar	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Slashing,Sword,BladeHeavy,Weapon Group Blades Heavy
+Trident of Fish Command	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Ranged,Thrown,Piercing,Trident,Spear,Weapon Group Spears,Weapon Group Melee OneHanded Piercing
+Trident of Warning	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Ranged,Thrown,Piercing,Trident,Spear,Weapon Group Spears,Weapon Group Melee OneHanded Piercing
+Flurry of Blows	CRB	false	1	1	Weapon,Resizable,Melee,Special,Finesseable,Bludgeoning,Close,Unarmed,Monk,Weapon Group Close,Weapon Group Monk,Weapon Group Natural,Natural,Light
+Shieldbash (Light)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,Light,Finesseable,Bludgeoning,Shieldbash,Unarmed
+Shieldbash (Heavy)	CRB	false	1	1	Weapon,Resizable,Melee,Martial,OneHanded,Bludgeoning,Shieldbash,Unarmed
+Touch Attack (Ray)	CRB	false	0	0	Weapon,Ranged,Thrown,Unarmed
+Unarmed Strike	CRB	false	1	1	Weapon,Resizable,Melee,Special,Unarmed,Monk,Bludgeoning,Finesseable,Close,Weapon Group Close,Weapon Group Monk,Weapon Group Natural,Natural,Light
+Blowgun (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Piercing,Blowgun,Weapon Group Thrown
+Heavy Crossbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Light Crossbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows,LightCrossbow
+Dart (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Thrown,Piercing,Dart,Weapon Group Thrown
+Javelin (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Thrown,Piercing,Javelin,Spear,Weapon Group Spears,Weapon Group Thrown
+Sling (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Bludgeoning,Sling,Weapon Group Thrown
+Longbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Longbow,Weapon Group Bows
+Composite Longbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Longbow,Composite,Weapon Group Bows
+Shortbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Shortbow,Weapon Group Bows
+Composite Shortbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Shortbow,Composite,Weapon Group Bows
+Bolas (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Thrown,Bludgeoning,Weapon Group Thrown
+Hand Crossbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Repeating Heavy Crossbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Repeating Light Crossbow (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Net (Base)	CRB	false	0	0	Weapon,Resizable,Ranged,Exotic,Thrown,Weapon Group Thrown
+Shuriken (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Thrown,Consumable,Ammunition,Piercing,Shuriken,Weapon Group Monk,Weapon Group Thrown
+Halfling Sling Staff (Base)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Halfling,Bludgeoning,Sling,Weapon Group Thrown
+Crossbow (Heavy)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Crossbow (Light)	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows,LightCrossbow
+Longbow (Composite)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Longbow,Composite,Weapon Group Bows
+Longbow (Composite +0)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Longbow,Composite,Weapon Group Bows
+Shortbow (Composite)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Shortbow,Composite,Weapon Group Bows
+Shortbow (Composite +0)	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Shortbow,Composite,Weapon Group Bows
+Crossbow (Hand)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Crossbow (Repeating Heavy)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Crossbow (Repeating Light)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Piercing,Crossbow,Weapon Group Crossbows
+Sling Staff (Halfling)	CRB	false	1	1	Weapon,Resizable,Ranged,Exotic,Container,Projectile,Halfling,Bludgeoning,Sling,Weapon Group Thrown
+Javelin of Lightning	CRB	false	1	1	Weapon,Resizable,Ranged,Simple,Thrown,Piercing,Javelin,Spear,Weapon Group Spears,Weapon Group Thrown
+Oathbow	CRB	false	1	1	Weapon,Resizable,Ranged,Martial,Container,Projectile,Piercing,Bow,Longbow,Composite,Weapon Group Bows
+Improvised Weapon (1d2)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d3)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d4)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d6)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d8)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d10)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (1d12)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (2d4)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (2d6)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (2d8)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (2d10)	CRB	false	1	1	Weapon,Melee,Improvised
+Improvised Weapon (Thrown) (1d2)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d3)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d4)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d6)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d8)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d10)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (1d12)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (2d4)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (2d6)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (2d8)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Improvised Weapon (Thrown) (2d10)	CRB	false	1	1	Weapon,Ranged,Thrown,Improvised,Improvised Thrown
+Bucket	CRB	false	0	0	Weapon,Resizable,Melee,Light,Standard,Ranged,Thrown,Martial,Bludgeoning,Hammer
+Oil (1 Pint Flask)	CRB	false	1	1	Goods,General,Liquid,Flask,Consumable,Weapon,Ranged,Thrown,Fire,Splash
+Spade	CRB	false	0	0	Weapon,Resizable,Melee,Light,Standard,Ranged,Thrown,Martial,Bludgeoning,Hammer
+Acid (Flask)	CRB	false	1	1	Goods,Alchemical,Flask,Consumable,Weapon,Ranged,Thrown,Acid,Splash,NoAttackPenalty
+Alchemist's Fire (Flask)	CRB	false	1	1	Goods,Alchemical,Flask,Consumable,Weapon,Ranged,Thrown,Fire,Splash,NoAttackPenalty
+Holy Water (Flask)	CRB	false	1	1	Goods,Flask,Consumable,Weapon,Ranged,Thrown,Splash,NoAttackPenalty
+Tanglefoot Bag	CRB	false	0	0	Goods,Alchemical,Consumable,Weapon,Ranged,Thrown,Splash,NoAttackPenalty
+Thunderstone	CRB	false	0	0	Goods,Alchemical,Consumable,Weapon,Ranged,Thrown,Sonic,Splash,NoAttackPenalty
+Arrows (Blunt/20)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow
+Arrows (Flight/20)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow
+Arrows (Smoke/20)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow
+Arrow (Blunt)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow,Individual
+Arrow (Flight)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow,Individual
+Arrow (Smoke)	APG	false	0	0	Ammunition,Resizable,Standard,Arrow,Individual
+Battle Aspergillum	APG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Simple,Standard,Bludgeoning,Mace,Hammer
+Cestus	APG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Simple,Standard,Bludgeoning,Piercing,Monk,Close
+Stake (Wood)	APG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Ranged,Thrown,Simple,Standard,Piercing,Close
+Bayonet	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Simple,Standard,Piercing,Bayonet,Close
+Spear (Boar)	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Ranged,Thrown,Simple,Standard,Piercing,Spear
+Sword Cane	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Martial,Standard,Piercing,Sword
+Bardiche	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Reach,Standard,Slashing,Polearm
+Bec de Corbin	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Reach,Standard,Bludgeoning,Piercing,Polearm
+Bill	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Reach,Standard,Slashing,Polearm
+Glaive-Guisarme	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Reach,Standard,Slashing,Polearm
+Lucerne Hammer	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Bludgeoning,Piercing,Reach,Polearm
+Dagger (Swordbreaker)	APG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Exotic,Standard,Dagger,Tengu
+Falcata	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing,HeavyBlade,Tengu
+Khopesh	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing,HeavyBlade,Tengu
+Sword (Temple)	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing,HeavyBlade,Tengu
+Spear (Chain)	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Exotic,Standard,Piercing,Slashing
+Mancatcher	APG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Exotic,Reach,Standard,Piercing,Polearm
+Chakram	APG	false	1	1	Weapon,Resizable,Martial,Ranged,Thrown,Standard,Slashing,Chakram
+Pilum	APG	false	1	1	Weapon,Resizable,Martial,Ranged,Thrown,Standard,Piercing,Pilum,Javelin,Spear
+Boomerang	APG	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Bludgeoning,Thrown,Consumable
+Crossbow (Double)	APG	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Container,Projectile,Crossbow
+Bomb	APG	false	1	1	Weapon,Exotic,Ranged,Standard,Thrown,Splash,Fire,NoAttackPenalty,Light
+Brass Knuckles	APG	false	1	1	Weapon,Resizable,Natural,Weapon Group Natural,Melee,Unarmed,Monk,Bludgeoning,Finesseable,Close
+Improvised Weapon (Light)	APG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Simple,Standard,Bludgeoning,Mace,Hammer
+Improvised Weapon (One-Handed)	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Ranged,Thrown,Simple,Standard,Bludgeoning,Club,Hammer
+Improvised Weapon (Two-Handed)	APG	false	1	1	Weapon,Resizable,Melee,OneHanded,Simple,Standard,Double,Bludgeoning,Quarterstaff,Polearm
+Fake Rapier	ACG	false	1	1	Weapon,Melee,Piercing,Weapon Group Melee OneHanded Piercing
+Brawler's Flurry	ACG	false	0	0	Weapon,Resizable,Melee,Special,Unarmed,Bludgeoning,Finesseable,Close
+Aklys	B1	false	1	1	Weapon,Resizable,Melee,Light,Ranged,Thrown,Exotic,Bludgeoning
+Claw Blades (Catfolk)	ARG	false	1	1	Weapon,Resizable,Light,Melee,Slashing,Finesseable
+Dogslicer	ARG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Martial,Standard,Slashing
+Horsechopper	ARG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Piercing,Slashing
+Jolting Dart	ARG	false	1	1	Weapon,Resizable,Simple,Ranged,Standard,Piercing,Electricity,Thrown,Dart
+Longaxe (Dwarven)	ARG	false	1	1	Weapon,Resizable,Melee,Dwarven,Slashing,Exotic,Reach,Axe
+Longhammer (Dwarven)	ARG	false	1	1	Weapon,Resizable,Melee,Dwarven,Bludgeoning,Exotic,Hammer,Reach
+Sea-Knife	ARG	false	1	1	Weapon,Resizable,Light,Melee,Piercing,Slashing,Exotic,Finesseable
+Snag Net	ARG	false	0	0	Weapon,Resizable,Exotic,Ranged,Standard,Thrown
+Swift Obsidian Greataxe	ARG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Standard,Slashing,Axe
+Tail Attachment (Long Lash)	ARG	false	1	1	Weapon,Resizable,Melee,Light,KoboldTailAttachment,Slashing,Reach,Finesseable
+Tail Attachment (Pounder)	ARG	false	1	1	Weapon,Resizable,Melee,Light,KoboldTailAttachment,Bludgeoning,Finesseable
+Tail Attachment (Razored)	ARG	false	1	1	Weapon,Resizable,Melee,Light,KoboldTailAttachment,Slashing,Finesseable
+Tail Attachment (Spiked)	ARG	false	1	1	Weapon,Resizable,Melee,Light,KoboldTailAttachment,Piercing,Finesseable
+Tail Attachment (Sweeper)	ARG	false	1	1	Weapon,Resizable,Melee,Light,KoboldTailAttachment,Bludgeoning,Trip,Finesseable
+Tailblade (Ratfolk)	ARG	false	1	1	Weapon,Resizable,Light,Melee,Slashing,RatfolkTailblade,Finesseable
+Underwater Crossbow (Heavy)	ARG	false	1	1	Weapon,Resizable,Simple,Ranged,Standard,Piercing,Container,Projectile,Crossbow
+Underwater Crossbow (Light)	ARG	false	1	1	Weapon,Resizable,Simple,Ranged,Standard,Piercing,Container,Projectile,Crossbow
+Waraxe (Dwarven Double)	ARG	false	1	1	Weapon,Resizable,Melee,Dwarven,Slashing,Exotic
+Weapon (Dwarven Boulder)	ARG	false	1	1	Weapon,Resizable,Melee,Dwarven,Bludgeoning,Exotic
+Darts (Featherweight/10)	UI	false	0	0	Ammunition,Resizable,Standard,Dart
+Spring Blade	UI	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Ranged,Thrown,Simple,Standard,Piercing,Slashing,Dagger,BladeLight
+Wrist Launcher	UI	false	0	0	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Container,Projectile,Blowgun
+Wrist Launcher (Heavy)	UI	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Container,Projectile,Crossbow
+Mystic Bolts	UI	false	0	0	Weapon,Resizable,Melee,Light,Ranged,Thrown,OneHanded
+Liquid Blade	UE	false	1	1	Alchemical,Consumable,Weapon,Melee,Light,Finesseable,Martial,Standard,Piercing,Sword,Fragile
+Flame Fountain Firework	UE	false	1	1	Alchemical,Consumable,Weapon,Melee,OneHanded,Fire
+Banshee Ballerina (Firework)	UE	false	0	0	Alchemical,Consumable,Weapon,Ranged,Thrown,Sonic,Splash
+Bottled Lightning	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Electricity,Sonic,Splash
+Burst Jar	UE	false	0	0	Alchemical,Consumable,Weapon,Ranged,Thrown,Sonic,Splash
+Ghast Retch (Flask)	UE	false	0	0	Alchemical,Consumable,Weapon,Ranged,Thrown,Poison,Splash
+Keros Oil (Flask)	UE	false	1	1	Goods,Alchemical,Weapon,Ranged,Fire
+Pellet Grenade (Iron)	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Piercing,Bludgeoning,Fire,Splash
+Pellet Grenade (Silver)	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Piercing,Bludgeoning,Fire,Splash
+Pellet Grenade (Cold Iron)	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Piercing,Bludgeoning,Fire,Splash
+Pellet Grenade (Adamantine)	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Piercing,Bludgeoning,Fire,Splash
+Shard Gel (Flask)	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Piercing,Splash
+Star Candle (Firework)	UE	false	0	0	Alchemical,Consumable,Weapon,Ranged,Thrown,Fire
+Tangleburn Bag	UE	false	1	1	Alchemical,Consumable,Weapon,Ranged,Thrown,Fire,Splash
+Atlatl Dart	UE	false	0	0	Ammunition,Resizable,AtlatlDart
+Bamboo Shaft Arrows (10)	UE	false	0	0	Ammunition,Resizable,Standard,Arrow
+Blunt Arrows (20)	UE	false	0	0	Ammunition,Resizable,Standard,Arrow
+Flight Arrows (20)	UE	false	0	0	Ammunition,Resizable,Standard,Arrow
+Kestros Dart (10)	UE	false	0	0	Ammunition,Resizable,KestrosDart
+Smoke Arrow	UE	false	0	0	Ammunition,Resizable,Standard,Arrow
+Whistling Arrows (20)	UE	false	0	0	Ammunition,Resizable,Standard,Arrow
+Alchemical Cartridge (Dragon's Breath)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Alchemical Cartridge (Entangling Shot)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Alchemical Cartridge (Flare)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Alchemical Cartridge (Paper/Bullet)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Alchemical Cartridge (Paper/Pellet)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Alchemical Cartridge (Salt Shot)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Black Powder (Dose)	UE	false	0	0	Ammunition,Resizable,Standard,BlackPowder
+Bullet (Firearm)	UE	false	0	0	Ammunition,Resizable,Standard,Bullet
+Bullet (Firearm/30)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmBullet
+Bullet (Firearm/Pitted)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmBullet
+Metal Cartridge	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmCartridge
+Pellets (Handful)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmPellet
+Pellets (Handful/30)	UE	false	0	0	Ammunition,Resizable,FirearmGear,FirearmPellet
+Bullet (Burrowing/Greater)	UE	false	0	0	FirearmGear,Ammo,Ammunition,Resizable,FirearmBullet
+Bullet (Burrowing/Lesser)	UE	false	0	0	FirearmGear,Ammo,Ammunition,Resizable,FirearmBullet
+Bullet (Tracer)	UE	false	0	0	FirearmGear,Ammo,Ammunition,Resizable,FirearmBullet
+Buckler Gun	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol
+Pepperbox	UE	false	1	1	Weapon,Resizable,Ranged,OneHanded,Exotic,Standard,Bludgeoning,Piercing,Container,Projectile,Firearm
+Pistol	UE	false	1	1	Weapon,Resizable,Ranged,OneHanded,Exotic,Standard,Bludgeoning,Piercing,Container,Projectile,Firearm
+Pistol (Coat)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol
+Pistol (Dagger)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol,Double
+Pistol (Double-Barreled)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol
+Pistol (Dragon)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol,Scatter
+Pistol (Sword Cane)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol,Double
+Blunderbuss	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Blunderbuss,Scatter
+Culverin	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Culverin,Scatter
+Double Hackbut	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Hackbut
+Fire Lance	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,FireLance
+Musket	UE	false	1	1	Weapon,Resizable,Ranged,TwoHanded,Exotic,Standard,Bludgeoning,Piercing,Container,Projectile,Firearm
+Musket (Axe)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Musket,Double
+Musket (Double-Barreled)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Musket
+Musket (Warhammer)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Musket,Double
+Revolver	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Revolver
+Rifle	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Rifle
+Rifle (Pepperbox)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Rifle
+Shotgun	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Shotgun,Scatter
+Shotgun (Double-Barreled)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Shotgun,Scatter
+Pistol (Firedrake)	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol
+Pistol of the Infinite Sky	UE	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Pistol
+Mere Club	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Simple,Bludgeoning,Piercing,Hammer
+Butterfly Sword	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Light,Finesseable,Melee,Martial,Monk,Tengu
+Gladius	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Martial,Piercing,Performance,GladiatorMelee,Light,Finesseable
+Jutte	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Light,Finesseable,Disarm,Monk
+Kerambit	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Light,Finesseable
+Shang Gou	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Disarm,Trip,Monk
+Tonfa	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Blocking,Monk,Light,Finesseable
+Double Chicken Saber	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Disarm,Monk,Tengu
+Broadsword (Nine Ring)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Monk,Tengu
+Scizore	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Martial,Piercing,Gauntlet
+Terbutje	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Martial,Slashing
+Earth Breaker	UE	false	1	1	Weapon,Resizable,Melee,Martial,Standard,Bludgeoning
+Hooked Lance	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Reach,Trip
+Mattock	UE	false	1	1	Weapon,Resizable,Piercing,Melee,Fragile
+Monk's Spade	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Double,Monk
+Naginata	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Reach
+Nodachi	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Brace,Tengu
+Ogre Hook	UE	false	1	1	Weapon,Resizable,Melee,TwoHanded,Martial,Standard,Piercing
+Rhomphaia	UE	false	1	1	Weapon,Resizable,Melee,Piercing,Slashing,Brace,Fragile,Reach
+Sansetsukon	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Blocking,Disarm,Monk
+Tepoztopilli	UE	false	1	1	Weapon,Resizable,Melee,StoneAge,Piercing,Slashing,fragile,reach
+Tiger Fork	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Brace,Monk
+Sword (Tri-Point Double-Edged)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Reach,Tengu
+Dan Bong	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Bludgeoning,Blocking,Monk,Ranged,Thrown
+Emei Piercer	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Piercing,Monk
+Fighting Fan	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Piercing,Distracting,Monk
+Knuckle Axe	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Exotic,Slashing,Performance,Monk
+Pata	UE	false	1	1	Weapon,Resizable,Melee,Finesseable,Exotic,Piercing
+Quadrens	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Exotic,Piercing,Performance
+Scorpion Whip	UE	false	1	1	Weapon,Resizable,Exotic,Melee,Standard,Slashing
+Sica	UE	false	1	1	Weapon,Exotic,Melee,Finesseable,Standard,Slashing
+Swordbreaker (Dagger)	UE	false	1	1	Weapon,Resizable,Melee,Light,Exotic,Slashing,BladeLight
+Tekko-Kagi (Iron Claw)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Piercing,Disarm
+Wakizashi	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Piercing,Slashing,Deadly,Tengu,Light,Finesseable
+Terbutje (Great)	UE	false	1	1	Weapon,Resizable,Melee,StoneAge,Slashing,Fragile
+Hooked Axe	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Exotic,Slashing,Performance,Disarm,Trip
+Katana	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Deadly,OneHanded,Sword,BladeHeavy,Tengu
+Nine-Section Whip	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Bludgeoning,Blocking,Distracting,Monk,Trip
+Sawtooth Sabre	UE	false	1	1	Weapon,Resizable,Melee,Exotic,Standard,Slashing
+Shotel	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Piercing,BladeLight
+Taiaha	UE	false	1	1	Weapon,Resizable,Melee,StoneAge,Bludgeoning,Piercing,Double
+Temple Sword	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Slashing,Sword
+Urumi	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing
+Wahaika	UE	false	1	1	Weapon,Resizable,Melee,StoneAge,Bludgeoning,Disarm
+Bo Staff	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Bludgeoning,Blocking,Double,Monk
+Chain Spear	UE	false	1	1	Weapon,Resizable,Melee,TwoHanded,Exotic,Piercing,Slashing,Double,Spear
+Flying Blade	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Exotic,Slashing,Performance,Reach,Sword,Tengu
+Kama (Double-Chained)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Double,Monk,Reach,Trip
+Katana (Double Walking Stick)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Bludgeoning,Double,Tengu,Sword
+Kusarigama (Sickle and Chain)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Bludgeoning,Double,Monk,Reach,Trip,Grapple
+Meteor Hammer	UE	false	1	1	Weapon,Resizable,Exotic,Melee,Standard,Bludgeoning
+Sword (Seven-Branched)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Disarm,Monk,Sword,Tengu
+Tetsubo	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Bludgeoning
+Throwing Shield	UE	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Ranged,Thrown,Exotic,Bludgeoning,Performance,Trip
+Blade of the Rising Sun	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Deadly,OneHanded,Sword,BladeHeavy,Tengu
+Blade of the Sword-Saint	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Deadly,OneHanded,Sword,BladeHeavy,Tengu
+Hammer (Polarity)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,TwoHanded,Exotic,Bludgeoning,Reach,Trip,Hammer
+Hellscourge	UE	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Exotic,Slashing,Flail
+Lash of the Howler	UE	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Exotic,Slashing,Flail
+Spirit Caller	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Simple,Bludgeoning,Piercing,Hammer
+Sword (Ten-Ring)	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,OneHanded,Martial,Slashing,Monk,Sword
+Demon Prince Armor Claw Attack	UE	false	1	1	Weapon,Resizable,Melee,Simple,Unarmed,Piercing,Slashing
+Ring of Rat Fangs Bite Attack	UE	false	1	1	Weapon,Resizable,Melee,Simple,Unarmed,Piercing
+Amentum	UE	false	1	1	Weapon,Resizable,Ranged,Martial,Piercing,Spear
+Atlatl	UE	false	1	1	Weapon,Resizable,StoneAge,Piercing,Ranged,Thrown,Container
+Hunga Munga	UE	false	1	1	Weapon,Resizable,Ranged,Thrown,Martial,Piercing,BladeLight
+Iron Brush	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Light,Finesseable
+Lungchuan Tamo	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Monk,Light,Finesseable
+Poisoned Sand Tube	UE	false	0	0	Weapon,Resizable,EasternWeapon,Eastern,Ranged
+Sibat	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial
+Tube Arrow Shooter	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Ranged
+Wushu Dart	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Light,Finesseable,Ranged,Thrown,Martial,Piercing
+Crossbow (Repeating Hand)	UE	false	1	1	Weapon,Resizable,Ranged,Exotic,Piercing
+Harpoon	UE	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Ranged,Standard,Slashing,Sword
+Kestros	UE	false	1	1	Weapon,Resizable,Piercing,Container,Ranged
+Kyoketsu Shoge	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Exotic,Slashing,Piercing,Disarm,Grapple,Monk,Reach,Ranged,Thrown
+Lasso	UE	false	0	0	Weapon,Resizable,Ranged,Exotic,Thrown
+Rope Dart	UE	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Ranged,Exotic,Piercing,Blocking,Distracting,Monk
+Scroll Blade	UM	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Piercing,Sword,BladeLight
+Astral Suit Ram 1	UPSI	false	1	1	Weapon,Melee,Standard,Bludgeoning,Ram
+Astral Suit Ram 2	UPSI	false	1	1	Weapon,Melee,Standard,Bludgeoning,Ram
+Astral Suit Ram 3	UPSI	false	1	1	Weapon,Melee,Standard,Bludgeoning,Ram
+Astral Suit Ram 4	UPSI	false	1	1	Weapon,Melee,Standard,Bludgeoning,Ram
+Mind Blade (Light Bludgeoning)	UPSI	false	1	1	Weapon,Resizable,Melee,Finesseable,Bludgeoning,MindBlade
+Mind Blade (Light Piercing)	UPSI	false	1	1	Weapon,Resizable,Melee,Finesseable,Piercing,MindBlade
+Mind Blade (Light Slashing)	UPSI	false	1	1	Weapon,Resizable,Melee,Finesseable,Slashing,MindBlade
+Mind Blade (One-Handed Bludgeoning)	UPSI	false	1	1	Weapon,Resizable,Melee,Bludgeoning,MindBlade
+Mind Blade (One-Handed Piercing)	UPSI	false	1	1	Weapon,Resizable,Melee,Piercing,MindBlade
+Mind Blade (One-Handed Slashing)	UPSI	false	1	1	Weapon,Resizable,Melee,Slashing,MindBlade
+Mind Blade (Two-Handed Bludgeoning)	UPSI	false	1	1	Weapon,Resizable,Melee,Bludgeoning,MindBlade
+Mind Blade (Two-Handed Piercing)	UPSI	false	1	1	Weapon,Resizable,Melee,Piercing,MindBlade
+Mind Blade (Two-Handed Slashing)	UPSI	false	1	1	Weapon,Resizable,Melee,Slashing,MindBlade
+Mind Dagger	UPSI	false	1	1	Weapon,Resizable,Melee,Finesseable,Slashing,MindBlade,Thrown
+Deadly Fist	UPSI	false	1	1	Weapon,Melee,Special,Unarmed,Monk,Bludgeoning,Piercing,Slashing,Finesseable,Close
+Mind Arrow	UPSI	false	1	1	Weapon,Ranged,Projectile,Piercing,MindArrow
+Mind Xephyr Knife	UPSI	false	1	1	Weapon,Melee,Light,Finesseable,Slashing,MindBlade,Thrown,Ranged,Standard,Piercing,BladeLight
+Mind Bolt (Long Range Bludgeoning)	UPSI	false	1	1	Weapon,Ranged,Projectile,Bludgeoning,MindBolt
+Mind Bolt (Long Range Piercing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Piercing,MindBolt
+Mind Bolt (Long Range Slashing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Slashing,MindBolt
+Mind Bolt (Medium Range Bludgeoning)	UPSI	false	1	1	Weapon,Ranged,Projectile,Bludgeoning,MindBolt
+Mind Bolt (Medium Range Piercing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Piercing,MindBolt
+Mind Bolt (Medium Range Slashing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Slashing,MindBolt
+Mind Bolt (Short Range Bludgeoning)	UPSI	false	1	1	Weapon,Ranged,Projectile,Bludgeoning,MindBolt
+Mind Bolt (Short Range Piercing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Piercing,MindBolt
+Mind Bolt (Short Range Slashing)	UPSI	false	1	1	Weapon,Ranged,Projectile,Slashing,MindBolt
+Flurry of Fists	UPSI	false	1	1	Weapon,Melee,Special,Unarmed,Monk,Bludgeoning,Finesseable,Close
+Flurry of Strikes	UPSI	false	1	1	Weapon,Melee,Special,Unarmed,Monk,Bludgeoning,Finesseable,Close
+Astral Warrior Weapon (Bludgeoning)	UPSI	false	1	1	Weapon,Melee,OneHanded,Finesseable,Standard,Bludgeoning
+Astral Warrior Weapon (Piercing)	UPSI	false	1	1	Weapon,Melee,OneHanded,Finesseable,Standard,Piercing
+Astral Warrior Weapon (Slashing)	UPSI	false	1	1	Weapon,Melee,OneHanded,Finesseable,Standard,Slashing
+Crystal Shard	UPSI	false	1	1	Weapon,Ranged,Standard,Slashing,Thrown
+Xephyr Knife	UPSI	false	1	1	Weapon,Melee,Light,Finesseable,Ranged,Thrown,Exotic,Standard,Piercing,Slashing,BladeLight
+Black Powder (Keg)	UC	false	0	0	Ammunition,Resizable,Standard,BlackPowder
+Arrow (Iron-tipped Distance/20)	UC	false	0	0	Ammunition,Resizable,Arrow
+Arrow (Whistling)	UC	false	0	0	Ammunition,Resizable,Arrow
+Bamboo Shaft (10)	UC	false	0	0	Ammunition,Resizable,BambooShaft
+Bullet (Adamantine)	UC	false	0	0	Ammunition,Resizable,FirearmGear,FirearmBullet
+Bullet (Firearm/Silver)	UC	false	0	0	Ammunition,Resizable,FirearmGear,FirearmBullet
+Siege Engine Ammunition (Alchemist's Fire)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Blast Shot)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Bomb)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Chain Shot)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Liquid Ice)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Plague Bundle)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Siege Engine Ammunition (Smoke Shot)	UC	false	0	0	Ammunition,Resizable,SiegeAmmo
+Aklys (Gladiator)	UC	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Exotic,Bludgeoning,Ranged,Thrown,Performance,Trip
+Amentum (Javelin)	UC	false	1	1	Weapon,Resizable,GladiatorWeapon,Melee,Martial,Piercing,Performance,Thrown,Ranged
+Wushu Dart (5)	UC	false	1	1	Weapon,Resizable,EasternWeapon,Eastern,Melee,Martial,Monk,Light,Finesseable
+Battered Blunderbuss	UC	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Battered,Blunderbuss,Scatter
+Battered Musket	UC	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Battered,Musket
+Battered Pistol	UC	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Piercing,Bludgeoning,Container,Projectile,Firearm,Weapon Group Firearms,Battered,Pistol
+Ballista (Gate Breaker)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Ballista (Heavy)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Piercing
+Ballista (Light)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Piercing
+Bombard (Heavy)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Bludgeoning,Piercing
+Bombard (Light)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Bludgeoning,Piercing
+Bombard (Standard)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Bludgeoning,Piercing
+Cannon	UC	false	1	1	Weapon,Ranged,Siege,Exotic,Standard,Bludgeoning,Piercing,Container,Projectile,Firearm
+Cannon (Fiend's Mouth)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Bludgeoning,Piercing
+Catapult (Heavy)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Catapult (Light)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Catapult (Standard)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Firedrake	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Fire
+Firewyrm	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Siege,Fire
+Springal (Arrow)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Piercing
+Springal (Rocket)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Fire
+Trebuchet (Heavy)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Trebuchet (Light)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Trebuchet (Standard)	UC	false	1	1	Weapon,Ranged,SiegeWeapon,Exotic,Bludgeoning
+Rock (Small)	B1	false	0	0	Weapon,Simple,Ranged,Standard,Bludgeoning,Thrown,Rock
+Rock (Medium)	B1	false	0	0	Weapon,Simple,Ranged,Standard,Bludgeoning,Thrown,Rock
+Rending Claw Blades	ARG	false	1	1	Weapon,Resizable,Light,Melee,Slashing,Finesseable
+Seedpod	UW	false	1	1	Weapon,Exotic,Ranged,Standard,Thrown,Splash,Bludgeoning,NoAttackPenalty
+Ectoplasmic Residue	OA	false	0	0	Goods,Alchemical,Consumable,Weapon,Ranged,Thrown,Splash,Flask
+Living Grimoire Holy Text	HA	false	1	1	Weapon,Resizable,Melee,Exotic,Light,Finesseable,Bludgeoning
+Blackaxe	ISWG	false	1	1	Weapon,Resizable,Melee,Martial,Slashing,Axe
+War Razor	ISWG	false	1	1	Weapon,Resizable,Melee,Light,Finesseable,Martial,Standard,Slashing
+Klar (as weapon)	ISWG	false	1	1	Weapon,Resizable,Melee,Martial,Standard,Slashing
+Bladed Scarf	ISWG	false	1	1	Weapon,Resizable,Melee,TwoHanded,Exotic,Finesseable,Standard,Slashing
+Cannon Ball	ISWG	false	0	0	Ammunition,Resizable,Standard,Bullet
+Bolts (Bolas/10)	MC	false	0	0	Ammunition,Resizable,Standard,BolaBolt
+Bullet (Sling/Alchemical)	MC	false	0	0	Ammunition,Resizable,Standard,Bullet
+Slaver's Crossbow (Heavy)	MC	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Bludgeoning,Container,Projectile,Crossbow
+Slaver's Crossbow (Light)	MC	false	1	1	Weapon,Resizable,Exotic,Ranged,Standard,Bludgeoning,Container,Projectile,Crossbow
+Flindbar	MC	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Bludgeoning,Piercing,Flail,Gnoll
+Spiderdraw	MC	false	0	0	Goods,Alchemical,Consumable,Weapon,Ranged,Thrown,Splash
+Ranged Cannon ~ Clockwork Goliath	B3	false	0	0	Weapon,Ranged,SiegeWeapon,SiegeFirearm,Exotic,Bludgeoning,Piercing
+Rock (Fine)	B4	false	1	1	Weapon,Simple,Ranged,Standard,Bludgeoning,Thrown,Rock
+Rock (Large)	B4	false	1	1	Weapon,Simple,Ranged,Standard,Bludgeoning,Thrown,Rock
+Skull	B4	false	1	1	Weapon,Simple,Ranged,Standard,Bludgeoning,Thrown
+Crimson Bluff	ISC	false	0	0	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing
+Rostland Edge	ISC	false	0	0	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing,Aldori,Finesseable
+Elven Leafblade	AG	false	1	1	Weapon,Resizable,Melee,Light,Exotic,Standard,Piercing,Slashing,Elven,Finesseable
+Elven Thornblade	AG	false	1	1	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Piercing,Slashing,Elven,Finesseable
+Mantis Blade	AG	false	0	0	Weapon,Resizable,Melee,OneHanded,Exotic,Standard,Slashing

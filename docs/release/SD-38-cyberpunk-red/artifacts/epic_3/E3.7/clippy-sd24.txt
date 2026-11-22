@@ -1,0 +1,10 @@
+SUMMARY
+  passed:  1  clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-XsOaCe
+test no_would_strings_in_shipping_source ... ok
+test no_zero_tolerance_forbidden_tokens_in_shipping_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+

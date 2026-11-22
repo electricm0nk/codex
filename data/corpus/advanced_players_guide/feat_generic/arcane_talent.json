@@ -1,0 +1,62 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Magic is in your blood, and at your fingertips.",
+    "key": "Arcane Talent",
+    "name": "Arcane Talent",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=Elf,RACESUBTYPE=Gnome"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=10"
+      },
+      {
+        "key": "DESC",
+        "value": "Magic is in your blood, and at your fingertips."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Arcane Talent Selection|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Choose a 0-level spell from the sorcerer/wizard spell list. You can cast this spell three times per day as a spell-like ability. The caster level is equal to your character level. The save DC is %1|CHA+10"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "record_key": "Arcane Talent",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
+}

@@ -1,0 +1,66 @@
+STATED	scripts/oracle_harness/eqm-fixtures/arrow_alone.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/arrow_alone_apg.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=2 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=2 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=2 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=2 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/outfit_baseline.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/outfit_darkleaf.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=0 shield=2 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=0 shield=2 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=0 shield=2 dexterity=2 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/build/install/pcgen/characters/CodeMonkey.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=3 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/build/install/pcgen/characters/Everything.pcg	row=15	printed=15	ten_plus_parts=15	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=3 size=1 natural=0 deflection=0 misc=1
+STATED	$PCGEN_REPO_DIR/build/install/pcgen/characters/Sorcerer.pcg	row=11	printed=11	ten_plus_parts=11	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/build/install/pcgen/characters/SpecialWizard.pcg	row=10	printed=10	ten_plus_parts=10	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=-1 size=1 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/characters/CodeMonkey.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=3 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/characters/Everything.pcg	row=15	printed=15	ten_plus_parts=15	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=3 size=1 natural=0 deflection=0 misc=1
+STATED	$PCGEN_REPO_DIR/characters/Sorcerer.pcg	row=11	printed=11	ten_plus_parts=11	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/characters/SpecialWizard.pcg	row=10	printed=10	ten_plus_parts=10	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=-1 size=1 natural=0 deflection=0 misc=0
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Alice.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Bard.pcg	row=11	printed=11	ten_plus_parts=11	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Bob.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Bob_Companion.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Charlie.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_CloudGiantHalfDragon.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Dave.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Eve.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Fran.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Gordon.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Harold.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Ivan.pcg	row=10	printed=10	ten_plus_parts=10	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=0 size=0 natural=0 deflection=0 misc=0
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Jango.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_JimDop.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	row=27	printed=27	ten_plus_parts=27	sum=ok	row_is_printed=yes	armor=13 shield=0 dexterity=3 size=0 natural=0 deflection=0 misc=1
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	row=21	printed=21	ten_plus_parts=21	sum=ok	row_is_printed=yes	armor=7 shield=0 dexterity=3 size=0 natural=0 deflection=0 misc=1
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Lauren.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Mallory.pcg	row=11	printed=11	ten_plus_parts=11	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=0 size=0 natural=0 deflection=0 misc=1
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Q-PsiCrystal.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_Quasvin.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_UT~Gordon.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_UT~Harold.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_UT~Ivan.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_BarJack.pcg	row=20	printed=20	ten_plus_parts=20	sum=ok	row_is_printed=yes	armor=6 shield=0 dexterity=3 size=1 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_BrdJoe.pcg	row=11	printed=11	ten_plus_parts=11	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_CleElf.pcg	row=19	printed=19	ten_plus_parts=19	sum=ok	row_is_printed=yes	armor=7 shield=1 dexterity=1 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_FigFae.pcg	row=14	printed=14	ten_plus_parts=14	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=3 size=0 natural=0 deflection=0 misc=1
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_MonKee.pcg	row=10	printed=10	ten_plus_parts=10	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=-1 size=0 natural=0 deflection=0 misc=1
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_SWizSam.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=1 size=1 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/3e_WizShar.pcg	row=12	printed=12	ten_plus_parts=12	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=2 size=0 natural=0 deflection=0 misc=0
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/Zen_Nancy.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/msrd_Elwood.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/msrd_Ilyana.pcg
+REFUSED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/none_PdfBuster.pcg	The PCGen import tool (pcg_import) refused the file: none_PdfBuster.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+REFUSED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/none_derth.pcg	The PCGen import tool (pcg_import) refused the file: none_derth.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/pf_Cleric.pcg	row=16	printed=16	ten_plus_parts=16	sum=ok	row_is_printed=yes	armor=5 shield=1 dexterity=0 size=0 natural=0 deflection=0 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/pf_Paladin.pcg	row=22	printed=22	ten_plus_parts=22	sum=ok	row_is_printed=yes	armor=10 shield=0 dexterity=1 size=0 natural=0 deflection=1 misc=0
+STATED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/pf_Rogue.pcg	row=25	printed=25	ten_plus_parts=25	sum=ok	row_is_printed=yes	armor=5 shield=0 dexterity=4 size=1 natural=2 deflection=2 misc=1
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/pf_goldielocks.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic_drone.pcg
+BLOCKED	$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_soldier.pcg
+STATED	$PCGEN_REPO_DIR/code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	row=13	printed=13	ten_plus_parts=13	sum=ok	row_is_printed=yes	armor=0 shield=0 dexterity=3 size=0 natural=0 deflection=0 misc=0
+BLOCKED	$PCGEN_REPO_DIR/data/zen_test/Dex3.pcg
+SUMMARY	files=65	saved=37	blocked=26	refused=2	stated=37	without=0	sums=37	row_is_printed=37

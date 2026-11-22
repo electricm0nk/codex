@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Psicrystal ~ Skills",
+    "delivery": null,
+    "description": "A psicrystal has the same skill ranks as its owner, except that it has a minimum of 4 ranks each in Perception and Stealth.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:psicrystal_skills",
+    "name": "Skills",
+    "owners": [
+      "ultimate_psionics:monster:psicrystal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|max(4-skillinfo(\"RANK\",\"Perception\"),0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|max(4-skillinfo(\"RANK\",\"Stealth\"),0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BaseClassSkillPts|-MAX(1,2+INT)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A psicrystal has the same skill ranks as its owner, except that it has a minimum of 4 ranks each in Perception and Stealth."
+      },
+      {
+        "key": "KEY",
+        "value": "Psicrystal ~ Skills"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": "p.111",
+    "traits": []
+  },
+  "ingested_at": "2026-08-13T02:27:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 742,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Psicrystal ~ Skills",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 64305.0,
+    "description": "Allows its wielder to see in darkness as if it had the see in darkness ability (Bestiary 2 301). Three times per day, the wielder can use it to create a deeper darkness effect (caster level 8th).",
+    "key": "Rod of Shadows",
+    "name": "Rod of Shadows",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mace (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Mace.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "64305"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Rod"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows its wielder to see in darkness as if it had the see in darkness ability (Bestiary 2 301). Three times per day, the wielder can use it to create a deeper darkness effect (caster level 8th)."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Rod of Shadows",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

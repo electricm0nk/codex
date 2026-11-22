@@ -1,0 +1,51 @@
+{
+  "schema": "tranche-2-7-prep-doctrine-recovery/v1",
+  "ts": "2026-07-12T04-03-44Z",
+  "operator": "god-emporer (per user instructions 2026-07-12)",
+  "scope": "Draft the ruleset, push tranche/2-7, reopen PR against tranche/2-7. Of these three, the first is fully in-scope; the second and third require operator push access + gh CLI + token that this shell does not have.",
+  "actions_taken": [
+    {
+      "action": "Drafted .github/branch-protection-rulesets/tranche-2-7.json",
+      "where": "Local tranche/2-7 branch in the /workspace/repos/codex worktree",
+      "structure": "Mirrors .github/branch-protection-rulesets/tranche-3.json exactly: deny deletion, deny force-push, require status checks for the tranche-2-7-ci workflow (NOT YET AUTHORED, will fail-open), no PR reviews, restrict pushes (operator fills in maintainer github user ids before applying).",
+      "key_differences_from_tranche_3": "branch is tranche/2-7; baseline_sha is 15d073a (tranche/2-7 tip at time of authoring); status-check contexts name tranche-2-7-ci workflow explicitly so the ruleset is ready when the workflow is authored.",
+      "verification": "JSON validates; file is 4,166 bytes; comment-header mirrors tranche-3.json conventions."
+    },
+    {
+      "action": "Committed the ruleset to the local tranche/2-7 branch",
+      "commit_sha": "6d6d7a7",
+      "commit_message": "ops(tranche-2-7): add branch-protection ruleset source-of-truth artifact",
+      "where": "Local tranche/2-7 branch in /workspace/repos/codex worktree",
+      "what_will_happen_on_push": "When the operator pushes tranche/2-7 to origin, this commit and the ruleset file go with it. The ruleset will then need to be applied to GitHub via the Rulesets API or web admin per the README's apply path."
+    },
+    {
+      "action": "Posted operator checklist on t_230c4a14 (OPS card)",
+      "what": "A self-contained, copy-pasteable procedure for: (1) pushing tranche/2-7 to origin, (2) configuring branch protection on tranche/2-7 in GitHub settings, (3) reopening PR #264 (live Slice A) against tranche/2-7. Includes the exact gh CLI command for each step and the GitHub web UI path as a fallback."
+    },
+    {
+      "action": "Posted Slice A reopen procedure on t_eb2135b3",
+      "what": "A targeted, step-by-step 'how to reopen Slice A against tranche/2-7' procedure. Notes that the work itself (commit c7c27dc on feat/sd17-slice-a-include-graph) is sound; only the PR target changes."
+    },
+    {
+      "action": "Posted ready-to-dispatch note on t_dd3dacbd (parent gate)",
+      "what": "Documents the dispatch cascade after tranche/2-7 lands: B-1 \u2192 B-2 \u2192 B-3 \u2192 B-4 \u2192 B-5 \u2192 B-6 \u2192 C. The full progression is in programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/."
+    }
+  ],
+  "what_i_did_NOT_do": [
+    {
+      "task": "Run `git push origin tranche/2-7`",
+      "why": "This shell has no push access. `git push origin HEAD:tranche/2-7` returns 'git@github.com: Permission denied (publickey).' Verified multiple times. The /home/ubuntu/.config/gh/ directory and the /home/ubuntu/.config/gh/.claude_gh_token file do not exist on this VM. I will not pretend otherwise or fabricate a confirmation."
+    },
+    {
+      "task": "Run `gh pr reopen 264` or `gh pr create --base tranche/2-7 ...`",
+      "why": "`gh` CLI is not installed (`/usr/bin/bash: gh: command not found`). No GitHub token is present. I will not pretend otherwise or fabricate a PR."
+    }
+  ],
+  "what_the_operator_must_do_to_complete_the_unblock": [
+    "From a working copy with push access to electricm0nk/codex, run the procedure I posted on t_230c4a14. It is fully self-contained:",
+    "  Step 1: `git push -u origin tranche/2-7`",
+    "  Step 2: Apply the ruleset (web admin or API) with maintainer github user ids filled in",
+    "  Step 3: `gh pr create --base tranche/2-7 ...` for Slice A",
+    "After step 3, the live Slice A's PR is open against tranche/2-7, the parent gate flips to dispatchable, the 7 fresh slices start dispatching in order."
+  ]
+}

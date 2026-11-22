@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "My Light",
+    "name": "My Light",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cryptic,Dread,Marksman,Psion,Psychic Warrior,Wilder=0|Gifted Blade=1"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychokinesis"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Light"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au, Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "40-ft. cone of light emanating from you"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "DESC",
+        "value": "Your eyes emit 20-ft. cone of light."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "My Light",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

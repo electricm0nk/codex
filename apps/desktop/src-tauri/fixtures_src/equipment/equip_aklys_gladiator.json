@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Aklys (Gladiator)",
+    "name": "Aklys (Gladiator)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Aklys"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.GladiatorWeapon.Melee.Exotic.Bludgeoning.Ranged.Thrown.Performance.Trip"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Performance.Material ~ Steel.Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_aklys_gladiator.txt",
+    "record_key": "Aklys (Gladiator)"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Half-orcs from mountainous regions are excellent climbers, and sometimes ambush prey by leaping down from above. Half-orcs with this racial trait gain a +1 bonus on Acrobatics and Climb checks.",
+    "key": "Half-Orc ~ Rock Climber",
+    "name": "Rock Climber",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Rock Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Rock Climber],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceIntimidating=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-orcs from mountainous regions are excellent climbers, and sometimes ambush prey by leaping down from above. Half-orcs with this racial trait gain a +1 bonus on Acrobatics and Climb checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the intimidating trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Rock Climber"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Climb|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|true"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Half-Orc ~ Rock Climber",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

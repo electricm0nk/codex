@@ -1,0 +1,185 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "ultimate_magic:companion:scarlet_spider_poison"
+    ],
+    "corpus_key": "Scarlet Spider",
+    "external_ability_refs": [],
+    "key": "ultimate_magic:companion:scarlet_spider",
+    "monster_class": "Vermin:1",
+    "name": "Scarlet Spider",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarlet Spider ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Scarlet Spider"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Poison,*1,1d3"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.120",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -8
+      },
+      {
+        "ability": "DEX",
+        "amount": 10
+      },
+      {
+        "ability": "CON",
+        "amount": 0
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": 0
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "ingested_at": "2026-08-18T22:35:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+    "record_key": "Scarlet Spider",
+    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

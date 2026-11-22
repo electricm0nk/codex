@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 3600.0,
+    "description": null,
+    "key": "Kalistocrat's Gloves",
+    "name": "Kalistocrat's Gloves",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Wondrous.Magic.Slot_Hands.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "3600"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_magic.lst",
+    "record_key": "Kalistocrat's Gloves",
+    "sha256": "6fc68dc8e7c39e038c3ac499020b7e86f948cf8b9303db583243e19028959f9e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

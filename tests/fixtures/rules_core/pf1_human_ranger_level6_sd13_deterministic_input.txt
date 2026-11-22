@@ -1,0 +1,45 @@
+# SD13-E5 Ranger level 6 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 6 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-6 hybrid baseline, mirroring the
+# level-5 fixture's shape with the class level swapped.
+#
+# Level 6 adds one new deterministic choice selection tied to the PF1 Core Rulebook
+# Combat Style Feat rule's 6th-level interval ("The ranger's expertise manifests in
+# the form of bonus feats at 2nd, 6th, 10th, 14th, and 18th level."):
+#   - choice:ranger_combat_style_bonus_feat_2 -> feat:manyshot (the SECOND combat
+#     style bonus feat, drawn from the Archery style's own 6th-level restricted
+#     list -- Improved Precise Shot or Manyshot -- since this fixture's combat
+#     style, carried forward unchanged from level 2, is archery)
+# This fixture carries forward the same favored-enemy (both types and the
+# bonus-increase target), combat-style, favored-terrain, and hunter's-bond
+# selections from the level-5 fixture unchanged, since none of those are
+# re-granted at 6th level.
+case_id=pf1-crb-human-ranger-level6
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:6
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_hunters_bond:form:bond
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

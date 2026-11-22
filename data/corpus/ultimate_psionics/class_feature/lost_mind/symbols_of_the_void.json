@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lost Mind ~ Symbols of the Void",
+    "name": "Symbols of the Void",
+    "class": "Lost Mind",
+    "description": "Certain symbol spells treated as known powers; need class level twice spell level to manifest.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lost Mind ~ Symbols of the Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Certain symbol spells treated as known powers; need class level twice spell level to manifest."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cryptic Insight|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Cryptic;LEVEL=4|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=5|Symbol of Pain,Symbol of Sleep|PREVARGTEQ:CrypticML,10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=6|Symbol of Persuasion|PREVARGTEQ:CrypticML,12"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=7|Symbol of Stunning|PREVARGTEQ:CrypticML,14"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Cryptic=8|Symbol of Death,Symbol of Insanity|PREVARGTEQ:CrypticML,16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1826,
+    "record_key": "Lost Mind ~ Symbols of the Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

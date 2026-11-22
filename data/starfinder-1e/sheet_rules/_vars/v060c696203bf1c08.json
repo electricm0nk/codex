@@ -1,0 +1,1 @@
+{"var":"v060c696203bf1c08","label":"Skill Cap Profession Archaeologist","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:28"]}}

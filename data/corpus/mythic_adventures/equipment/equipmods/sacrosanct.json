@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 5000.0,
+    "description": "Once per day when the wielder uses the sacrosanct weapon to channel energy, she can increase the radius of the channel energy to 40 feet. They wielder must be able to channel positive or negative energy to use this ability. Alternatively, the wielder can expend one use of mythic power to use this ability instead of expending its daily use. When using mythic power to activate this ability, it can be done at will.",
+    "key": "SACROSANCT",
+    "name": "SACROSANCT",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Sacrosanct ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day when the wielder uses the sacrosanct weapon to channel energy, she can increase the radius of the channel energy to 40 feet. They wielder must be able to channel positive or negative energy to use this ability. Alternatively, the wielder can expend one use of mythic power to use this ability instead of expending its daily use. When using mythic power to activate this ability, it can be done at will."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 151,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "SACROSANCT",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

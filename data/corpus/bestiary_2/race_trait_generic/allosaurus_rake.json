@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Allosaurus ~ Rake",
+    "name": "Allosaurus ~ Rake",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Rake"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RakeAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RakeBonusDamage|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RakeAttack|BAB+STR-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RakeBonusDamage|STR"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2 talons +%1, 1d8+%2)|RakeAttack|RakeBonusDamage"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2006,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Allosaurus ~ Rake",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

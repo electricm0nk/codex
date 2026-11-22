@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 60000.0,
+    "description": "This rod looks like a royal scepter worth at least 5,000 gp in materials and workmanship alone. The wielder can command the obedience and fealty of creatures within 120 feet when she activates the device (a standard action). Creatures totaling 300 Hit Dice can be ruled, but creatures with Intelligence scores of 12 or higher are each entitled to a DC 16 Will save to negate the effect. Ruled creatures obey the wielder as if she were their absolute sovereign. Still, if the wielder gives a command that is contrary to the nature of the creatures commanded, the magic is broken. The rod can be used for 500 total minutes before crumbling to dust. This duration need not be continuous.",
+    "key": "Rod (Rulership)",
+    "name": "Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Rulership)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Rulership"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "60000"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.488"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|32,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Rod, mass charm monster"
+      },
+      {
+        "key": "DESC",
+        "value": "This rod looks like a royal scepter worth at least 5,000 gp in materials and workmanship alone. The wielder can command the obedience and fealty of creatures within 120 feet when she activates the device (a standard action). Creatures totaling 300 Hit Dice can be ruled, but creatures with Intelligence scores of 12 or higher are each entitled to a DC 16 Will save to negate the effect. Ruled creatures obey the wielder as if she were their absolute sovereign. Still, if the wielder gives a command that is contrary to the nature of the creatures commanded, the magic is broken. The rod can be used for 500 total minutes before crumbling to dust. This duration need not be continuous."
+      }
+    ],
+    "weight_lbs": 8.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 459,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Rulership)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

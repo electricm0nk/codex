@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Siltsight Gift",
+    "name": "Siltsight Gift",
+    "description": "While underwater, you ignore concealment from silt, muck, and murky water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Siltsight Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneSiltsightGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "While underwater, you ignore concealment from silt, muck, and murky water."
+      },
+      {
+        "key": "DESC",
+        "value": "You also gain blindsense with a range of 10 feet while underwater.|PREVARGTEQ:DeepOneManifestationLevel,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 173,
+    "record_key": "Deep One Corruption ~ Siltsight Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

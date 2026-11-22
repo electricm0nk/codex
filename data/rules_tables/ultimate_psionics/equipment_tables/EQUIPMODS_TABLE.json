@@ -1,0 +1,917 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_psionics/equipment_tables/EQUIPMODS_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_psionics",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Special Ability ~ Psionic Blade ~ Weapon",
+      "category": "Equipmods",
+      "name": "Psionic Blade",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Crystal / Mundane",
+      "category": "Equipmods",
+      "name": "Crystal (Mundane)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "25hp/inch and 8 hardness"
+    },
+    {
+      "key": "Material ~ Crystal / Deep",
+      "category": "Equipmods",
+      "name": "Crystal (Deep)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage"
+    },
+    {
+      "key": "Material ~ Crystal / Mundane ~ Item",
+      "category": "Equipmods",
+      "name": "Crystal (Mundane)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "25hp/inch and 8 hardness"
+    },
+    {
+      "key": "Material ~ Crystal / Deep ~ Item",
+      "category": "Equipmods",
+      "name": "Crystal (Deep)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "30hp/inch and 10 hardness"
+    },
+    {
+      "key": "Special Ability ~ Aporter ~ Armor",
+      "category": "Equipmods",
+      "name": "Aporter",
+      "cost_gp": 40320.0,
+      "weight_lbs": null,
+      "description": "2/day transports wearer and equipment to any spot within 800 feet as Fold Space"
+    },
+    {
+      "key": "Special Ability ~ Averter ~ Shield",
+      "category": "Equipmods",
+      "name": "Averter",
+      "cost_gp": 12960.0,
+      "weight_lbs": null,
+      "description": "3/day Aversion to shield, DC 14"
+    },
+    {
+      "key": "Special Ability ~ Determination ~ Armor",
+      "category": "Equipmods",
+      "name": "Determination",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "1/day automatic breath of life at 0 hp"
+    },
+    {
+      "key": "Special Ability ~ Ectoplasmic ~ Armor",
+      "category": "Equipmods",
+      "name": "Ectoplasmic",
+      "cost_gp": 10800.0,
+      "weight_lbs": null,
+      "description": "1/day ectoplasmic form for up to 5 minutes"
+    },
+    {
+      "key": "Special Ability ~ Floating ~ Armor",
+      "category": "Equipmods",
+      "name": "Floating",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "negates normal penalty for swimming in armor; additionally a +4 circumstance bonus for Swim checks"
+    },
+    {
+      "key": "Special Ability ~ Fusing ~ Armor / Heavy",
+      "category": "Equipmods",
+      "name": "Fusing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter"
+    },
+    {
+      "key": "Special Ability ~ Fusing ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Fusing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter"
+    },
+    {
+      "key": "Special Ability ~ Fusing ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Fusing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter"
+    },
+    {
+      "key": "Special Ability ~ Fusing ~ Shield",
+      "category": "Equipmods",
+      "name": "Fusing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Armor Check reduced, Max Dex increased, one category lighter"
+    },
+    {
+      "key": "Special Ability ~ Gleaming ~ Armor",
+      "category": "Equipmods",
+      "name": "Gleaming",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "flashes and gleams give wearer a 'fuzzy' appearance granting concealment"
+    },
+    {
+      "key": "Special Ability ~ Heartening ~ Shield",
+      "category": "Equipmods",
+      "name": "Heartening",
+      "cost_gp": 720.0,
+      "weight_lbs": null,
+      "description": "grants 5 temporary hit points a day for up to 4 minutes"
+    },
+    {
+      "key": "Special Ability ~ Landing ~ Armor",
+      "category": "Equipmods",
+      "name": "Landing",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "wearer takes no damage from the first 60' of a fall; target lands on feet no matter the distance of a fall"
+    },
+    {
+      "key": "Special Ability ~ Linked ~ Armor",
+      "category": "Equipmods",
+      "name": "Linked",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "wearer forms a bond with other wearers of linked armor or shields in 10 miles; as mindlink power"
+    },
+    {
+      "key": "Special Ability ~ Manifester ~ Shield",
+      "category": "Equipmods",
+      "name": "Manifester",
+      "cost_gp": 10800.0,
+      "weight_lbs": null,
+      "description": "generates 3 power points per day that the wielder can use when manifesting a power; all must be used at once"
+    },
+    {
+      "key": "Special Ability ~ Mindarmor ~ Armor",
+      "category": "Equipmods",
+      "name": "Mindarmor",
+      "cost_gp": 24000.0,
+      "weight_lbs": null,
+      "description": "wearer gains a +3 insight bonus to Will saves vs. mind affecting and compulsion effects"
+    },
+    {
+      "key": "Special Ability ~ Murmuring ~ Armor",
+      "category": "Equipmods",
+      "name": "Murmuring",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "-5 penalty to others' concentration checks within 30 ft."
+    },
+    {
+      "key": "Special Ability ~ Murmuring / Greater ~ Armor",
+      "category": "Equipmods",
+      "name": "Murmuring (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "-5 penalty to others' concentration checks within 30 ft.; failed concentration check does 1d6 bleed damage"
+    },
+    {
+      "key": "Special Ability ~ Phasing ~ Armor",
+      "category": "Equipmods",
+      "name": "Phasing",
+      "cost_gp": 65520.0,
+      "weight_lbs": null,
+      "description": "phase through wood, plaster, or stone for total of 60' per day"
+    },
+    {
+      "key": "Special Ability ~ Power Resistance / 13 ~ Armor",
+      "category": "Equipmods",
+      "name": "Power Resistance (13)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Resistance / 15 ~ Armor",
+      "category": "Equipmods",
+      "name": "Power Resistance (15)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Resistance / 17 ~ Armor",
+      "category": "Equipmods",
+      "name": "Power Resistance (17)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Resistance / 19 ~ Armor",
+      "category": "Equipmods",
+      "name": "Power Resistance (19)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Quickness ~ Armor",
+      "category": "Equipmods",
+      "name": "Quickness",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "armor adds 5' to wearer's movement after armor reduction"
+    },
+    {
+      "key": "Special Ability ~ Radiant / Psionic ~ Armor",
+      "category": "Equipmods",
+      "name": "Radiant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "resistance 10 to energy attacks; radiates light in 60' radius for rounds equal to points absorbed"
+    },
+    {
+      "key": "Special Ability ~ Ranged ~ Shield",
+      "category": "Equipmods",
+      "name": "Ranged",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can be thrown with a range increment of 30 ft by those proficient in its use; returns just before wielder's next turn"
+    },
+    {
+      "key": "Special Ability ~ Seeing ~ Armor",
+      "category": "Equipmods",
+      "name": "Seeing",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "flanking only gains +1 bonus; gains +1 enhancement to Perception checks, but a -2 save vs. gaze attacks"
+    },
+    {
+      "key": "Special Ability ~ Time Buttress ~ Shield",
+      "category": "Equipmods",
+      "name": "Time Buttress",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day Timeless Body"
+    },
+    {
+      "key": "Special Ability ~ Vanishing ~ Armor",
+      "category": "Equipmods",
+      "name": "Vanishing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "2/day cloud mind"
+    },
+    {
+      "key": "Special Ability ~ Wall ~ Shield",
+      "category": "Equipmods",
+      "name": "Wall",
+      "cost_gp": 20160.0,
+      "weight_lbs": null,
+      "description": "1/day drop to form Wall of Ectoplasm for 7 minutes"
+    },
+    {
+      "key": "Special Ability ~ Agile ~ Melee",
+      "category": "Equipmods",
+      "name": "Agile",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Add Dexterity bonus, instead of Strength bonus, to weapon damage"
+    },
+    {
+      "key": "Special Ability ~ Bodyfeeder ~ Melee",
+      "category": "Equipmods",
+      "name": "Bodyfeeder",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "adds damage as temporary hit points on a critical hit"
+    },
+    {
+      "key": "Special Ability ~ Challenger ~ Melee",
+      "category": "Equipmods",
+      "name": "Challenger",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "attack and use Intimidate to give target penalties to attack others"
+    },
+    {
+      "key": "Special Ability ~ Collision ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Collision",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus"
+    },
+    {
+      "key": "Special Ability ~ Collision ~ Melee",
+      "category": "Equipmods",
+      "name": "Collision",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus"
+    },
+    {
+      "key": "Special Ability ~ Collision ~ Ranged",
+      "category": "Equipmods",
+      "name": "Collision",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+5 damage on any hit on top of enhancement bonus"
+    },
+    {
+      "key": "Special Ability ~ Coup de Grace ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Coup de Grace",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27"
+    },
+    {
+      "key": "Special Ability ~ Coup de Grace ~ Melee",
+      "category": "Equipmods",
+      "name": "Coup de Grace",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27"
+    },
+    {
+      "key": "Special Ability ~ Coup de Grace ~ Ranged",
+      "category": "Equipmods",
+      "name": "Coup de Grace",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "paralyzed for 1 round on crit, DC 27"
+    },
+    {
+      "key": "Special Ability ~ Dislocator ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "teleport target 1-100 miles randomly, DC 17"
+    },
+    {
+      "key": "Special Ability ~ Dislocator ~ Melee",
+      "category": "Equipmods",
+      "name": "Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day teleport target 1-100 miles randomly, DC 17"
+    },
+    {
+      "key": "Special Ability ~ Dislocator ~ Ranged",
+      "category": "Equipmods",
+      "name": "Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day teleport target 1-100 miles randomly, DC 17"
+    },
+    {
+      "key": "Special Ability ~ Dissipater ~ Melee",
+      "category": "Equipmods",
+      "name": "Dissipater",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "ignores damage reduction and hardness of ectoplasm creatures and items and treats all successful hits as critical hits"
+    },
+    {
+      "key": "Special Ability ~ Dueling / Luck Bonus ~ Melee",
+      "category": "Equipmods",
+      "name": "Dueling",
+      "cost_gp": 14000.0,
+      "weight_lbs": null,
+      "description": "Gain luck bonus to CMB and CMD double the enchantment bonus with maneuvers when using weapon"
+    },
+    {
+      "key": "Special Ability ~ Energy / Cold ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Cold)",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates cold energy ammunition"
+    },
+    {
+      "key": "Special Ability ~ Energy / Electricity ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Electricity)",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates electricity energy ammunition"
+    },
+    {
+      "key": "Special Ability ~ Energy / Fire ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Fire)",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Creates fire energy ammunition"
+    },
+    {
+      "key": "Special Ability ~ Energy / Cold / Greater ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Greater Cold)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to cold energy"
+    },
+    {
+      "key": "Special Ability ~ Energy / Electricity / Greater ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Greater Electricity)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to electricity energy"
+    },
+    {
+      "key": "Special Ability ~ Energy / Fire / Greater ~ Ranged",
+      "category": "Equipmods",
+      "name": "Energy (Greater Fire)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Converts ammunition to fire energy"
+    },
+    {
+      "key": "Special Ability ~ Fatalist ~ Weapon",
+      "category": "Equipmods",
+      "name": "Fatalist",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "for 1 minute, target gets -2 to AC and Will saves; Intimidate checks against target get +3"
+    },
+    {
+      "key": "Special Ability ~ Dislocator / Great ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Great Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20"
+    },
+    {
+      "key": "Special Ability ~ Dislocator / Great ~ Melee",
+      "category": "Equipmods",
+      "name": "Great Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20"
+    },
+    {
+      "key": "Special Ability ~ Dislocator / Great ~ Ranged",
+      "category": "Equipmods",
+      "name": "Great Dislocator",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day send target to random plane, DC 20"
+    },
+    {
+      "key": "Special Ability ~ Guardian ~ Weapon",
+      "category": "Equipmods",
+      "name": "Guardian",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Transfer some or all of enhancement bonus to saves"
+    },
+    {
+      "key": "Special Ability ~ Invader ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Invader",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Can forcibly add target to collective"
+    },
+    {
+      "key": "Special Ability ~ Knockout ~ Weapon",
+      "category": "Equipmods",
+      "name": "Knockout",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Target falls asleep for 3 rounds, new save every round (DC 13 Fort)"
+    },
+    {
+      "key": "Special Ability ~ Linked Striking ~ Weapon",
+      "category": "Equipmods",
+      "name": "Linked Striking",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Add 2 to enhancement bonus and +2d6 damage on subsequent hits vs. an enemy"
+    },
+    {
+      "key": "Special Ability ~ Lucky ~ Melee",
+      "category": "Equipmods",
+      "name": "Lucky",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day reroll failed attack roll as free action"
+    },
+    {
+      "key": "Special Ability ~ Manifester ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Manifester",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once"
+    },
+    {
+      "key": "Special Ability ~ Manifester ~ Melee",
+      "category": "Equipmods",
+      "name": "Manifester",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once"
+    },
+    {
+      "key": "Special Ability ~ Manifester ~ Ranged",
+      "category": "Equipmods",
+      "name": "Manifester",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once"
+    },
+    {
+      "key": "Special Ability ~ Mindcrusher ~ Melee",
+      "category": "Equipmods",
+      "name": "Mindcrusher",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "drains half base damage in power points; if no power points or non-psionic, 1d2 Wisdom Damage, DC 17"
+    },
+    {
+      "key": "Special Ability ~ Mindfeeder ~ Melee",
+      "category": "Equipmods",
+      "name": "Mindfeeder",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on a critical hit gives wielder temporary power points equal to damage dealt; points overlap, don't stack"
+    },
+    {
+      "key": "Special Ability ~ Parrying ~ Melee",
+      "category": "Equipmods",
+      "name": "Parrying",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "provides a +1 insight bonus to AC and saves when wielded"
+    },
+    {
+      "key": "Special Ability ~ Power Storing ~ Melee",
+      "category": "Equipmods",
+      "name": "Power Storing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can store one power up to 5PP and discharge on successful hit as a swift action if desired"
+    },
+    {
+      "key": "Special Ability ~ Psibane ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Psibane",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures"
+    },
+    {
+      "key": "Special Ability ~ Psibane ~ Melee",
+      "category": "Equipmods",
+      "name": "Psibane",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures"
+    },
+    {
+      "key": "Special Ability ~ Psibane ~ Ranged",
+      "category": "Equipmods",
+      "name": "Psibane",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures bestowed on ammunition"
+    },
+    {
+      "key": "Special Ability ~ Psicrystal Setting ~ Weapon",
+      "category": "Equipmods",
+      "name": "Psicrystal Setting",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "psicrystal can be docked to weapon like a psicrystal staff; while docked, the weapon can be charged like deep crystal"
+    },
+    {
+      "key": "Special Ability ~ Psychic ~ Melee",
+      "category": "Equipmods",
+      "name": "Psychic",
+      "cost_gp": 35000.0,
+      "weight_lbs": null,
+      "description": "enhancement bonus varies depending on Power Point reserve of character; see text"
+    },
+    {
+      "key": "Special Ability ~ Psychodisruptive ~ Weapon",
+      "category": "Equipmods",
+      "name": "Psychodisruptive",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "disrupts psionic and magical abilities"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Psychokinetic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic ~ Melee",
+      "category": "Equipmods",
+      "name": "Psychokinetic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic ~ Ranged",
+      "category": "Equipmods",
+      "name": "Psychokinetic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR)"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic Burst ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Psychokinetic Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic Burst ~ Melee",
+      "category": "Equipmods",
+      "name": "Psychokinetic Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1"
+    },
+    {
+      "key": "Special Ability ~ Psychokinetic Burst ~ Ranged",
+      "category": "Equipmods",
+      "name": "Psychokinetic Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d4 ectoplasmic damage (ignores DR) bestowed on ammunition; On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1"
+    },
+    {
+      "key": "Special Ability ~ Rebounding ~ Thrown",
+      "category": "Equipmods",
+      "name": "Rebounding",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Use iterative attacks with single thrown weapon"
+    },
+    {
+      "key": "Special Ability ~ Scourgebane ~ Weapon",
+      "category": "Equipmods",
+      "name": "Scourgebane",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures"
+    },
+    {
+      "key": "Special Ability ~ Soulbreaker ~ Melee",
+      "category": "Equipmods",
+      "name": "Soulbreaker",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "on a critical hit bestows one negative level on target; FORT Save (DC:18) day later or permanent"
+    },
+    {
+      "key": "Special Ability ~ Sundering ~ Melee",
+      "category": "Equipmods",
+      "name": "Sundering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "wielder treated as if has Improved Sunder Feat"
+    },
+    {
+      "key": "Special Ability ~ Suppression ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Suppression",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielder's manifester level, max 15) vs DC of 11+manifester level of power"
+    },
+    {
+      "key": "Special Ability ~ Suppression ~ Melee",
+      "category": "Equipmods",
+      "name": "Suppression",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielders manifester level, max 15) vs DC of 11+manifester level of power"
+    },
+    {
+      "key": "Special Ability ~ Suppression ~ Ranged",
+      "category": "Equipmods",
+      "name": "Suppression",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day target opponent or object suffers targeted dispel psionics ((1d20 + 5 + wielders manifester level, max 15) vs DC of 11+manifester level of power"
+    },
+    {
+      "key": "Special Ability ~ Teleporting ~ Thrown",
+      "category": "Equipmods",
+      "name": "Teleporting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "when thrown will return, by teleporting through Astral Plane, back to thrower's hand just before thrower's next turn"
+    },
+    {
+      "key": "Special Ability ~ Whistling ~ Weapon",
+      "category": "Equipmods",
+      "name": "Whistling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round"
+    },
+    {
+      "key": "Special Ability ~ Wrenching ~ Ranged",
+      "category": "Equipmods",
+      "name": "Wrenching",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reposition target towards wielder"
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Power Trigger",
+      "category": "Equipmods",
+      "name": "|Power Effect (50 Charges/Power Trigger)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Single Use",
+      "category": "Equipmods",
+      "name": "|Power Effect (Single Use/Use Activated)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Single Use / Crawling",
+      "category": "Equipmods",
+      "name": "|Power Effect (Single Use/Use Activated)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Completion",
+      "category": "Equipmods",
+      "name": "|Power Effect (Single Use/Completion)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Psicrown / Lesser",
+      "category": "Equipmods",
+      "name": "|Power Effect (Psicrown/Lesser)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Psicrown / Greater",
+      "category": "Equipmods",
+      "name": "|Power Effect (Psicrown/Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Effect / Psicrown / True",
+      "category": "Equipmods",
+      "name": "|Power Effect (Psicrown/True)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Choice / Earring of Resistance",
+      "category": "Equipmods",
+      "name": "|Power Choice (Earring of Resistance)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Choice / Green White Ioun Stone",
+      "category": "Equipmods",
+      "name": "|Power Choice (Green White Ioun Stone)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Choice / Mind Stone",
+      "category": "Equipmods",
+      "name": "|Power Choice (Mind Stone)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Choice / Mind Stone / Greater",
+      "category": "Equipmods",
+      "name": "|Power Choice (Greater Mind Stone)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Power Choice / Third Eye",
+      "category": "Equipmods",
+      "name": "|Talent Choice (Third Eye)",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Quality ~ Gloves of Calling",
+      "category": "Equipmods",
+      "name": "Weapon Choice",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Quality ~ Dancing Robes of Sharatwan / Armor Bonus",
+      "category": "Equipmods",
+      "name": "Armor Bonus for Dancing Robes of Sharatwan",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DancingRobesArmorBonus"
+    },
+    {
+      "key": "Special Quality ~ Dancing Robes of Sharatwan / Determination",
+      "category": "Equipmods",
+      "name": "Determination for Dancing Robes of Sharatwan",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day automatic breath of life at 0 hp"
+    },
+    {
+      "key": "Special Quality ~ Dissonance / Enhancement Bonus / Main",
+      "category": "Equipmods",
+      "name": "Enhancement Bonus for Dissonance Main",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DissonanceEnhancementBonusMain"
+    },
+    {
+      "key": "Special Quality ~ Dissonance / Enhancement Bonus / Alt",
+      "category": "Equipmods",
+      "name": "Enhancement Bonus for Dissonance Alt",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|DissonanceEnhancementBonusAlt"
+    },
+    {
+      "key": "Special Quality ~ Dissonance / Whistling / Main",
+      "category": "Equipmods",
+      "name": "Whistling for Dissonance Main",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round"
+    },
+    {
+      "key": "Special Quality ~ Dissonance / Whistling / Alt",
+      "category": "Equipmods",
+      "name": "Whistling for Dissonance Alt",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round"
+    },
+    {
+      "key": "Special Quality ~ Severis / Enhancement Bonus",
+      "category": "Equipmods",
+      "name": "Enhancement Bonus for Severis",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+% enhancement|Severis"
+    },
+    {
+      "key": "Special Quality ~ Severis / Scourgebane",
+      "category": "Equipmods",
+      "name": "Scourgebane for Severis",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures"
+    }
+  ]
+}

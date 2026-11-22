@@ -1,0 +1,14 @@
+post-rebase HEAD 7f20a4994c
+$ cargo test --locked -j 8 --lib cpr:: -- --test-threads=8
+test result: ok. 95 passed; 0 failed; 0 ignored; 0 measured; 2892 filtered out; finished in 0.12s
+$ cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_ -- --test-threads=8
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 808 filtered out; finished in 3.85s
+$ bash scripts/verify.sh --only clippy -j 8
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+RESULT: PASS
+post-rebase audit 0539be07ce...HEAD
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

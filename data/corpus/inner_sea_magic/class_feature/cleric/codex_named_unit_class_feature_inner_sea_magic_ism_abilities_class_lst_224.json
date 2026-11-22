@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T22:08:29Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_224)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_224)",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TravelDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Travel Domain ~ Dimensional Hop|PREVARGTEQ:DomainTravelAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TravelDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelDC|10+(DomainTravelLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Advanced Player's Guide"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "APG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 224,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_224)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_class.lst:224"
+  }
+}

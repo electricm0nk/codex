@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Undercommon (cannot speak)",
+    "name": "Undercommon (cannot speak)",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Understand"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_languages.lst",
+    "record_key": "Undercommon (cannot speak)",
+    "sha256": "b8e04b15ad8aaec4009668df8a907d9d7917889c3b8d9e43a2193aae87de5ce5"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

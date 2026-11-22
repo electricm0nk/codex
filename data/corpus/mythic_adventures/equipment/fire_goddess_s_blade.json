@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 15.0,
+    "description": null,
+    "key": "Fire Goddess's Blade",
+    "name": "Fire Goddess's Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Flaming ~ Weapon.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "Three times per day as a swift action, its wielder can transform the sword into a blade of pure flame. In this form, the blade deals 1d8+9 points of fire damage (as the flame blade spell). Once per day, the sword's wielder can expend one use of mythic power to transform the blade into a Large fire elemental for 10 minutes. When the duration ends or the fire elemental is defeated, the blade reappears in its owner's hands."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Fire Goddess's Blade",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

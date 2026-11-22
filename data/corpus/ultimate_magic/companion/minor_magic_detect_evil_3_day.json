@@ -1,0 +1,60 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Evolution ~ Minor Detect Evil 3",
+    "name": "Minor Magic ~ Detect Evil (3/day)",
+    "origin": "declared",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Minor Detect Evil 3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike.EidMagicUpgrade"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Minor Detect Evil 1"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=11"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DetectEvilEidSLAPerDay|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 151,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Evolution ~ Minor Detect Evil 3",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

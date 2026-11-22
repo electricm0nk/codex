@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Summon Creature (Level 2)",
+    "name": "Summon Creature (Level 2)",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "starfinder/paizo/character_operations_manual/support/scom_spells_aa.lst",
+    "record_key": "Summon Creature (Level 2)",
+    "sha256": "854612c8c0695173c8af84cea7b52f88498ab3b4d6a5f70b68449ef6d8d54baf"
+  },
+  "unit_id": "character_operations_manual:spell:summon_creature_level_2"
+}

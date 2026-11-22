@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindbender ~ Enthrall",
+    "name": "Enthrall",
+    "class": "Mindbender",
+    "description": "Once per day, you can make one creature your thrall (Will %1 negates).  The affected creature will follow any instruction you give, including harming itself, although obviously self-destructive orders give the target an additional save each round it is under those orders.  You may only have one thrall at any given time and the thrall gains a new save to negate the effect every 24 hours from the time it became your thrall.  This is considered a mind-affecting, compulsion effect.|MindbenderEnthrallDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindbender ~ Enthrall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialAttack.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindbenderEnthrallDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can make one creature your thrall (Will %1 negates).  The affected creature will follow any instruction you give, including harming itself, although obviously self-destructive orders give the target an additional save each round it is under those orders.  You may only have one thrall at any given time and the thrall gains a new save to negate the effect every 24 hours from the time it became your thrall.  This is considered a mind-affecting, compulsion effect.|MindbenderEnthrallDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindbenderEnthrallDC|10+INT+(TelepathyDisciplineLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 512,
+    "record_key": "Mindbender ~ Enthrall"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

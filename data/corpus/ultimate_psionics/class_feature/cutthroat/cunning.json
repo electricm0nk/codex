@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cutthroat ~ Cunning",
+    "name": "Cunning",
+    "class": "Cutthroat",
+    "description": "You gain a +%1 competence bonus on Bluff and Stealth skill checks made while maintaining psionic focus.  You can expend your psionic focus to double this bonus for a single Bluff or Stealth skill check.|CunningBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutthroat ~ Cunning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CunningBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 competence bonus on Bluff and Stealth skill checks made while maintaining psionic focus.  You can expend your psionic focus to double this bonus for a single Bluff or Stealth skill check.|CunningBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Stealth|CunningBonus*PsionicFocusActive|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CunningBonus|min(5,floor((SoulknifeLVL+2)/4))"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2154,
+    "record_key": "Cutthroat ~ Cunning"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,279 @@
+//! `SheetDocument` → PDF bytes through Typst used as a library (SD-39 `decisions.md §4`).
+//!
+//! The Typst world here is closed: its only files are the shared frame and blocks templates and
+//! the block looks (`resources/print/*.typ`, `resources/print/looks/*.typ`, compiled into the
+//! binary), the sheet's own JSON and the generated main
+//! file, and the images the sheet's blocks carry (the saved portrait, read by the caller, or a game
+//! system's logo, compiled in); its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
+//! in). It never searches the system's fonts, never reads the disk and never asks for the date,
+//! so one sheet prints the same bytes on every machine (NR-3).
+
+use std::path::PathBuf;
+use std::sync::LazyLock;
+
+use typst::diag::{FileError, FileResult, SourceDiagnostic};
+use typst::foundations::{Bytes, Datetime, Duration};
+use typst::syntax::{FileId, RootedPath, Source, VirtualPath, VirtualRoot};
+use typst::text::{Font, FontBook};
+use typst::utils::LazyHash;
+use typst::{Library, LibraryExt, World};
+use typst_layout::PagedDocument;
+use typst_pdf::PdfOptions;
+
+use serde::Serialize;
+
+use crate::print::model::SheetDocument;
+
+/// The shared page frame and the look dispatcher (operator ruling R2; SD-40 `decisions.md §4`).
+const FRAME_TYP: &str = include_str!("../../resources/print/frame.typ");
+const BLOCKS_TYP: &str = include_str!("../../resources/print/blocks.typ");
+
+/// The block looks (SD-40 `decisions.md §4`): one Typst template per `Look`, by the name the
+/// sheet's JSON gives it, served at `/looks/<name>.typ`; `blocks.typ` dispatches on that name.
+pub(crate) const LOOKS: &[(&str, &str)] = &[
+    ("table", include_str!("../../resources/print/looks/table.typ")),
+    ("abilities", include_str!("../../resources/print/looks/abilities.typ")),
+    ("square-block", include_str!("../../resources/print/looks/square-block.typ")),
+    ("armor-class", include_str!("../../resources/print/looks/armor-class.typ")),
+    ("attack", include_str!("../../resources/print/looks/attack.typ")),
+    ("saves", include_str!("../../resources/print/looks/saves.typ")),
+    ("speed", include_str!("../../resources/print/looks/speed.typ")),
+    ("skills", include_str!("../../resources/print/looks/skills.typ")),
+    ("weapons", include_str!("../../resources/print/looks/weapons.typ")),
+    ("portrait", include_str!("../../resources/print/looks/portrait.typ")),
+    ("name-campaign", include_str!("../../resources/print/looks/name-campaign.typ")),
+    ("languages", include_str!("../../resources/print/looks/languages.typ")),
+    ("conditional-bonuses", include_str!("../../resources/print/looks/conditional-bonuses.typ")),
+    ("resistances", include_str!("../../resources/print/looks/resistances.typ")),
+    ("section-title", include_str!("../../resources/print/looks/section-title.typ")),
+    ("feats", include_str!("../../resources/print/looks/feats.typ")),
+    ("class-features", include_str!("../../resources/print/looks/class-features.typ")),
+    ("actions", include_str!("../../resources/print/looks/actions.typ")),
+    ("defense", include_str!("../../resources/print/looks/defense.typ")),
+    ("gear", include_str!("../../resources/print/looks/gear.typ")),
+    ("money", include_str!("../../resources/print/looks/money.typ")),
+    ("spells", include_str!("../../resources/print/looks/spells.typ")),
+    ("spellbook", include_str!("../../resources/print/looks/spellbook.typ")),
+    ("custom", include_str!("../../resources/print/looks/custom.typ")),
+    ("pets", include_str!("../../resources/print/looks/pets.typ")),
+    ("bio", include_str!("../../resources/print/looks/bio.typ")),
+    ("breakdown", include_str!("../../resources/print/looks/breakdown.typ")),
+    ("math", include_str!("../../resources/print/looks/math.typ")),
+    ("progression", include_str!("../../resources/print/looks/progression.typ")),
+    ("notes", include_str!("../../resources/print/looks/notes.typ")),
+];
+
+/// The game systems' logos (SD-41 `decisions.md §34` (7), §35 Q10; sources in
+/// `resources/print/logos/SOURCES.md`), by `game_system`: page 1's portrait box prints one when no
+/// portrait is saved. Compiled in, like the fonts, so the world still never reads the disk.
+const LOGOS: [(&str, &str, &[u8]); 3] = [
+    ("pf1", "/logos/pf1e.png", include_bytes!("../../resources/print/logos/pf1e.png")),
+    (crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID, "/logos/sf1e.png", include_bytes!("../../resources/print/logos/sf1e.png")),
+    (codex::rules_core::game_system::GameSystem::CyberpunkRed.id(), "/logos/cpr.png", include_bytes!("../../resources/print/logos/cpr.png")),
+];
+
+/// The logo of `game_system` as an image a block prints; `None` for a system with no logo file.
+pub fn logo(game_system: &str) -> Option<crate::print::model::SheetImage> {
+    LOGOS.iter().find(|(system, _, _)| *system == game_system).map(|(_, path, bytes)| crate::print::model::SheetImage {
+        path: (*path).to_owned(),
+        source: format!("resources/print{path}"),
+        bytes: bytes.to_vec(),
+    })
+}
+
+/// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
+const FONT_FILES: [&[u8]; 4] = [
+    include_bytes!("../../resources/fonts/LiberationSans-Regular.ttf"),
+    include_bytes!("../../resources/fonts/LiberationSans-Bold.ttf"),
+    include_bytes!("../../resources/fonts/LiberationSans-Italic.ttf"),
+    include_bytes!("../../resources/fonts/LiberationSans-BoldItalic.ttf"),
+];
+
+/// The generated entry point: the frame, given the sheet.
+const MAIN_TYP: &str = "#import \"/frame.typ\": sheet\n#sheet(json(\"/sheet.json\"))\n";
+
+static FONTS: LazyLock<Vec<Font>> =
+    LazyLock::new(|| FONT_FILES.iter().flat_map(|data| Font::iter(Bytes::new(*data))).collect());
+
+static LIBRARY: LazyLock<LazyHash<Library>> = LazyLock::new(|| LazyHash::new(Library::default()));
+
+static BOOK: LazyLock<LazyHash<FontBook>> = LazyLock::new(|| LazyHash::new(FontBook::from_fonts(FONTS.iter())));
+
+/// The font families the print world can typeset with, sorted and deduplicated.
+#[cfg(test)]
+pub fn font_families() -> Vec<String> {
+    let mut families: Vec<String> = FONTS.iter().map(|font| font.info().family.clone()).collect();
+    families.sort();
+    families.dedup();
+    families
+}
+
+fn file_id(path: &str) -> FileId {
+    FileId::new(RootedPath::new(
+        VirtualRoot::Project,
+        VirtualPath::new(path).expect("a print template path is a valid virtual path"),
+    ))
+}
+
+struct SheetWorld {
+    main: Source,
+    /// The frame, the dispatcher and every look.
+    templates: Vec<Source>,
+    sheet_json: Bytes,
+    /// The images the blocks print, each at its virtual path.
+    images: Vec<(FileId, Bytes)>,
+}
+
+impl SheetWorld {
+    fn new(sheet_json: Vec<u8>, images: Vec<(FileId, Bytes)>) -> Self {
+        let mut templates = vec![
+            Source::new(file_id("/frame.typ"), FRAME_TYP.to_owned()),
+            Source::new(file_id("/blocks.typ"), BLOCKS_TYP.to_owned()),
+        ];
+        templates.extend(LOOKS.iter().map(|(name, text)| Source::new(file_id(&format!("/looks/{name}.typ")), (*text).to_owned())));
+        Self { main: Source::new(file_id("/main.typ"), MAIN_TYP.to_owned()), templates, sheet_json: Bytes::new(sheet_json), images }
+    }
+}
+
+impl World for SheetWorld {
+    fn library(&self) -> &LazyHash<Library> {
+        &LIBRARY
+    }
+
+    fn book(&self) -> &LazyHash<FontBook> {
+        &BOOK
+    }
+
+    fn main(&self) -> FileId {
+        self.main.id()
+    }
+
+    fn source(&self, id: FileId) -> FileResult<Source> {
+        std::iter::once(&self.main)
+            .chain(self.templates.iter())
+            .find(|source| source.id() == id)
+            .cloned()
+            .ok_or_else(|| not_found(id))
+    }
+
+    fn file(&self, id: FileId) -> FileResult<Bytes> {
+        if id == file_id("/sheet.json") {
+            return Ok(self.sheet_json.clone());
+        }
+        if let Some((_, bytes)) = self.images.iter().find(|(image, _)| *image == id) {
+            return Ok(bytes.clone());
+        }
+        self.source(id).map(|source| Bytes::from_string(source.text().to_owned()))
+    }
+
+    fn font(&self, index: usize) -> Option<Font> {
+        FONTS.get(index).cloned()
+    }
+
+    fn today(&self, _offset: Option<Duration>) -> Option<Datetime> {
+        // No date reaches the sheet: two prints of one character are the same bytes (NR-3).
+        None
+    }
+}
+
+fn not_found(id: FileId) -> FileError {
+    FileError::NotFound(PathBuf::from(id.vpath().get_with_slash()))
+}
+
+/// A typeset sheet: the PDF, and every warning Typst raised while making it.
+#[derive(Debug)]
+pub struct TypesetSheet {
+    pub pdf: Vec<u8>,
+    pub warnings: Vec<String>,
+}
+
+fn describe(diagnostics: &[SourceDiagnostic]) -> Vec<String> {
+    diagnostics
+        .iter()
+        .map(|diagnostic| {
+            let hints = diagnostic.hints.iter().map(|hint| format!(" (hint: {})", hint.v)).collect::<String>();
+            format!("{:?}: {}{hints}", diagnostic.severity, diagnostic.message)
+        })
+        .collect()
+}
+
+/// What the frame is given: the sheet, and the columns it lays its blocks on.
+#[derive(Serialize)]
+struct SheetJson<'a> {
+    #[serde(flatten)]
+    document: &'a SheetDocument,
+    columns: u8,
+}
+
+/// Typesets `document` through the shared frame into PDF bytes. A layout the page grid cannot
+/// print as listed is refused by name (`SheetDocument::check_places`); another error is Typst's own words.
+/// An image Typst cannot print (a portrait file that does not read or decode) never fails the
+/// sheet: it is typeset again without its images, and a warning names each file left out.
+pub fn typeset(document: &SheetDocument) -> Result<TypesetSheet, String> {
+    match typeset_as_given(document) {
+        Err(error) if document.blocks.iter().any(|block| block.image.is_some()) => {
+            let mut without = document.clone();
+            let mut warnings = Vec::new();
+            for block in &mut without.blocks {
+                if let Some(image) = block.image.take() {
+                    warnings.push(format!("print.image: {} could not be printed ({error}); the empty box printed", image.source));
+                }
+            }
+            let mut typeset = typeset_as_given(&without)?;
+            warnings.append(&mut typeset.warnings);
+            Ok(TypesetSheet { pdf: typeset.pdf, warnings })
+        }
+        result => result,
+    }
+}
+
+fn typeset_as_given(document: &SheetDocument) -> Result<TypesetSheet, String> {
+    let (paged, warnings) = compile(document)?;
+    let options = PdfOptions { ident: typst::foundations::Smart::Custom(document.title.clone()), ..PdfOptions::default() };
+    let pdf = typst_pdf::pdf(&paged, &options)
+        .map_err(|errors| format!("the sheet did not export to PDF: {}", describe(&errors).join("; ")))?;
+    Ok(TypesetSheet { pdf, warnings })
+}
+
+/// What a look states about its own layout: the value of every `metadata` element labelled `label`
+/// in the typeset sheet, in page order (a look's measured facts that the PDF's text cannot show,
+/// such as how many blank lines a fixed box holds).
+#[cfg(test)]
+pub fn look_metadata(document: &SheetDocument, label: &str) -> Result<Vec<serde_json::Value>, String> {
+    use typst::foundations::{Label, Selector};
+    use typst::introspection::Introspector;
+    let (paged, _) = compile(document)?;
+    let label = Label::new(typst::utils::PicoStr::intern(label)).ok_or_else(|| format!("`{label}` is not a label"))?;
+    paged
+        .introspector()
+        .query(&Selector::Label(label))
+        .iter()
+        .map(|element| {
+            let value = element.get_by_name("value").map_err(|err| format!("metadata without a value: {err:?}"))?;
+            serde_json::to_value(&value).map_err(|err| err.to_string())
+        })
+        .collect()
+}
+
+/// The sheet typeset into pages, and every warning Typst raised.
+fn compile(document: &SheetDocument) -> Result<(PagedDocument, Vec<String>), String> {
+    document.check_places()?;
+    if let Some(block) = document.blocks.iter().find(|block| !LOOKS.iter().any(|(name, _)| *name == block.look.name())) {
+        return Err(format!("print.look: block `{}` ({}) names the look `{}`, which has no template", block.id, block.heading, block.look.name()));
+    }
+    let sheet = SheetJson { document, columns: document.columns() };
+    let sheet_json = serde_json::to_vec(&sheet).map_err(|err| format!("the sheet does not serialise: {err}"))?;
+    let images = document
+        .blocks
+        .iter()
+        .filter_map(|block| block.image.as_ref())
+        .map(|image| (file_id(&image.path), Bytes::new(image.bytes.clone())))
+        .collect();
+    let world = SheetWorld::new(sheet_json, images);
+    let warned = typst::compile::<PagedDocument>(&world);
+    let warnings = describe(&warned.warnings);
+    let paged = warned
+        .output
+        .map_err(|errors| format!("the sheet did not typeset: {}", describe(&errors).join("; ")))?;
+    Ok((paged, warnings))
+}

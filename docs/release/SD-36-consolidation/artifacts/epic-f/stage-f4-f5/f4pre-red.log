@@ -1,0 +1,92 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.23s
+     Running tests/sd36_f4pre_pool_choices.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd36_f4pre_pool_choices-3e1ffb1d3d5bf42d)
+
+running 8 tests
+test an_invented_domain_links_to_nothing ... ok
+test the_domain_count_and_the_spirit_pool_convert_as_choices ... FAILED
+test a_shaman_spirit_pick_links_to_the_spirit_choice_and_holds_the_spirit ... FAILED
+test a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it ... FAILED
+test a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain ... FAILED
+test an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it ... FAILED
+test the_pool_pass_prints_no_air_domain_value_for_a_linked_pick ... FAILED
+test the_pool_pass_prints_no_battle_spirit_value_for_a_linked_pick ... FAILED
+
+failures:
+
+---- the_domain_count_and_the_spirit_pool_convert_as_choices stdout ----
+
+thread 'the_domain_count_and_the_spirit_pool_convert_as_choices' (1900760) panicked at tests/sd36_f4pre_pool_choices.rs:77:86:
+cleric domain count offers None
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- a_shaman_spirit_pick_links_to_the_spirit_choice_and_holds_the_spirit stdout ----
+
+thread 'a_shaman_spirit_pick_links_to_the_spirit_choice_and_holds_the_spirit' (1900757) panicked at tests/sd36_f4pre_pool_choices.rs:120:99:
+no link: []
+
+---- a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it stdout ----
+
+thread 'a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it' (1900755) panicked at tests/sd36_f4pre_pool_choices.rs:132:5:
+assertion failed: at5.holds(base)
+
+---- a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain stdout ----
+
+thread 'a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain' (1900756) panicked at tests/sd36_f4pre_pool_choices.rs:90:99:
+no link: []
+
+---- an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it stdout ----
+
+thread 'an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it' (1900758) panicked at tests/sd36_f4pre_pool_choices.rs:102:5:
+assertion failed: at5.holds("core_rulebook:domain:air")
+
+---- the_pool_pass_prints_no_air_domain_value_for_a_linked_pick stdout ----
+
+thread 'the_pool_pass_prints_no_air_domain_value_for_a_linked_pick' (1900761) panicked at tests/sd36_f4pre_pool_choices.rs:113:9:
+cleric 1: [
+    (
+        "class_feature.cleric.domain.generic.air_domain.electricity_resistance.electricityresistancebonus",
+        0,
+    ),
+    (
+        "class_feature.cleric.domain.generic.air_domain.lightning_arc.lightningarctimes",
+        4,
+    ),
+]
+
+---- the_pool_pass_prints_no_battle_spirit_value_for_a_linked_pick stdout ----
+
+thread 'the_pool_pass_prints_no_battle_spirit_value_for_a_linked_pick' (1900762) panicked at tests/sd36_f4pre_pool_choices.rs:144:9:
+shaman 1: [
+    (
+        "class_feature.acg.shaman.spirit.generic.battle_spirit.battle_spirit.shamanbattlespiritbonus",
+        1,
+    ),
+    (
+        "class_feature.acg.shaman.spirit.generic.battle_spirit.battle_spirit.shamanbattlespiritrounds",
+        2,
+    ),
+    (
+        "class_feature.acg.shaman.spirit.generic.battle_spirit.enemies_bane.shamanenemiesbanetimes",
+        2,
+    ),
+    (
+        "class_feature.acg.shaman.spirit.generic.battle_spirit.paragon_of_battle.shamanparagonofbattletimes",
+        2,
+    ),
+]
+
+
+failures:
+    a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it
+    a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain
+    a_shaman_spirit_pick_links_to_the_spirit_choice_and_holds_the_spirit
+    an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it
+    the_domain_count_and_the_spirit_pool_convert_as_choices
+    the_pool_pass_prints_no_air_domain_value_for_a_linked_pick
+    the_pool_pass_prints_no_battle_spirit_value_for_a_linked_pick
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.12s
+
+error: test failed, to rerun pass `--test sd36_f4pre_pool_choices`
+EXIT=101

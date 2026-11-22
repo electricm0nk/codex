@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Dirindi Default ~ ELECTRICAL AFFINITY",
+    "name": "ELECTRICAL AFFINITY",
+    "type": "Racial Trait.Dirindi Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "starfinder/paizo/alien_archive_3/saa3_abilities.lst",
+    "record_key": "Dirindi Default ~ ELECTRICAL AFFINITY",
+    "sha256": "e8ff4643d9f2e5a204c2cf31519525b446d32c2281778d7671690f3bb501e850"
+  },
+  "unit_id": "alien_archive_3:ability:dirindi_default_electrical_affinity"
+}

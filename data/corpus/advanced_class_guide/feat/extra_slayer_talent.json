@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Slayer Talent",
+    "category": "General",
+    "name": "Extra Slayer Talent",
+    "description": "Through long practice, you have learned how to perform a special talent.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Slayer ~ Slayer Talents"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 67,
+    "record_key": "Extra Slayer Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

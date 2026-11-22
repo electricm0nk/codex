@@ -1,0 +1,299 @@
+[
+  {
+    "name": "Bodysculpting (Standard)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Bodysculpting (Standard) 500eb (Expensive)"
+  },
+  {
+    "name": "Bodysculpting (Exotic)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Bodysculpting (Exotic) 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Braindance",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Braindance 20eb (Everyday)"
+  },
+  {
+    "name": "Drink, Dive Bar",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 10,
+    "cost_text": "10eb (Cheap)",
+    "price_category": "Cheap",
+    "text": "Drink, Dive Bar 10eb (Cheap)"
+  },
+  {
+    "name": "Drink, Good Bar",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 10,
+    "cost_text": "10eb (Cheap)",
+    "price_category": "Cheap",
+    "text": "Drink, Good Bar 10eb (Cheap)"
+  },
+  {
+    "name": "Drink, Excellent Bar",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Drink, Excellent Bar 20eb (Everyday)"
+  },
+  {
+    "name": "Drink, Executive Bar",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Drink, Executive Bar 50eb (Costly)"
+  },
+  {
+    "name": "Found Cyberware Installation (Mall)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 100,
+    "cost_text": "100eb (Premium)",
+    "price_category": "Premium",
+    "text": "Found Cyberware Installation (Mall) 100eb (Premium)"
+  },
+  {
+    "name": "Found Cyberware Installation (Clinic)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Found Cyberware Installation (Clinic) 500eb (Expensive)"
+  },
+  {
+    "name": "Found Cyberware Installation (Hospital)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Found Cyberware Installation (Hospital) 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Hospital Treatment (DV10)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Hospital Treatment (DV10) 50eb (Costly)"
+  },
+  {
+    "name": "Hospital Treatment (DV13)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 100,
+    "cost_text": "100eb (Premium)",
+    "price_category": "Premium",
+    "text": "Hospital Treatment (DV13) 100eb (Premium)"
+  },
+  {
+    "name": "Hospital Treatment (DV15)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Hospital Treatment (DV15) 500eb (Expensive)"
+  },
+  {
+    "name": "Hospital Treatment (DV17+)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Hospital Treatment (DV17+) 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Hotel, Per Night",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 100,
+    "cost_text": "100eb (Premium)",
+    "price_category": "Premium",
+    "text": "Hotel, Per Night 100eb (Premium)"
+  },
+  {
+    "name": "Hotel, Luxury, Per Night",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Hotel, Luxury, Per Night 500eb (Expensive)"
+  },
+  {
+    "name": "Interactive Braindance",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Interactive Braindance 50eb (Costly)"
+  },
+  {
+    "name": "Live Concert / Sporting Event",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 100,
+    "cost_text": "100eb (Premium)",
+    "price_category": "Premium",
+    "text": "Live Concert / Sporting Event 100eb (Premium)"
+  },
+  {
+    "name": "Movie",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Movie 20eb (Everyday)"
+  },
+  {
+    "name": "Professional Services, Good, Per Hour",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 100,
+    "cost_text": "100eb (Premium)",
+    "price_category": "Premium",
+    "text": "Professional Services, Good, Per Hour 100eb (Premium)"
+  },
+  {
+    "name": "Professional Services, Excellent, Per Hour",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Professional Services, Excellent, Per Hour 500eb (Expensive)"
+  },
+  {
+    "name": "Professional Services, World Class, Per Job",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 5000,
+    "cost_text": "5,000eb (Luxury)",
+    "price_category": "Luxury",
+    "text": "Professional Services, World Class, Per Job 5,000eb (Luxury)"
+  },
+  {
+    "name": "Restaurant Meal, Fast Food",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 10,
+    "cost_text": "10eb (Cheap)",
+    "price_category": "Cheap",
+    "text": "Restaurant Meal, Fast Food 10eb (Cheap)"
+  },
+  {
+    "name": "Restaurant Meal, Good",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Restaurant Meal, Good 20eb (Everyday)"
+  },
+  {
+    "name": "Restaurant Meal, Excellent",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Restaurant Meal, Excellent 50eb (Costly)"
+  },
+  {
+    "name": "Restaurant Meal, World Class",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Restaurant Meal, World Class 500eb (Expensive)"
+  },
+  {
+    "name": "Taxi",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Taxi 20eb (Everyday)"
+  },
+  {
+    "name": "Therapy (Standard Humanity Loss)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Therapy (Standard Humanity Loss) 500eb (Expensive)"
+  },
+  {
+    "name": "Therapy (Extreme Humanity Loss)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Therapy (Extreme Humanity Loss) 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Therapy (Addiction)",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Therapy (Addiction) 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Trauma Team (Silver), Per Month",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 500,
+    "cost_text": "500eb (Expensive)",
+    "price_category": "Expensive",
+    "text": "Trauma Team (Silver), Per Month 500eb (Expensive)"
+  },
+  {
+    "name": "Trauma Team (Executive), Per Month",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 1000,
+    "cost_text": "1,000eb (Very Expensive)",
+    "price_category": "Very Expensive",
+    "text": "Trauma Team (Executive), Per Month 1,000eb (Very Expensive)"
+  },
+  {
+    "name": "Video Game",
+    "kind": "service",
+    "source_page": "p377",
+    "cost_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Video Game 50eb (Costly)"
+  }
+]

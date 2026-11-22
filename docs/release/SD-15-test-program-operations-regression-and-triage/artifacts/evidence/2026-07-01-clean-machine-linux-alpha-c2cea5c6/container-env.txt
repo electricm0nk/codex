@@ -1,0 +1,7 @@
+HOSTNAME=167ac83c3a91
+PWD=/
+HOME=/root
+SHLVL=1
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DEBIAN_FRONTEND=noninteractive
+_=/usr/bin/env

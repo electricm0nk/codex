@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Water Orm ~ Elusive",
+    "delivery": "Supernatural",
+    "description": "Water orms are rarely discovered except by their own choice.  As a full-round action while in water, a water orm can move up to its run speed (200 ft.) without leaving any trace of its passage (identical in effect to pass without trace).  An elusive water orm gains a +40 circumstance bonus to its Stealth check.  In addition, when not in combat, a water orm is considered to be under the effects of a nondetection spell.  These effects function at caster level 20th and cannot be dispelled.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:water_orm_elusive",
+    "name": "Elusive",
+    "owners": [
+      "bestiary_2:monster:water_orm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Water orms are rarely discovered except by their own choice.  As a full-round action while in water, a water orm can move up to its run speed (200 ft.) without leaving any trace of its passage (identical in effect to pass without trace).  An elusive water orm gains a +40 circumstance bonus to its Stealth check.  In addition, when not in combat, a water orm is considered to be under the effects of a nondetection spell.  These effects function at caster level 20th and cannot be dispelled."
+      },
+      {
+        "key": "KEY",
+        "value": "Water Orm ~ Elusive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.280",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1344,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Water Orm ~ Elusive",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

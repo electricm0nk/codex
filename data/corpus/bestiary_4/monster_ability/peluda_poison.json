@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Peluda ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Quill-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Con damage; cure 2 consecutive saves.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:peluda_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:monster:peluda"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Quill-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Con damage; cure 2 consecutive saves.|15+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Peluda ~ Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-15T01:24:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1158,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Peluda ~ Poison",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Celestial Creature ~ Smite Evil",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action (adds +%2 on attack rolls and +%3 damage bonus against evil foes; smite persists until target is dead or the celestial creature rests).",
+    "description_variables": [
+      "SmiteEvilTimes",
+      "SmiteEvilAttackBonus",
+      "SmiteEvilDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:celestial_creature_smite_evil",
+    "name": "Smite Evil",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (+%2 attack, +%3 damage)|SmiteEvilTimes|SmiteEvilAttackBonus|SmiteEvilDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilAttackBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilDamageBonus|max(mastervar(\"TL\"),TL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilTimes|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteEvilAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteEvilDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteEvilTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day as a swift action (adds +%2 on attack rolls and +%3 damage bonus against evil foes; smite persists until target is dead or the celestial creature rests).|SmiteEvilTimes|SmiteEvilAttackBonus|SmiteEvilDamageBonus"
+      },
+      {
+        "key": "KEY",
+        "value": "Celestial Creature ~ Smite Evil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Supernatural"
+      }
+    ],
+    "source_page": "p.294",
+    "traits": [
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1555,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Celestial Creature ~ Smite Evil",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

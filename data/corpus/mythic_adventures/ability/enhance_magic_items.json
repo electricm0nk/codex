@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Enhance Magic Items",
+    "name": "Enhance Magic Items",
+    "description": "Your mythic presence enhances the power of certain magic items. Add +%1 to the caster level of potions, scrolls, staves, and wands you use. When using a staff or wand, you may activate the item by expending one use of mythic power instead of one of the item's charges.|HalfMythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Enhance Magic Items"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage,Mythic Path ~ Hierophant,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mythic presence enhances the power of certain magic items. Add +%1 to the caster level of potions, scrolls, staves, and wands you use. When using a staff or wand, you may activate the item by expending one use of mythic power instead of one of the item's charges.|HalfMythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16, 34, 45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 165,
+    "record_key": "Mythic Path Ability ~ Enhance Magic Items"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

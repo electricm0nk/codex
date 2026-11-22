@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/cpr/stats.rs b/src/rules_core/cpr/stats.rs
+index 4c4dc6f8c8..30704b309d 100644
+--- a/src/rules_core/cpr/stats.rs
++++ b/src/rules_core/cpr/stats.rs
+@@ -14,7 +14,7 @@ const SOURCE_HUMANITY: &str = "Cyberpunk RED core rulebook p. 80";
+ 
+ /// p. 79: "Hit Points equal to 10 + (5[BODY and WILL averaged, rounding up])".
+ pub fn hit_points(body: u8, will: u8) -> i16 {
+-    let average_rounded_up = (u16::from(body) + u16::from(will)).div_ceil(2);
++    let average_rounded_up = (u16::from(body) + u16::from(will)) / 2;
+     10 + 5 * average_rounded_up as i16
+ }
+ 

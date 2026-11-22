@@ -1,0 +1,6 @@
+452:     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+856:test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... FAILED
+1350:thread 'cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses' (3008198) panicked at src/cpr_adapter.rs:597:9:
+1358:test result: FAILED. 876 passed; 1 failed; 2 ignored; 0 measured; 0 filtered out; finished in 521.10s
+1361:     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/packaged_resources-9d84901f614e62fd)
+1367:test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 96.51s

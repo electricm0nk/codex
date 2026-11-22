@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jinushigami ~ Infused Quarterstaff",
+    "delivery": "Supernatural",
+    "description": "Any quarterstaff a jinushigami wields functions as a +5 quarterstaff (unless the quarterstaff already has a greater enhancement bonus). If a jinushigami is within its regional ward, it can create a Gargantuan quarterstaff out of the surrounding terrain as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jinushigami_infused_quarterstaff",
+    "name": "Infused Quarterstaff",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any quarterstaff a jinushigami wields functions as a +5 quarterstaff (unless the quarterstaff already has a greater enhancement bonus). If a jinushigami is within its regional ward, it can create a Gargantuan quarterstaff out of the surrounding terrain as a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Jinushigami ~ Infused Quarterstaff"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "TYPE",
+        "value": "JinushigamiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.160",
+    "traits": [
+      "JinushigamiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1110,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jinushigami ~ Infused Quarterstaff",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

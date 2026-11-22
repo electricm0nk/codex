@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Rat (Riding)",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "monster_codex:companion:companion_advancement_rat_riding",
+    "name": "Companion Advancement (Rat (Riding))",
+    "owners": [
+      "monster_codex:companion:companion_rat_riding"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Endurance"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Rat (Riding)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Rat (Riding))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Rat (Riding)",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

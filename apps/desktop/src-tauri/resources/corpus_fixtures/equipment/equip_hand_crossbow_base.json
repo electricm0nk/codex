@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You can draw a hand crossbow back by hand. Loading a hand crossbow is a move action that provokes attacks of opportunity. You can shoot, but not load, a hand crossbow with one hand at no penalty. You can shoot a hand crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons.",
+    "key": "Hand Crossbow (Base)",
+    "name": "Hand Crossbow"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_hand_crossbow_base.txt",
+    "record_key": "Hand Crossbow (Base)"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cutthroat ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Cutthroat",
+    "description": "You gain the sneak attack ability of a rogue of half your soulknife level as long as you are maintaining psionic focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutthroat ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the sneak attack ability of a rogue of half your soulknife level as long as you are maintaining psionic focus."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue ~ Sneak Attack|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueSneakAttackLVL|floor(SoulknifeLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2155,
+    "record_key": "Cutthroat ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,60 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+warning: unused import: `super::*`
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3124:9
+     |
+3124 |     use super::*;
+     |         ^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3134:20
+     |
+3134 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=1"), Some(("Item level", "1".to_string())));
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3135:20
+     |
+3135 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=L"), Some(("Quality", "Bulk: L".to_string())));
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3136:20
+     |
+3136 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "BULK=-"), Some(("Quality", "Bulk: -".to_string())));
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3137:20
+     |
+3137 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=2"), Some(("Quality", "Bulk: 2".to_string())));
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3138:20
+     |
+3138 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "You gain darkvision with a range of 60 feet."), None);
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3139:20
+     |
+3139 |         assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=varies"), None);
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3140:20
+     |
+3140 |         assert_eq!(sf_modifier_stat(sf, "equipment", "ItemLevel=1"), None);
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sf_modifier_stat` in this scope
+    --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:3141:20
+     |
+3141 |         assert_eq!(sf_modifier_stat(GameSystem::Pathfinder1e, "equipment_modifier", "Bulk=L"), None);
+     |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+warning: `codex-ingest` (lib test) generated 1 warning
+error: could not compile `codex-ingest` (lib test) due to 8 previous errors; 1 warning emitted

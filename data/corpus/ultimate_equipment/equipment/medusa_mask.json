@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10000.0,
+    "description": "The mask grants protection against visual effects, including gaze attacks and sight-based illusions.; Once per day as a standard action, the wearer can cause the central gemstone to glow with pale green light, at which point she may target any one creature within 30 feet. The targeted creature must succeed at a DC 15 Fortitude save or be petrified for 1 minute, as if by flesh to stone.",
+    "key": "Medusa Mask",
+    "name": "Medusa Mask",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "DC",
+          "SPELL.Medusa Mask Gaze",
+          "5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "SPROP",
+        "value": "The mask grants protection against visual effects, including gaze attacks and sight-based illusions."
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day as a standard action, the wearer can cause the central gemstone to glow with pale green light, at which point she may target any one creature within 30 feet. The targeted creature must succeed at a DC 15 Fortitude save or be petrified for 1 minute, as if by flesh to stone."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|Medusa Mask Gaze"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Equipment ~ Medusa Mask"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 713,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Medusa Mask",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

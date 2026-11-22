@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Zoic Fetish (Mammal)",
+    "category": "MagicItems",
+    "name": "Zoic Fetish (Mammal)",
+    "cost_gp": 7500.0,
+    "weight_lbs": null,
+    "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (mammal) 1/day"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+    "sha256": "792741b27d5309e252c6f35e597f507e4eb2c0756fae9b087406d5c34cc51611",
+    "line": 56,
+    "record_key": "Zoic Fetish (Mammal)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

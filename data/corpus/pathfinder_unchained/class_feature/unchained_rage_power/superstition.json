@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Superstition",
+    "name": "Superstition",
+    "class": "Unchained Barbarian",
+    "description": "You gain a +%1 competence bonus on saving throws made to resist spells and spell-like abilities. You cannot be the willing target of any spell and must attempt saving throws to resist all spells, even those cast by allies.|SuperstitionSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Superstition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Superstition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SuperstitionSaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 competence bonus on saving throws made to resist spells and spell-like abilities. You cannot be the willing target of any spell and must attempt saving throws to resist all spells, even those cast by allies.|SuperstitionSaveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 389,
+    "record_key": "Unchained Rage Power ~ Superstition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

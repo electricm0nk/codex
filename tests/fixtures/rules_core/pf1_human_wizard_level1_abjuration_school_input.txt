@@ -1,0 +1,31 @@
+# Task #66 deterministic Human Wizard level 1 Abjuration-school fixture.
+# Mirrors the accepted SD13-E4-R3 Human Wizard level-1 fixture
+# (tests/fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt)
+# ability/feat posture exactly, swapping only the school specialization
+# choice from Evocation to Abjuration (Necromancy/Transmutation stay as the
+# two opposed schools -- they remain legal opposition choices regardless of
+# which school is specialized in, since PF1's only opposition restriction is
+# "not your own specialty school and not Divination").
+#
+# It deliberately avoids every other spell-support surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no arcane bond resolution,
+# and no opposed-school bookkeeping. It adds only the minimum choice data
+# needed to make the Abjuration school-power grounding (Resistance,
+# Protective Ward, Energy Absorption) legible at level 1.
+case_id=task66-pf1-crb-human-wizard-level1-abjuration
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:1
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:abjuration
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=task-66-wizard-abjuration-school-grounding

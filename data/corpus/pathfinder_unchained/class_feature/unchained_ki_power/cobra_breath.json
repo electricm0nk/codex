@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Cobra Breath",
+    "name": "Cobra Breath",
+    "class": "Unchained Ki Power",
+    "description": "Whenever a monk with this ki power uses diamond body to neutralize a poison, he can instead release that poison as a ranged touch attack against a single foe within 30 feet. If the attack hits, the foe must succeed at a saving throw (using the poison's original DC) or suffer the poison's effects, even if it was not originally a contact poison. A monk must be at least 12th level and must possess the diamond body ki power before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Cobra Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Cobra Breath"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Ki Power ~ Diamond Body"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a monk with this ki power uses diamond body to neutralize a poison, he can instead release that poison as a ranged touch attack against a single foe within 30 feet. If the attack hits, the foe must succeed at a saving throw (using the poison's original DC) or suffer the poison's effects, even if it was not originally a contact poison. A monk must be at least 12th level and must possess the diamond body ki power before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 529,
+    "record_key": "Unchained Ki Power ~ Cobra Breath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

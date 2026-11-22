@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Vishkanya ~ Deceptive",
+    "name": "Deceptive",
+    "race_key": "Vishkanya",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vishkanya Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Vishkanya_ReplaceLimber"
+    ],
+    "description": "Vishkanya clans that make their livings robbing or killing humans train to distract targets at critical moments. They gain a +2 racial bonus on Bluff checks. This racial trait replaces the racial bonus on Escape Artist checks.",
+    "source_page": "p.217",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Deceptive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vishkanya ~ Deceptive],[!PREFACT:1,ABILITIES,Vishkanya_ReplaceLimber=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Vishkanya clans that make their livings robbing or killing humans train to distract targets at critical moments. They gain a +2 racial bonus on Bluff checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the racial bonus on Escape Artist checks.|!PREABILITY:1,CATEGORY=Special Ability,Vishkanya ~ Deceptive"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vishkanya Racial Trait|AUTOMATIC|Deceptive ~ Vishkanya ~ Limber"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Bluff"
+      },
+      {
+        "key": "FACT",
+        "value": "Vishkanya_ReplaceLimber|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1662,
+    "record_key": "Vishkanya ~ Deceptive"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

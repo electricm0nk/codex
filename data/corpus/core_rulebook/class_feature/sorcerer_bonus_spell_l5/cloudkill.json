@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L5 ~ Cloudkill",
+    "name": "Cloudkill",
+    "class": "Sorcerer",
+    "description": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD [no save]. A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save [in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud]. A living creature with 6 or more HD takes 1d4 points of Constitution damage on your turn each round while in the cloud [a successful Fortitude save halves this damage]. Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell. Unlike a fog cloud, the cloudkill moves away from you at 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell. Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L5 ~ Cloudkill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Cloudkill_L5,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Cloudkill"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD [no save]. A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save [in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud]. A living creature with 6 or more HD takes 1d4 points of Constitution damage on your turn each round while in the cloud [a successful Fortitude save halves this damage]. Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell. Unlike a fog cloud, the cloudkill moves away from you at 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell. Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2130,
+    "record_key": "Sorcerer Bonus Spell L5 ~ Cloudkill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

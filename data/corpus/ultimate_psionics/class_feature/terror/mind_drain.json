@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Mind Drain",
+    "name": "Mind Drain",
+    "class": "Terror",
+    "description": "Your attack drains %1 power points from the target (Will DC %2 negates).  Against a spellcaster, one random level %3 spell is drained.  This is a mind-affecting fear effect.|MindDrainAmount|MindDrainDC|floor(MindDrainAmount/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Mind Drain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindDrainAmount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack drains %1 power points from the target (Will DC %2 negates).  Against a spellcaster, one random level %3 spell is drained.  This is a mind-affecting fear effect.|MindDrainAmount|MindDrainDC|floor(MindDrainAmount/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindDrainAmount|TerrorAugmentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindDrainDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Mind Drain)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 292,
+    "record_key": "Terror ~ Mind Drain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Astomoi ~ Languages",
+    "name": "Languages",
+    "description": "Astomoi begin play knowing Common, but as they have no mouths, they cannot speak. They have telepathy with a range of 100 feet. Astomoi with high Intelligence scores can choose any of the following languages: Abyssal, Aklo, Celestial, Elven, Gnome, Infernal, and Sylvan.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Astomoi ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Language"
+      },
+      {
+        "key": "DESC",
+        "value": "Astomoi begin play knowing Common, but as they have no mouths, they cannot speak. They have telepathy with a range of 100 feet. Astomoi with high Intelligence scores can choose any of the following languages: Abyssal, Aklo, Celestial, Elven, Gnome, Infernal, and Sylvan."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Abyssal|Bonus Language ~ Aklo|Bonus Language ~ Celestial|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Infernal|Bonus Language ~ Sylvan"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 50,
+    "record_key": "Astomoi ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

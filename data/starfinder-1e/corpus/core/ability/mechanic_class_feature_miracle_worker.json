@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Mechanic Class Feature ~ MIRACLE WORKER",
+    "name": "Miracle Worker",
+    "type": "Class Feature.Mechanic Class Feature.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1357,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Mechanic Class Feature ~ MIRACLE WORKER",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:mechanic_class_feature_miracle_worker"
+}

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soul Archer ~ Form Mind Arrow",
+    "name": "Form Mind Arrow",
+    "class": "Soul Archer",
+    "description": "You can choose to shape your mind blade as a semisolid arrow of psychic energy and form a mind arrow as a free action.  If you have the ability to make multiple attacks, you can create multiple mind arrows as part of an attack.  You must have one hand free to create and fire a mind arrow.  The arrow is identical in all ways (except visually) to an arrow shot from a composite longbow of a size appropriate to you. You add your Wisdom modifier to the damage for attacks made with mind arrows, instead of your Strength modifier. The mind arrow receives all the benefits normally applied to the mind blade, including the ability to use psychic strike, any enhancement bonus or weapon special abilities, or feats that apply to the mind blade, although any melee-specific options are non-functional while in mind arrow form. Ranged feats that apply to ranged attacks, such as Point-Blank Shot, apply to the mind arrow. Any weapon special abilities that apply to the mind blade are inactive while in mind arrow form until the soulknife spends the normal amount of time to reassign the special abilities of the mind blade.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Archer ~ Form Mind Arrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulArcherClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to shape your mind blade as a semisolid arrow of psychic energy and form a mind arrow as a free action.  If you have the ability to make multiple attacks, you can create multiple mind arrows as part of an attack.  You must have one hand free to create and fire a mind arrow.  The arrow is identical in all ways (except visually) to an arrow shot from a composite longbow of a size appropriate to you. You add your Wisdom modifier to the damage for attacks made with mind arrows, instead of your Strength modifier. The mind arrow receives all the benefits normally applied to the mind blade, including the ability to use psychic strike, any enhancement bonus or weapon special abilities, or feats that apply to the mind blade, although any melee-specific options are non-functional while in mind arrow form. Ranged feats that apply to ranged attacks, such as Point-Blank Shot, apply to the mind arrow. Any weapon special abilities that apply to the mind blade are inactive while in mind arrow form until the soulknife spends the normal amount of time to reassign the special abilities of the mind blade."
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Mind Arrow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.379"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1510,
+    "record_key": "Soul Archer ~ Form Mind Arrow"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

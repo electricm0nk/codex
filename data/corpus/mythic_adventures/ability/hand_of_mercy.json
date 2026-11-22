@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Hand of Mercy",
+    "name": "Hand of Mercy",
+    "description": "If you have the channel energy ability, you can touch a creature and expend one use of channel energy to remove a condition afflicting that creature. Each time you use this ability, you can choose one of the following conditions: dazed, fatigued, shaken, sickened, or staggered. At 6th tier, you can also choose from among the cursed, exhausted, frightened, and nauseated conditions. At 9th tier, you can also choose from among the blinded, deafened, paralyzed, and stunned conditions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Hand of Mercy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have the channel energy ability, you can touch a creature and expend one use of channel energy to remove a condition afflicting that creature. Each time you use this ability, you can choose one of the following conditions: dazed, fatigued, shaken, sickened, or staggered. At 6th tier, you can also choose from among the cursed, exhausted, frightened, and nauseated conditions. At 9th tier, you can also choose from among the blinded, deafened, paralyzed, and stunned conditions."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 325,
+    "record_key": "Mythic Path Ability ~ Hand of Mercy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

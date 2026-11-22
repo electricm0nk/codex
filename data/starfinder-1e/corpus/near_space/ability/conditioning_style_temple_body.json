@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Conditioning Style ~ Temple Body",
+    "name": "Temple Body",
+    "type": "Class Feature.Commando Conditioning Style"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 137,
+    "path": "starfinder/paizo/near_space/sns_abilities_class.lst",
+    "record_key": "Conditioning Style ~ Temple Body",
+    "sha256": "2f32621f4dc9d20fca4ca38995e6fd3816fa054a0c440949a71ac11e92124b9b"
+  },
+  "unit_id": "near_space:ability:conditioning_style_temple_body"
+}

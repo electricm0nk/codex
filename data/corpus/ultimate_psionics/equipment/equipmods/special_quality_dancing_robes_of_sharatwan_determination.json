@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "1/day automatic breath of life at 0 hp|PREMULT:2,[PREVARGTEQ:TL,14],[PREABILITY:1,CATEGORY=Special Ability,Dancing Robes of Sharatwan Attunement]",
+    "key": "Special Quality ~ Dancing Robes of Sharatwan / Determination",
+    "name": "Determination for Dancing Robes of Sharatwan",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dancing Robes of Sharatwan / Determination"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day automatic breath of life at 0 hp|PREMULT:2,[PREVARGTEQ:TL,14],[PREABILITY:1,CATEGORY=Special Ability,Dancing Robes of Sharatwan Attunement]"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 140,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Quality ~ Dancing Robes of Sharatwan / Determination",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

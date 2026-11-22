@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 12.0,
+    "description": null,
+    "key": "Sword (Tri-Point Double-Edged)",
+    "name": "Sword (Tri-Point Double-Edged)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sword (Tri-Point Double-Edged)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Martial.Reach.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "14"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      }
+    ],
+    "weight_lbs": 14.0
+  },
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Sword (Tri-Point Double-Edged)",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

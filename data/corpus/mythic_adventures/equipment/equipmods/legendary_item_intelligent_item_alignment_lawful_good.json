@@ -1,0 +1,82 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Good",
+    "name": "Legendary Intelligent Item / Align (LG)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemAlignment",
+          "00"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1+var(\"IntItemNegativeLevel\")",
+          "!PREALIGN:LG"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Good"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent.Alignment"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Item Has Alignment.Lawful Good"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good,Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Neutral,Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Evil,Legendary Item ~ Intelligent Item ~ Alignment / Neutral Evil,Legendary Item ~ Intelligent Item ~ Alignment / Lawful Evil,Legendary Item ~ Intelligent Item ~ Alignment / Lawful Neutral,Legendary Item ~ Intelligent Item ~ Alignment / Neutral Good,Legendary Item ~ Intelligent Item ~ Alignment / True Neutral"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Mythic,Intelligent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item ~ Align (LG)"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Good",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

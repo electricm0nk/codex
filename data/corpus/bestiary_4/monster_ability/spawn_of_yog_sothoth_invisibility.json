@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Spawn of Yog-Sothoth ~ Invisibility",
+    "delivery": "Extraordinary",
+    "description": "This functions like natural invisibility, except it is subject to invisibility purge and effects that outline invisible creatures (such as glitterdust and faerie fire). It cannot be dispelled.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:spawn_of_yog_sothoth_invisibility",
+    "name": "Tenuous Natural Invisibility",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This functions like natural invisibility, except it is subject to invisibility purge and effects that outline invisible creatures (such as glitterdust and faerie fire). It cannot be dispelled."
+      },
+      {
+        "key": "KEY",
+        "value": "Spawn of Yog-Sothoth ~ Invisibility"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1323,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Spawn of Yog-Sothoth ~ Invisibility",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Thundering Smash",
+    "name": "Thundering Smash",
+    "class": "Thunderjarl",
+    "description": "When you confirm a critical hit with a melee weapon, you can immediately manifest stomp as a swift action without paying any power points, automatically augmented up to your manifester level.  If you have already used your swift action, this ability cannot be used.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Thundering Smash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you confirm a critical hit with a melee weapon, you can immediately manifest stomp as a swift action without paying any power points, automatically augmented up to your manifester level.  If you have already used your swift action, this ability cannot be used."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2120,
+    "record_key": "Thunderjarl ~ Thundering Smash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

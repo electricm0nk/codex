@@ -1,0 +1,9 @@
+#!/bin/bash
+export PATH="$HOME/.cargo/bin:$PATH" CARGO_TARGET_DIR=/home/ubuntu/cargo-target/sd38-main
+W=/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main; D=$W/docs/release/SD-38-cyberpunk-red/artifacts/epic_5/E5.3; S=/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/f61b82f6-6418-42af-8873-d3df5da582e6/scratchpad/e53
+set_status() { sed -i "s/^$1 .*/$1 $2/" $D/verify-status-2.txt; }
+cd $W/apps/desktop/src-tauri
+cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 > $S/desktop-full-2.log 2>&1; set_status desktop-full-2 "exit=$?"
+cd $W/apps/desktop
+(npm run typecheck && npm test && npm run ui-smoke:doc) > $S/frontend-2.log 2>&1; set_status frontend-2 "exit=$?"
+echo DONE >> $D/verify-status-2.txt

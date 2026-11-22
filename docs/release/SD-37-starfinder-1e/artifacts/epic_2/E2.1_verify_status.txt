@@ -1,0 +1,2 @@
+root: exit 0
+desktop: exit 0

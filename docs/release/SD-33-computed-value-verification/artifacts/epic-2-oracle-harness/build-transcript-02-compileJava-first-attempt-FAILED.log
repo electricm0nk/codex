@@ -1,0 +1,17 @@
+Parallel Configuration Cache is an incubating feature.
+Calculating task graph as no cached configuration is available for tasks: compileJava
+
+[Incubating] Problems report is available at: file:///home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pcgen-oracle-checkout/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Configuring project ':PCGen-Formula' without an existing directory is not allowed. The configured projectDirectory '/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pcgen-oracle-checkout/PCGen-Formula' does not exist, can't be written to or is not a directory.
+
+* Try:
+> Make sure the project directory exists and is writable.
+> For more information, see https://docs.gradle.org/9.5.1/userguide/multi_project_builds.html#include_existing_projects_only
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 1s
+Configuration cache entry stored.

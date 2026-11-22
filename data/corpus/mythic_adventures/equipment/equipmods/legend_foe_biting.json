@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "When this item deals damage, its user can use mythic power to double the total amount of damage it deals. If the attack is a normal attack, the bearer can expend one use of legendary power to double the total amount of damage. If the attack is a confirmed critical hit, the bearer must instead expend two uses of legendary power to double the total damage. Damage from weapon special abilities (such as flaming) and precision-based damage are also doubled.",
+    "key": "LEGEND_FOE-BITING",
+    "name": "LEGEND_FOE-BITING",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Foe-Biting"
+      },
+      {
+        "key": "TYPE",
+        "value": "Legendary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Legendary"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Artifact"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Minor,Major"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "When this item deals damage, its user can use mythic power to double the total amount of damage it deals. If the attack is a normal attack, the bearer can expend one use of legendary power to double the total amount of damage. If the attack is a confirmed critical hit, the bearer must instead expend two uses of legendary power to double the total damage. Damage from weapon special abilities (such as flaming) and precision-based damage are also doubled."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 169,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "LEGEND_FOE-BITING",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,21 @@
+RENDER	/home/ubuntu/workspace/repos/pcgen/build/install/pcgen/characters/CodeMonkey.pcg A4	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/build/install/pcgen/characters/CodeMonkey.pcg Letter	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/characters/CodeMonkey.pcg A4	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/characters/CodeMonkey.pcg Letter	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Bard.pcg A4	pages=12	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Bard.pcg Letter	pages=13	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_BarJack.pcg A4	pages=14	blocks=36	continued=1	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_BarJack.pcg Letter	pages=14	blocks=36	continued=1	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_BrdJoe.pcg A4	pages=12	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_BrdJoe.pcg Letter	pages=12	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_MonKee.pcg A4	pages=15	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_MonKee.pcg Letter	pages=16	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_SWizSam.pcg A4	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_SWizSam.pcg Letter	pages=15	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_WizShar.pcg A4	pages=13	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/3e_WizShar.pcg Letter	pages=14	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/pf_Paladin.pcg A4	pages=16	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/pf_Paladin.pcg Letter	pages=17	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/pf_Rogue.pcg A4	pages=15	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+RENDER	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/pf_Rogue.pcg Letter	pages=16	blocks=36	continued=0	split=0	sections=Abilities and Feats/Inventory/Spellbook/Bio/Progression/Math	faults=
+SUMMARY	files=10	saved=10	blocked=0	refused=0	renders=20	bad=0

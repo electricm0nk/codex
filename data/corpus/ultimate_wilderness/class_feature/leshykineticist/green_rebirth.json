@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leshykineticist ~ Green Rebirth",
+    "name": "Green Rebirth",
+    "class": "Kineticist",
+    "description": "At 20th level, a leshykineticist taps into the ancient power of the First World. When her verdant burst ability activates, it heals all allies and plant creatures in the area as if by a maximized version of her kinetic healer ability, rather than only 1d8 hit points. After 24 hours, one of the plants that grew in the area serves as a vessel for the leshykineticist's spirit again, allowing her to return to life without penalty. Killing all the new plants that grew from her verdant burst within 24 hours prevents her from reviving in this way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshykineticist ~ Green Rebirth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a leshykineticist taps into the ancient power of the First World. When her verdant burst ability activates, it heals all allies and plant creatures in the area as if by a maximized version of her kinetic healer ability, rather than only 1d8 hit points. After 24 hours, one of the plants that grew in the area serves as a vessel for the leshykineticist's spirit again, allowing her to return to life without penalty. Killing all the new plants that grew from her verdant burst within 24 hours prevents her from reviving in this way."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 25,
+    "record_key": "Leshykineticist ~ Green Rebirth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

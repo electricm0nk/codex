@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Ki Visions",
+    "name": "Ki Visions",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ability often sees visions of spirits or hears the voice of his departed mentor in his dreams. On any given night during which the monk dreams, he can use this ability to gain the benefits of a divination. If he does, he spends 2 ki points from the next day's total. A monk must be at least 10th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Ki Visions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Ki Visions"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ability often sees visions of spirits or hears the voice of his departed mentor in his dreams. On any given night during which the monk dreams, he can use this ability to gain the benefits of a divination. If he does, he spends 2 ki points from the next day's total. A monk must be at least 10th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 548,
+    "record_key": "Unchained Ki Power ~ Ki Visions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

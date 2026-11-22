@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Danger Sense",
+    "name": "Danger Sense",
+    "class": null,
+    "description": "You gain a +%1 bonus on Reflex saves to avoid traps and a +%1 dodge bonus to AC against attacks by traps. In addition, you gain a +%1 bonus on Perception checks to avoid being surprised by a foe. This ability counts as trap sense for any feat or class prerequisite, and can be replaced by any archetype class feature that replaces trap sense. The bonuses gained from this ability stack with those gained from trap sense (if you have trap sense from another class).|TrapSenseBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive.BarbarianClassFeatures.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Trap Sense"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapSenseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Reflex saves to avoid traps and a +%1 dodge bonus to AC against attacks by traps. In addition, you gain a +%1 bonus on Perception checks to avoid being surprised by a foe. This ability counts as trap sense for any feat or class prerequisite, and can be replaced by any archetype class feature that replaces trap sense. The bonuses gained from this ability stack with those gained from trap sense (if you have trap sense from another class).|TrapSenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Avoid Surprise|TrapSenseBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|TrapSenseBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Reflex to avoid traps|TrapSenseBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 446,
+    "record_key": "Danger Sense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

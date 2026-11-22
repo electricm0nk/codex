@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Uncarnate ~ Uncarnate Bridge",
+    "name": "Uncarnate Bridge",
+    "class": "Psion Uncarnate",
+    "description": "Teleport from living creature to living creature; can cause these creatures to be nauseated (DC %1).|UncarnateBridgeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Uncarnate ~ Uncarnate Bridge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionUncarnateClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UncarnateBridgeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Teleport from living creature to living creature; can cause these creatures to be nauseated (DC %1).|UncarnateBridgeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncarnateBridgeDC|10+(PsionUncarnateLVL/2)+max(INT,WIS,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.371"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1414,
+    "record_key": "Psion Uncarnate ~ Uncarnate Bridge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

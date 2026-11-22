@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Noqual Golem ~ Powerful Blows",
+    "delivery": "Extraordinary",
+    "description": "A noqual golem inflicts 1-1/2 times its Strength bonus and threatens a critical hit on a 19-20 with its slam attacks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:noqual_golem_powerful_blows",
+    "name": "Powerful Blows",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|CRITRANGEADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|STR/2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A noqual golem inflicts 1-1/2 times its Strength bonus and threatens a critical hit on a 19-20 with its slam attacks."
+      },
+      {
+        "key": "KEY",
+        "value": "Noqual Golem ~ Powerful Blows"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.18",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Noqual Golem ~ Powerful Blows",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5400.0,
+    "description": "3/day when bloodraging, cast 3rd or lower-level spell as attack of opportunity",
+    "key": "Ring of Vengeful Blood Magic",
+    "name": "Ring of Vengeful Blood Magic",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "5400"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day when bloodraging, cast 3rd or lower-level spell as attack of opportunity"
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Vengeful Blood Magic",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

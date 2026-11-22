@@ -1,0 +1,26 @@
+{
+  "book": "bonus_bestiary",
+  "classified_at": "2026-08-11T09:16:36Z",
+  "classified_by_cycle": "SD29-E5-F1-001",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+    "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content.",
+    "product_identity_source": "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section"
+  },
+  "operator_sign_off": {
+    "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header.",
+    "signed_off": false,
+    "signed_off_at": null
+  },
+  "records_processed": 34,
+  "records_redacted": 0,
+  "redaction_policy": {
+    "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+    "blacklist_version_reviewed": "2026-07-27",
+    "marker": "[redacted PI]",
+    "pi_field_recorded": true,
+    "schema_preserving": true
+  },
+  "redistribution_posture": "ogl-notice-attached",
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_processed re-derived from disk to 34 (was 31), re-derived from disk (find data/corpus/bonus_bestiary -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 34; per-kind: class: 3, monster: 14, monster_ability: 17). records_processed is 34, records_redacted is 0. Prior note follows, unedited. Every field of all 31 records written by this run (14 monsters + 17 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+}

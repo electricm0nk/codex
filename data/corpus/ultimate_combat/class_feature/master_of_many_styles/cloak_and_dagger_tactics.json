@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Master of Many Styles ~ Cloak and Dagger Tactics",
+    "name": "Cloak and Dagger Tactics",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master of Many Styles ~ Cloak and Dagger Tactics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterOfManyStylesBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Cloak and Dagger Tactics"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=FEAT,Cloak and Dagger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Cloak and Dagger Style]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Cloak and Dagger Tactics"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_bos.lst",
+    "sha256": "6de3ee9ced1e60cbbb8728c5d2aeeb2445718d0210c4de5524b31761567cdcb3",
+    "line": 38,
+    "record_key": "Master of Many Styles ~ Cloak and Dagger Tactics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

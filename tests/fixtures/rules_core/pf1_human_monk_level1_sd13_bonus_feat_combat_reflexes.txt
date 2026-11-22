@@ -1,0 +1,23 @@
+# SD13-E5 deterministic Human Monk level 1 martial chassis fixture, bonus-feat
+# choice variant. Identical to the canonical SD13-E3 fixture
+# (pf1_human_monk_level1_sd13_deterministic_input.txt) except the level-1 bonus
+# feat choice-slot selection names Combat Reflexes instead of Stunning Fist, to
+# prove the SD13-E5 bonus-feat choice recognition seam recognizes more than one
+# member of the PF1 Core Rulebook restricted Monk bonus feat list.
+case_id=pf1-crb-human-monk-level1-bonus-feat-combat-reflexes
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:1
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:combat_reflexes
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:combat_reflexes
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

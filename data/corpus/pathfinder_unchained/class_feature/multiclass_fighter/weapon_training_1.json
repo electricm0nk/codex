@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Multiclass Fighter ~ Weapon Training 1",
+    "name": "Weapon Training 1",
+    "class": "Fighter",
+    "description": "At 11th level, he gains weapon training 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Multiclass Fighter ~ Weapon Training 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass Fighter.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, he gains weapon training 1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Weapon Training"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingLVL|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponTrainingLVL|5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 880,
+    "record_key": "Multiclass Fighter ~ Weapon Training 1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

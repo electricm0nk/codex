@@ -1,0 +1,31 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Boggard",
+    "name": "Boggard",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T15:18:08Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages_boggard.lst",
+    "record_key": "Boggard",
+    "sha256": "dcbecc4adaee5b47699cf7e7a0e2fb129eecf5246f447e738f4e41b31d89a3a2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

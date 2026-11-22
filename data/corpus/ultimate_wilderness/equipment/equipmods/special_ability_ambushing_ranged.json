@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Adds to wielder's stealth checks when sniping, +1d6 precision damage in surprise rounds or when target is unaware of the wielder's presence.",
+    "key": "Special Ability ~ Ambushing ~ Ranged",
+    "name": "Ambushing",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Ambushing ~ Ranged"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Ranged"
+      },
+      {
+        "key": "SPROP",
+        "value": "Adds to wielder's stealth checks when sniping, +1d6 precision damage in surprise rounds or when target is unaware of the wielder's presence."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equipmods.lst",
+    "record_key": "Special Ability ~ Ambushing ~ Ranged",
+    "sha256": "a278728c52e6818b8594bff2d7e13fa2d3eecbe6fbaba14875e90cc54e20c021"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

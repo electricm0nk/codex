@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rule - Use Fractional Saves",
+    "name": "Rule - Use Fractional Saves",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseFractionalSave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSaveGood_Fortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSaveGood_Reflex|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSaveGood_Will|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSavePoor_Fortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSavePoor_Reflex|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassSavePoor_Will|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseAlternateSaveProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|(ClassSaveGood_Fortitude/2)+(ClassSavePoor_Fortitude/3)+if(ClassSaveGood_Fortitude>0,2,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|(ClassSaveGood_Reflex/2)+(ClassSavePoor_Reflex/3)+if(ClassSaveGood_Reflex>0,2,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|(ClassSaveGood_Will/2)+(ClassSavePoor_Will/3)+if(ClassSaveGood_Will>0,2,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UseFractionalSave|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UseAlternateSaveProgression|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 15,
+    "record_key": "Rule - Use Fractional Saves"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

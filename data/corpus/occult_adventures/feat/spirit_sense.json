@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spirit Sense",
+    "category": "General",
+    "name": "Spirit Sense",
+    "description": "You sense the presence of the unseen. You gain a +5 bonus on checks to notice haunts. In addition, when you target an incorporeal creature with a corporeal spell or effect that doesn't deal damage, you have a 75% chance of affecting the target. Normal: Corporeal spells and effects that don't deal damage have only a 50% chance of affecting an incorporeal creature.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity],[PRESPELLCAST:TYPE=Psychic]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 67,
+    "record_key": "Spirit Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Caulborn ~ Cooperative Scrying",
+    "delivery": "SpellLike",
+    "description": "Three or more caulborn joining hands can scry on a place or creature as if using the scrying spell (DC 20), but with no limit to the spell's duration so long as at least three of the caulborn involved continue to join hands and concentrate. This ability functions at CL 7th (or at the highest CL available to the most powerful caulborn in the group). The save DC is Charisma-based, adjusted by the modifier of the caulborn with the highest Charisma score.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:caulborn_cooperative_scrying",
+    "name": "Cooperative Scrying",
+    "owners": [
+      "bestiary_3:monster:caulborn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three or more caulborn joining hands can scry on a place or creature as if using the scrying spell (DC 20), but with no limit to the spell's duration so long as at least three of the caulborn involved continue to join hands and concentrate. This ability functions at CL 7th (or at the highest CL available to the most powerful caulborn in the group). The save DC is Charisma-based, adjusted by the modifier of the caulborn with the highest Charisma score."
+      },
+      {
+        "key": "KEY",
+        "value": "Caulborn ~ Cooperative Scrying"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "TYPE",
+        "value": "CaulbornRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.48",
+    "traits": [
+      "CaulbornRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 539,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Caulborn ~ Cooperative Scrying",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

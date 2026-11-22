@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You can sense the location of a target creature within range if it is also within 10 feet of a living plant or fungus. You must be able to target the creature by tangible qualities such as its build, clothing texture, size, or tracks, but you need not have line of effect to your target. The fungus or plants near the target serve as a scrying sensor for this spell. Your senses of hearing, smell, and touch extend to all fungus and plants within 10 feet of the target, allowing you to gauge the size and shape of nearby objects and potentially to overhear conversations in which the target is currently participating. Your scent ability and tremorsense extend through this scrying sensor if you have them, but any other special senses you might have do not. For 1 day after casting this spell, you gain a +5 insight bonus on Survival checks to track creatures you sensed via the spell. You can dismiss this bonus on Survival checks.",
+    "key": "Forest's Sense",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Druid,Shaman=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Sense the location of a distant target that is near a plant or fungus.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sense the location of a target creature within range if it is also within 10 feet of a living plant or fungus. You must be able to target the creature by tangible qualities such as its build, clothing texture, size, or tracks, but you need not have line of effect to your target. The fungus or plants near the target serve as a scrying sensor for this spell. Your senses of hearing, smell, and touch extend to all fungus and plants within 10 feet of the target, allowing you to gauge the size and shape of nearby objects and potentially to overhear conversations in which the target is currently participating. Your scent ability and tremorsense extend through this scrying sensor if you have them, but any other special senses you might have do not. For 1 day after casting this spell, you gain a +5 insight bonus on Survival checks to track creatures you sensed via the spell. You can dismiss this bonus on Survival checks.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "(CASTERLEVEL) miles"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Scrying"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Forest's Sense",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range"
+  ]
+}

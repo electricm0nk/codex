@@ -1,0 +1,1 @@
+{"var":"v72328e2df20a76b6","label":"Spirit Deck Times","declared_by":["inner_sea_world_guide:class_feature:spirit_deck"],"contributions":[{"rule_id":"inner_sea_world_guide:class:harrower","expr":{"Max":[{"Const":1},{"Sum":[{"Const":1},{"AbilityMod":"Cha"}]}]},"when":{"Compare":{"lhs":{"ClassLevel":"harrower"},"op":"Gte","rhs":{"Const":5}}}}],"provenance":{}}

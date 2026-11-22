@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Reconstruction",
+    "name": "Reconstruction",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaper=2"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Metacreativity"
+      },
+      {
+        "key": "COMPS",
+        "value": "Ma, Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Construct touched"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "DESC",
+        "value": "Repairs construct of 3d8+(CASTERLEVEL) hit points."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 388,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Reconstruction",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

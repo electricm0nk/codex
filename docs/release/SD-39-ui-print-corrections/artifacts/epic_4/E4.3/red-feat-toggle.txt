@@ -1,0 +1,4 @@
+thread 'character_hub::tests::equipment_panel_the_feat_toggle_is_not_a_held_item' (275878) panicked at src/character_hub.rs:13277:9:
+[HeldEquipmentCopyDto { item_id: "item:longsword", name: "Longsword", bonus: 0, active_state: EquippedActive, slot: WieldMain }, HeldEquipmentCopyDto { item_id: "item:chain_shirt", name: "Chain Shirt", bonus: 0, active_state: EquippedActive, slot: Armor }, Hel
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1024 filtered out; finished in 4.58s
+error: test failed, to rerun pass `--bin codex-desktop`

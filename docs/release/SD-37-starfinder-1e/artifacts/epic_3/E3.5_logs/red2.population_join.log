@@ -1,0 +1,22 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.43s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 1 test
+test the_starfinder_population_is_the_inventory_units_of_the_converted_books ... FAILED
+
+failures:
+
+---- the_starfinder_population_is_the_inventory_units_of_the_converted_books stdout ----
+
+thread 'the_starfinder_population_is_the_inventory_units_of_the_converted_books' (2564546) panicked at crates/codex-ingest/tests/sf_core_proof.rs:178:5:
+units with no source row: ["character_operations_manual:feat:close_combat", "character_operations_manual:spell:summon_creature", "character_operations_manual:spell:summon_creature_level_1", "character_operations_manual:spell:summon_creature_level_2", "character_operations_manual:spell:summon_creature_level_3", "character_operations_manual:spell:summon_creature_level_4", "character_operations_manual:spell:summon_creature_level_5", "character_operations_manual:spell:summon_creature_level_6"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    the_starfinder_population_is_the_inventory_units_of_the_converted_books
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 1.58s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

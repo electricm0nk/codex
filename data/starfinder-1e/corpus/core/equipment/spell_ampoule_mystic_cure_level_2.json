@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Spell Ampoule (Mystic Cure (Level 2))",
+    "name": "Spell Ampoule (Mystic Cure (Level 2))",
+    "type": "Magic.SpellAmpoule.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Spell Ampoule (Mystic Cure (Level 2))",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:spell_ampoule_mystic_cure_level_2"
+}

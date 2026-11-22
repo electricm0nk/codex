@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Occult Skill Unlock",
+    "name": "Occult Skill Unlock",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Automatic Writing|PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Automatic Writing|PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Dowsing|PRESKILL:1,Survival=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Faith Healing|PRESKILL:1,Heal=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Hypnotism|PRESKILL:1,Diplomacy=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Phrenology|PRESKILL:1,Knowledge (Arcana)=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Prognostication|PRESKILL:1,Sense Motive=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Psychometry|PRESKILL:1,Appraise=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Read Aura|PRESKILL:1,Perception=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1934,
+    "record_key": "Occult Skill Unlock"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

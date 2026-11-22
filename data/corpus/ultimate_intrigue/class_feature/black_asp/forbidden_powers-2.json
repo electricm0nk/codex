@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Black Asp ~ Unchained Forbidden Powers",
+    "name": "Forbidden Powers",
+    "class": "Monk",
+    "description": "A black asp can select a forbidden ki power as a ki power or in place of the tongue of the sun and moon monk class ability. If he chooses to do so, he replaces the tongue of the sun and moon for the chosen forbidden ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Black Asp ~ Unchained Forbidden Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.BlackAspClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnchainedBlackAspForbiddenPower|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A black asp can select a forbidden ki power as a ki power or in place of the tongue of the sun and moon monk class ability. If he chooses to do so, he replaces the tongue of the sun and moon for the chosen forbidden ki power."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnchainedBlackAspForbiddenPower|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 19,
+    "record_key": "Black Asp ~ Unchained Forbidden Powers"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

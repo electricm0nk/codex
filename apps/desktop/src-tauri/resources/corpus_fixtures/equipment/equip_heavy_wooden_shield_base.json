@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You strap a shield to your forearm and grip it with your hand. A heavy shield is so heavy that you can't use your shield hand for anything else.&nl;Wooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to spells and effects.&nl;Shield Bash Attacks: You can bash an opponent with a heavy shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right.",
+    "key": "Heavy Wooden Shield (Base)",
+    "name": "Heavy Wooden Shield"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_heavy_wooden_shield_base.txt",
+    "record_key": "Heavy Wooden Shield (Base)"
+  }
+}

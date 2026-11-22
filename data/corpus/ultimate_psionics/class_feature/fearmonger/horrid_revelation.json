@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fearmonger ~ Horrid Revelation",
+    "name": "Horrid Revelation",
+    "class": "Fearmonger",
+    "description": "When you use your devastating touch ability and you already have temporary hit points from drink fear, you can sacrifice all of those temporary hit points to cause your target to be staggered and shaken (Will DC %1).  This lasts one round for every temporary hit point sacrificed.  You do not gain temporary hit points from this use of devastating touch.|HorridRevelationDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearmonger ~ Horrid Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HorridRevelationDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your devastating touch ability and you already have temporary hit points from drink fear, you can sacrifice all of those temporary hit points to cause your target to be staggered and shaken (Will DC %1).  This lasts one round for every temporary hit point sacrificed.  You do not gain temporary hit points from this use of devastating touch.|HorridRevelationDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HorridRevelationDC|10+floor(DreadLVL/2)+DreadPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1883,
+    "record_key": "Fearmonger ~ Horrid Revelation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:45Z",
+  "data": {
+    "corpus_key": "Horror ~ Devastating Touch",
+    "delivery": "Supernatural",
+    "description": "Melee touch on living target deals %1d%2+%3 damage.",
+    "description_variables": [
+      "DevastatingTouchDice",
+      "DevastatingTouchDieType",
+      "DevastatingTouchBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "ultimate_psionics:monster_ability:horror_devastating_touch",
+    "name": "Devastating Touch",
+    "owners": [],
+    "source_page": "p.268",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 735,
+    "record_key": "Horror ~ Devastating Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

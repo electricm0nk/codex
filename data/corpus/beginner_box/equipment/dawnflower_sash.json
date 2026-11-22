@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Dawnflower Sash",
+    "category": "MagicItems",
+    "name": "Dawnflower Sash",
+    "cost_gp": 2500.0,
+    "weight_lbs": 0.0,
+    "description": "[redacted PI]"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 8,
+    "record_key": "Dawnflower Sash"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
+}

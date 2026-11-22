@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Overwhelming Fear",
+    "name": "Overwhelming Fear",
+    "class": "Terror",
+    "description": "The target of your next attack cowers for %1 round (Will DC %2 negates).  If the attack misses, the effect is wasted.  This is a mind-affecting fear effect.|OverwhelmingFearDuration|OverwhelmingFearDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Overwhelming Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OverwhelmingFearDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OverwhelmingFearDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The target of your next attack cowers for %1 round (Will DC %2 negates).  If the attack misses, the effect is wasted.  This is a mind-affecting fear effect.|OverwhelmingFearDuration|OverwhelmingFearDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OverwhelmingFearDuration|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OverwhelmingFearDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OverwhelmingFearDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Overwhelming Fear)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 304,
+    "record_key": "Terror ~ Overwhelming Fear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Acid Blood Stain",
+    "name": "Acid Blood Stain",
+    "description": "Your acidic sweat damages your equipment. After using or wearing an item for 8 hours total, it gains the broken condition. If you use or wear a broken item for 8 hours, it is destroyed. This ability doesn't break cursed items, artifacts, or similar items that are difficult or impossible to destroy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Acid Blood Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveAcidBloodStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "Your acidic sweat damages your equipment. After using or wearing an item for 8 hours total, it gains the broken condition. If you use or wear a broken item for 8 hours, it is destroyed. This ability doesn't break cursed items, artifacts, or similar items that are difficult or impossible to destroy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 384,
+    "record_key": "Hive Corruption ~ Acid Blood Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

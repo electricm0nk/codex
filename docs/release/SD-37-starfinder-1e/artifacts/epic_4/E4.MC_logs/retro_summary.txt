@@ -1,0 +1,45 @@
+codex retrospective — event log summary
+window: 2026-10-03T20:36:43Z  (since 2026-10-03T20:36:43+00:00)
+
+EVENTS  14 total
+      6  verification
+      3  correction
+      2  incident
+      2  rework
+      1  deferral
+  origin: agent=8, derived=6
+
+CORRECTIONS  3
+  who was wrong:
+       1  E3.MC discovery (progress.md ## DISCOVERED, kanban E4.1 row)
+       1  E4.3 receipt draft (own)
+       1  progress.md DISCOVERED E3.4 -> E4.2 (SF skill bonus targets)
+  who caught it:
+       1  sd37-e4-1
+       1  sd37-e4-2
+       1  sd37-e4-3
+  1 had already propagated when caught
+    - 2026-10-03T20:52:50Z  E3.MC discovery (progress.md ## DISCOVERED, kanban E4.1 row) claimed HD:1 per level is a class token with no package line; actual every SF class principal carries StatBlock "Hit die" prose "d1" (the HD term has a package source; only RaceHP was absent, and Con x level is a system rule)
+    - 2026-10-04T02:47:41Z  progress.md DISCOVERED E3.4 -> E4.2 (SF skill bonus targets) claimed SF skill bonuses resolve to the display records (ids display_*), not the base skill; actual on the E4.2 package 374 of 374 Skill targets and 20 of 20 SkillSituation targets name the base skill id; 0 name display_*
+    - 2026-10-04T03:31:18Z  E4.3 receipt draft (own) claimed SF package Ability-targeting rows: 535; actual 455 (252 ability-kind + 203 race-kind)
+
+INCIDENTS  2  (0 produced plausible wrong results)
+    - 2026-10-04T05:38:54Z  two E4.4 verify drivers ran concurrently on one tree for ~1 min (first launched with nohup &, judged dead by a Monitor 'kill -0' that cannot see the Bash tool's process namespace; second launched via run_in_background); both wrote the same stage logs (detected by pgrep showed sheet_rule_convert --check with PPID = the first driver's pid)
+    - 2026-10-04T11:07:06Z  verify.sh --only clippy is red on tranche/17 before E4.5's lines: 11 -D warnings errors, all in lines earlier SD-37 cards added (src/rules_core/sheet_rule.rs:4123 manual_is_multiple_of, E2.2 f3457f59d9; codex-ingest convert.rs:519 tabs_in_doc_comments x4, E4.4 989353a2eb; pool_option.rs:368-373 doc_lazy_continuation x6, E4.2 c9a31b35bf); no earlier E-card receipt ran the clippy stage (detected by E4.5_verify.sh clippy stage (bash scripts/verify.sh --only clippy), locations from grep '-->' over the stage's clippy-root/clippy-ingest logs, owners from git blame)
+
+NEAR MISSES  0  (0 escaped and were fixed after the fact)
+
+DEFERRALS  1 total, 1 open, 0 resolved
+    - StarfinderAdapter::level_up returns the empty LevelUpPlan — LevelUpPlan grants cite Grant::source_table: TableCellRef whose rule_set is a Pathfinder rules_tables RuleSetId; no Starfinder package row can be named without changing level_up.rs (no E4 row); SF level-up is card E6.5's criterion  [revisit: E6.5 (SF level-up)]
+
+REWORK  2
+       1  implementation written first; RED confirmed only on the chosen-ability gap and by 7 planted mutations
+       1  the 20th-row parse took the last 6 digit/dash tokens of the page tail, which on the Witchwarper page includes the Starfinder Enhanced note after the table
+
+VERIFICATION  6 runs, 2 with a failing stage
+       2  clippy
+
+GIT (same window)  13 commits by 1 authors
+    1.0769 events per commit
+
+LOG  8 shards at /home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events

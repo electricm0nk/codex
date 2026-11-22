@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 12.0,
+    "description": null,
+    "key": "Terbutje (Great)",
+    "name": "Terbutje (Great)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Terbutje (Great)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.StoneAge.Slashing.Fragile"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Bone.Special Quality ~ Fragile.Material ~ Obsidian.Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 113,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Terbutje (Great)",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

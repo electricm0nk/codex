@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Spellcraft",
+    "name": "Spellcraft",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Spellcraft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SpellcraftRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpellcraftRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ spellcraft 05 Ranks|PREVARGTEQ:SpellcraftRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ spellcraft 10 Ranks|PREVARGTEQ:SpellcraftRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ spellcraft 15 Ranks|PREVARGTEQ:SpellcraftRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ spellcraft 20 Ranks|PREVARGTEQ:SpellcraftRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpellcraftRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Spellcraft\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 57,
+    "record_key": "Refined Education Unlock ~ Spellcraft"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Pugwampi ~ Unluck Aura",
+    "name": "Unluck Aura",
+    "description": "A pugwampi radiates an aura of unluck to a radius of 20 feet.  Any creature in this area must roll two d20s whenever a situation calls for a d20 roll (such as an attack roll, a skill check, or a saving throw) and must use the lower of the two results generated.  This is a mind-affecting effect that does not work on animals, other gremlins, or gnolls.  Any character who gains any sort of luck bonus (such as that granted by a luckstone or divine favor) is immune to the pugwampi unluck aura.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pugwampi ~ Unluck Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A pugwampi radiates an aura of unluck to a radius of 20 feet.  Any creature in this area must roll two d20s whenever a situation calls for a d20 roll (such as an attack roll, a skill check, or a saving throw) and must use the lower of the two results generated.  This is a mind-affecting effect that does not work on animals, other gremlins, or gnolls.  Any character who gains any sort of luck bonus (such as that granted by a luckstone or divine favor) is immune to the pugwampi unluck aura."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 638,
+    "record_key": "Pugwampi ~ Unluck Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

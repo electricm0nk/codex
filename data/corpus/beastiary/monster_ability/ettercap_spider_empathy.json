@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ettercap ~ Spider Empathy",
+    "delivery": "Extraordinary",
+    "description": "This ability functions as the druid's wild empathy, save that an ettercap can only use this ability on spiders. An ettercap gains a +4 racial bonus on this check. Spiders are mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing ettercaps to train giant spiders and use them as guardians.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:ettercap_spider_empathy",
+    "name": "Spider Empathy",
+    "owners": [
+      "beastiary:monster:ettercap"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|SpiderEmpathyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiderEmpathyBonus|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiderEmpathyBonus|HD+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiderEmpathyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as the druid's wild empathy, save that an ettercap can only use this ability on spiders. An ettercap gains a +4 racial bonus on this check. Spiders are mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing ettercaps to train giant spiders and use them as guardians."
+      },
+      {
+        "key": "KEY",
+        "value": "Ettercap ~ Spider Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Communicate"
+      }
+    ],
+    "source_page": "p.129",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 601,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ettercap ~ Spider Empathy",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

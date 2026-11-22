@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metamind ~ Font of Power",
+    "name": "Font of Power",
+    "class": "Metamind",
+    "description": "For up to 1 minute, 1/day, manifest powers without using power points, gain DR 10/-, and manifestation of powers is uninterruptable.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamind ~ Font of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MetamindClassFeatures.SpecialQuality.Psilike"
+      },
+      {
+        "key": "DESC",
+        "value": "For up to 1 minute, 1/day, manifest powers without using power points, gain DR 10/-, and manifestation of powers is uninterruptable."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.362"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1259,
+    "record_key": "Metamind ~ Font of Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

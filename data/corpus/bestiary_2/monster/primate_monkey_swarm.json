@@ -1,0 +1,148 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:monkey_swarm_coordinated_swarm"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Primate (Monkey Swarm)",
+    "external_ability_refs": [
+      "Distraction ~ Swarm",
+      "No Combat Maneuvers",
+      "Swarm Traits"
+    ],
+    "key": "bestiary_2:monster:primate_monkey_swarm",
+    "monster_class": "Animal:3",
+    "name": "Primate (Monkey Swarm)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Swarm"
+      }
+    ],
+    "race_subtype": "Swarm",
+    "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Distraction ~ Swarm|Monkey Swarm ~ Coordinated Swarm|No Combat Maneuvers|Swarm Traits"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Swarm|DAMAGE|-1*(STR)"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Swarm,Weapon.Melee.Natural.Finesseable,*1,2d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Swarm"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "T",
+    "source_page": "p.212",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 687,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Primate (Monkey Swarm)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

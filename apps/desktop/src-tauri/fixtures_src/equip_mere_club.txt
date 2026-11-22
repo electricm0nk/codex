@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Mere Club
+Mere Club																				PROFICIENCY:WEAPON|Mere Club								TYPE:Weapon.Resizable.Melee.OneHanded.Simple.Bludgeoning.Piercing.Hammer																																	COST:2	WT:2										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d4					EQMOD:Material ~ Stone																																																				SOURCEPAGE:p.32

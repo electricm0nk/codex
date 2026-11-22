@@ -1,0 +1,235 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd39-e3.1": 2,
+      "sd39-e3.2": 3,
+      "sd39-e3.3": 3,
+      "sd39-e3.4": 3,
+      "sd39-e3.5": 3,
+      "sd39-e3.6": 2,
+      "sd39-e3.mc": 5
+    },
+    "by_subject": {
+      "CharacterSheet-caption": 1,
+      "E3.2 dispatch prompt": 1,
+      "E3.2-receipt": 1,
+      "E3.3-receipt": 1,
+      "E3.3-row": 1,
+      "E3.4-receipt": 1,
+      "E3.MC dispatch prompt": 1,
+      "SD-39 E3.2 row (epic-breakdown.md)": 1,
+      "SD-39 E3.2 row and decisions.md \u00a78": 1,
+      "SD-39 E3.5 acceptance grep": 1,
+      "SD-39 E3.6 row (epic-breakdown.md)": 1,
+      "SD-39 decisions.md \u00a725 (E3.5 row)": 1,
+      "SD-39 package (epic-breakdown E3.1, decisions \u00a725)": 1,
+      "attach_equipment_modifier_at_root doc comment": 1,
+      "catalog row name, and my first hide rule in E3.1": 1,
+      "character_input.rs apply_equipment_modifier comment": 1,
+      "decisions.md": 2,
+      "epic-breakdown.md": 1,
+      "sd39-e3.1": 1,
+      "sd39-e3.5 market_category_of first draft": 1
+    },
+    "by_verification_method": {
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md | awk 'END{print NR}'": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'": 1,
+      "cargo test --lib an_equipment_modifier_line: left [1, 0] right [0, 1] before the reader fix": 1,
+      "cargo test --locked -j 8 --bins enhancement_rows in apps/desktop/src-tauri: 2 passed, 5 failed, left 16 right 18 on the worn armor": 1,
+      "cargo test --locked -j 8 --lib an_equipment_modifier_line_keeps_a_modifier_id_with_colons": 1,
+      "cargo test --locked -j 8 --no-fail-fast -p codex-ingest -- --test-threads=8: rules_core_pilot_compute_corpus_via_converter 20 passed, 1 failed": 1,
+      "cargo test --locked -j 8 market_attach_price: market_attach_price_cashless_charged_nothing attaches on 0 cp": 1,
+      "enhancement_rows_every_weapon_offer_reaches_its_row: 210 rows with an offer, 0 not reaching a row, the 7 named": 1,
+      "git show 7f6005a503:apps/desktop/src/characterHub/StarfinderCharacterSheet.tsx | grep -c 'Add Weapon\\|Add Armor\\|Add Gear'": 1,
+      "market_attach_price_a_legacy_id_pays_for_its_market_row red: left 230000 right 0, artifacts/epic_3/E3.MC/red-legacy.txt": 1,
+      "market_attach_price_a_row_with_no_such_offer_attaches_free first run, E3.6/red-behaviour.txt; grep -rl 'Special Ability ~ +6' src data/sheet_rules prints nothing": 1,
+      "market_buy_sell_*_sell cases; grep sell_equipment_copy_at_root character_hub.rs": 1,
+      "market_buy_sell_an_export_and_import_keeps_what_each_copy_holds red: right holds Special Ability ~ +1 ~ Weapon, left []; artifacts/epic_3/E3.MC/red.txt": 1,
+      "market_buy_sell_standard_sell_returns_half_the_plus_one_price: 115,750 cp refund": 1,
+      "market_category_filter_files_every_row_once_and_loses_only_the_named_hides: hidden 262 under the first rule, 130 under the second; Holy Avenger row in the catalog dump": 1,
+      "market_shell_lists_no_cyberdeck and market_shell_every_row_bought_is_on_the_sell_list red: 14 rows, artifacts/epic_3/E3.MC/red.txt": 1,
+      "npm run ui-smoke --only sheet-market-buy: expected string missing 'Sell +1 Chain Shirt'; test corpus_fixture_bundle_has_two_spells_and_two_equipment_records": 1,
+      "python3 json over data/sheet_rules/core_rulebook/equipment_modifier/{plus1w,special_ability_1_weapon}.json; test enhancement_price_table_modifier_keys_name_the_records_that_hold_the_bonus": 1,
+      "python3 over data/starfinder-1e/sheet_rules/*/equipment/*.json; sheet-market-starfinder-refused red, then green": 1,
+      "set_equipment_active_state_at_root_stows_and_re_equips_a_carried_item passes on the base tree with item:dagger EquippedActive beside the Longsword": 1,
+      "ui-smoke sheet-market-buy-weapon-carried green; market_buy_sell_a_buy_the_engine_refuses_charges_nothing": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd39-e3.5",
+        "id": "1793647071546-sd39-e3.5-59420c",
+        "summary": "SD-39 E3.5 acceptance grep claimed grep for Add Weapon/Armor/Gear on the SF and CPR sheets goes to 0 when their Add buttons go; actual it prints 0 before E3.5; neither sheet had those buttons",
+        "ts": "2026-11-02T19:17:51Z"
+      },
+      {
+        "actor": "sd39-e3.5",
+        "id": "1793647071757-sd39-e3.5-9c6114",
+        "summary": "character_input.rs apply_equipment_modifier comment claimed the modifier item id holds no colon, so the final colon is the boundary; actual a Starfinder modifier id holds colons; a saved upgrade made the character unloadable",
+        "ts": "2026-11-02T19:17:51Z"
+      },
+      {
+        "actor": "sd39-e3.5",
+        "id": "1793647072013-sd39-e3.5-26cb42",
+        "summary": "sd39-e3.5 market_category_of first draft claimed the Weapon tag names a Starfinder weapon; actual 978 of 1080 records with a Damage row have no Weapon tag; a laser rifle landed on Gear",
+        "ts": "2026-11-02T19:17:52Z"
+      },
+      {
+        "actor": "sd39-e3.6",
+        "id": "1793657636907-sd39-e3.6-17b464",
+        "summary": "decisions.md claimed E3.6 row: 3 modes x charged / refused / sold back, as if Cashless can refuse for money; actual Cashless skips the money check; its refused case is a copy not held",
+        "ts": "2026-11-02T22:13:56Z"
+      },
+      {
+        "actor": "sd39-e3.6",
+        "id": "1793657637038-sd39-e3.6-d188c7",
+        "summary": "attach_equipment_modifier_at_root doc comment claimed enhancement records run +1 through +10; actual Special Ability ~ +6 ~ Weapon is unknown_item",
+        "ts": "2026-11-02T22:13:57Z"
+      },
+      {
+        "actor": "sd39-e3.mc",
+        "id": "1793664274704-sd39-e3.mc-fe98a6",
+        "summary": "E3.3-receipt claimed the Sell list's new read means applied_modifiers need not cross the export/import DTO; actual export then import silently drops every paid +N: a +3 Longsword and a +2 Chain Shirt reloaded plain",
+        "ts": "2026-11-03T00:04:34Z"
+      },
+      {
+        "actor": "sd39-e3.mc",
+        "id": "1793664274825-sd39-e3.mc-a31f87",
+        "summary": "SD-39 decisions.md \u00a725 (E3.5 row) claimed the Cyberpunk Market lists 7 kinds and decks are neither listed nor on the Sell list; actual 3 gear-kind Cyberdeck records were listed and charged, reached no sheet and could not be sold; 11 other rows sharing a cyberware name could be bought and never sold",
+        "ts": "2026-11-03T00:04:34Z"
+      },
+      {
+        "actor": "sd39-e3.mc",
+        "id": "1793664274947-sd39-e3.mc-19b6a5",
+        "summary": "SD-39 E3.6 row (epic-breakdown.md) claimed a legacy item:* id attaches free as it does today; actual every Pathfinder character starts with item:longsword and item:chain_shirt, so Attach Modifier gave them a free +5 that moves AC, attack and damage; the id resolves to the Market row's record",
+        "ts": "2026-11-03T00:04:34Z"
+      },
+      {
+        "actor": "sd39-e3.mc",
+        "id": "1793664275066-sd39-e3.mc-caec57",
+        "summary": "E3.MC dispatch prompt claimed re-count the 51 constant; actual the card-count constant is 54",
+        "ts": "2026-11-03T00:04:35Z"
+      },
+      {
+        "actor": "sd39-e3.mc",
+        "id": "1793664815071-sd39-e3.mc-edf358",
+        "summary": "E3.4-receipt claimed the rest of codex-ingest's tests were not run, and the second-weapon refusal removal is proved by the desktop and root sweeps; actual a_second_real_weapon_equipped_is_honestly_blocked_not_guessed in crates/codex-ingest pinned the refusal and has been red on origin/tranche-19 since af1e860a9c",
+        "ts": "2026-11-03T00:13:35Z"
+      }
+    ],
+    "repeat_subjects": [
+      {
+        "count": 2,
+        "subject": "decisions.md"
+      }
+    ],
+    "total": 21,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd39-e3.1": 3,
+      "sd39-e3.2": 4,
+      "sd39-e3.3": 3,
+      "sd39-e3.4": 5,
+      "sd39-e3.5": 6,
+      "sd39-e3.6": 3,
+      "sd39-e3.mc": 5,
+      "sd39-main": 2
+    },
+    "by_origin": {
+      "agent": 24,
+      "derived": 7
+    },
+    "by_type": {
+      "correction": 21,
+      "incident": 2,
+      "rework": 1,
+      "verification": 7
+    },
+    "total": 31
+  },
+  "generated_at": "2026-11-03T03:11:18Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 15,
+    "events_per_commit": 2.0667,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        15
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "fresh-tree-empty-corpus-bundle": 1,
+      "spec-json-append-conflict": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e3.5",
+        "id": "1793647072233-sd39-e3.5-e17951",
+        "summary": "sheet-tab-gear read red on a fresh side-lane tree: create form says no race could be read from the corpus (detected by ui-smoke sheet-tab-gear.FAILED.png)",
+        "ts": "2026-11-02T19:17:52Z"
+      },
+      {
+        "actor": "sd39-e3.5",
+        "id": "1793655019761-sd39-e3.5-f6e967",
+        "summary": "E3.4 and E3.5 both appended ui-smoke rows at the end of spec.json, so the side lane's rebase conflicted; about 50 minutes to rebuild and re-verify (detected by git rebase origin/tranche-19)",
+        "ts": "2026-11-02T21:30:19Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 2
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/docs/retro/events",
+    "problems": [],
+    "shards": 8
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "counting converted files on disk panicked the app at launch once 2 records left the bundle, because tauri-build leaves copied resources in place; ui-smoke hung on a dead window before any row ran, and three runs read as a harness stall": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e3.4",
+        "id": "1793651502802-sd39-e3.4-26ec4b",
+        "summary": "redid the desktop's start-up record count, and the fixture list: counting converted files on disk panicked the app at launch once 2 records left the bundle, because tauri-build leaves copied resources in place; ui-smoke hung on a dead window before any row ran, and three runs read as a harness stall",
+        "ts": "2026-11-02T20:31:42Z"
+      }
+    ],
+    "total": 1
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 7
+  },
+  "window": {
+    "since": "2026-11-02T06:10:42-05:00",
+    "spec": "2026-11-02T06:10:42-05:00",
+    "until": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Race ~ Sylph",
+    "name": "Sylph",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race ~ Sylph"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsSylph"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/sylph/sylph_templates.lst",
+    "record_key": "Race ~ Sylph",
+    "sha256": "12fd85ba55f563d0b9a393aa58778bda41d25314a78268a498f013d61f394c7b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

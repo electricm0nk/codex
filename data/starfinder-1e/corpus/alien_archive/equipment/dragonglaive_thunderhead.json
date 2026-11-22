@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Dragonglaive (thunderhead)",
+    "name": "Dragonglaive, thunderhead",
+    "type": "RESIZABLE.Weapon.Melee.Advanced Melee.Prof Group Advanced Melee.ToHit_UseStr.Damage_UseStr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "starfinder/paizo/alien_archive/saa_equip.lst",
+    "record_key": "Dragonglaive (thunderhead)",
+    "sha256": "6b5557e98616ac13e1f2750fe5d46cad3da77a33218836fd1fc9d2fc361e7bb3"
+  },
+  "unit_id": "alien_archive:equipment:dragonglaive_thunderhead"
+}

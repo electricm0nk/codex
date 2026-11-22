@@ -1,0 +1,81 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 5200.0,
+    "description": null,
+    "key": "IntItemStatINT19",
+    "name": "IntItemStatINT19",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatINT",
+          "9"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 19"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "5200"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 11,Intelligent Item ~ Ability Score / Intelligence 12,Intelligent Item ~ Ability Score / Intelligence 13,Intelligent Item ~ Ability Score / Intelligence 14,Intelligent Item ~ Ability Score / Intelligence 15,Intelligent Item ~ Ability Score / Intelligence 16,Intelligent Item ~ Ability Score / Intelligence 17,Intelligent Item ~ Ability Score / Intelligence 18,Intelligent Item ~ Ability Score / Intelligence 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat INT ~ 19"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 818,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "IntItemStatINT19",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

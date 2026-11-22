@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionics Domain ~ Psionic Amplifier",
+    "name": "Psionic Amplifier",
+    "description": "As a standard action you can become an amplifier of psionic energy until the end of your next turn.  This aura emanates 15 ft. out from you.  All psionic powers manifested within the emanation either gain a +1 bonus to their manifester level or increase their saving throw DC by +1, chosen by the manifester when he manifests the power.  This manifester level increase allows additional augmenting of the power being manifester.  You can use this ability %1 times per day.|DomainPsionicsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionics Domain ~ Psionic Amplifier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can become an amplifier of psionic energy until the end of your next turn.  This aura emanates 15 ft. out from you.  All psionic powers manifested within the emanation either gain a +1 bonus to their manifester level or increase their saving throw DC by +1, chosen by the manifester when he manifests the power.  This manifester level increase allows additional augmenting of the power being manifester.  You can use this ability %1 times per day.|DomainPsionicsTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DomainPsionicsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainPsionicsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainPsionicsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 116,
+    "record_key": "Psionics Domain ~ Psionic Amplifier"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

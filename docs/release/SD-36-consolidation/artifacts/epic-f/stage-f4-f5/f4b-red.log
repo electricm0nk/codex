@@ -1,0 +1,13 @@
+== RED: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml list_ -- --test-threads=8
+error[E0425]: cannot find function `build_class_creation_roster` in this scope
+     --> src/character_hub.rs:10005:22
+error[E0425]: cannot find function `build_level_up_class_options` in this scope
+     --> src/character_hub.rs:10072:23
+error[E0425]: cannot find function `build_class_creation_roster` in this scope
+     --> src/character_hub.rs:10083:22
+error[E0425]: cannot find function `build_level_up_class_options` in this scope
+     --> src/character_hub.rs:10133:23
+error[E0425]: cannot find function `build_level_up_class_options` in this scope
+     --> src/character_hub.rs:10140:22
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 5 previous errors
+EXIT=101

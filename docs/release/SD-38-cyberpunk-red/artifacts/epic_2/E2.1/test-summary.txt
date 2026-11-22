@@ -1,0 +1,29 @@
+== baseline (pre-change tree)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2901 filtered out; finished in 0.00s
+== RED (tests written, no implementation)
+      1 error: could not compile `codex` (lib test) due to 9 previous errors; 1 warning emitted
+      2 error[E0425]: cannot find function `current_emp` in this scope
+      1 error[E0425]: cannot find function `derived_rows` in this scope
+      1 error[E0425]: cannot find function `hit_points` in this scope
+      3 error[E0425]: cannot find function `seriously_wounded` in this scope
+      1 error[E0425]: cannot find value `current_emp` in this scope
+      1 error[E0425]: cannot find value `humanity_max` in this scope
+== GREEN
+test rules_core::cpr::stats::tests::current_emp_lowers_with_the_tens_place_of_humanity_and_stops_at_zero ... ok
+test rules_core::cpr::stats::tests::seriously_wounded_is_half_hp_rounded_up ... ok
+test rules_core::cpr::stats::tests::humanity_max_is_ten_per_emp_point_as_the_p081_table_prints ... ok
+test rules_core::cpr::stats::tests::all_126_cells_of_the_p080_hp_table_equal_the_formula ... ok
+test rules_core::cpr::stats::tests::derived_rows_are_cpr_rows_with_the_book_values ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2901 filtered out; finished in 0.00s
+== plant floor for ceil
+test rules_core::cpr::stats::tests::derived_rows_are_cpr_rows_with_the_book_values ... FAILED
+test rules_core::cpr::stats::tests::all_126_cells_of_the_p080_hp_table_equal_the_formula ... FAILED
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 2901 filtered out; finished in 0.00s
+== post-rebase cpr::
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 2892 filtered out; finished in 0.02s
+== root full
+300
+== desktop full
+test result: ok. 809 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 589.60s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 98.46s

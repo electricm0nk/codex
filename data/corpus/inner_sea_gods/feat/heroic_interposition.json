@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Heroic Interposition",
+    "category": "Combat",
+    "name": "Heroic Interposition",
+    "description": "You arrive just when you are most needed to vanquish evil. Once per day, you can move up to your speed as an immediate action, but you must end this movement adjacent to an opponent who is about to make an attack against an ally. As long as you are visible to the opponent you moved next to, that opponent takes a -2 penalty on the attack roll to which you moved in response.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Dodge,Improved Initiative,Mobility",
+      "PREDEITY:1,PANTHEON.Empyreal Lord",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]",
+      "PRETEXT:Prerequisites: Dex 13, Dodge, Improved Initiative, Mobility, worshiper ofan empyreal lord."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 53,
+    "record_key": "Heroic Interposition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

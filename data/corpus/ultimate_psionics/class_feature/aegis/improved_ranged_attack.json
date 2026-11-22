@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Improved Ranged Attack",
+    "name": "Improved Ranged Attack",
+    "class": "Aegis",
+    "description": "The damage of your ranged attack ability increases.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Improved Ranged Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Ranged Attack"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangedAttackBonusDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The damage of your ranged attack ability increases."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedAttackBonusDice|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedAttackBonusDice|floor(AegisLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedAttackDice|RangedAttackBonusDice"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 117,
+    "record_key": "Aegis ~ Improved Ranged Attack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

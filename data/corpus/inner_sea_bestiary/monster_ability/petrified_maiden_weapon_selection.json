@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Petrified Maiden ~ Weapon Selection",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:petrified_maiden_weapon_selection",
+    "name": "Weapon Selection",
+    "owners": [
+      "inner_sea_bestiary:monster:petrified_maiden"
+    ],
+    "raw_tokens": [
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|%LIST"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|TOHIT,DAMAGE|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Martial"
+      },
+      {
+        "key": "KEY",
+        "value": "Petrified Maiden ~ Weapon Selection"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "PetrifiedMaidenWeaponSelection"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PetrifiedMaidenWeaponSelection"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:08:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 257,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Petrified Maiden ~ Weapon Selection",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Deathtrap Ooze ~ Acid",
+    "delivery": "Extraordinary",
+    "description": "A deathtrap ooze secretes acid that dissolves only flesh. Creatures made of materials other than flesh are immune to this acid.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:deathtrap_ooze_acid",
+    "name": "Acid",
+    "owners": [
+      "bestiary_3:monster:deathtrap_ooze"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A deathtrap ooze secretes acid that dissolves only flesh. Creatures made of materials other than flesh are immune to this acid."
+      },
+      {
+        "key": "KEY",
+        "value": "Deathtrap Ooze ~ Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "TYPE",
+        "value": "DeathtrapOozeRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.64",
+    "traits": [
+      "DeathtrapOozeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 615,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Deathtrap Ooze ~ Acid",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

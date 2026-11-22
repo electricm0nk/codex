@@ -1,0 +1,46 @@
+# SD13-E5 deterministic Human Fighter level 9 progression fixture.
+# Widens the accepted GE-06 deterministic PF1 Core Rulebook Human Fighter pilot to
+# level 9 as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice seam and
+# the deterministic Longsword / Chain Shirt / no-shield posture. Level 9 grants
+# Weapon Training 2: the first weapon group (Heavy Blades) rises to +2 and a second
+# weapon group is chosen at +1, so this fixture adds the
+# choice:fighter_weapon_training_group_2 selection (canonically group:bows); it
+# grants no new bonus feat (the cadence is 1, 2, 4, 6, 8, 10, ... and its next
+# entry is level 10) and no new armor-training milestone (Armor Training 2 stayed
+# at level 7).
+case_id=pf1-crb-human-fighter-level9
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:9
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+feat=feat:combat_reflexes
+feat=feat:improved_critical
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:fighter_weapon_training_group:group:heavy_blades
+choice=choice:fighter_bonus_feat_6:feat:combat_reflexes
+choice=choice:fighter_bonus_feat_8:feat:improved_critical
+choice=choice:fighter_weapon_training_group_2:group:bows
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

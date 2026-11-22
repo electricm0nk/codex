@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Nightmare Constructor ~ Empowered in Fear",
+    "name": "Empowered in Fear",
+    "description": "Your horror is treated as if under the effect of physical acceleration any time it is within 30 ft. of a shaken, frightened, or panicked creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightmare Constructor ~ Empowered in Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your horror is treated as if under the effect of physical acceleration any time it is within 30 ft. of a shaken, frightened, or panicked creature."
+      },
+      {
+        "key": "DESC",
+        "value": "Your horror is also treated as if under the form of doom power when within 30 ft. of a shaken, frightened, or panicked creature.  This effect allows the horror to have more natural attacks than its normal eidolon form limit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 19,
+    "record_key": "Nightmare Constructor ~ Empowered in Fear"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

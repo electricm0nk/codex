@@ -1,0 +1,61 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You are obsessed with the abilities and weaknesses of monsters.",
+    "key": "Improved Monster Lore",
+    "name": "Improved Monster Lore",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Inquisitor ~ Monster Lore"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImprovedMonsterLoreBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are obsessed with the abilities and weaknesses of monsters."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImprovedMonsterLoreBonus|classlevel(\"Inquisitor\")/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +%1 sacred bonus on all skill checks to identify the abilities and weaknesses of creatures.|ImprovedMonsterLoreBonus"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Improved Monster Lore",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

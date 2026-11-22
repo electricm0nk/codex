@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Forest Dragon ~ Stony Death",
+    "delivery": "Supernatural",
+    "description": "Any creature reduced to 0 or fewer hit points by a great wyrm forest dragon's breath weapon must also make a Fortitude save (same DC as the forest dragon's breath weapon) or be petrified as the flesh to stone spell. This is a death effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:forest_dragon_stony_death",
+    "name": "Stony Death",
+    "owners": [
+      "bestiary_3:monster:dragon_forest"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature reduced to 0 or fewer hit points by a great wyrm forest dragon's breath weapon must also make a Fortitude save (same DC as the forest dragon's breath weapon) or be petrified as the flesh to stone spell. This is a death effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Forest Dragon ~ Stony Death"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": [
+      "RaceAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 763,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Forest Dragon ~ Stony Death",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

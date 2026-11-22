@@ -1,0 +1,10 @@
+# awk: /^test result/ sums of passed/failed/ignored; python: re.findall over the same log (two implementations agree)
+root_full (cd <tree> && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8): 300 suites, 6672 passed, 0 failed, 27 ignored (awk) / 300, 6672, 0, 27 (python)
+desktop_full (cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8): 2 suites, 837 passed, 0 failed, 2 ignored (awk) / 2, 837, 0, 2 (python)
+clippy (bash scripts/verify.sh --only clippy -j 8): RESULT: PASS
+sd24_audit (cargo test --locked -j 8 --test sd24_wired_integration_audit -- --test-threads=8): 5 passed, 0 failed
+
+# after `git rebase origin/tranche-18` (onto f5fa482a72: E2.MC, E4.1, E4.2 landed; none of them touches src/, so root_full above stands)
+desktop bin suite (cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8, bin suite): 837 passed, 0 failed
+desktop packaged_resources (cargo test --locked -j 8 --test packaged_resources -- --test-threads=8): 1 passed, 0 failed (run alone: the sweep's 590 s shell timeout cut it)
+frontend (cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc): clean; 170/170 test files passed; 108 rows, 18 screens; docs/testing/ui-smoke-inventory.md unchanged

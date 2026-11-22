@@ -1,0 +1,57 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You take a -2 penalty on attack rolls and Dexterity-based checks involving your hands. Whenever you become dazed or stunned, if the spirit has 3 or more points of influence over you after adding the point, the hand attacks you (or a vulnerable ally, GM's discretion) with a held item or unarmed strike as if proficient, dealing damage equal to 1d8+%1 (regardless of the held item).|STR",
+    "key": "Possessed Corruption ~ Traitorous Hand Stain",
+    "name": "Traitorous Hand Stain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Traitorous Hand Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedTraitorousHandStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a -2 penalty on attack rolls and Dexterity-based checks involving your hands. Whenever you become dazed or stunned, if the spirit has 3 or more points of influence over you after adding the point, the hand attacks you (or a vulnerable ally, GM's discretion) with a held item or unarmed strike as if proficient, dealing damage equal to 1d8+%1 (regardless of the held item).|STR"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|-2 on attacks involving your hands"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|-2 on Dex-based checks  involving your hands"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 667,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Traitorous Hand Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

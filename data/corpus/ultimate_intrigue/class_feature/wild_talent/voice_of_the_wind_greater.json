@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Voice of the Wind (Greater)",
+    "name": "Voice of the Wind, Greater",
+    "class": "Kineticist",
+    "description": "Element air; Type utility (Sp); Level 2; Burn 0 - Your voice of the wind ability gains both power and finesse. You can use voice of the wind to create unusual sounds, as ghost sound, to throw your voice, as ventriloquism, and even to alter your voice, as vocal alteration. You can send messages at a much greater distance than before and at a faster rate. When using voice of the wind's whispering wind effect, you can choose to have the wind rise high into the sky, where it can gust at 50 miles per hour before descending to deliver the message. While the gust is still small, abnormal wind that fast is noticeable, unlike the normal gentle zephyr from whispering wind. If you choose to use the faster gust, you can deliver a message as far as %1 miles, instead of %2 miles.|KineticistLVL*50|KineticistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Voice of the Wind (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Voice Of The Wind"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite voice of the wind"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 2; Burn 0 - Your voice of the wind ability gains both power and finesse. You can use voice of the wind to create unusual sounds, as ghost sound, to throw your voice, as ventriloquism, and even to alter your voice, as vocal alteration. You can send messages at a much greater distance than before and at a faster rate. When using voice of the wind's whispering wind effect, you can choose to have the wind rise high into the sky, where it can gust at 50 miles per hour before descending to deliver the message. While the gust is still small, abnormal wind that fast is noticeable, unlike the normal gentle zephyr from whispering wind. If you choose to use the faster gust, you can deliver a message as far as %1 miles, instead of %2 miles.|KineticistLVL*50|KineticistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 37,
+    "record_key": "Wild Talent ~ Voice of the Wind (Greater)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

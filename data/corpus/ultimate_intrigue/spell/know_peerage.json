@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You impart your knowledge of nobility and peerage to the target, allowing her to recognize members of noble households, differentiate one set of heraldry from another, and otherwise identify who's who at a royal gala or other noteworthy social event. The target is able to identify noble individuals, noble family names, and noble crests, signets, heraldry, and other symbols. The target treats her number of ranks in Knowledge (nobility) as though it were equal to your number of ranks in Knowledge (nobility), to a maximum of 5 ranks and a minimum of 0. If the target's number of ranks is greater than yours, she uses her own number of ranks instead. In addition, if the target's new total skill bonus on Knowledge (nobility) checks is at least +0, she automatically succeeds on all Knowledge (nobility) checks with a DC of 10 or lower.|PRERULE:1,DisplayFullSpell",
+    "key": "Know Peerage",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Medium,Paladin=1|Cleric,Inquisitor,Mesmerist,Occultist,Psychic,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Target uses your Knowledge (nobility) ranks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You impart your knowledge of nobility and peerage to the target, allowing her to recognize members of noble households, differentiate one set of heraldry from another, and otherwise identify who's who at a royal gala or other noteworthy social event. The target is able to identify noble individuals, noble family names, and noble crests, signets, heraldry, and other symbols. The target treats her number of ranks in Knowledge (nobility) as though it were equal to your number of ranks in Knowledge (nobility), to a maximum of 5 ranks and a minimum of 0. If the target's number of ranks is greater than yours, she uses her own number of ranks instead. In addition, if the target's new total skill bonus on Knowledge (nobility) checks is at least +0, she automatically succeeds on all Knowledge (nobility) checks with a DC of 10 or lower.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Know Peerage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Know Peerage",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 4000.0,
+    "description": "This heavy linen cloak has a fish-scale pattern that darkens toward the bottom and white feathers on the shoulders. Once per day, the wearer can use Beast Shape I (bird or fish only), Hide from Animals (affecting only the wearer), and Feather Fall. The wearer also gains a +5 competence bonus on Swim checks.",
+    "key": "Featherscale Cloak",
+    "name": "Featherscale Cloak",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Swim",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Featherscale Cloak|TIMES=1|CASTERLEVEL=5|Beast Shape I|Hide From Animals|Feather Fall"
+      },
+      {
+        "key": "DESC",
+        "value": "This heavy linen cloak has a fish-scale pattern that darkens toward the bottom and white feathers on the shoulders. Once per day, the wearer can use Beast Shape I (bird or fish only), Hide from Animals (affecting only the wearer), and Feather Fall. The wearer also gains a +5 competence bonus on Swim checks."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 194,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Featherscale Cloak",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

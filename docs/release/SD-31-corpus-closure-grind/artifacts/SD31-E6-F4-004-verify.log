@@ -1,0 +1,97 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_800ec009-61e-3
+logs:  /tmp/codex-verify-uzkUVA
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_800ec009-61e-3, mounted at /): 54% used, 452G available
+    scratch-log filesystem (/tmp/codex-verify-uzkUVA, mounted at /): 54% used, 452G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (5 cases passed)
+---------------------------------------------------------------
+==> site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh
+    PASS  site-dashboard-selftest  (6 passed, 0 failed)
+---------------------------------------------------------------
+==> site-dashboard-check — scripts/publish-site-dashboard.sh --check
+    FAIL  site-dashboard-check  (exit 1 — /tmp/codex-verify-uzkUVA/site-dashboard-check.log)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 98.95%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (17 cases passed)
+---------------------------------------------------------------
+==> supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py
+    PASS  supersession-gate-selftest  (16 cases passed)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+---------------------------------------------------------------
+==> declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped
+    PASS  declared-pi-audit  (clean)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    PASS  root-lib  (1949 passed)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
+    PASS  root-full  (6875 passed across 565 suites, all 529 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    PASS  desktop  (457 passed)
+---------------------------------------------------------------
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (24741 records examined of 25618 read, 243655 tokens compared (9 synthesized), 25193 digests checked, 0 findings)
+---------------------------------------------------------------
+==> supersession-gate — python3 scripts/supersession_register_gate.py
+    PASS  supersession-gate  (116 objects, all clean)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (99/99 files)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:52 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  26  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  site-dashboard-check
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_CORPUS_LITERAL_RECORDS=24741 (was 24699)
+
+RESULT: FAIL — logs in /tmp/codex-verify-uzkUVA
+VERIFY_EXIT=1

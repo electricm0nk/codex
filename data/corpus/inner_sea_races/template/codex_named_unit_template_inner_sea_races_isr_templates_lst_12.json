@@ -1,0 +1,50 @@
+{
+  "codex_generated_name": true,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_12)",
+    "name": "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_12)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Polyglot"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_races:isr_templates.lst:12",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_templates.lst",
+    "record_key": "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_12)",
+    "sha256": "812af64526cb7cb6f368279af82ee41cb338326f3b7d65d8381307685273f27a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

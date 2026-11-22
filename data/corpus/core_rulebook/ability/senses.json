@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Intelligent Item ~ Senses",
+    "name": "Senses",
+    "description": "Senses allow an intelligent magic item to see and hear out to the listed distance. Adding darkvision or blindsense allows the item to use those senses out to the same range as the item's base senses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Intelligent Item"
+      },
+      {
+        "key": "TYPE",
+        "value": "IntelligentItemOutput.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Senses allow an intelligent magic item to see and hear out to the listed distance. Adding darkvision or blindsense allows the item to use those senses out to the same range as the item's base senses."
+      },
+      {
+        "key": "DESC",
+        "value": "%1 ft.|IntItemSenseRange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 210,
+    "record_key": "Intelligent Item ~ Senses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

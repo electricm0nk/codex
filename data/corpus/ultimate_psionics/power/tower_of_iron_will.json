@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tower of Iron Will",
+    "name": "Tower of Iron Will",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psion,Tactician,Vitalist,Wilder=5"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Telepathy"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "RANGE",
+        "value": "10 ft."
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius emanation centered on you"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None (harmless)"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "DESC",
+        "value": "Grant PR 19 against mind-affecting powers to all creatures within 10 ft. until your next turn."
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:11:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 458,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Tower of Iron Will",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

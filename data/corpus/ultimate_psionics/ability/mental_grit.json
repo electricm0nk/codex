@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Kaigun ~ Mental Grit",
+    "name": "Mental Grit",
+    "description": "You learn how to turn your psionic power into grit points.  As a swift action, you can spend 3 power points and expend your psionic focus after making a successful ranged attack with a firearm to gain 1 grit point, although you cannot exceed your normal maximum grit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kaigun ~ Mental Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to turn your psionic power into grit points.  As a swift action, you can spend 3 power points and expend your psionic focus after making a successful ranged attack with a firearm to gain 1 grit point, although you cannot exceed your normal maximum grit points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 38,
+    "record_key": "Kaigun ~ Mental Grit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

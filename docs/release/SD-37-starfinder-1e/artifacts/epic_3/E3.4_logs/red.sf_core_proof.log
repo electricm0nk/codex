@@ -1,0 +1,72 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.30s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-b029bb7bf5e396b7)
+
+running 9 tests
+test armor_class_bonuses_split_into_eac_and_kac ... FAILED
+test a_hit_point_token_no_table_term_claims_is_a_named_degradation ... FAILED
+test class_hit_point_pools_route_by_the_sf_mapping_table ... FAILED
+test the_package_prints_no_product_identity_term ... FAILED
+test the_converted_books_are_the_core_rulebook_and_never_an_excluded_book ... ok
+test the_package_report_counts_every_inventory_unit_and_names_every_refusal ... FAILED
+test the_starfinder_tree_reads_exactly_the_converted_books_includes ... FAILED
+test the_starfinder_population_is_the_inventory_units_of_the_converted_books ... FAILED
+test the_corpus_holds_one_screened_record_per_unit ... FAILED
+
+failures:
+
+---- armor_class_bonuses_split_into_eac_and_kac stdout ----
+
+thread 'armor_class_bonuses_split_into_eac_and_kac' (2221667) panicked at crates/codex-ingest/tests/sf_core_proof.rs:90:101:
+core:equipment:second_skin: no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet
+
+---- a_hit_point_token_no_table_term_claims_is_a_named_degradation stdout ----
+
+thread 'a_hit_point_token_no_table_term_claims_is_a_named_degradation' (2221665) panicked at crates/codex-ingest/tests/sf_core_proof.rs:90:101:
+core:ability:1_hit_point: no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet
+
+---- class_hit_point_pools_route_by_the_sf_mapping_table stdout ----
+
+thread 'class_hit_point_pools_route_by_the_sf_mapping_table' (2221668) panicked at crates/codex-ingest/tests/sf_core_proof.rs:90:101:
+core:class:soldier: no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- the_package_prints_no_product_identity_term stdout ----
+
+thread 'the_package_prints_no_product_identity_term' (2221671) panicked at crates/codex-ingest/tests/sf_core_proof.rs:211:59:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../data/starfinder-1e/sheet_rules: No such file or directory (os error 2)
+
+---- the_package_report_counts_every_inventory_unit_and_names_every_refusal stdout ----
+
+thread 'the_package_report_counts_every_inventory_unit_and_names_every_refusal' (2221672) panicked at crates/codex-ingest/tests/sf_core_proof.rs:229:91:
+_report.json is generated: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+
+---- the_starfinder_tree_reads_exactly_the_converted_books_includes stdout ----
+
+thread 'the_starfinder_tree_reads_exactly_the_converted_books_includes' (2221674) panicked at crates/codex-ingest/tests/sf_core_proof.rs:46:77:
+the Starfinder tree loads: "no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet"
+
+---- the_starfinder_population_is_the_inventory_units_of_the_converted_books stdout ----
+
+thread 'the_starfinder_population_is_the_inventory_units_of_the_converted_books' (2221673) panicked at crates/codex-ingest/tests/sf_core_proof.rs:46:77:
+the Starfinder tree loads: "no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet"
+
+---- the_corpus_holds_one_screened_record_per_unit stdout ----
+
+thread 'the_corpus_holds_one_screened_record_per_unit' (2221670) panicked at crates/codex-ingest/tests/sf_core_proof.rs:211:59:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../data/starfinder-1e/corpus: No such file or directory (os error 2)
+
+
+failures:
+    a_hit_point_token_no_table_term_claims_is_a_named_degradation
+    armor_class_bonuses_split_into_eac_and_kac
+    class_hit_point_pools_route_by_the_sf_mapping_table
+    the_corpus_holds_one_screened_record_per_unit
+    the_package_prints_no_product_identity_term
+    the_package_report_counts_every_inventory_unit_and_names_every_refusal
+    the_starfinder_population_is_the_inventory_units_of_the_converted_books
+    the_starfinder_tree_reads_exactly_the_converted_books_includes
+
+test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Speak with Animals (aquatic only)",
+    "school": "Divination",
+    "level": null,
+    "description": "You can ask questions of and receive answers from aquatic animals, but the spell doesn't make them any more friendly than normal."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+    "sha256": "312f9985c63265cc827a6b622e9c5f326c3b6460170e7aa289c687019c37b7cd",
+    "line": 39,
+    "record_key": "Speak with Animals (aquatic only)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

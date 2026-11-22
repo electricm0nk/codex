@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Variant Ability",
+    "key": "Android ~ No No Variant Ability",
+    "name": "No Variant Ability",
+    "type": "No Variant Ability.Android Variant Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2497,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Android ~ No No Variant Ability",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:android_no_no_variant_ability"
+}

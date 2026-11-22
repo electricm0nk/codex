@@ -1,0 +1,49 @@
+# F3c2 RED logs (before the fix, sd36/epic-f2-f3 at 157dc5496a + the new tests)
+# (1) cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8 expert_prints
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.81s
+     Running tests/sd36_class_skill_from_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd36_class_skill_from_record-7314d3254af7ac76)
+
+running 1 test
+test expert_prints_its_canonical_class_skill_picks_and_psion_stays_refused_by_name ... FAILED
+
+failures:
+
+---- expert_prints_its_canonical_class_skill_picks_and_psion_stays_refused_by_name stdout ----
+
+thread 'expert_prints_its_canonical_class_skill_picks_and_psion_stays_refused_by_name' (1079302) panicked at tests/sd36_class_skill_from_record.rs:97:9:
+expert: Unknown { reason: "the converted closure of `expert` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    expert_prints_its_canonical_class_skill_picks_and_psion_stays_refused_by_name
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 3.86s
+
+error: test failed, to rerun pass `--test sd36_class_skill_from_record`
+EXIT=101
+
+# (2) cargo test --locked -j 8 --lib dragon_disciple_names -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.54s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 1 test
+test rules_core::class_census::tests::dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline ... FAILED
+
+failures:
+
+---- rules_core::class_census::tests::dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline stdout ----
+
+thread 'rules_core::class_census::tests::dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline' (1081904) panicked at src/rules_core/class_census.rs:3295:9:
+assertion `left == right` failed: All([Compare { lhs: ClassLevel("dragon_disciple"), op: Lte, rhs: Const(10) }, Holds { what: Language("Draconic"), count: 1 }, AtLeast { n: 1, of: [Holds { what: Rule("advanced_class_guide:class_feature:eldritch_scion_spells"), count: 1 }, AtLeast { n: 3, of: [Situational { text: "requires a spontaneous caster" }, Compare { lhs: HighestSpellLevel(Arcane), op: Gte, rhs: Const(1) }, Not(Compare { lhs: ClassLevel("sorcerer"), op: Gte, rhs: Const(1) })] }, AtLeast { n: 2, of: [Compare { lhs: ClassLevel("sorcerer"), op: Gte, rhs: Const(1) }, Holds { what: Rule("core_rulebook:class_feature:sorcerer_bloodline_draconic"), count: 1 }] }] }, Not(Holds { what: RaceType("Dragon"), count: 1 }), Compare { lhs: SkillRanks("knowledge_arcana"), op: Gte, rhs: Const(5) }, Not(Holds { what: Template("half_dragon"), count: 1 })])
+  left: Err("a clause carries a caster term but no branch of it translates to a carrier + level (every branch needs a term outside BaseAttack / SkillRanks / HighestSpellLevel(Arcane|Divine|Any) / Not of a spell-kind term), so no carrier can be named: AtLeast { n: 1, of: [Holds { what: Rule(\"advanced_class_guide:class_feature:eldritch_scion_spells\"), count: 1 }, AtLeast { n: 3, of: [Situational { text: \"requires a spontaneous caster\" }, Compare { lhs: HighestSpellLevel(Arcane), op: Gte, rhs: Const(1) }, Not(Compare { lhs: ClassLevel(\"sorcerer\"), op: Gte, rhs: Const(1) })] }, AtLeast { n: 2, of: [Compare { lhs: ClassLevel(\"sorcerer\"), op: Gte, rhs: Const(1) }, Holds { what: Rule(\"core_rulebook:class_feature:sorcerer_bloodline_draconic\"), count: 1 }] }] }")
+ right: Ok(["sorcerer"])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::class_census::tests::dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2728 filtered out; finished in 3.75s
+
+error: test failed, to rerun pass `--lib`

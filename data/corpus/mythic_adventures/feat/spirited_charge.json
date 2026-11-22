@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spirited Charge",
+    "category": "Mythic",
+    "name": "Spirited Charge (Mythic)",
+    "description": "Your mounted charge knocks the wind and wits from those foolish enough to stand against you. When you hit an opponent with a mounted charge, that opponent must succeed at a Fortitude saving throw (DC ) or be staggered for rounds. If you use a lance with this attack, increase the saving throw DC by 2. As a free action before you make the attack, you can expend one use of mythic power to daze your opponent on a failed saving throw instead of staggering it.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Spirited Charge",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 164,
+    "record_key": "Spirited Charge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

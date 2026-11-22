@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Brachiation",
+    "name": "Brachiation",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Su); Level 3; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Brachiation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Su); Level 3; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can gain a climb speed equal to your base speed when moving through forested terrain."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 70,
+    "record_key": "Wild Talent ~ Brachiation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

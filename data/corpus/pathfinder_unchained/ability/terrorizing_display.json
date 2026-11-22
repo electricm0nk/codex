@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Terrorizing Display",
+    "name": "Terrorizing Display",
+    "description": "When you use this feat, you can spend 5 stamina points to affect allies within 60 feet instead of 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Terrorizing Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use this feat, you can spend 5 stamina points to affect allies within 60 feet instead of 30 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "133"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ARG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_arg.lst",
+    "sha256": "b41ac3a17891f22fc0609b12ce383abe454fb693714e9e3d5dc8e4481b7f6965",
+    "line": 55,
+    "record_key": "Combat Trick ~ Terrorizing Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

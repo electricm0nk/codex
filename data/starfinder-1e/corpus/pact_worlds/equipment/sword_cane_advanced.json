@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Sword cane (advanced)",
+    "name": "Sword cane, advanced",
+    "type": "RESIZABLE.Piercing.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized.ToHit_UseStr.Damage_UseStr.Operative"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/pact_worlds/spw_equip.lst",
+    "record_key": "Sword cane (advanced)",
+    "sha256": "94b4c32719bdc26a95e56d1ddc01d6ff7faa40f07200137eb45048d0471eae95"
+  },
+  "unit_id": "pact_worlds:equipment:sword_cane_advanced"
+}

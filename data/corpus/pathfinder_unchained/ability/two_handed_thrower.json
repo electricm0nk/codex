@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "When you throw a one-handed thrown weapon with two hands or throw a two-handed thrown weapon, you can spend 2 stamina points to add twice your Strength bonus to that attack's damage instead of 1-1/2 times your Strength bonus.",
+    "key": "Combat Trick ~ Two-Handed Thrower",
+    "name": "Two-Handed Thrower",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Two-Handed Thrower"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you throw a one-handed thrown weapon with two hands or throw a two-handed thrown weapon, you can spend 2 stamina points to add twice your Strength bonus to that attack's damage instead of 1-1/2 times your Strength bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 179,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "record_key": "Combat Trick ~ Two-Handed Thrower",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
+}

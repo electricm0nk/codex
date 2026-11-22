@@ -1,0 +1,2328 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_gods/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_gods",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Lawgiver",
+      "name": "Lawgiver",
+      "size": "G",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": "Extraplanar|Herald|Lawful",
+      "challenge_rating": "15",
+      "monster_class": "Construct:18",
+      "source_page": "p.276",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Lawgiver ~ Immunity to Rust",
+        "Lawgiver ~ Freeze",
+        "Lawgiver ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 6
+    },
+    {
+      "key": "The First Blade",
+      "name": "The First Blade",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Herald",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):18",
+      "source_page": "p.288",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d10"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 18
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "First Blade ~ Powerful Blows (Slam)",
+        "First Blade ~ Regeneration",
+        "First Blade ~ Bladed Slam",
+        "First Blade ~ Swarm Form",
+        "First Blade ~ Lord of Battle",
+        "First Blade ~ Rage Aura",
+        "First Blade ~ Ironsense"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races_b4",
+      "source_line": 6
+    },
+    {
+      "key": "Orsheval",
+      "name": "Orsheval",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Lawful",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.277",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Hoof",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Orsheval ~ Electric Hooves",
+        "Orsheval ~ Glittering Radiance",
+        "Orsheval ~ Truespeech"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 7
+    },
+    {
+      "key": "Basileus",
+      "name": "Basileus",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Herald|Lawful",
+      "challenge_rating": "16",
+      "monster_class": "Outsider (Ref/Will):16",
+      "source_page": "p.278",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Touch",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 16
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Basileus ~ Gaze",
+        "Basileus ~ Terror Shape",
+        "Basileus ~ Veil of Forms"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 10
+    },
+    {
+      "key": "Steward of the Skein",
+      "name": "Steward of the Skein",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Fly",
+          "feet": 150
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Herald|Psychopomp|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Ref/Will):19",
+      "source_page": "p.302",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d10"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Skein Steward ~ Immunity to Possession",
+        "Skein Steward ~ Fate Aura",
+        "Skein Steward ~ Gaze",
+        "Skein Steward ~ Change Shape",
+        "Skein Steward ~ Constant Spells",
+        "Skein Steward ~ Tugging Strands"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races_b4",
+      "source_line": 10
+    },
+    {
+      "key": "Devil (Accomplice)",
+      "name": "Devil (Accomplice)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):6",
+      "source_page": "p.279",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Hesperian ~ Detect Good",
+        "Hesperian ~ Change Shape",
+        "Hesperian ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 11
+    },
+    {
+      "key": "Psychopomp (Ahmuuth)",
+      "name": "Psychopomp (Ahmuuth)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Psychopomp",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):6",
+      "source_page": "p.303",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Ahmuuth ~ Animated Shield",
+        "Ahmuuth ~ Death's Dagger",
+        "Ahmuuth ~ Ectoplasmic Focus"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races_b4",
+      "source_line": 11
+    },
+    {
+      "key": "The Menotherian",
+      "name": "The Menotherian",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Herald|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):15",
+      "source_page": "p.280",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Sting",
+          "damage_dice": "2d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Menotherian ~ Alluring Scent",
+        "Menotherian ~ Implant",
+        "Menotherian ~ Mind Control",
+        "Menotherian ~ Poison",
+        "Menotherian ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 14
+    },
+    {
+      "key": "Vendenopterix",
+      "name": "Vendenopterix",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):6",
+      "source_page": "p.281",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Vendenopterix ~ Ability Drain",
+        "Vendenopterix ~ Poison",
+        "Vendenopterix ~ Swift Tracker",
+        "Vendenopterix ~ Change Shape",
+        "Vendenopterix ~ Enchantment Resistance"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 15
+    },
+    {
+      "key": "Thais",
+      "name": "Thais",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Good|Herald|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):17",
+      "source_page": "p.282",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 16
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Thais ~ Armor of Valor",
+        "Thais ~ Aura of Bravery",
+        "Thais ~ Luck Domain",
+        "Thais ~ Penetrating Gaze",
+        "Thais ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 18
+    },
+    {
+      "key": "Ataxian",
+      "name": "Ataxian",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Good",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):4",
+      "source_page": "p.283",
+      "natural_attacks": [
+        {
+          "name": "Ray",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam",
+          "damage_dice": "1d2"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Ataxian ~ Possession",
+        "Ataxian ~ Staggered",
+        "Ataxian ~ Staggering Drunk",
+        "Ataxian ~ Ray"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 19
+    },
+    {
+      "key": "Night Monarch",
+      "name": "Night Monarch",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 120
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Good|Herald",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Will):18",
+      "source_page": "p.284",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Wing",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Night Monarch ~ No Breath",
+        "Night Monarch ~ Immunity to Cold",
+        "Night Monarch ~ Breath Weapon",
+        "Night Monarch ~ Poison Flesh",
+        "Night Monarch ~ Dream Dust",
+        "Night Monarch ~ Languages"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 22
+    },
+    {
+      "key": "Azata (Thyrlien)",
+      "name": "Azata (Thyrlien)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Azata|Chaotic|Extraplanar|Good|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):6",
+      "source_page": "p.285",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        },
+        {
+          "name": "Wing",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Thyrlien ~ Fast Healing",
+        "Thyrlien ~ Poison",
+        "Thyrlien ~ Starlight Blast",
+        "Thyrlien ~ Change Shape",
+        "Thyrlien ~ Poison Resistance",
+        "Thyrlien ~ Detect Evil",
+        "Thyrlien ~ Detect Magic"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 23
+    },
+    {
+      "key": "The Grim White Stag",
+      "name": "The Grim White Stag",
+      "size": "C",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Good|Lawful",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):18",
+      "source_page": "p.286",
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "4d6"
+        },
+        {
+          "name": "Hoof",
+          "damage_dice": "2d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 28
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Grim White Stag ~ Bugle",
+        "Grim White Stag ~ Cascade of Spears",
+        "Grim White Stag ~ Heroes' Feast",
+        "Grim White Stag ~ Protective Aura",
+        "Grim White Stag ~ Lay on Hands",
+        "Grim White Stag ~ Detect Evil",
+        "Grim White Stag ~ Languages",
+        "Grim White Stag ~ Poison Resistance"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 27
+    },
+    {
+      "key": "Archon (Stag)",
+      "name": "Archon (Stag)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Archon|Extraplanar|Good|Lawful|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):6",
+      "source_page": "p.287",
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Stag Archon ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 28
+    },
+    {
+      "key": "Zentragt",
+      "name": "Zentragt",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):6",
+      "source_page": "p.289",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Zentragt ~ Adamantine Attacks",
+        "Zentragt ~ Eat Metal"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 32
+    },
+    {
+      "key": "Personification of Fury",
+      "name": "Personification of Fury",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 100
+        },
+        {
+          "mode": "Swim",
+          "feet": 90
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Air|Elemental|Extraplanar|Herald|Water",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):17",
+      "source_page": "p.290",
+      "natural_attacks": [
+        {
+          "name": "Ray",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Slam",
+          "damage_dice": "2d10"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 24
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Personification of Fury ~ Water Mastery",
+        "Personification of Fury ~ Change Shape",
+        "Personification of Fury ~ Energy Ray"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 35
+    },
+    {
+      "key": "Xocothian",
+      "name": "Xocothian",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        },
+        {
+          "mode": "Swim",
+          "feet": 90
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Air|Extraplanar|Water",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):6",
+      "source_page": "p.291",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Wing",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Xocothian ~ Form of Sea and Sky",
+        "Xocothian ~ Speed Burst",
+        "Xocothian ~ Speak with Animals"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 36
+    },
+    {
+      "key": "Hand of the Inheritor",
+      "name": "Hand of the Inheritor",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Fly",
+          "feet": 150
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Angel|Extraplanar|Good|Herald|Lawful",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):18",
+      "source_page": "p.292",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "WIS",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Hand of the Inheritor ~ Lay on Hands",
+        "Hand of the Inheritor ~ Divine Trigger"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 39
+    },
+    {
+      "key": "Angel (Iophanite)",
+      "name": "Angel (Iophanite)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Angel|Extraplanar|Fire|Good|Lawful",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Ref):5",
+      "source_page": "p.293",
+      "natural_attacks": [
+        {
+          "name": "Blade",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Iophanite Angel ~ Radiance",
+        "Iophanite Angel ~ Shield Form",
+        "Iophanite Angel ~ Protection from Evil"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 40
+    },
+    {
+      "key": "The Old Man",
+      "name": "The Old Man",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Herald|Lawful",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Ref/Will):17",
+      "source_page": "p.294",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 20
+        },
+        {
+          "ability": "WIS",
+          "amount": 20
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "The Old Man ~ Regeneration",
+        "The Old Man ~ Monk Abilities"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 43
+    },
+    {
+      "key": "Pavbagha",
+      "name": "Pavbagha",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Lawful",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.295",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Pavbagha ~ Stunning Claw",
+        "Pavbagha ~ Fade"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 45
+    },
+    {
+      "key": "Yethazmari",
+      "name": "Yethazmari",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Fly",
+          "feet": 100
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Evil|Extraplanar|Herald",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Will):18",
+      "source_page": "p.296",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "6d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 16
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Yethazmari ~ Breath Weapon",
+        "Yethazmari ~ Bay",
+        "Yethazmari ~ Poison Gout",
+        "Yethazmari ~ Soul Scream",
+        "Yethazmari ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 49
+    },
+    {
+      "key": "Demon (Swaithe)",
+      "name": "Demon (Swaithe)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):5",
+      "source_page": "p.297",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Swaithe ~ Eyeless",
+        "Swaithe ~ Hexes",
+        "Swaithe ~ Witchcraft"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 50
+    },
+    {
+      "key": "Arcanotheign",
+      "name": "Arcanotheign",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Herald|Incorporeal",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Will):17",
+      "source_page": "p.298",
+      "natural_attacks": [
+        {
+          "name": "Incorporeal touch",
+          "damage_dice": "4d6"
+        },
+        {
+          "name": "Eldritch blast",
+          "damage_dice": "4d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 16
+        },
+        {
+          "ability": "CHA",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 20
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Arcanotheign ~ Resistance to Divine Power",
+        "Arcanotheign ~ Change Shape",
+        "Arcanotheign ~ Eldritch Blast",
+        "Arcanotheign ~ Energy Channel Aura",
+        "Arcanotheign ~ Constant Spells"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 53
+    },
+    {
+      "key": "Burleev",
+      "name": "Burleev",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.299",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Burleev ~ Frostfire Spirit"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 54
+    },
+    {
+      "key": "The Stabbing Beast",
+      "name": "The Stabbing Beast",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar|Herald|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Will):17",
+      "source_page": "p.300",
+      "natural_attacks": [
+        {
+          "name": "Sting",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 24
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Stabbing Beast ~ Change Shape",
+        "Stabbing Beast ~ Murderer's Reward",
+        "Stabbing Beast ~ Poison Stream",
+        "Stabbing Beast ~ Sudden Strike",
+        "Stabbing Beast ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 57
+    },
+    {
+      "key": "Karumzek",
+      "name": "Karumzek",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Ref):5",
+      "source_page": "p.301",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Karumzek ~ Change Shape",
+        "Karumzek ~ Deft Limbs",
+        "Karumzek ~ Poison",
+        "Karumzek ~ Sense Poison",
+        "Karumzek ~ Negate Aroma"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 58
+    },
+    {
+      "key": "Qlippoth (Thognorok)",
+      "name": "Qlippoth (Thognorok)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Acquatic|Chaotic|Evil|Extraplanar|Qlippoth",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.305",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Thognorok ~ Acid Web",
+        "Thognorok ~ Horrific Appearance",
+        "Thognorok ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 65
+    },
+    {
+      "key": "Sunlord Thalachos",
+      "name": "Sunlord Thalachos",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Fly",
+          "feet": 100
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Angel|Extraplanar|Good|Herald|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):15",
+      "source_page": "p.306",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Thalachos ~ Change Shape",
+        "Thalachos ~ Divine Trigger",
+        "Thalachos ~ Regeneration",
+        "Thalachos ~ Stun",
+        "Thalachos ~ Uncanny Dodge"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 68
+    },
+    {
+      "key": "Yhohm",
+      "name": "Yhohm",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Fire|Good",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.307",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        },
+        {
+          "name": "Talon",
+          "damage_dice": "1d2"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Yhohm ~ Holy Fire",
+        "Yhohm ~ Self-Resurrection",
+        "Yhohm ~ Shroud of Flame"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 69
+    },
+    {
+      "key": "The Spirit of Adoration",
+      "name": "The Spirit of Adoration",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Good|Herald|Shapechanger",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Ref/Will):16",
+      "source_page": "p.308",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Adoration Spirit ~ Bardic Magic",
+        "Adoration Spirit ~ Inspiration",
+        "Adoration Spirit ~ Stunning Ray",
+        "Adoration Spirit ~ Unearthly Grace",
+        "Adoration Spirit ~ Bardic Performance",
+        "Adoration Spirit ~ Charming Aura",
+        "Adoration Spirit ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 72
+    },
+    {
+      "key": "Dapsara",
+      "name": "Dapsara",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Angel|Extraplanar|Good",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):5",
+      "source_page": "p.309",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Dapsara ~ Bardic Performance",
+        "Dapsara ~ Ghostly Arms",
+        "Dapsara ~ Versatile Performance",
+        "Dapsara ~ Weapon Proficiencies",
+        "Dapsara ~ Change Shape"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 73
+    },
+    {
+      "key": "The Grand Defender",
+      "name": "The Grand Defender",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": "Extraplanar|Herald",
+      "challenge_rating": "15",
+      "monster_class": "Construct:18",
+      "source_page": "p.310",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Grand Defender ~ Ablative Adaptation",
+        "Grand Defender ~ Breath Weapon",
+        "Grand Defender ~ Defender's Shield",
+        "Grand Defender ~ Hammer Storm"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 76
+    },
+    {
+      "key": "Chalkost",
+      "name": "Chalkost",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Good|Lawful|Shapechanger",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.311",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Chalkost ~ Breath Weapon",
+        "Chalkost ~ Change Shape",
+        "Chalkost ~ Dwarf Blood",
+        "Chalkost ~ Shock Cestus"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 77
+    },
+    {
+      "key": "Mother's Maw",
+      "name": "Mother's Maw",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": "Evil|Extraplanar|Herald",
+      "challenge_rating": "15",
+      "monster_class": "Undead:18",
+      "source_page": "p.312",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "5d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 14
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Mother's Maw ~ Desecrate Aura",
+        "Mother's Maw ~ Spell Deflection",
+        "Mother's Maw ~ Devour Soul",
+        "Mother's Maw ~ Deathless",
+        "Mother's Maw ~ Breath Weapon",
+        "Mother's Maw ~ Channel Negative Energy",
+        "Mother's Maw ~ Swallow Whole"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 80
+    },
+    {
+      "key": "Sarcovalt",
+      "name": "Sarcovalt",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):4",
+      "source_page": "p.313",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Sarcovalt ~ Detach Head",
+        "Sarcovalt ~ Disease Swarm"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 81
+    },
+    {
+      "key": "The Prince in Chains",
+      "name": "The Prince in Chains",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar|Kyton|Lawful",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Fort/Ref):15",
+      "source_page": "p.314",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "6d6"
+        },
+        {
+          "name": "Tentacle",
+          "damage_dice": "3d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Prince in Chains ~ Chainstorm",
+        "Prince in Chains ~ Exaction",
+        "Prince in Chains ~ Howl of Despair",
+        "Prince in Chains ~ Vicious Critical",
+        "Prince in Chains ~ Unnerving Gaze"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 85
+    },
+    {
+      "key": "Kyton (Lampadarius)",
+      "name": "Kyton (Lampadarius)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar|Kyton|Lawful",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Fort/Will):5",
+      "source_page": "p.315",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Incorporeal Touch",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Lampadarius ~ Regeneration",
+        "Lampadarius ~ Semi-Incorporeal",
+        "Lampadarius ~ Strength Damage",
+        "Lampadarius ~ Unnerving Gaze"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isg_races",
+      "source_line": 86
+    }
+  ]
+}

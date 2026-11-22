@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Battle Wilder ~ Combat Fortitude",
+    "name": "Combat Fortitude",
+    "class": "Wilder",
+    "description": "You gain a +%1 bonus to Fortitude saves as long as you are maintaining focus.|CombatFortitudeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Wilder ~ Combat Fortitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatFortitudeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to Fortitude saves as long as you are maintaining focus.|CombatFortitudeBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you are subject to an effect that allows a Fortitude save, you receive a second Fortitude save to negate the effect in addition to any save the effect may allow; if the spell or power already allows a Fortitude save to negate, you make a second one, and would need to fail both to be affected.|PRECLASS:1,Wilder=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|CombatFortitudeBonus*PsionicFocusActive"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatFortitudeBonus|floor((WilderLVL-1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2364,
+    "record_key": "Battle Wilder ~ Combat Fortitude"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

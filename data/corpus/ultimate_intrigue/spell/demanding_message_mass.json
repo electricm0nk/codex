@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as demanding message, except that you can issue one suggestion to each of the spell's targets instead of just one. Each time you do so, it takes a standard action. You can issue a different suggestion to each target.|PRERULE:1,DisplayFullSpell",
+    "key": "Demanding Message (Mass)",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Mesmerist,Occultist,Psychic=6|Sorcerer,Witch,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Send messages as per message with one suggestion for each creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as demanding message, except that you can issue one suggestion to each of the spell's targets instead of just one. Each time you do so, it takes a standard action. You can issue a different suggestion to each target.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes, then (CASTERLEVEL) hours or until completed  [D]; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Demanding Message, Mass"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes; see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Demanding Message (Mass)",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

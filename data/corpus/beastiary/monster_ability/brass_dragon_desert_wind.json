@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brass Dragon ~ Desert Wind",
+    "delivery": "Supernatural",
+    "description": "A juvenile or older brass dragon can call up the desert wind to serve him. This functions as gust of wind, but any creature in its path must make a Fortitude save or be blinded for 1d4 rounds by the sand. The save DC for this effect is %1.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:brass_dragon_desert_wind",
+    "name": "Desert Wind",
+    "owners": [
+      "beastiary:monster:dragon_brass"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A juvenile or older brass dragon can call up the desert wind to serve him. This functions as gust of wind, but any creature in its path must make a Fortitude save or be blinded for 1d4 rounds by the sand. The save DC for this effect is %1.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Brass Dragon ~ Desert Wind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 456,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Brass Dragon ~ Desert Wind",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

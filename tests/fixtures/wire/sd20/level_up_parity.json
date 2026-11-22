@@ -1,0 +1,70 @@
+{
+  "name": "level_up_fighter_1_to_2_parity",
+  "epic": "Epic 7 -- Level Up grant model",
+  "shape": "sd20-epic-seam-v1",
+  "shape_note": "SD-20 fixture-shape decision, documented identically across all six Epic 2-7 wire-fixture parity fixtures (spellbook_parity.json, feat_prereqs_parity.json, skill_allocation_parity.json, equipment_effects_parity.json, damage_total_parity.json, level_up_parity.json): technical-design.md section 1.2 illustrates a CharacterInput -> PilotReceipt shaped fixture, but Epic 8's own integration-closure cycle (tests/sd20_tabletop_readiness_integration.rs module doc comment, Finding 1) found Epics 2-7's compute functions are never wired into PilotReceipt / printed_sheet_cell_map at all -- each epic's real seam takes and returns its own distinct type, not a CharacterInput/PilotReceipt pair. Section 1.2's illustrative format therefore does not fit Epics 2-7 as actually landed. This fixture instead captures that epic's OWN real compute function's input -> output round trip directly: {name, epic, seam_function, input, expected_output}, where input/expected_output mirror the real Rust input/output types field-by-field. A Rust enum variant is represented as its Debug-format string; a Rust Option::None is represented as JSON null. Only boundary_contract_parity.json (Epic 1) and human_fighter_level_1_tabletop.json (Epic 8) are genuinely CharacterInput -> PilotReceipt shaped, because only Epic 1's contract and Epic 8's integration test actually route through that pipeline. Grant description text is deliberately NOT captured in this fixture: several real Grant.effects[].description strings contain non-ASCII characters (e.g. an em dash) that tests/sd20_contract_boundary_parity.rs's / tests/sd20_tabletop_readiness_integration.rs's shared std-only JSON reader (byte-per-char, no UTF-8 decoding) cannot round-trip losslessly; the same precedent tests/sd20_tabletop_readiness_integration.rs's own epic_probe_level_up_grants_fighter_level_1_to_2 test already set (it asserts Grant.name / Grant.source_table / Grant.effects[].value only, never the free-text description) is followed here.",
+  "seam_function": "rules_core::level_up::compute_level_up_grants",
+  "input": {
+    "note": "reuses the exact CharacterInput human_fighter_level_1_tabletop.json's own input carries (race:human single-class level-1 Fighter with real feats/skills/equipment/choices), including the choice:fighter_bonus_feat_2 -> feat:toughness selection compute_level_up_grants needs to surface the level-2 Bonus Feat slot grant -- cross-checked against tests/sd20_tabletop_readiness_integration.rs's own epic_probe_level_up_grants_fighter_level_1_to_2 test, which exercises the identical transition against the identical fixture character",
+    "character": {
+      "race_id": "race:human",
+      "class_levels": [{ "class_id": "class:fighter", "level": 1 }],
+      "ability_scores": {
+        "strength": 16,
+        "dexterity": 14,
+        "constitution": 14,
+        "intelligence": 10,
+        "wisdom": 12,
+        "charisma": 8
+      },
+      "selected_feats": ["feat:dodge", "feat:weapon_focus", "feat:power_attack", "Dodge", "Weapon Focus", "Power Attack"],
+      "skill_allocations": [
+        { "skill_id": "skill:climb", "ranks": 1 },
+        { "skill_id": "skill:intimidate", "ranks": 1 },
+        { "skill_id": "skill:swim", "ranks": 1 }
+      ],
+      "equipment_selections": [
+        { "item_id": "item:longsword", "active_state": "equipped_active" },
+        { "item_id": "item:chain_shirt", "active_state": "equipped_active" },
+        { "item_id": "item:shield", "active_state": "absent" },
+        { "item_id": "power_attack", "active_state": "selected_inactive" },
+        { "item_id": "Special Quality ~ Masterwork ~ Weapon", "active_state": "equipped_active" }
+      ],
+      "selected_choices": [
+        { "choice_set_id": "choice:level_1_character_feat", "selection_id": "feat:power_attack" },
+        { "choice_set_id": "choice:human_bonus_feat", "selection_id": "feat:dodge" },
+        { "choice_set_id": "choice:fighter_bonus_feat", "selection_id": "feat:weapon_focus:weapon:longsword" },
+        { "choice_set_id": "choice:favored_class_bonus", "selection_id": "bonus:hp" },
+        { "choice_set_id": "choice:fighter_bonus_feat_2", "selection_id": "feat:toughness" }
+      ]
+    },
+    "from_level": 1,
+    "to_level": 2
+  },
+  "expected_output": {
+    "automatic_features": [
+      {
+        "name_contains": "base_attack_bonus",
+        "source_table": { "table": "class_tables", "row_key": "fighter:2", "column_key": "base_attack_bonus" },
+        "effects_value": 2
+      },
+      {
+        "name_contains": "fort_save",
+        "source_table": { "table": "class_tables", "row_key": "fighter:2", "column_key": "fort_save" },
+        "effects_value": 3
+      },
+      {
+        "name_contains": "bravery",
+        "source_table": { "table": "pilot_compute::explain_fighter_class_features", "row_key": "fighter:2", "column_key": "class_feature.fighter.bravery" },
+        "effects_value": 1
+      },
+      {
+        "name_contains": "level 2 bonus feat",
+        "source_table": { "table": "pilot_compute::explain_fighter_class_features", "row_key": "fighter:2", "column_key": "class_feature.fighter.level_2_bonus_feat" },
+        "effects_value": 0
+      }
+    ],
+    "resource_pool_change_pools": [],
+    "capstone_threshold": false
+  }
+}

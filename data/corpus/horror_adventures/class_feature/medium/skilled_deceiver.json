@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Deceiver ~ Skilled Deceiver",
+    "name": "Skilled Deceiver",
+    "class": "Medium",
+    "description": "(Lesser) You add a +%1 bonus on all Bluff checks.|max(1,MediumLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Deceiver ~ Skilled Deceiver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) You add a +%1 bonus on all Bluff checks.|max(1,MediumLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|max(1,MediumLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 99,
+    "record_key": "Medium ~ Deceiver ~ Skilled Deceiver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

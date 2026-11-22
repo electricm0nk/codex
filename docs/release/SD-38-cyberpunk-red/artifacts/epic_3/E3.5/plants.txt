@@ -1,0 +1,16 @@
+PLANT 1: Maker option max = per*rank (8) instead of rank (4)
+test rules_core::cpr::roles::tests::tech_maker_places_8_specialty_ranks_none_above_4 ... FAILED
+thread 'rules_core::cpr::roles::tests::tech_maker_places_8_specialty_ranks_none_above_4' (1689939) panicked at src/rules_core/cpr/roles.rs:1374:9:
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 2988 filtered out; finished in 0.01s
+PLANT 2: Motorpool upgrade vehicle-fit check skipped
+test rules_core::cpr::roles::tests::nomad_motorpool_takes_4_picks_of_vehicles_and_upgrades_of_rank_4_or_lower ... FAILED
+thread 'rules_core::cpr::roles::tests::nomad_motorpool_takes_4_picks_of_vehicles_and_upgrades_of_rank_4_or_lower' (1690891) panicked at src/rules_core/cpr/roles.rs:1328:41:
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 2988 filtered out; finished in 0.01s
+PLANT 3: create does not save cpr_role_choices.txt
+test cpr_creation::tests::create_saves_the_role_at_rank_4_and_its_sub_choices ... FAILED
+thread 'cpr_creation::tests::create_saves_the_role_at_rank_4_and_its_sub_choices' (1692777) panicked at src/cpr_creation.rs:2063:9:
+test result: FAILED. 25 passed; 1 failed; 0 ignored; 0 measured; 822 filtered out; finished in 12.55s
+PLANT 4 (frontend): adjustRolePoints moves by one instead of the engine's steps
+/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src/testSupport/asserts.ts:10
+    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
+exit=1

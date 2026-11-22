@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Enigmatic Stare",
+    "name": "Enigmatic Stare",
+    "class": "Mesmerist",
+    "description": "The target of an enigma's hypnotic stare takes a -%1 penalty on Perception checks to notice the enigma.|EnigmaEnigmaticStareBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Enigmatic Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnigmaEnigmaticStareBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The target of an enigma's hypnotic stare takes a -%1 penalty on Perception checks to notice the enigma.|EnigmaEnigmaticStareBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnigmaEnigmaticStareBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnigmaEnigmaticStareBonus|2|PRECLASS:1,Mesmerist=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 54,
+    "record_key": "Enigma ~ Enigmatic Stare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

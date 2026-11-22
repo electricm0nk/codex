@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Surprise Follow-Through",
+    "name": "Surprise Follow-Through",
+    "description": "When striking one opponent, you catch its ally off guard.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Surprise Follow-Through"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Cleave,Power Attack"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "1"
+      },
+      {
+        "key": "DESC",
+        "value": "When striking one opponent, you catch its ally off guard."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Surprise Follow-Through"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When using Cleave or Great Cleave, the second foe you attack on your turn is denied its Dexterity bonus against you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 20,
+    "record_key": "Warpriest Bonus Feat ~ Surprise Follow-Through"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

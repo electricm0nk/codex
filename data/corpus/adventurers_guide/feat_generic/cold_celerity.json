@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Cold Celerity",
+    "name": "Cold Celerity",
+    "description": "You are a child of the frozen north, and you draw your strength from the biting cold and unforgiving conditions.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Endurance"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Endurance."
+      },
+      {
+        "key": "DESC",
+        "value": "You are a child of the frozen north, and you draw your strength from the biting cold and unforgiving conditions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you are in conditions of severe cold (below 0° F), you gain a +2 bonus on initiative checks and a +1 bonus on attack rolls. In addition, you gain the bonus on attack rolls for 1 round after any round in which you take cold damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 21,
+    "record_key": "Cold Celerity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

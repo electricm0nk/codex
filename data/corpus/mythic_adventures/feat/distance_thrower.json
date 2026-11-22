@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Distance Thrower",
+    "category": "Mythic",
+    "name": "Distance Thrower (Mythic)",
+    "description": "There's virtually no limit to your powerful throwing arm. Thrown weapons wielded by you have twice their normal range.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Distance Thrower",
+      "PRESTAT:1,STR=17",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 76,
+    "record_key": "Distance Thrower"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

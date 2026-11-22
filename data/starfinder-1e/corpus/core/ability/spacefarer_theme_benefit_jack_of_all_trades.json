@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "SPACEFARER Theme Benefit ~ JACK OF ALL TRADES",
+    "name": "JACK OF ALL TRADES",
+    "type": "Theme.Theme Benefit.SPACEFARER Theme Benefit.SPACEFARER Theme Benefit Lvl 12"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 667,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "SPACEFARER Theme Benefit ~ JACK OF ALL TRADES",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:spacefarer_theme_benefit_jack_of_all_trades"
+}

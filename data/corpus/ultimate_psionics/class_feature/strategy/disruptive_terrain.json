@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Strategy ~ Disrupting Terrain",
+    "name": "Disruptive Terrain",
+    "class": "Strategy",
+    "description": "Create %1-foot radius of difficult terrain for non-collective members; lasts %2 rounds.|DisruptiveTerrainRadius|DisruptiveTerrainDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategy ~ Disrupting Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TacticianStrategy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Tactician=10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptiveTerrainDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptiveTerrainRadius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Create %1-foot radius of difficult terrain for non-collective members; lasts %2 rounds.|DisruptiveTerrainRadius|DisruptiveTerrainDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptiveTerrainDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptiveTerrainRadius|5*floor(StrategyLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 932,
+    "record_key": "Strategy ~ Disrupting Terrain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

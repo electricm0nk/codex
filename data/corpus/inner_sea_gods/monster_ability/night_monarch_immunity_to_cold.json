@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Night Monarch ~ Immunity to Cold",
+    "delivery": "Extraordinary",
+    "description": "The Night Monarch never takes cold damage, and this ability is imparted onto any riders.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:night_monarch_immunity_to_cold",
+    "name": "Immunity to Cold",
+    "owners": [
+      "inner_sea_gods:monster:night_monarch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The Night Monarch never takes cold damage, and this ability is imparted onto any riders."
+      },
+      {
+        "key": "KEY",
+        "value": "Night Monarch ~ Immunity to Cold"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-15T02:34:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Night Monarch ~ Immunity to Cold",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

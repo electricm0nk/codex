@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Xephyr",
+    "name": "Xephyr",
+    "class": "Soulknife",
+    "description": "You have learned to interweave your race's psionic abilities to further improve your fighting techniques.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Xephyr"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeBonusFeat.SoulknifeBladeSkill2.SoulknifeBladeSkill6.SoulknifeBladeSkill8.SoulknifeBladeSkill10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Xephyr],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeBonusFeat.SoulknifePsychicStrike.SoulknifeBladeSkill2.SoulknifeBladeSkill6.SoulknifeBladeSkill8.SoulknifeBladeSkill10]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Xeph"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to interweave your race's psionic abilities to further improve your fighting techniques."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Mind Knife|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Defensive Burst|PRECLASS:1,Soulknife=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Psychic Strike|!PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Gifted Blade|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Gifted Blade Manifester Level|PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Gifted Blade|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Reflex Burst|PRECLASS:1,Soulknife=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Precise Strike|PRECLASS:1,Soulknife=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Xephyr ~ Burst Attack|PRECLASS:1,Soulknife=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.342"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2142,
+    "record_key": "Soulknife Archetype ~ Xephyr"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

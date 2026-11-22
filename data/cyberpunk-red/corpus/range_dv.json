@@ -1,0 +1,592 @@
+[
+  {
+    "kind": "range_dv",
+    "name": "Pistol",
+    "source_page": "p174",
+    "text": "Pistol 13 15 20 25 30 30 N/A N/A",
+    "mode": "single_shot",
+    "row_label": "Pistol",
+    "weapon_types": [
+      "Medium Pistol",
+      "Heavy Pistol",
+      "Very Heavy Pistol"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 13
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 15
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 20
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 25
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 30
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 30
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": null
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": null
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "SMG",
+    "source_page": "p174",
+    "text": "SMG 15 13 15 20 25 25 30 N/A",
+    "mode": "single_shot",
+    "row_label": "SMG",
+    "weapon_types": [
+      "SMG",
+      "Heavy SMG"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 15
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 13
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 15
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 20
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 25
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 25
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": 30
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": null
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Shotgun (Slug)",
+    "source_page": "p174",
+    "text": "Shotgun (Slug) 13 15 20 25 30 35 N/A N/A",
+    "mode": "single_shot",
+    "row_label": "Shotgun (Slug)",
+    "weapon_types": [
+      "Shotgun"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 13
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 15
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 20
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 25
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 30
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 35
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": null
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": null
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Assault Rifle",
+    "source_page": "p174",
+    "text": "Assault Rifle 17 16 15 13 15 20 25 30",
+    "mode": "single_shot",
+    "row_label": "Assault Rifle",
+    "weapon_types": [
+      "Assault Rifle"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 17
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 16
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 15
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 13
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 15
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 20
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": 25
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": 30
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Sniper Rifle",
+    "source_page": "p174",
+    "text": "Sniper Rifle 30 25 25 20 15 16 17 20",
+    "mode": "single_shot",
+    "row_label": "Sniper Rifle",
+    "weapon_types": [
+      "Sniper Rifle"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 30
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 25
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 25
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 20
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 15
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 16
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": 17
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": 20
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Bows & Crossbow",
+    "source_page": "p174",
+    "text": "Bows & Crossbow 15 13 15 17 20 22 N/A N/A",
+    "mode": "single_shot",
+    "row_label": "Bows & Crossbow",
+    "weapon_types": [
+      "Bows & Crossbows"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 15
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 13
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 15
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 17
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 20
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 22
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": null
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": null
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Grenade Launcher",
+    "source_page": "p174",
+    "text": "Grenade Launcher 16 15 15 17 20 22 25 N/A",
+    "mode": "single_shot",
+    "row_label": "Grenade Launcher",
+    "weapon_types": [
+      "Grenade Launcher"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 16
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 15
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 15
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 17
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 20
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 22
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": 25
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": null
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Rocket Launcher",
+    "source_page": "p174",
+    "text": "Rocket Launcher 17 16 15 15 20 20 25 30",
+    "mode": "single_shot",
+    "row_label": "Rocket Launcher",
+    "weapon_types": [
+      "Rocket Launcher"
+    ],
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 17
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 16
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 15
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 15
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 20
+      },
+      {
+        "range": "101 to 200 m/yds",
+        "min_m_yds": 101,
+        "max_m_yds": 200,
+        "dv": 20
+      },
+      {
+        "range": "201 to 400 m/yds",
+        "min_m_yds": 201,
+        "max_m_yds": 400,
+        "dv": 25
+      },
+      {
+        "range": "401 to 800 m/yds",
+        "min_m_yds": 401,
+        "max_m_yds": 800,
+        "dv": 30
+      }
+    ],
+    "transcription_note": "D-1 (decisions.md section 20.1): the printed table has 8 row labels and p172 lists 11 weapon types; the page prints no mapping. weapon_types is the D-1 default mapping. Image check of p174 (150 dpi render, viewed in full): 8 row labels, 8 range bands, 8 N/A cells (CUI F-71 says 11; the page and image show 8), no weapon-type list or footnote on the page; the text extraction and the image agree on every cell."
+  },
+  {
+    "kind": "range_dv",
+    "name": "SMGs (Autofire)",
+    "source_page": "p174",
+    "text": "SMGs 20 17 20 25 30",
+    "mode": "autofire",
+    "row_label": "SMGs",
+    "weapon_types": [
+      "SMG",
+      "Heavy SMG"
+    ],
+    "autofire_max_multiplier": 3,
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 20
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 17
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 20
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 25
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 30
+      }
+    ],
+    "transcription_note": "Autofire row: weapon_types are the p172 types whose Alt. Fire Modes column prints Autofire (SMG, Heavy SMG: Autofire (3); Assault Rifle: Autofire (4)). Image of p174 agrees with the text on all 10 cells."
+  },
+  {
+    "kind": "range_dv",
+    "name": "Assault Rifle (Autofire)",
+    "source_page": "p174",
+    "text": "Assault Rifle 22 20 17 20 25",
+    "mode": "autofire",
+    "row_label": "Assault Rifle",
+    "weapon_types": [
+      "Assault Rifle"
+    ],
+    "autofire_max_multiplier": 4,
+    "bands": [
+      {
+        "range": "0 to 6 m/yds",
+        "min_m_yds": 0,
+        "max_m_yds": 6,
+        "dv": 22
+      },
+      {
+        "range": "7 to 12 m/yds",
+        "min_m_yds": 7,
+        "max_m_yds": 12,
+        "dv": 20
+      },
+      {
+        "range": "13 to 25 m/yds",
+        "min_m_yds": 13,
+        "max_m_yds": 25,
+        "dv": 17
+      },
+      {
+        "range": "26 to 50 m/yds",
+        "min_m_yds": 26,
+        "max_m_yds": 50,
+        "dv": 20
+      },
+      {
+        "range": "51 to 100 m/yds",
+        "min_m_yds": 51,
+        "max_m_yds": 100,
+        "dv": 25
+      }
+    ],
+    "transcription_note": "Autofire row: weapon_types are the p172 types whose Alt. Fire Modes column prints Autofire (SMG, Heavy SMG: Autofire (3); Assault Rifle: Autofire (4)). Image of p174 agrees with the text on all 10 cells."
+  }
+]

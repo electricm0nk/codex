@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Disenchanter ~ Power Spray",
+    "delivery": "Supernatural",
+    "description": "Once per day, a disenchanter can release a 20-foot cone-shaped burst of raw magical energy through its trunk. Creatures in the cone take 4d6 points of damage (DC 14 Reflex save for half ). Creatures immune to magic effects that allow spell resistance (such as golems) are immune to this ability. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:disenchanter_power_spray",
+    "name": "Power Spray",
+    "owners": [
+      "bestiary_3:monster:disenchanter"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a disenchanter can release a 20-foot cone-shaped burst of raw magical energy through its trunk. Creatures in the cone take 4d6 points of damage (DC 14 Reflex save for half ). Creatures immune to magic effects that allow spell resistance (such as golems) are immune to this ability. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Disenchanter ~ Power Spray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "TYPE",
+        "value": "DisenchanterRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.81",
+    "traits": [
+      "DisenchanterRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 696,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Disenchanter ~ Power Spray",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

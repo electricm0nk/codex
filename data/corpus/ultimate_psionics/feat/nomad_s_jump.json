@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Nomad's Jump",
+    "category": "Psionic",
+    "name": "Nomad's Jump",
+    "description": "Your levels of elocater stack with your levels of nomad for the purposes of determining the range of nomad's step. In addition, when you use nomad's step, you may split your distance traveled into two steps and determine your line of sight at the end of the first step. The total distance traveled must not exceed your maximum range for nomad's step and you may perform no other actions during the steps.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Nomad's Step ~ Psychoportation,Elocater ~ Aerial Acrobatics",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 223,
+    "record_key": "Nomad's Jump"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

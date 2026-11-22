@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Magical Child",
+    "name": "Magical Child",
+    "class": "Vigilante",
+    "description": "Some vigilantes, no matter their age, carry a spark of capricious whimsy under which flows a powerful current of magic and wonder. They keep these wondrous abilities secret, though they are aided in their endeavors by creatures just as magical as they are.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Magical Child"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Magical Child],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SkillRanks=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent8=True,Vigilante_Archetype_VigilanteTalent10=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_VigilanteTalent16=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_FrighteningAppearance=True,Vigilante_Archetype_StunningAppearance=True,Vigilante_Archetype_VengeanceStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vigilantes, no matter their age, carry a spark of capricious whimsy under which flows a powerful current of magic and wonder. They keep these wondrous abilities secret, though they are aided in their endeavors by creatures just as magical as they are."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Magical Child ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Magical Child ~ Skill Ranks per Level|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Child ~ Weapon and Armor Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Child ~ Spellcasting|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Child ~ Transformation Sequence|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Child ~ Animal Guide|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Child ~ Staunch Ally|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VengeanceStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 92,
+    "record_key": "Vigilante Archetype ~ Magical Child"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

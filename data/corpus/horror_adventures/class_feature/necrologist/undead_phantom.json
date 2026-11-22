@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Necrologist ~ Undead Phantom",
+    "name": "Undead Phantom",
+    "class": "Spiritualist",
+    "description": "A necrologist's phantom is undead, rather than an outsider. It has normal undead immunities and no Constitution score; uses d8 Hit Dice, each of which is modified by the phantom's Charisma modifier as normal; and gains the abilities below at the levels indicated. An undead phantom otherwise follows the standard phantom rules (for instance, its base attack bonus and skills don't change to match undead).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necrologist ~ Undead Phantom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.NecrologistClassFeatures"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "A necrologist's phantom is undead, rather than an outsider. It has normal undead immunities and no Constitution score; uses d8 Hit Dice, each of which is modified by the phantom's Charisma modifier as normal; and gains the abilities below at the levels indicated. An undead phantom otherwise follows the standard phantom rules (for instance, its base attack bonus and skills don't change to match undead)."
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadPhantomMasterLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadPhantomMasterLVL|SpiritualistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "FOLLOWERS|Phantom|-1"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Undead Phantom|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Undead Phantom|Undead Phantom"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 317,
+    "record_key": "Necrologist ~ Undead Phantom"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

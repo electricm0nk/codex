@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Domain Base ~ Air",
+    "name": "Air",
+    "class": "Domain Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AirDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirDC|10+(DomainAirLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Air],[PREVARLT:AirDomain,1]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 615,
+    "record_key": "Domain Base ~ Air"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

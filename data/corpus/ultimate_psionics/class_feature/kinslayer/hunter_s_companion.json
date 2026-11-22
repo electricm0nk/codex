@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kinslayer ~ Hunter's Companion",
+    "name": "Hunter's Companion",
+    "class": "Kinslayer",
+    "description": "You must choose an animal companion.  When you and your animal companion are flanking the same enemy of the humanoid (giant) subtype, the bonus you each gain for flanking is increased by 2.  In addition, you and your animal companion are able to communicate telepathically as long as you are maintaining psionic focus, with a range of %1 feet.  This communication does not make the animal companion any more intelligent, so this typically results in you giving commands to the animal companion or simple questions and answers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinslayer ~ Hunter's Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You must choose an animal companion.  When you and your animal companion are flanking the same enemy of the humanoid (giant) subtype, the bonus you each gain for flanking is increased by 2.  In addition, you and your animal companion are able to communicate telepathically as long as you are maintaining psionic focus, with a range of %1 feet.  This communication does not make the animal companion any more intelligent, so this typically results in you giving commands to the animal companion or simple questions and answers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Ranger ~ Hunter's Bond"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter's Bond|NORMAL|Hunter's Bond ~ Animal Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2589,
+    "record_key": "Kinslayer ~ Hunter's Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

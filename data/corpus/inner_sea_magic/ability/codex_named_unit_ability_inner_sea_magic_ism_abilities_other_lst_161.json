@@ -1,0 +1,80 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "description": "[redacted PI]",
+    "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_161)",
+    "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_161)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Axiomatic|Flaming Burst|Unholy"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:161",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 161,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_161)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

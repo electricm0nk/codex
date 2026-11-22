@@ -1,0 +1,79 @@
+    PASS  preflight-disk  (disk budget OK)
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+    PASS  oracle-pin-selftest  (16 passed, 0 failed)
+    PASS  producer-selftest  (30 cases passed)
+    PASS  doneness-selftest  (5 cases passed)
+    PASS  pi-redaction-selftest  (49 cases passed)
+    PASS  provenance-selftest  (32 cases passed)
+    PASS  site-status-frozen-check  (site/status-data.json is frozen at 100%)
+    PASS  site-status-frozen-check-selftest  (6 cases passed)
+    PASS  site-dashboard-pi-gate  (22 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+    PASS  build-public-status-selftest  (40 cases passed)
+    PASS  site-public-status-check  (site/status-data.json and site/status-data/*.json are current)
+    PASS  site-public-status-pi-gate  (38 file(s) scanned against 1612 declared-PI name(s), zero leaked)
+    PASS  site-asset-stamp-check  (site/*.html cache-busting stamps match site/styles.css)
+    PASS  reachability-audit-selftest  (11 cases passed)
+    PASS  reachability-audit  (reachable ceiling 100.00%)
+    PASS  groundtruth-guard-selftest  (17 cases passed)
+    PASS  supersession-gate-selftest  (16 cases passed)
+    PASS  shape-coverage-standing-gate-selftest  (20 cases passed)
+    PASS  shape-coverage-standing-gate  (population=2485 unclassified=0 no_record=0 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+    PASS  cycle-scope-gate-selftest  (51 cases passed)
+    PASS  missing-engine-tables  (population=0 kinds=0)
+    PASS  denominator-gate  (files_checked=367 violations=0)
+    PASS  figure-provenance  (files_checked=297 figures_examined=631 violations=0)
+    PASS  corpus-bundle  (files_copied=14029 pattern_sync=ok scoped_residue_hits=0 full_gate=live_files=0 live_hits=0 verdict=PASS)
+    PASS  tauri-resources-tracked  (resources_checked=15 verdict=PASS)
+    PASS  pcgen-residue-gate  (live_files=0 live_hits=0 verdict=PASS)
+    PASS  crate-wall  (0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean)
+    PASS  token-coverage-selftest  (26 cases passed)
+    PASS  token-coverage  (non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS)
+    PASS  pi-sweep  (12 hits over src/rules_core/rules_catalog (1) + data/rules_tables (11), 11 baseline rows, 0 package stamps disagree)
+    PASS  declared-pi-audit  (clean)
+    PASS  audit-selftest  (28 passed, 0 failed)
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+    PASS  driver-selftest  (9 passed, 0 failed)
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+    PASS  corpus-trap-audit-selftest  (14 passed, 0 failed)
+    PASS  root-lib  (3067 passed)
+    PASS  root-full  (6771 passed across 300 suites, all 292 tests/*.rs suites executed)
+    PASS  ingest-full  (1858 passed across 177 suites, all 126 tests/*.rs suites executed)
+    PASS  desktop  (1240 passed)
+    PASS  corpus-sweep  (48706 records examined of 51523 read, 413314 tokens compared (9 synthesized), 51463 digests checked, 0 findings)
+    PASS  sheet-rules-check  (records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (438.3s))
+    PASS  sf-sheet-rules-check  (package: records=8582 converted=8582 refused=0 rules=11320 var_tables=238 verdict=PASS (30.5s); corpus: records=8582 redacted=289 renamed=137 description_redacted=192 files=8590 verdict=PASS)
+    PASS  rules-schema-check  (3 schemas regenerate byte-equal; 3 schema tests pass)
+    PASS  corpus-trap-audit  (records_examined=27681 defects[wiring-class-mismatch=0 disabled-line=165 key-differs-from-name=650 mod-record=2117 shared-name-distinct-records=249] traps=407 — all defect kinds at their registered counts)
+    PASS  supersession-gate  (116 objects, all clean)
+    PASS  frontend-install  (node_modules present)
+    PASS  frontend-test  (191/191 files)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+    PASS  class-dump  (31/31 computing)
+    PASS  class-census  (ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185))
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_LIB_TESTS baseline is stale: 3019 recorded, 3067 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6707 recorded, 6771 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 299 recorded, 300 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_INGEST_FULL_TESTS baseline is stale: 1841 recorded, 1858 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_INGEST_TEST_BINARIES baseline is stale: 176 recorded, 177 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_DESKTOP_TESTS baseline is stale: 892 recorded, 1240 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  - BASELINE_FRONTEND_TEST_FILES baseline is stale: 173 recorded, 191 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/scripts/verify-baselines.env.
+  BASELINE_ROOT_LIB_TESTS=3067
+  BASELINE_ROOT_FULL_TESTS=6771
+  BASELINE_ROOT_TEST_BINARIES=300
+  BASELINE_INGEST_FULL_TESTS=1858
+  BASELINE_INGEST_TEST_BINARIES=177
+  BASELINE_DESKTOP_TESTS=1240
+  BASELINE_CORPUS_LITERAL_RECORDS=48706
+  BASELINE_FRONTEND_TEST_FILES=191
+  BASELINE_CLIPPY_WARNINGS_ROOT=0
+  BASELINE_CLIPPY_WARNINGS_DESKTOP=0
+  BASELINE_CLIPPY_WARNINGS_INGEST=0
+  BASELINE_COMPUTED_CLASSES=31
+  BASELINE_CENSUS_IDS=137
+  BASELINE_CENSUS_COMPUTED=63
+  BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74
+  BASELINE_CENSUS_MIX_COMPUTED=185
+  BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=68
+RESULT: PASS

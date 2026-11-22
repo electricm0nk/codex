@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Seaweed Leshy ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 8th; concentration +9) Constant-pass without trace 1/day-entangle (in water only, DC 12)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:seaweed_leshy_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 8th; concentration +9) Constant-pass without trace 1/day-entangle (in water only, DC 12)"
+      },
+      {
+        "key": "KEY",
+        "value": "Seaweed Leshy ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeaweedLeshyRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SeaweedLeshyRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1204,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Seaweed Leshy ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

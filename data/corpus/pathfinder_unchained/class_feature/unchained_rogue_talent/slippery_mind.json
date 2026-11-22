@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Slippery Mind",
+    "name": "Slippery Mind",
+    "class": "Unchained Rogue Talent",
+    "description": "This ability represents your ability to wriggle free from magical effects that would otherwise control or compel you. If you are affected by an enchantment spell or effect and fails your saving throw, you can attempt it again 1 round later at the same DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Slippery Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.Unchained Rogue Advanced Talent"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlipperymindTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability represents your ability to wriggle free from magical effects that would otherwise control or compel you. If you are affected by an enchantment spell or effect and fails your saving throw, you can attempt it again 1 round later at the same DC."
+      },
+      {
+        "key": "DESC",
+        "value": " You get only this one extra chance to succeed on your saving throw.|PREVAREQ:SlipperymindTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": " You get %1 extra chances to succeed on your saving throw.|SlipperymindTimes|PREVARGTEQ:SlipperymindTimes,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Slippery Mind"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlipperymindTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 679,
+    "record_key": "Unchained Rogue Talent ~ Slippery Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

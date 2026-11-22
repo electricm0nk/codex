@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You prevent the targets from having conscious awareness of your presence. You make yourself completely undetectable to the subjects by erasing all awareness of your presence from their minds. The targets can't see, hear, smell, feel, or taste you, including with extraordinary or supernatural senses such as blindsense, blindsight, scent, or tremorsense. They can't pinpoint your location by any means, including detect spells. The targets remain unaware of your actions, provided you don't make any attacks or cause any obvious or directly threatening changes in the targets' environment. If you attack any of the target creatures, the effect ends. If you take an action that creates a sustained and obvious change in the target's environment-for example, attacking a creature other than a target or moving a sizeable or attended object the target can see-the target immediately receives a new saving throw.|PRERULE:1,DisplayFullSpell",
+    "key": "Hidden Presence",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Inquisitor,Mesmerist,Psychic,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Prevent creatures from noticing your presence.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You prevent the targets from having conscious awareness of your presence. You make yourself completely undetectable to the subjects by erasing all awareness of your presence from their minds. The targets can't see, hear, smell, feel, or taste you, including with extraordinary or supernatural senses such as blindsense, blindsight, scent, or tremorsense. They can't pinpoint your location by any means, including detect spells. The targets remain unaware of your actions, provided you don't make any attacks or cause any obvious or directly threatening changes in the targets' environment. If you attack any of the target creatures, the effect ends. If you take an action that creates a sustained and obvious change in the target's environment-for example, attacking a creature other than a target or moving a sizeable or attended object the target can see-the target immediately receives a new saving throw.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Hidden Presence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL/3) creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Hidden Presence",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

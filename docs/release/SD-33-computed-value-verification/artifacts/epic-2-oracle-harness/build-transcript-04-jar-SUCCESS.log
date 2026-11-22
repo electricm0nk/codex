@@ -1,0 +1,35 @@
+Parallel Configuration Cache is an incubating feature.
+Calculating task graph as no cached configuration is available for tasks: jar
+> Task :PCGen-base:processResources NO-SOURCE
+> Task :PCGen-Formula:processResources NO-SOURCE
+> Task :downloadJavaFXLocal UP-TO-DATE
+> Task :PCGen-Formula:jjtree UP-TO-DATE
+> Task :PCGen-base:compileJava UP-TO-DATE
+> Task :PCGen-Formula:javacc UP-TO-DATE
+> Task :PCGen-base:classes UP-TO-DATE
+> Task :PCGen-base:jar UP-TO-DATE
+> Task :PCGen-Formula:compileJava UP-TO-DATE
+> Task :PCGen-Formula:classes UP-TO-DATE
+> Task :extractJavaFXLocal UP-TO-DATE
+> Task :PCGen-Formula:jar UP-TO-DATE
+> Task :copyMasterSheets
+> Task :processResources
+> Task :compileJava UP-TO-DATE
+> Task :classes
+> Task :jarGroupingPlugins
+> Task :jarFunctionPlugins
+> Task :jarJepCommandsPlugins
+> Task :jarModifierPlugins
+> Task :jarConverterPlugins
+> Task :jarPrimitivePlugins
+> Task :jarBonusPlugins
+> Task :jarQualifierPlugins
+> Task :jarExportPlugins
+> Task :jarPrePlugins
+> Task :jarLstPlugins
+> Task :jarAllPlugins
+> Task :jar
+
+BUILD SUCCESSFUL in 4s
+23 actionable tasks: 14 executed, 9 up-to-date
+Configuration cache entry stored.

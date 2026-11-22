@@ -1,0 +1,119 @@
+{
+  "run": {
+    "command_dump": "cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --dump <scratch>/dump-after",
+    "wall_seconds_time_v": 125.05,
+    "wall_seconds_bin_reported": 112.6,
+    "exit": 0,
+    "records": 49450,
+    "converted": 49450,
+    "refused": 0,
+    "rules_written": {
+      "baseline": 71862,
+      "fresh": 71863
+    },
+    "var_tables": {
+      "baseline": 5309,
+      "fresh": 5882
+    }
+  },
+  "preconditions": {
+    "git_status_short_empty": true,
+    "report_json": {
+      "records": 49450,
+      "converted": 49450,
+      "rules_written": 71862
+    },
+    "unresolved_references_count": 11925
+  },
+  "structural_diff": {
+    "verdict": "PASS",
+    "removed_rule_ids": 0,
+    "unexpected_field_deltas": 0,
+    "removed_granted_by_edges": 0,
+    "removed_grants": 0,
+    "records_moved": false,
+    "added_rule_ids": [
+      "ultimate_psionics:class:psion#bonus5"
+    ],
+    "added_granted_by_edges_total": 4491,
+    "added_granted_by_edges_by_target_kind": {
+      "class_feature": 3722,
+      "race_trait": 426,
+      "companion": 192,
+      "ability": 118,
+      "domain": 33
+    },
+    "added_granted_by_edges_by_granter_shape": {
+      "Rule": 3970,
+      "Class": 490,
+      "Choice": 31
+    },
+    "added_grants_total": 102,
+    "added_grants_by_shape": {
+      "FactGrant+WeaponSet": 62,
+      "GatedFactGrant": 38,
+      "GatedFactGrant+WeaponSet": 1,
+      "FactGrant+WeaponAllOf": 1
+    },
+    "added_vars_tables": 573,
+    "added_defects_files": 1,
+    "provenance_only_deltas": {
+      "count": 30,
+      "pinned_count": 30
+    }
+  },
+  "unresolved_references": {
+    "baseline_total": 11925,
+    "fresh_total": 7469,
+    "delta": -4456,
+    "removed_rows": 4456,
+    "added_rows": 0,
+    "new_defect_kind": {
+      "ambiguous-parent-category-target.json": 28,
+      "all_28_were_in_baseline_unresolved_references": true
+    }
+  },
+  "unres2_rerun_on_fresh_dump": {
+    "closure_rows": 66356,
+    "closure_rows_baseline": 66237,
+    "A": 0,
+    "B": 63,
+    "D": 3033,
+    "E": 3565,
+    "F": 808,
+    "D_E_F_unchanged_from_baseline": true,
+    "proficiency_rows_by_mechanism": {
+      "F": 17,
+      "D": 7
+    }
+  },
+  "edge_count_reconciliation": {
+    "spec_estimate": 4456,
+    "measured": 4491,
+    "net_difference": 35,
+    "class_typed_edges": 490,
+    "class_typed_matched_to_mechanism_A_class_source_defects": 441,
+    "class_typed_unmatched_other_causes": 49,
+    "rule_typed_edges": 3970,
+    "choice_typed_edges": 31,
+    "ambiguous_deferred_not_converted_to_edges": 28
+  },
+  "per_edge_correctness": {
+    "seed": 20260921,
+    "random_sample": {
+      "n": 200,
+      "pass": 199,
+      "pass_ambiguous_correctly_deferred": 1,
+      "fail": 0
+    },
+    "all_class_to_proficiency_edges": {
+      "n": 17,
+      "pass": 17,
+      "fail": 0
+    }
+  },
+  "gates": {
+    "git_status_after": "empty",
+    "residue_gate": "PASS (0 of 0)"
+  }
+}

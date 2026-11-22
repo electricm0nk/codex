@@ -1,0 +1,43 @@
+# SD18 deterministic Human Bard level 13 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Bard
+# level-1..level-12 spontaneous arcane spell-bearing baseline
+# (tests/sd18_bard_level12_widening.rs) to level 13 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/performance posture from the level-1 through level-12
+# fixtures, adding only the level bump this bounded tranche needs. The PF1
+# Core Rulebook Bard class table's level-13 "Special" column is blank
+# (verified independently against d20pfsrd, the Archives of Nethys
+# aonprd.com mirror, and legacy.aonprd.com, all three byte-for-byte
+# identical), so no new choice line is required.
+#
+# It deliberately avoids every later Bard burden surface: no
+# performance-state engine (start/maintain action economy, round
+# tracking/consumption), no Countersong or Distraction, no Versatile
+# Performance execution, no Suggestion execution, no Dirge of Doom execution,
+# no Inspire Greatness execution, no untrained-skill-use execution for
+# Jack-of-All-Trades, no Lore Master take-10/take-20 execution against any
+# actual Knowledge check, no Soothing Performance healing/condition-removal
+# execution, and no spontaneous known-spell / slot posture burden. Base
+# attack bonus and all three base saves stay numerically unchanged from
+# level 12 (integer-division coincidences: 13*3/4=9, 13/3=4, 13/2+2=8), the
+# Bardic Performance rounds-per-day pool genuinely rises, and the Fascinate
+# affected-creature count genuinely rises, while the Fascinate DC stays
+# unchanged (13/2=6, an integer-division coincidence with level 12).
+case_id=pf1-crb-human-bard-level13
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:bard:13
+ability=strength:10
+ability=dexterity:14
+ability=constitution:12
+ability=intelligence:13
+ability=wisdom:8
+ability=charisma:15
+feat=feat:dodge
+choice=choice:bard_bardic_knowledge:flag:enabled
+choice=choice:bard_bardic_music:performance:inspire_courage
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Oma ~ Capsize",
+    "delivery": "Extraordinary",
+    "description": "An oma can attempt to capsize a ship or other vehicle by ramming it as a charge attack and attempting a combat maneuver check. The DC of this check is 25, or the result of the captain's Profession (sailor) check, whichever is higher. For each size category the ship is larger than the oma, the oma takes a cumulative -10 penalty on this combat maneuver check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:oma_capsize",
+    "name": "Capsize",
+    "owners": [
+      "bestiary_4:monster:oma"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An oma can attempt to capsize a ship or other vehicle by ramming it as a charge attack and attempting a combat maneuver check. The DC of this check is 25, or the result of the captain's Profession (sailor) check, whichever is higher. For each size category the ship is larger than the oma, the oma takes a cumulative -10 penalty on this combat maneuver check."
+      },
+      {
+        "key": "KEY",
+        "value": "Oma ~ Capsize"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oma Racial Trait.SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Oma Racial Trait"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1145,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Oma ~ Capsize",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

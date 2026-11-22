@@ -1,0 +1,41 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Magical Knack ~ Paladin",
+    "name": "Paladin",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Knack ~ Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Paladin|min(2,(TL-(var(\"CL=Paladin\")+var(\"BL=Paladin\")-3)))|PRECLASS:1,Paladin=4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Magical Knack ~ Paladin",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

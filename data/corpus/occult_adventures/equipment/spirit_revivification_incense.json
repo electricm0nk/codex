@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 800.0,
+    "description": "A spiritualist can burn the incense as part of her ritual to manifest her phantom, in which case the manifested phantom returns with its maximum number of hit points, regardless of previous damage incurred.",
+    "key": "Spirit Revivification Incense",
+    "name": "Spirit Revivification Incense",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Revivification Incense"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "800"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "SPROP",
+        "value": "A spiritualist can burn the incense as part of her ritual to manifest her phantom, in which case the manifested phantom returns with its maximum number of hit points, regardless of previous damage incurred."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Spirit Revivification Incense",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

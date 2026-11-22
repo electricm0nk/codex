@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Archetype ~ Arcane Mind",
+    "name": "Arcane Mind",
+    "class": "Psion",
+    "description": "Through the mental discipline of arcane magical training and ritual, you instead discovered how to tap into and focus your own psionic power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Archetype ~ Arcane Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsionArchetype.PsionFeat1"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psion Archetype ~ Arcane Mind],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsionFeat1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Through the mental discipline of arcane magical training and ritual, you instead discovered how to tap into and focus your own psionic power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Arcane Mind ~ Arcane Trappings|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Arcane Mind ~ Mysterious Magic|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Arcane Mind ~ Strange Synergy|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Arcane Mind ~ Mystic Mind|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psion Feat|-1|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1935,
+    "record_key": "Psion Archetype ~ Arcane Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

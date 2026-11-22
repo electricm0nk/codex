@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wilder Archetype ~ Battle Wilder",
+    "name": "Battle Wilder",
+    "class": "Wilder",
+    "description": "You channel your emotions not into your manifesting ability, but into your combat prowess.  While you are still capable of and effective at using powers, you also gain improved battle capacity, as well as expanded training in weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilder Archetype ~ Battle Wilder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WilderArchetype.WilderWildSurge.WilderSurgeBlast.WilderSurgeBond.WilderSurgingEuphoria.WilderImprovedSurgeBond.WilderPerfectSurge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wilder=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wilder Archetype ~ Battle Wilder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderWildSurge,TYPE.WilderSurgeBlast,TYPE.WilderSurgeBond,TYPE.WilderSurgingEuphoria,TYPE.WilderImprovedSurgeBond,TYPE.WilderPerfectSurge]"
+      },
+      {
+        "key": "DESC",
+        "value": "You channel your emotions not into your manifesting ability, but into your combat prowess.  While you are still capable of and effective at using powers, you also gain improved battle capacity, as well as expanded training in weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Martial Weapon Proficiency Output"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Combat Surge|PRECLASS:1,Wilder=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Surging Assault|PRECLASS:1,Wilder=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Toughness|PRECLASS:1,Wilder=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Combat Euphoria|PRECLASS:1,Wilder=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Combat Fortitude|PRECLASS:1,Wilder=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Battle Wilder ~ Physical Overload|PRECLASS:1,Wilder=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All Martial Weapon Proficiencies"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2351,
+    "record_key": "Wilder Archetype ~ Battle Wilder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Sylph ~ Air Affinity",
+    "name": "Air Affinity",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "Sylph Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Sylph_ReplaceAirAffinity",
+    "sets_replace_flags": [],
+    "description": "Sylph sorcerers with the elemental (air) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Sylph spellcasters with the Air domain use their domain powers and spells at +1 caster level.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Air Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Sylph_ReplaceAirAffinity=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sylph sorcerers with the elemental (air) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Sylph spellcasters with the Air domain use their domain powers and spells at +1 caster level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Affinity Sorcerer Bonus|PREMULT:2,[PRECLASS:1,Sorcerer=1],[PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Air)]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Air",
+          "1",
+          "PREDOMAIN:1,Air"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Cloud Subdomain",
+          "1",
+          "PREDOMAIN:1,Cloud Subdomain"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Wind Subdomain",
+          "1",
+          "PREDOMAIN:1,Wind Subdomain"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/sylph/sylph_abilities_race.lst",
+    "sha256": "39f0cb0b0bee0f835684e08c1ef323ea657f2f737f38d2774cfcbe1cb57081bf",
+    "line": 21,
+    "record_key": "Sylph ~ Air Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

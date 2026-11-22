@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:11:45Z",
+  "data": {
+    "corpus_key": "Surge",
+    "delivery": "Supernatural",
+    "description": "The monster can call upon its mythic power to overcome difficult challenges. It can expend one use of mythic power to increase any d20 roll it just made by rolling 1d6 and adding it to the result. Using this ability is an immediate action taken after the original roll is made and the results are revealed. The bonus die gained by using this ability increases to 1d8 at 4th rank, 1d10 at 7th rank, and 1d12 at 10th rank. The monster can use this ability even if it's mindless or of animal-level intelligence.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "mythic_adventures:monster_ability:surge",
+    "name": "Surge",
+    "owners": [],
+    "source_page": "p.228",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 362,
+    "record_key": "Surge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Unarmed Heartseeker",
+    "name": "Unarmed Heartseeker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "UnarmedDisplay"
+      },
+      {
+        "key": "ASPECT",
+        "value": "UnarmedNotes|Ignores the miss chance for concealment against most living targets"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_abilities.lst",
+    "sha256": "b81e4185e6ebbd0656ae80a103f4f5a7d7b27e1c98ed536ef981dabf8d04be2a",
+    "line": 49,
+    "record_key": "Unarmed Heartseeker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

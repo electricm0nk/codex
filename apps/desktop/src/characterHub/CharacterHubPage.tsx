@@ -1,0 +1,358 @@
+import { useEffect, useState, useLayoutEffect } from 'react';
+import { characterCreationGate, loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
+import {
+  replaceRowInSurface,
+  toRowSurface,
+  type CharacterHubListSurface,
+  type CharacterHubListRowSurface,
+} from './buildCharacterHubListSurface';
+import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { CreateCharacterForm } from './CreateCharacterForm';
+import { StarfinderCreateForm } from './StarfinderCreateForm';
+import { CyberpunkCreateForm } from './CyberpunkCreateForm';
+import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
+import { CyberpunkCharacterSheet } from './CyberpunkCharacterSheet';
+import { isCyberpunkCharacter } from './cyberpunkSheetModel';
+import { isStarfinderCharacter } from './starfinderSheetModel';
+import { LandingScreen, type RuleSetId } from './LandingScreen';
+import { LoadCharacterScreen } from './LoadCharacterScreen';
+import { CharacterSheet } from './CharacterSheet';
+import { EquipmentCatalogScreen } from '../equipmentCatalog/EquipmentCatalogScreen';
+import { SpellCatalogScreen } from '../spellCatalog/SpellCatalogScreen';
+import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
+import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
+import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScreen';
+import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
+import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
+import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
+import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
+import { CyberpunkCatalogScreen } from '../cyberpunkCatalog/CyberpunkCatalogScreen';
+import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
+import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
+import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
+import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
+import { EditCampaignScreen } from '../campaign/EditCampaignScreen';
+import { hubFrameStyle } from '../layout/screenLayout';
+import { CampaignSheet } from '../campaign/CampaignSheet';
+
+type Mode =
+  | 'landing'
+  | 'load'
+  | 'create'
+  | 'sheet'
+  | 'equipmentCatalog'
+  | 'spellCatalog'
+  | 'classCatalog'
+  | 'raceCatalog'
+  | 'monsterCatalog'
+  | 'companionCatalog'
+  | 'intelligentItemCatalog'
+  | 'starfinderCatalog'
+  | 'cyberpunkCatalog'
+  | 'corpusIngestDiagnostic'
+  | 'dm-toolkit'
+  | 'campaign-list'
+  | 'campaign-create'
+  | 'campaign-edit'
+  | 'campaign-sheet';
+
+/**
+ * The hub inside its frame. Create a character uses the whole window; every other screen keeps the
+ * centered reading width it was designed for (see `layout/screenLayout.ts`).
+ */
+export function CharacterHubPage({ claimMain }: { claimMain: (goMain: () => void) => () => void }) {
+  const [wide, setWide] = useState(false);
+  return (
+    <div style={hubFrameStyle(wide)}>
+      <CharacterHubScreens onWideChange={setWide} claimMain={claimMain} />
+    </div>
+  );
+}
+
+function CharacterHubScreens({
+  onWideChange,
+  claimMain,
+}: {
+  onWideChange: (wide: boolean) => void;
+  /** App's menu host claim (`AppMenuHost.claimMain`). */
+  claimMain: (goMain: () => void) => () => void;
+}) {
+  const [mode, setMode] = useState<Mode>('landing');
+  // Layout effect, not a plain effect: the frame must widen before the Create form paints.
+  useLayoutEffect(() => {
+    onWideChange(mode === 'create');
+  }, [mode, onWideChange]);
+  // Every ☰ menu off the main screen starts with "Main menu" (decisions.md §26.1): claimed here, released on return.
+  const offMain = mode !== 'landing';
+  useLayoutEffect(() => (offMain ? claimMain(() => setMode('landing')) : undefined), [offMain, claimMain]);
+  const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
+  const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
+  const [cyberpunkCatalogKind, setCyberpunkCatalogKind] = useState<string>('role');
+  const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
+  // Where the ✕ on the character sheet should return to — Load Character
+  // normally, but the campaign screen when opened from a party member there.
+  const [sheetReturnMode, setSheetReturnMode] = useState<Mode>('load');
+  // The open campaign's folder (SD-42 `decisions.md §11`: a campaign is its folder).
+  const [activeCampaignDir, setActiveCampaignDir] = useState<string | null>(null);
+  const [surface, setSurface] = useState<CharacterHubListSurface | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function reload() {
+    loadCharacterHubListSurfaceRuntime(ruleSet)
+      .then(setSurface)
+      .catch((cause: unknown) => {
+        setError(cause instanceof Error ? cause.message : 'Unknown character hub failure');
+      });
+  }
+
+  // The Load list is the selected rule set's: re-list when the landing's selection changes.
+  useEffect(() => {
+    reload();
+  }, [ruleSet]);
+
+  if (mode === 'landing') {
+    return (
+      <LandingScreen
+        selectedRuleSet={ruleSet}
+        onSelectRuleSet={setRuleSet}
+        onCreate={() => setMode('create')}
+        createGate={characterCreationGate(ruleSet)}
+        onLoad={() => setMode('load')}
+        onBrowseEquipment={() => setMode('equipmentCatalog')}
+        onBrowseSpells={() => setMode('spellCatalog')}
+        onBrowseClasses={() => setMode('classCatalog')}
+        onBrowseRaces={() => setMode('raceCatalog')}
+        onBrowseMonsters={() => setMode('monsterCatalog')}
+        onBrowseCompanions={() => setMode('companionCatalog')}
+        onBrowseIntelligentItems={() => setMode('intelligentItemCatalog')}
+        onBrowseStarfinder={(kind) => {
+          setStarfinderCatalogKind(kind);
+          setMode('starfinderCatalog');
+        }}
+        onBrowseCyberpunk={(kind) => {
+          setCyberpunkCatalogKind(kind);
+          setMode('cyberpunkCatalog');
+        }}
+        onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
+        onCampaignManager={() => setMode('campaign-list')}
+        onDmToolkit={() => setMode('dm-toolkit')}
+      />
+    );
+  }
+
+  if (mode === 'equipmentCatalog') {
+    return <EquipmentCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'spellCatalog') {
+    return <SpellCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'classCatalog') {
+    return <ClassCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'raceCatalog') {
+    return <RaceCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'companionCatalog') {
+    return <CompanionCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'monsterCatalog') {
+    return <MonsterCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'intelligentItemCatalog') {
+    return <IntelligentItemCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'starfinderCatalog') {
+    // SD-37 E6.4: Starfinder 1e's catalogs, read from its own package.
+    return <StarfinderCatalogScreen initialKind={starfinderCatalogKind} onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'cyberpunkCatalog') {
+    // SD-38 E6.2: Cyberpunk RED's catalogs, read from its corpus by `list_cyberpunk_catalog`.
+    return <CyberpunkCatalogScreen initialKind={cyberpunkCatalogKind} onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'corpusIngestDiagnostic') {
+    return <CorpusIngestDiagnosticPanel onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'dm-toolkit') {
+    // v0.8 D-6: the real campaign console (world / timeline / places /
+    // people / clues / scenes / rules, cross-linked, exportable). The old
+    // stub promised encounter building and initiative tracking; neither is
+    // in v1 and no affordance hints at them.
+    return <DmToolkitScreen onBack={() => setMode('landing')} />;
+  }
+
+  if (mode === 'campaign-list') {
+    return (
+      <CampaignManagerScreen
+        onCancel={() => setMode('landing')}
+        onCreate={() => setMode('campaign-create')}
+        onEdit={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
+          setMode('campaign-edit');
+        }}
+        onLoad={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
+          setMode('campaign-sheet');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'campaign-create') {
+    return (
+      <CreateCampaignScreen
+        onCancel={() => setMode('campaign-list')}
+        onCreated={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
+          setMode('campaign-edit');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'campaign-edit' && activeCampaignDir) {
+    return (
+      <EditCampaignScreen
+        campaignId={activeCampaignDir}
+        onCancel={() => setMode('campaign-list')}
+        onSaved={() => setMode('campaign-list')}
+      />
+    );
+  }
+
+  if (mode === 'campaign-sheet' && activeCampaignDir) {
+    return (
+      <CampaignSheet
+        campaignDir={activeCampaignDir}
+        onClose={() => setMode('campaign-list')}
+        onCharacterImported={reload}
+        onOpenCharacterSheet={(row, detail) => {
+          setSheet({ row, detail });
+          setSheetReturnMode('campaign-sheet');
+          setMode('sheet');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isStarfinderCharacter(sheet.detail.summary)) {
+    // SD-37 E6.3: a Starfinder character opens the Starfinder sheet, never the Pathfinder one.
+    return (
+      <StarfinderCharacterSheet
+        key={sheet.detail.summary.characterId}
+        detail={sheet.detail}
+        onDetailRefreshed={(detail) => {
+          // SD-37 E6.5: after a level-up the row's class/level label follows the saved character.
+          const updatedRow = toRowSurface(detail.summary);
+          setSheet((current) => (current ? { row: updatedRow, detail } : current));
+          setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
+        }}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isCyberpunkCharacter(sheet.detail.summary)) {
+    // A Cyberpunk RED character opens the Cyberpunk RED sheet, never the Pathfinder one.
+    return (
+      <CyberpunkCharacterSheet
+        key={sheet.detail.summary.characterId}
+        detail={sheet.detail}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'sheet' && sheet) {
+    return (
+      <CharacterSheet
+        row={sheet.row}
+        detail={sheet.detail}
+        onClose={() => setMode(sheetReturnMode)}
+        onDetailRefreshed={(detail) => {
+          // The Level box/class panel/Progression rail derive from
+          // `row.classSummary`, not `detail` — rebuild `row` from the
+          // refreshed detail's summary too, so both stay in sync without a
+          // close-and-reopen or a full list re-fetch. Also patch the Load
+          // Character list's cached copy of the same row (item 26) so its
+          // level/class label doesn't go stale until the next full reload.
+          const updatedRow = toRowSurface(detail.summary);
+          setSheet((current) => (current ? { row: updatedRow, detail } : current));
+          setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
+        }}
+        ruleSet={ruleSet}
+        onOpen={() => {
+          // "Open" always returns to the Load Character screen so the
+          // operator can pick a different saved character, regardless of
+          // whether this sheet was opened from Load Character or from a
+          // campaign party member's sheet.
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+        onCloned={reload}
+        onOpenCampaign={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
+          setMode('campaign-sheet');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'load') {
+    return (
+      <LoadCharacterScreen
+        surface={surface}
+        error={error}
+        onCancel={() => setMode('landing')}
+        onOpenSheet={(row, detail) => {
+          setSheet({ row, detail });
+          setSheetReturnMode('load');
+          setMode('sheet');
+        }}
+        onRefresh={reload}
+      />
+    );
+  }
+
+  return (
+    <section style={{ marginTop: '2rem' }}>
+      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <h2 style={{ margin: 0 }}>Create a character</h2>
+        <button
+          type="button"
+          onClick={() => setMode('landing')}
+          style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, cursor: 'pointer', padding: '0.5rem 1rem' }}
+        >
+          Back
+        </button>
+      </div>
+      {/* Refresh the list data in the background so it's current whenever the
+          user chooses to go back — but stay on the form so they can see the
+          computed character sheet (or blocked diagnostics) the submit produced. */}
+      {characterCreationGate(ruleSet).form === 'starfinder' ? (
+        <StarfinderCreateForm onCreated={reload} />
+      ) : characterCreationGate(ruleSet).form === 'cyberpunk' ? (
+        <CyberpunkCreateForm onCreated={reload} />
+      ) : (
+        <CreateCharacterForm onCreated={reload} />
+      )}
+    </section>
+  );
+}

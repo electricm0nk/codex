@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A sai is a metal spike flanked by a pair of prongs used to trap an enemy's weapon. With a sai, you get a +2 bonus on Combat Maneuver Checks to sunder an enemy's weapon. Though pointed, a sai is used primarily to bludgeon foes and to disarm weapons.",
+    "key": "Sai (Base)",
+    "name": "Sai"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_sai_base.txt",
+    "record_key": "Sai (Base)"
+  }
+}

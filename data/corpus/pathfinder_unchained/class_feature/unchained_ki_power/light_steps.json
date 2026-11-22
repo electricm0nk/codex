@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Light Steps",
+    "name": "Light Steps",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ki power can move effortlessly across nearly any surface. Whenever the monk activates his feather balance ki power, he can also ignore all difficult terrain. In addition, while active, he can cross any solid surface, even if it would normally not support his weight. This does not allow him to walk on liquids. A monk must be at least 8th level and have the feather balance ki power before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Light Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Extraordinary.Light Steps"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Ki Power ~ Feather Balance"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ki power can move effortlessly across nearly any surface. Whenever the monk activates his feather balance ki power, he can also ignore all difficult terrain. In addition, while active, he can cross any solid surface, even if it would normally not support his weight. This does not allow him to walk on liquids. A monk must be at least 8th level and have the feather balance ki power before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 550,
+    "record_key": "Unchained Ki Power ~ Light Steps"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

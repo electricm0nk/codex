@@ -1,0 +1,4 @@
+# scripts/pcgen-run-character.sh -c <file> -e stat.txt.ftl (STAT.0..5), the real engine at the pin
+pf_Paladin: STR=18 DEX=12 CON=14 INT=8 WIS=12 CHA=14 
+pf_Rogue: STR=12 DEX=22 CON=11 INT=15 WIS=12 CHA=14 
+pf_Cleric: STR=10 DEX=10 CON=11 INT=10 WIS=18 CHA=17 

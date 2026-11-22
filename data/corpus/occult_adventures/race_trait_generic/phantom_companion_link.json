@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Phantom Companion ~ Link",
+    "name": "Link",
+    "description": "A spiritualist and her phantom share a mental link that allows for communication across distances (as long as they are on the same plane). This communication is a free action that can be performed even when it isn't the spiritualist's turn, but the spiritualist and the phantom must both be conscious to communicate in this way. This allows the spiritualist to give orders to her phantom at any time. Magic items interfere with a spiritualist's connection to her phantom; as a result, the spiritualist and her phantom share magic item slots. For example, if the spiritualist is wearing a magic ring, her phantom can wear only one magic ring. In the case of a conf lict, the items worn by the spiritualist remain active, and those worn by the phantom become dormant. The phantom must possess the appropriate appendages to utilize a magic item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Companion ~ Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phantom Companion.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spiritualist and her phantom share a mental link that allows for communication across distances (as long as they are on the same plane). This communication is a free action that can be performed even when it isn't the spiritualist's turn, but the spiritualist and the phantom must both be conscious to communicate in this way. This allows the spiritualist to give orders to her phantom at any time. Magic items interfere with a spiritualist's connection to her phantom; as a result, the spiritualist and her phantom share magic item slots. For example, if the spiritualist is wearing a magic ring, her phantom can wear only one magic ring. In the case of a conf lict, the items worn by the spiritualist remain active, and those worn by the phantom become dormant. The phantom must possess the appropriate appendages to utilize a magic item."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 8,
+    "record_key": "Phantom Companion ~ Link"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

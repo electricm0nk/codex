@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cameroceras ~ Pressure Adaptation",
+    "delivery": "Extraordinary",
+    "description": "A cameroceras suffers no pressure damage at depths less than 1 mile, even if it is instantaneously moved to a different pressure.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:cameroceras_pressure_adaptation",
+    "name": "Pressure Adaptation",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cameroceras suffers no pressure damage at depths less than 1 mile, even if it is instantaneously moved to a different pressure."
+      },
+      {
+        "key": "KEY",
+        "value": "Cameroceras ~ Pressure Adaptation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CamerocerasRacialTrait"
+      }
+    ],
+    "source_page": "p.49",
+    "traits": [
+      "CamerocerasRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Cameroceras ~ Pressure Adaptation",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

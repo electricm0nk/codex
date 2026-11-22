@@ -1,0 +1,1333 @@
+[
+ {
+  "name": "Rockerboy Streetrat skill list",
+  "role": "Rockerboy",
+  "source_page": "p087",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 4,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Composition",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Melee Weapon",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Personal Grooming",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Play Instrument (choose 1)",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Streetwise",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Wardrobe & Style",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p089"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Rockerboy Role (p087); the 4 levels of Language from Cultural Origin are on top of these.",
+  "transcription_note": "Levels read from the p087/p088 page images (grid columns interleave in the text layer). The printed grid names the (x2) skills without the marker except Electronics/Security Tech; `x2` is set from the master skill list (p083-p086: Pilot Air Vehicle, Martial Arts, Autofire, Heavy Weapons, Demolitions, Electronics/Security Tech, Paramedic). Each list costs 86 points by Level x1 (x2 skills Level x2), Cultural Language excluded.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Solo Streetrat skill list",
+  "role": "Solo",
+  "source_page": "p087",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Autofire",
+    "level": 6,
+    "basic": false,
+    "x2": true
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Interrogation",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Melee Weapon",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Resist Torture/Drugs",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Shoulder Arms",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Tactics",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p089"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Solo Role (p087); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Netrunner Streetrat skill list",
+  "role": "Netrunner",
+  "source_page": "p087",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Basic Tech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Conceal/Reveal Object",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Cryptography",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Cybertech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Electronics/Security Tech",
+    "level": 6,
+    "basic": false,
+    "x2": true
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Library Search",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p089"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Netrunner Role (p087); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Tech Streetrat skill list",
+  "role": "Tech",
+  "source_page": "p087",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Basic Tech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Cybertech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Electronics/Security Tech",
+    "level": 6,
+    "basic": false,
+    "x2": true
+   },
+   {
+    "name": "Land Vehicle Tech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Shoulder Arms",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Science (choose 1)",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Weaponstech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p089"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Tech Role (p087); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Medtech Streetrat skill list",
+  "role": "Medtech",
+  "source_page": "p087",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Basic Tech",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Cybertech",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Deduction",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Paramedic",
+    "level": 6,
+    "basic": false,
+    "x2": true
+   },
+   {
+    "name": "Resist Torture/Drugs",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Science (choose 1)",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Shoulder Arms",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p089"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Medtech Role (p087); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Media Streetrat skill list",
+  "role": "Media",
+  "source_page": "p088",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Bribery",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Composition",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Deduction",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Library Search",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Lip Reading",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Photography/Film",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p090"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Media Role (p088); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Lawman Streetrat skill list",
+  "role": "Lawman",
+  "source_page": "p088",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Autofire",
+    "level": 6,
+    "basic": false,
+    "x2": true
+   },
+   {
+    "name": "Criminology",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Deduction",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Interrogation",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Shoulder Arms",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Tracking",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p090"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Lawman Role (p088); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Exec Streetrat skill list",
+  "role": "Exec",
+  "source_page": "p088",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Accounting",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Bureaucracy",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Business",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Deduction",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Lip Reading",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Personal Grooming",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p090"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Exec Role (p088); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Fixer Streetrat skill list",
+  "role": "Fixer",
+  "source_page": "p088",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 4,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 4,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Bribery",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Business",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Forgery",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Pick Lock",
+    "level": 4,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Streetwise",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Trading",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p090"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Fixer Role (p088); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ },
+ {
+  "name": "Nomad Streetrat skill list",
+  "role": "Nomad",
+  "source_page": "p088",
+  "skills": [
+   {
+    "name": "Athletics",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Brawling",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Concentration",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Conversation",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Education",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Evasion",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "First Aid",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Human Perception",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Language (Streetslang)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Local Expert (Your Home)",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Perception",
+    "level": 4,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Persuasion",
+    "level": 2,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Stealth",
+    "level": 6,
+    "basic": true,
+    "x2": false
+   },
+   {
+    "name": "Animal Handling",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Drive Land Vehicle",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Handgun",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Melee Weapon",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Tracking",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Trading",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   },
+   {
+    "name": "Wilderness Survival",
+    "level": 6,
+    "basic": false,
+    "x2": false
+   }
+  ],
+  "edgerunner_list_pages": [
+   "p090"
+  ],
+  "cultural_language_free_rank": 4,
+  "text": "Streetrat skills and levels for the Nomad Role (p088); the 4 levels of Language from Cultural Origin are on top of these.",
+  "kind": "role_skill_list"
+ }
+]

@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Div ~ Unchained Eidolon LVL20",
+    "delivery": null,
+    "description": "At 20th level, div eidolons gain the ability to use greater teleport at will, as per the spell (caster level 14th), except they can teleport only themselves and up to 50 pounds of carried objects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl20",
+    "name": "Eidolon Progession Lv.20",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, div eidolons gain the ability to use greater teleport at will, as per the spell (caster level 14th), except they can teleport only themselves and up to 50 pounds of carried objects."
+      },
+      {
+        "key": "KEY",
+        "value": "Div ~ Unchained Eidolon LVL20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DivLVL20"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "DivLVL20"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 152,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Div ~ Unchained Eidolon LVL20",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

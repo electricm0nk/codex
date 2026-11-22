@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Jutte
+Jutte																					PROFICIENCY:WEAPON|Jutte								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.Light.Finesseable.Martial.Bludgeoning.Monk																														COST:8	WT:1										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.30

@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unnatural Aura",
+    "delivery": "Supernatural",
+    "description": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC 25 Handle Animal, Ride, or wild empathy check.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:unnatural_aura",
+    "name": "Unnatural Aura",
+    "owners": [
+      "bestiary_4:monster:colossus_flesh"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft.)|UnnaturalAuraRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnaturalAuraRange|30"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnnaturalAuraRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC 25 Handle Animal, Ride, or wild empathy check."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 74,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Unnatural Aura",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Sword Cane",
+    "name": "Sword Cane",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGEMULT:2",
+          "-0.5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sword Cane"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Standard.Piercing.Sword"
+      },
+      {
+        "key": "COST",
+        "value": "45"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_sword_cane.txt",
+    "record_key": "Sword Cane"
+  }
+}

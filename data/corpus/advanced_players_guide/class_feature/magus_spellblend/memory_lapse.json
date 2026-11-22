@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Memory Lapse",
+    "name": "Memory Lapse",
+    "class": "Magus",
+    "description": "You cause the target to forget what happened from the casting of the spell back to the beginning of its last turn. This may allow a retry on a Diplomacy, Intimidate, or opposed skill check, though only with respect to the target, not other creatures that may be present.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Memory Lapse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=1|Memory Lapse"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Memory Subdomain=2"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the target to forget what happened from the casting of the spell back to the beginning of its last turn. This may allow a retry on a Diplomacy, Intimidate, or opposed skill check, though only with respect to the target, not other creatures that may be present.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3596,
+    "record_key": "Magus Spellblend ~ Memory Lapse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

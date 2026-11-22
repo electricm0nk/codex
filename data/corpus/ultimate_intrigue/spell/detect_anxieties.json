@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as detect thoughts except that you sense significant anxieties of creatures with an Intelligence score of 1 or higher, regardless of whether they are conscious or not. Instead of Intelligence, the second round of concentration reveals each mind's Wisdom score and current degree of fear (shaken, frightened, panicked, cowering, or paralyzed with fear). If the highest Wisdom score is 26 or higher (and at least 10 points higher than your own Wisdom score), you are stunned for 1 round and the spell ends. Instead of surface thoughts, the third round of concentration reveals the most pressing current anxiety of any mind in the area (Will negates). Presenting a creature with the threat of its anxiety grants you a +2 bonus (or higher, at the GM's discretion) on checks to Intimidate that creature.|PRERULE:1,DisplayFullSpell",
+    "key": "Detect Anxieties",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Medium,Mesmerist,Psychic=2|Bard,Cleric,Inquisitor,Paladin,Sorcerer,Spiritualist,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Learn what makes creatures anxious.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as detect thoughts except that you sense significant anxieties of creatures with an Intelligence score of 1 or higher, regardless of whether they are conscious or not. Instead of Intelligence, the second round of concentration reveals each mind's Wisdom score and current degree of fear (shaken, frightened, panicked, cowering, or paralyzed with fear). If the highest Wisdom score is 26 or higher (and at least 10 points higher than your own Wisdom score), you are stunned for 1 round and the spell ends. Instead of surface thoughts, the third round of concentration reveals the most pressing current anxiety of any mind in the area (Will negates). Presenting a creature with the threat of its anxiety grants you a +2 bonus (or higher, at the GM's discretion) on checks to Intimidate that creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration, up to (CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "60 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Detect Anxieties"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Cone-shaped emanation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Detect Anxieties",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

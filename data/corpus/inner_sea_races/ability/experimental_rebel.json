@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Experimental Rebel",
+    "name": "Experimental Rebel",
+    "description": "You gain a +2 trait bonus on saving throws against spells and abilities created by elves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Experimental Rebel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Half-Elf Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Experimental Rebel]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 trait bonus on saving throws against spells and abilities created by elves."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 on saves vs. spells and abilities created by elves."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 57,
+    "record_key": "Trait ~ Experimental Rebel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

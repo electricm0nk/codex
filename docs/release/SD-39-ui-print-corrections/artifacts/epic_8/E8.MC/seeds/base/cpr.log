@@ -1,0 +1,9 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-e8mc-base/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 43.08s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-e8mc-base/debug/deps/codex_desktop-688ade94d133d7d9)
+
+running 1 test
+test cpr_sheet_print::tests::every_rule_line_prints_with_its_resolved_numbers ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1233 filtered out; finished in 0.07s
+

@@ -1,0 +1,356 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_1/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Devil (Apostate)",
+      "name": "Devil, Apostate (Deimavigga)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+      "challenge_rating": "17",
+      "monster_class": "Outsider (Fort/Will):18",
+      "source_page": "p.54",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 20
+        },
+        {
+          "ability": "CON",
+          "amount": 18
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 18
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Apostate Devil ~ Boundless Reach",
+        "Apostate Devil ~ Evangelization",
+        "Apostate Devil ~ Indomitable Oration",
+        "Apostate Devil ~ Malleable Form",
+        "Apostate Devil ~ Ohrwurm",
+        "Apostate Devil ~ Spell-Like Abilities",
+        "Apostate Devil ~ Summon Devil",
+        "Apostate Devil ~ Wisdom Drain"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Regeneration"
+      ],
+      "source_file": "botd1_races",
+      "source_line": 9
+    },
+    {
+      "key": "Devil (Heresy)",
+      "name": "Devil, Heresy (Ayngavhaul)",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+      "challenge_rating": "12",
+      "monster_class": "Outsider (Fort/Will):13",
+      "source_page": "p.56",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "INT",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Heresy Devil ~ Blasphemous Bile",
+        "Heresy Devil ~ Corpulence",
+        "Heresy Devil ~ Devil Summoner",
+        "Heresy Devil ~ Searing Word",
+        "Heresy Devil ~ Spell-Like Abilities",
+        "Heresy Devil ~ Summon Devil",
+        "Heresy Devil ~ Throne of Skulls"
+      ],
+      "external_ability_refs": [
+        "Fast Healing",
+        "Flight Maneuverability"
+      ],
+      "source_file": "botd1_races",
+      "source_line": 10
+    },
+    {
+      "key": "Devil (Lesser Host)",
+      "name": "Devil, Lesser Host (Gaav)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+      "challenge_rating": "3",
+      "monster_class": "Outsider (Fort/Ref):4",
+      "source_page": "p.58",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Lesser Host Devil ~ Noxious Breath",
+        "Lesser Host Devil ~ Shared Senses",
+        "Lesser Host Devil ~ Spell-Like Abilities",
+        "Lesser Host Devil ~ Summon Devil",
+        "Lesser Host Devil ~ Superior Grappler",
+        "Lesser Host Devil ~ Swarming"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "source_file": "botd1_races",
+      "source_line": 11
+    },
+    {
+      "key": "Devil (Greater Host)",
+      "name": "Devil, Greater Host (Magaav)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+      "challenge_rating": "6",
+      "monster_class": "Outsider (Fort/Ref):7",
+      "source_page": "p.58",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "2d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Greater Host Devil ~ Infernal Wound",
+        "Greater Host Devil ~ Master Grappler",
+        "Greater Host Devil ~ Noxious Breath",
+        "Greater Host Devil ~ Rend",
+        "Greater Host Devil ~ Shared Senses",
+        "Greater Host Devil ~ Spell-Like Abilities",
+        "Greater Host Devil ~ Summon Devil"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "source_file": "botd1_races",
+      "source_line": 12
+    },
+    {
+      "key": "Devil (Warmonger)",
+      "name": "Devil, Warmonger (Levaloch)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+      "challenge_rating": "7",
+      "monster_class": "Outsider (Fort/Ref):8",
+      "source_page": "p.60",
+      "natural_attacks": [
+        {
+          "name": "Leg",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Warmonger Devil ~ Construct Form",
+        "Warmonger Devil ~ Hellstrider",
+        "Warmonger Devil ~ Merciless Blow",
+        "Warmonger Devil ~ Phalanx",
+        "Warmonger Devil ~ Skills",
+        "Warmonger Devil ~ Spell-Like Abilities",
+        "Warmonger Devil ~ Stability",
+        "Warmonger Devil ~ Summon Devil"
+      ],
+      "external_ability_refs": [
+        "Warmonger Devil ~ Trample"
+      ],
+      "source_file": "botd1_races",
+      "source_line": 13
+    }
+  ]
+}

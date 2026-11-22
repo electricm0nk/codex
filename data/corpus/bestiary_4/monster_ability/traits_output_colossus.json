@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Colossus",
+    "delivery": "Extraordinary",
+    "description": "A colossus exudes a constant antimagic field, as the spell, with a radius equal to its reach. Typically, this field ignores specified schools of magic or spell descriptors. &nl; Colossi have the ability to transform themselves into some other shape. &nl; As a swift action, a colossus can expend one use of mythic power to cast or activate one of its spell-like abilities as a free action. &nl; When a colossus is in its normal form, as a swift action it can make a single melee attack at its highest base attack against a target three or more size categories smaller than the colossus and then attempt to grapple the target, pinning it. &nl; A colossus can be created only by a creator with a mythic tier or rank equal to or greater than that of the colossus it is attempting to create. &nl; A colossus can expend one use of mythic power as swift action to double its damage resistance for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_colossus",
+    "name": "Colossus Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A colossus can be created only by a creator with a mythic tier or rank equal to or greater than that of the colossus it is attempting to create."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A colossus can expend one use of mythic power as swift action to double its damage resistance for 1 round."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; As a swift action, a colossus can expend one use of mythic power to cast or activate one of its spell-like abilities as a free action."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Colossi have the ability to transform themselves into some other shape."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; When a colossus is in its normal form, as a swift action it can make a single melee attack at its highest base attack against a target three or more size categories smaller than the colossus and then attempt to grapple the target, pinning it."
+      },
+      {
+        "key": "DESC",
+        "value": "A colossus exudes a constant antimagic field, as the spell, with a radius equal to its reach. Typically, this field ignores specified schools of magic or spell descriptors."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Colossus"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Colossus",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

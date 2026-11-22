@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You adopt the spirit's mannerisms, disturbing others and making it harder to disguise the possession. You take a -4 penalty on Diplomacy and Disguise checks.",
+    "key": "Possessed Corruption ~ Contaminated Personality Stain",
+    "name": "Contaminated Personality Stain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Contaminated Personality Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedContaminatedPersonalityStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DESC",
+        "value": "You adopt the spirit's mannerisms, disturbing others and making it harder to disguise the possession. You take a -4 penalty on Diplomacy and Disguise checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Disguise|-4"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 643,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Contaminated Personality Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

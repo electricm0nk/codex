@@ -1,0 +1,36 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Racial Traits ~ Oread",
+    "name": "Racial Traits ~ Oread",
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Oread_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oread Racial Trait|AUTOMATIC|Oread ~ Ability Scores|PREVAREQ:Oread_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Oread",
+    "sha256": "c5a8280f0e6fdcb5a3786cbbbb42f924827c09bc55840daa90e463992687336f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

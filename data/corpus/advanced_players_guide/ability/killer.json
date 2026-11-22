@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Killer",
+    "name": "Killer",
+    "description": "You made your first kill at a very young age and found the task of war or murder to your liking. You deal additional damage equal to your weapon's critical hit modifier when you score a successful critical hit with a weapon; this additional damage is added to the final total, and is not multiplied by the critical hit multiple itself. This extra damage is a trait bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.CombatTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Killer],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.CombatTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You made your first kill at a very young age and found the task of war or murder to your liking. You deal additional damage equal to your weapon's critical hit modifier when you score a successful critical hit with a weapon; this additional damage is added to the final total, and is not multiplied by the critical hit multiple itself. This extra damage is a trait bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 21,
+    "record_key": "Trait ~ Killer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

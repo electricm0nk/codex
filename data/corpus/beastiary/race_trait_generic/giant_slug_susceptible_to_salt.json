@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Slug ~ Susceptible to Salt",
+    "name": "Susceptible to Salt",
+    "description": "A handful of salt burns a giant slug as if it were a flask of acid, causing 1d6 points of damage per use.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Slug ~ Susceptible to Salt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQualit.Extraordinary.Weakness"
+      },
+      {
+        "key": "DESC",
+        "value": "A handful of salt burns a giant slug as if it were a flask of acid, causing 1d6 points of damage per use."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1130,
+    "record_key": "Giant Slug ~ Susceptible to Salt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

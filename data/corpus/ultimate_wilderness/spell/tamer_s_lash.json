@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A 15-foot-long whip of sonic energy springs from your hand, delivering a loud crack when you strike with it. The tamer's lash acts as a whip that deals 1d4 points of sonic damage on a hit, but it has no physical substance and you cannot use it to perform combat maneuvers, nor can it be sundered or disarmed. If you strike an animal with the tamer's lash, the animal must succeed at a Will saving throw or be unable to attack you for 1d3 rounds. Furthermore, if the whipped animal starts its turn unable to attack you as a result of this spell and it is within 30 feet of you, it must spend its first action moving away from you, if it is able. Combat-trained animals, animal companions, and animals with Hit Dice in excess of (CASTERLEVEL+4) gain a +4 circumstance bonus on their saves to avoid being intimidated in this way. This intimidation effect is a mind-affecting fear effect.",
+    "key": "Tamer's Lash",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Bloodrager,Magus,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "A 15-foot-long whip of sonic energy springs from your hand, delivering a loud crack when you strike with it. The tamer's lash acts as a whip that deals 1d4 points of sonic damage on a hit, but it has no physical substance and you cannot use it to perform combat maneuvers, nor can it be sundered or disarmed. If you strike an animal with the tamer's lash, the animal must succeed at a Will saving throw or be unable to attack you for 1d3 rounds. Furthermore, if the whipped animal starts its turn unable to attack you as a result of this spell and it is within 30 feet of you, it must spend its first action moving away from you, if it is able. Combat-trained animals, animal companions, and animals with Hit Dice in excess of (CASTERLEVEL+4) gain a +4 circumstance bonus on their saves to avoid being intimidated in this way. This intimidation effect is a mind-affecting fear effect.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a whip made of sound that damages foes and can frighten animals.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Sonic"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "A whip of magical sound"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Tamer's Lash",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

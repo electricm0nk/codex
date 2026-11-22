@@ -1,0 +1,10 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error[E0432]: unresolved import `codex_ingest::pcgen_import::sheet_rule::formula_system`
+  --> crates/codex-ingest/tests/sf_formula_system.rs:15:45
+   |
+15 | use codex_ingest::pcgen_import::sheet_rule::formula_system::{
+   |                                             ^^^^^^^^^^^^^^ could not find `formula_system` in `sheet_rule`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `codex-ingest` (test "sf_formula_system") due to 1 previous error
+exit=101

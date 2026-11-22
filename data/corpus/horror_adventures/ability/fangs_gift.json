@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ Fangs Gift",
+    "name": "Fangs Gift",
+    "description": "You can, as a swift action, grow fangs that grant you a bite attack. This is a primary natural attack that deals 1d6 points of piercing damage if your size is Medium (1d4 if Small). You can dismiss the fangs as a move action. You can drain blood with your bite from a helpless creature as a standard action, or a pinned creature as a free action once per round immediately after succeeding at a combat maneuver check to pin the creature or maintain your pin. Each time you drain blood, you deal 1 point of Constitution damage. This counts toward the feeding you must do to avoid your corruption progressing; you needn't entirely drain and kill the creature. Draining blood changes your alignment only if you feed on an unwilling innocent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Fangs Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismFangsGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a swift action, grow fangs that grant you a bite attack. This is a primary natural attack that deals 1d6 points of piercing damage if your size is Medium (1d4 if Small). You can dismiss the fangs as a move action. You can drain blood with your bite from a helpless creature as a standard action, or a pinned creature as a free action once per round immediately after succeeding at a combat maneuver check to pin the creature or maintain your pin. Each time you drain blood, you deal 1 point of Constitution damage. This counts toward the feeding you must do to avoid your corruption progressing; you needn't entirely drain and kill the creature. Draining blood changes your alignment only if you feed on an unwilling innocent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 910,
+    "record_key": "Vampirism Corruption ~ Fangs Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

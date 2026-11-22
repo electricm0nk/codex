@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3020.0,
+    "description": "A stair-step pattern of stars wraps around the outside of this dark blue ring. In addition to the powers of a ring of feather falling, a ring of stairs and stars allows the wearer to use Magic Missile once per day, with the missiles taking the shape of shooting stars. As a standard action, the wearer may create an illusory butterfly that flits about within the wearer's square for 1 minute before fading away.",
+    "key": "Ring Of Stairs And Stars",
+    "name": "Ring Of Stairs And Stars",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "SLOT_Ring.Ring.Magic"
+      },
+      {
+        "key": "COST",
+        "value": "3020"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.259"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring Of Stairs And Stars|TIMES=ATWILL|CASTERLEVEL=3|Feather Fall"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring Of Stairs And Stars|TIMES=1|CASTERLEVEL=3|Magic Missile"
+      },
+      {
+        "key": "DESC",
+        "value": "A stair-step pattern of stars wraps around the outside of this dark blue ring. In addition to the powers of a ring of feather falling, a ring of stairs and stars allows the wearer to use Magic Missile once per day, with the missiles taking the shape of shooting stars. As a standard action, the wearer may create an illusory butterfly that flits about within the wearer's square for 1 minute before fading away."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 166,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Ring Of Stairs And Stars",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

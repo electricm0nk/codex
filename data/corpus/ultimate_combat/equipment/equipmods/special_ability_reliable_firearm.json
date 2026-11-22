@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm.",
+    "key": "Special Ability ~ Reliable ~ Firearm",
+    "name": "Reliable",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Reliable ~ Firearm"
+      },
+      {
+        "key": "TYPE",
+        "value": "OneHandedFirearm.TwoHandedFirearm"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "SPROP",
+        "value": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst",
+    "record_key": "Special Ability ~ Reliable ~ Firearm",
+    "sha256": "74c6f604d044b7bd0487c13c03d4aefad9eab3f2f7b814b54d424da334adedcc"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

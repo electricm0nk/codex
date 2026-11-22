@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Reincarnated",
+    "name": "Reincarnated",
+    "description": "You lived a previous life as someone-or something- else. For you, life and death are a cycle, and you have no fear of death. You gain a +2 trait bonus on saving throws against fear and death effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Reincarnated"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Reincarnated],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You lived a previous life as someone-or something- else. For you, life and death are a cycle, and you have no fear of death. You gain a +2 trait bonus on saving throws against fear and death effects."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 trait bonus on saving throws against fear and death effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 90,
+    "record_key": "Trait ~ Reincarnated"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

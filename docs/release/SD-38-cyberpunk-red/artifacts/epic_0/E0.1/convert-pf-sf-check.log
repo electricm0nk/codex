@@ -1,0 +1,2 @@
+convert_sf.log:records=8582 converted=8582 refused=0 rules=11320 var_tables=238 verdict=PASS (29.7s)
+convert_pf.log:records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (414.2s)

@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Petitioner ~ The Shapeless",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:petitioner_the_shapeless",
+    "name": "The Shapeless",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Petitioner ~ The Shapeless"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CN"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Incorporeal|No Strength Score"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Petitioner Slam"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Petitioner"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Petitioner"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 947,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Petitioner ~ The Shapeless",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

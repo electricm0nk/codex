@@ -1,0 +1,13 @@
+App data root: /tmp/codex-ui-smoke-sd38-e4_8-gaSeF5/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd38-e4.8'...
+FAIL  sheet-cyberpunk-streetrat-solo  -- expected string missing: 'Cash	500'; expected string missing: 'Basic VH Pistol Ammunition	30'; expected string missing: 'Basic Rifle Ammunition	70'; forbidden string present: 'cpr.cash'; forbidden string present: 'cpr.ammo.'; forbidden string present: 'OTHER TOTALS'
+FAIL  sheet-cyberpunk-edgerunner-netrunner  -- expected string missing: 'Cash	500'; expected string missing: 'Basic VH Pistol Ammunition	30'; forbidden string present: 'cpr.cash'; forbidden string present: 'cpr.ammo.'; forbidden string present: 'OTHER TOTALS'
+FAIL  sheet-cyberpunk-complete-package-fixer  -- expected string missing: 'Cash	1450'; forbidden string present: 'cpr.cash'; forbidden string present: 'OTHER TOTALS'
+FAIL  sheet-cyberpunk-critical-tick  -- target not found: 'Critical Injuries to the Body: Collapsed Lung (no element named 'Critical Injuries to the Body: Collapsed Lung')' at row step 21/27 (click "Critical Injuries to the Body: Collapsed Lung")
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+0/4 green, 4 red, 0 blocked, 0 manual, 0 not-run (M = 4 rows)
+Cleanup: 4 character(s) created across 4 row(s) with a cleanup record, 4 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e4_8-gaSeF5/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/docs/release/SD-38-cyberpunk-red/artifacts/epic_4/E4.8/red/ui-smoke
+Removed isolated app-data root /tmp/codex-ui-smoke-sd38-e4_8-gaSeF5 (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

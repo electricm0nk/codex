@@ -1,0 +1,58 @@
+[
+  {
+    "source_page": "p231",
+    "name": "Addiction",
+    "kind": "therapy",
+    "description": "One week of intensive psychotherapy combined with a flight of anti-addiction drugs in a safe environment.",
+    "cost_eb": 1000,
+    "price_category": "V. Expensive",
+    "medtech_dv": 15,
+    "materials_eb": 500,
+    "materials_price_category": "Expensive",
+    "duration": "1 week",
+    "humanity_regained_dice": null,
+    "max_humanity_penalty": null,
+    "text": "Patient is freed of one of their addictions. However, whenever they roll against the Secondary Effect of the source of their addiction for 1 year after getting clean, they automatically fail the roll.",
+    "transcription_note": "p231 table checked against the page image (150 dpi crop of the whole table): the max-Humanity penalty sentences print in the Effect cell of the Standard and Extreme rows only, not in the Addiction row (D-5 precondition). The extract interleaves Effect with the Medical Tech DV column; the values here were read from the image."
+  },
+  {
+    "source_page": "p231",
+    "name": "Standard Humanity Loss",
+    "kind": "therapy",
+    "description": "One week of intensive psychotherapy combining stress and anger management counseling, hypnosis, and minor direct brain reprogramming, aided by pharmaceuticals, and a safe environment which may be induced by therapeutic braindance.",
+    "cost_eb": 500,
+    "price_category": "Expensive",
+    "medtech_dv": 15,
+    "materials_eb": 100,
+    "materials_price_category": "Premium",
+    "duration": "1 week",
+    "humanity_regained_dice": "2d6",
+    "max_humanity_penalty": {
+      "per_cyberware": 2,
+      "per_borgware": 4,
+      "zero_humanity_loss_excluded": true
+    },
+    "text": "Patient regains 2d6 of their lost Humanity. Humanity cannot be fully regained without the removal of cyberware. Each piece of cyberware will decrease your maximum Humanity by 2. Each piece of borgware cyberware lowers maximum Humanity by 4 instead. Cyberware with 0 Humanity Loss on installation will not decrease your maximum Humanity.",
+    "transcription_note": "p231 table checked against the page image (150 dpi crop of the whole table): the max-Humanity penalty sentences print in the Effect cell of the Standard and Extreme rows only, not in the Addiction row (D-5 precondition). The extract interleaves Effect with the Medical Tech DV column; the values here were read from the image."
+  },
+  {
+    "source_page": "p231",
+    "name": "Extreme Humanity Loss",
+    "kind": "therapy",
+    "description": "One week of intensive psychotherapy, and sessions focused on direct and extreme brain reprogramming, only made possible by state-of-the-art pharmaceuticals and a safe environment which may be induced by therapeutic braindance.",
+    "cost_eb": 1000,
+    "price_category": "V. Expensive",
+    "medtech_dv": 17,
+    "materials_eb": 500,
+    "materials_price_category": "Expensive",
+    "duration": "1 week",
+    "humanity_regained_dice": "4d6",
+    "max_humanity_penalty": {
+      "per_cyberware": 2,
+      "per_borgware": 4,
+      "zero_humanity_loss_excluded": true
+    },
+    "text": "Patient regains 4d6 of their lost Humanity. Humanity cannot be fully regained without the removal of cyberware. Each piece of cyberware will decrease your maximum Humanity by 2. Each piece of borgware cyberware lowers maximum Humanity by 4 instead. Cyberware with 0 Humanity Loss on installation will not decrease your maximum Humanity.",
+    "transcription_note": "p231 table checked against the page image (150 dpi crop of the whole table): the max-Humanity penalty sentences print in the Effect cell of the Standard and Extreme rows only, not in the Addiction row (D-5 precondition). The extract interleaves Effect with the Medical Tech DV column; the values here were read from the image."
+  }
+]

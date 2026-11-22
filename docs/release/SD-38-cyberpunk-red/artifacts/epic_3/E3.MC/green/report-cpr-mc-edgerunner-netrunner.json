@@ -1,0 +1,14 @@
+{
+  "character": "CPR MC Edgerunner Netrunner",
+  "explanations": 214,
+  "printedLines": 41,
+  "computedCellsShown": 214,
+  "computedTableRows": 115,
+  "computedTableRowsOnLiveSheet": 115,
+  "liveLinesWithADigit": 131,
+  "liveDigitLinesInExpectedSheet": 131,
+  "cellsNotEqualToTheirRow": 0,
+  "missA": [],
+  "missB": [],
+  "missC": []
+}

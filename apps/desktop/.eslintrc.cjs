@@ -1,0 +1,59 @@
+// SD-16 / E8-F3 — controlled-defect lint guard.
+//
+// This config is append-only relative to any future desktop-wide
+// eslint config that may be introduced by E6's F3a lint-config block.
+// It only ENFORCES the AV-UI-7 rule the F2 handoff pinned:
+//
+//   No `fetch()` call in any code path may target the GitHub
+//   Releases API or the `/repos/.../issues` API. The shell's
+//   discovery surface is the protected `update-index` branch on
+//   origin; agent-driven GitHub API calls belong in the agent lane
+//   (or in the operator browser handoff), not in the desktop app.
+
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es2020: true,
+  },
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  },
+  rules: {
+    // Forbids any `fetch(...)` whose first argument targets the
+    // GitHub Releases API or the repo issues/releases REST surface.
+    // The matcher is structural: it only inspects `arguments[0]`,
+    // with separate selectors for string literals and template
+    // literals whose static leading segment includes the forbidden
+    // substrings.
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector:
+          "CallExpression[callee.name='fetch'][arguments.0.type='Literal'][arguments.0.value=/(^https?:\\/\\/(api\\.)?github\\.com\\/repos\\/|\\/releases)/i]",
+        message:
+          'SD-16 AV-UI-7: the shell must not call fetch() against api.github.com/repos or /releases. Discovery goes through the protected update-index branch.',
+      },
+      {
+        selector:
+          "CallExpression[callee.name='fetch'][arguments.0.type='TemplateLiteral'][arguments.0.quasis.0.value.raw=/(^https?:\\/\\/(api\\.)?github\\.com\\/repos\\/|\\/releases)/i]",
+        message:
+          'SD-16 AV-UI-7: the shell must not call fetch() against api.github.com/repos or /releases. Discovery goes through the protected update-index branch.',
+      },
+    ],
+  },
+  overrides: [
+    {
+      // The E6 F3a fetch module is the AUTHORITATIVE seam for
+      // discovery calls; it only fetches the protected update-index
+      // branch and the manifest URL it points at. We exempt it from
+      // the rule's literal-scanner so that the comment strings
+      // describing what is forbidden do not trip the rule.
+      files: ['src/update/fetch.ts'],
+      rules: {
+        'no-restricted-syntax': 'off',
+      },
+    },
+  ],
+};

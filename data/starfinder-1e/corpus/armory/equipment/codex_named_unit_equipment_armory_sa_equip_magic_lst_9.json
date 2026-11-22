@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (equipment_armory_sa_equip_magic_lst_9)",
+    "name": "Codex-Named Unit (equipment_armory_sa_equip_magic_lst_9)",
+    "type": "Magic.WornMagic"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "armory:sa_equip_magic.lst:9",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "starfinder/paizo/armory/sa_equip_magic.lst",
+    "record_key": "Codex-Named Unit (equipment_armory_sa_equip_magic_lst_9)",
+    "sha256": "57b21ce2b1389190406761c6638b224968f0e1ffb0c1f63a3278dedcd1f35694"
+  },
+  "unit_id": "armory:equipment:starfinder_backpack"
+}

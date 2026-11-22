@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 6000.0,
+    "description": "If the possessor learns the proper tune, once per day he can use these pipes to summon 1d4+1 dire rats as if using Summon Monster III. The summoned dire rats also have the swarming racial trait, and count as ratfolk for the purposes of the ratfolk's swarming racial trait.",
+    "key": "Pipes of the Warren Guardian",
+    "name": "Pipes of the Warren Guardian",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "SPROP",
+        "value": "If the possessor learns the proper tune, once per day he can use these pipes to summon 1d4+1 dire rats as if using Summon Monster III. The summoned dire rats also have the swarming racial trait, and count as ratfolk for the purposes of the ratfolk's swarming racial trait."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 67,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Pipes of the Warren Guardian",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "data": {
+    "key": "Critical Cure",
+    "category": "WoundThreshold",
+    "name": "Critical Cure",
+    "description": "Your healing is more effective if your patient is badly injured.",
+    "source_page": "P.137"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 25,
+    "record_key": "Critical Cure"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

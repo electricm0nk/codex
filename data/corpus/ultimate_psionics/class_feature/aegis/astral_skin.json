@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Astral Skin",
+    "name": "Astral Skin",
+    "class": "Aegis",
+    "description": "Treat like psychoactive skin.  Gain the following customizations for free: speed (2), nimble",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Astral Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat like psychoactive skin.  Gain the following customizations for free: speed (2), nimble"
+      },
+      {
+        "key": "DESC",
+        "value": "evasion|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "improved evasion|PREVARGT:AstralSuitLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Nimble|Aegis ~ Speed|Aegis ~ Speed 2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Evasion|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Improved Evasion|PREVARGT:AstralSuitLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 43,
+    "record_key": "Aegis ~ Astral Skin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

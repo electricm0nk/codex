@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Race Subtype ~ Sahkil",
+    "name": "Sahkil Traits",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Subtype ~ Sahkil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Infernal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traits Output ~ Sahkil|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=SahkilSubtypeTrait|Immunity to Death Effects|Immunity to Fear|Immunity to Disease|Immunity to Poison|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 92,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Race Subtype ~ Sahkil",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:sr"
+  ]
+}

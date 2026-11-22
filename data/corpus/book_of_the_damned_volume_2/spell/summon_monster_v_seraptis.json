@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Summon Monster V (Seraptis)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "A creature with the summon ability can summon other specific creatures of its kind much as though casting a summon monster spell, but it usually has only a limited chance of success (as specified in the creature's entry). Roll d%%: On a failure, no creature answers the summons. Summoned creatures automatically return whence they came after 1 hour. A creature summoned in this way cannot use any spells or spell-like abilities that require material components costing more than 1 gp unless those components are supplied, nor can it use its own summon ability for 1 hour. An appropriate spell level is given for each summoning ability for purposes of Will saves, caster level checks, and concentration checks. No experience points are awarded for defeating summoned monsters."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+    "sha256": "cec56af35e0cda5fa61a508cd76ff21a42f9720dd11c459dec81cc3279d094ea",
+    "line": 25,
+    "record_key": "Summon Monster V (Seraptis)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

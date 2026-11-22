@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Racial Subtype ~ Savage Elf",
+    "name": "Savage Elf",
+    "description": "In lands where every day is a constant struggle to survive and the niceties of civilization are rare, elves adapt to depend on swift strikes and lifelong vigilance to keep their families alive. These elves have the eternal grudge and fleet-footed alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Racial Subtype ~ Savage Elf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf Racial Subtype ~ Savage Elf],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true,Elf_ReplaceKeenSenses=true,Elf_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "In lands where every day is a constant struggle to survive and the niceties of civilization are rare, elves adapt to depend on swift strikes and lifelong vigilance to keep their families alive. These elves have the eternal grudge and fleet-footed alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Savage Elf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Elf Racial Trait|NORMAL|Elf ~ Eternal Grudge|Elf ~ Fleet-Footed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2163,
+    "record_key": "Elf Racial Subtype ~ Savage Elf"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

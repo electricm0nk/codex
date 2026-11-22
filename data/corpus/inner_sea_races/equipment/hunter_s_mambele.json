@@ -1,0 +1,78 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 4.0,
+    "description": null,
+    "key": "Hunter's Mambele",
+    "name": "Hunter's Mambele",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Hunga Munga"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Magic.Resizable.Ranged.Thrown.Martial.Specific.Piercing.BladeLight"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|17000.Special Ability ~ +1 ~ Weapon.Special Ability ~ Huntsman ~ Weapon.Special Ability ~ Returning ~ Thrown.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "RANGE",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+    "record_key": "Hunter's Mambele",
+    "sha256": "8bab5c93e80b95941384620665b3bcc691bebf1b540dd94323573020b736d0a7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

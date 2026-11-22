@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Quilted Cloth
+Quilted Cloth											PROFICIENCY:ARMOR|Quilted Cloth	TYPE:Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal		COST:100	WT:15								ACCHECK:0		EQMOD:Material ~ Cloth																		MAXDEX:8		SOURCEPAGE:p.180	SPELLFAILURE:10																																																																						BONUS:COMBAT|AC|1|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

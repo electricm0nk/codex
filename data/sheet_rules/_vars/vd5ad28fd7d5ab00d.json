@@ -1,0 +1,1 @@
+{"var":"vd5ad28fd7d5ab00d","label":"Halfling Halfling Luck Save Bonus","declared_by":["core_rulebook:race_trait:halfling_halfling_luck"],"contributions":[{"rule_id":"core_rulebook:race_trait:halfling_halfling_luck","expr":{"Const":1},"bonus_type":{"name":"Racial","mode":"Plain"},"when":"Always"}],"provenance":{}}

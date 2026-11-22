@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Sorcerer",
+    "name": "Sorcerer",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Class,Sorcerer"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Sorcerer|EvangelistLVL-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CFP_Level,SorcererLVL|EvangelistLVL-1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Sorcerer",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

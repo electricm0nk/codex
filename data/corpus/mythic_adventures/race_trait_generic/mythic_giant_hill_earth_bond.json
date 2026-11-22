@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Giant (Hill) ~ Earth Bond",
+    "name": "Earth Bond",
+    "description": "A mythic hill giant gains a +2 bonus on attack rolls, weapon damage rolls, and saves while touching the ground (including a stone or earthen floor in a building). As a standard action, a hill giant touching the ground can expend one use of mythic power to rejuvenate itself, gaining the benefits of cure critical wounds and restoration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Giant (Hill) ~ Earth Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Giant (Hill) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic hill giant gains a +2 bonus on attack rolls, weapon damage rolls, and saves while touching the ground (including a stone or earthen floor in a building). As a standard action, a hill giant touching the ground can expend one use of mythic power to rejuvenate itself, gaining the benefits of cure critical wounds and restoration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 173,
+    "record_key": "Mythic Giant (Hill) ~ Earth Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

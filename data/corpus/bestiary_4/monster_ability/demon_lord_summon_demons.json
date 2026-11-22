@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demon Lord ~ Summon Demons",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a swift action, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower. This otherwise works like the summon universal monster rule with a 100%% chance of success, and counts as a 9th-level spell effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:demon_lord_summon_demons",
+    "name": "Summon Demons",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a swift action, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower. This otherwise works like the summon universal monster rule with a 100%% chance of success, and counts as a 9th-level spell effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Demon Lord ~ Summon Demons"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 120,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Demon Lord ~ Summon Demons",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

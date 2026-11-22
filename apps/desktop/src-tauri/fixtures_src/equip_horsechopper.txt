@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Horsechopper
+Horsechopper																			PROFICIENCY:WEAPON|Horsechopper							TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Piercing.Slashing.Polearm																																		COST:10	WT:12										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d10					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.30

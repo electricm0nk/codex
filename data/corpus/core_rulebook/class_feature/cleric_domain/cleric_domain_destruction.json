@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cleric Domain ~ Destruction",
+    "name": "Cleric Domain ~ Destruction",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Inflict Light Wounds|Cleric=2|Shatter|Cleric=3|Contagion|Cleric=4|Inflict Critical Wounds|Cleric=5|Inflict Light Wounds (Mass)|Cleric=6|Harm|Cleric=7|Disintegrate|Cleric=8|Earthquake|Cleric=9|Implosion|PREVAREQ:DestructionDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3153,
+    "record_key": "Cleric Domain ~ Destruction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,125 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Jiang-Shi Vampire",
+    "delivery": null,
+    "description": "Senses: A jiang-shi vampire gains darkvision 60 feet. It also gains the ability to sense the breathing of living creatures-a jiang-shi has blindsight to a range of 60 feet against creatures that breathe. A creature may hold its breath to prevent a jiang-shi from noticing it in this manner. &nl; Hit Dice: Change all racial Hit Dice to d8s. Class Hit Dice are unaffected. As undead, jiang-shis use their Charisma modifier to determine bonus hit points (instead of Constitution). &nl; Defensive Abilities: A jiang-shi gains channel resistance +4, DR 10/magic and slashing, and resistance to cold 20, in addition to all of the defensive abilities granted by the undead type. A jiang-shi also gains fast healing 5. In addition, all jiang-shis gain the following defensive ability. &nl; Weaknesses: Jiang-shis recoil from mirrors or the sound of handbells rung within 10 feet of them. Cooked rice, which to jiang-shis mocks the fundamental fact that they no longer eat food, shames them into recoiling as well. These things don't harm a jiang-shi vampire-they merely keep it at bay for a period of time. A recoiling jiang-shi vampire must stay at least 5 feet away from the object of its revulsion, and cannot touch or make melee attacks against a creature brandishing the object during that round. Holding a jiang-shi vampire at bay takes a standard action. After being held at bay for 1 round, a jiang-shi vampire can attempt to overcome its revulsion of the object and function normally each round it makes a DC 20 Will save at the start of its turn. &nl; Destroying a Jiang-Shi: If reduced to 0 hit points, a jiangshi vampire crumbles to dust but is not destroyed. It reforms in 1 minute with 1 hit point in the same space, or the nearest unoccupied space. Scattering the dust before the jiang-shi reforms destroys it permanently, as does mixing rice into the dust with a dose of holy water. Jiangshi vampires are also susceptible to wooden weapons carved from peach trees, as such weapons represent the unity of all elements and life to these creatures. A wooden weapon carved from a peach tree automatically bypasses a jiang-shi vampire's damage reduction. Additionally, any successful hit from such a weapon that reduces a jiang-shi to 0 hit points immediately destroys the creature. Although they normally retreat from daylight, jiang-shi vampires are not destroyed by sunlight like regular vampires and can move around during the day without harm. &nl; Speed: A jiang-shi moves only by hopping. This mode of movement is somewhat less swift than regular movement, and thus a jiang-shi's base speed is reduced by 10 feet from the base creature's speed, to a minimum of 10 feet. This unusual mode of movement allows the jiangshi to ignore the effects of difficult terrain on movement, and makes it impossible to trip. Other speeds (like fly or swim speeds) are not affected by this reduction. &nl; Melee: A jiang-shi gains a bite attack and 2 claw attacks if the base creature didn't have them. Damage for the bite attack depends on the jiang-shi's size, but its claw attacks do damage as a creature two size categories larger. For a Medium jiang-shi, a bite attack deals 1d6 points of damage and a claw attack deals 1d8 points of damage. A jiang-shi's claws are even more dangerous than this, though-see the \"brutal claws\" special attack below. A jiang-shi's natural weapons are treated as magic weapons for the purpose of overcoming damage reduction. &nl; Special Attacks: A jiang-shi gains several special attacks. Save DCs are equal to 10 + 1/2 the jiang-shi's Hit Dice + the jiang-shi's Charisma modifier unless otherwise noted. &nl; Ability Scores: Str +4, Dex +6, Int +2, Wis +4, Cha +2. As an undead creature, a jiang-shi has no Constitution score. &nl; Feats: Jiang-shis gain Alertness, Dodge, Mobility, Skill Focus (Acrobatics), and Spring Attack as bonus feats. &nl; Skills: Jiang-shis gain a +8 racial bonus on Acrobatics, Perception, and Stealth checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jiang_shi_vampire",
+    "name": "Jiang-Shi Vampire",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Alertness|Dodge|Mobility|Skill Focus (Acrobatics)|Spring Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Perception,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "NONSTAT|CON"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Ability Scores: Str +4, Dex +6, Int +2, Wis +4, Cha +2. As an undead creature, a jiang-shi has no Constitution score."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Defensive Abilities: A jiang-shi gains channel resistance +4, DR 10/magic and slashing, and resistance to cold 20, in addition to all of the defensive abilities granted by the undead type. A jiang-shi also gains fast healing 5. In addition, all jiang-shis gain the following defensive ability."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Destroying a Jiang-Shi: If reduced to 0 hit points, a jiangshi vampire crumbles to dust but is not destroyed. It reforms in 1 minute with 1 hit point in the same space, or the nearest unoccupied space. Scattering the dust before the jiang-shi reforms destroys it permanently, as does mixing rice into the dust with a dose of holy water. Jiangshi vampires are also susceptible to wooden weapons carved from peach trees, as such weapons represent the unity of all elements and life to these creatures. A wooden weapon carved from a peach tree automatically bypasses a jiang-shi vampire's damage reduction. Additionally, any successful hit from such a weapon that reduces a jiang-shi to 0 hit points immediately destroys the creature. Although they normally retreat from daylight, jiang-shi vampires are not destroyed by sunlight like regular vampires and can move around during the day without harm."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Feats: Jiang-shis gain Alertness, Dodge, Mobility, Skill Focus (Acrobatics), and Spring Attack as bonus feats."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Hit Dice: Change all racial Hit Dice to d8s. Class Hit Dice are unaffected. As undead, jiang-shis use their Charisma modifier to determine bonus hit points (instead of Constitution)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Melee: A jiang-shi gains a bite attack and 2 claw attacks if the base creature didn't have them. Damage for the bite attack depends on the jiang-shi's size, but its claw attacks do damage as a creature two size categories larger. For a Medium jiang-shi, a bite attack deals 1d6 points of damage and a claw attack deals 1d8 points of damage. A jiang-shi's claws are even more dangerous than this, though-see the \"brutal claws\" special attack below. A jiang-shi's natural weapons are treated as magic weapons for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Skills: Jiang-shis gain a +8 racial bonus on Acrobatics, Perception, and Stealth checks."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Special Attacks: A jiang-shi gains several special attacks. Save DCs are equal to 10 + 1/2 the jiang-shi's Hit Dice + the jiang-shi's Charisma modifier unless otherwise noted."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Speed: A jiang-shi moves only by hopping. This mode of movement is somewhat less swift than regular movement, and thus a jiang-shi's base speed is reduced by 10 feet from the base creature's speed, to a minimum of 10 feet. This unusual mode of movement allows the jiangshi to ignore the effects of difficult terrain on movement, and makes it impossible to trip. Other speeds (like fly or swim speeds) are not affected by this reduction."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Weaknesses: Jiang-shis recoil from mirrors or the sound of handbells rung within 10 feet of them. Cooked rice, which to jiang-shis mocks the fundamental fact that they no longer eat food, shames them into recoiling as well. These things don't harm a jiang-shi vampire-they merely keep it at bay for a period of time. A recoiling jiang-shi vampire must stay at least 5 feet away from the object of its revulsion, and cannot touch or make melee attacks against a creature brandishing the object during that round. Holding a jiang-shi vampire at bay takes a standard action. After being held at bay for 1 round, a jiang-shi vampire can attempt to overcome its revulsion of the object and function normally each round it makes a DC 20 Will save at the start of its turn."
+      },
+      {
+        "key": "DESC",
+        "value": "Senses: A jiang-shi vampire gains darkvision 60 feet. It also gains the ability to sense the breathing of living creatures-a jiang-shi has blindsight to a range of 60 feet against creatures that breathe. A creature may hold its breath to prevent a jiang-shi from noticing it in this manner."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.JiangShiVampire"
+      },
+      {
+        "key": "VISION",
+        "value": "Breathing Blindsight (60')|Darkvision (60')"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "JiangShiVampire"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1663,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jiang-Shi Vampire",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wayfinder Ioun Stone Resonant Power ~ Orange Prism",
+    "name": "Orange Prism",
+    "description": "Every time the bearer casts a spell, roll 1d4-2 and add this (and the +1 caster level granted by the normal power of the ioun stone) to his caster level. If this modified caster level is too low to cast the spell, the spell fails and is lost.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayfinder Ioun Stone Resonant Power ~ Orange Prism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Slotted Ioun Stone Resonant Power"
+      },
+      {
+        "key": "DESC",
+        "value": "Every time the bearer casts a spell, roll 1d4-2 and add this (and the +1 caster level granted by the normal power of the ioun stone) to his caster level. If this modified caster level is too low to cast the spell, the spell fails and is lost."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 110,
+    "record_key": "Wayfinder Ioun Stone Resonant Power ~ Orange Prism"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Summon Monster IX (Yamaraj)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "This spell functions like summon monster I, except that you can only summon any one CR 19 or lower psychopomp."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+    "sha256": "312f9985c63265cc827a6b622e9c5f326c3b6460170e7aa289c687019c37b7cd",
+    "line": 54,
+    "record_key": "Summon Monster IX (Yamaraj)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

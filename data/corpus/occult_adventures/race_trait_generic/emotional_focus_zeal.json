@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus ~ Zeal",
+    "name": "Zeal",
+    "description": "A phantom with this emotional focus fixates on every task given as if it were the phantom's last. The most basic commands are treated as life-and-death situations, and the truly dangerous ones are faced with a resolve and tenacity that sometimes defies common sense. Zeal phantoms take the form of steadfast protectors or daring and manic creatures looking for the next challenge or opportunity to prove itself to either its master or itself. Often very prideful creatures, these phantoms display an orange aura upon completing their tasks. They are prone to boast about their accomplishments and chastise those around them for not accomplishing more.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus ~ Zeal"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom with this emotional focus fixates on every task given as if it were the phantom's last. The most basic commands are treated as life-and-death situations, and the truly dangerous ones are faced with a resolve and tenacity that sometimes defies common sense. Zeal phantoms take the form of steadfast protectors or daring and manic creatures looking for the next challenge or opportunity to prove itself to either its master or itself. Often very prideful creatures, these phantoms display an orange aura upon completing their tasks. They are prone to boast about their accomplishments and chastise those around them for not accomplishing more."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Skills|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Good Saves|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Tracking|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Ruthless Combatant|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Determination Aura|PREVARGTEQ:PhantomMasterLevel,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Steadfast Servant|PREVARGTEQ:PhantomMasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Zeal ~ Zeal's Resolve|PREVARGTEQ:PhantomMasterLevel,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 54,
+    "record_key": "Emotional Focus ~ Zeal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

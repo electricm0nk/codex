@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Battlefield Healer",
+    "category": "Story",
+    "name": "Battlefield Healer",
+    "description": "[Not Implemented] In even the fiercest battles, you risk life and limb to save your allies. When attempting a concentration check caused by receiving damage (including ongoing damage), you reduce the damage taken by 50%% for the purposes of determining the concentration check DC. Goal:Over time, provoke at least 20 attacks of opportunity for casting conjuration (healing) spells on allies. These spells don't have to succeed to count. Completion Benef it:You automatically succeed at concentration checks for conjuration (healing) spells caused by taking damage.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must successfully cast a conjuration (healing) spell on an ally after being hit by an attack of opportunity, or have the Battle, Chaplain, or Healed background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 9,
+    "record_key": "Battlefield Healer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

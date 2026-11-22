@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Shaman Wandering Spirit ~ Waves",
+    "name": "Waves (Wandering Spirit)",
+    "class": "Shaman",
+    "description": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Spirit ~ Waves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Wave Strike|PREVARGTEQ:ShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Fluid Mastery|PREVARGTEQ:ShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Elemental Form|PREVARGTEQ:ShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Waves Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|hydraulic push"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|slipstream"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|water breathing"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|wall of ice"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|geyser"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|fluid form"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|vortex"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|seamantle"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|tsunami"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1466,
+    "record_key": "Shaman Wandering Spirit ~ Waves"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

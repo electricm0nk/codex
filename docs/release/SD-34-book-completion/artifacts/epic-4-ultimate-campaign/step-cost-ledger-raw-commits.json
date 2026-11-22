@@ -1,0 +1,25 @@
+{
+  "derive_command": "git log --reverse --format='%H|%ct|%s' ea2b3396f2..HEAD -- docs/work-inventory.json",
+  "scope_note": "This file lists ONLY the commits touching docs/work-inventory.json in this bundle (both Epic 3 and Epic 4 dispatched commits sit in one linear log against the same file). The single Epic 4 row is the one this ledger measures; the immediately preceding row (an Epic 3 commit) is kept so the wall-time delta for the Epic 4 row is reproducible without re-deriving Epic 3's own ledger.",
+  "commits": [
+    {
+      "sha": "36db23a05376b9c0cf634bbadb1f7322444328e5",
+      "epoch": 1787971367,
+      "subject": "fix(sd34): AT-34-E3-003 -- bucket U cycle 2, fix render_pcgen_desc bare-percent-after-digit defect",
+      "epic": "3",
+      "note": "last work-inventory.json-touching commit before Epic 4's first bucket-clearing cycle; its timestamp is this ledger's interval start."
+    },
+    {
+      "sha": "4005925ae2f70777d3191a13f9895cdec91c4c6f",
+      "epoch": 1787977847,
+      "subject": "fix(sd34): AT-34-E4-002 -- ultimate_campaign bucket B closed via missing PI-coordinate wire-up (partial)",
+      "epic": "4",
+      "bucket": "B",
+      "atlas_before": {"book": "ultimate_campaign", "DONE": 127, "B": 5, "D": 4, "M": 88, "V": 18, "U": 21, "X": 2},
+      "atlas_after": {"book": "ultimate_campaign", "DONE": 130, "B": 0, "D": 5, "M": 89, "V": 18, "U": 21, "X": 2},
+      "wall_seconds_since_prior_work_inventory_commit": 6480,
+      "wall_minutes_since_prior_work_inventory_commit": 108.0
+    }
+  ],
+  "note_on_AT-34-E4-001": "AT-34-E4-001's two commits (72c9f6fec6, 68e9b353b9) do NOT appear here -- they touch no file under docs/work-inventory.json (its own receipt states 'No bucket movement (U:21 X:2 unchanged); resolution is by proof per the criterion's own Evidence clause'). A cycle that moves zero units in the ledger's denominator is correctly absent from a per-bucket wall-time table, not silently folded into E4-002's number -- consistent with decisions.md §9 (measurement waves that bank zero units are legitimate deliverables) being reported separately, not merged into a bucket it did not touch."
+}

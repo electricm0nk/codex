@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Energy Absorption",
+    "name": "Energy Absorption",
+    "class": "Unchained Barbarian",
+    "description": "Once per day, you can absorb the energy from a single attack that deals damage of the energy type you resist with the energy resistance rage power. You take no damage from the attack and don't attempt a saving throw. Instead, you increase the temporary hit points from your rage by an amount equal to 1/2 the damage she would have taken (ignoring your energy resistance).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Energy Absorption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rage Power ~ Energy Resistance"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,12"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Energy Absorption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyAbsorptionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can absorb the energy from a single attack that deals damage of the energy type you resist with the energy resistance rage power. You take no damage from the attack and don't attempt a saving throw. Instead, you increase the temporary hit points from your rage by an amount equal to 1/2 the damage she would have taken (ignoring your energy resistance)."
+      },
+      {
+        "key": "DESC",
+        "value": "Once before your rage ends, you can unleash the stored energy as a breath weapon in either a 60-foot line or a 30-foot cone. The breath weapon deals an amount of damage equal to the full amount you would have taken from the absorbed effect. Creatures affected by the breath weapon can attempt a Reflex save for half damage (DC %1). You retain the temporary hit points from this ability even if you unleash this breath weapon.|EnergyAbsorptionDC|PREVARGTEQ:RagePowersLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyAbsorptionDC|10+floor(RagePowersLVL/2)+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 351,
+    "record_key": "Unchained Rage Power ~ Energy Absorption"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Defensive Combat Training",
+    "name": "Defensive Combat Training",
+    "class": "Sorcerer",
+    "description": "You excel at defending yourself from all manner of combat maneuvers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Defensive Combat Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_DefensiveCombatTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You excel at defending yourself from all manner of combat maneuvers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Defensive Combat Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You treat your total Hit Dice as your base attack bonus when calculating your Combat Maneuver Defense."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2029,
+    "record_key": "Sorcerer Bloodline Feat ~ Defensive Combat Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Syringe stick (ultra-pointed)",
+    "name": "Syringe stick, ultra-pointed",
+    "type": "RESIZABLE.Weapon.Melee.Prof Group Basic Melee.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized.ToHit_UseStr.Damage_UseStr.Operative"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/character_operations_manual/scom_equip.lst",
+    "record_key": "Syringe stick (ultra-pointed)",
+    "sha256": "cba8b09cc85fd6b39a2c1eb058e378f02f0e47c390d227dd1738fee55d8cdd3e"
+  },
+  "unit_id": "character_operations_manual:equipment:syringe_stick_ultra_pointed"
+}

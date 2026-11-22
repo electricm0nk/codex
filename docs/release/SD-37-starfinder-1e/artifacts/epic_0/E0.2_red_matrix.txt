@@ -1,0 +1,11 @@
+MISSING paizo/core
+MISSING paizo/core/_society
+MISSING paizo/armory
+MISSING paizo/character_operations_manual
+MISSING paizo/pact_worlds
+MISSING paizo/near_space
+MISSING paizo/alien_archive
+MISSING paizo/alien_archive_2
+MISSING paizo/alien_archive_3
+MISSING paizo/starfinder_society_rules
+MISSING lpj_design/infinite_space

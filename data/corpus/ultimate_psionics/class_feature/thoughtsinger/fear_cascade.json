@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Fear Cascade",
+    "name": "Fear Cascade",
+    "class": "Thoughtsinger",
+    "description": "You can spend an additional round of thoughtsong to manifest fear cascade (ML %1) on a mindlinked target.|FearCascadeML",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Fear Cascade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearCascadeML|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend an additional round of thoughtsong to manifest fear cascade (ML %1) on a mindlinked target.|FearCascadeML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearCascadeML|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2437,
+    "record_key": "Thoughtsinger ~ Fear Cascade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

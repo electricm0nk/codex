@@ -1,0 +1,65 @@
+import { invoke } from '@tauri-apps/api/core';
+import { formatError, hasTauriRuntime } from './runtime';
+import type { CharacterSummaryDto } from './loadListSavedCharacters';
+import type { PilotSnapshotDto, CorpusDerivedDto, DiagnosticDto } from './loadCreateCharacter';
+import type { CharacterMoneyDto } from './characterMoney';
+import type { PriceMode } from '../characterHub/priceMode';
+import type { CopyKeyDto } from './listHeldEquipment';
+
+/**
+ * Write desktop boundary for atomically attaching an Equipmods-category
+ * modifier (e.g. a "+1 Enhancement to Weapon" record) to a specific
+ * already-equipped selection: the `attach_equipment_modifier` Tauri command
+ * validates `modifierItemId` against the real equipment catalog and
+ * `itemId` against the character's actual equipment selections, then
+ * mirrors `purchase_equipment`'s resolve-cost -> check-affordability ->
+ * mutate -> charge sequencing, under `priceMode`. A `+N` the copy's Market row
+ * offers is charged that offer less what the copy already holds, so a plain
+ * copy brought up to `+N` costs what buying the `+N` costs. Otherwise a modifier
+ * with a real, known `cost_gp` (e.g. Masterwork) is charged that, and an unknown
+ * `cost_gp` attaches for free rather than blocking. Cashless moves no money.
+ * See `attach_equipment_modifier_at_root`'s own doc comment in
+ * `character_hub.rs` for the full reasoning.
+ *
+ * A distinct outcome union from `PurchaseEquipmentOutcome` (not reused,
+ * despite the identical field set) so the two commands' `kind` tags stay
+ * distinct on the wire (`"Attached"` vs `"Purchased"`) — same per-command
+ * outcome convention every other mutation here already follows.
+ */
+
+export interface AttachEquipmentModifierRequest {
+  characterId: string;
+  /** The target equipment selection to attach to, e.g. an equipped Longsword's item_id. */
+  itemId: string;
+  /** The copy to attach to (the gear screen's Customize); absent, the first copy of `itemId` in hand. */
+  copy?: CopyKeyDto;
+  /** The Equipmods-category item being attached. */
+  modifierItemId: string;
+  savedAt: string;
+  /** How the charge moves money, the mode shown on the equipment screen. */
+  priceMode: PriceMode;
+}
+
+export type AttachEquipmentModifierOutcome =
+  | {
+      kind: 'Attached';
+      summary: CharacterSummaryDto;
+      snapshot: PilotSnapshotDto;
+      corpusDerived: CorpusDerivedDto;
+      money: CharacterMoneyDto;
+    }
+  | { kind: 'Blocked'; diagnostics: DiagnosticDto[] };
+
+export async function attachEquipmentModifier(
+  request: AttachEquipmentModifierRequest
+): Promise<AttachEquipmentModifierOutcome> {
+  if (!hasTauriRuntime()) {
+    throw new Error('Tauri runtime not available for attaching an equipment modifier');
+  }
+
+  try {
+    return await invoke<AttachEquipmentModifierOutcome>('attach_equipment_modifier', { request });
+  } catch (cause: unknown) {
+    throw new Error(`Failed to attach equipment modifier: ${formatError(cause)}`);
+  }
+}

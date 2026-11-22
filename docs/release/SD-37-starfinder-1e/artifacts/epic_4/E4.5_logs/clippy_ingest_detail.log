@@ -1,0 +1,119 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Checking codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error: using tabs in doc comments is not recommended
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:519:26
+    |
+519 | /// (`scr_classes.lst` `1    CAST:0,2    KNOWN:4,2` ... `20    CAST:0,5,5,5,5,5,5    KNOWN:6,6,6,6,6,5,5`).
+    |                          ^^^^ help: consider using four spaces per tab
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#tabs_in_doc_comments
+    = note: `-D clippy::tabs-in-doc-comments` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::tabs_in_doc_comments)]`
+
+error: using tabs in doc comments is not recommended
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:519:35
+    |
+519 | /// (`scr_classes.lst` `1    CAST:0,2    KNOWN:4,2` ... `20    CAST:0,5,5,5,5,5,5    KNOWN:6,6,6,6,6,5,5`).
+    |                                      ^^^^ help: consider using four spaces per tab
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#tabs_in_doc_comments
+
+error: using tabs in doc comments is not recommended
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:519:54
+    |
+519 | /// (`scr_classes.lst` `1    CAST:0,2    KNOWN:4,2` ... `20    CAST:0,5,5,5,5,5,5    KNOWN:6,6,6,6,6,5,5`).
+    |                                                            ^^^^ help: consider using four spaces per tab
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#tabs_in_doc_comments
+
+error: using tabs in doc comments is not recommended
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs:519:73
+    |
+519 | /// (`scr_classes.lst` `1    CAST:0,2    KNOWN:4,2` ... `20    CAST:0,5,5,5,5,5,5    KNOWN:6,6,6,6,6,5,5`).
+    |                                                                                  ^^^^ help: consider using four spaces per tab
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#tabs_in_doc_comments
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:368:5
+    |
+368 | /// inventory units, so `link_pool_choices` found no member and the pick offered nothing: the
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+    = note: `-D clippy::doc-lazy-continuation` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::doc_lazy_continuation)]`
+help: indent this line
+    |
+368 | ///   inventory units, so `link_pool_choices` found no member and the pick offered nothing: the
+    |     ++
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:369:5
+    |
+369 | /// chosen skill's class-skill grant and bonus reached no sheet. Each member converts like any pick
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+help: indent this line
+    |
+369 | ///   chosen skill's class-skill grant and bonus reached no sheet. Each member converts like any pick
+    |     ++
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:370:5
+    |
+370 | /// row ([`convert_options`]); once written, `link_pool_choices` gives the pick its `offers`
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+help: indent this line
+    |
+370 | ///   row ([`convert_options`]); once written, `link_pool_choices` gives the pick its `offers`
+    |     ++
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:371:5
+    |
+371 | /// (`Rules { pool: internal, tags: <t> }`) and the engine holds the member the build chose.
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+help: indent this line
+    |
+371 | ///   (`Rules { pool: internal, tags: <t> }`) and the engine holds the member the build chose.
+    |     ++
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:372:5
+    |
+372 | /// The option id's pool is the category's (`<book>:pool_option:<C slug>_<name slug>`). A category
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+help: indent this line
+    |
+372 | ///   The option id's pool is the category's (`<book>:pool_option:<C slug>_<name slug>`). A category
+    |     ++
+
+error: doc list item without indentation
+   --> crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs:373:5
+    |
+373 | /// no record picks from (`BONUS:ABILITYPOOL` names it nowhere) declares no option.
+    |     ^
+    |
+    = help: if this is supposed to be its own paragraph, add a blank line
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#doc_lazy_continuation
+help: indent this line
+    |
+373 | ///   no record picks from (`BONUS:ABILITYPOOL` names it nowhere) declares no option.
+    |     ++
+
+error: could not compile `codex-ingest` (lib) due to 10 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `codex-ingest` (lib test) due to 10 previous errors

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Taskmaster",
+    "name": "Taskmaster",
+    "description": "You intimidate weaker allies into reckless ferocity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Taskmaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Demoralizing Lash"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHobgoblin=true"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You intimidate weaker allies into reckless ferocity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Taskmaster"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a standard action, you spur an ally, who must have fewer Hit Dice than yourself, to reckless effort. For 1 minute, the ally gains a +1 morale bonus on attack rolls, weapon damage rolls, and Will saves against mind-affecting effects. However, the ally also takes a -2 penalty to AC and on skill checks. To affect an unwilling ally, you must succeed at an Intimidate check with the same DC used to demoralize your ally. If you have 10 or more ranks in Intimidate, the morale bonus increases to +2."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 43,
+    "record_key": "Warpriest Bonus Feat ~ Taskmaster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

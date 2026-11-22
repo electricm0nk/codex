@@ -1,0 +1,53 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "You can spend 2 stamina points to regain 1 round of rage after reducing a foe whose CR is at least half your character level to below 0 hit points, rather than upon successfully sundering a target.",
+    "key": "Combat Trick ~ Destroyer's Blessing",
+    "name": "Destroyer's Blessing",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Destroyer's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 2 stamina points to regain 1 round of rage after reducing a foe whose CR is at least half your character level to below 0 hit points, rather than upon successfully sundering a target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "117"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ARG"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_arg.lst",
+    "record_key": "Combat Trick ~ Destroyer's Blessing",
+    "sha256": "b41ac3a17891f22fc0609b12ce383abe454fb693714e9e3d5dc8e4481b7f6965"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Rogue Talent ~ Major Psionics",
+    "name": "Major Psionics",
+    "class": "Rogue",
+    "description": "You can manifest %1 two times a day as a psi-like ability. The manifester level for this ability is %2.  The save DC for this power is %3.|%CHOICE|RogueManifesterLevel|MajorPsionicsDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Rogue Talent ~ Major Psionics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.PsiLike.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Psionic Rogue Talent ~ Minor Psionics"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=11"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "IsPsionic,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MajorPsionicsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest %1 two times a day as a psi-like ability. The manifester level for this ability is %2.  The save DC for this power is %3.|%CHOICE|RogueManifesterLevel|MajorPsionicsDC"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Psion[LEVELMAX=1;LEVELMIN=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MajorPsionicsDC|11+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1085,
+    "record_key": "Psionic Rogue Talent ~ Major Psionics"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

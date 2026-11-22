@@ -1,0 +1,71 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Wild Shape Medium Animal (Dolphin)",
+    "name": "Wild Shape Medium Animal (Dolphin)",
+    "raw_tokens": [
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Wild Shape (Medium Animal)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "TODO"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "WildShapeProgression,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,80"
+      },
+      {
+        "key": "TYPE",
+        "value": "WildshapeTemplate.WildshapeMedium"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 319,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Wild Shape Medium Animal (Dolphin)",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

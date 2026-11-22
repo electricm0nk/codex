@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadow Lord ~ Incorporeal Step",
+    "delivery": "Supernatural",
+    "description": "When a shadow lord moves, it gains the incorporeal subtype and quality, including a deflection bonus to AC equal to its Charisma bonus. It loses the incorporeal subtype and special ability when it stops moving.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:shadow_lord_incorporeal_step",
+    "name": "Incorporeal Step",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shadow Lord ~ Incorporeal Step Temp Bonus|PREVAREQ:ShadowLordIncorporealStep,1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a shadow lord moves, it gains the incorporeal subtype and quality, including a deflection bonus to AC equal to its Charisma bonus. It loses the incorporeal subtype and special ability when it stops moving."
+      },
+      {
+        "key": "KEY",
+        "value": "Shadow Lord ~ Incorporeal Step"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|ShadowLordIncorporealStep|1"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1262,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shadow Lord ~ Incorporeal Step",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

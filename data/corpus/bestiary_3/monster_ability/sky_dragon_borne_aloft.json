@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sky Dragon ~ Borne Aloft",
+    "delivery": "Supernatural",
+    "description": "Old or younger sky dragons fly with good maneuverability while all older sky dragons have perfect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sky_dragon_borne_aloft",
+    "name": "Borne Aloft",
+    "owners": [
+      "bestiary_3:monster:dragon_sky"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1|PRESIZEGTEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1|PRESIZEGTEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1|PREVARGTEQ:DragonAgeCategory,9"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Old or younger sky dragons fly with good maneuverability while all older sky dragons have perfect."
+      },
+      {
+        "key": "KEY",
+        "value": "Sky Dragon ~ Borne Aloft"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural"
+      }
+    ],
+    "source_page": "p.98",
+    "traits": [
+      "RaceAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 776,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sky Dragon ~ Borne Aloft",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

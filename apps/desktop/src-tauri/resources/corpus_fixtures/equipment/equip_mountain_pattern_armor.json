@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Mountain Pattern Armor",
+    "name": "Mountain Pattern Armor"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_mountain_pattern_armor.txt",
+    "record_key": "Mountain Pattern Armor"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-26T19:37:17Z",
+  "data": {
+    "key": "Skinwalker ~ Wereshark-Kin",
+    "name": "Wereshark-Kin (Seascarred)",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Skinwalker Subrace"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Skinwalker_ReplaceAbilityScores",
+      "Skinwalker_ReplaceAnimalMinded",
+      "Skinwalker_ReplaceChangeShape",
+      "Skinwalker_ReplaceSpellLikeAbility"
+    ],
+    "description": "These unusual skinwalkers tend to be strong-willed and brisk in their patterns of speech. They often serve aboard pirate ships, where their traits are well appreciated.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Wereshark-Kin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Skinwalker ~ Wereshark-Kin],[!PREFACT:1,ABILITIES,Skinwalker_ReplaceAbilityScores=True,Skinwalker_ReplaceAnimalMinded=True,Skinwalker_ReplaceChangeShape=True,Skinwalker_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "These unusual skinwalkers tend to be strong-willed and brisk in their patterns of speech. They often serve aboard pirate ships, where their traits are well appreciated."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skinwalker ~ Wereshark-Kin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|Wereshark-Kin ~ Ability Scores|Wereshark-Kin ~ Animal-Minded|Wereshark-Kin ~ Change Shape|Wereshark-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Wereshark"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|N"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Wisdom, -2 Intelligence (+2 Constitution while shapechanged)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Perception, Swim."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Charm animal (aquatic animals only) 1/day."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Bestial Features|Breathe water as well as air, bite attack that deals 1d6 points of damage, ferocity (Pathfinder RPG Bestiary), swim speed of 30 feet."
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 135,
+    "record_key": "Skinwalker ~ Wereshark-Kin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

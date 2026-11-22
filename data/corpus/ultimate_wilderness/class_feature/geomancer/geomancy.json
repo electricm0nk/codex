@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Geomancer ~ Geomancy",
+    "name": "Geomancy",
+    "class": "Occultist",
+    "description": "A geomancer learns one fewer implement school at 1st level. Instead, the spells that he knows are partially determined by the type of terrain he is currently in (and the level of spells he can cast). When he leaves a type of terrain, he loses knowledge of the spells that terrain grants and instead knows the spells granted by the new type of terrain he has entered. If a specific terrainfalls into more than one category, the geomancer chooses which list of spells he receives when he enters the terrain. The spells at each spell level for the various types of terrain are listed below.&nl;[Cold] 1st-frostbite (UM), 2nd-frigid touch (UM), 3rd-sleet storm, 4th-creeping ice (ACG), 5th-icy prison (UM), 6th-freezing sphere.&nl;[Desert] 1st-sun metal (UC), 2nd-shifting sand (APG), 3rd-cup of dust (APG), 4th-fire shield, 5th-flame strike, 6th-sirocco (APG).&nl;[Forest] 1st-entangle, 2nd-tree shape, 3rd-speak with plants, 4th-arboreal hammer (UM), 5th-tree stride, 6th-liveoak.&nl;[Jungle] 1st-nauseating dart (ACG), 2nd-sickening entanglement (ACG), 3rd-venomous bolt (APG), 4th-poison, 5th-snake staff (APG), 6th-swarm skin (APG).&nl;[Mountain] 1st-stone fist (APG), 2nd-stone call (APG), 3rd-stone shape, 4th-obsidian flow (UC), 5th-cave fangs (OA), 6th-move earth.&nl;[Plains] 1st-mount, 2nd-gust of wind, 3rd-plant growth, 4th-aspect of the stag (APG), 5th-control winds, 6th-whip of ants (ACG).&nl;[Planes (Other Than the Material Plane)] 1st-endure elements, 2nd-rope trick, 3rd-blink, 4th-dimensional anchor, 5th-planar adaptation (APG), 6th-plane shift.&nl;[Swamp] 1st-mudball (ARG), 2nd-burst of nettles (UM), 3rd-lily pad stride (APG), 4th-slowing mud (ACG), 5th-insect plague, 6th-mass fester (APG).&nl;[Underground] 1st-expeditious excavation (APG), 2nd-darkvision, 3rd-meld into stone, 4th-echolocation (UM), 5th-suffocation (APG), 6th-conjure black pudding (UM).&nl;[Urban] 1st-urban grace (ARG), 2nd-share language (APG), 3rd-urban step (UI), 4th-zone of silence, 5th-telepathic bond, 6th-statue.&nl;[Water] 1st-air bubble (UC), 2nd-slipstream (APG), 3rd-water breathing, 4th-fluid form (APG), 5th-geyser (APG), 6th-control water.&nl;[Additional spells NOT IMPLEMENTED] This alters implements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geomancer ~ Geomancy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.GeomancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A geomancer learns one fewer implement school at 1st level. Instead, the spells that he knows are partially determined by the type of terrain he is currently in (and the level of spells he can cast). When he leaves a type of terrain, he loses knowledge of the spells that terrain grants and instead knows the spells granted by the new type of terrain he has entered. If a specific terrainfalls into more than one category, the geomancer chooses which list of spells he receives when he enters the terrain. The spells at each spell level for the various types of terrain are listed below.&nl;[Cold] 1st-frostbite (UM), 2nd-frigid touch (UM), 3rd-sleet storm, 4th-creeping ice (ACG), 5th-icy prison (UM), 6th-freezing sphere.&nl;[Desert] 1st-sun metal (UC), 2nd-shifting sand (APG), 3rd-cup of dust (APG), 4th-fire shield, 5th-flame strike, 6th-sirocco (APG).&nl;[Forest] 1st-entangle, 2nd-tree shape, 3rd-speak with plants, 4th-arboreal hammer (UM), 5th-tree stride, 6th-liveoak.&nl;[Jungle] 1st-nauseating dart (ACG), 2nd-sickening entanglement (ACG), 3rd-venomous bolt (APG), 4th-poison, 5th-snake staff (APG), 6th-swarm skin (APG).&nl;[Mountain] 1st-stone fist (APG), 2nd-stone call (APG), 3rd-stone shape, 4th-obsidian flow (UC), 5th-cave fangs (OA), 6th-move earth.&nl;[Plains] 1st-mount, 2nd-gust of wind, 3rd-plant growth, 4th-aspect of the stag (APG), 5th-control winds, 6th-whip of ants (ACG).&nl;[Planes (Other Than the Material Plane)] 1st-endure elements, 2nd-rope trick, 3rd-blink, 4th-dimensional anchor, 5th-planar adaptation (APG), 6th-plane shift.&nl;[Swamp] 1st-mudball (ARG), 2nd-burst of nettles (UM), 3rd-lily pad stride (APG), 4th-slowing mud (ACG), 5th-insect plague, 6th-mass fester (APG).&nl;[Underground] 1st-expeditious excavation (APG), 2nd-darkvision, 3rd-meld into stone, 4th-echolocation (UM), 5th-suffocation (APG), 6th-conjure black pudding (UM).&nl;[Urban] 1st-urban grace (ARG), 2nd-share language (APG), 3rd-urban step (UI), 4th-zone of silence, 5th-telepathic bond, 6th-statue.&nl;[Water] 1st-air bubble (UC), 2nd-slipstream (APG), 3rd-water breathing, 4th-fluid form (APG), 5th-geyser (APG), 6th-control water.&nl;[Additional spells NOT IMPLEMENTED] This alters implements."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 134,
+    "record_key": "Geomancer ~ Geomancy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jungle Giant ~ Warding Tattoos",
+    "delivery": "Supernatural",
+    "description": "A jungle giant's magical tattoos grant it a +4 deflection bonus to Armor Class. The giant loses this bonus if it wears armor.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jungle_giant_warding_tattoos",
+    "name": "Warding Tattoos",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A jungle giant's magical tattoos grant it a +4 deflection bonus to Armor Class. The giant loses this bonus if it wears armor."
+      },
+      {
+        "key": "KEY",
+        "value": "Jungle Giant ~ Warding Tattoos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "TYPE",
+        "value": "JungleGiantRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.129",
+    "traits": [
+      "JungleGiantRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 918,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jungle Giant ~ Warding Tattoos",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

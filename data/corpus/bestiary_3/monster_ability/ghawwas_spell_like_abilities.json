@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ghawwas ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 12th; concentration +14) Constant-detect good, detect magic At will-control water, curse water, deeper darkness, dimension door 3/day-hallucinatory terrain (DC 16), stinking cloud (DC 15), summon (level 6, 1 pairaka 60%%), quench (DC 15)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ghawwas_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 12th; concentration +14) Constant-detect good, detect magic At will-control water, curse water, deeper darkness, dimension door 3/day-hallucinatory terrain (DC 16), stinking cloud (DC 15), summon (level 6, 1 pairaka 60%%), quench (DC 15)"
+      },
+      {
+        "key": "KEY",
+        "value": "Ghawwas ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhawwasRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "GhawwasRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 733,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ghawwas ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,1415 @@
+# SD-37 E7.1: engine fields the oracle exports no value for (build \t field). Written by
+# SF_PARITY_NOT_IN_ORACLE_WRITE=1 cargo test --bin codex-desktop sf_oracle_parity_the_not_in_oracle_list_is_current
+SF-Soldier-3	row.sf.ability_modifier.charisma
+SF-Soldier-3	row.sf.ability_modifier.constitution
+SF-Soldier-3	row.sf.ability_modifier.dexterity
+SF-Soldier-3	row.sf.ability_modifier.intelligence
+SF-Soldier-3	row.sf.ability_modifier.strength
+SF-Soldier-3	row.sf.ability_modifier.wisdom
+SF-Soldier-3	row.sf.bulk_limit.overburdened_above
+SF-Soldier-3	row.sf.bulk_limit.unencumbered_max
+SF-Soldier-3	row.sf.class_level.soldier
+SF-Soldier-3	row.sf.credits.remaining
+SF-Soldier-3	row.sf.credits.starting
+SF-Soldier-3	skill.Computers
+SF-Soldier-3	skill.Computers.ranks
+SF-Soldier-3	skill.Culture
+SF-Soldier-3	skill.Culture.ranks
+SF-Soldier-3	skill.Engineering
+SF-Soldier-3	skill.Engineering.ranks
+SF-Soldier-3	skill.Life Science
+SF-Soldier-3	skill.Life Science.ranks
+SF-Soldier-3	skill.Mysticism
+SF-Soldier-3	skill.Mysticism.ranks
+SF-Soldier-3	skill.Physical Science
+SF-Soldier-3	skill.Physical Science.ranks
+SF-Soldier-3	skill.Profession (Accountant)
+SF-Soldier-3	skill.Profession (Accountant).ranks
+SF-Soldier-3	skill.Profession (Actor)
+SF-Soldier-3	skill.Profession (Actor).ranks
+SF-Soldier-3	skill.Profession (Archaeologist)
+SF-Soldier-3	skill.Profession (Archaeologist).ranks
+SF-Soldier-3	skill.Profession (Architect)
+SF-Soldier-3	skill.Profession (Architect).ranks
+SF-Soldier-3	skill.Profession (Artist)
+SF-Soldier-3	skill.Profession (Artist).ranks
+SF-Soldier-3	skill.Profession (Bounty Hunter)
+SF-Soldier-3	skill.Profession (Bounty Hunter).ranks
+SF-Soldier-3	skill.Profession (Comedian)
+SF-Soldier-3	skill.Profession (Comedian).ranks
+SF-Soldier-3	skill.Profession (Con Artist)
+SF-Soldier-3	skill.Profession (Con Artist).ranks
+SF-Soldier-3	skill.Profession (Cook)
+SF-Soldier-3	skill.Profession (Cook).ranks
+SF-Soldier-3	skill.Profession (Corporate Professional)
+SF-Soldier-3	skill.Profession (Corporate Professional).ranks
+SF-Soldier-3	skill.Profession (Counselor)
+SF-Soldier-3	skill.Profession (Counselor).ranks
+SF-Soldier-3	skill.Profession (Courtesan)
+SF-Soldier-3	skill.Profession (Courtesan).ranks
+SF-Soldier-3	skill.Profession (Dancer)
+SF-Soldier-3	skill.Profession (Dancer).ranks
+SF-Soldier-3	skill.Profession (Dockworker)
+SF-Soldier-3	skill.Profession (Dockworker).ranks
+SF-Soldier-3	skill.Profession (Electrician)
+SF-Soldier-3	skill.Profession (Electrician).ranks
+SF-Soldier-3	skill.Profession (Farmer)
+SF-Soldier-3	skill.Profession (Farmer).ranks
+SF-Soldier-3	skill.Profession (Gambler)
+SF-Soldier-3	skill.Profession (Gambler).ranks
+SF-Soldier-3	skill.Profession (General Contractor)
+SF-Soldier-3	skill.Profession (General Contractor).ranks
+SF-Soldier-3	skill.Profession (Herbalist)
+SF-Soldier-3	skill.Profession (Herbalist).ranks
+SF-Soldier-3	skill.Profession (Lab Technician)
+SF-Soldier-3	skill.Profession (Lab Technician).ranks
+SF-Soldier-3	skill.Profession (Lawyer)
+SF-Soldier-3	skill.Profession (Lawyer).ranks
+SF-Soldier-3	skill.Profession (Maintenance Worker)
+SF-Soldier-3	skill.Profession (Maintenance Worker).ranks
+SF-Soldier-3	skill.Profession (Manager)
+SF-Soldier-3	skill.Profession (Manager).ranks
+SF-Soldier-3	skill.Profession (Mathematician)
+SF-Soldier-3	skill.Profession (Mathematician).ranks
+SF-Soldier-3	skill.Profession (Mercenary)
+SF-Soldier-3	skill.Profession (Mercenary).ranks
+SF-Soldier-3	skill.Profession (Merchant)
+SF-Soldier-3	skill.Profession (Merchant).ranks
+SF-Soldier-3	skill.Profession (Miner)
+SF-Soldier-3	skill.Profession (Miner).ranks
+SF-Soldier-3	skill.Profession (Musician)
+SF-Soldier-3	skill.Profession (Musician).ranks
+SF-Soldier-3	skill.Profession (Orator)
+SF-Soldier-3	skill.Profession (Orator).ranks
+SF-Soldier-3	skill.Profession (Philosopher)
+SF-Soldier-3	skill.Profession (Philosopher).ranks
+SF-Soldier-3	skill.Profession (Poet)
+SF-Soldier-3	skill.Profession (Poet).ranks
+SF-Soldier-3	skill.Profession (Politician)
+SF-Soldier-3	skill.Profession (Politician).ranks
+SF-Soldier-3	skill.Profession (Professor)
+SF-Soldier-3	skill.Profession (Professor).ranks
+SF-Soldier-3	skill.Profession (Psychologist)
+SF-Soldier-3	skill.Profession (Psychologist).ranks
+SF-Soldier-3	skill.Profession (Quartermaster)
+SF-Soldier-3	skill.Profession (Quartermaster).ranks
+SF-Soldier-3	skill.Profession (Smuggler)
+SF-Soldier-3	skill.Profession (Smuggler).ranks
+SF-Soldier-3	skill.Profession (Video Personality)
+SF-Soldier-3	skill.Profession (Video Personality).ranks
+SF-Soldier-3	skill.Profession (Vidgamer)
+SF-Soldier-3	skill.Profession (Vidgamer).ranks
+SF-Soldier-3	skill.Profession (Writer)
+SF-Soldier-3	skill.Profession (Writer).ranks
+SF-Soldier-3	skill.Sleight of Hand
+SF-Soldier-3	skill.Sleight of Hand.ranks
+SF-Mystic-5	row.sf.ability_modifier.charisma
+SF-Mystic-5	row.sf.ability_modifier.constitution
+SF-Mystic-5	row.sf.ability_modifier.dexterity
+SF-Mystic-5	row.sf.ability_modifier.intelligence
+SF-Mystic-5	row.sf.ability_modifier.strength
+SF-Mystic-5	row.sf.ability_modifier.wisdom
+SF-Mystic-5	row.sf.bulk_limit.overburdened_above
+SF-Mystic-5	row.sf.bulk_limit.unencumbered_max
+SF-Mystic-5	row.sf.class_level.mystic
+SF-Mystic-5	row.sf.credits.remaining
+SF-Mystic-5	row.sf.credits.starting
+SF-Mystic-5	skill.Computers
+SF-Mystic-5	skill.Computers.ranks
+SF-Mystic-5	skill.Engineering
+SF-Mystic-5	skill.Engineering.ranks
+SF-Mystic-5	skill.Physical Science
+SF-Mystic-5	skill.Physical Science.ranks
+SF-Mystic-5	skill.Profession (Accountant)
+SF-Mystic-5	skill.Profession (Accountant).ranks
+SF-Mystic-5	skill.Profession (Actor)
+SF-Mystic-5	skill.Profession (Actor).ranks
+SF-Mystic-5	skill.Profession (Archaeologist)
+SF-Mystic-5	skill.Profession (Archaeologist).ranks
+SF-Mystic-5	skill.Profession (Architect)
+SF-Mystic-5	skill.Profession (Architect).ranks
+SF-Mystic-5	skill.Profession (Artist)
+SF-Mystic-5	skill.Profession (Artist).ranks
+SF-Mystic-5	skill.Profession (Bounty Hunter)
+SF-Mystic-5	skill.Profession (Bounty Hunter).ranks
+SF-Mystic-5	skill.Profession (Comedian)
+SF-Mystic-5	skill.Profession (Comedian).ranks
+SF-Mystic-5	skill.Profession (Con Artist)
+SF-Mystic-5	skill.Profession (Con Artist).ranks
+SF-Mystic-5	skill.Profession (Cook)
+SF-Mystic-5	skill.Profession (Cook).ranks
+SF-Mystic-5	skill.Profession (Corporate Professional)
+SF-Mystic-5	skill.Profession (Corporate Professional).ranks
+SF-Mystic-5	skill.Profession (Counselor)
+SF-Mystic-5	skill.Profession (Counselor).ranks
+SF-Mystic-5	skill.Profession (Courtesan)
+SF-Mystic-5	skill.Profession (Courtesan).ranks
+SF-Mystic-5	skill.Profession (Dancer)
+SF-Mystic-5	skill.Profession (Dancer).ranks
+SF-Mystic-5	skill.Profession (Dockworker)
+SF-Mystic-5	skill.Profession (Dockworker).ranks
+SF-Mystic-5	skill.Profession (Electrician)
+SF-Mystic-5	skill.Profession (Electrician).ranks
+SF-Mystic-5	skill.Profession (Farmer)
+SF-Mystic-5	skill.Profession (Farmer).ranks
+SF-Mystic-5	skill.Profession (Gambler)
+SF-Mystic-5	skill.Profession (Gambler).ranks
+SF-Mystic-5	skill.Profession (General Contractor)
+SF-Mystic-5	skill.Profession (General Contractor).ranks
+SF-Mystic-5	skill.Profession (Herbalist)
+SF-Mystic-5	skill.Profession (Herbalist).ranks
+SF-Mystic-5	skill.Profession (Lab Technician)
+SF-Mystic-5	skill.Profession (Lab Technician).ranks
+SF-Mystic-5	skill.Profession (Lawyer)
+SF-Mystic-5	skill.Profession (Lawyer).ranks
+SF-Mystic-5	skill.Profession (Maintenance Worker)
+SF-Mystic-5	skill.Profession (Maintenance Worker).ranks
+SF-Mystic-5	skill.Profession (Manager)
+SF-Mystic-5	skill.Profession (Manager).ranks
+SF-Mystic-5	skill.Profession (Mathematician)
+SF-Mystic-5	skill.Profession (Mathematician).ranks
+SF-Mystic-5	skill.Profession (Mercenary)
+SF-Mystic-5	skill.Profession (Mercenary).ranks
+SF-Mystic-5	skill.Profession (Merchant)
+SF-Mystic-5	skill.Profession (Merchant).ranks
+SF-Mystic-5	skill.Profession (Miner)
+SF-Mystic-5	skill.Profession (Miner).ranks
+SF-Mystic-5	skill.Profession (Musician)
+SF-Mystic-5	skill.Profession (Musician).ranks
+SF-Mystic-5	skill.Profession (Orator)
+SF-Mystic-5	skill.Profession (Orator).ranks
+SF-Mystic-5	skill.Profession (Philosopher)
+SF-Mystic-5	skill.Profession (Philosopher).ranks
+SF-Mystic-5	skill.Profession (Poet)
+SF-Mystic-5	skill.Profession (Poet).ranks
+SF-Mystic-5	skill.Profession (Politician)
+SF-Mystic-5	skill.Profession (Politician).ranks
+SF-Mystic-5	skill.Profession (Professor)
+SF-Mystic-5	skill.Profession (Professor).ranks
+SF-Mystic-5	skill.Profession (Psychologist)
+SF-Mystic-5	skill.Profession (Psychologist).ranks
+SF-Mystic-5	skill.Profession (Quartermaster)
+SF-Mystic-5	skill.Profession (Quartermaster).ranks
+SF-Mystic-5	skill.Profession (Smuggler)
+SF-Mystic-5	skill.Profession (Smuggler).ranks
+SF-Mystic-5	skill.Profession (Video Personality)
+SF-Mystic-5	skill.Profession (Video Personality).ranks
+SF-Mystic-5	skill.Profession (Vidgamer)
+SF-Mystic-5	skill.Profession (Vidgamer).ranks
+SF-Mystic-5	skill.Profession (Writer)
+SF-Mystic-5	skill.Profession (Writer).ranks
+SF-Mystic-5	skill.Sleight of Hand
+SF-Mystic-5	skill.Sleight of Hand.ranks
+SF-Technomancer-5	row.sf.ability_modifier.charisma
+SF-Technomancer-5	row.sf.ability_modifier.constitution
+SF-Technomancer-5	row.sf.ability_modifier.dexterity
+SF-Technomancer-5	row.sf.ability_modifier.intelligence
+SF-Technomancer-5	row.sf.ability_modifier.strength
+SF-Technomancer-5	row.sf.ability_modifier.wisdom
+SF-Technomancer-5	row.sf.bulk_limit.overburdened_above
+SF-Technomancer-5	row.sf.bulk_limit.unencumbered_max
+SF-Technomancer-5	row.sf.class_level.technomancer
+SF-Technomancer-5	row.sf.credits.remaining
+SF-Technomancer-5	row.sf.credits.starting
+SF-Technomancer-5	skill.Culture
+SF-Technomancer-5	skill.Culture.ranks
+SF-Technomancer-5	skill.Medicine
+SF-Technomancer-5	skill.Medicine.ranks
+SF-Technomancer-5	skill.Profession (Accountant)
+SF-Technomancer-5	skill.Profession (Accountant).ranks
+SF-Technomancer-5	skill.Profession (Actor)
+SF-Technomancer-5	skill.Profession (Actor).ranks
+SF-Technomancer-5	skill.Profession (Archaeologist)
+SF-Technomancer-5	skill.Profession (Archaeologist).ranks
+SF-Technomancer-5	skill.Profession (Architect)
+SF-Technomancer-5	skill.Profession (Architect).ranks
+SF-Technomancer-5	skill.Profession (Artist)
+SF-Technomancer-5	skill.Profession (Artist).ranks
+SF-Technomancer-5	skill.Profession (Bounty Hunter)
+SF-Technomancer-5	skill.Profession (Bounty Hunter).ranks
+SF-Technomancer-5	skill.Profession (Comedian)
+SF-Technomancer-5	skill.Profession (Comedian).ranks
+SF-Technomancer-5	skill.Profession (Con Artist)
+SF-Technomancer-5	skill.Profession (Con Artist).ranks
+SF-Technomancer-5	skill.Profession (Cook)
+SF-Technomancer-5	skill.Profession (Cook).ranks
+SF-Technomancer-5	skill.Profession (Corporate Professional)
+SF-Technomancer-5	skill.Profession (Corporate Professional).ranks
+SF-Technomancer-5	skill.Profession (Counselor)
+SF-Technomancer-5	skill.Profession (Counselor).ranks
+SF-Technomancer-5	skill.Profession (Courtesan)
+SF-Technomancer-5	skill.Profession (Courtesan).ranks
+SF-Technomancer-5	skill.Profession (Dancer)
+SF-Technomancer-5	skill.Profession (Dancer).ranks
+SF-Technomancer-5	skill.Profession (Dockworker)
+SF-Technomancer-5	skill.Profession (Dockworker).ranks
+SF-Technomancer-5	skill.Profession (Electrician)
+SF-Technomancer-5	skill.Profession (Electrician).ranks
+SF-Technomancer-5	skill.Profession (Farmer)
+SF-Technomancer-5	skill.Profession (Farmer).ranks
+SF-Technomancer-5	skill.Profession (Gambler)
+SF-Technomancer-5	skill.Profession (Gambler).ranks
+SF-Technomancer-5	skill.Profession (General Contractor)
+SF-Technomancer-5	skill.Profession (General Contractor).ranks
+SF-Technomancer-5	skill.Profession (Herbalist)
+SF-Technomancer-5	skill.Profession (Herbalist).ranks
+SF-Technomancer-5	skill.Profession (Lab Technician)
+SF-Technomancer-5	skill.Profession (Lab Technician).ranks
+SF-Technomancer-5	skill.Profession (Lawyer)
+SF-Technomancer-5	skill.Profession (Lawyer).ranks
+SF-Technomancer-5	skill.Profession (Maintenance Worker)
+SF-Technomancer-5	skill.Profession (Maintenance Worker).ranks
+SF-Technomancer-5	skill.Profession (Manager)
+SF-Technomancer-5	skill.Profession (Manager).ranks
+SF-Technomancer-5	skill.Profession (Mathematician)
+SF-Technomancer-5	skill.Profession (Mathematician).ranks
+SF-Technomancer-5	skill.Profession (Mercenary)
+SF-Technomancer-5	skill.Profession (Mercenary).ranks
+SF-Technomancer-5	skill.Profession (Merchant)
+SF-Technomancer-5	skill.Profession (Merchant).ranks
+SF-Technomancer-5	skill.Profession (Miner)
+SF-Technomancer-5	skill.Profession (Miner).ranks
+SF-Technomancer-5	skill.Profession (Musician)
+SF-Technomancer-5	skill.Profession (Musician).ranks
+SF-Technomancer-5	skill.Profession (Orator)
+SF-Technomancer-5	skill.Profession (Orator).ranks
+SF-Technomancer-5	skill.Profession (Philosopher)
+SF-Technomancer-5	skill.Profession (Philosopher).ranks
+SF-Technomancer-5	skill.Profession (Poet)
+SF-Technomancer-5	skill.Profession (Poet).ranks
+SF-Technomancer-5	skill.Profession (Politician)
+SF-Technomancer-5	skill.Profession (Politician).ranks
+SF-Technomancer-5	skill.Profession (Professor)
+SF-Technomancer-5	skill.Profession (Professor).ranks
+SF-Technomancer-5	skill.Profession (Psychologist)
+SF-Technomancer-5	skill.Profession (Psychologist).ranks
+SF-Technomancer-5	skill.Profession (Quartermaster)
+SF-Technomancer-5	skill.Profession (Quartermaster).ranks
+SF-Technomancer-5	skill.Profession (Smuggler)
+SF-Technomancer-5	skill.Profession (Smuggler).ranks
+SF-Technomancer-5	skill.Profession (Video Personality)
+SF-Technomancer-5	skill.Profession (Video Personality).ranks
+SF-Technomancer-5	skill.Profession (Vidgamer)
+SF-Technomancer-5	skill.Profession (Vidgamer).ranks
+SF-Technomancer-5	skill.Profession (Writer)
+SF-Technomancer-5	skill.Profession (Writer).ranks
+SF-Envoy-3	row.sf.ability_modifier.charisma
+SF-Envoy-3	row.sf.ability_modifier.constitution
+SF-Envoy-3	row.sf.ability_modifier.dexterity
+SF-Envoy-3	row.sf.ability_modifier.intelligence
+SF-Envoy-3	row.sf.ability_modifier.strength
+SF-Envoy-3	row.sf.ability_modifier.wisdom
+SF-Envoy-3	row.sf.bulk_limit.overburdened_above
+SF-Envoy-3	row.sf.bulk_limit.unencumbered_max
+SF-Envoy-3	row.sf.class_level.envoy
+SF-Envoy-3	row.sf.credits.remaining
+SF-Envoy-3	row.sf.credits.starting
+SF-Envoy-3	skill.Life Science
+SF-Envoy-3	skill.Life Science.ranks
+SF-Envoy-3	skill.Medicine
+SF-Envoy-3	skill.Medicine.ranks
+SF-Envoy-3	skill.Mysticism
+SF-Envoy-3	skill.Mysticism.ranks
+SF-Envoy-3	skill.Physical Science
+SF-Envoy-3	skill.Physical Science.ranks
+SF-Envoy-3	skill.Profession (Accountant)
+SF-Envoy-3	skill.Profession (Accountant).ranks
+SF-Envoy-3	skill.Profession (Actor)
+SF-Envoy-3	skill.Profession (Actor).ranks
+SF-Envoy-3	skill.Profession (Archaeologist)
+SF-Envoy-3	skill.Profession (Archaeologist).ranks
+SF-Envoy-3	skill.Profession (Architect)
+SF-Envoy-3	skill.Profession (Architect).ranks
+SF-Envoy-3	skill.Profession (Artist)
+SF-Envoy-3	skill.Profession (Artist).ranks
+SF-Envoy-3	skill.Profession (Bounty Hunter)
+SF-Envoy-3	skill.Profession (Bounty Hunter).ranks
+SF-Envoy-3	skill.Profession (Comedian)
+SF-Envoy-3	skill.Profession (Comedian).ranks
+SF-Envoy-3	skill.Profession (Con Artist)
+SF-Envoy-3	skill.Profession (Con Artist).ranks
+SF-Envoy-3	skill.Profession (Cook)
+SF-Envoy-3	skill.Profession (Cook).ranks
+SF-Envoy-3	skill.Profession (Corporate Professional)
+SF-Envoy-3	skill.Profession (Corporate Professional).ranks
+SF-Envoy-3	skill.Profession (Counselor)
+SF-Envoy-3	skill.Profession (Counselor).ranks
+SF-Envoy-3	skill.Profession (Courtesan)
+SF-Envoy-3	skill.Profession (Courtesan).ranks
+SF-Envoy-3	skill.Profession (Dancer)
+SF-Envoy-3	skill.Profession (Dancer).ranks
+SF-Envoy-3	skill.Profession (Dockworker)
+SF-Envoy-3	skill.Profession (Dockworker).ranks
+SF-Envoy-3	skill.Profession (Electrician)
+SF-Envoy-3	skill.Profession (Electrician).ranks
+SF-Envoy-3	skill.Profession (Farmer)
+SF-Envoy-3	skill.Profession (Farmer).ranks
+SF-Envoy-3	skill.Profession (Gambler)
+SF-Envoy-3	skill.Profession (Gambler).ranks
+SF-Envoy-3	skill.Profession (General Contractor)
+SF-Envoy-3	skill.Profession (General Contractor).ranks
+SF-Envoy-3	skill.Profession (Herbalist)
+SF-Envoy-3	skill.Profession (Herbalist).ranks
+SF-Envoy-3	skill.Profession (Lab Technician)
+SF-Envoy-3	skill.Profession (Lab Technician).ranks
+SF-Envoy-3	skill.Profession (Lawyer)
+SF-Envoy-3	skill.Profession (Lawyer).ranks
+SF-Envoy-3	skill.Profession (Maintenance Worker)
+SF-Envoy-3	skill.Profession (Maintenance Worker).ranks
+SF-Envoy-3	skill.Profession (Manager)
+SF-Envoy-3	skill.Profession (Manager).ranks
+SF-Envoy-3	skill.Profession (Mathematician)
+SF-Envoy-3	skill.Profession (Mathematician).ranks
+SF-Envoy-3	skill.Profession (Mercenary)
+SF-Envoy-3	skill.Profession (Mercenary).ranks
+SF-Envoy-3	skill.Profession (Merchant)
+SF-Envoy-3	skill.Profession (Merchant).ranks
+SF-Envoy-3	skill.Profession (Miner)
+SF-Envoy-3	skill.Profession (Miner).ranks
+SF-Envoy-3	skill.Profession (Musician)
+SF-Envoy-3	skill.Profession (Musician).ranks
+SF-Envoy-3	skill.Profession (Orator)
+SF-Envoy-3	skill.Profession (Orator).ranks
+SF-Envoy-3	skill.Profession (Philosopher)
+SF-Envoy-3	skill.Profession (Philosopher).ranks
+SF-Envoy-3	skill.Profession (Poet)
+SF-Envoy-3	skill.Profession (Poet).ranks
+SF-Envoy-3	skill.Profession (Politician)
+SF-Envoy-3	skill.Profession (Politician).ranks
+SF-Envoy-3	skill.Profession (Professor)
+SF-Envoy-3	skill.Profession (Professor).ranks
+SF-Envoy-3	skill.Profession (Psychologist)
+SF-Envoy-3	skill.Profession (Psychologist).ranks
+SF-Envoy-3	skill.Profession (Quartermaster)
+SF-Envoy-3	skill.Profession (Quartermaster).ranks
+SF-Envoy-3	skill.Profession (Smuggler)
+SF-Envoy-3	skill.Profession (Smuggler).ranks
+SF-Envoy-3	skill.Profession (Video Personality)
+SF-Envoy-3	skill.Profession (Video Personality).ranks
+SF-Envoy-3	skill.Profession (Vidgamer)
+SF-Envoy-3	skill.Profession (Vidgamer).ranks
+SF-Envoy-3	skill.Profession (Writer)
+SF-Envoy-3	skill.Profession (Writer).ranks
+SF-Envoy-3	skill.Sleight of Hand
+SF-Envoy-3	skill.Sleight of Hand.ranks
+SF-Mechanic-1	row.sf.ability_modifier.charisma
+SF-Mechanic-1	row.sf.ability_modifier.constitution
+SF-Mechanic-1	row.sf.ability_modifier.dexterity
+SF-Mechanic-1	row.sf.ability_modifier.intelligence
+SF-Mechanic-1	row.sf.ability_modifier.strength
+SF-Mechanic-1	row.sf.ability_modifier.wisdom
+SF-Mechanic-1	row.sf.bulk_limit.overburdened_above
+SF-Mechanic-1	row.sf.bulk_limit.unencumbered_max
+SF-Mechanic-1	row.sf.class_level.mechanic
+SF-Mechanic-1	row.sf.credits.remaining
+SF-Mechanic-1	row.sf.credits.starting
+SF-Mechanic-1	skill.Culture
+SF-Mechanic-1	skill.Culture.ranks
+SF-Mechanic-1	skill.Life Science
+SF-Mechanic-1	skill.Life Science.ranks
+SF-Mechanic-1	skill.Medicine
+SF-Mechanic-1	skill.Medicine.ranks
+SF-Mechanic-1	skill.Mysticism
+SF-Mechanic-1	skill.Mysticism.ranks
+SF-Mechanic-1	skill.Profession (Accountant)
+SF-Mechanic-1	skill.Profession (Accountant).ranks
+SF-Mechanic-1	skill.Profession (Actor)
+SF-Mechanic-1	skill.Profession (Actor).ranks
+SF-Mechanic-1	skill.Profession (Archaeologist)
+SF-Mechanic-1	skill.Profession (Archaeologist).ranks
+SF-Mechanic-1	skill.Profession (Architect)
+SF-Mechanic-1	skill.Profession (Architect).ranks
+SF-Mechanic-1	skill.Profession (Artist)
+SF-Mechanic-1	skill.Profession (Artist).ranks
+SF-Mechanic-1	skill.Profession (Bounty Hunter)
+SF-Mechanic-1	skill.Profession (Bounty Hunter).ranks
+SF-Mechanic-1	skill.Profession (Comedian)
+SF-Mechanic-1	skill.Profession (Comedian).ranks
+SF-Mechanic-1	skill.Profession (Con Artist)
+SF-Mechanic-1	skill.Profession (Con Artist).ranks
+SF-Mechanic-1	skill.Profession (Cook)
+SF-Mechanic-1	skill.Profession (Cook).ranks
+SF-Mechanic-1	skill.Profession (Corporate Professional)
+SF-Mechanic-1	skill.Profession (Corporate Professional).ranks
+SF-Mechanic-1	skill.Profession (Counselor)
+SF-Mechanic-1	skill.Profession (Counselor).ranks
+SF-Mechanic-1	skill.Profession (Courtesan)
+SF-Mechanic-1	skill.Profession (Courtesan).ranks
+SF-Mechanic-1	skill.Profession (Dancer)
+SF-Mechanic-1	skill.Profession (Dancer).ranks
+SF-Mechanic-1	skill.Profession (Dockworker)
+SF-Mechanic-1	skill.Profession (Dockworker).ranks
+SF-Mechanic-1	skill.Profession (Electrician)
+SF-Mechanic-1	skill.Profession (Electrician).ranks
+SF-Mechanic-1	skill.Profession (Farmer)
+SF-Mechanic-1	skill.Profession (Farmer).ranks
+SF-Mechanic-1	skill.Profession (Gambler)
+SF-Mechanic-1	skill.Profession (Gambler).ranks
+SF-Mechanic-1	skill.Profession (General Contractor)
+SF-Mechanic-1	skill.Profession (General Contractor).ranks
+SF-Mechanic-1	skill.Profession (Herbalist)
+SF-Mechanic-1	skill.Profession (Herbalist).ranks
+SF-Mechanic-1	skill.Profession (Lab Technician)
+SF-Mechanic-1	skill.Profession (Lab Technician).ranks
+SF-Mechanic-1	skill.Profession (Lawyer)
+SF-Mechanic-1	skill.Profession (Lawyer).ranks
+SF-Mechanic-1	skill.Profession (Maintenance Worker)
+SF-Mechanic-1	skill.Profession (Maintenance Worker).ranks
+SF-Mechanic-1	skill.Profession (Manager)
+SF-Mechanic-1	skill.Profession (Manager).ranks
+SF-Mechanic-1	skill.Profession (Mathematician)
+SF-Mechanic-1	skill.Profession (Mathematician).ranks
+SF-Mechanic-1	skill.Profession (Mercenary)
+SF-Mechanic-1	skill.Profession (Mercenary).ranks
+SF-Mechanic-1	skill.Profession (Merchant)
+SF-Mechanic-1	skill.Profession (Merchant).ranks
+SF-Mechanic-1	skill.Profession (Miner)
+SF-Mechanic-1	skill.Profession (Miner).ranks
+SF-Mechanic-1	skill.Profession (Musician)
+SF-Mechanic-1	skill.Profession (Musician).ranks
+SF-Mechanic-1	skill.Profession (Orator)
+SF-Mechanic-1	skill.Profession (Orator).ranks
+SF-Mechanic-1	skill.Profession (Philosopher)
+SF-Mechanic-1	skill.Profession (Philosopher).ranks
+SF-Mechanic-1	skill.Profession (Poet)
+SF-Mechanic-1	skill.Profession (Poet).ranks
+SF-Mechanic-1	skill.Profession (Politician)
+SF-Mechanic-1	skill.Profession (Politician).ranks
+SF-Mechanic-1	skill.Profession (Professor)
+SF-Mechanic-1	skill.Profession (Professor).ranks
+SF-Mechanic-1	skill.Profession (Psychologist)
+SF-Mechanic-1	skill.Profession (Psychologist).ranks
+SF-Mechanic-1	skill.Profession (Quartermaster)
+SF-Mechanic-1	skill.Profession (Quartermaster).ranks
+SF-Mechanic-1	skill.Profession (Smuggler)
+SF-Mechanic-1	skill.Profession (Smuggler).ranks
+SF-Mechanic-1	skill.Profession (Video Personality)
+SF-Mechanic-1	skill.Profession (Video Personality).ranks
+SF-Mechanic-1	skill.Profession (Vidgamer)
+SF-Mechanic-1	skill.Profession (Vidgamer).ranks
+SF-Mechanic-1	skill.Profession (Writer)
+SF-Mechanic-1	skill.Profession (Writer).ranks
+SF-Mechanic-1	skill.Sleight of Hand
+SF-Mechanic-1	skill.Sleight of Hand.ranks
+SF-Envoy-1	row.sf.ability_modifier.charisma
+SF-Envoy-1	row.sf.ability_modifier.constitution
+SF-Envoy-1	row.sf.ability_modifier.dexterity
+SF-Envoy-1	row.sf.ability_modifier.intelligence
+SF-Envoy-1	row.sf.ability_modifier.strength
+SF-Envoy-1	row.sf.ability_modifier.wisdom
+SF-Envoy-1	row.sf.bulk_limit.overburdened_above
+SF-Envoy-1	row.sf.bulk_limit.unencumbered_max
+SF-Envoy-1	row.sf.class_level.envoy
+SF-Envoy-1	row.sf.credits.remaining
+SF-Envoy-1	row.sf.credits.starting
+SF-Envoy-1	skill.Computers
+SF-Envoy-1	skill.Computers.ranks
+SF-Envoy-1	skill.Engineering
+SF-Envoy-1	skill.Engineering.ranks
+SF-Envoy-1	skill.Life Science
+SF-Envoy-1	skill.Life Science.ranks
+SF-Envoy-1	skill.Medicine
+SF-Envoy-1	skill.Medicine.ranks
+SF-Envoy-1	skill.Mysticism
+SF-Envoy-1	skill.Mysticism.ranks
+SF-Envoy-1	skill.Physical Science
+SF-Envoy-1	skill.Physical Science.ranks
+SF-Envoy-1	skill.Profession (Accountant)
+SF-Envoy-1	skill.Profession (Accountant).ranks
+SF-Envoy-1	skill.Profession (Actor)
+SF-Envoy-1	skill.Profession (Actor).ranks
+SF-Envoy-1	skill.Profession (Archaeologist)
+SF-Envoy-1	skill.Profession (Archaeologist).ranks
+SF-Envoy-1	skill.Profession (Architect)
+SF-Envoy-1	skill.Profession (Architect).ranks
+SF-Envoy-1	skill.Profession (Artist)
+SF-Envoy-1	skill.Profession (Artist).ranks
+SF-Envoy-1	skill.Profession (Bounty Hunter)
+SF-Envoy-1	skill.Profession (Bounty Hunter).ranks
+SF-Envoy-1	skill.Profession (Comedian)
+SF-Envoy-1	skill.Profession (Comedian).ranks
+SF-Envoy-1	skill.Profession (Con Artist)
+SF-Envoy-1	skill.Profession (Con Artist).ranks
+SF-Envoy-1	skill.Profession (Cook)
+SF-Envoy-1	skill.Profession (Cook).ranks
+SF-Envoy-1	skill.Profession (Corporate Professional)
+SF-Envoy-1	skill.Profession (Corporate Professional).ranks
+SF-Envoy-1	skill.Profession (Counselor)
+SF-Envoy-1	skill.Profession (Counselor).ranks
+SF-Envoy-1	skill.Profession (Courtesan)
+SF-Envoy-1	skill.Profession (Courtesan).ranks
+SF-Envoy-1	skill.Profession (Dancer)
+SF-Envoy-1	skill.Profession (Dancer).ranks
+SF-Envoy-1	skill.Profession (Dockworker)
+SF-Envoy-1	skill.Profession (Dockworker).ranks
+SF-Envoy-1	skill.Profession (Electrician)
+SF-Envoy-1	skill.Profession (Electrician).ranks
+SF-Envoy-1	skill.Profession (Farmer)
+SF-Envoy-1	skill.Profession (Farmer).ranks
+SF-Envoy-1	skill.Profession (Gambler)
+SF-Envoy-1	skill.Profession (Gambler).ranks
+SF-Envoy-1	skill.Profession (General Contractor)
+SF-Envoy-1	skill.Profession (General Contractor).ranks
+SF-Envoy-1	skill.Profession (Herbalist)
+SF-Envoy-1	skill.Profession (Herbalist).ranks
+SF-Envoy-1	skill.Profession (Lab Technician)
+SF-Envoy-1	skill.Profession (Lab Technician).ranks
+SF-Envoy-1	skill.Profession (Lawyer)
+SF-Envoy-1	skill.Profession (Lawyer).ranks
+SF-Envoy-1	skill.Profession (Maintenance Worker)
+SF-Envoy-1	skill.Profession (Maintenance Worker).ranks
+SF-Envoy-1	skill.Profession (Manager)
+SF-Envoy-1	skill.Profession (Manager).ranks
+SF-Envoy-1	skill.Profession (Mathematician)
+SF-Envoy-1	skill.Profession (Mathematician).ranks
+SF-Envoy-1	skill.Profession (Mercenary)
+SF-Envoy-1	skill.Profession (Mercenary).ranks
+SF-Envoy-1	skill.Profession (Merchant)
+SF-Envoy-1	skill.Profession (Merchant).ranks
+SF-Envoy-1	skill.Profession (Miner)
+SF-Envoy-1	skill.Profession (Miner).ranks
+SF-Envoy-1	skill.Profession (Musician)
+SF-Envoy-1	skill.Profession (Musician).ranks
+SF-Envoy-1	skill.Profession (Orator)
+SF-Envoy-1	skill.Profession (Orator).ranks
+SF-Envoy-1	skill.Profession (Philosopher)
+SF-Envoy-1	skill.Profession (Philosopher).ranks
+SF-Envoy-1	skill.Profession (Poet)
+SF-Envoy-1	skill.Profession (Poet).ranks
+SF-Envoy-1	skill.Profession (Politician)
+SF-Envoy-1	skill.Profession (Politician).ranks
+SF-Envoy-1	skill.Profession (Professor)
+SF-Envoy-1	skill.Profession (Professor).ranks
+SF-Envoy-1	skill.Profession (Psychologist)
+SF-Envoy-1	skill.Profession (Psychologist).ranks
+SF-Envoy-1	skill.Profession (Quartermaster)
+SF-Envoy-1	skill.Profession (Quartermaster).ranks
+SF-Envoy-1	skill.Profession (Smuggler)
+SF-Envoy-1	skill.Profession (Smuggler).ranks
+SF-Envoy-1	skill.Profession (Video Personality)
+SF-Envoy-1	skill.Profession (Video Personality).ranks
+SF-Envoy-1	skill.Profession (Vidgamer)
+SF-Envoy-1	skill.Profession (Vidgamer).ranks
+SF-Envoy-1	skill.Profession (Writer)
+SF-Envoy-1	skill.Profession (Writer).ranks
+SF-Envoy-1	skill.Sleight of Hand
+SF-Envoy-1	skill.Sleight of Hand.ranks
+SF-Mystic-1	row.sf.ability_modifier.charisma
+SF-Mystic-1	row.sf.ability_modifier.constitution
+SF-Mystic-1	row.sf.ability_modifier.dexterity
+SF-Mystic-1	row.sf.ability_modifier.intelligence
+SF-Mystic-1	row.sf.ability_modifier.strength
+SF-Mystic-1	row.sf.ability_modifier.wisdom
+SF-Mystic-1	row.sf.bulk_limit.overburdened_above
+SF-Mystic-1	row.sf.bulk_limit.unencumbered_max
+SF-Mystic-1	row.sf.class_level.mystic
+SF-Mystic-1	row.sf.credits.remaining
+SF-Mystic-1	row.sf.credits.starting
+SF-Mystic-1	skill.Computers
+SF-Mystic-1	skill.Computers.ranks
+SF-Mystic-1	skill.Culture
+SF-Mystic-1	skill.Culture.ranks
+SF-Mystic-1	skill.Engineering
+SF-Mystic-1	skill.Engineering.ranks
+SF-Mystic-1	skill.Life Science
+SF-Mystic-1	skill.Life Science.ranks
+SF-Mystic-1	skill.Physical Science
+SF-Mystic-1	skill.Physical Science.ranks
+SF-Mystic-1	skill.Profession (Accountant)
+SF-Mystic-1	skill.Profession (Accountant).ranks
+SF-Mystic-1	skill.Profession (Actor)
+SF-Mystic-1	skill.Profession (Actor).ranks
+SF-Mystic-1	skill.Profession (Archaeologist)
+SF-Mystic-1	skill.Profession (Archaeologist).ranks
+SF-Mystic-1	skill.Profession (Architect)
+SF-Mystic-1	skill.Profession (Architect).ranks
+SF-Mystic-1	skill.Profession (Artist)
+SF-Mystic-1	skill.Profession (Artist).ranks
+SF-Mystic-1	skill.Profession (Bounty Hunter)
+SF-Mystic-1	skill.Profession (Bounty Hunter).ranks
+SF-Mystic-1	skill.Profession (Comedian)
+SF-Mystic-1	skill.Profession (Comedian).ranks
+SF-Mystic-1	skill.Profession (Con Artist)
+SF-Mystic-1	skill.Profession (Con Artist).ranks
+SF-Mystic-1	skill.Profession (Cook)
+SF-Mystic-1	skill.Profession (Cook).ranks
+SF-Mystic-1	skill.Profession (Corporate Professional)
+SF-Mystic-1	skill.Profession (Corporate Professional).ranks
+SF-Mystic-1	skill.Profession (Counselor)
+SF-Mystic-1	skill.Profession (Counselor).ranks
+SF-Mystic-1	skill.Profession (Courtesan)
+SF-Mystic-1	skill.Profession (Courtesan).ranks
+SF-Mystic-1	skill.Profession (Dancer)
+SF-Mystic-1	skill.Profession (Dancer).ranks
+SF-Mystic-1	skill.Profession (Dockworker)
+SF-Mystic-1	skill.Profession (Dockworker).ranks
+SF-Mystic-1	skill.Profession (Electrician)
+SF-Mystic-1	skill.Profession (Electrician).ranks
+SF-Mystic-1	skill.Profession (Farmer)
+SF-Mystic-1	skill.Profession (Farmer).ranks
+SF-Mystic-1	skill.Profession (Gambler)
+SF-Mystic-1	skill.Profession (Gambler).ranks
+SF-Mystic-1	skill.Profession (General Contractor)
+SF-Mystic-1	skill.Profession (General Contractor).ranks
+SF-Mystic-1	skill.Profession (Herbalist)
+SF-Mystic-1	skill.Profession (Herbalist).ranks
+SF-Mystic-1	skill.Profession (Lab Technician)
+SF-Mystic-1	skill.Profession (Lab Technician).ranks
+SF-Mystic-1	skill.Profession (Lawyer)
+SF-Mystic-1	skill.Profession (Lawyer).ranks
+SF-Mystic-1	skill.Profession (Maintenance Worker)
+SF-Mystic-1	skill.Profession (Maintenance Worker).ranks
+SF-Mystic-1	skill.Profession (Manager)
+SF-Mystic-1	skill.Profession (Manager).ranks
+SF-Mystic-1	skill.Profession (Mathematician)
+SF-Mystic-1	skill.Profession (Mathematician).ranks
+SF-Mystic-1	skill.Profession (Mercenary)
+SF-Mystic-1	skill.Profession (Mercenary).ranks
+SF-Mystic-1	skill.Profession (Merchant)
+SF-Mystic-1	skill.Profession (Merchant).ranks
+SF-Mystic-1	skill.Profession (Miner)
+SF-Mystic-1	skill.Profession (Miner).ranks
+SF-Mystic-1	skill.Profession (Musician)
+SF-Mystic-1	skill.Profession (Musician).ranks
+SF-Mystic-1	skill.Profession (Orator)
+SF-Mystic-1	skill.Profession (Orator).ranks
+SF-Mystic-1	skill.Profession (Philosopher)
+SF-Mystic-1	skill.Profession (Philosopher).ranks
+SF-Mystic-1	skill.Profession (Poet)
+SF-Mystic-1	skill.Profession (Poet).ranks
+SF-Mystic-1	skill.Profession (Politician)
+SF-Mystic-1	skill.Profession (Politician).ranks
+SF-Mystic-1	skill.Profession (Professor)
+SF-Mystic-1	skill.Profession (Professor).ranks
+SF-Mystic-1	skill.Profession (Psychologist)
+SF-Mystic-1	skill.Profession (Psychologist).ranks
+SF-Mystic-1	skill.Profession (Quartermaster)
+SF-Mystic-1	skill.Profession (Quartermaster).ranks
+SF-Mystic-1	skill.Profession (Smuggler)
+SF-Mystic-1	skill.Profession (Smuggler).ranks
+SF-Mystic-1	skill.Profession (Video Personality)
+SF-Mystic-1	skill.Profession (Video Personality).ranks
+SF-Mystic-1	skill.Profession (Vidgamer)
+SF-Mystic-1	skill.Profession (Vidgamer).ranks
+SF-Mystic-1	skill.Profession (Writer)
+SF-Mystic-1	skill.Profession (Writer).ranks
+SF-Mystic-1	skill.Sleight of Hand
+SF-Mystic-1	skill.Sleight of Hand.ranks
+SF-Operative-1	row.sf.ability_modifier.charisma
+SF-Operative-1	row.sf.ability_modifier.constitution
+SF-Operative-1	row.sf.ability_modifier.dexterity
+SF-Operative-1	row.sf.ability_modifier.intelligence
+SF-Operative-1	row.sf.ability_modifier.strength
+SF-Operative-1	row.sf.ability_modifier.wisdom
+SF-Operative-1	row.sf.bulk_limit.overburdened_above
+SF-Operative-1	row.sf.bulk_limit.unencumbered_max
+SF-Operative-1	row.sf.class_level.operative
+SF-Operative-1	row.sf.credits.remaining
+SF-Operative-1	row.sf.credits.starting
+SF-Operative-1	skill.Computers
+SF-Operative-1	skill.Computers.ranks
+SF-Operative-1	skill.Culture
+SF-Operative-1	skill.Culture.ranks
+SF-Operative-1	skill.Engineering
+SF-Operative-1	skill.Engineering.ranks
+SF-Operative-1	skill.Life Science
+SF-Operative-1	skill.Life Science.ranks
+SF-Operative-1	skill.Medicine
+SF-Operative-1	skill.Medicine.ranks
+SF-Operative-1	skill.Mysticism
+SF-Operative-1	skill.Mysticism.ranks
+SF-Operative-1	skill.Physical Science
+SF-Operative-1	skill.Physical Science.ranks
+SF-Operative-1	skill.Profession (Accountant)
+SF-Operative-1	skill.Profession (Accountant).ranks
+SF-Operative-1	skill.Profession (Actor)
+SF-Operative-1	skill.Profession (Actor).ranks
+SF-Operative-1	skill.Profession (Archaeologist)
+SF-Operative-1	skill.Profession (Archaeologist).ranks
+SF-Operative-1	skill.Profession (Architect)
+SF-Operative-1	skill.Profession (Architect).ranks
+SF-Operative-1	skill.Profession (Artist)
+SF-Operative-1	skill.Profession (Artist).ranks
+SF-Operative-1	skill.Profession (Bounty Hunter)
+SF-Operative-1	skill.Profession (Bounty Hunter).ranks
+SF-Operative-1	skill.Profession (Comedian)
+SF-Operative-1	skill.Profession (Comedian).ranks
+SF-Operative-1	skill.Profession (Con Artist)
+SF-Operative-1	skill.Profession (Con Artist).ranks
+SF-Operative-1	skill.Profession (Cook)
+SF-Operative-1	skill.Profession (Cook).ranks
+SF-Operative-1	skill.Profession (Corporate Professional)
+SF-Operative-1	skill.Profession (Corporate Professional).ranks
+SF-Operative-1	skill.Profession (Counselor)
+SF-Operative-1	skill.Profession (Counselor).ranks
+SF-Operative-1	skill.Profession (Courtesan)
+SF-Operative-1	skill.Profession (Courtesan).ranks
+SF-Operative-1	skill.Profession (Dancer)
+SF-Operative-1	skill.Profession (Dancer).ranks
+SF-Operative-1	skill.Profession (Dockworker)
+SF-Operative-1	skill.Profession (Dockworker).ranks
+SF-Operative-1	skill.Profession (Electrician)
+SF-Operative-1	skill.Profession (Electrician).ranks
+SF-Operative-1	skill.Profession (Farmer)
+SF-Operative-1	skill.Profession (Farmer).ranks
+SF-Operative-1	skill.Profession (Gambler)
+SF-Operative-1	skill.Profession (Gambler).ranks
+SF-Operative-1	skill.Profession (General Contractor)
+SF-Operative-1	skill.Profession (General Contractor).ranks
+SF-Operative-1	skill.Profession (Herbalist)
+SF-Operative-1	skill.Profession (Herbalist).ranks
+SF-Operative-1	skill.Profession (Lab Technician)
+SF-Operative-1	skill.Profession (Lab Technician).ranks
+SF-Operative-1	skill.Profession (Lawyer)
+SF-Operative-1	skill.Profession (Lawyer).ranks
+SF-Operative-1	skill.Profession (Maintenance Worker)
+SF-Operative-1	skill.Profession (Maintenance Worker).ranks
+SF-Operative-1	skill.Profession (Manager)
+SF-Operative-1	skill.Profession (Manager).ranks
+SF-Operative-1	skill.Profession (Mathematician)
+SF-Operative-1	skill.Profession (Mathematician).ranks
+SF-Operative-1	skill.Profession (Mercenary)
+SF-Operative-1	skill.Profession (Mercenary).ranks
+SF-Operative-1	skill.Profession (Merchant)
+SF-Operative-1	skill.Profession (Merchant).ranks
+SF-Operative-1	skill.Profession (Miner)
+SF-Operative-1	skill.Profession (Miner).ranks
+SF-Operative-1	skill.Profession (Musician)
+SF-Operative-1	skill.Profession (Musician).ranks
+SF-Operative-1	skill.Profession (Orator)
+SF-Operative-1	skill.Profession (Orator).ranks
+SF-Operative-1	skill.Profession (Philosopher)
+SF-Operative-1	skill.Profession (Philosopher).ranks
+SF-Operative-1	skill.Profession (Poet)
+SF-Operative-1	skill.Profession (Poet).ranks
+SF-Operative-1	skill.Profession (Politician)
+SF-Operative-1	skill.Profession (Politician).ranks
+SF-Operative-1	skill.Profession (Professor)
+SF-Operative-1	skill.Profession (Professor).ranks
+SF-Operative-1	skill.Profession (Psychologist)
+SF-Operative-1	skill.Profession (Psychologist).ranks
+SF-Operative-1	skill.Profession (Quartermaster)
+SF-Operative-1	skill.Profession (Quartermaster).ranks
+SF-Operative-1	skill.Profession (Smuggler)
+SF-Operative-1	skill.Profession (Smuggler).ranks
+SF-Operative-1	skill.Profession (Video Personality)
+SF-Operative-1	skill.Profession (Video Personality).ranks
+SF-Operative-1	skill.Profession (Vidgamer)
+SF-Operative-1	skill.Profession (Vidgamer).ranks
+SF-Operative-1	skill.Profession (Writer)
+SF-Operative-1	skill.Profession (Writer).ranks
+SF-Operative-1	skill.Sleight of Hand
+SF-Operative-1	skill.Sleight of Hand.ranks
+SF-Solarian-1	row.sf.ability_modifier.charisma
+SF-Solarian-1	row.sf.ability_modifier.constitution
+SF-Solarian-1	row.sf.ability_modifier.dexterity
+SF-Solarian-1	row.sf.ability_modifier.intelligence
+SF-Solarian-1	row.sf.ability_modifier.strength
+SF-Solarian-1	row.sf.ability_modifier.wisdom
+SF-Solarian-1	row.sf.bulk_limit.overburdened_above
+SF-Solarian-1	row.sf.bulk_limit.unencumbered_max
+SF-Solarian-1	row.sf.class_level.solarian
+SF-Solarian-1	row.sf.credits.remaining
+SF-Solarian-1	row.sf.credits.starting
+SF-Solarian-1	skill.Computers
+SF-Solarian-1	skill.Computers.ranks
+SF-Solarian-1	skill.Culture
+SF-Solarian-1	skill.Culture.ranks
+SF-Solarian-1	skill.Engineering
+SF-Solarian-1	skill.Engineering.ranks
+SF-Solarian-1	skill.Life Science
+SF-Solarian-1	skill.Life Science.ranks
+SF-Solarian-1	skill.Medicine
+SF-Solarian-1	skill.Medicine.ranks
+SF-Solarian-1	skill.Physical Science
+SF-Solarian-1	skill.Physical Science.ranks
+SF-Solarian-1	skill.Profession (Accountant)
+SF-Solarian-1	skill.Profession (Accountant).ranks
+SF-Solarian-1	skill.Profession (Actor)
+SF-Solarian-1	skill.Profession (Actor).ranks
+SF-Solarian-1	skill.Profession (Archaeologist)
+SF-Solarian-1	skill.Profession (Archaeologist).ranks
+SF-Solarian-1	skill.Profession (Architect)
+SF-Solarian-1	skill.Profession (Architect).ranks
+SF-Solarian-1	skill.Profession (Artist)
+SF-Solarian-1	skill.Profession (Artist).ranks
+SF-Solarian-1	skill.Profession (Bounty Hunter)
+SF-Solarian-1	skill.Profession (Bounty Hunter).ranks
+SF-Solarian-1	skill.Profession (Comedian)
+SF-Solarian-1	skill.Profession (Comedian).ranks
+SF-Solarian-1	skill.Profession (Con Artist)
+SF-Solarian-1	skill.Profession (Con Artist).ranks
+SF-Solarian-1	skill.Profession (Cook)
+SF-Solarian-1	skill.Profession (Cook).ranks
+SF-Solarian-1	skill.Profession (Corporate Professional)
+SF-Solarian-1	skill.Profession (Corporate Professional).ranks
+SF-Solarian-1	skill.Profession (Counselor)
+SF-Solarian-1	skill.Profession (Counselor).ranks
+SF-Solarian-1	skill.Profession (Courtesan)
+SF-Solarian-1	skill.Profession (Courtesan).ranks
+SF-Solarian-1	skill.Profession (Dancer)
+SF-Solarian-1	skill.Profession (Dancer).ranks
+SF-Solarian-1	skill.Profession (Dockworker)
+SF-Solarian-1	skill.Profession (Dockworker).ranks
+SF-Solarian-1	skill.Profession (Electrician)
+SF-Solarian-1	skill.Profession (Electrician).ranks
+SF-Solarian-1	skill.Profession (Farmer)
+SF-Solarian-1	skill.Profession (Farmer).ranks
+SF-Solarian-1	skill.Profession (Gambler)
+SF-Solarian-1	skill.Profession (Gambler).ranks
+SF-Solarian-1	skill.Profession (General Contractor)
+SF-Solarian-1	skill.Profession (General Contractor).ranks
+SF-Solarian-1	skill.Profession (Herbalist)
+SF-Solarian-1	skill.Profession (Herbalist).ranks
+SF-Solarian-1	skill.Profession (Lab Technician)
+SF-Solarian-1	skill.Profession (Lab Technician).ranks
+SF-Solarian-1	skill.Profession (Lawyer)
+SF-Solarian-1	skill.Profession (Lawyer).ranks
+SF-Solarian-1	skill.Profession (Maintenance Worker)
+SF-Solarian-1	skill.Profession (Maintenance Worker).ranks
+SF-Solarian-1	skill.Profession (Manager)
+SF-Solarian-1	skill.Profession (Manager).ranks
+SF-Solarian-1	skill.Profession (Mathematician)
+SF-Solarian-1	skill.Profession (Mathematician).ranks
+SF-Solarian-1	skill.Profession (Mercenary)
+SF-Solarian-1	skill.Profession (Mercenary).ranks
+SF-Solarian-1	skill.Profession (Merchant)
+SF-Solarian-1	skill.Profession (Merchant).ranks
+SF-Solarian-1	skill.Profession (Miner)
+SF-Solarian-1	skill.Profession (Miner).ranks
+SF-Solarian-1	skill.Profession (Musician)
+SF-Solarian-1	skill.Profession (Musician).ranks
+SF-Solarian-1	skill.Profession (Orator)
+SF-Solarian-1	skill.Profession (Orator).ranks
+SF-Solarian-1	skill.Profession (Philosopher)
+SF-Solarian-1	skill.Profession (Philosopher).ranks
+SF-Solarian-1	skill.Profession (Poet)
+SF-Solarian-1	skill.Profession (Poet).ranks
+SF-Solarian-1	skill.Profession (Politician)
+SF-Solarian-1	skill.Profession (Politician).ranks
+SF-Solarian-1	skill.Profession (Professor)
+SF-Solarian-1	skill.Profession (Professor).ranks
+SF-Solarian-1	skill.Profession (Psychologist)
+SF-Solarian-1	skill.Profession (Psychologist).ranks
+SF-Solarian-1	skill.Profession (Quartermaster)
+SF-Solarian-1	skill.Profession (Quartermaster).ranks
+SF-Solarian-1	skill.Profession (Smuggler)
+SF-Solarian-1	skill.Profession (Smuggler).ranks
+SF-Solarian-1	skill.Profession (Video Personality)
+SF-Solarian-1	skill.Profession (Video Personality).ranks
+SF-Solarian-1	skill.Profession (Vidgamer)
+SF-Solarian-1	skill.Profession (Vidgamer).ranks
+SF-Solarian-1	skill.Profession (Writer)
+SF-Solarian-1	skill.Profession (Writer).ranks
+SF-Solarian-1	skill.Sleight of Hand
+SF-Solarian-1	skill.Sleight of Hand.ranks
+SF-Soldier-1	row.sf.ability_modifier.charisma
+SF-Soldier-1	row.sf.ability_modifier.constitution
+SF-Soldier-1	row.sf.ability_modifier.dexterity
+SF-Soldier-1	row.sf.ability_modifier.intelligence
+SF-Soldier-1	row.sf.ability_modifier.strength
+SF-Soldier-1	row.sf.ability_modifier.wisdom
+SF-Soldier-1	row.sf.bulk_limit.overburdened_above
+SF-Soldier-1	row.sf.bulk_limit.unencumbered_max
+SF-Soldier-1	row.sf.class_level.soldier
+SF-Soldier-1	row.sf.credits.remaining
+SF-Soldier-1	row.sf.credits.starting
+SF-Soldier-1	skill.Computers
+SF-Soldier-1	skill.Computers.ranks
+SF-Soldier-1	skill.Culture
+SF-Soldier-1	skill.Culture.ranks
+SF-Soldier-1	skill.Engineering
+SF-Soldier-1	skill.Engineering.ranks
+SF-Soldier-1	skill.Life Science
+SF-Soldier-1	skill.Life Science.ranks
+SF-Soldier-1	skill.Medicine
+SF-Soldier-1	skill.Medicine.ranks
+SF-Soldier-1	skill.Mysticism
+SF-Soldier-1	skill.Mysticism.ranks
+SF-Soldier-1	skill.Physical Science
+SF-Soldier-1	skill.Physical Science.ranks
+SF-Soldier-1	skill.Profession (Accountant)
+SF-Soldier-1	skill.Profession (Accountant).ranks
+SF-Soldier-1	skill.Profession (Actor)
+SF-Soldier-1	skill.Profession (Actor).ranks
+SF-Soldier-1	skill.Profession (Archaeologist)
+SF-Soldier-1	skill.Profession (Archaeologist).ranks
+SF-Soldier-1	skill.Profession (Architect)
+SF-Soldier-1	skill.Profession (Architect).ranks
+SF-Soldier-1	skill.Profession (Artist)
+SF-Soldier-1	skill.Profession (Artist).ranks
+SF-Soldier-1	skill.Profession (Bounty Hunter)
+SF-Soldier-1	skill.Profession (Bounty Hunter).ranks
+SF-Soldier-1	skill.Profession (Comedian)
+SF-Soldier-1	skill.Profession (Comedian).ranks
+SF-Soldier-1	skill.Profession (Con Artist)
+SF-Soldier-1	skill.Profession (Con Artist).ranks
+SF-Soldier-1	skill.Profession (Cook)
+SF-Soldier-1	skill.Profession (Cook).ranks
+SF-Soldier-1	skill.Profession (Corporate Professional)
+SF-Soldier-1	skill.Profession (Corporate Professional).ranks
+SF-Soldier-1	skill.Profession (Counselor)
+SF-Soldier-1	skill.Profession (Counselor).ranks
+SF-Soldier-1	skill.Profession (Courtesan)
+SF-Soldier-1	skill.Profession (Courtesan).ranks
+SF-Soldier-1	skill.Profession (Dancer)
+SF-Soldier-1	skill.Profession (Dancer).ranks
+SF-Soldier-1	skill.Profession (Dockworker)
+SF-Soldier-1	skill.Profession (Dockworker).ranks
+SF-Soldier-1	skill.Profession (Electrician)
+SF-Soldier-1	skill.Profession (Electrician).ranks
+SF-Soldier-1	skill.Profession (Farmer)
+SF-Soldier-1	skill.Profession (Farmer).ranks
+SF-Soldier-1	skill.Profession (Gambler)
+SF-Soldier-1	skill.Profession (Gambler).ranks
+SF-Soldier-1	skill.Profession (General Contractor)
+SF-Soldier-1	skill.Profession (General Contractor).ranks
+SF-Soldier-1	skill.Profession (Herbalist)
+SF-Soldier-1	skill.Profession (Herbalist).ranks
+SF-Soldier-1	skill.Profession (Lab Technician)
+SF-Soldier-1	skill.Profession (Lab Technician).ranks
+SF-Soldier-1	skill.Profession (Lawyer)
+SF-Soldier-1	skill.Profession (Lawyer).ranks
+SF-Soldier-1	skill.Profession (Maintenance Worker)
+SF-Soldier-1	skill.Profession (Maintenance Worker).ranks
+SF-Soldier-1	skill.Profession (Manager)
+SF-Soldier-1	skill.Profession (Manager).ranks
+SF-Soldier-1	skill.Profession (Mathematician)
+SF-Soldier-1	skill.Profession (Mathematician).ranks
+SF-Soldier-1	skill.Profession (Mercenary)
+SF-Soldier-1	skill.Profession (Mercenary).ranks
+SF-Soldier-1	skill.Profession (Merchant)
+SF-Soldier-1	skill.Profession (Merchant).ranks
+SF-Soldier-1	skill.Profession (Miner)
+SF-Soldier-1	skill.Profession (Miner).ranks
+SF-Soldier-1	skill.Profession (Musician)
+SF-Soldier-1	skill.Profession (Musician).ranks
+SF-Soldier-1	skill.Profession (Orator)
+SF-Soldier-1	skill.Profession (Orator).ranks
+SF-Soldier-1	skill.Profession (Philosopher)
+SF-Soldier-1	skill.Profession (Philosopher).ranks
+SF-Soldier-1	skill.Profession (Poet)
+SF-Soldier-1	skill.Profession (Poet).ranks
+SF-Soldier-1	skill.Profession (Politician)
+SF-Soldier-1	skill.Profession (Politician).ranks
+SF-Soldier-1	skill.Profession (Professor)
+SF-Soldier-1	skill.Profession (Professor).ranks
+SF-Soldier-1	skill.Profession (Psychologist)
+SF-Soldier-1	skill.Profession (Psychologist).ranks
+SF-Soldier-1	skill.Profession (Quartermaster)
+SF-Soldier-1	skill.Profession (Quartermaster).ranks
+SF-Soldier-1	skill.Profession (Smuggler)
+SF-Soldier-1	skill.Profession (Smuggler).ranks
+SF-Soldier-1	skill.Profession (Video Personality)
+SF-Soldier-1	skill.Profession (Video Personality).ranks
+SF-Soldier-1	skill.Profession (Vidgamer)
+SF-Soldier-1	skill.Profession (Vidgamer).ranks
+SF-Soldier-1	skill.Profession (Writer)
+SF-Soldier-1	skill.Profession (Writer).ranks
+SF-Technomancer-1	row.sf.ability_modifier.charisma
+SF-Technomancer-1	row.sf.ability_modifier.constitution
+SF-Technomancer-1	row.sf.ability_modifier.dexterity
+SF-Technomancer-1	row.sf.ability_modifier.intelligence
+SF-Technomancer-1	row.sf.ability_modifier.strength
+SF-Technomancer-1	row.sf.ability_modifier.wisdom
+SF-Technomancer-1	row.sf.bulk_limit.overburdened_above
+SF-Technomancer-1	row.sf.bulk_limit.unencumbered_max
+SF-Technomancer-1	row.sf.class_level.technomancer
+SF-Technomancer-1	row.sf.credits.remaining
+SF-Technomancer-1	row.sf.credits.starting
+SF-Technomancer-1	skill.Culture
+SF-Technomancer-1	skill.Culture.ranks
+SF-Technomancer-1	skill.Life Science
+SF-Technomancer-1	skill.Life Science.ranks
+SF-Technomancer-1	skill.Medicine
+SF-Technomancer-1	skill.Medicine.ranks
+SF-Technomancer-1	skill.Mysticism
+SF-Technomancer-1	skill.Mysticism.ranks
+SF-Technomancer-1	skill.Profession (Accountant)
+SF-Technomancer-1	skill.Profession (Accountant).ranks
+SF-Technomancer-1	skill.Profession (Actor)
+SF-Technomancer-1	skill.Profession (Actor).ranks
+SF-Technomancer-1	skill.Profession (Archaeologist)
+SF-Technomancer-1	skill.Profession (Archaeologist).ranks
+SF-Technomancer-1	skill.Profession (Architect)
+SF-Technomancer-1	skill.Profession (Architect).ranks
+SF-Technomancer-1	skill.Profession (Artist)
+SF-Technomancer-1	skill.Profession (Artist).ranks
+SF-Technomancer-1	skill.Profession (Bounty Hunter)
+SF-Technomancer-1	skill.Profession (Bounty Hunter).ranks
+SF-Technomancer-1	skill.Profession (Comedian)
+SF-Technomancer-1	skill.Profession (Comedian).ranks
+SF-Technomancer-1	skill.Profession (Con Artist)
+SF-Technomancer-1	skill.Profession (Con Artist).ranks
+SF-Technomancer-1	skill.Profession (Cook)
+SF-Technomancer-1	skill.Profession (Cook).ranks
+SF-Technomancer-1	skill.Profession (Corporate Professional)
+SF-Technomancer-1	skill.Profession (Corporate Professional).ranks
+SF-Technomancer-1	skill.Profession (Counselor)
+SF-Technomancer-1	skill.Profession (Counselor).ranks
+SF-Technomancer-1	skill.Profession (Courtesan)
+SF-Technomancer-1	skill.Profession (Courtesan).ranks
+SF-Technomancer-1	skill.Profession (Dancer)
+SF-Technomancer-1	skill.Profession (Dancer).ranks
+SF-Technomancer-1	skill.Profession (Dockworker)
+SF-Technomancer-1	skill.Profession (Dockworker).ranks
+SF-Technomancer-1	skill.Profession (Electrician)
+SF-Technomancer-1	skill.Profession (Electrician).ranks
+SF-Technomancer-1	skill.Profession (Farmer)
+SF-Technomancer-1	skill.Profession (Farmer).ranks
+SF-Technomancer-1	skill.Profession (Gambler)
+SF-Technomancer-1	skill.Profession (Gambler).ranks
+SF-Technomancer-1	skill.Profession (General Contractor)
+SF-Technomancer-1	skill.Profession (General Contractor).ranks
+SF-Technomancer-1	skill.Profession (Herbalist)
+SF-Technomancer-1	skill.Profession (Herbalist).ranks
+SF-Technomancer-1	skill.Profession (Lab Technician)
+SF-Technomancer-1	skill.Profession (Lab Technician).ranks
+SF-Technomancer-1	skill.Profession (Lawyer)
+SF-Technomancer-1	skill.Profession (Lawyer).ranks
+SF-Technomancer-1	skill.Profession (Maintenance Worker)
+SF-Technomancer-1	skill.Profession (Maintenance Worker).ranks
+SF-Technomancer-1	skill.Profession (Manager)
+SF-Technomancer-1	skill.Profession (Manager).ranks
+SF-Technomancer-1	skill.Profession (Mathematician)
+SF-Technomancer-1	skill.Profession (Mathematician).ranks
+SF-Technomancer-1	skill.Profession (Mercenary)
+SF-Technomancer-1	skill.Profession (Mercenary).ranks
+SF-Technomancer-1	skill.Profession (Merchant)
+SF-Technomancer-1	skill.Profession (Merchant).ranks
+SF-Technomancer-1	skill.Profession (Miner)
+SF-Technomancer-1	skill.Profession (Miner).ranks
+SF-Technomancer-1	skill.Profession (Musician)
+SF-Technomancer-1	skill.Profession (Musician).ranks
+SF-Technomancer-1	skill.Profession (Orator)
+SF-Technomancer-1	skill.Profession (Orator).ranks
+SF-Technomancer-1	skill.Profession (Philosopher)
+SF-Technomancer-1	skill.Profession (Philosopher).ranks
+SF-Technomancer-1	skill.Profession (Poet)
+SF-Technomancer-1	skill.Profession (Poet).ranks
+SF-Technomancer-1	skill.Profession (Politician)
+SF-Technomancer-1	skill.Profession (Politician).ranks
+SF-Technomancer-1	skill.Profession (Professor)
+SF-Technomancer-1	skill.Profession (Professor).ranks
+SF-Technomancer-1	skill.Profession (Psychologist)
+SF-Technomancer-1	skill.Profession (Psychologist).ranks
+SF-Technomancer-1	skill.Profession (Quartermaster)
+SF-Technomancer-1	skill.Profession (Quartermaster).ranks
+SF-Technomancer-1	skill.Profession (Smuggler)
+SF-Technomancer-1	skill.Profession (Smuggler).ranks
+SF-Technomancer-1	skill.Profession (Video Personality)
+SF-Technomancer-1	skill.Profession (Video Personality).ranks
+SF-Technomancer-1	skill.Profession (Vidgamer)
+SF-Technomancer-1	skill.Profession (Vidgamer).ranks
+SF-Technomancer-1	skill.Profession (Writer)
+SF-Technomancer-1	skill.Profession (Writer).ranks
+SF-Technomancer-1	skill.Sleight of Hand
+SF-Technomancer-1	skill.Sleight of Hand.ranks
+SF-Technomancer-1	spells.technomancer.0.dc
+SF-Technomancer-1	spells.technomancer.1.dc
+SF-Biohacker-1	row.sf.ability_modifier.charisma
+SF-Biohacker-1	row.sf.ability_modifier.constitution
+SF-Biohacker-1	row.sf.ability_modifier.dexterity
+SF-Biohacker-1	row.sf.ability_modifier.intelligence
+SF-Biohacker-1	row.sf.ability_modifier.strength
+SF-Biohacker-1	row.sf.ability_modifier.wisdom
+SF-Biohacker-1	row.sf.bulk_limit.overburdened_above
+SF-Biohacker-1	row.sf.bulk_limit.unencumbered_max
+SF-Biohacker-1	row.sf.class_level.biohacker
+SF-Biohacker-1	row.sf.credits.remaining
+SF-Biohacker-1	row.sf.credits.starting
+SF-Biohacker-1	skill.Culture
+SF-Biohacker-1	skill.Culture.ranks
+SF-Biohacker-1	skill.Engineering
+SF-Biohacker-1	skill.Engineering.ranks
+SF-Biohacker-1	skill.Mysticism
+SF-Biohacker-1	skill.Mysticism.ranks
+SF-Biohacker-1	skill.Physical Science
+SF-Biohacker-1	skill.Physical Science.ranks
+SF-Biohacker-1	skill.Profession (Accountant)
+SF-Biohacker-1	skill.Profession (Accountant).ranks
+SF-Biohacker-1	skill.Profession (Actor)
+SF-Biohacker-1	skill.Profession (Actor).ranks
+SF-Biohacker-1	skill.Profession (Archaeologist)
+SF-Biohacker-1	skill.Profession (Archaeologist).ranks
+SF-Biohacker-1	skill.Profession (Architect)
+SF-Biohacker-1	skill.Profession (Architect).ranks
+SF-Biohacker-1	skill.Profession (Artist)
+SF-Biohacker-1	skill.Profession (Artist).ranks
+SF-Biohacker-1	skill.Profession (Bounty Hunter)
+SF-Biohacker-1	skill.Profession (Bounty Hunter).ranks
+SF-Biohacker-1	skill.Profession (Comedian)
+SF-Biohacker-1	skill.Profession (Comedian).ranks
+SF-Biohacker-1	skill.Profession (Con Artist)
+SF-Biohacker-1	skill.Profession (Con Artist).ranks
+SF-Biohacker-1	skill.Profession (Cook)
+SF-Biohacker-1	skill.Profession (Cook).ranks
+SF-Biohacker-1	skill.Profession (Corporate Professional)
+SF-Biohacker-1	skill.Profession (Corporate Professional).ranks
+SF-Biohacker-1	skill.Profession (Counselor)
+SF-Biohacker-1	skill.Profession (Counselor).ranks
+SF-Biohacker-1	skill.Profession (Courtesan)
+SF-Biohacker-1	skill.Profession (Courtesan).ranks
+SF-Biohacker-1	skill.Profession (Dancer)
+SF-Biohacker-1	skill.Profession (Dancer).ranks
+SF-Biohacker-1	skill.Profession (Dockworker)
+SF-Biohacker-1	skill.Profession (Dockworker).ranks
+SF-Biohacker-1	skill.Profession (Electrician)
+SF-Biohacker-1	skill.Profession (Electrician).ranks
+SF-Biohacker-1	skill.Profession (Farmer)
+SF-Biohacker-1	skill.Profession (Farmer).ranks
+SF-Biohacker-1	skill.Profession (Gambler)
+SF-Biohacker-1	skill.Profession (Gambler).ranks
+SF-Biohacker-1	skill.Profession (General Contractor)
+SF-Biohacker-1	skill.Profession (General Contractor).ranks
+SF-Biohacker-1	skill.Profession (Herbalist)
+SF-Biohacker-1	skill.Profession (Herbalist).ranks
+SF-Biohacker-1	skill.Profession (Lab Technician)
+SF-Biohacker-1	skill.Profession (Lab Technician).ranks
+SF-Biohacker-1	skill.Profession (Lawyer)
+SF-Biohacker-1	skill.Profession (Lawyer).ranks
+SF-Biohacker-1	skill.Profession (Maintenance Worker)
+SF-Biohacker-1	skill.Profession (Maintenance Worker).ranks
+SF-Biohacker-1	skill.Profession (Manager)
+SF-Biohacker-1	skill.Profession (Manager).ranks
+SF-Biohacker-1	skill.Profession (Mathematician)
+SF-Biohacker-1	skill.Profession (Mathematician).ranks
+SF-Biohacker-1	skill.Profession (Mercenary)
+SF-Biohacker-1	skill.Profession (Mercenary).ranks
+SF-Biohacker-1	skill.Profession (Merchant)
+SF-Biohacker-1	skill.Profession (Merchant).ranks
+SF-Biohacker-1	skill.Profession (Miner)
+SF-Biohacker-1	skill.Profession (Miner).ranks
+SF-Biohacker-1	skill.Profession (Musician)
+SF-Biohacker-1	skill.Profession (Musician).ranks
+SF-Biohacker-1	skill.Profession (Orator)
+SF-Biohacker-1	skill.Profession (Orator).ranks
+SF-Biohacker-1	skill.Profession (Philosopher)
+SF-Biohacker-1	skill.Profession (Philosopher).ranks
+SF-Biohacker-1	skill.Profession (Poet)
+SF-Biohacker-1	skill.Profession (Poet).ranks
+SF-Biohacker-1	skill.Profession (Politician)
+SF-Biohacker-1	skill.Profession (Politician).ranks
+SF-Biohacker-1	skill.Profession (Professor)
+SF-Biohacker-1	skill.Profession (Professor).ranks
+SF-Biohacker-1	skill.Profession (Psychologist)
+SF-Biohacker-1	skill.Profession (Psychologist).ranks
+SF-Biohacker-1	skill.Profession (Quartermaster)
+SF-Biohacker-1	skill.Profession (Quartermaster).ranks
+SF-Biohacker-1	skill.Profession (Smuggler)
+SF-Biohacker-1	skill.Profession (Smuggler).ranks
+SF-Biohacker-1	skill.Profession (Video Personality)
+SF-Biohacker-1	skill.Profession (Video Personality).ranks
+SF-Biohacker-1	skill.Profession (Vidgamer)
+SF-Biohacker-1	skill.Profession (Vidgamer).ranks
+SF-Biohacker-1	skill.Profession (Writer)
+SF-Biohacker-1	skill.Profession (Writer).ranks
+SF-Biohacker-1	skill.Sleight of Hand
+SF-Biohacker-1	skill.Sleight of Hand.ranks
+SF-Vanguard-1	row.sf.ability_modifier.charisma
+SF-Vanguard-1	row.sf.ability_modifier.constitution
+SF-Vanguard-1	row.sf.ability_modifier.dexterity
+SF-Vanguard-1	row.sf.ability_modifier.intelligence
+SF-Vanguard-1	row.sf.ability_modifier.strength
+SF-Vanguard-1	row.sf.ability_modifier.wisdom
+SF-Vanguard-1	row.sf.bulk_limit.overburdened_above
+SF-Vanguard-1	row.sf.bulk_limit.unencumbered_max
+SF-Vanguard-1	row.sf.class_level.vanguard
+SF-Vanguard-1	row.sf.credits.remaining
+SF-Vanguard-1	row.sf.credits.starting
+SF-Vanguard-1	skill.Computers
+SF-Vanguard-1	skill.Computers.ranks
+SF-Vanguard-1	skill.Culture
+SF-Vanguard-1	skill.Culture.ranks
+SF-Vanguard-1	skill.Engineering
+SF-Vanguard-1	skill.Engineering.ranks
+SF-Vanguard-1	skill.Life Science
+SF-Vanguard-1	skill.Life Science.ranks
+SF-Vanguard-1	skill.Medicine
+SF-Vanguard-1	skill.Medicine.ranks
+SF-Vanguard-1	skill.Mysticism
+SF-Vanguard-1	skill.Mysticism.ranks
+SF-Vanguard-1	skill.Physical Science
+SF-Vanguard-1	skill.Physical Science.ranks
+SF-Vanguard-1	skill.Profession (Accountant)
+SF-Vanguard-1	skill.Profession (Accountant).ranks
+SF-Vanguard-1	skill.Profession (Actor)
+SF-Vanguard-1	skill.Profession (Actor).ranks
+SF-Vanguard-1	skill.Profession (Archaeologist)
+SF-Vanguard-1	skill.Profession (Archaeologist).ranks
+SF-Vanguard-1	skill.Profession (Architect)
+SF-Vanguard-1	skill.Profession (Architect).ranks
+SF-Vanguard-1	skill.Profession (Artist)
+SF-Vanguard-1	skill.Profession (Artist).ranks
+SF-Vanguard-1	skill.Profession (Bounty Hunter)
+SF-Vanguard-1	skill.Profession (Bounty Hunter).ranks
+SF-Vanguard-1	skill.Profession (Comedian)
+SF-Vanguard-1	skill.Profession (Comedian).ranks
+SF-Vanguard-1	skill.Profession (Con Artist)
+SF-Vanguard-1	skill.Profession (Con Artist).ranks
+SF-Vanguard-1	skill.Profession (Cook)
+SF-Vanguard-1	skill.Profession (Cook).ranks
+SF-Vanguard-1	skill.Profession (Corporate Professional)
+SF-Vanguard-1	skill.Profession (Corporate Professional).ranks
+SF-Vanguard-1	skill.Profession (Counselor)
+SF-Vanguard-1	skill.Profession (Counselor).ranks
+SF-Vanguard-1	skill.Profession (Courtesan)
+SF-Vanguard-1	skill.Profession (Courtesan).ranks
+SF-Vanguard-1	skill.Profession (Dancer)
+SF-Vanguard-1	skill.Profession (Dancer).ranks
+SF-Vanguard-1	skill.Profession (Dockworker)
+SF-Vanguard-1	skill.Profession (Dockworker).ranks
+SF-Vanguard-1	skill.Profession (Electrician)
+SF-Vanguard-1	skill.Profession (Electrician).ranks
+SF-Vanguard-1	skill.Profession (Farmer)
+SF-Vanguard-1	skill.Profession (Farmer).ranks
+SF-Vanguard-1	skill.Profession (Gambler)
+SF-Vanguard-1	skill.Profession (Gambler).ranks
+SF-Vanguard-1	skill.Profession (General Contractor)
+SF-Vanguard-1	skill.Profession (General Contractor).ranks
+SF-Vanguard-1	skill.Profession (Herbalist)
+SF-Vanguard-1	skill.Profession (Herbalist).ranks
+SF-Vanguard-1	skill.Profession (Lab Technician)
+SF-Vanguard-1	skill.Profession (Lab Technician).ranks
+SF-Vanguard-1	skill.Profession (Lawyer)
+SF-Vanguard-1	skill.Profession (Lawyer).ranks
+SF-Vanguard-1	skill.Profession (Maintenance Worker)
+SF-Vanguard-1	skill.Profession (Maintenance Worker).ranks
+SF-Vanguard-1	skill.Profession (Manager)
+SF-Vanguard-1	skill.Profession (Manager).ranks
+SF-Vanguard-1	skill.Profession (Mathematician)
+SF-Vanguard-1	skill.Profession (Mathematician).ranks
+SF-Vanguard-1	skill.Profession (Mercenary)
+SF-Vanguard-1	skill.Profession (Mercenary).ranks
+SF-Vanguard-1	skill.Profession (Merchant)
+SF-Vanguard-1	skill.Profession (Merchant).ranks
+SF-Vanguard-1	skill.Profession (Miner)
+SF-Vanguard-1	skill.Profession (Miner).ranks
+SF-Vanguard-1	skill.Profession (Musician)
+SF-Vanguard-1	skill.Profession (Musician).ranks
+SF-Vanguard-1	skill.Profession (Orator)
+SF-Vanguard-1	skill.Profession (Orator).ranks
+SF-Vanguard-1	skill.Profession (Philosopher)
+SF-Vanguard-1	skill.Profession (Philosopher).ranks
+SF-Vanguard-1	skill.Profession (Poet)
+SF-Vanguard-1	skill.Profession (Poet).ranks
+SF-Vanguard-1	skill.Profession (Politician)
+SF-Vanguard-1	skill.Profession (Politician).ranks
+SF-Vanguard-1	skill.Profession (Professor)
+SF-Vanguard-1	skill.Profession (Professor).ranks
+SF-Vanguard-1	skill.Profession (Psychologist)
+SF-Vanguard-1	skill.Profession (Psychologist).ranks
+SF-Vanguard-1	skill.Profession (Quartermaster)
+SF-Vanguard-1	skill.Profession (Quartermaster).ranks
+SF-Vanguard-1	skill.Profession (Smuggler)
+SF-Vanguard-1	skill.Profession (Smuggler).ranks
+SF-Vanguard-1	skill.Profession (Video Personality)
+SF-Vanguard-1	skill.Profession (Video Personality).ranks
+SF-Vanguard-1	skill.Profession (Vidgamer)
+SF-Vanguard-1	skill.Profession (Vidgamer).ranks
+SF-Vanguard-1	skill.Profession (Writer)
+SF-Vanguard-1	skill.Profession (Writer).ranks
+SF-Vanguard-1	skill.Sleight of Hand
+SF-Vanguard-1	skill.Sleight of Hand.ranks
+SF-Witchwarper-1	row.sf.ability_modifier.charisma
+SF-Witchwarper-1	row.sf.ability_modifier.constitution
+SF-Witchwarper-1	row.sf.ability_modifier.dexterity
+SF-Witchwarper-1	row.sf.ability_modifier.intelligence
+SF-Witchwarper-1	row.sf.ability_modifier.strength
+SF-Witchwarper-1	row.sf.ability_modifier.wisdom
+SF-Witchwarper-1	row.sf.bulk_limit.overburdened_above
+SF-Witchwarper-1	row.sf.bulk_limit.unencumbered_max
+SF-Witchwarper-1	row.sf.class_level.witchwarper
+SF-Witchwarper-1	row.sf.credits.remaining
+SF-Witchwarper-1	row.sf.credits.starting
+SF-Witchwarper-1	skill.Computers
+SF-Witchwarper-1	skill.Computers.ranks
+SF-Witchwarper-1	skill.Culture
+SF-Witchwarper-1	skill.Culture.ranks
+SF-Witchwarper-1	skill.Engineering
+SF-Witchwarper-1	skill.Engineering.ranks
+SF-Witchwarper-1	skill.Life Science
+SF-Witchwarper-1	skill.Life Science.ranks
+SF-Witchwarper-1	skill.Medicine
+SF-Witchwarper-1	skill.Medicine.ranks
+SF-Witchwarper-1	skill.Profession (Accountant)
+SF-Witchwarper-1	skill.Profession (Accountant).ranks
+SF-Witchwarper-1	skill.Profession (Actor)
+SF-Witchwarper-1	skill.Profession (Actor).ranks
+SF-Witchwarper-1	skill.Profession (Archaeologist)
+SF-Witchwarper-1	skill.Profession (Archaeologist).ranks
+SF-Witchwarper-1	skill.Profession (Architect)
+SF-Witchwarper-1	skill.Profession (Architect).ranks
+SF-Witchwarper-1	skill.Profession (Artist)
+SF-Witchwarper-1	skill.Profession (Artist).ranks
+SF-Witchwarper-1	skill.Profession (Bounty Hunter)
+SF-Witchwarper-1	skill.Profession (Bounty Hunter).ranks
+SF-Witchwarper-1	skill.Profession (Comedian)
+SF-Witchwarper-1	skill.Profession (Comedian).ranks
+SF-Witchwarper-1	skill.Profession (Con Artist)
+SF-Witchwarper-1	skill.Profession (Con Artist).ranks
+SF-Witchwarper-1	skill.Profession (Cook)
+SF-Witchwarper-1	skill.Profession (Cook).ranks
+SF-Witchwarper-1	skill.Profession (Corporate Professional)
+SF-Witchwarper-1	skill.Profession (Corporate Professional).ranks
+SF-Witchwarper-1	skill.Profession (Counselor)
+SF-Witchwarper-1	skill.Profession (Counselor).ranks
+SF-Witchwarper-1	skill.Profession (Courtesan)
+SF-Witchwarper-1	skill.Profession (Courtesan).ranks
+SF-Witchwarper-1	skill.Profession (Dancer)
+SF-Witchwarper-1	skill.Profession (Dancer).ranks
+SF-Witchwarper-1	skill.Profession (Dockworker)
+SF-Witchwarper-1	skill.Profession (Dockworker).ranks
+SF-Witchwarper-1	skill.Profession (Electrician)
+SF-Witchwarper-1	skill.Profession (Electrician).ranks
+SF-Witchwarper-1	skill.Profession (Farmer)
+SF-Witchwarper-1	skill.Profession (Farmer).ranks
+SF-Witchwarper-1	skill.Profession (Gambler)
+SF-Witchwarper-1	skill.Profession (Gambler).ranks
+SF-Witchwarper-1	skill.Profession (General Contractor)
+SF-Witchwarper-1	skill.Profession (General Contractor).ranks
+SF-Witchwarper-1	skill.Profession (Herbalist)
+SF-Witchwarper-1	skill.Profession (Herbalist).ranks
+SF-Witchwarper-1	skill.Profession (Lab Technician)
+SF-Witchwarper-1	skill.Profession (Lab Technician).ranks
+SF-Witchwarper-1	skill.Profession (Lawyer)
+SF-Witchwarper-1	skill.Profession (Lawyer).ranks
+SF-Witchwarper-1	skill.Profession (Maintenance Worker)
+SF-Witchwarper-1	skill.Profession (Maintenance Worker).ranks
+SF-Witchwarper-1	skill.Profession (Manager)
+SF-Witchwarper-1	skill.Profession (Manager).ranks
+SF-Witchwarper-1	skill.Profession (Mathematician)
+SF-Witchwarper-1	skill.Profession (Mathematician).ranks
+SF-Witchwarper-1	skill.Profession (Mercenary)
+SF-Witchwarper-1	skill.Profession (Mercenary).ranks
+SF-Witchwarper-1	skill.Profession (Merchant)
+SF-Witchwarper-1	skill.Profession (Merchant).ranks
+SF-Witchwarper-1	skill.Profession (Miner)
+SF-Witchwarper-1	skill.Profession (Miner).ranks
+SF-Witchwarper-1	skill.Profession (Musician)
+SF-Witchwarper-1	skill.Profession (Musician).ranks
+SF-Witchwarper-1	skill.Profession (Orator)
+SF-Witchwarper-1	skill.Profession (Orator).ranks
+SF-Witchwarper-1	skill.Profession (Philosopher)
+SF-Witchwarper-1	skill.Profession (Philosopher).ranks
+SF-Witchwarper-1	skill.Profession (Poet)
+SF-Witchwarper-1	skill.Profession (Poet).ranks
+SF-Witchwarper-1	skill.Profession (Politician)
+SF-Witchwarper-1	skill.Profession (Politician).ranks
+SF-Witchwarper-1	skill.Profession (Professor)
+SF-Witchwarper-1	skill.Profession (Professor).ranks
+SF-Witchwarper-1	skill.Profession (Psychologist)
+SF-Witchwarper-1	skill.Profession (Psychologist).ranks
+SF-Witchwarper-1	skill.Profession (Quartermaster)
+SF-Witchwarper-1	skill.Profession (Quartermaster).ranks
+SF-Witchwarper-1	skill.Profession (Smuggler)
+SF-Witchwarper-1	skill.Profession (Smuggler).ranks
+SF-Witchwarper-1	skill.Profession (Video Personality)
+SF-Witchwarper-1	skill.Profession (Video Personality).ranks
+SF-Witchwarper-1	skill.Profession (Vidgamer)
+SF-Witchwarper-1	skill.Profession (Vidgamer).ranks
+SF-Witchwarper-1	skill.Profession (Writer)
+SF-Witchwarper-1	skill.Profession (Writer).ranks
+SF-Witchwarper-1	skill.Sleight of Hand
+SF-Witchwarper-1	skill.Sleight of Hand.ranks
+SF-Witchwarper-1	spells.witchwarper.1.dc

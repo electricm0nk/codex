@@ -1,0 +1,58 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_57)",
+    "name": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_57)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Artifice,Chaos,Earth,Evil|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "The Polymorph Plague; Nascent demon lord of cursed kingdoms, vile experiments"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Demon Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Halberd"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "book_of_the_damned_volume_2:botd2_deities.lst:57",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_deities.lst",
+    "record_key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_57)",
+    "sha256": "2ebb6b7a58be0b8a166ea336cf71dc61e6261faed7a36c37a233d026ab44c603"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

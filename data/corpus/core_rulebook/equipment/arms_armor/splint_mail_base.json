@@ -1,0 +1,113 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 200.0,
+    "description": "Splint mail is made up of metal strips, like banded mail. The suit includes gauntlets.",
+    "key": "Splint Mail (Base)",
+    "name": "Splint Mail",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-3",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "7",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-7",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Splint Mail (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Splint Mail"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "200"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "40"
+      },
+      {
+        "key": "DESC",
+        "value": "Splint mail is made up of metal strips, like banded mail. The suit includes gauntlets."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 45.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Splint Mail (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

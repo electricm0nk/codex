@@ -1,0 +1,2 @@
+     Running `/home/ubuntu/cargo-target/sd38-e06-base/debug/sheet_rule_convert --check`
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (420.2s)

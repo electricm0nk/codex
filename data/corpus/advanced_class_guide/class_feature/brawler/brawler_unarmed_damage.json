@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Brawler ~ Unarmed Damage",
+    "name": "Brawler ~ Unarmed Damage",
+    "class": "Brawler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerUnarmedDamageProgression|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerUnarmedDamageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerUDAMAttackSize|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 1|PREVAREQ:BrawlerUnarmedDamageProgression,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 4|PREVAREQ:BrawlerUnarmedDamageProgression,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 8|PREVAREQ:BrawlerUnarmedDamageProgression,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12|PREVAREQ:BrawlerUnarmedDamageProgression,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 16|PREVAREQ:BrawlerUnarmedDamageProgression,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 20|PREVAREQ:BrawlerUnarmedDamageProgression,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUnarmedDamageLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUnarmedDamageProgression|(min(5,BrawlerUnarmedDamageLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|1|PREBASESIZEEQ:F"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|2|PREBASESIZEEQ:D"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|3|PREBASESIZEEQ:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|4|PREBASESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|5|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|6|PREBASESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|7|PREBASESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|8|PREBASESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|9|PREBASESIZEEQ:C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUnarmedDamageLVL|HalfOrcBrawlerFavClassBonus/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 940,
+    "record_key": "Brawler ~ Unarmed Damage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

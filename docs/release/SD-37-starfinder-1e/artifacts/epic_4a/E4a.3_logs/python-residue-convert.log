@@ -1,0 +1,7 @@
+/usr/bin/python3: No module named pytest
+residue_exit=0
+convert_check_exit=0
+----------------------------------------------------------------------
+Ran 88 tests in 2.165s
+
+FAILED (failures=1)

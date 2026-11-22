@@ -1,0 +1,6 @@
+FAIL  sheet-print-dialog-opens  -- expected string missing: 'A4'; expected string missing: 'US Letter'
+FAIL  sheet-print-save-pdf  -- marker not found on screen: 'Saved /tmp/codex-ui-smoke-print-aldric.pdf ('
+PASS  sheet-print-starfinder-dialog-opens
+FAIL  sheet-print-cyberpunk-save-pdf  -- marker not found on screen: 'Saved /tmp/codex-ui-smoke-print-jax.pdf ('
+PASS  sheet-print-restore-pathfinder
+2/5 green, 3 red, 0 blocked, 0 manual, 0 not-run (M = 5 rows)

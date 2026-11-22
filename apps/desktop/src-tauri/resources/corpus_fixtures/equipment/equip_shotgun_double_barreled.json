@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Shotgun (Double-Barreled)",
+    "name": "Shotgun (Double-Barreled)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_shotgun_double_barreled.txt",
+    "record_key": "Shotgun (Double-Barreled)"
+  }
+}

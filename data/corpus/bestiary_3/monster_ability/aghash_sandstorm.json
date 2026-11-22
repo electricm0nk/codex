@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Aghash ~ Sandstorm",
+    "delivery": "Supernatural",
+    "description": "Once per day, as a full-round action, an aghash can create a temporary sandstorm. This storm has a radius of 100 feet centered on the aghash and lasts for 1 minute per Hit Die the aghash possesses (typically 5). This functions as a sandstorm (Core Rulebook 431).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:aghash_sandstorm",
+    "name": "Sandstorm",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, as a full-round action, an aghash can create a temporary sandstorm. This storm has a radius of 100 feet centered on the aghash and lasts for 1 minute per Hit Die the aghash possesses (typically 5). This functions as a sandstorm (Core Rulebook 431)."
+      },
+      {
+        "key": "KEY",
+        "value": "Aghash ~ Sandstorm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "TYPE",
+        "value": "AghashRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.83",
+    "traits": [
+      "AghashRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 704,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Aghash ~ Sandstorm",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

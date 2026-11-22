@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "weapon bypasses all armor. The wielder can expend one use of legendary power when attacking to make the attack against touch AC. If she instead expends two uses of legendary power, the weapon also bypasses any def lection bonus to AC the target has.",
+    "key": "LEGEND_UNSTOPPABLE_STRIKE",
+    "name": "LEGEND_UNSTOPPABLE_STRIKE",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Unstoppable Strike"
+      },
+      {
+        "key": "TYPE",
+        "value": "Legendary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Legendary"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Artifact"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Minor,Major"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "weapon bypasses all armor. The wielder can expend one use of legendary power when attacking to make the attack against touch AC. If she instead expends two uses of legendary power, the weapon also bypasses any def lection bonus to AC the target has."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 181,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "LEGEND_UNSTOPPABLE_STRIKE",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

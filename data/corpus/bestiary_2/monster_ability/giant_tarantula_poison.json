@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Giant Tarantula ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d6 Str; cure 2 consecutive saves.",
+    "description_variables": [
+      "GiantTarantulaPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:giant_tarantula_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantTarantulaPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantTarantulaPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantTarantulaPoisonDC|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantTarantulaPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d6 Str; cure 2 consecutive saves.|GiantTarantulaPoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Tarantula ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.256",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1211,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Giant Tarantula ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

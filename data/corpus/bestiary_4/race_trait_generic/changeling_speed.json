@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Changelings have a base speed of 30 feet.",
+    "key": "Changeling ~ Speed",
+    "name": "Normal Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Changeling_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Changelings have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MOVEBASE|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Changeling ~ Speed",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

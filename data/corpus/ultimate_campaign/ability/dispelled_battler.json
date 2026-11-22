@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Dispelled Battler",
+    "name": "Dispelled Battler",
+    "description": "When deprived of magic, you fight harder. You gain a +1 trait bonus on weapon attack and damage rolls while within an area of antimagic such as that created by an antimagic field. You also gain this bonus for 1 round after you are subject to an area or targeted dispel magic spell, regardless of the effect's success or failure in dispelling your spells and magical effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Dispelled Battler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.CombatTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Dispelled Battler],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.CombatTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "When deprived of magic, you fight harder. You gain a +1 trait bonus on weapon attack and damage rolls while within an area of antimagic such as that created by an antimagic field. You also gain this bonus for 1 round after you are subject to an area or targeted dispel magic spell, regardless of the effect's success or failure in dispelling your spells and magical effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 trait bonus on weapon attack and damage rolls while within an area of antimagic or for 1 round after you are subject to an area or targeted dispel magic spell."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 29,
+    "record_key": "Trait ~ Dispelled Battler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

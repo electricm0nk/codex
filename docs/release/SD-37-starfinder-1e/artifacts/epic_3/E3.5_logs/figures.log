@@ -1,0 +1,51 @@
+$ python3 (A): _report.json + per-book rule files + corpus licences
+report {'records': 8582, 'converted': 8582, 'refused': 0, 'rules_written': 10611, 'var_tables': 168, 'degraded_records': 34}
+by_kind {'ability': 3296, 'class': 11, 'deity': 39, 'equipment': 2634, 'equipment_modifier': 336, 'feat': 224, 'language': 68, 'proficiency': 1324, 'race': 77, 'skill': 116, 'spell': 370, 'template': 87}
+degraded_by_token_type {'AUTO (FEAT)': 1, 'BONUS:HP|ALTHP (no Starfinder mapping-table term)': 2, 'BONUS:HP|CURRENTMAX (no Starfinder mapping-table term)': 3, 'BONUS:SITUATION (target shape)': 1, 'BONUS:Skill': 1, 'FORMULA:CL-no-owner': 3, 'FORMULA:identifier DEFINEd nowhere (FighterLVL inside a function or under * /)': 1, 'FORMULA:identifier DEFINEd nowhere (TechnomacerLVL inside a function or under * /)': 1, 'FORMULA:malformed (parser refusals)': 8, 'FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)': 2, 'FORMULA:var(SKILL.<name>.MISC)': 1, 'MODIFYOTHER (compute role movement_speed SET is not a term this record adds)': 9, 'unmapped:GRANT': 6, 'unmapped:XTRASKILLPTSPERLVL': 1}
+rule files per book {'alien_archive': 300, 'alien_archive_2': 298, 'alien_archive_3': 178, 'armory': 2922, 'character_operations_manual': 1000, 'core': 3105, 'near_space': 351, 'pact_worlds': 428} sum 8582
+corpus licence per book {('alien_archive', 'OGL'): 282, ('alien_archive', 'PI-REDACTED'): 18, ('alien_archive_2', 'OGL'): 298, ('alien_archive_3', 'OGL'): 178, ('armory', 'OGL'): 2911, ('armory', 'PI-REDACTED'): 11, ('character_operations_manual', 'OGL'): 951, ('character_operations_manual', 'PI-REDACTED'): 49, ('core', 'OGL'): 3009, ('core', 'PI-REDACTED'): 96, ('near_space', 'OGL'): 326, ('near_space', 'PI-REDACTED'): 25, ('pact_worlds', 'OGL'): 338, ('pact_worlds', 'PI-REDACTED'): 90} PI-REDACTED total 289 records 8582
+degraded ids:
+   core:ability:drone_mod_energy_shield ['BONUS:HP|ALTHP (no Starfinder mapping-table term)']
+   core:ability:operative_class_feature_quick_movement ['FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)']
+   core:ability:technomancer_class_feature_cache_capacitor ['FORMULA:identifier DEFINEd nowhere (TechnomacerLVL inside a function or under * /)']
+   core:ability:1_hit_point ['BONUS:HP|CURRENTMAX (no Starfinder mapping-table term)']
+   core:class:drone ['BONUS:HP|CURRENTMAX (no Starfinder mapping-table term)']
+   core:equipment:tool_kit_armorcrafter_kit ['BONUS:SITUATION (target shape)']
+   core:feat:amplified_glitch ['FORMULA:CL-no-owner']
+   core:feat:fleet ['FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)']
+   core:feat:spell_focus ['FORMULA:CL-no-owner']
+   core:feat:weapon_specialization ['FORMULA:CL-no-owner']
+   core:race:human ['unmapped:XTRASKILLPTSPERLVL']
+   armory:equipment:scrambler_gloves_mk_1 ['FORMULA:malformed (parser refusals)']
+   character_operations_manual:ability:law_officer_theme_benefit_theme_knowledge ['FORMULA:malformed (parser refusals)']
+   character_operations_manual:ability:gear_boost_finesse_striker ['FORMULA:identifier DEFINEd nowhere (FighterLVL inside a function or under * /)']
+   character_operations_manual:ability:ysoki_scrappy ['BONUS:HP|CURRENTMAX (no Starfinder mapping-table term)']
+   pact_worlds:race:astrazoan ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   pact_worlds:race:bantrid ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   pact_worlds:race:borai ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   pact_worlds:race:khizar ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   pact_worlds:race:sro ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   pact_worlds:race:strix ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)', 'unmapped:GRANT']
+   near_space:ability:commando_commando_conditioning ['FORMULA:malformed (parser refusals)']
+   near_space:ability:commando_exceptional_endurance ['BONUS:HP|ALTHP (no Starfinder mapping-table term)']
+   near_space:skill:profession_quartermaster ['FORMULA:var(SKILL.<name>.MISC)']
+   alien_archive:ability:drow_default_drow_immunities ['FORMULA:malformed (parser refusals)']
+   alien_archive:ability:nuar_default_darkvision ['FORMULA:malformed (parser refusals)']
+   alien_archive:ability:urog_default_electrical_resistance ['FORMULA:malformed (parser refusals)']
+   alien_archive_2:ability:vlaka_default_perceptive ['BONUS:Skill']
+   alien_archive_2:equipment:laborer_frame_advanced_treads ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)']
+   alien_archive_2:equipment:laborer_frame_climbing_pads ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)']
+   alien_archive_2:equipment:laborer_frame_swim_jets ['MODIFYOTHER (compute role movement_speed SET is not a term this record adds)']
+   alien_archive_3:ability:dirindi_default_electrical_affinity ['FORMULA:malformed (parser refusals)']
+   alien_archive_3:ability:hanakan_default_hanakan_magic ['FORMULA:malformed (parser refusals)']
+   alien_archive_3:ability:ijtikri_default_ijtikri_movement ['AUTO (FEAT)']
+$ awk (B): find | awk per book; grep -l PI-REDACTED | awk
+core rules=3105 corpus=3105 pi=96
+armory rules=2922 corpus=2922 pi=11
+character_operations_manual rules=1000 corpus=1000 pi=49
+pact_worlds rules=428 corpus=428 pi=90
+near_space rules=351 corpus=351 pi=25
+alien_archive rules=300 corpus=300 pi=18
+alien_archive_2 rules=298 corpus=298 pi=0
+alien_archive_3 rules=178 corpus=178 pi=0
+TOTAL rules=8582 corpus=8582 pi=289

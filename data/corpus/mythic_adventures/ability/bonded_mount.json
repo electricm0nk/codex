@@ -1,0 +1,48 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Impervious Companion ~ Bonded Mount",
+    "name": "Bonded Mount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Impervious Companion ~ Bonded Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Impervious Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicImperviousBody_Bonded_Mount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicImperviousBody_Bonded_Mount|1"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 419,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Impervious Companion ~ Bonded Mount",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

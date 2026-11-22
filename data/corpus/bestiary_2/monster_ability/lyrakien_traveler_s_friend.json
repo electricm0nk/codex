@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lyrakien ~ Traveler's Friend",
+    "delivery": "Supernatural",
+    "description": "The performances and company of a lyrakien ease the burden of travel.  Once per day, a creature may spend a minute listening to a lyrakien's performance - doing so removes the effects of exhaustion and fatigue from the listener.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:lyrakien_traveler_s_friend",
+    "name": "Traveler's Friend",
+    "owners": [
+      "bestiary_2:monster:azata_lyrakien"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The performances and company of a lyrakien ease the burden of travel.  Once per day, a creature may spend a minute listening to a lyrakien's performance - doing so removes the effects of exhaustion and fatigue from the listener."
+      },
+      {
+        "key": "KEY",
+        "value": "Lyrakien ~ Traveler's Friend"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.38",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2157,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Lyrakien ~ Traveler's Friend",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

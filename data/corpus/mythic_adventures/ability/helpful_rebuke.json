@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Helpful Rebuke",
+    "name": "Helpful Rebuke",
+    "description": "You are quick with stern yet helpful words of advice. Whenever an ally within line of sight fails a skill check with a skill you're trained in, you can expend one use of mythic power as an immediate action to allow that ally to reroll that skill check with a +%1 bonus. If the new roll is successful, your ally succeeds at that check instead of failing it. The ally who failed the skill check must be able to see and hear you to gain this reroll. You can use this ability with a skill you aren't trained in, but you must expend two uses of mythic power to do so, and the ally doesn't gain your tier as a bonus on the reroll.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Helpful Rebuke"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are quick with stern yet helpful words of advice. Whenever an ally within line of sight fails a skill check with a skill you're trained in, you can expend one use of mythic power as an immediate action to allow that ally to reroll that skill check with a +%1 bonus. If the new roll is successful, your ally succeeds at that check instead of failing it. The ally who failed the skill check must be able to see and hear you to gain this reroll. You can use this ability with a skill you aren't trained in, but you must expend two uses of mythic power to do so, and the ally doesn't gain your tier as a bonus on the reroll.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 183,
+    "record_key": "Mythic Path Ability ~ Helpful Rebuke"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures|PREMULT:2,[PREVARGTEQ:TL,6],[PREABILITY:1,CATEGORY=Special Ability,Severis Attunement]",
+    "key": "Special Quality ~ Severis / Scourgebane",
+    "name": "Scourgebane for Severis",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Severis / Scourgebane"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPROP",
+        "value": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures|PREMULT:2,[PREVARGTEQ:TL,6],[PREABILITY:1,CATEGORY=Special Ability,Severis Attunement]"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Quality ~ Severis / Scourgebane",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

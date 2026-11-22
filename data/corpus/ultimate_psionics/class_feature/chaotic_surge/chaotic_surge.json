@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Chaotic Surge",
+    "name": "Chaotic Surge",
+    "class": null,
+    "description": "When you invoke a wild surge, you roll a d4.  If the result is a 1, your power manifests at %1 manifester levels lower than normal.  If this would result in a manifester level too low to manifest the power, you are shaken until the start of your next turn and the power fails, although you do not spend any power points.  If the result is a 2 or 3, your manifester level is improved by %2.  If the result is a 4, your manifester level is improved by %3.  Psychic enervation:If your wild surge roll was 1, you are dazed until the end of your next turn.  On a 2-3, you are dazed until the end of your next turn and lose %4 power points.  On a 4, you are dazed until the end of your next turn and lose %5 power points.|ChaoticMLPenalty|ChaoticMLBonusA|ChaoticMLBonusB|ChaoticPPLossA|ChaoticPPLossB",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChaoticMLPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChaoticMLBonusA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChaoticMLBonusB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChaoticPPLossA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChaoticPPLossB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you invoke a wild surge, you roll a d4.  If the result is a 1, your power manifests at %1 manifester levels lower than normal.  If this would result in a manifester level too low to manifest the power, you are shaken until the start of your next turn and the power fails, although you do not spend any power points.  If the result is a 2 or 3, your manifester level is improved by %2.  If the result is a 4, your manifester level is improved by %3.  Psychic enervation:If your wild surge roll was 1, you are dazed until the end of your next turn.  On a 2-3, you are dazed until the end of your next turn and lose %4 power points.  On a 4, you are dazed until the end of your next turn and lose %5 power points.|ChaoticMLPenalty|ChaoticMLBonusA|ChaoticMLBonusB|ChaoticPPLossA|ChaoticPPLossB"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Chaotic Surge Bond|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Chaotic Surge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Chaotic Improved Surge Bond|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChaoticMLPenalty|WildSurge*(-1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChaoticMLBonusA|WildSurge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChaoticMLBonusB|WildSurge*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChaoticPPLossA|SurgeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChaoticPPLossB|2*SurgeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicEnervationPercent|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1048,
+    "record_key": "Chaotic Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

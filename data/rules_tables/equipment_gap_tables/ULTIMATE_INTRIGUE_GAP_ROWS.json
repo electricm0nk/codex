@@ -1,0 +1,83 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ULTIMATE_INTRIGUE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "UI",
+      "key": "LIBERATING",
+      "name": "LIBERATING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Aids wielder in detecting when a creature is under an enchantment. Striking a mentally controlled deals nonlethal damage, grants new save with a bonus.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "PEACEFUL",
+      "name": "PEACEFUL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature that has taken nonlethal damage from a peaceful weapon becomes shaken for 1 round each time it deals lethal damage to another living creature.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "SILENCING",
+      "name": "SILENCING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "SLITHERING",
+      "name": "SLITHERING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon ignores half of AC bonus from cover, half of penalty from squeezing, and is harder to disarm or sunder.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "TRUTHFUL",
+      "name": "TRUTHFUL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon ignores miss chance provided by illusions, such as blur, and acts as a dispelling weapon against figments and shadow conjuration effects.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "UMBRAL",
+      "name": "UMBRAL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon is considered to have concealment for the purposes of attacks or effects directed at the weapon, grants wielder darkvision, 30 ft, while held, radiates 20-ft radius of darkness on command.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UI",
+      "key": "UNSEEN",
+      "name": "UNSEEN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon, and scabbard, become invisible on command, may deny unaware target Dex bonus to AC on first strike, has total concealment against attacks or effects directed at the weapon.",
+      "name_pi_citation": null
+    }
+  ]
+}

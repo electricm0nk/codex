@@ -1,0 +1,10 @@
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 27 previous errors; 1 warning emitted
+      1 error[E0422]: cannot find struct, variant or union type `CprImproveRequest` in this scope
+      5 error[E0425]: cannot find function `apply_at_root` in this scope
+      8 error[E0425]: cannot find function `preview_at_root` in this scope
+      3 error[E0425]: cannot find type `CprImproveRequest` in this scope
+      2 error[E0425]: cannot find type `CprPurchase` in this scope
+      1 error[E0425]: cannot find type `ExplanationDto` in this scope
+      1 error[E0425]: cannot find type `Path` in this scope
+      5 error[E0433]: cannot find type `CprPurchase` in this scope
+      1 error[E0433]: cannot find type `Path` in this scope

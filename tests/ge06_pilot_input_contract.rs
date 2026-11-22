@@ -11,9 +11,8 @@ use codex::rules_core::character_input::{
 
 #[test]
 fn loads_ge06_deterministic_pilot_input_contract_as_chosen_input() {
-    let fixture = include_str!(
-        "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-    );
+    let fixture =
+        include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
     let result = load_character_input_fixture(fixture);
 
@@ -27,7 +26,10 @@ fn loads_ge06_deterministic_pilot_input_contract_as_chosen_input() {
         .expect("valid GE-06 deterministic fixture should produce a character input record");
 
     // Identity (case_id is the GE-06 addition over the GE-04 record shape).
-    assert_eq!(input.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        input.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(input.source_package_id, "pf1.core_rulebook");
     assert_eq!(input.chosen.race_id, "race:human");
     assert_eq!(input.chosen.class_levels.len(), 1);
@@ -65,10 +67,7 @@ fn loads_ge06_deterministic_pilot_input_contract_as_chosen_input() {
         selection_for("choice:level_1_character_feat"),
         Some("feat:power_attack")
     );
-    assert_eq!(
-        selection_for("choice:human_bonus_feat"),
-        Some("feat:dodge")
-    );
+    assert_eq!(selection_for("choice:human_bonus_feat"), Some("feat:dodge"));
     assert_eq!(
         selection_for("choice:fighter_bonus_feat"),
         Some("feat:weapon_focus:weapon:longsword")
@@ -160,9 +159,5 @@ fn unsupported_equipment_active_state_returns_claim_blocking_diagnostic() {
     assert_eq!(result.diagnostics[0].severity, DiagnosticSeverity::Error);
     assert_eq!(result.diagnostics[0].subject_ref, "equipment_selections");
     assert!(result.diagnostics[0].claim_blocking);
-    assert!(
-        result.diagnostics[0]
-            .message
-            .contains("unsupported state")
-    );
+    assert!(result.diagnostics[0].message.contains("unsupported state"));
 }

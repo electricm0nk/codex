@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Shield Companion",
+    "name": "Shield Companion",
+    "class": "Magus",
+    "description": "As shield other, but affecting your companion creature.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Shield Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellBlend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Shield Companion"
+      },
+      {
+        "key": "DESC",
+        "value": "As shield other, but affecting your companion creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|1|TYPE=Deflection"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|ALL|1|TYPE=Resistance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4108,
+    "record_key": "Magus Spellblend ~ Shield Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

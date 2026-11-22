@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Surge Protection",
+    "name": "Surge Protection",
+    "description": "Take 1 less hp or pp damage from enervation (minimum 1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Surge Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.MaenadTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Surge Protection],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Maenad,RACESUBTYPE=Maenad],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Maenad]"
+      },
+      {
+        "key": "DESC",
+        "value": "Take 1 less hp or pp damage from enervation (minimum 1)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 193,
+    "record_key": "Trait ~ Surge Protection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

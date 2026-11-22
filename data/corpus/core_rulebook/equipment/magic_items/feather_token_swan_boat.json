@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 450.0,
+    "description": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.\nSwan Boat: A token that forms a swan-like boat capable of moving on water at a speed of 60 feet. It can carry eight horses and gear, 32 Medium characters, or any equivalent combination. The boat lasts for 1 day.",
+    "key": "Feather Token (Swan Boat)",
+    "name": "Feather Token (Swan Boat)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feather Token (Swan Boat)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Feather Token (Swan Boat)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "450"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.512"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|225 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, major creation"
+      },
+      {
+        "key": "DESC",
+        "value": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.&nl;Swan Boat: A token that forms a swan-like boat capable of moving on water at a speed of 60 feet. It can carry eight horses and gear, 32 Medium characters, or any equivalent combination. The boat lasts for 1 day."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 157,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Feather Token (Swan Boat)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

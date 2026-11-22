@@ -1,0 +1,301 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "feat_gap_tables/ADVANCED_RACE_GUIDE_FEAT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "feat_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Multitalented Mastery ~ Bonus Hit Point",
+      "category": "MultitalentedMasteryBonus",
+      "name": "Bonus Hit Point",
+      "description": null
+    },
+    {
+      "key": "Multitalented Mastery ~ Bonus Skill Point",
+      "category": "MultitalentedMasteryBonus",
+      "name": "Bonus Skill Rank",
+      "description": null
+    },
+    {
+      "key": "Mother's Gift ~ Hag Claws",
+      "category": "Extraordinary",
+      "name": "Hag Claws",
+      "description": "You gain a +1 bonus on attack and damage rolls with your claws."
+    },
+    {
+      "key": "Mother's Gift ~ Surprisingly Tough",
+      "category": "Extraordinary",
+      "name": "Surprisingly Tough",
+      "description": "Your natural armor bonus increases by +1."
+    },
+    {
+      "key": "Mother's Gift ~ Uncanny Resistance",
+      "category": "Supernatural",
+      "name": "Uncanny Resistance",
+      "description": "You gain spell resistance equal to 6 + your character level. %1.|TL+6"
+    },
+    {
+      "key": "Angelic Flesh ~ Brazen",
+      "category": "AngelicFleshOption",
+      "name": "Brazen",
+      "description": "You take a -2 penalty on Disguise and Stealth checks but gain fire resistance 5 and a +2 bonus on saves against fire effects."
+    },
+    {
+      "key": "Angelic Flesh ~ Golden",
+      "category": "AngelicFleshOption",
+      "name": "Golden",
+      "description": "You take a -2 penalty on Disguise and Stealth checks but gain a +2 bonus on saves against blindness, dazzling, patterns, and effects with the light descriptor. When you cast spells or use spell-like abilities that are from the illusion (pattern) subschool or have the light descriptor, you do so at +1 caster level."
+    },
+    {
+      "key": "Angelic Flesh ~ Silver",
+      "category": "AngelicFleshOption",
+      "name": "Silver",
+      "description": "You take a -2 penalty on Disguise and Stealth checks but gain a +2 bonus on saves against paralysis, petrification, and poison, and your unarmed strikes or natural weapons count as silver for the purpose of overcoming damage reduction."
+    },
+    {
+      "key": "Angelic Flesh ~ Steel",
+      "category": "AngelicFleshOption",
+      "name": "Steel",
+      "description": "You take a -2 penalty on Disguise and Stealth checks but gain a +1 natural armor bonus to AC, and your unarmed strikes or natural weapons count as cold iron for the purpose of overcoming damage reduction."
+    },
+    {
+      "key": "Heavenly Radiance ~ Flare  Burst",
+      "category": "HeavenlyRadianceOption",
+      "name": "Flare Burst",
+      "description": "By expending a use of daylight, you may use this spell as a spell-like ability."
+    },
+    {
+      "key": "Heavenly Radiance ~ Wake of Light",
+      "category": "HeavenlyRadianceOption",
+      "name": "Wake of Light",
+      "description": "By expending a use of daylight, you may use this spell as a spell-like ability."
+    },
+    {
+      "key": "Heavenly Radiance ~ Searing Light",
+      "category": "HeavenlyRadianceOption",
+      "name": "Searing Light",
+      "description": "By expending a use of daylight, you may use this spell as a spell-like ability."
+    },
+    {
+      "key": "Heavenly Radiance ~ Wandering Star Motes",
+      "category": "HeavenlyRadianceOption",
+      "name": "Wandering Star Motes",
+      "description": "By expending a use of daylight, you may use this spell as a spell-like ability."
+    },
+    {
+      "key": "Heavenly Radiance ~ Sunbeam",
+      "category": "HeavenlyRadianceOption",
+      "name": "Sunbeam",
+      "description": "By expending a use of daylight, you may use this spell as a spell-like ability."
+    },
+    {
+      "key": "Catfolk Exemplar ~ Enhanced Senses",
+      "category": "CatfolkExemplarOption",
+      "name": "Enhanced Senses",
+      "description": "If you have low-light vision, you gain the scent catfolk racial trait. If you have the scent racial trait, you gain low-light vision."
+    },
+    {
+      "key": "Catfolk Exemplar ~ Fast Sprinter",
+      "category": "CatfolkExemplarOption",
+      "name": "Fast Sprinter",
+      "description": "You gain a 10-foot racial bonus to your speed when using the charge, run, or withdraw actions. If you have the sprinter racial trait, your racial bonus to speed when using the charge, run, or withdraw action increases to a 20-foot bonus."
+    },
+    {
+      "key": "Catfolk Exemplar ~ Sharp Claws",
+      "category": "CatfolkExemplarOption",
+      "name": "Sharp Claws",
+      "description": "If you do not have the cat's claws racial trait or the claws of the beast manifestation from the Aspect of the Beast feat , you gain the cat's claws racial trait. If you have either the cat's claws racial trait or the claws of the beast manifestation, your claw damage increases to 1d6."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Aquatic)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Aquatic)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Dwarf)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Dwarf)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Elf)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Elf)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Giant)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Giant)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Gnoll)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Gnoll)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Gnome)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Gnome)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Goblinoid)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Goblinoid)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Halfling)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Halfling)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Human)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Human)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Orc)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Orc)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Humanoid (Reptilian)",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Humanoid (Reptilian)",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Blood Drinker Monstrous Humanoid",
+      "category": "BloodDrinkerType",
+      "name": "Blood Drinker Monstrous Humanoid",
+      "description": "You have acquired a taste for the blood of creatures with this subtype."
+    },
+    {
+      "key": "Umbral Scion Spell ~ Dispel Magic",
+      "category": "Umbral Scion Spell",
+      "name": "Dispel Magic",
+      "description": null
+    },
+    {
+      "key": "Umbral Scion Spell ~ Divine Favor",
+      "category": "Umbral Scion Spell",
+      "name": "Divine Favor",
+      "description": null
+    },
+    {
+      "key": "Umbral Scion Spell ~ Suggestion",
+      "category": "Umbral Scion Spell",
+      "name": "Suggestion",
+      "description": null
+    },
+    {
+      "key": "Black",
+      "category": "Kobold Scale Color",
+      "name": "Black",
+      "description": null
+    },
+    {
+      "key": "Blue",
+      "category": "Kobold Scale Color",
+      "name": "Blue",
+      "description": null
+    },
+    {
+      "key": "Green",
+      "category": "Kobold Scale Color",
+      "name": "Green",
+      "description": null
+    },
+    {
+      "key": "Red",
+      "category": "Kobold Scale Color",
+      "name": "Red",
+      "description": null
+    },
+    {
+      "key": "White",
+      "category": "Kobold Scale Color",
+      "name": "White",
+      "description": null
+    },
+    {
+      "key": "Kobold Dragon Breath ~ Acid Line",
+      "category": "Supernatural",
+      "name": "Acid Line",
+      "description": "You breathe a 30-foot line of acid that deals 2d6 points of acid damage."
+    },
+    {
+      "key": "Kobold Dragon Breath ~ Electricity Line",
+      "category": "Supernatural",
+      "name": "Electricity Line",
+      "description": "You breathe a 30-foot line of electricity that deals 2d6 points of electricity damage."
+    },
+    {
+      "key": "Kobold Dragon Breath ~ Acid Cone",
+      "category": "Supernatural",
+      "name": "Acid Cone",
+      "description": "You breathe a 15-foot cone of acid that deals 2d6 points of acid damage."
+    },
+    {
+      "key": "Kobold Dragon Breath ~ Fire Cone",
+      "category": "Supernatural",
+      "name": "Fire Cone",
+      "description": "You breathe a 15-foot cone of fire that deals 2d6points of fire damage."
+    },
+    {
+      "key": "Kobold Dragon Breath ~ Cold Cone",
+      "category": "Supernatural",
+      "name": "Cold Cone",
+      "description": "You breathe a 15-foot cone of cold that deals 2d6 points of cold damage."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Bully",
+      "category": "OrcWeaponExpertise",
+      "name": "Bully",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Defender",
+      "category": "OrcWeaponExpertise",
+      "name": "Defender",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Disrupter",
+      "category": "OrcWeaponExpertise",
+      "name": "Disrupter",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Killer",
+      "category": "OrcWeaponExpertise",
+      "name": "Killer",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Thug",
+      "category": "OrcWeaponExpertise",
+      "name": "Thug",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    },
+    {
+      "key": "Orc Weapon Expertise ~ Trickster",
+      "category": "OrcWeaponExpertise",
+      "name": "Trickster",
+      "description": "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit you chose so long as you are actually proficient with that weapon."
+    }
+  ]
+}

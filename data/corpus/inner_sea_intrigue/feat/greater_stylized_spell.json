@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Greater Stylized Spell",
+    "category": "General",
+    "name": "Greater Stylized Spell",
+    "description": "You can modify your spell's superficial qualities in a greater variety of ways. When you modify a spell with Stylized Spell, you can apply one of the stylized magic options (see Stylized Magic on page 16) without reducing the DC of the check to identify the spell. In addition, you can apply up to two additional stylized magic options, reducing the DC of checks to identify the spell by 5 per option as normal.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Stylized Spell",
+      "PRESKILL:2,Bluff=10,Spellcraft=10",
+      "PRETEXT:Stylized Spell, Bluff 10 ranks, Spellcraft 10 ranks."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst",
+    "sha256": "bf848df0e5343241cdaea1562d1bef5d7f09362af28cf315e22c5eff69eb9418",
+    "line": 13,
+    "record_key": "Greater Stylized Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

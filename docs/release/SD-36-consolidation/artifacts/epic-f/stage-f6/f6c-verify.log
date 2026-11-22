@@ -1,0 +1,75 @@
+# Pass 1 (after the first converter write) was all green but was redone: the live smoke run then found (1) the app's non-test build did not compile (a #[cfg(test)]-only import, fixed; the non-test build is now checked below) and (2) the shaman's 'Domains / Life (Spirit)' line (closed by the second converter write). Pass 2, after all changes:
+
+# F6c verification (one pass, after all changes; worktree codex-epic-f6, CARGO_TARGET_DIR=codex-epic-f6-target)
+               total        used        free      shared  buff/cache   available
+Mem:             134           5          68           0          61         128
+## converter freshness: cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (438.4s)
+exit=0
+## PCGen residue: python3 scripts/pcgen_residue_gate.py --check --closure
+live_files=0 live_hits=0 verdict=PASS
+exit=0
+## frozen status: python3 scripts/site/check_frozen_status.py --check
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f6/site/status-data.json is frozen at 100% (49450 units)
+exit=0
+## corpus bundle: node scripts/gen-corpus-bundle.mjs (tree must stay unchanged)
+files_copied=14029 dst=/home/ubuntu/workspace/worktrees/codex-epic-f6/apps/desktop/src-tauri/resources/corpus_bundle
+0
+## F6c scans (--nocapture): no_printed_domain_count_is_filled_by_its_own_class_grants, the_chassis_cites_the_newest_printing_in_any_order, no_prestige_requirement_line_prints_a_raw_id
+domain-count lines 47, offering a domain 46; on a class record 4: [("advanced_class_guide:class:shaman#bonus1", false, true), ("core_rulebook:class:cleric#bonus1", true, false), ("core_rulebook:class:paladin#bonus1", true, false), ("inner_sea_world_guide:class:daughter_of_urgathoa#bonus5", true, false)]; classes whose own DOMAIN: rows grant domains 4: {"druid", "ex_antipaladin", "magus", "shaman"}; printed and filled by the class's own grants 0
+domain records only a withheld-count class grants: 10 (0 printing): [("advanced_class_guide:domain:battle_spirit", false), ("advanced_class_guide:domain:bones_spirit", false), ("advanced_class_guide:domain:flame_spirit", false), ("advanced_class_guide:domain:heavens_spirit", false), ("advanced_class_guide:domain:life_spirit", false), ("advanced_class_guide:domain:lore_spirit", false), ("advanced_class_guide:domain:nature_spirit", false), ("advanced_class_guide:domain:stone_spirit", false), ("advanced_class_guide:domain:waves_spirit", false), ("advanced_class_guide:domain:wind_spirit", false)]
+prestige gates 74, printed requirement lines 286, lines with a raw id 0
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2747 filtered out; finished in 3.92s
+exit=0
+## root lib: cargo test --locked -j 8 --lib -- --test-threads=8
+test result: ok. 2744 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 277.56s
+exit=0
+## sd36 test files: cargo test --locked -j 8 --test sd36_* (7 files) -- --test-threads=8
+     Running tests/sd36_bloodline_pick_option.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_bloodline_pick_option-972edb87b3dcfbcb)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.72s
+     Running tests/sd36_class_skill_from_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_class_skill_from_record-7314d3254af7ac76)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 69.43s
+     Running tests/sd36_f3_polish.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f3_polish-2b3088d512d05512)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 131.30s
+     Running tests/sd36_f4_link_pick_namespace.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f4_link_pick_namespace-caa5bade4b5ed959)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 199.71s
+     Running tests/sd36_f4pre_pool_choices.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f4pre_pool_choices-3e1ffb1d3d5bf42d)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.43s
+     Running tests/sd36_multiclass_any_class.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_multiclass_any_class-3e5cd4b045cf56f7)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 68.71s
+     Running tests/sd36_sorcerer_bloodline_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_sorcerer_bloodline_record-c46438d0ba193f6f)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 39.10s
+exit=0
+## codex-ingest converter unit tests: cargo test --locked -j 8 -p codex-ingest --lib sheet_rule -- --test-threads=8
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 602 filtered out; finished in 14.40s
+exit=0
+## root clippy: cargo clippy --locked --tests -j 8 --workspace
+0
+exit=0
+## desktop: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+build_level_up_class_options(fighter 6), cold (census sweep included): 80.996814438s
+build_level_up_class_options(fighter 6), warm (the dialog's cost): 1.095587725s
+fighter 6, each of 133 level-up options (advance 1, add_base 58, add_prestige 74) taken for real: computed 123, refused with the blocker shown 10, refused by something other than the mix gate 0: []
+test result: ok. 626 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 449.95s
+exit=0
+## desktop non-test build, the app's dev command: cargo clippy --locked -j 8 --no-default-features --manifest-path apps/desktop/src-tauri/Cargo.toml (errors counted; the warnings are the bin's existing dead-code set)
+0
+exit=0
+## desktop clippy: cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml
+0
+exit=0
+## census: cargo run --locked -j 8 --quiet --bin class_census -- --json /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f6/census-f6c.json
+exit=0
+census-f6c vs census-f5, fields differing (generated_at excluded): ['prestige']
+## class status table: python3 scripts/gen_class_status_table.py --check
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+exit=0
+## frontend: npm run typecheck && npm test (apps/desktop)
+> tsc --noEmit
+
+PASS src/update/restoreOffer.test.ts
+
+127/127 test files passed.
+exit=0
+VERIFY_DONE
+EXIT=0

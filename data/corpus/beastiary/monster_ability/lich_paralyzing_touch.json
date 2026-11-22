@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lich ~ Paralyzing Touch",
+    "delivery": "Supernatural",
+    "description": "Any living creature a lich hits with its touch attack must succeed on a Fortitude save or be permanently paralyzed. Remove paralysis or any spell that can remove a curse can free the victim (see the bestow curse spell description, DC %1). The effect cannot be dispelled. Anyone paralyzed by a lich seems dead, though a DC 20 Perception check or a DC 15 Heal check reveals that the victim is still alive.",
+    "description_variables": [
+      "LichParalyzingTouchDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:lich_paralyzing_touch",
+    "name": "Paralyzing Touch",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralyzing Touch"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|LichParalyzingTouchDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LichParalyzingTouchDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LichParalyzingTouchDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralyzing Touch)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LichParalyzingTouchDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any living creature a lich hits with its touch attack must succeed on a Fortitude save or be permanently paralyzed. Remove paralysis or any spell that can remove a curse can free the victim (see the bestow curse spell description, DC %1). The effect cannot be dispelled. Anyone paralyzed by a lich seems dead, though a DC 20 Perception check or a DC 15 Heal check reveals that the victim is still alive.|LichParalyzingTouchDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Lich ~ Paralyzing Touch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.189",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1340,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Lich ~ Paralyzing Touch",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "IsDuergar",
+    "name": "IsDuergar",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "IsDuergar|True"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_templates.lst",
+    "record_key": "IsDuergar",
+    "sha256": "314799d60e5cd6043f881d269ccaea8b2c355e3264642d7f237b989a3ccd0564"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

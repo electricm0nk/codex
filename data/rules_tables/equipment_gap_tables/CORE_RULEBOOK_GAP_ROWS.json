@@ -1,0 +1,3333 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/CORE_RULEBOOK_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "CRB",
+      "key": "CLOTH",
+      "name": "CLOTH",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "LEATHER",
+      "name": "LEATHER",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ROPE",
+      "name": "ROPE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "STEEL",
+      "name": "STEEL",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "WOOD",
+      "name": "WOOD",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MWORKW",
+      "name": "MWORKW",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MWORKM",
+      "name": "MWORKM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MWORKA",
+      "name": "MWORKA",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MWORKT",
+      "name": "MWORKT",
+      "category": "Equipmods",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MWORKB",
+      "name": "MWORKB",
+      "category": "Equipmods",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BONDED_OBJECT",
+      "name": "BONDED_OBJECT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Can be used once per day to cast any one spell that the wizard has in his spellbook and is capable of casting, even if the spell is not prepared.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "THROWN_AMMO",
+      "name": "THROWN_AMMO",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BOWSTR",
+      "name": "BOWSTR",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Strength bonus to damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BRACE",
+      "name": "BRACE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Extra damage when set against a charging character (pg. 144) brace",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DISARM",
+      "name": "DISARM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Bonus to disarm an enemy (pg. 144) disarm",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MONK",
+      "name": "MONK",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "May be used to perform a flurry of blows (pg. 145) monk",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "NONLETHAL",
+      "name": "NONLETHAL",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Deals nonlethal damage (pg. 145) nonlethal",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "TRIP",
+      "name": "TRIP",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "May be used to make trip attacks (pg.145) trip",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPIKE_A",
+      "name": "SPIKE_A",
+      "category": "Equipmods",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": "Spiked",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPIKE_S",
+      "name": "SPIKE_S",
+      "category": "Equipmods",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": "Spiked",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPIKE_SB",
+      "name": "SPIKE_SB",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Spiked",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "LOCK_G",
+      "name": "LOCK_G",
+      "category": "Equipmods",
+      "cost_gp": 8.0,
+      "weight_lbs": null,
+      "description": "Locked",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "NONHUMANOID",
+      "name": "NONHUMANOID",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BROKEW",
+      "name": "BROKEW",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "-2 penalty on attack and damage rolls with critical of 20/x2.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BROKEA",
+      "name": "BROKEA",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "AC bonus is halved and AC Check is doubled.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BROKES",
+      "name": "BROKES",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "AC bonus is halved and AC Check is doubled.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BROKET",
+      "name": "BROKET",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "-2 penalty on all skill checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BROKEM",
+      "name": "BROKEM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Uses twice the charges as normal.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Adamantine (Ammo)",
+      "name": "Adamantine (Ammo)",
+      "category": "Equipmods",
+      "cost_gp": 60.0,
+      "weight_lbs": null,
+      "description": "adamantine, ignore hardness less than 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Adamantine (Light Armor)",
+      "name": "Adamantine (Light Armor)",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Adamantine (Medium Armor)",
+      "name": "Adamantine (Medium Armor)",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Adamantine (Heavy Armor)",
+      "name": "Adamantine (Heavy Armor)",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Adamantine (Weapon)",
+      "name": "Adamantine (Weapon)",
+      "category": "Equipmods",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": "adamantine, ignore hardness less than 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Mithral (Light Armor)",
+      "name": "Mithral (Light Armor)",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Mithral (Medium Armor)",
+      "name": "Mithral (Medium Armor)",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Mithral (Heavy Armor)",
+      "name": "Mithral (Heavy Armor)",
+      "category": "Equipmods",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Mithral (Shield)",
+      "name": "Mithral (Shield)",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Mithral (Item)",
+      "name": "Mithral (Item)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Darkwood",
+      "name": "Darkwood",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "darkwood",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Dragonhide",
+      "name": "Dragonhide",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "dragonhide",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Cold Iron",
+      "name": "Cold Iron",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "cold iron",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Alchemical Silver",
+      "name": "Alchemical Silver",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "silver",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ADAMANT_AMMO",
+      "name": "ADAMANT_AMMO",
+      "category": "Equipmods",
+      "cost_gp": 60.0,
+      "weight_lbs": null,
+      "description": "adamantine, ignore hardness less than 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ADAMANT_ARMR_LT",
+      "name": "ADAMANT_ARMR_LT",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ADAMANT_ARMR_MED",
+      "name": "ADAMANT_ARMR_MED",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ADAMANT_ARMR_HVY",
+      "name": "ADAMANT_ARMR_HVY",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "adamantine",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ADAMANT_WEAP",
+      "name": "ADAMANT_WEAP",
+      "category": "Equipmods",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": "adamantine, ignore hardness less than 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MITHRAL_ARMR_LT",
+      "name": "MITHRAL_ARMR_LT",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MITHRAL_ARMR_MED",
+      "name": "MITHRAL_ARMR_MED",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MITHRAL_ARMR_HVY",
+      "name": "MITHRAL_ARMR_HVY",
+      "category": "Equipmods",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MITHRAL_SHLD",
+      "name": "MITHRAL_SHLD",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MITHRAL_ITEM",
+      "name": "MITHRAL_ITEM",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "mithral",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DARK",
+      "name": "DARK",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "darkwood",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DRACO",
+      "name": "DRACO",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "dragonhide",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "C_IRON",
+      "name": "C_IRON",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "cold iron",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ALCHM",
+      "name": "ALCHM",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "silver",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_3",
+      "name": "CHARGED_ITEM_3",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_4",
+      "name": "CHARGED_ITEM_4",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_5",
+      "name": "CHARGED_ITEM_5",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_6",
+      "name": "CHARGED_ITEM_6",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_7",
+      "name": "CHARGED_ITEM_7",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_8",
+      "name": "CHARGED_ITEM_8",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_9",
+      "name": "CHARGED_ITEM_9",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_10",
+      "name": "CHARGED_ITEM_10",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_12",
+      "name": "CHARGED_ITEM_12",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_20",
+      "name": "CHARGED_ITEM_20",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_34",
+      "name": "CHARGED_ITEM_34",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_36",
+      "name": "CHARGED_ITEM_36",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_50",
+      "name": "CHARGED_ITEM_50",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_ITEM_101",
+      "name": "CHARGED_ITEM_101",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CHARGED_STAFF",
+      "name": "CHARGED_STAFF",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "USES_PER_DAY_1",
+      "name": "USES_PER_DAY_1",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "USES_PER_DAY_2",
+      "name": "USES_PER_DAY_2",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "USES_PER_DAY_3",
+      "name": "USES_PER_DAY_3",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "USES_PER_DAY_10",
+      "name": "USES_PER_DAY_10",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_1",
+      "name": "MAGIC_ENHANCE_1",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_2",
+      "name": "MAGIC_ENHANCE_2",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_3",
+      "name": "MAGIC_ENHANCE_3",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_4",
+      "name": "MAGIC_ENHANCE_4",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_5",
+      "name": "MAGIC_ENHANCE_5",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_6",
+      "name": "MAGIC_ENHANCE_6",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_7",
+      "name": "MAGIC_ENHANCE_7",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_8",
+      "name": "MAGIC_ENHANCE_8",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_9",
+      "name": "MAGIC_ENHANCE_9",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_ENHANCE_10",
+      "name": "MAGIC_ENHANCE_10",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAGIC_COST",
+      "name": "MAGIC_COST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_1USE",
+      "name": "SPL_1USE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CHRG",
+      "name": "SPL_CHRG",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CMD",
+      "name": "SPL_CMD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_ACT",
+      "name": "SPL_ACT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_ENHC_AB",
+      "name": "BNS_ENHC_AB",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus to ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_ENHC_AC",
+      "name": "BNS_ENHC_AC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Enhancement bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SPELL",
+      "name": "BNS_SPELL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "bonus spell",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_DEFL",
+      "name": "BNS_AC_DEFL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deflection bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_LUCK",
+      "name": "BNS_AC_LUCK",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Luck bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_INSI",
+      "name": "BNS_AC_INSI",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Insight bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_SCRD",
+      "name": "BNS_AC_SCRD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Sacred bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_PROF",
+      "name": "BNS_AC_PROF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Profane bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_AC_OTHE",
+      "name": "BNS_AC_OTHE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Other bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_ENHC_NAT",
+      "name": "BNS_ENHC_NAT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Natural Armor bonus to armor class",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_RES",
+      "name": "BNS_SAV_RES",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Resistance bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_LUC",
+      "name": "BNS_SAV_LUC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Luck bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_INS",
+      "name": "BNS_SAV_INS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Insight bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_SAC",
+      "name": "BNS_SAV_SAC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Sacred bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_PRO",
+      "name": "BNS_SAV_PRO",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Profane bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SAV_OTH",
+      "name": "BNS_SAV_OTH",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Other bonus to all saving throws",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SKL_CMP",
+      "name": "BNS_SKL_CMP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Competence bonus to selected skill",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BNS_SPL_RST",
+      "name": "BNS_SPL_RST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "base spell resistance",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAX_KNW",
+      "name": "MAX_KNW",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Grants maximum skill ranks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MAX_GNL",
+      "name": "MAX_GNL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Grants maximum skill ranks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CON_STANDARD",
+      "name": "SPL_CON_STANDARD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CON_ROUND",
+      "name": "SPL_CON_ROUND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CON_MINUTES",
+      "name": "SPL_CON_MINUTES",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CON_HOURS",
+      "name": "SPL_CON_HOURS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_CON_DAYS",
+      "name": "SPL_CON_DAYS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_SPP",
+      "name": "SPL_SPP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_SSP",
+      "name": "SPL_SSP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPL_SLP",
+      "name": "SPL_SLP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "A_1USEMI",
+      "name": "A_1USEMI",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "A_1USEME",
+      "name": "A_1USEME",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "A_1USEMA",
+      "name": "A_1USEMA",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "D_1USEMI",
+      "name": "D_1USEMI",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "D_1USEME",
+      "name": "D_1USEME",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "D_1USEMA",
+      "name": "D_1USEMA",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1STEP",
+      "name": "PLUS1STEP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2STEP",
+      "name": "PLUS2STEP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3STEP",
+      "name": "PLUS3STEP",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1STEP_NO_PENALTY",
+      "name": "PLUS1STEP_NO_PENALTY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2STEP_NO_PENALTY",
+      "name": "PLUS2STEP_NO_PENALTY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3STEP_NO_PENALTY",
+      "name": "PLUS3STEP_NO_PENALTY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1W",
+      "name": "PLUS1W",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2W",
+      "name": "PLUS2W",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3W",
+      "name": "PLUS3W",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS4W",
+      "name": "PLUS4W",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS5W",
+      "name": "PLUS5W",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1M",
+      "name": "PLUS1M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2M",
+      "name": "PLUS2M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3M",
+      "name": "PLUS3M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS4M",
+      "name": "PLUS4M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS5M",
+      "name": "PLUS5M",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ANARCH",
+      "name": "ANARCH",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "chaotically aligned, +2d6 damage against lawful targets, 1 negative level bestowed on lawful wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "AXIOM",
+      "name": "AXIOM",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "lawfully aligned, +2d6 damage against chaotic targets, 1 negative level bestowed to chaotic wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BANE",
+      "name": "BANE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapons have +2 enhancement bonus and deal +2d6 bonus damage against the chosen foe",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BRILL",
+      "name": "BRILL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "ignores armor and shield bonuses including enhancement, cannot harm undead, constructs, and objects",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DANCE",
+      "name": "DANCE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can be loosed to attack on its own",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DEFEND",
+      "name": "DEFEND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can transfer some or all of its enhancement bonus to AC",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DISRPT",
+      "name": "DISRPT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "undead hit must make Will save (DC 14) or be destroyed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DISTNC",
+      "name": "DISTNC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "range increment doubled",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FLAME",
+      "name": "FLAME",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 fire damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FLM_BRST",
+      "name": "FLM_BRST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 fire damage, on a critical hit deals +%d10 additional fire damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FROST",
+      "name": "FROST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 cold damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "GHOST",
+      "name": "GHOST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "deals damage normally against incorporeal creatures regardless of bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "HOLY",
+      "name": "HOLY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "good aligned, +2d6 damage against evil targets, 1 negative level bestowed to evil wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ICY_BRST",
+      "name": "ICY_BRST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 cold damage, on a critical hit deals +%d10 additional cold damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "KEEN",
+      "name": "KEEN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "threat range doubled",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "KI",
+      "name": "KI",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can use ki attacks through weapon",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MERCY",
+      "name": "MERCY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 damage, deals non-lethal damage only",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CLEAVE",
+      "name": "CLEAVE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "allows an additional Cleave attack per round (with Cleave feat)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RETURN",
+      "name": "RETURN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "when thrown will return just before thrower's next turn",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SEEK",
+      "name": "SEEK",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "negates any miss chance",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHOCK",
+      "name": "SHOCK",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 electricity damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHK_BRST",
+      "name": "SHK_BRST",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 electricity damage, on a critical hit deals +%d10 additional electricity damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPEED",
+      "name": "SPEED",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants one extra attack at full base attack bonus when making a full-attack action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "STORE",
+      "name": "STORE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can store a single targeted spell of up to 3rd level with a casting time of 1 standard action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "THUNDER",
+      "name": "THUNDER",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+%d8 sonic damage on a critical hit and permanently deafened unless save vs Fort (DC 14)|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "THROW",
+      "name": "THROW",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can be thrown with a range increment of 10 ft.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "UNHOLY",
+      "name": "UNHOLY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "evil aligned, +2d6 damage against good targets, 1 negative level bestowed to good wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "VICIOUS",
+      "name": "VICIOUS",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2d6 damage to target, plus 1d6 damage to user",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "VORPAL",
+      "name": "VORPAL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "severs opponents head on natural 20 critical hit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "WOUND",
+      "name": "WOUND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "deals 1 point of bleed damage per hit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MightyFist_AMF",
+      "name": "MightyFist_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1_AMF",
+      "name": "PLUS1_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2_AMF",
+      "name": "PLUS2_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3_AMF",
+      "name": "PLUS3_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS4_AMF",
+      "name": "PLUS4_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS5_AMF",
+      "name": "PLUS5_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ANARCH_AMF",
+      "name": "ANARCH_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks are chaotically aligned, +2d6 damage against lawful targets, 1 negative level bestowed on lawful wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "AXIOM_AMF",
+      "name": "AXIOM_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks are lawfully aligned, +2d6 damage against chaotic targets, 1 negative level bestowed to chaotic wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BANE_AMF",
+      "name": "BANE_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks gain a +2 enhancement bonus and do +2d6 bonus damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BRILL_AMF",
+      "name": "BRILL_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks ignore armor and shield bonuses including enhancement, cannot harm undead, constructs, and objects",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DEFEND_AMF",
+      "name": "DEFEND_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can transfer some or all of its enhancement bonus to AC",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "DISRPT_AMF",
+      "name": "DISRPT_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "undead hit by unarmed and natural attacks must make Will save (DC 14) or be destroyed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FLAME_AMF",
+      "name": "FLAME_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 fire damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FLM_BRST_AMF",
+      "name": "FLM_BRST_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 fire damage, on a critical hit deals +%d10 additional fire damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FROST_AMF",
+      "name": "FROST_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 cold damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "GHOST_AMF",
+      "name": "GHOST_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks deal damage normally against incorporeal creatures regardless of bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "HOLY_AMF",
+      "name": "HOLY_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks are good aligned, +2d6 damage against evil targets, 1 negative level bestowed to evil wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ICY_BRST_AMF",
+      "name": "ICY_BRST_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 cold damage, on a critical hit deals +%d10 additional cold damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "KI_AMF",
+      "name": "KI_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can use ki attacks through unarmed and natural attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "MERCY_AMF",
+      "name": "MERCY_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 damage, deals non-lethal damage only",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "CLEAVE_AMF",
+      "name": "CLEAVE_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "allows an additional Cleave attack per round on unarmed and natural attacks (with Cleave feat)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHOCK_AMF",
+      "name": "SHOCK_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 electricity damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHK_BRST_AMF",
+      "name": "SHK_BRST_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 electricity damage, on a critical hit deals +%d10 additional electricity damage|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPEED_AMF",
+      "name": "SPEED_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants one extra attack with unarmed or natural attack at full base attack bonus when making a full-attack action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "STORE_AMF",
+      "name": "STORE_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "can store a single targeted spell of up to 3rd level with a casting time of 1 standard action",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "THUNDER_AMF",
+      "name": "THUNDER_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +%d8 sonic damage on a critical hit and permanently deafened unless save vs Fort (DC 14)|CRITMULT-1",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "UNHOLY_AMF",
+      "name": "UNHOLY_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks are evil aligned, +2d6 damage against good targets, 1 negative level bestowed to good wielder",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "VICIOUS_AMF",
+      "name": "VICIOUS_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +2d6 damage to target, plus 1d6 damage to user",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "WOUND_AMF",
+      "name": "WOUND_AMF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks deal 1 point of bleed damage per hit",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1A",
+      "name": "PLUS1A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2A",
+      "name": "PLUS2A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3A",
+      "name": "PLUS3A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS4A",
+      "name": "PLUS4A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS5A",
+      "name": "PLUS5A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS1S",
+      "name": "PLUS1S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS2S",
+      "name": "PLUS2S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS3S",
+      "name": "PLUS3S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS4S",
+      "name": "PLUS4S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PLUS5S",
+      "name": "PLUS5S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ANMATD",
+      "name": "ANMATD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "floats within 2 feet of the wielder, but still take normal penalties",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ARW_CAT",
+      "name": "ARW_CAT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "attracts ranged weapons to it; grants +1 deflection bonus vs ranged weapons",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ARW_DEF",
+      "name": "ARW_DEF",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reflex save (DC 20 + Missile enhancement) to deflect arrows; 1/round",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BASH_H",
+      "name": "BASH_H",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "damage dice increases to 1d8",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BASH_L",
+      "name": "BASH_L",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "damage dice increases to 1d6",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "BLIND",
+      "name": "BLIND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "flashes light 2/day upon command; range 20 ft.; Reflex save (DC 14) or be blinded for 1d4 rounds",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_ACD",
+      "name": "RST_ACD",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "absorbs 10 points of acid damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_ACD_IMP",
+      "name": "RST_ACD_IMP",
+      "category": "Equipmods",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": "absorbs 20 points of acid damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RES_ACD_GRT",
+      "name": "RES_ACD_GRT",
+      "category": "Equipmods",
+      "cost_gp": 66000.0,
+      "weight_lbs": null,
+      "description": "absorbs 30 points of acid damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_CLD",
+      "name": "RST_CLD",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "absorbs 10 points of cold damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_CLD_IMP",
+      "name": "RST_CLD_IMP",
+      "category": "Equipmods",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": "absorbs 20 points of cold damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RES_CLD_GRT",
+      "name": "RES_CLD_GRT",
+      "category": "Equipmods",
+      "cost_gp": 66000.0,
+      "weight_lbs": null,
+      "description": "absorbs 30 points of cold damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_ELC",
+      "name": "RST_ELC",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "absorbs 10 points of electricity damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_ELC_IMP",
+      "name": "RST_ELC_IMP",
+      "category": "Equipmods",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": "absorbs 20 points of electricity damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RES_ELC_GRT",
+      "name": "RES_ELC_GRT",
+      "category": "Equipmods",
+      "cost_gp": 66000.0,
+      "weight_lbs": null,
+      "description": "absorbs 30 points of electricity damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_FIR",
+      "name": "RST_FIR",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "absorbs 10 points of fire damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_FIR_IMP",
+      "name": "RST_FIR_IMP",
+      "category": "Equipmods",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": "absorbs 20 points of fire damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RES_FIR_GRT",
+      "name": "RES_FIR_GRT",
+      "category": "Equipmods",
+      "cost_gp": 66000.0,
+      "weight_lbs": null,
+      "description": "absorbs 30 points of fire damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_SNC",
+      "name": "RST_SNC",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "absorbs 10 points of sonic damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RST_SNC_IMP",
+      "name": "RST_SNC_IMP",
+      "category": "Equipmods",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": "absorbs 20 points of sonic damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "RES_SNC_GRT",
+      "name": "RES_SNC_GRT",
+      "category": "Equipmods",
+      "cost_gp": 66000.0,
+      "weight_lbs": null,
+      "description": "absorbs 30 points of sonic damage per attack",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ETHERE",
+      "name": "ETHERE",
+      "category": "Equipmods",
+      "cost_gp": 49000.0,
+      "weight_lbs": null,
+      "description": "become ethereal (as Ethereal Jaunt spell) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FRT_LGHT",
+      "name": "FRT_LGHT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "25% chance to negate critical hits and sneak attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FRT_MOD",
+      "name": "FRT_MOD",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "50% chance to negate critical hits and sneak attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "FRT_HVY",
+      "name": "FRT_HVY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "75% chance to negate critical hits and sneak attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "GHOST_A",
+      "name": "GHOST_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "armor and enhancement count vs. incorporeal attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "GLAM",
+      "name": "GLAM",
+      "category": "Equipmods",
+      "cost_gp": 2700.0,
+      "weight_lbs": null,
+      "description": "can appear as normal clothing on command",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "INVULN",
+      "name": "INVULN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants DR 5/magic",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "REFLC",
+      "name": "REFLC",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "reflect spell (as Spell Turning spell) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHDW",
+      "name": "SHDW",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "+5 competence bonus to Stealth checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHDW_IMP",
+      "name": "SHDW_IMP",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "+10 competence bonus to Stealth checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SHDW_GRT",
+      "name": "SHDW_GRT",
+      "category": "Equipmods",
+      "cost_gp": 33750.0,
+      "weight_lbs": null,
+      "description": "+15 competence bonus to Stealth checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SLK",
+      "name": "SLK",
+      "category": "Equipmods",
+      "cost_gp": 3750.0,
+      "weight_lbs": null,
+      "description": "+5 competence bonus to Escape Artist checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SLK_IMP",
+      "name": "SLK_IMP",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "+10 competence bonus to Escape Artist checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SLK_GRT",
+      "name": "SLK_GRT",
+      "category": "Equipmods",
+      "cost_gp": 33750.0,
+      "weight_lbs": null,
+      "description": "+15 competence bonus to Escape Artist checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPELL_RES_13",
+      "name": "SPELL_RES_13",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants spell resistance 13",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPELL_RES_15",
+      "name": "SPELL_RES_15",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants spell resistance 15",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPELL_RES_17",
+      "name": "SPELL_RES_17",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants spell resistance 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "SPELL_RES_19",
+      "name": "SPELL_RES_19",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants spell resistance 19",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "UNDEAD",
+      "name": "UNDEAD",
+      "category": "Equipmods",
+      "cost_gp": 49000.0,
+      "weight_lbs": null,
+      "description": "control up to 26 HD of undead per day (As Control Undead spell)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "WILD_A",
+      "name": "WILD_A",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "preserve armor and enhancment bonus while using Wild Shape",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "WILD_S",
+      "name": "WILD_S",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "preserve shield and enhancment bonus while using Wild Shape",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemBase",
+      "name": "IntItemBase",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemPurpose",
+      "name": "IntItemPurpose",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT11",
+      "name": "IntItemStatINT11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT12",
+      "name": "IntItemStatINT12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT13",
+      "name": "IntItemStatINT13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT14",
+      "name": "IntItemStatINT14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT15",
+      "name": "IntItemStatINT15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT16",
+      "name": "IntItemStatINT16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT17",
+      "name": "IntItemStatINT17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT18",
+      "name": "IntItemStatINT18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT19",
+      "name": "IntItemStatINT19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatINT20",
+      "name": "IntItemStatINT20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS11",
+      "name": "IntItemStatWIS11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS12",
+      "name": "IntItemStatWIS12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS13",
+      "name": "IntItemStatWIS13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS14",
+      "name": "IntItemStatWIS14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS15",
+      "name": "IntItemStatWIS15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS16",
+      "name": "IntItemStatWIS16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS17",
+      "name": "IntItemStatWIS17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS18",
+      "name": "IntItemStatWIS18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS19",
+      "name": "IntItemStatWIS19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatWIS20",
+      "name": "IntItemStatWIS20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA11",
+      "name": "IntItemStatCHA11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA12",
+      "name": "IntItemStatCHA12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA13",
+      "name": "IntItemStatCHA13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA14",
+      "name": "IntItemStatCHA14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA15",
+      "name": "IntItemStatCHA15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA16",
+      "name": "IntItemStatCHA16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA17",
+      "name": "IntItemStatCHA17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA18",
+      "name": "IntItemStatCHA18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA19",
+      "name": "IntItemStatCHA19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntItemStatCHA20",
+      "name": "IntItemStatCHA20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntSpeech",
+      "name": "IntSpeech",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "An intelligent item with the capability for speech can talk using any of the languages it knows. It automatically knows Common.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntTelepathy",
+      "name": "IntTelepathy",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Telepathy allows an intelligent item to communicate with its wielder telepathically, regardless of its known languages. The wielder must be touching the item to communicate in this way.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntSense60",
+      "name": "IntSense60",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntSense120",
+      "name": "IntSense120",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntDarkvision",
+      "name": "IntDarkvision",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Darkvision % ft.|IntItemSenseRange",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntBlindsense",
+      "name": "IntBlindsense",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Blindsense % ft.|IntItemSenseRange",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntReadLang",
+      "name": "IntReadLang",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Read Languages",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "IntReadMagic",
+      "name": "IntReadMagic",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Read Magic",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (CG)",
+      "name": "Intelligent Item Alignment (CG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (CN)",
+      "name": "Intelligent Item Alignment (CN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (CE)",
+      "name": "Intelligent Item Alignment (CE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (NE)",
+      "name": "Intelligent Item Alignment (NE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (LE)",
+      "name": "Intelligent Item Alignment (LE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (LG)",
+      "name": "Intelligent Item Alignment (LG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (LN)",
+      "name": "Intelligent Item Alignment (LN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (NG)",
+      "name": "Intelligent Item Alignment (NG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Alignment (TN)",
+      "name": "Intelligent Item Alignment (TN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastZeroAtWill",
+      "name": "ItemPower_CastZeroAtWill",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastOneThree",
+      "name": "ItemPower_CastOneThree",
+      "category": "Equipmods",
+      "cost_gp": 1200.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastTwoOne",
+      "name": "ItemPower_CastTwoOne",
+      "category": "Equipmods",
+      "cost_gp": 2400.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastThreeOne",
+      "name": "ItemPower_CastThreeOne",
+      "category": "Equipmods",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastThreeThree",
+      "name": "ItemPower_CastThreeThree",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastFourThree",
+      "name": "ItemPower_CastFourThree",
+      "category": "Equipmods",
+      "cost_gp": 33600.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastTwoThree",
+      "name": "ItemPower_CastTwoThree",
+      "category": "Equipmods",
+      "cost_gp": 7200.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_CastFourOne",
+      "name": "ItemPower_CastFourOne",
+      "category": "Equipmods",
+      "cost_gp": 11200.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_MagicAura",
+      "name": "ItemPower_MagicAura",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Item can use magic aura on itself at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_FiveSkill",
+      "name": "ItemPower_FiveSkill",
+      "category": "Equipmods",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "Item has 5 ranks in the chosen skill",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_Move",
+      "name": "ItemPower_Move",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Item can sprout limbs and move with a speed of 10 feet",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_TenSkill",
+      "name": "ItemPower_TenSkill",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Item has 10 ranks in the chosen skill",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_ChangeShape",
+      "name": "ItemPower_ChangeShape",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Item can change shape into one other form of the same size",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_Fly",
+      "name": "ItemPower_Fly",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Item can fly (as per the spell) at a speed of 30 feet",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "ItemPower_Teleport",
+      "name": "ItemPower_Teleport",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "Item can teleport itself 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Align)",
+      "name": "Intelligent Item Purpose (Slay Align)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay diametrically opposed alignment",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Arcane)",
+      "name": "Intelligent Item Purpose (Slay Arcane)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay arcane spellcasters (including spellcasting monsters and those that use spell-like abilities)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Divine)",
+      "name": "Intelligent Item Purpose (Slay Divine)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay divine spellcasters (including divine entities and servitors)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay NonCasters)",
+      "name": "Intelligent Item Purpose (Slay NonCasters)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay non-spellcasters",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Creature Type)",
+      "name": "Intelligent Item Purpose (Slay Creature Type)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay a particular creature type (see the bane special ability for choices)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Race or Kind)",
+      "name": "Intelligent Item Purpose (Slay Race or Kind)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay a particular race or kind of creature",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Defend Race or Kind)",
+      "name": "Intelligent Item Purpose (Defend Race or Kind)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defend a particular race or kind of creature",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay Deity Servant)",
+      "name": "Intelligent Item Purpose (Slay Deity Servant)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay the servants of a specific deity",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Defend Deity Servant)",
+      "name": "Intelligent Item Purpose (Defend Deity Servant)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defend the servants and interests of a specific deity",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "Intelligent Item Purpose (Slay All)",
+      "name": "Intelligent Item Purpose (Slay All)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Defeat/slay all (other than the item and the wielder)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_DetectFoe",
+      "name": "PurposePower_DetectFoe",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Dedicated Power - Detect special purpose foes",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_CastFourAtWill",
+      "name": "PurposePower_CastFourAtWill",
+      "category": "Equipmods",
+      "cost_gp": 56000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_LuckBonus",
+      "name": "PurposePower_LuckBonus",
+      "category": "Equipmods",
+      "cost_gp": 80000.0,
+      "weight_lbs": null,
+      "description": "Dedicated Power - +2 luck attacks & saves",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_CastFiveAtWill",
+      "name": "PurposePower_CastFiveAtWill",
+      "category": "Equipmods",
+      "cost_gp": 90000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_CastSixAtWill",
+      "name": "PurposePower_CastSixAtWill",
+      "category": "Equipmods",
+      "cost_gp": 132000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_CastSevenAtWill",
+      "name": "PurposePower_CastSevenAtWill",
+      "category": "Equipmods",
+      "cost_gp": 182000.0,
+      "weight_lbs": null,
+      "description": "Cast the chosen spell at will",
+      "name_pi_citation": null
+    },
+    {
+      "book": "CRB",
+      "key": "PurposePower_TrueRes",
+      "name": "PurposePower_TrueRes",
+      "category": "Equipmods",
+      "cost_gp": 200000.0,
+      "weight_lbs": null,
+      "description": "Dedicated Power - True resurrection on wielder",
+      "name_pi_citation": null
+    }
+  ]
+}

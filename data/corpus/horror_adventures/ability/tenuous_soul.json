@@ -1,0 +1,68 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your soul feels the constant and increasing pull of Hell.",
+    "key": "Hellbound Corruption ~ Tenuous Soul",
+    "name": "Tenuous Soul",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Tenuous Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HellboundManifestation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HellboundTenuousSoulBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "Your soul feels the constant and increasing pull of Hell."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hellbound Tenuous Soul Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hellbound Tenuous Soul Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HellboundTenuousSoulBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HellboundTenuousSoulBonus|2|PREVARGTEQ:HellboundManifestationLevel,3"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 361,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hellbound Corruption ~ Tenuous Soul",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,254 @@
+[
+ {
+  "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+  "book": "advanced_class_guide",
+  "key": "Hunter's Sight",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "advanced_class_guide:equipment:ring_of_eloquence",
+  "book": "advanced_class_guide",
+  "key": "Ring of Eloquence",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+  "book": "advanced_players_guide",
+  "key": "Fork of the Forgotten One",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+  "book": "advanced_players_guide",
+  "key": "Ring of Maniacal Devices",
+  "target_skill": "Craft (Traps)"
+ },
+ {
+  "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+  "book": "advanced_race_guide",
+  "key": "Cloak of the Diplomat",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+  "book": "advanced_race_guide",
+  "key": "Ring of the Sophisticate",
+  "target_skill": "Sense Motive"
+ },
+ {
+  "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+  "book": "book_of_the_damned_volume_2",
+  "key": "Demon Senses",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+  "book": "core_rulebook",
+  "key": "Circlet of Persuasion",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+  "book": "core_rulebook",
+  "key": "Gloves of Swimming and Climbing",
+  "target_skill": "Swim"
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+  "book": "inner_sea_gods",
+  "key": "Besmara's Bicorne",
+  "target_skill": "Acrobatics"
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+  "book": "inner_sea_gods",
+  "key": "Besmara's Tricorne",
+  "target_skill": "Profession (Sailor)"
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+  "book": "inner_sea_gods",
+  "key": "Deadeye's Spotter Ring",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories",
+  "book": "inner_sea_races",
+  "key": "Scarf of Glorious Histories",
+  "target_skill": "Intimidate"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+  "book": "ultimate_equipment",
+  "key": "Bracelet of Bargaining",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+  "book": "ultimate_equipment",
+  "key": "Cloak of the Diplomat",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:heritage_book",
+  "book": "ultimate_equipment",
+  "key": "Heritage Book",
+  "target_skill": "Knowledge (Nobility)"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+  "book": "ultimate_equipment",
+  "key": "Judge's Wig",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+  "book": "ultimate_equipment",
+  "key": "Juggler's Kit",
+  "target_skill": "Perform (Act)"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+  "book": "ultimate_equipment",
+  "key": "Mask of Ugliness",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:musical_staff",
+  "book": "ultimate_equipment",
+  "key": "Musical Staff",
+  "target_skill": "Perform (String Instruments)"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+  "book": "ultimate_equipment",
+  "key": "Pirate's Eye Patch",
+  "target_skill": "Swim"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+  "book": "ultimate_equipment",
+  "key": "Pliant Gloves",
+  "target_skill": "Escape Artist"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+  "book": "ultimate_equipment",
+  "key": "Ring of Maniacal Devices",
+  "target_skill": "Craft (Traps)"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+  "book": "ultimate_equipment",
+  "key": "Ring of the Ecclesiarch",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+  "book": "ultimate_equipment",
+  "key": "Ring of the Sophisticate",
+  "target_skill": "Sense Motive"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+  "book": "ultimate_equipment",
+  "key": "Rod (Beguiling)",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+  "book": "ultimate_equipment",
+  "key": "Suzerain Scepter",
+  "target_skill": "Knowledge (Nobility)"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
+  "book": "ultimate_psionics",
+  "key": "Companion Stone (Diplomacy)",
+  "target_skill": "Diplomacy"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Detection)",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Discernment)",
+  "target_skill": "Sense Motive"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Dread)",
+  "target_skill": "Intimidate"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Insightful Detection)",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Psionic Craft)",
+  "target_skill": "Spellcraft"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
+  "book": "ultimate_psionics",
+  "key": "Eyes of Expanded Vision",
+  "target_skill": "Perception"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Alchemist)",
+  "target_skill": "Craft (Alchemy)"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Inflitrator)",
+  "target_skill": "Bluff"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Nimble Trickster)",
+  "target_skill": "Escape Artist"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Chameleon)",
+  "target_skill": "Stealth"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Nimbleness)",
+  "target_skill": "Acrobatics"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Spider)",
+  "target_skill": "Climb"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
+  "book": "ultimate_psionics",
+  "key": "Ring (Self Sufficiency)",
+  "target_skill": "Autohypnosis"
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:third_eye_aware",
+  "book": "ultimate_psionics",
+  "key": "Third Eye (Aware)",
+  "target_skill": "Perception"
+ }
+]

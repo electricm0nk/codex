@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Magmin ~ Heated Flesh",
+    "delivery": "Extraordinary",
+    "description": "Any metal weapon striking a magmin must succeed at a DC 14 Fortitude save or melt and gain the broken condition. Another strike by the same weapon causes the metal weapon to be destroyed if it fails a second save. Wood weapons are destroyed after only one failed save. Unarmed and natural attacks made against the magmin deal 1 point of fire damage to the attacker. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:magmin_heated_flesh",
+    "name": "Heated Flesh",
+    "owners": [
+      "bestiary_3:monster:magmin"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any metal weapon striking a magmin must succeed at a DC 14 Fortitude save or melt and gain the broken condition. Another strike by the same weapon causes the metal weapon to be destroyed if it fails a second save. Wood weapons are destroyed after only one failed save. Unarmed and natural attacks made against the magmin deal 1 point of fire damage to the attacker. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Magmin ~ Heated Flesh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagminRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.189",
+    "traits": [
+      "MagminRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1252,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Magmin ~ Heated Flesh",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

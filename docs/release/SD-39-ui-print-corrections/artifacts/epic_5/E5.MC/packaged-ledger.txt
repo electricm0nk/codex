@@ -1,0 +1,2 @@
+stage: scratch stage.py, tauri.conf.json bundle.resources symlinked; probe calls bind_rules_tables_package_root and set_data_root; CODEX_REPO_ROOT unset
+diff rows-checkout rows-stage exit: 0, 1972 lines; seeds Aldric, Elowen, Tomas and a Sorcerer 5 edit

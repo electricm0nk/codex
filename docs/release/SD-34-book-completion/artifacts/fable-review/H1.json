@@ -1,0 +1,140 @@
+{
+  "lane": "H1",
+  "lane_summary": {
+    "files_reviewed": 474,
+    "files_skipped_generated": 38,
+    "notes": "Mechanical sweeps only - grep/wc census across src/ and apps/desktop/src-tauri/src. Total .rs files scanned: 474. Generated files with GENERATED FILE marker: 38 of 474 (8.0%). No destructive operations performed."
+  },
+  "findings": [
+    {
+      "id": "H1-001",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 1,
+      "line_end": 78506,
+      "severity": "P2",
+      "category": "bloat",
+      "title": "Largest file in codebase at 78,506 lines",
+      "short_summary": "78.5k line monolithic module",
+      "evidence": "src/rules_core/pilot_compute/mod.rs contains 78,506 lines, 6.6x larger than the next largest non-generated file (character_hub.rs at 9,247 lines). This file also carries 239 commented-out code blocks across 20+ consecutive line ranges, suggesting accumulated cruft.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-002",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "239 commented-out code blocks >20 consecutive lines across codebase",
+      "short_summary": "239 dead comment blocks (20+ lines each)",
+      "evidence": "Grep scan for consecutive // comment lines (excluding doc comments //! and ///) found 239 blocks. Largest: src/rules_core/pilot_compute/mod.rs lines 4711-5064 (354 lines), followed by lines 1634-1869 (236 lines). Other significant blocks in src/rules_core/feat_effects.rs, equipment_resolver.rs, and acg/mod.rs. These represent accumulated technical debt and maintenance hazard.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    },
+    {
+      "id": "H1-003",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "21 files exceed 3,000 lines threshold",
+      "short_summary": "21 oversized files (>3k lines)",
+      "evidence": "Files >3,000 lines in src/ and apps/desktop/src-tauri/src (out of 474 total source .rs files): pilot_compute/mod.rs (78,506), v06_work_inventory.rs (25,596), bestiary/monster_data.rs (17,684), bestiary_4/monster_data.rs (17,455), bestiary_2/monster_data.rs (17,079), bestiary_3/monster_data.rs (16,675), character_hub.rs (9,247), reach_gate.rs (8,127), support_state_matrix.rs (7,471), ultimate_wilderness/companion_data.rs (6,360), derived_evaluator_fixture_check.rs (6,069), feat_effects.rs (5,064), pf1_adapter.rs (4,368), inner_sea_bestiary/monster_data.rs (3,944), ultimate_psionics/monster_data.rs (3,571), race_resolver.rs (3,568), inner_sea_gods/monster_data.rs (3,467), cache_gen/class_feature.rs (3,371), trait_effects.rs (3,134), pilot_compute/companion_base_stat_table.rs (3,087), ingest_race_traits.rs (3,076), ultimate_combat/feat_tables.rs (3,046).",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-004",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "38 files have GENERATED FILE marker",
+      "short_summary": "8.0% of source files are generated (38 of 474)",
+      "evidence": "38 of 474 total .rs files in src/ and apps/desktop/src-tauri/src contain GENERATED FILE marker in first 5 lines. These files are excluded from manual code review per ground rules. Likely candidates: data generation outputs, cache builders, and code-gen artifacts from STC packages.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-005",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "28 instances of #[allow(dead_code)] in source code",
+      "short_summary": "28 dead_code allow attributes",
+      "evidence": "Grep found 28 #[allow(dead_code)] attributes across src/ and apps/. Instances in: advanced_race_guide/class_spell_levels.rs:36, acg.rs (4 instances), domain_power.rs (3), pathfinder_unchained/mod.rs:51, beastiary1.rs (3), ingest_class_spell_levels_arg.rs:278, e5_combat_ac_ours.rs:49, untabled_base_class_feature_roster.rs:73, ingest_spells.rs:352, pilot_compute/mod.rs (2), campaign_drive.rs:74, transaction.rs (4), class_catalog_generic.rs:247, character_hub.rs:4974, pf1_adapter.rs (3).",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-006",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "Zero TODO/FIXME/HACK/XXX markers found in source code",
+      "short_summary": "0 debug markers in 474 files",
+      "evidence": "Grep scan for TODO, FIXME, HACK, XXX across all .rs files in src/ and apps/desktop/src-tauri/src found zero instances. This indicates clean codebase free of debug annotations, spanning all 474 scanned files.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-007",
+      "file": "src/rules_core",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P3",
+      "category": "census",
+      "title": "No #[allow(unused_imports)] in source directories",
+      "short_summary": "0 unused_imports allows in source code",
+      "evidence": "Grep for #[allow(unused_imports)] found zero instances in src/ and apps/desktop/src-tauri/src (searched 474 files). 16 instances of this marker exist only in auto-generated target/debug/build/ files (out of scope). Source code maintains clean import hygiene.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-008",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 1,
+      "line_end": 25596,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Second-largest file at 25,596 lines",
+      "short_summary": "25.6k line work inventory utility",
+      "evidence": "src/bin/v06_work_inventory.rs is 25,596 lines. This is ~3.4x larger than character_hub.rs (9,247 lines) and suggests monolithic CLI/tooling accumulation.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-009",
+      "file": "src/rules_core/rules_tables/bestiary/monster_data.rs",
+      "line_start": 1,
+      "line_end": 17684,
+      "severity": "P3",
+      "category": "census",
+      "title": "Data table file at 17,684 lines (generated-like)",
+      "short_summary": "17.7k line data table (likely generated)",
+      "evidence": "src/rules_core/rules_tables/bestiary/monster_data.rs is 17,684 lines. Similar monster_data.rs files exist for bestiary_2 (17,079), bestiary_3 (16,675), bestiary_4 (17,455), inner_sea_bestiary (3,944), ultimate_psionics (3,571), and inner_sea_gods (3,467). Pattern suggests data generation, likely covered by GENERATED FILE marker on opening lines.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "H1-010",
+      "file": "src/rules_core/support_state_matrix.rs",
+      "line_start": 6217,
+      "line_end": 6361,
+      "severity": "P3",
+      "category": "census",
+      "title": "145-line commented block in support_state_matrix.rs",
+      "short_summary": "145-line dead code comment block",
+      "evidence": "src/rules_core/support_state_matrix.rs:6217-6361 contains 145 consecutive comment lines. This is the largest single commented block outside pilot_compute/mod.rs. Represents significant dead code accumulation in this file.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    }
+  ]
+}

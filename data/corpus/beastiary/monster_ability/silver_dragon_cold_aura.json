@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Silver Dragon ~ Cold Aura",
+    "delivery": "Supernatural",
+    "description": "An old or older silver dragon is surrounded by an aura of cold. All creatures within %1 feet of the dragon take %2d6 points of cold damage at the beginning of the dragon's turn. A silver dragon can suppress or activate this aura at will as a free action.",
+    "description_variables": [
+      "ColdAuraRange",
+      "ColdAuraDice"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:silver_dragon_cold_aura",
+    "name": "Cold Aura",
+    "owners": [
+      "beastiary:monster:dragon_silver"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., %2d6)|ColdAuraRange|ColdAuraDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdAuraDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdAuraRange|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ColdAuraDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ColdAuraRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An old or older silver dragon is surrounded by an aura of cold. All creatures within %1 feet of the dragon take %2d6 points of cold damage at the beginning of the dragon's turn. A silver dragon can suppress or activate this aura at will as a free action.|ColdAuraRange|ColdAuraDice"
+      },
+      {
+        "key": "KEY",
+        "value": "Silver Dragon ~ Cold Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Aura"
+      }
+    ],
+    "source_page": "p.110",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 499,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Silver Dragon ~ Cold Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

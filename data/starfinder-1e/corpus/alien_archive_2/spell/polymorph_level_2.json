@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Polymorph (Level 2)",
+    "name": "Polymorph (Level 2)",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "starfinder/paizo/alien_archive_2/saa2_spells.lst",
+    "record_key": "Polymorph (Level 2)",
+    "sha256": "f5a3d81aea8c6b417903727be6ed6173f8ac54bdf9893eab94c0e3a6e6309acc"
+  },
+  "unit_id": "alien_archive_2:spell:polymorph_level_2"
+}

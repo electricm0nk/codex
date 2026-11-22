@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 7250.0,
+    "description": "This item appears to be a normal glass bottle with a cork. When taken to any airless environment, it retains air within it at all times, continually renewing its contents. This means that a character can draw air out of the bottle to breathe. The bottle can even be shared by multiple characters who pass it around. Breathing out of the bottle is a standard action, but a character so doing can then act for as long as she can hold her breath.",
+    "key": "Bottle of Air",
+    "name": "Bottle of Air",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bottle of Air"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bottle of Air"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "7250"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,625 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, water breathing"
+      },
+      {
+        "key": "SPROP",
+        "value": "Retains air within it at all times, continually renewing its contents."
+      },
+      {
+        "key": "DESC",
+        "value": "This item appears to be a normal glass bottle with a cork. When taken to any airless environment, it retains air within it at all times, continually renewing its contents. This means that a character can draw air out of the bottle to breathe. The bottle can even be shared by multiple characters who pass it around. Breathing out of the bottle is a standard action, but a character so doing can then act for as long as she can hold her breath."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bottle of Air",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

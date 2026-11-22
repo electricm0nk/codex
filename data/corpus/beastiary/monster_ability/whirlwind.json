@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Whirlwind",
+    "delivery": "Supernatural",
+    "description": "You can transform yourself into a whirlwind and remain in that form for up to %1 rounds. If you have a fly speed, you can continue to fly at that same speed while in whirlwind form, otherwise you gain a fly speed equal to your base land speed (average maneuverability) while in whirlwind form. The whirlwind is always 5 feet wide at its base, A whirlwind's width at its peak is always equal to half of its height. You control the exact height, but it must be at least 10 feet and at most %2 feet high. The whirlwind form does not provoke attacks of opportunity, even if you enter the space another creature occupies. Another creature might be caught in the whirlwind if it touches or enters the whirlwind, or if the whirlwind moves into or through a creature's space. In whirlwind form you cannot make your normal attacks, and you do not threaten the area around you. Creatures one or more size categories smaller than the whirlwind might take damage when caught in the whirlwind (generally damage equal your slam attack) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC %3) when it comes into contact with the whirlwind or take damage as if it were hit by the your slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful winds, automatically taking the indicated damage each round. A creature that can fly is allowed a Reflex save each round to escape the whirlwind. The creature still takes damage but can leave if the save is successful. Creatures trapped in the whirlwind cannot move except to go where the whirlwind carries them or to escape the whirlwind. Trapped creatures can otherwise act normally, but must succeed on a Concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the whirlwind take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The whirlwind can have only as many creatures trapped inside at one time as will fit inside the whirlwind's volume. The whirlwind can eject any carried creatures whenever you wish as a free action, depositing them in your space. If the whirlwind's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the whirlwind's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a Concentration check (DC 15 + spell level) to cast a spell.",
+    "description_variables": [
+      "WhirlwindDuration",
+      "WhirlwindHeight",
+      "WhirlwindDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:whirlwind",
+    "name": "Whirlwind",
+    "owners": [
+      "beastiary:monster:elemental_air_medium",
+      "beastiary:monster:elemental_air_large",
+      "beastiary:monster:elemental_air_huge",
+      "beastiary:monster:elemental_air_greater",
+      "beastiary:monster:elemental_air_elder"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Whirlwind"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|WhirlwindDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WhirlwindDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WhirlwindDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Whirlwind)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WhirlwindDuration|HD/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WhirlwindHeight|0"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WhirlwindDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WhirlwindDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WhirlwindHeight|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can transform yourself into a whirlwind and remain in that form for up to %1 rounds. If you have a fly speed, you can continue to fly at that same speed while in whirlwind form, otherwise you gain a fly speed equal to your base land speed (average maneuverability) while in whirlwind form. The whirlwind is always 5 feet wide at its base, A whirlwind's width at its peak is always equal to half of its height. You control the exact height, but it must be at least 10 feet and at most %2 feet high. The whirlwind form does not provoke attacks of opportunity, even if you enter the space another creature occupies. Another creature might be caught in the whirlwind if it touches or enters the whirlwind, or if the whirlwind moves into or through a creature's space. In whirlwind form you cannot make your normal attacks, and you do not threaten the area around you. Creatures one or more size categories smaller than the whirlwind might take damage when caught in the whirlwind (generally damage equal your slam attack) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC %3) when it comes into contact with the whirlwind or take damage as if it were hit by the your slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful winds, automatically taking the indicated damage each round. A creature that can fly is allowed a Reflex save each round to escape the whirlwind. The creature still takes damage but can leave if the save is successful. Creatures trapped in the whirlwind cannot move except to go where the whirlwind carries them or to escape the whirlwind. Trapped creatures can otherwise act normally, but must succeed on a Concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the whirlwind take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The whirlwind can have only as many creatures trapped inside at one time as will fit inside the whirlwind's volume. The whirlwind can eject any carried creatures whenever you wish as a free action, depositing them in your space. If the whirlwind's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the whirlwind's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a Concentration check (DC 15 + spell level) to cast a spell.|WhirlwindDuration|WhirlwindHeight|WhirlwindDC|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can transform yourself into a whirlwind and remain in that form for up to %1 rounds.|WhirlwindDuration|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      }
+    ],
+    "source_page": "p.306",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1551,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Whirlwind",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

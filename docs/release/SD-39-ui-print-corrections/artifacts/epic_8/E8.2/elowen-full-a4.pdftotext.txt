@@ -1,0 +1,475 @@
+Elowen Ashgrave
+Identity
+
+Name                                                                             Elowen Ashgrave
+Race                                                                                      Human
+Class                                                                                    Wizard 5
+
+Combat
+
+Armor Class                                                                                     17
+Touch                                                                                           13
+Flat-Footed                                                                                     14
+Base Attack Bonus                                                                               +2
+Melee                                                                                           -2
+CMB                                                                                             +1
+CMD                                                                                             13
+Initiative                                                                                      +2
+Fortitude                                                                                       +2
+Reflex                                                                                          +3
+Will                                                                                            +5
+
+Abilities
+
+Strength                                                                                    8   -1
+Dexterity                                                                                  14   +2
+Constitution                                                                               13   +1
+Intelligence                                                                               18   +4
+Wisdom                                                                                     12   +1
+Charisma                                                                                   10   +0
+
+Skills
+
+Skill                                                                                Ranks Total
+Climb                                                                                    1    -2
+Fly                                                                                      5    —
+Intimidate                                                                               1   +1
+Knowledge (Arcana)                                                                       5    —
+Knowledge (Dungeoneering)                                                                5    —
+Knowledge (Planes)                                                                       5    —
+Knowledge (Religion)                                                                     5    —
+Linguistics                                                                              2    —
+Spellcraft                                                                               5    —
+Swim                                                                                     1    -2
+
+Weapons
+
+Weapon                                                    Damage Str    Enh. Critical      Wield
+Longsword                                                    1d8 -1      +0 19-20/x2 One Handed
+Attack bonus (longsword)                                      -2
+Damage bonus (longsword)                                      +0
+Threat range from (longsword)                                 19
+
+Armor
+
+Armor or shield                                                        AC Max Dex Check Failure
+Chain Shirt                                                            +4      +4    -2   20%
+
+                                Elowen Ashgrave · page 1 of 10
+Armor check penalty, all worn                                                                  -2
+Max Dex, all worn                                                                              +4
+Arcane spell failure, all worn                                                               20%
+
+Inventory
+
+Item                                                                                                          State Weight
+Longsword                                                                                         Worn (Wield main)   4 lb
+Chain Shirt                                                                                           Worn (Armor)   25 lb
+Carried weight                                                                                                29 lb
+Load                                                                                                       Medium
+Light load up to                                                                                              26 lb
+Medium load up to                                                                                             53 lb
+Heavy load up to                                                                                              80 lb
+
+Feats
+
+Power Attack
+ You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.
+ You can choose to take a -1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee
+ damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one
+ handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This
+ bonus to damage is halved (-50%) if you are making an attack with an off-hand weapon or secondary natural weapon. You must
+ choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to
+ touch attacks or effects that do not deal hit point damage.
+Dodge
+ Your training and reflexes allow you to react swiftly to avoid an opponent's attack.
+ You gain a +1 dodge bonus to your AC. A condition that makes you lose your Dex bonus to AC also makes you lose the benefits of
+ this feat.
+Weapon Focus (longsword)
+ You are especially good at using your chosen weapon.
+ You gain a +1 bonus on all attack rolls you make using the selected weapon.
+Feat slots: level granted                                                                                                             3
+Feat slots: level spent                                                                                                               0
+Feat slots: level remaining                                                                                                           3
+Feat slots: racial granted                                                                                                            1
+Feat slots: racial spent                                                                                                              1
+Feat slots: racial remaining                                                                                                          0
+Feat slots: wizard bonus feat granted                                                                                                 1
+Feat slots: wizard bonus feat spent                                                                                                   1
+Feat slots: wizard bonus feat remaining                                                                                               0
+
+Class Features
+
+Wizard
+ Hit die: d6
+ Skill ranks per level: 2
+Wizard (base Fortitude save)                                                                                                      +1
+Wizard (base Reflex save)                                                                                                         +1
+Wizard (base Will save)                                                                                                           +4
+Wizard (base attack)                                                                                                              +2
+Wizard (caster level)                                                                                                             +5
+Abjuration Wizard Spells
+Arcane Bond                                                                                                                       +1
+ At 1st level, wizards form a powerful bond with an object or a creature. This bond can take one of two forms: a familiar or a
+ bonded object. A familiar is a magical pet that enhances the wizard's skills and senses and can aid him in magic, while a bonded
+ object is an item a wizard can use to cast additional spells or to serve as a magical item. Once a wizard makes this choice, it is
+ permanent and cannot be changed.
+Arcane School
+
+
+
+                                                   Elowen Ashgrave · page 2 of 10
+ A wizard can choose to specialize in one school of magic, gaining additional spells and powers based on that school. This choice
+ must be made at 1st level, and once made, it cannot be changed. A wizard that does not select a school receives the universalist
+ school instead.
+ A wizard that chooses to specialize in one school of magic must select two other schools as his opposition schools, representing
+ knowledge sacrificed in one area of arcane lore to gain mastery in another. A wizard who prepares spells from his opposition
+ schools must use two spell slots of that level to prepare the spell. In addition, a specialist takes a -4 penalty on any skill checks
+ made when crafting a magic item that has a spell from one of his opposition schools as a prerequisite. A universalist wizard can
+ prepare spells from any school without restriction.
+ Each arcane school gives the wizard a number of school powers. In addition, specialist wizards receive an additional spell slot of
+ each spell level he can cast, from 1st on up. Each day, a wizard can prepare a spell from his specialty school in that slot. This spell
+ must be in the wizard's spellbook. A wizard can select a spell modified by a metamagic feat to prepare in his school slot, but it
+ uses up a higher-level spell slot. Wizards with the universalist school do not receive a school slot.
+Arcane School Tracker
+CMB
+Cantrips
+ Wizards can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not
+ expended when cast and may be used again. A wizard can prepare a cantrip from an opposed school, but it uses up two of his
+ available slots.
+Conjuration Wizard Spells
+Divination Wizard Spells
+Enchantment Wizard Spells
+Evocation Wizard Spells
+Illusion Wizard Spells
+Necromancy Wizard Spells
+Spells
+ A wizard casts arcane spells drawn from the sorcerer/wizard spell list presented in Chapter 10. A wizard must choose and prepare
+ his spells ahead of time.
+ To learn, prepare, or cast a spell, the wizard must have an Intelligence score equal to at least 10 + the spell level. The Difficulty
+ Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier.
+ A wizard can cast only a certain number of spells of each spell level per day. His base daily spell allotment is given on Table 3-16.
+ In addition, he receives bonus spells per day if he has a high Intelligence score (see Table 1-3).
+ A wizard may know any number of spells. He must choose and prepare his spells ahead of time by getting 8 hours of sleep and
+ spending 1 hour studying his spellbook. While studying, the wizard decides which spells to prepare.
+Transmutation Wizard Spells
+Universal Wizard Spells
+Weapon Prof ~ Auto
+Wizard
+Wizard Spells
+
+Spells
+
+Light                                                                                                 Wizard Known, Prepared
+Fireball                                                                                              Wizard Known, Prepared
+Wizard: spell save DC, level 1                                                                            15
+Wizard: spell save DC, level 2                                                                            16
+Wizard: spell save DC, level 3                                                                            17
+Wizard: spells per day, level 0                                                                            4
+Wizard: spells per day, level 1                                                                            5
+Wizard: spells per day, level 2                                                                            4
+Wizard: spells per day, level 3                                                                            3
+Wizard: caster level                                                                                       5
+
+Custom
+
+Conditions                                                                                                                    Normal
+
+Pets
+
+No animal companion or mount.
+
+Actions
+
+                                                    Elowen Ashgrave · page 3 of 10
++2 to One Ability Score
+ Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.
+Bonus Feat
+ Humans select one extra feat at 1st level.
+Languages
+ Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret
+ languages, such as Druidic).
+Medium
+ Humans are Medium creatures and have no bonuses or penalties due to their size.
+Skilled
+ Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.
+Normal Speed
+ Humans have a base speed of 30 feet.
+Human
+ Speed: Walk 30 ft.
+Bonus Feat                                                                                                             +1
+ Humans select one extra feat at 1st level.
+Skilled                                                                                                                +1
+ Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.
+
+
+
+
+                                                   Elowen Ashgrave · page 4 of 10
+Spellbook
+
+Light                                                                                                                            Evocation
+ This spell causes a touched object to glow like a torch, shedding normal light in a 20-foot radius, and increasing the light level for
+ an additional 20 feet by one step, up to normal light (darkness becomes dim light, and dim light becomes normal light). In an area
+ of normal or bright light, this spell has no effect. The effect is immobile, but it can be cast on a movable object. You can only have
+ one light spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. If
+ you make this spell permanent (through permanency or a similar effect), it does not count against this limit. Light can be used to
+ counter or dispel any darkness spell of equal or lower spell level.
+ Casting time: 1 standard action
+ Components: V, M/DF
+ Descriptor: Light
+ Duration: 0 minutes
+ Range: Touch
+ Saving throw: None
+ School: Evocation
+ Spell resistance: No
+ Target or area: Object touched
+ Descriptor: WoodSchool
+Fireball                                                                                                                         Evocation
+ A fireball spell generates a searing explosion of flame that detonates with a low roar and deals 1d6 points of fire damage per
+ caster level (maximum 10d6) to every creature within the area. Unattended objects also take this damage. The explosion creates
+ almost no pressure. You point your finger and determine the range (distance and height) at which the fireball is to burst. A glowing,
+ pea-sized bead streaks from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the
+ prescribed range, blossoms into the fireball at that point. An early impact results in an early detonation. If you attempt to send the
+ bead through a narrow passage, such as through an arrow slit, you must "hit" the opening with a ranged touch attack, or else the
+ bead strikes the barrier and detonates prematurely. The fireball sets fire to combustibles and damages objects in the area. It can
+ melt metals with low melting points, such as lead, gold, copper, silver, and bronze. If the damage caused to an interposing barrier
+ shatters or breaks through it, the fireball may continue beyond the barrier if the area permits; otherwise it stops at the barrier just
+ as any other spell effect does.
+ Casting time: 1 standard action
+ Components: V, S, M
+ Descriptor: Fire
+ Duration: Instantaneous
+ Range: 400 ft.
+ Saving throw: Reflex half
+ School: Evocation
+ Spell resistance: Yes
+ Target or area: 20-ft.-radius spread
+ School: FireSchool
+
+
+
+
+                                                       Elowen Ashgrave · page 5 of 10
+Show the Math
+
+Combat · Armor Class                                                                                                                      17
+ defense.baseline_armor_class = 17: Baseline armor class: base 10 + Chain Shirt armor bonus (+4) + Dexterity contribution (+2,
+ DEX modifier +2 within MAXDEX:4) + Medium size modifier (+0, PF1 Table 8-1) + Dodge (+1, only for a character actually carrying
+ feat:dodge) + Barbarian Rage penalty (0, only while actively, validly raging) + Skald Inspired Rage penalty (0, only while actively,
+ validly singing) + Bloodrager Bloodrage penalty (0, only while actively, validly bloodraging) + Brawler AC Bonus (+0, while wearing
+ light or no armor) + Alchemist Mutagen natural armor bonus (+0, only while actively, validly mutated) + Inquisitor Protection
+ judgment sacred/profane bonus (+0, only while actively, validly judging Protection) + Oracle Nature's Whispers Charisma-for-
+ Dexterity substitution (+0, only for a Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty (0, only while
+ actively challenging) + Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus (+0, only for a Draconic-bloodline
+ Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus (+0, only for a character holding that feat who did NOT
+ take the Scaled Skin alternate racial trait); shield is absent (+0) = 17
+Combat · Touch                                                                                                                            13
+ defense.touch_armor_class = 13: Touch armor class: the armor class above (17) with the contributors a touch attack ignores
+ removed -- Chain Shirt armor bonus (-4), Alchemist Mutagen natural armor (-0), Sorcerer Draconic Bloodline natural armor (-0),
+ ARG Armor of the Pit natural armor (-0); shield is absent (-0). The Dexterity contribution (+2), the Medium size modifier (+0, PF1
+ Table 8-1) and every dodge/sacred/ability bonus and penalty are all retained = 13
+Combat · Flat-Footed                                                                                                                      14
+ defense.flat_footed_armor_class = 14: Flat-footed armor class: the armor class above (17) with the contributors a flat-footed
+ character is denied removed -- the Dexterity contribution (-2, bonus only; a Dexterity penalty is kept) including the Oracle Nature's
+ Whispers Charisma-for-Dexterity substitution (-0, which stands in for that bonus), and every dodge-typed bonus (-1: Dodge's +1,
+ per PF1 "any situation that denies you your Dexterity bonus to Armor Class also denies you dodge bonuses"). The Chain Shirt
+ armor bonus (+4), the Medium size modifier (+0), every natural armor and sacred/profane bonus, every penalty, and Brawler's AC
+ Bonus (+0, whose own rule text applies it even when flat-footed) are all retained = 14
+Combat · Base Attack Bonus                                                                                                                +2
+ class_chassis.base_attack_bonus = 2: Wizard level 5 base attack bonus from rules_tables::crb::class_tables::class_tables()'s
+ Wizard row (1/2 BAB, PF1 Core Rulebook Wizard class table): 2
+Combat · Melee                                                                                                                             -2
+ combat.baseline_melee_attack_bonus = -2: Baseline melee attack bonus for the Longsword: Wizard base attack bonus (+2) +
+ Strength modifier (+-1) + Weapon Focus (Longsword) (+1) + Medium size modifier (+0, PF1 Table 8-1 -- attack rolls take the same
+ size modifier as Armor Class) -4 nonproficiency penalty (this class has no Longsword proficiency in the corpus); Power Attack is
+ selected but inactive (+0) = -2
+Combat · CMB                                                                                                                              +1
+ combat.combat_maneuver_bonus = 1: Combat Maneuver Bonus: Wizard base attack bonus (+2) + Strength modifier (+-1) +
+ Medium special size modifier (+0) = 1. The special size modifier runs OPPOSITE to Table 8-1's Armor Class column: being smaller
+ makes a creature worse at combat maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is modelled
+ by this engine, so none is summed here
+Combat · CMD                                                                                                                              13
+ defense.combat_maneuver_defense = 13: Combat Maneuver Defense: base 10 + Wizard base attack bonus (+2) + Strength
+ modifier (+-1) + Dexterity modifier (+2) + Medium special size modifier (+0) = 13. These are exactly the terms PF1's published
+ CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses to Armor Class that also apply to CMD in
+ real PF1 are NOT folded in here yet, and are named rather than silently implied
+Combat · Initiative                                                                                                                       +2
+ initiative.total = 2: Initiative +2: Dexterity modifier +2. Bonuses that hold only while a grit or panache point is held are listed on their
+ own and not added here
+Combat · Fortitude                                                                                                                        +2
+ defense.total_save.fortitude = 2: Total Fortitude save: Wizard base Fortitude save (+1) + Constitution modifier (+1) + feat bonus
+ (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment
+ sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one
+ that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 2
+Combat · Reflex                                                                                                                           +3
+ defense.total_save.reflex = 3: Total Reflex save: Wizard base Reflex save (+1) + Dexterity modifier (+2) + feat bonus (+0,
+ Lightning Reflexes if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/
+ profane bonus (+0, only while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-Dexterity substitution (+0,
+ only for a Lore-Mystery Oracle who took that revelation) + alternate racial trait (+0, only for a character who took one that declares
+ a Reflex modifier -- this one can be NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) + character trait (+0, no
+ ultimate_campaign trait currently declares a Reflex bonus, so always 0) = 3
+Combat · Will                                                                                                                             +5
+ defense.total_save.will = 5: Total Will save: Wizard base Will save (+4) + Wisdom modifier (+1) + feat bonus (+0, Iron Will if
+ selected) + Barbarian Rage morale bonus (+0, only while actively, validly raging) + Skald Inspired Rage morale bonus (+0, only
+ while actively, validly singing) + Bloodrager Bloodrage morale bonus (+0, only while actively, validly bloodraging) + Good domain
+ Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly
+
+
+
+                                                      Elowen Ashgrave · page 6 of 10
+ judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual
+ Minded is the one such trait in the corpus today) + character trait (+0, Indomitable Faith if selected) = 5
+Abilities · Strength                                                                                                                 8 -1
+ ability_modifier.strength = -1: strength ability modifier from chosen score 8: floor(8 / 2) - 5 = -1
+Abilities · Dexterity                                                                                                              14 +2
+ ability_modifier.dexterity = 2: dexterity ability modifier from chosen score 14: floor(14 / 2) - 5 = 2
+Abilities · Constitution                                                                                                           13 +1
+ ability_modifier.constitution = 1: constitution ability modifier from chosen score 13: floor(13 / 2) - 5 = 1
+Abilities · Intelligence                                                                                                           18 +4
+ ability_modifier.intelligence = 4: intelligence ability modifier from chosen score 18: floor(18 / 2) - 5 = 4
+Abilities · Wisdom                                                                                                                 12 +1
+ ability_modifier.wisdom = 1: wisdom ability modifier from chosen score 12: floor(12 / 2) - 5 = 1
+Abilities · Charisma                                                                                                               10 +0
+ ability_modifier.charisma = 0: charisma ability modifier from chosen score 10: floor(10 / 2) - 5 = 0
+Skills · Climb                                                                                                                       1 -2
+ skill.selected_modifier.climb = -2: Selected Climb modifier: rank 1 + Strength modifier (-1) + no class-skill bonus (Climb is not a
+ class skill for this character's class) + Chain Shirt armor-check penalty (-2) + feat bonus (+0, Athletic if selected) = -2
+Skills · Intimidate                                                                                                                 1 +1
+ skill.selected_modifier.intimidate = 1: Selected Intimidate modifier: rank 1 + Charisma modifier (+0) + no class-skill bonus
+ (Intimidate is not a class skill for this character's class) + feat bonus (+0, Persuasive and/or Intimidating Prowess if selected) = 1
+Skills · Swim                                                                                                                        1 -2
+ skill.selected_modifier.swim = -2: Selected Swim modifier: rank 1 + Strength modifier (-1) + no class-skill bonus (Swim is not a
+ class skill for this character's class) + Chain Shirt armor-check penalty (-2) + feat bonus (+0, Athletic if selected) + Witch Flight hex
+ (+0) = -2
+Weapons · Longsword                                                                                1d8 -1 +0 19-20/x2 One Handed
+ (no derivation recorded)
+Weapons · Attack bonus (longsword)                                                                                                        -2
+ combat.weapon_attack_bonus.longsword = -2: Attack bonus with the equipped Longsword: base attack bonus (+2) + governing
+ ability modifier (-1) + weapon feats (+1) + nonproficiency penalty (-4) + size modifier (+0) = -2. Weapon Focus / Greater Weapon
+ Focus name this weapon, adding +1 to the attack roll. -4 nonproficiency penalty: nothing this character holds grants proficiency
+ with this weapon -- neither a class grant nor Simple/Martial/Exotic Weapon Proficiency naming it. Only the Focus feats reach this
+ total -- the Specialization feats are damage and Improved Critical is threat range, both grounded separately. Separate from
+ combat.baseline_melee_attack_bonus, which is the Melee number for the first melee weapon in hand.
+Weapons · Damage bonus (longsword)                                                                                                     +0
+ combat.weapon_damage_bonus.longsword = 0: Feat damage bonus with the equipped Longsword: +0. No Weapon
+ Specialization or Greater Weapon Specialization names this weapon, so no feat bonus applies to its damage rolls. This is the feat
+ contribution alone, NOT a damage total: the weapon's own 1d8 damage die and the Strength-to-damage contribution are
+ excluded, because Strength applies at 1x one-handed, 1.5x two-handed and 0.5x off-hand and this engine does not record how a
+ weapon is being wielded
+Weapons · Threat range from (longsword)                                                                                                19
+ combat.weapon_threat_range_low.longsword = 19: Critical threat range with the equipped Longsword: 19-20/x2. Improved Critical
+ does not name this weapon, so its threat range is the weapon's printed one. The value grounded here is the LOW end of the
+ range; the corpus stores CRITRANGE as a width, so the range is 21-width..=20
+Armor · Chain Shirt                                                                                                      +4 +4 -2 20%
+ (no derivation recorded)
+Armor · Armor check penalty, all worn                                                                                                     -2
+ (no derivation recorded)
+Armor · Max Dex, all worn                                                                                                              +4
+ (no derivation recorded)
+Armor · Arcane spell failure, all worn                                                                                              20%
+ (no derivation recorded)
+Inventory · Carried weight                                                                                                          29 lb
+ (no derivation recorded)
+Inventory · Light load up to                                                                                                        26 lb
+ (no derivation recorded)
+Inventory · Medium load up to                                                                                                       53 lb
+ (no derivation recorded)
+Inventory · Heavy load up to                                                                                                        80 lb
+ (no derivation recorded)
+Feats · Feat slots: level granted                                                                                                         3
+ feats.budget.level.granted = 3: Feats granted by a feat at every odd character level
+Feats · Feat slots: level spent                                                                                                           0
+ feats.budget.level.spent = 0: Held feats charged to the level pool
+Feats · Feat slots: level remaining                                                                                                       3
+ feats.budget.level.remaining = 3: Granted minus spent in the level pool
+
+                                                     Elowen Ashgrave · page 7 of 10
+Feats · Feat slots: racial granted                                                                                                       1
+ feats.budget.racial.granted = 1: Feats granted by Bonus Feat
+Feats · Feat slots: racial spent                                                                                                         1
+ feats.budget.racial.spent = 1: Held feats charged to the racial pool
+Feats · Feat slots: racial remaining                                                                                                     0
+ feats.budget.racial.remaining = 0: Granted minus spent in the racial pool
+Feats · Feat slots: wizard bonus feat granted                                                                                            1
+ feats.budget.wizard_bonus_feat.granted = 1: Feats granted by Bonus Feats (wizard bonus feat picks)
+Feats · Feat slots: wizard bonus feat spent                                                                                              1
+ feats.budget.wizard_bonus_feat.spent = 1: Held feats charged to the wizard bonus feat pool
+Feats · Feat slots: wizard bonus feat remaining                                                                                          0
+ feats.budget.wizard_bonus_feat.remaining = 0: Granted minus spent in the wizard bonus feat pool
+Class Features · Wizard (base Fortitude save)                                                                                           +1
+ (no derivation recorded)
+Class Features · Wizard (base Reflex save)                                                                                              +1
+ (no derivation recorded)
+Class Features · Wizard (base Will save)                                                                                                +4
+ (no derivation recorded)
+Class Features · Wizard (base attack)                                                                                                   +2
+ (no derivation recorded)
+Class Features · Wizard (caster level)                                                                                                  +5
+ (no derivation recorded)
+Class Features · Arcane Bond                                                                                                            +1
+ (no derivation recorded)
+Spells · Wizard: spell save DC, level 1                                                                                                 15
+ class_chassis.wizard.spell_save_dc.spell_level_1 = 15: Wizard spell save DC at wizard level 5, spell level 1: 10 + 1 + Intelligence
+ modifier 4 = 15 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT
+ token: "The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier" —
+ Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no
+ saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed
+Spells · Wizard: spell save DC, level 2                                                                                                 16
+ class_chassis.wizard.spell_save_dc.spell_level_2 = 16: Wizard spell save DC at wizard level 5, spell level 2: 10 + 2 + Intelligence
+ modifier 4 = 16 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT
+ token: "The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier" —
+ Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no
+ saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed
+Spells · Wizard: spell save DC, level 3                                                                                                 17
+ class_chassis.wizard.spell_save_dc.spell_level_3 = 17: Wizard spell save DC at wizard level 5, spell level 3: 10 + 3 + Intelligence
+ modifier 4 = 17 (PF1 Core Rulebook, verified identically on both primary sources and PCGen's cr_classes.lst SPELLSTAT:INT
+ token: "The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier" —
+ Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom). This grounds the base DC formula only: no
+ saving-throw resolution, no target, no spell selection, and no feat DC modifiers are computed
+Spells · Wizard: spells per day, level 0                                                                                                 4
+ class_spell.wizard.total_spells_per_day.spell_level_0 = 4: Wizard level 5 total spells per day at spell level 0: base 4 + specialist
+ bonus slot 0 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count,
+ decomposed here per spell level) + Intelligence bonus 0 = 4
+Spells · Wizard: spells per day, level 1                                                                                                 5
+ class_spell.wizard.total_spells_per_day.spell_level_1 = 5: Wizard level 5 total spells per day at spell level 1: base 3 + specialist
+ bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count,
+ decomposed here per spell level) + Intelligence bonus 1 = 5
+Spells · Wizard: spells per day, level 2                                                                                                 4
+ class_spell.wizard.total_spells_per_day.spell_level_2 = 4: Wizard level 5 total spells per day at spell level 2: base 2 + specialist
+ bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count,
+ decomposed here per spell level) + Intelligence bonus 1 = 4
+Spells · Wizard: spells per day, level 3                                                                                                 3
+ class_spell.wizard.total_spells_per_day.spell_level_3 = 3: Wizard level 5 total spells per day at spell level 3: base 1 + specialist
+ bonus slot 1 (Evocation-only, already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own flat count,
+ decomposed here per spell level) + Intelligence bonus 1 = 3
+Spells · Wizard: caster level                                                                                                            5
+ class_chassis.wizard.caster_level = 5: Wizard caster level at Wizard level 5: 5, transcribed from the book's own caster-level rule
+ (core_rulebook/cr_classes.lst:281). The book's rule routes the caster level through an intermediate variable that resolves to the
+ class level: the two terms that could raise it are both 0 for a base-class character — one is raised only by opt-in item and trait
+ content, the other only by bloodline and archetype records. The rule carries no level gate, so it applies from class level 1. The
+ class's declared spellcasting ability (INT) is named for reference only. This grounds the caster level and nothing else: no spells
+ known, no spells per day, no bonus spell slots from a high INT, no spell save DC, and no per-spell dice counts are computed from
+
+                                                    Elowen Ashgrave · page 8 of 10
+ it. The Spells tab already renders each spell's own description text, which is where a "per caster level" scaling clause and its cap
+ live
+Actions · Bonus Feat                                                                                                                +1
+ (no derivation recorded)
+Actions · Skilled                                                                                                                   +1
+ (no derivation recorded)
+
+
+
+
+                                                   Elowen Ashgrave · page 9 of 10
+Bio and Campaign Notes
+
+No bio is recorded.
+No campaign lists this character.
+
+
+
+
+                                    Elowen Ashgrave · page 10 of 10
+

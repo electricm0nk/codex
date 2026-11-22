@@ -1,0 +1,576 @@
+{
+ "$comment": "F7 MR scratch spec run 2",
+ "rows": [
+  {
+   "id": "create-character-render",
+   "screen": "create",
+   "steps": [
+    {
+     "op": "click",
+     "target": "New\nCharacter"
+    }
+   ],
+   "marker": "Create a character",
+   "expect": [
+    "Character name",
+    "Player name",
+    "Race",
+    "Class",
+    "Create character"
+   ],
+   "selectsNonEmpty": [
+    "character-race",
+    "character-class"
+   ],
+   "notes": "This is the item-8-class check that historically catches the race-select-empty defect (see the harness spec's own precedent): the race select must carry more than zero <option>s, not merely render."
+  },
+  {
+   "id": "mr-create-halfling",
+   "screen": "sheet",
+   "setup": [
+    "create-character-render"
+   ],
+   "steps": [
+    {
+     "op": "click",
+     "target": "character-name"
+    },
+    {
+     "op": "type",
+     "text": "F7MR Halfling"
+    },
+    {
+     "op": "click",
+     "target": "player-name"
+    },
+    {
+     "op": "type",
+     "text": "UI Smoke Harness"
+    },
+    {
+     "op": "select",
+     "target": "Halfling (CRB)",
+     "text": "Halfling (CRB)"
+    },
+    {
+     "op": "select",
+     "target": "Monk",
+     "text": "Monk"
+    },
+    {
+     "op": "click",
+     "target": "ability-dexterity"
+    },
+    {
+     "op": "type",
+     "text": "15"
+    },
+    {
+     "op": "click",
+     "target": "ability-constitution"
+    },
+    {
+     "op": "type",
+     "text": "13"
+    },
+    {
+     "op": "click",
+     "target": "ability-wisdom"
+    },
+    {
+     "op": "type",
+     "text": "11"
+    },
+    {
+     "op": "click",
+     "target": "ability-charisma"
+    },
+    {
+     "op": "type",
+     "text": "9"
+    },
+    {
+     "op": "click",
+     "target": "Create character"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "scroll",
+     "ticks": 40,
+     "direction": "up"
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    },
+    {
+     "op": "click",
+     "target": "Back"
+    },
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "F7MR Halfling"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    }
+   ],
+   "marker": "ABILITIES",
+   "expect": [
+    "F7MR Halfling",
+    "ABILITIES"
+   ],
+   "forbid": [
+    "CASTERLEVEL",
+    "min(",
+    "))d",
+    "If requires",
+    "no record in the corpus",
+    "Flurry of Blows",
+    "Spells (Ray)",
+    "Spells (Touch)",
+    "Splash Weapon",
+    "Unarmed Strike",
+    "Grapple"
+   ]
+  },
+  {
+   "id": "mr-create-gnome",
+   "screen": "sheet",
+   "setup": [
+    "create-character-render"
+   ],
+   "steps": [
+    {
+     "op": "click",
+     "target": "character-name"
+    },
+    {
+     "op": "type",
+     "text": "F7MR Gnome"
+    },
+    {
+     "op": "click",
+     "target": "player-name"
+    },
+    {
+     "op": "type",
+     "text": "UI Smoke Harness"
+    },
+    {
+     "op": "select",
+     "target": "Gnome (CRB)",
+     "text": "Gnome (CRB)"
+    },
+    {
+     "op": "select",
+     "target": "Cleric",
+     "text": "Cleric"
+    },
+    {
+     "op": "click",
+     "target": "ability-dexterity"
+    },
+    {
+     "op": "type",
+     "text": "15"
+    },
+    {
+     "op": "click",
+     "target": "ability-constitution"
+    },
+    {
+     "op": "type",
+     "text": "13"
+    },
+    {
+     "op": "click",
+     "target": "ability-wisdom"
+    },
+    {
+     "op": "type",
+     "text": "11"
+    },
+    {
+     "op": "click",
+     "target": "ability-charisma"
+    },
+    {
+     "op": "type",
+     "text": "9"
+    },
+    {
+     "op": "click",
+     "target": "Create character"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "scroll",
+     "ticks": 40,
+     "direction": "up"
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    },
+    {
+     "op": "click",
+     "target": "Back"
+    },
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "F7MR Gnome"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    }
+   ],
+   "marker": "ABILITIES",
+   "expect": [
+    "F7MR Gnome",
+    "ABILITIES"
+   ],
+   "forbid": [
+    "CASTERLEVEL",
+    "min(",
+    "))d",
+    "If requires",
+    "no record in the corpus",
+    "Flurry of Blows",
+    "Spells (Ray)",
+    "Spells (Touch)",
+    "Splash Weapon",
+    "Unarmed Strike",
+    "Grapple"
+   ]
+  },
+  {
+   "id": "mr-create-halforc",
+   "screen": "sheet",
+   "setup": [
+    "create-character-render"
+   ],
+   "steps": [
+    {
+     "op": "click",
+     "target": "character-name"
+    },
+    {
+     "op": "type",
+     "text": "F7MR HalfOrc"
+    },
+    {
+     "op": "click",
+     "target": "player-name"
+    },
+    {
+     "op": "type",
+     "text": "UI Smoke Harness"
+    },
+    {
+     "op": "select",
+     "target": "Half-Orc (CRB)",
+     "text": "Half-Orc (CRB)"
+    },
+    {
+     "op": "select",
+     "target": "Samurai",
+     "text": "class:samurai"
+    },
+    {
+     "op": "click",
+     "target": "ability-dexterity"
+    },
+    {
+     "op": "type",
+     "text": "15"
+    },
+    {
+     "op": "click",
+     "target": "ability-constitution"
+    },
+    {
+     "op": "type",
+     "text": "13"
+    },
+    {
+     "op": "click",
+     "target": "ability-wisdom"
+    },
+    {
+     "op": "type",
+     "text": "11"
+    },
+    {
+     "op": "click",
+     "target": "ability-charisma"
+    },
+    {
+     "op": "type",
+     "text": "9"
+    },
+    {
+     "op": "click",
+     "target": "Create character"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "scroll",
+     "ticks": 40,
+     "direction": "up"
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    },
+    {
+     "op": "click",
+     "target": "Back"
+    },
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "F7MR HalfOrc"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    }
+   ],
+   "marker": "ABILITIES",
+   "expect": [
+    "F7MR HalfOrc",
+    "ABILITIES"
+   ],
+   "forbid": [
+    "CASTERLEVEL",
+    "min(",
+    "))d",
+    "If requires",
+    "no record in the corpus",
+    "Flurry of Blows",
+    "Spells (Ray)",
+    "Spells (Touch)",
+    "Splash Weapon",
+    "Unarmed Strike",
+    "Grapple"
+   ]
+  },
+  {
+   "id": "mr-create-human",
+   "screen": "sheet",
+   "setup": [
+    "create-character-render"
+   ],
+   "steps": [
+    {
+     "op": "click",
+     "target": "character-name"
+    },
+    {
+     "op": "type",
+     "text": "F7MR Human"
+    },
+    {
+     "op": "click",
+     "target": "player-name"
+    },
+    {
+     "op": "type",
+     "text": "UI Smoke Harness"
+    },
+    {
+     "op": "select",
+     "target": "Human (CRB)",
+     "text": "Human (CRB)"
+    },
+    {
+     "op": "select",
+     "target": "Wizard",
+     "text": "Wizard"
+    },
+    {
+     "op": "click",
+     "target": "ability-dexterity"
+    },
+    {
+     "op": "type",
+     "text": "15"
+    },
+    {
+     "op": "click",
+     "target": "ability-constitution"
+    },
+    {
+     "op": "type",
+     "text": "13"
+    },
+    {
+     "op": "click",
+     "target": "ability-wisdom"
+    },
+    {
+     "op": "type",
+     "text": "11"
+    },
+    {
+     "op": "click",
+     "target": "ability-charisma"
+    },
+    {
+     "op": "type",
+     "text": "9"
+    },
+    {
+     "op": "click",
+     "target": "Create character"
+    },
+    {
+     "op": "wait",
+     "ms": 3000
+    },
+    {
+     "op": "scroll",
+     "ticks": 40,
+     "direction": "up"
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    },
+    {
+     "op": "click",
+     "target": "Back"
+    },
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "F7MR Human"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 4000
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    }
+   ],
+   "marker": "ABILITIES",
+   "expect": [
+    "F7MR Human",
+    "ABILITIES"
+   ],
+   "forbid": [
+    "CASTERLEVEL",
+    "min(",
+    "))d",
+    "If requires",
+    "no record in the corpus",
+    "Flurry of Blows",
+    "Spells (Ray)",
+    "Spells (Touch)",
+    "Splash Weapon",
+    "Unarmed Strike",
+    "Grapple"
+   ]
+  },
+  {
+   "id": "mr-elowen-skills",
+   "screen": "sheet",
+   "steps": [
+    {
+     "op": "click",
+     "target": "Load\nCharacter"
+    },
+    {
+     "op": "click",
+     "target": "Elowen Ashgrave"
+    },
+    {
+     "op": "click",
+     "target": "Load"
+    },
+    {
+     "op": "wait",
+     "ms": 10000
+    },
+    {
+     "op": "scroll",
+     "ticks": 10,
+     "direction": "down"
+    },
+    {
+     "op": "key",
+     "key": "Shift"
+    }
+   ],
+   "marker": "Manage skill allocation",
+   "expect": [
+    "fully allocated",
+    "Spellcraft"
+   ],
+   "forbid": [
+    "CASTERLEVEL",
+    "min(",
+    "))d",
+    "If requires",
+    "no record in the corpus",
+    " unallocated"
+   ]
+  }
+ ]
+}

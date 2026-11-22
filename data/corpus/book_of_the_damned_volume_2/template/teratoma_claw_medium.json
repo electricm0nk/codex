@@ -1,0 +1,52 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "key": "Teratoma Claw ~ Medium",
+    "name": "Teratoma Claw ~ Medium",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PRESIZEEQ",
+        "value": "M"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Claw|TOHIT|-5|!PREABILITY:1,CATEGORY=FEAT,Multiattack"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Claw|TOHIT|-2|PREABILITY:1,CATEGORY=FEAT,Multiattack"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Teratoma Claw|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Teratoma Claw,Weapon.Natural.Melee.Weapon Group Natural.Finesseable.Bludgeoning.Slashing,*1,1d6"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "record_key": "Teratoma Claw ~ Medium",
+    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

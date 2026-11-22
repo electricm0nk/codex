@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Haunting Reminder",
+    "school": "Enchantment",
+    "level": 1,
+    "description": "As part of casting this spell, you can attempt a single Intimidate check to make the target act friendly to you. If you succeed, the target assists you normally, but it remains fearful of your retribution even after its attitude shifts to unfriendly. If the creature reports your coercion to authorities, attacks you, or otherwise acts in a purposeful way that threatens you or your objectives (at the GM's discretion), the spell triggers, inflicting the creature with the unshakable certainty that you will find and punish it. This imposes the shaken condition on the creature for (CASTERLEVEL) days; during this time, the creature takes a -2 penalty on saving throws against spells you cast with the fear descriptor."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 21,
+    "record_key": "Haunting Reminder"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

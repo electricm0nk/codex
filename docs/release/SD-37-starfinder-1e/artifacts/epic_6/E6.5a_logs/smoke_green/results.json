@@ -1,0 +1,120 @@
+[
+  {
+    "id": "create-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/create-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nStarfinder 1st Edition — a 1st-level character: race, theme, class, then the point buy.\n\nCharacter name\n\nRace\n\nTheme\n\nClass\n\nKey ability\n\nChoices for this race, theme and class\n+2 Racial Stat Bonus — adjusts ability scores\n\nHuman — adjusts ability scores\n\nSoldier\n\nPrimary Fighting Style\n\nAbility scores (point buy)\nPoints spent: 10 of 10. Each point raises a score by 1; no",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6b3dd75e-0694-4eb6-b13b-485d9ac33895"
+      ],
+      "deleted": [
+        "6b3dd75e-0694-4eb6-b13b-485d9ac33895"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-sheet",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/open-starfinder-sheet.png",
+    "rendered_excerpt": "⚙\nSF Smoke Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t1\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t8\nHit Points\t11\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKinetic Armor Class (KAC)\t12\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "314c4247-061f-4f46-9667-4d23d9e187cb"
+      ],
+      "deleted": [
+        "314c4247-061f-4f46-9667-4d23d9e187cb"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-starfinder-soldier-preview",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/level-up-starfinder-soldier-preview.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Alpha\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nLevel up\n\nCharacter level now: 1\n\nSoldier 2 — character level 2\nSkill ranks per level: 4\nSkill ranks this level\nRanks in one skill: at most the character level, 2 (SRD Acquiring Skills (https://www.aonsrd.com/Rules.aspx?ID=77))\n-1 rank Acrobatics\n+1 rank Acrobatics\n0\n-1 rank Athletics\n+1 rank Athletics\n1 (+1)\n-1 r",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a5ebe169-2f0c-45a6-a93c-3397c925a360"
+      ],
+      "deleted": [
+        "a5ebe169-2f0c-45a6-a93c-3397c925a360"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-starfinder-soldier-accept",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/level-up-starfinder-soldier-accept.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Bravo\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nLeveled up: Soldier 2 — character level 2\n\nCLASS\n\nSoldier\t2\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t16\nHit Points\t18\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKine",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1b602b10-563f-4231-a83e-a3a082cd90cd"
+      ],
+      "deleted": [
+        "1b602b10-563f-4231-a83e-a3a082cd90cd"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "choices-starfinder-soldier-loadout",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/choices-starfinder-soldier-loadout.png",
+    "rendered_excerpt": "⚙\nSF Smoke Loadout\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina P",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6aaaf360-7f3f-4daa-b598-23f91c85e5ae"
+      ],
+      "deleted": [
+        "6aaaf360-7f3f-4daa-b598-23f91c85e5ae"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "browse-starfinder-catalog",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/browse-starfinder-catalog.png",
+    "rendered_excerpt": "⚙\nStarfinder 1e — Classes\nClose\nRaces\nThemes\nClasses\nFeats\nSpells\nEquipment\nSearch by name, book, tag or text\n11 classes from 2 books\nBiohacker\nCharacter Operations Manual\nBase · PC\nSkill ranks per level: 4\nBiohacker: Value: biohacker level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if biohacker level at most 20; Declares KeyAbilityScore as INT or ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e65a/smoke_green/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-5a-green-9F0g0a/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

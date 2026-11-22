@@ -1,0 +1,22 @@
+[
+{
+"id": "equipment-catalog-chip-filter-and-back",
+"status": "red",
+"reason": "target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click \"Magic Items\")"
+},
+{
+"id": "sheet-market-open-weapons",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-equipment-lists",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-override-market-weapon-not-proficient",
+"status": "green",
+"reason": null
+}
+]

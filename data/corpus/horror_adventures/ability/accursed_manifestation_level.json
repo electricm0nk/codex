@@ -1,0 +1,49 @@
+{
+  "codex_generated_name": false,
+  "completeness": "full",
+  "data": {
+    "description": "Your Accursed corruption is level %1.|AccursedManifestationLevel",
+    "key": "Accursed Manifestation Level",
+    "name": "Accursed Manifestation Level",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Accursed Manifestation Level"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AccursedManifestationLevel|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|AccursedManifestationLevel|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Your Accursed corruption is level %1.|AccursedManifestationLevel"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Accursed Manifestation Level",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ]
+}

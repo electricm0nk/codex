@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Lamellar (Stone)
+Lamellar (Stone)							PROFICIENCY:ARMOR|Lamellar			TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard						COST:500	WT:45		ACCHECK:-7																										MAXDEX:0											SOURCEPAGE:p.12	SPELLFAILURE:40																															BONUS:COMBAT|AC|8|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

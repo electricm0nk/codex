@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Talented Magician",
+    "category": "General",
+    "name": "Talented Magician",
+    "description": "You gain an additional daily use of each of your minor magic and major magic rogue talents. You can take this feat multiple times.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Rogue Talent ~ Major Magic,Rogue Talent ~ Minor Magic"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 160,
+    "record_key": "Talented Magician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

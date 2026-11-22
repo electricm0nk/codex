@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 50.0,
+    "description": "If you drink a vial of antitoxin, you get a +5 alchemical bonus on Fortitude saving throws against poison for 1 hour.",
+    "key": "Antitoxin (Vial)",
+    "name": "Antitoxin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antitoxin (Vial)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Antitoxin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Vial.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|Vials of"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Single|Vial of"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 alchemical bonus to Fortitude saves against poison for 1 hour"
+      },
+      {
+        "key": "DESC",
+        "value": "If you drink a vial of antitoxin, you get a +5 alchemical bonus on Fortitude saving throws against poison for 1 hour."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 191,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Antitoxin (Vial)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

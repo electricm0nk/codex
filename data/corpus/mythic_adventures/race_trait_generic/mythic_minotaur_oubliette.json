@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Minotaur ~ Oubliette",
+    "name": "Oubliette",
+    "description": "Whenever a mythic minotaur hits a creature with its gore attack as part of a powerful charge, the target must succeed at a DC 15 Will save or be sent into an extradimensional prison, as the maze spell but lasting for 1d4+1 rounds. The save DC is Wisdom-based and includes a +2 racial modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Minotaur ~ Oubliette"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Minotaur Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a mythic minotaur hits a creature with its gore attack as part of a powerful charge, the target must succeed at a DC 15 Will save or be sent into an extradimensional prison, as the maze spell but lasting for 1d4+1 rounds. The save DC is Wisdom-based and includes a +2 racial modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 214,
+    "record_key": "Mythic Minotaur ~ Oubliette"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

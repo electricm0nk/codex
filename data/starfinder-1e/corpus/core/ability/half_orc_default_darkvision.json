@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Half-Orc Default ~ Darkvision",
+    "name": "Darkvision",
+    "type": "Racial Trait.Half-Orc Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2186,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Half-Orc Default ~ Darkvision",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:half_orc_default_darkvision"
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Wanderer's Shroud",
+    "name": "Wanderer's Shroud",
+    "description": "Your wanderings often go unnoticed. Efforts to use the Diplomacy skill to gather information about you take a -1 penalty, and you gain a +1 trait bonus on all saving throws against scrying and mindreading effects that allow saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Wanderer's Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Wanderer's Shroud],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your wanderings often go unnoticed. Efforts to use the Diplomacy skill to gather information about you take a -1 penalty, and you gain a +1 trait bonus on all saving throws against scrying and mindreading effects that allow saving throws."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|-1 penalty to Diplomacy to gather information"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 trait bonus on all saving throws against scrying and mindreading effects that allow saving throws."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 97,
+    "record_key": "Trait ~ Wanderer's Shroud"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

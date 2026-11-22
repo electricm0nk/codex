@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Purifier ~ Smite the Unclean",
+    "name": "Smite the Unclean",
+    "class": "Purifier",
+    "description": "You can call out to the powers of good to aid you in your struggle against the unclean %1 times per day. As a swift action, you choose one target within sight to smite. If this target is an aberration or has the psionic subtype, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. Regardless of the target, Smite the Unclean attacks automatically bypass any DR the creature might possess. In addition, while smite the unclean is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not an aberration or of the psionic subtype, the smite is wasted with no effect. The Smite the Unclean effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteTheUncleanTimes|SmiteTheUncleanAttackBonus|SmiteTheUncleanDamageBonus|SmiteTheUncleanDamageBonus*2|SmiteTheUncleanACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Smite the Unclean"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteTheUncleanLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call out to the powers of good to aid you in your struggle against the unclean %1 times per day. As a swift action, you choose one target within sight to smite. If this target is an aberration or has the psionic subtype, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. Regardless of the target, Smite the Unclean attacks automatically bypass any DR the creature might possess. In addition, while smite the unclean is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not an aberration or of the psionic subtype, the smite is wasted with no effect. The Smite the Unclean effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteTheUncleanTimes|SmiteTheUncleanAttackBonus|SmiteTheUncleanDamageBonus|SmiteTheUncleanDamageBonus*2|SmiteTheUncleanACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteTheUncleanLVL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteTheUncleanTimes|min((SmiteTheUncleanLVL+2)/3,7)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteTheUncleanAttackBonus,SmiteTheUncleanACBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteTheUncleanDamageBonus|SmiteTheUncleanLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SmiteTheUnlceanTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2541,
+    "record_key": "Purifier ~ Smite the Unclean"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

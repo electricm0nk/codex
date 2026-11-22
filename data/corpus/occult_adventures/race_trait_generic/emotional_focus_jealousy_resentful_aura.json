@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Jealousy ~ Resentful Aura",
+    "name": "Resentful Aura",
+    "description": "When the spiritualist reaches 7th level, as a swift action, the phantom can emit a 20-footradius aura that forces enemies within the aura who make an attack or cast a spell that does not include the phantom in its effect to succeed at a Will saving throw (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier) or become staggered until the end of the enemy's next turn. Ending the aura is a free action. The phantom can use this ability in either ectoplasmic or incorporeal form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Jealousy ~ Resentful Aura"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2e"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Jealousy.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the spiritualist reaches 7th level, as a swift action, the phantom can emit a 20-footradius aura that forces enemies within the aura who make an attack or cast a spell that does not include the phantom in its effect to succeed at a Will saving throw (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier) or become staggered until the end of the enemy's next turn. Ending the aura is a free action. The phantom can use this ability in either ectoplasmic or incorporeal form."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 109,
+    "record_key": "Emotional Focus / Jealousy ~ Resentful Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Air) ~ Create Vacuum",
+    "name": "Create Vacuum",
+    "description": "As a standard action, a mythic elder air elemental can suck the air out of the lungs of creatures it has swallowed or that are trapped in its whirlwind (Fortitude DC 27 negates). Creatures that fail the save take 2d6 points of damage and must attempt Constitution checks each round as if they had run out of breath. An affected character can't speak, use breath weapons, cast spells with verbal components, or do anything else that requires breathing. A trapped creature that succeeds at its save must succeed at a concentration check to cast spells. The air elemental can maintain this vacuum as a move action. If it stops, the trapped or swallowed creatures can breathe again. The save DC is Strength-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Air) ~ Create Vacuum"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Air) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a mythic elder air elemental can suck the air out of the lungs of creatures it has swallowed or that are trapped in its whirlwind (Fortitude DC 27 negates). Creatures that fail the save take 2d6 points of damage and must attempt Constitution checks each round as if they had run out of breath. An affected character can't speak, use breath weapons, cast spells with verbal components, or do anything else that requires breathing. A trapped creature that succeeds at its save must succeed at a concentration check to cast spells. The air elemental can maintain this vacuum as a move action. If it stops, the trapped or swallowed creatures can breathe again. The save DC is Strength-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 136,
+    "record_key": "Mythic Elemental (Air) ~ Create Vacuum"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

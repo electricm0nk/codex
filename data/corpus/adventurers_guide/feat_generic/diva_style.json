@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Diva Style",
+    "name": "Diva Style",
+    "description": "You employ song, dance, or some other method of performance to distract your enemies from the battle at hand.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,13"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PRECLASS:1,Bard=1]"
+      },
+      {
+        "key": "DESC",
+        "value": "You employ song, dance, or some other method of performance to distract your enemies from the battle at hand."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using this style, you can use any Perform skill in place of Bluff to feint in combat. You can attempt a Perform check to feint as a move action when you begin a bardic performance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 27,
+    "record_key": "Diva Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

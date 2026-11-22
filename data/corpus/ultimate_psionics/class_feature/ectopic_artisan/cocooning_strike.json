@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ectopic Artisan ~ Cocooning Strike",
+    "name": "Cocooning Strike",
+    "class": "Ectopic Artisan",
+    "description": "You gain a permanent customization that triggers on a critical hit while your astral suit is active.  When triggered, the target is affected by ectoplasmic cocoon (Reflex DC %1 negates).  This effect only works on Large or smaller creatures.  This ability can only be triggered once per round.  You can grant this customization to your astral warrior when it is created, but you lose access to it while the astral warrior is active and has been granted the customization.|CocooningStrikeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectopic Artisan ~ Cocooning Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CocooningStrikeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a permanent customization that triggers on a critical hit while your astral suit is active.  When triggered, the target is affected by ectoplasmic cocoon (Reflex DC %1 negates).  This effect only works on Large or smaller creatures.  This ability can only be triggered once per round.  You can grant this customization to your astral warrior when it is created, but you lose access to it while the astral warrior is active and has been granted the customization.|CocooningStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CocooningStrikeDC|10+floor(AegisLVL/2)+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1754,
+    "record_key": "Ectopic Artisan ~ Cocooning Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

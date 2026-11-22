@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "Gain electricity resistance 5, +1 effective caster level when casting any spell with electricity descriptor.",
+    "key": "Rod (Conduit)",
+    "name": "Rod (Conduit)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Electricity",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Conduit Rod"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.GreaterMedium"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.178"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain electricity resistance 5, +1 effective caster level when casting any spell with electricity descriptor."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 215,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Rod (Conduit)",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

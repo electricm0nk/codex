@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_bestiary_4_b4_spells_modified_lst_52)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "[redacted PI]"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+    "sha256": "312f9985c63265cc827a6b622e9c5f326c3b6460170e7aa289c687019c37b7cd",
+    "line": 52,
+    "record_key": "Codex-Named Unit (spell_bestiary_4_b4_spells_modified_lst_52)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_spells_modified.lst:52"
+  }
+}

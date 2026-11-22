@@ -1,0 +1,20 @@
+after-render: exit=0
+mutA-render: exit=0
+mutA-restored: diff-exit=0
+mutB-render: exit=0
+mutB-restored: diff-exit=0
+post-restore-render: exit=0
+before-render: exit=0
+e11: exit=0
+e12-count: out=19
+e12-unregistered: lines=0
+e13-check: exit=0
+e13-system-check: exit=0
+dump: exit=0
+structural-diff: exit=0
+mut1: exit=1
+mut2: exit=1
+residue: exit=0
+desktop-sweep: exit=0
+root-sweep: exit=0
+DONE

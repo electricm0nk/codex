@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Oread ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "Oread Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Oread_ReplaceSpellLikeAbility",
+    "sets_replace_flags": [],
+    "description": "Oreads can use magic stone 1/day as spell-like ability (with a caster level equal to the oread's character level).",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oread ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Oread_ReplaceSpellLikeAbility=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Oreads can use magic stone 1/day as spell-like ability (with a caster level equal to the oread's character level)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Magic Stone"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_abilities_race.lst",
+    "sha256": "6df0996010724936a1ddf95c3a26311e2834198b134c95f4bc8b9c06255fa843",
+    "line": 19,
+    "record_key": "Oread ~ Spell-Like Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metamorph ~ Natural Shifter",
+    "name": "Natural Shifter",
+    "class": "Metamorph",
+    "description": "Caster level for metamorphosis powers increases by %1.|NaturalShifter",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Natural Shifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MetamorphClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalShifter|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Caster level for metamorphosis powers increases by %1.|NaturalShifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Metamorphosis|NaturalShifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Metamorphosis (Minor)|NaturalShifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Metamorphosis (Major)|NaturalShifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Metamorphosis (True)|NaturalShifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalShifter|floor((MetamorphLVL+4)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.363"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1290,
+    "record_key": "Metamorph ~ Natural Shifter"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

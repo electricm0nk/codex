@@ -1,0 +1,40 @@
+{
+  "codex_generated_name": false,
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Master Spy",
+    "name": "Master Spy",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterSpy_CFP_Level|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterSpy_CFP_Level|MasterSpyLVL|TYPE=Base"
+      }
+    ]
+  },
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+    "record_key": "Master Spy",
+    "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon Fusion Seal_LVL16",
+    "name": "Level 16",
+    "type": "Weapon Infusion Seal"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "starfinder/paizo/core/scr_equipmods.lst",
+    "record_key": "Weapon Fusion Seal_LVL16",
+    "sha256": "f3f834dcfe0b160855fbe9bdeac4ff6e6ea8a71ca1ea9afbfb556c0dc89d9930"
+  },
+  "unit_id": "core:equipment_modifier:weapon_fusion_seal_lvl16"
+}

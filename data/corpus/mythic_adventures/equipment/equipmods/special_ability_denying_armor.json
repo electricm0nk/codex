@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "1/day, negate a critical hit or sneak attack from melee weapon.",
+    "key": "Special Ability ~ Denying ~ Armor",
+    "name": "Denying",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Denying ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "PLUS",
+        "value": "4"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,ArmorEnhancement"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Armor,Heavy"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day, negate a critical hit or sneak attack from melee weapon."
+      },
+      {
+        "key": "SPROP",
+        "value": " A mythic wearer can expend two uses of mythic power to use this ability an additional time per day, and can even expend two more uses of mythic power to negate both a critical hit and sneak attack from the same attack.|PREVARGTEQ:MythicLevel,1"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Special Ability ~ Denying ~ Armor",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

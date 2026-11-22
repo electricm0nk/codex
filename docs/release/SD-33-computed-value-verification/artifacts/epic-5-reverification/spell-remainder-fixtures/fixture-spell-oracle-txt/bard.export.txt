@@ -1,0 +1,10 @@
+SPELL.0.0.0.NAME=Sift
+SPELL.0.0.0.DC=
+SPELL.0.1.0.NAME=Beguiling Gift
+SPELL.0.1.0.DC=15
+SPELL.0.3.0.NAME=Jester's Jaunt
+SPELL.0.3.0.DC=17
+SPELL.0.3.1.NAME=Reviving Finale
+SPELL.0.3.1.DC=17
+SPELL.0.6.0.NAME=Fool's Forbiddance
+SPELL.0.6.0.DC=20

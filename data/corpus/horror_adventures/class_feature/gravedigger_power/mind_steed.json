@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Mind Steed",
+    "name": "Mind Steed",
+    "class": "Gravedigger Power",
+    "description": "As a standard action, you can expend 1 point of inspiration to conjure a spectral horse. This horse can be either Medium or Large, but it otherwise functions as mount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Mind Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Grave Lamp"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of inspiration to conjure a spectral horse. This horse can be either Medium or Large, but it otherwise functions as mount"
+      },
+      {
+        "key": "DESC",
+        "value": "with a base land speed increased by 20 feet|PREVARGTEQ:InvestigatorLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": ". The horse lasts for %1 minutes.|10*InvestigatorLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "If you expend 1 additional point of inspiration, the mount can fly at a speed of 60 feet with good maneuverability, but doing so reduces the mount's duration to %1 minutes.|InvestigatorLVL|PREVARGTEQ:InvestigatorLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 56,
+    "record_key": "Gravedigger Power ~ Mind Steed"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

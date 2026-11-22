@@ -1,0 +1,39 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Share Language (Communal)",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": "Mesmerist=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Occultist=3[PREFACT:1,ABILITIES,OccultistSchool_Divination=True]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      }
+    ],
+    "school": null
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 488,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Share Language (Communal)",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

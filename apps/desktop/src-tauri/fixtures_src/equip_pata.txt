@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Pata
+Pata																					PROFICIENCY:WEAPON|Pata									TYPE:Weapon.Resizable.Melee.Light.Finesseable.Exotic.Piercing.BladeLight																																	COST:14	WT:3										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.34

@@ -1,0 +1,133 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Power Points",
+    "name": "Cryptic Power Points",
+    "class": "Cryptic",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrypticPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrypticPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrypticPPStat|CrypticPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrypticPPL|CrypticML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1|PREVARGTEQ:CrypticPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:CrypticPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:CrypticPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:CrypticPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:CrypticPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:CrypticPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:CrypticPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:CrypticPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:CrypticPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:CrypticPPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:CrypticPPL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:CrypticPPL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:CrypticPPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:CrypticPPL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:CrypticPPL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:CrypticPPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:CrypticPPL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:CrypticPPL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:CrypticPPL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(CrypticPPStat*CrypticPPL)/2|TYPE=CrypticBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 164,
+    "record_key": "Cryptic Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

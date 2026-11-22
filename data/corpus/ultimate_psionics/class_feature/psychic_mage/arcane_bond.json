@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Mage ~ Arcane Bond",
+    "name": "Arcane Bond",
+    "class": "Psychic",
+    "description": "You can choose Psicrystal Affinity as a bonus feat instead of choosing a familiar or item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Mage ~ Arcane Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Wizard ~ Arcane Bond"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose Psicrystal Affinity as a bonus feat instead of choosing a familiar or item."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psychic Mage Arcane Bond|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2628,
+    "record_key": "Psychic Mage ~ Arcane Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Fleshwarp Exposure",
+    "name": "Fleshwarp Exposure",
+    "description": "You gain a +1 trait bonus on saving throws against transmutation spells and effects. Transmutations you willingly accept affect you as though they were cast at 1 caster level higher for the purpose of determining duration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Fleshwarp Exposure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Drow Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Fleshwarp Exposure]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDrow=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 trait bonus on saving throws against transmutation spells and effects. Transmutations you willingly accept affect you as though they were cast at 1 caster level higher for the purpose of determining duration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 60,
+    "record_key": "Trait ~ Fleshwarp Exposure"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

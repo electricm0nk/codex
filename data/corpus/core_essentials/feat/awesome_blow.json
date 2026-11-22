@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Awesome Blow",
+    "category": "General",
+    "name": "Awesome Blow",
+    "description": "This creature can send opponents flying. As a standard action, the creature may perform an awesome blow combat manuever. If the creature's maneuver succeeds against a corporeal opponent smaller than itself, its opponent is knocked flying 10 feet in a direction of the attacking creature's choice and falls prone. The attacking creature can only push the opponent in a straight line, and the opponent can't move closer to the attacking creature than the square it started in. If an obstacle prevents the completion of the opponent's move, the opponent and the obstacle each take 1d6 points of damage, and the opponent is knocked prone in the space adjacent to the obstacle.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Bull Rush",
+      "PRESIZEGTEQ:L",
+      "PRESTAT:1,STR=25"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
+    "sha256": "a7ea4d8929b217e3b634f1113b881c9e0d3bea75eeae23ece83e02e08a3bf9b8",
+    "line": 10,
+    "record_key": "Awesome Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

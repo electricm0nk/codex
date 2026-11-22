@@ -1,0 +1,7 @@
+apps/desktop/src/characterHub/LoadCharacterScreen.test.ts
+apps/desktop/src/boundary/importPcg.ts
+apps/desktop/src/boundary/importPcg.test.ts
+apps/desktop/src/characterHub/LoadCharacterScreen.tsx
+apps/desktop/src-tauri/src/main.rs
+apps/desktop/src-tauri/src/character_hub.rs
+apps/desktop/src-tauri/src/sf_oracle_parity.rs

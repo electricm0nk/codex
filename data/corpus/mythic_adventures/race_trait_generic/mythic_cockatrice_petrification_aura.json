@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Cockatrice ~ Petrification Aura",
+    "name": "Petrification Aura",
+    "description": "A creature within 30 feet of a mythic cockatrice on its turn must successfully save or be subjected by petrification as if it had been bitten.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Cockatrice ~ Petrification Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Cockatrice Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature within 30 feet of a mythic cockatrice on its turn must successfully save or be subjected by petrification as if it had been bitten."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 82,
+    "record_key": "Mythic Cockatrice ~ Petrification Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
