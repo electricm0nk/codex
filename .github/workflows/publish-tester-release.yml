@@ -1055,8 +1055,9 @@ jobs:
             TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'"'"' ]/,"",$2); print $2; exit}' "${FOUND}")"
           fi
           if [ -z "${TRANCHE_ID}" ]; then
-            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in docs/release/SD-16/tranche-*/manifest.yaml)"
-            exit 1
+            # The label only goes into the commit message. Only develop has a tranche manifest, so beta/stable must not fail here.
+            echo "::notice::channel-index: no tranche manifest for promotion_branch=${GITHUB_REF_NAME}; labelling the index commit 'none'"
+            TRANCHE_ID="none"
           fi
 
           PUBLISHED_AT="$(gh release view "${TAG}" --json publishedAt --jq '.publishedAt')"
