@@ -4,7 +4,6 @@ import {
   loadTesterWorkbenchSurfaceRuntime,
 } from './testerWorkbench/loadTesterWorkbenchSurfaceRuntime';
 import type { TesterWorkbenchSurface } from './testerWorkbench/loadTesterWorkbenchSurface';
-import { createReferenceListKey } from './referenceListKey';
 import {
   assembleFeedbackEvidence,
   captureAutoEvidence,
@@ -35,6 +34,7 @@ import {
   type MountTimeState,
 } from './update/controllerAdapter';
 import type { UpdateControllerDeps } from './update/updateModel';
+import { CorpusIngestDiagnosticPanel } from './characterHub/CorpusIngestDiagnosticPanel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { APP_SHELL_STYLE } from './layout/screenLayout';
 import { AppMenu, AppMenuHostContext, type AppMenuHost } from './layout/AppMenu';
@@ -66,18 +66,6 @@ function derivePlatformLabel(): string {
   return rawPlatform;
 }
 
-function toneColor(tone: 'info' | 'warning' | 'error'): string {
-  if (tone === 'error') {
-    return 'var(--color-error)';
-  }
-
-  if (tone === 'warning') {
-    return 'var(--color-warn)';
-  }
-
-  return 'var(--color-accent)';
-}
-
 function AppCard(props: { label: string; value: string; detail?: string }) {
   return (
     <div
@@ -94,29 +82,6 @@ function AppCard(props: { label: string; value: string; detail?: string }) {
       <p style={{ color: 'var(--color-text)', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>{props.value}</p>
       {props.detail ? <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', margin: '0.4rem 0 0' }}>{props.detail}</p> : null}
     </div>
-  );
-}
-
-function EvidenceList(props: {
-  emptyMessage: string;
-  items: Array<{ label: string; detail: string; machineRef: string }>;
-}) {
-  if (!props.items.length) {
-    return <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>{props.emptyMessage}</p>;
-  }
-
-  return (
-    <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-      {props.items.map((reference, index) => (
-        // GE08 refs can share label and machineRef while differing in detail,
-        // so the list index keeps sibling keys unique.
-        <li key={createReferenceListKey(reference.label, `${reference.machineRef}#${index}`)} style={{ marginBottom: '0.6rem' }}>
-          <strong>{reference.label}</strong>
-          <div style={{ color: 'var(--color-text-secondary)', marginTop: '0.2rem' }}>{reference.detail}</div>
-          <code style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>{reference.machineRef}</code>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -921,6 +886,54 @@ function UpdateSection() {
   );
 }
 
+/** Options > Developer (operator 16 + 19): build / platform / backend / update status, the feedback evidence, and the corpus ingest diagnostic. */
+export function DeveloperPanel(props: { surface: TesterWorkbenchSurface | null; error: string | null }) {
+  const { surface, error } = props;
+  return (
+    <>
+      <header>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+          {surface?.surfaceLabel ?? 'Developer diagnostics'}
+        </p>
+        <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Connecting to the app backend…'}</h1>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>
+          {surface?.lead ?? 'Loading backend diagnostics.'}
+        </p>
+      </header>
+
+      {error ? (
+        <section style={{ backgroundColor: 'var(--color-error-bg)', border: '1px solid var(--color-error-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
+          <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Failed to load diagnostics</h2>
+          <p style={{ color: 'var(--color-error)', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
+        </section>
+      ) : null}
+
+      {surface ? (
+        <>
+          <section style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '2rem' }}>
+            <AppCard label="Build" value={surface.status.build.label} detail={surface.status.update.label} />
+            <AppCard label="Platform" value={surface.platformLabel} detail={surface.status.support.currentPlatformSupportLabel} />
+            <AppCard
+              label="Backend"
+              value={surface.backendHealth?.reachable ? `v${surface.backendHealth.version} · ${surface.backendHealth.gitCommit}` : 'Unreachable'}
+              detail={
+                surface.backendHealth?.reachable
+                  ? 'Rust backend version and the commit this build was compiled from.'
+                  : surface.backendHealth?.unavailableNotice ?? 'Backend health has not been checked yet.'
+              }
+            />
+            <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} build on ${surface.status.support.currentPlatformSupportLabel}`} />
+          </section>
+
+          <FeedbackEvidencePanel surface={surface} />
+        </>
+      ) : null}
+
+      <CorpusIngestDiagnosticPanel />
+    </>
+  );
+}
+
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   // How many screen ☰ menus are mounted; while one is, App's own stays hidden.
@@ -1005,160 +1018,7 @@ export default function App() {
           ) : (
             <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so an enhancement request cannot be composed right now.</p>
           ),
-          developer: (
-            <>
-          <header>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-              {surface?.surfaceLabel ?? 'Developer diagnostics'}
-            </p>
-            <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Connecting to the app backend…'}</h1>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>
-              {surface?.lead ?? 'Loading backend diagnostics.'}
-            </p>
-          </header>
-
-          {error ? (
-        <section style={{ backgroundColor: 'var(--color-error-bg)', border: '1px solid var(--color-error-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-          <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Failed to load diagnostics</h2>
-          <p style={{ color: 'var(--color-error)', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
-        </section>
-      ) : null}
-
-      {surface ? (
-        <>
-          <section style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '2rem' }}>
-            <AppCard label="Build" value={surface.status.build.label} detail={surface.status.update.label} />
-            <AppCard label="Platform" value={surface.platformLabel} detail={surface.status.support.currentPlatformSupportLabel} />
-            <AppCard
-              label="Backend"
-              value={surface.backendHealth?.reachable ? `v${surface.backendHealth.version} · ${surface.backendHealth.gitCommit}` : 'Unreachable'}
-              detail={
-                surface.backendHealth?.reachable
-                  ? 'Rust backend version and the commit this build was compiled from.'
-                  : surface.backendHealth?.unavailableNotice ?? 'Backend health has not been checked yet.'
-              }
-            />
-            <AppCard label="Feature check" value={surface.workflowName} detail={surface.workflowState} />
-            <AppCard label="Data source" value={surface.dataTruthLabel} detail="Live backend data when reachable, clearly-labeled fallback data when it isn't." />
-          </section>
-
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '0.75rem' }}>
-            There is no database in this app. Rule content (races, classes, spells, equipment) is built directly
-            into this version of the app; your saved characters are stored as local files on this device.
-          </p>
-
-          {surface.fallbackNotice ? (
-            <section style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-              <h2 style={{ color: 'var(--color-warn)', marginTop: 0 }}>Showing fallback data</h2>
-              <p style={{ color: 'var(--color-warn)', marginBottom: 0 }}>{surface.fallbackNotice}</p>
-            </section>
-          ) : null}
-
-          {surface.summaryRows.length ? (
-            <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-              <h2 style={{ marginTop: 0 }}>Backend feature check</h2>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
-              <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: '1rem' }}>
-                {surface.summaryRows.map((row) => (
-                  <AppCard key={row.label} label={row.label} value={row.value} />
-                ))}
-              </div>
-            </section>
-          ) : null}
-
-          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Diagnostics</h2>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.feedbackStatusNotice}</p>
-
-            <div style={{ display: 'grid', gap: '0.75rem', marginTop: '1rem' }}>
-              {surface.diagnostics.length ? (
-                surface.diagnostics.map((diagnostic, index) => (
-                  <div
-                    key={`${diagnostic.classLabel}-${index}`}
-                    style={{
-                      backgroundColor: 'var(--color-surface)',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 12,
-                      padding: '0.9rem 1rem',
-                    }}
-                  >
-                    <p style={{ color: toneColor(diagnostic.severity), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-                      {diagnostic.severityLabel} · {diagnostic.classLabel}
-                    </p>
-                    <p style={{ margin: '0.45rem 0 0' }}>{diagnostic.message}</p>
-                    {diagnostic.subjectRef ? (
-                      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-                        Subject reference: <code>{diagnostic.subjectRef}</code>
-                      </p>
-                    ) : null}
-                    {diagnostic.claimBlocking ? (
-                      <p style={{ color: 'var(--color-warn)', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-                        This diagnostic blocks at least one claim in the bounded snapshot.
-                      </p>
-                    ) : null}
-                  </div>
-                ))
-              ) : (
-                <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No diagnostics for this check.</p>
-              )}
-            </div>
-
-            <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginTop: '1rem' }}>
-              <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Blocked calculations</h3>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', lineHeight: 1.5, marginTop: 0 }}>
-                  Things this check tried to compute but couldn't — distinct from features that are simply out of scope for this check.
-                </p>
-                {surface.blockedClaims.length ? (
-                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-                    {surface.blockedClaims.map((claim) => (
-                      <li key={claim} style={{ marginBottom: '0.45rem' }}>{claim}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>Nothing was blocked in this check.</p>
-                )}
-              </div>
-              <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Explanations</h3>
-                <EvidenceList emptyMessage="No explanations for this check." items={surface.explanationRefs} />
-              </div>
-              <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Sources</h3>
-                <EvidenceList emptyMessage="No sources for this check." items={surface.provenanceRefs} />
-              </div>
-            </div>
-          </section>
-
-          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Update &amp; platform support</h2>
-            <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
-              <AppCard label="Build track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
-              <AppCard label="Platform support" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
-              <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} build on ${surface.status.support.currentPlatformSupportLabel}`} />
-            </div>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
-              {surface.status.support.platformSupportDetail}
-            </p>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>{surface.status.update.detail}</p>
-          </section>
-
-          <FeedbackEvidencePanel surface={surface} />
-
-          {surface.notes.length ? (
-            <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-              <h2 style={{ marginTop: 0 }}>Notes</h2>
-              <ul style={{ marginBottom: 0, paddingLeft: '1.2rem' }}>
-                {surface.notes.map((note) => (
-                  <li key={note} style={{ marginBottom: '0.45rem' }}>{note}</li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-            </>
-          ) : null}
-            </>
-          ),
+          developer: <DeveloperPanel surface={surface} error={error} />,
         }}
       />
     </main>

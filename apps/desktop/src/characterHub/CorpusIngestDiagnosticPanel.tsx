@@ -46,7 +46,7 @@ function formatCounts(counts: Record<string, number>): string {
  * Full status table + flags + ETA is SD-26 scope; this panel shows only
  * `bookId` / `status` / `lastIngestedAt` / `contentKindCounts`.
  */
-export function CorpusIngestDiagnosticPanel(props: { onClose: () => void }) {
+export function CorpusIngestDiagnosticPanel() {
   const [books, setBooks] = useState<BookIngestStatusDto[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,16 +60,7 @@ export function CorpusIngestDiagnosticPanel(props: { onClose: () => void }) {
 
   return (
     <section style={{ marginTop: '1rem' }}>
-      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-        <h2 style={{ margin: 0 }}>Corpus Ingest Diagnostic</h2>
-        <button
-          type="button"
-          onClick={props.onClose}
-          style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, cursor: 'pointer', padding: '0.5rem 1rem' }}
-        >
-          Back
-        </button>
-      </div>
+      <h2 style={{ margin: '0 0 1rem' }}>Corpus Ingest Diagnostic</h2>
 
       {error ? (
         <p style={{ color: 'var(--color-danger, #d33)', margin: 0 }}>{error}</p>

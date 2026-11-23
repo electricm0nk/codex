@@ -271,7 +271,6 @@ export function LandingScreen(props: {
   onBrowseStarfinder: (kind: StarfinderCatalogKind) => void;
   /** Cyberpunk RED's catalogs (SD-38 E6.2), offered instead of the Pathfinder ones when it is selected; `kind` is the MANIFEST kind the screen opens on. */
   onBrowseCyberpunk: (kind: string) => void;
-  onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   onDmToolkit: () => void;
 }) {
@@ -371,20 +370,6 @@ export function LandingScreen(props: {
             </button>
           </>
         )}
-        <button
-          type="button"
-          onClick={props.onCorpusIngestDiagnostic}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Corpus Ingest Diagnostic
-        </button>
       </div>
     </section>
   );

@@ -63,7 +63,6 @@ function landing(selectedRuleSet: RuleSetId): string {
         onBrowseIntelligentItems: noop,
         onBrowseStarfinder: noop,
         onBrowseCyberpunk: noop,
-        onCorpusIngestDiagnostic: noop,
         onCampaignManager: noop,
         onDmToolkit: noop,
       })

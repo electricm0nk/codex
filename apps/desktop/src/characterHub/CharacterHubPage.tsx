@@ -27,7 +27,6 @@ import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/Intellig
 import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { CyberpunkCatalogScreen } from '../cyberpunkCatalog/CyberpunkCatalogScreen';
-import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
 import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
@@ -49,7 +48,6 @@ type Mode =
   | 'intelligentItemCatalog'
   | 'starfinderCatalog'
   | 'cyberpunkCatalog'
-  | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
   | 'campaign-create'
@@ -133,7 +131,6 @@ function CharacterHubScreens({
           setCyberpunkCatalogKind(kind);
           setMode('cyberpunkCatalog');
         }}
-        onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         onDmToolkit={() => setMode('dm-toolkit')}
       />
@@ -176,10 +173,6 @@ function CharacterHubScreens({
   if (mode === 'cyberpunkCatalog') {
     // SD-38 E6.2: Cyberpunk RED's catalogs, read from its corpus by `list_cyberpunk_catalog`.
     return <CyberpunkCatalogScreen initialKind={cyberpunkCatalogKind} onClose={() => setMode('landing')} />;
-  }
-
-  if (mode === 'corpusIngestDiagnostic') {
-    return <CorpusIngestDiagnosticPanel onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'dm-toolkit') {

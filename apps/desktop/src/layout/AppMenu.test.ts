@@ -68,7 +68,7 @@ assert(/screenMenus === 0 \? <AppMenu items=\{\[\]\} fixed \/>/.test(app), 'App 
 // its own (with Options) or App's.
 const hub = read('characterHub/CharacterHubPage.tsx');
 const modes = [...hub.match(/type Mode =([^;]+);/)![1]!.matchAll(/'([^']+)'/g)].map((m) => m[1]!);
-assertEqual(modes.length, 19, 'the census: 19 hub screens');
+assertEqual(modes.length, 18, 'the census: 18 hub screens');
 const OWN_MENU: Record<string, string> = {
   sheet: 'characterHub/CharacterSheet.tsx',
   'campaign-sheet': 'campaign/CampaignSheet.tsx',
