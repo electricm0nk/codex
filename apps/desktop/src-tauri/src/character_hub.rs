@@ -1027,7 +1027,14 @@ pub(crate) fn ability_budget_rows(input: &CharacterInput) -> Vec<ExplanationDto>
     use codex::rules_core::ability_budget::{ability_budget_now, SubTab};
     sheet_rule_package().as_ref().map_or_else(
         |_| Vec::new(),
-        |package| SubTab::ALL.iter().flat_map(|subtab| map_explanations_dto(&ability_budget_now(package, input, *subtab).explanation_rows())).collect(),
+        // Favored Class's rows need the character's Custom grants (`abilities::imported_favored_bonuses`); its sub-tab serves them.
+        |package| {
+            SubTab::ALL
+                .iter()
+                .filter(|subtab| **subtab != SubTab::FavoredClass)
+                .flat_map(|subtab| map_explanations_dto(&ability_budget_now(package, input, *subtab).explanation_rows()))
+                .collect()
+        },
     )
 }
 
@@ -3447,6 +3454,15 @@ fn push_hit_points_and_speed_rows(root: &Path, input: &CharacterInput, constitut
     let speed = land_speed_row(&input.chosen.race_id, item_row("custom_item.speed"), item_row("custom_item.speed_percent"));
     explanations.extend(hit_points);
     explanations.extend(speed);
+    let (hit_points, skill_ranks) = codex::rules_core::ability_budget::favored_class_bonus_taken(input);
+    let favored = codex::rules_core::ability_budget::favored_class(input).unwrap_or("none");
+    for (id, value, what) in [("favored_class.hit_points", hit_points, "hit point"), ("favored_class.skill_ranks", skill_ranks, "skill rank")] {
+        explanations.push(ExplanationDto {
+            id: id.to_owned(),
+            value: i16::try_from(value).unwrap_or(i16::MAX),
+            detail: format!("Favored class bonus (Core Rulebook p.31): +1 {what} for each level of the favored class ({favored}) spent so"),
+        });
+    }
 }
 
 /// Every held class level's hit points, plus Toughness and a bonded Toad familiar (the engine's
@@ -3471,6 +3487,7 @@ fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier
     let hit_dice: u8 = input.chosen.class_levels.iter().fold(0, |sum, held| sum.saturating_add(held.level));
     let feats = feat_effects::hp_bonus_from_feats(&input.chosen.selected_feats, hit_dice);
     let familiar = codex::rules_core::pilot_compute::character_familiar_hp_bonus(input);
+    let favored = i16::try_from(codex::rules_core::ability_budget::favored_class_bonus_taken(input).0).unwrap_or(0);
     let mut detail = format!(
         "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
         terms.join("; ")
@@ -3481,13 +3498,16 @@ fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier
     if familiar != 0 {
         detail.push_str(&format!("; familiar {familiar:+} (a bonded Toad)"));
     }
+    if favored != 0 {
+        detail.push_str(&format!("; favored class bonus {favored:+}"));
+    }
     if grants != 0 {
         detail.push_str(&format!("; GM grants {grants:+}"));
     }
     if worn != 0 {
         detail.push_str(&format!("; worn items {worn:+}"));
     }
-    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + feats + familiar + grants + worn, detail })
+    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + feats + familiar + favored + grants + worn, detail })
 }
 
 /// The held classes' hit points and one term per class for the row's detail; `None` with no class
@@ -8676,7 +8696,7 @@ fn place_pcg_create_items(file: &mut serde_json::Value, sets: &EquipmentSets) {
 /// pieces, so the Default migration never runs on an import) and the envelope's game system.
 /// `root` is a fresh character's: anything short of a whole saved character removes it, so a
 /// refused or failed import leaves nothing to list.
-fn import_pcg_json(
+pub(crate) fn import_pcg_json(
     contents: &str,
     root: &Path,
     fresh_character_id: &str,

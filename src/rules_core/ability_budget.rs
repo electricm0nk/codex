@@ -31,6 +31,11 @@
 //! replaces are its record's tags and that table's `replaces`; a class feature is replaced once, so an
 //! archetype replacing one a held archetype already replaces is refused, naming the feature. A held
 //! archetype's record is held when the Class Features pools are read, so a pool it shrinks or grants follows.
+//!
+//! **Favored Class** (Core Rulebook p.31, `decisions.md §19`). One favored class, saved as a `SelectedChoice`
+//! under [`FAVORED_CLASS_CHOICE_ID`]; then one bonus per level of it, +1 hit point or +1 skill rank, saved
+//! as `ability_selections` rows (`favored_class|favored_class_bonus|<record>|<character level>|`).
+//! [`favored_class_bonus_taken`] is what the sheet's maximum hit points and skill point pool add.
 
 use std::collections::BTreeMap;
 
@@ -67,16 +72,18 @@ pub enum SubTab {
     Traits,
     ClassFeatures,
     Archetype,
+    FavoredClass,
 }
 
 impl SubTab {
-    pub const ALL: [SubTab; 3] = [SubTab::Traits, SubTab::ClassFeatures, SubTab::Archetype];
+    pub const ALL: [SubTab; 4] = [SubTab::Traits, SubTab::ClassFeatures, SubTab::Archetype, SubTab::FavoredClass];
 
     pub fn id(self) -> &'static str {
         match self {
             SubTab::Traits => "traits",
             SubTab::ClassFeatures => "class_features",
             SubTab::Archetype => "archetype",
+            SubTab::FavoredClass => "favored_class",
         }
     }
 
@@ -180,14 +187,20 @@ impl AbilityBudget {
         }
         let pool_id = match self.subtab {
             SubTab::Traits => pool_of(option_id),
-            SubTab::ClassFeatures => match option_id.split_once(':') {
+            SubTab::ClassFeatures | SubTab::FavoredClass => match option_id.split_once(':') {
                 Some((pool, _)) => pool,
                 None => return Some(format!("'{option_id}' names no class feature pool.")),
             },
             // An archetype has no count budget; a replaced-feature clash is its option's `unmet`.
             SubTab::Archetype => return None,
         };
-        if self.subtab == SubTab::ClassFeatures && self.pool(pool_id).is_none() {
+        if self.subtab == SubTab::FavoredClass
+            && pool_id == FAVORED_CLASS_POOL
+            && let Some(held) = self.held.iter().find(|held| held.id.starts_with(FAVORED_CLASS_POOL) && !held.id.starts_with(FAVORED_BONUS_POOL))
+        {
+            return Some(format!("This character's favored class is already {}; remove it to choose another.", held.label));
+        }
+        if matches!(self.subtab, SubTab::ClassFeatures | SubTab::FavoredClass) && self.pool(pool_id).is_none() {
             return Some(format!("This character has no {} pool.", pool_words(pool_id)));
         }
         if let Some(pool) = self.pool(pool_id)
@@ -217,7 +230,8 @@ impl AbilityBudget {
 impl AbilityBudget {
     /// Whether the record an option names may be taken more than once (PCGen `MULT:YES`).
     fn repeatable(&self, package: &SheetRulePackage, option_id: &str) -> bool {
-        self.subtab == SubTab::ClassFeatures
+        (self.subtab == SubTab::FavoredClass && option_id.starts_with(FAVORED_BONUS_POOL))
+            || self.subtab == SubTab::ClassFeatures
             && option_id.split_once(':').and_then(|(_, record)| package.rule(record)).is_some_and(|rule| rule.repeatable)
     }
 }
@@ -237,6 +251,7 @@ pub fn ability_budget(package: &SheetRulePackage, input: &CharacterInput, subtab
         SubTab::Traits => trait_budget(package, input),
         SubTab::ClassFeatures => class_feature_budget(package, input),
         SubTab::Archetype => archetype_budget(package, input),
+        SubTab::FavoredClass => favored_class_budget(package, input, 0),
     }
 }
 
@@ -249,6 +264,7 @@ pub fn ability_budget_now(package: &SheetRulePackage, input: &CharacterInput, su
         SubTab::Traits => trait_budget(package, input),
         SubTab::ClassFeatures => class_feature_budget_from(package, input, false),
         SubTab::Archetype => archetype_budget(package, input),
+        SubTab::FavoredClass => favored_class_budget(package, input, 0),
     }
 }
 
@@ -519,6 +535,7 @@ pub fn ability_options(
         SubTab::Traits => trait_options(package, input, base),
         SubTab::ClassFeatures => class_feature_options(package, input, base),
         SubTab::Archetype => archetype_options(package, input, base),
+        SubTab::FavoredClass => favored_class_options(package, input),
     }
 }
 
@@ -791,6 +808,181 @@ fn trait_options(package: &SheetRulePackage, input: &CharacterInput, base: &Pilo
     options
 }
 
+/// The saved favored class: a `SelectedChoice` naming a class id (`class:fighter`).
+pub const FAVORED_CLASS_CHOICE_ID: &str = "choice:favored_class";
+/// The one-pick pool of the favored class and the per-level pool of its bonuses.
+pub const FAVORED_CLASS_POOL: &str = "favored_class";
+pub const FAVORED_BONUS_POOL: &str = "favored_class_bonus";
+/// The two Core Rulebook bonuses (p.31), as the package converts them (`cr_abilities_class.lst:93-94`).
+pub const FAVORED_HIT_POINT: &str = "core_rulebook:class_feature:favored_class_bonus_hit_point";
+pub const FAVORED_SKILL_RANK: &str = "core_rulebook:class_feature:favored_class_bonus_skill_rank";
+/// A held bonus's option id is its pool and record, then `@` and the character level it was taken at.
+const PICK_LEVEL_SEPARATOR: char = '@';
+/// The race alternates the corpus lacks (`artifacts/epic_3/E3.8/figures.py`: the oracle types 703
+/// favored class bonus options, the package converts the 2 core ones).
+const RACE_ALTERNATES_GAP: &str = "The corpus holds none of the race alternate favored class options (PCGen's Advanced Player's \
+     Guide / Advanced Race Guide lists name 703 favored class bonus options; the converted books carry only the Core Rulebook's \
+     +1 hit point and +1 skill rank), so only those two can be taken.";
+
+/// The class id `input` saves as its favored class (Core Rulebook p.31: one, chosen at 1st level).
+pub fn favored_class(input: &CharacterInput) -> Option<&str> {
+    input.chosen.selected_choices.iter().find(|choice| choice.choice_set_id == FAVORED_CLASS_CHOICE_ID).map(|choice| choice.selection_id.as_str())
+}
+
+/// The character levels at which `input` took a level of its favored class, classes in saved order.
+fn favored_levels(input: &CharacterInput) -> Vec<u8> {
+    let Some(favored) = favored_class(input) else { return Vec::new() };
+    let mut before = 0u8;
+    let mut levels = Vec::new();
+    for class in &input.chosen.class_levels {
+        if class.class_id == favored {
+            levels.extend((1..=class.level).map(|n| before.saturating_add(n)));
+        }
+        before = before.saturating_add(class.level);
+    }
+    levels
+}
+
+/// The favored class bonuses `input` holds for a level of its favored class, `(hit points, skill ranks)`:
+/// the sheet's maximum hit points and skill point pool each add theirs (Core Rulebook p.31).
+pub fn favored_class_bonus_taken(input: &CharacterInput) -> (i64, i64) {
+    let levels = favored_levels(input);
+    let picks = input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::FavoredClass.id() && levels.contains(&pick.level));
+    picks.fold((0, 0), |(hp, skill), pick| match pick.record_key.as_str() {
+        FAVORED_HIT_POINT => (hp + 1, skill),
+        FAVORED_SKILL_RANK => (hp, skill + 1),
+        _ => (hp, skill),
+    })
+}
+
+fn class_words(class_id: &str) -> String {
+    let words = pool_words(class_id.strip_prefix("class:").unwrap_or(class_id));
+    let mut chars = words.chars();
+    chars.next().map_or_else(String::new, |first| first.to_uppercase().chain(chars).collect())
+}
+
+/// The Favored Class budget: one favored class, then one bonus per level of it. `imported` is the
+/// bonuses a PCGen import already took as Custom grants (the desktop reads them from `custom.json`);
+/// they spend the bonus pool so the same levels are not paid twice.
+pub fn favored_class_budget(package: &SheetRulePackage, input: &CharacterInput, imported: i64) -> AbilityBudget {
+    let favored = favored_class(input);
+    let levels = favored_levels(input);
+    let picks: Vec<_> = input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::FavoredClass.id()).collect();
+    let mut held: Vec<HeldAbility> = favored
+        .map(|class| HeldAbility { id: format!("{FAVORED_CLASS_POOL}:{class}"), label: class_words(class), category: None })
+        .into_iter()
+        .collect();
+    held.extend(picks.iter().map(|pick| HeldAbility {
+        id: format!("{FAVORED_BONUS_POOL}:{}{PICK_LEVEL_SEPARATOR}{}", pick.record_key, pick.level),
+        label: package.rule(&pick.record_key).map_or_else(|| pick.record_key.clone(), display_label),
+        category: None,
+    }));
+    let mut bonus_sources: Vec<(Option<u8>, String)> = Vec::new();
+    if let Some(class) = favored {
+        bonus_sources.push((None, format!("{} levels ({})", class_words(class), levels.len())));
+    }
+    if imported > 0 {
+        bonus_sources.push((None, format!("{imported} already taken by the PCGen import as Custom grants")));
+    }
+    let pools = vec![
+        AbilityPool {
+            subtab: SubTab::FavoredClass,
+            id: FAVORED_CLASS_POOL.to_owned(),
+            granted: 1,
+            spent: i64::from(favored.is_some()),
+            sources: vec![(Some(1), "every character (1)".to_owned())],
+            opened: vec![1],
+        },
+        AbilityPool {
+            subtab: SubTab::FavoredClass,
+            id: FAVORED_BONUS_POOL.to_owned(),
+            granted: levels.len() as i64,
+            spent: picks.len() as i64 + imported,
+            sources: bonus_sources,
+            opened: levels,
+        },
+    ];
+    AbilityBudget { subtab: SubTab::FavoredClass, pools, held }
+}
+
+/// The level the next favored class bonus is charged to: the first favored-class level with no bonus,
+/// after the ones a PCGen import took (`imported`, the earliest levels).
+pub fn favored_next_level(input: &CharacterInput, imported: i64) -> Option<u8> {
+    let taken: Vec<u8> = input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::FavoredClass.id()).map(|pick| pick.level).collect();
+    favored_levels(input).into_iter().skip(usize::try_from(imported).unwrap_or(0)).find(|level| !taken.contains(level))
+}
+
+/// `(record id, level)` of a held bonus's option id (`favored_class_bonus:<record>@<level>`).
+pub fn favored_pick_of(option_id: &str) -> Option<(&str, u8)> {
+    let (record, level) = option_id.strip_prefix(FAVORED_BONUS_POOL)?.strip_prefix(':')?.rsplit_once(PICK_LEVEL_SEPARATOR)?;
+    Some((record, level.parse().ok()?))
+}
+
+/// The favored class choices: each held class, the two core bonuses, each held bonus (its own id, so
+/// the Selected list names it with its level), and the race alternates the corpus lacks, as a sentence.
+fn favored_class_options(package: &SheetRulePackage, input: &CharacterInput) -> Vec<AbilityOption> {
+    let favored = favored_class(input);
+    let mut options: Vec<AbilityOption> = input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|class| {
+            let unmet: Vec<String> = favored
+                .filter(|held| *held != class.class_id)
+                .map(|held| format!("This character's favored class is already {}; remove it to choose another.", class_words(held)))
+                .into_iter()
+                .collect();
+            AbilityOption {
+                id: format!("{FAVORED_CLASS_POOL}:{}", class.class_id),
+                label: class_words(&class.class_id),
+                pool: FAVORED_CLASS_POOL.to_owned(),
+                category: Some(format!("{} levels held", class.level)),
+                qualified: unmet.is_empty(),
+                unmet,
+                description: Some(
+                    "Core Rulebook p.31: each character chooses one favored class; whenever the character gains a level in it, \
+                     the character receives either +1 hit point or +1 skill rank."
+                        .to_owned(),
+                ),
+            }
+        })
+        .collect();
+    let no_class = favored.is_none().then(|| "Choose a favored class first: a bonus is taken for a level of the favored class.".to_owned());
+    for (record, words) in [(FAVORED_HIT_POINT, "+1 hit point: the sheet's maximum hit points add it."), (FAVORED_SKILL_RANK, "+1 skill rank: the skill point pool adds it.")] {
+        let label = package.rule(record).map_or_else(|| record.to_owned(), display_label);
+        options.push(AbilityOption {
+            id: format!("{FAVORED_BONUS_POOL}:{record}"),
+            label,
+            pool: FAVORED_BONUS_POOL.to_owned(),
+            category: None,
+            qualified: no_class.is_none(),
+            unmet: no_class.clone().into_iter().collect(),
+            description: Some(format!("For one level of the favored class: {words}")),
+        });
+    }
+    for pick in input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::FavoredClass.id()) {
+        options.push(AbilityOption {
+            id: format!("{FAVORED_BONUS_POOL}:{}{PICK_LEVEL_SEPARATOR}{}", pick.record_key, pick.level),
+            label: format!("{} (level {})", package.rule(&pick.record_key).map_or_else(|| pick.record_key.clone(), display_label), pick.level),
+            pool: FAVORED_BONUS_POOL.to_owned(),
+            category: None,
+            qualified: true,
+            unmet: Vec::new(),
+            description: None,
+        });
+    }
+    options.push(AbilityOption {
+        id: format!("{FAVORED_BONUS_POOL}:race_alternates"),
+        label: "Race alternate options".to_owned(),
+        pool: FAVORED_BONUS_POOL.to_owned(),
+        category: Some("not in the corpus".to_owned()),
+        qualified: false,
+        unmet: vec![RACE_ALTERNATES_GAP.to_owned()],
+        description: Some(RACE_ALTERNATES_GAP.to_owned()),
+    });
+    options
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -817,6 +1009,32 @@ mod tests {
         assert_eq!(feature_words("RogueTrapSense1", "rogue"), "Trap Sense 1");
         assert_eq!(feature_words("FighterArmorTraining_ALL", "fighter"), "Armor Training (all)");
         assert_eq!(feature_words("CF_WitchHex", "witch"), "Witch Hex");
+    }
+
+    /// A Wizard 1 / Fighter 2 favoring Fighter: its bonuses open at character levels 2 and 3; a bonus
+    /// saved at level 1 (a Wizard level) counts for nothing, and the race alternates are a sentence.
+    #[test]
+    fn ability_budget_favored_class_counts_only_levels_of_the_favored_class() {
+        use crate::rules_core::character_input::{AbilitySelection, SelectedChoice};
+        let mut input = level_one_with(&[]);
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: "class:wizard".to_owned(), level: 1 },
+            CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 2 },
+        ];
+        input.chosen.selected_choices.push(SelectedChoice { choice_set_id: FAVORED_CLASS_CHOICE_ID.to_owned(), selection_id: "class:fighter".to_owned() });
+        let pick = |record: &str, level: u8| AbilitySelection { subtab: "favored_class".to_owned(), pool: FAVORED_BONUS_POOL.to_owned(), record_key: record.to_owned(), level, target: None };
+        input.chosen.ability_selections = vec![pick(FAVORED_HIT_POINT, 1), pick(FAVORED_HIT_POINT, 2), pick(FAVORED_SKILL_RANK, 3)];
+        assert_eq!(favored_levels(&input), [2, 3]);
+        assert_eq!(favored_class_bonus_taken(&input), (1, 1));
+        let budget = favored_class_budget(package(), &input, 0);
+        assert_eq!(row(&budget, "abilities.budget.favored_class.favored_class_bonus.granted"), 2);
+        assert_eq!(favored_next_level(&input, 0), None);
+        assert_eq!(favored_pick_of("favored_class_bonus:core_rulebook:class_feature:favored_class_bonus_hit_point@2"), Some((FAVORED_HIT_POINT, 2)));
+        let options = favored_class_options(package(), &input);
+        let gap = options.iter().find(|o| o.id == "favored_class_bonus:race_alternates").expect("the gap sentence");
+        assert!(!gap.qualified && gap.unmet[0].contains("703"), "{:?}", gap.unmet);
+        let wizard = options.iter().find(|o| o.id == "favored_class:class:wizard").expect("wizard offered");
+        assert!(!wizard.qualified && wizard.unmet[0].contains("Fighter"), "{:?}", wizard.unmet);
     }
 
     fn level_one_with(traits: &[&str]) -> CharacterInput {

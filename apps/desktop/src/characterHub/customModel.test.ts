@@ -26,6 +26,7 @@ import {
   sheetSwimSpeed,
   sheetFlySpeed,
   withCustomSkillPoints,
+  withFavoredSkillRanks,
   type CharacterCustom,
   type CustomRecord,
 } from './customModel';
@@ -47,6 +48,10 @@ function verifiesTheSheetNumbersFollowTheGrants() {
   assertEqual(withCustomHitPoints(null, custom), null, 'an unknown total stays unknown');
   assertEqual(withCustomSkillPoints(8, custom), 11, 'the skill pool includes the grant');
   assertEqual(withCustomSkillPoints(null, custom), null, 'an unknown pool stays unknown');
+  const favored = [{ id: 'favored_class.skill_ranks', value: 1, detail: '' }];
+  assertEqual(withFavoredSkillRanks(8, favored), 9, 'the skill pool adds the engine favored class rank');
+  assertEqual(withFavoredSkillRanks(8, []), 8, 'no favored class row adds nothing');
+  assertEqual(withFavoredSkillRanks(null, favored), null, 'an unknown pool stays unknown');
   assertEqual(withCustomHitPoints(20, EMPTY_CUSTOM), 20, 'no grants, no change');
   assertEqual(withCustomSkillPoints(3, withGrants(grant('x', 'skill_points', -9))), 0, 'the pool never goes below zero');
 }

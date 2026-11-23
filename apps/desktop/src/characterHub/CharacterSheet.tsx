@@ -42,7 +42,7 @@ import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progre
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
 import { CustomItemsExchangeDialog } from './CustomItemsExchangeDialog';
-import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, withFavoredSkillRanks, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -473,7 +473,7 @@ function SkillsPanel(props: {
   useEffect(() => setLanguagesDraft(shownLanguages), [shownLanguages]);
   const spent = skillPointsSpent(props.allocation);
   const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
-  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
+  const available = withFavoredSkillRanks(withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom), props.explanations);
   const remaining = available === null ? null : available - spent;
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
   // reason, not silently scored as all-cross-class.
@@ -1956,12 +1956,15 @@ export function RulesAndFeaturesSection(props: { lines: readonly SheetLineDto[];
  * The Abilities tab's Class Features sub-tab: every class-feature pool the engine grants this character
  * (SD-43 E3.4: `abilities.budget.class_features.<pool>.*` rows, sized by the rules the character holds, each
  * pick charged to the level that granted it) on the generic sub-tab, then the class features no engine
- * row claims (SD-43 E3.1, moved from the Actions tab).
+ * row claims (SD-43 E3.1, moved from the Actions tab). The favored class and its per-level bonuses are a
+ * section of it (SD-43 E3.8, `decisions.md §19`, §30 Q-22.7 default placement).
  */
 function ClassFeatureReferencesPanel(props: {
   characterId: string;
   onAdd: (optionId: string) => Promise<void>;
   onRemove: (optionId: string) => Promise<void>;
+  onAddFavored: (optionId: string) => Promise<void>;
+  onRemoveFavored: (optionId: string) => Promise<void>;
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
   /** T4-L9 (`decisions.md §13`): the feat-held reachability arm needs the
@@ -1979,6 +1982,14 @@ function ClassFeatureReferencesPanel(props: {
         info={() => null}
         onAdd={(id) => props.onAdd(id)}
         onRemove={props.onRemove}
+      />
+      <AbilitySubTab
+        characterId={props.characterId}
+        subtab="favored_class"
+        title="Favored Class Bonus"
+        info={() => null}
+        onAdd={(id) => props.onAddFavored(id)}
+        onRemove={props.onRemoveFavored}
       />
       <ClassFeatureDescriptionReferenceSection
         explanations={props.explanations}
@@ -4393,6 +4404,8 @@ export function CharacterSheet(props: {
                           characterId={props.row.characterId}
                           onAdd={(optionId) => handleAddAbility(optionId, null, 'class_features')}
                           onRemove={(optionId) => handleRemoveAbility(optionId, 'class_features')}
+                          onAddFavored={(optionId) => handleAddAbility(optionId, null, 'favored_class')}
+                          onRemoveFavored={(optionId) => handleRemoveAbility(optionId, 'favored_class')}
                           explanations={engineRecords.explanations}
                           heldClasses={heldClasses}
                           selectedFeats={props.detail?.selectedFeats ?? []}
@@ -4574,7 +4587,7 @@ export function CharacterSheet(props: {
         heldClasses={heldClasses}
         classSkills={classSkills}
         characterLevel={level}
-        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, budgetIntelligence, isHuman), custom)}
+        totalPoints={withFavoredSkillRanks(withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, budgetIntelligence, isHuman), custom), engineRecords.explanations)}
         allocation={skillAllocation}
         explanations={engineRecords.explanations}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}

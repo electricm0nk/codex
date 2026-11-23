@@ -15,10 +15,18 @@
 //! **Archetype** (SD-43 E3.7) is an `ability_budget` sub-tab: the engine lists each held class's
 //! archetypes and refuses one replacing a class feature a held archetype already replaces; a pick is
 //! saved as a `SelectedChoice` under `ARCHETYPE_CHOICE_ID`.
+//!
+//! **Favored Class** (SD-43 E3.8, `decisions.md §19`) is an `ability_budget` sub-tab shown as a section of
+//! Class Features: the favored class, then a bonus per level of it. A PCGen import's favored class bonus
+//! is already Custom grants (`pcg_import/map.rs` `add_favored_class_bonus`, ids `favored-class-…`); those
+//! spend the bonus pool here ([`imported_favored_bonuses`]) so the same levels are not paid twice.
 
 use std::path::Path;
 
-use codex::rules_core::ability_budget::{ability_budget, ability_options, AbilityOption, SubTab};
+use codex::rules_core::ability_budget::{
+    ability_budget, ability_options, favored_class_budget, favored_next_level, favored_pick_of, AbilityOption, SubTab, FAVORED_BONUS_POOL,
+    FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL,
+};
 use codex::rules_core::ability_prereqs;
 use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
 use codex::rules_core::character_input::AbilitySelection;
@@ -122,6 +130,24 @@ fn remove_racial_ability_at_root(root: &Path, key: &str, saved_at: &str) -> Resu
     })
 }
 
+/// The id prefix the PCGen import gives its favored class bonus grants (`pcg_import/map.rs`).
+const IMPORTED_FAVORED_GRANT_PREFIX: &str = "favored-class-";
+
+/// How many favored class bonuses a PCGen import took as Custom grants: one a hit point or skill rank.
+pub(crate) fn imported_favored_bonuses(root: &Path) -> i64 {
+    crate::character_custom::load_character_custom_at_root(root)
+        .map(|custom| custom.grants.iter().filter(|grant| grant.id.starts_with(IMPORTED_FAVORED_GRANT_PREFIX)).map(|grant| i64::from(grant.value.max(0))).sum())
+        .unwrap_or(0)
+}
+
+/// A sub-tab's budget; Favored Class with the imported bonuses spent.
+fn budget_at_root(root: &Path, package: &codex::rules_core::sheet_rule::SheetRulePackage, input: &CharacterInput, subtab: SubTab) -> codex::rules_core::ability_budget::AbilityBudget {
+    match subtab {
+        SubTab::FavoredClass => favored_class_budget(package, input, imported_favored_bonuses(root)),
+        _ => ability_budget(package, input, subtab),
+    }
+}
+
 fn subtab_of(id: &str) -> Result<SubTab, String> {
     SubTab::from_id(id).ok_or_else(|| format!("'{id}' is not an Abilities sub-tab with an engine budget"))
 }
@@ -193,6 +219,21 @@ fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
             .filter(|choice| choice.choice_set_id == ARCHETYPE_CHOICE_ID)
             .map(|choice| choice.selection_id.clone())
             .collect(),
+        SubTab::FavoredClass => input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|choice| choice.choice_set_id == FAVORED_CLASS_CHOICE_ID)
+            .map(|choice| format!("{FAVORED_CLASS_POOL}:{}", choice.selection_id))
+            .chain(
+                input
+                    .chosen
+                    .ability_selections
+                    .iter()
+                    .filter(|pick| pick.subtab == subtab.id())
+                    .map(|pick| format!("{FAVORED_BONUS_POOL}:{}@{}", pick.record_key, pick.level)),
+            )
+            .collect(),
     }
 }
 
@@ -213,7 +254,7 @@ pub(crate) fn list_ability_options_at_root(root: &Path, subtab: &str) -> Result<
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
     let base = compute_pilot_base_chassis(&input);
     Ok(AbilityOptionsDto {
-        budget: map_explanations_dto(&ability_budget(package, &input, subtab).explanation_rows()),
+        budget: map_explanations_dto(&budget_at_root(root, package, &input, subtab).explanation_rows()),
         options: ability_options(package, &input, &base, subtab).into_iter().map(AbilityOptionDto::from).collect(),
         selected: selected_ids(&input, subtab),
     })
@@ -249,7 +290,7 @@ pub(crate) fn add_ability_selection_at_root(
     let subtab = subtab_of(subtab)?;
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
-    let budget = ability_budget(package, &input, subtab);
+    let budget = budget_at_root(root, package, &input, subtab);
     if let Some(refusal) = budget.refusal(package, option_id) {
         return Err(refusal);
     }
@@ -276,6 +317,19 @@ pub(crate) fn add_ability_selection_at_root(
             let choice = SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: option_id.to_owned() };
             mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
         }
+        SubTab::FavoredClass => match option_id.split_once(':') {
+            Some((FAVORED_CLASS_POOL, class)) => {
+                let choice = SelectedChoice { choice_set_id: FAVORED_CLASS_CHOICE_ID.to_owned(), selection_id: class.to_owned() };
+                mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
+            }
+            Some((_, record_key)) => {
+                let level = favored_next_level(&input, imported_favored_bonuses(root))
+                    .ok_or_else(|| format!("No level of the favored class is left to charge '{}' to", option.label))?;
+                let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: FAVORED_BONUS_POOL.to_owned(), record_key: record_key.to_owned(), level, target: None };
+                mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+            }
+            None => Err(format!("'{option_id}' names no favored class pool")),
+        },
     }
 }
 
@@ -317,6 +371,21 @@ pub(crate) fn remove_ability_selection_at_root(
                 return Err(format!("This character does not hold '{option_id}'."));
             }
             mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.retain(|c| !held(c)))
+        }
+        // Removing the favored class removes its bonuses: they were its levels'.
+        subtab @ SubTab::FavoredClass => {
+            let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+            if !selected_ids(&input, subtab).iter().any(|id| id == option_id) {
+                return Err(format!("This character does not hold '{option_id}'."));
+            }
+            let pick = favored_pick_of(option_id);
+            mutate_saved_character_at_root(root, saved_at, |input| match pick {
+                Some((record, level)) => input.chosen.ability_selections.retain(|p| !(p.subtab == subtab.id() && p.record_key == record && p.level == level)),
+                None => {
+                    input.chosen.selected_choices.retain(|c| c.choice_set_id != FAVORED_CLASS_CHOICE_ID);
+                    input.chosen.ability_selections.retain(|p| p.subtab != subtab.id());
+                }
+            })
         }
     }
 }
@@ -512,5 +581,103 @@ mod tests {
         let major = listed.options.iter().find(|o| o.id == major).expect("Major Magic still offered");
         assert!(!major.unmet.iter().any(|reason| reason.contains("Minor Magic")), "{:?}", major.unmet);
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The sheet row `id`'s value as the Character Sheet loads it.
+    fn sheet_row(root: &Path, id: &str) -> Option<i16> {
+        let loaded = crate::character_hub::load_saved_character_at_root(root).expect("the sheet loads");
+        loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    const FIGHTER: &str = "favored_class:class:fighter";
+    const BONUS_HIT_POINT: &str = "favored_class_bonus:core_rulebook:class_feature:favored_class_bonus_hit_point";
+    const BONUS_SKILL_RANK: &str = "favored_class_bonus:core_rulebook:class_feature:favored_class_bonus_skill_rank";
+
+    /// Core Rulebook p.31, Favored Class: "Whenever a character gains a level in his favored class, he
+    /// receives either + 1 hit point or + 1 skill rank." Aldric is a Fighter 3: favored Fighter, a hit
+    /// point at each of levels 1-3 is +3 on the sheet's maximum hit points; a fourth is refused.
+    #[test]
+    fn abilities_favored_class_a_fighter_3_takes_a_hit_point_at_levels_1_to_3_and_the_sheet_adds_3() {
+        let root = aldric_root("favored-hp");
+        let before = sheet_row(&root, "hit_points.max").expect("Aldric's hit points");
+        let listed = list_ability_options_at_root(&root, "favored_class").expect("favored class options");
+        assert!(listed.options.iter().any(|o| o.id == FIGHTER && o.qualified), "{:?}", listed.options);
+        let hit_point = listed.options.iter().find(|o| o.id == BONUS_HIT_POINT).expect("the +1 hit point option");
+        assert!(!hit_point.qualified && hit_point.unmet.iter().any(|r| r.contains("favored class")), "{:?}", hit_point.unmet);
+
+        add_ability_selection_at_root(&root, "favored_class", FIGHTER, SAVED_AT).expect("favored Fighter");
+        for _ in 0..3 {
+            add_ability_selection_at_root(&root, "favored_class", BONUS_HIT_POINT, SAVED_AT).expect("a hit point");
+        }
+        let refusal = add_ability_selection_at_root(&root, "favored_class", BONUS_HIT_POINT, SAVED_AT).expect_err("a fourth at Fighter 3");
+        assert!(refusal.contains("favored_class_bonus pool"), "{refusal}");
+        let picks = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        let levels: Vec<u8> = picks.iter().filter(|p| p.subtab == "favored_class").map(|p| p.level).collect();
+        assert_eq!(levels, [1, 2, 3], "one bonus charged to each Fighter level");
+        assert_eq!(sheet_row(&root, "hit_points.max"), Some(before + 3));
+        assert_eq!(sheet_row(&root, "favored_class.hit_points"), Some(3));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The same rule's other option: a skill rank at level 2 is +1 to the skill point pool.
+    #[test]
+    fn abilities_favored_class_a_skill_rank_at_level_2_adds_1_to_the_skill_pool() {
+        let root = aldric_root("favored-skill");
+        let before = sheet_row(&root, "hit_points.max").expect("Aldric's hit points");
+        assert_eq!(sheet_row(&root, "favored_class.skill_ranks"), Some(0), "no favored class: no extra rank");
+        add_ability_selection_at_root(&root, "favored_class", FIGHTER, SAVED_AT).expect("favored Fighter");
+        add_ability_selection_at_root(&root, "favored_class", BONUS_HIT_POINT, SAVED_AT).expect("level 1: a hit point");
+        add_ability_selection_at_root(&root, "favored_class", BONUS_SKILL_RANK, SAVED_AT).expect("level 2: a skill rank");
+        let picks = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        let taken: Vec<(String, u8)> = picks.iter().filter(|p| p.subtab == "favored_class").map(|p| (p.record_key.clone(), p.level)).collect();
+        assert_eq!(
+            taken,
+            [
+                ("core_rulebook:class_feature:favored_class_bonus_hit_point".to_owned(), 1),
+                ("core_rulebook:class_feature:favored_class_bonus_skill_rank".to_owned(), 2)
+            ]
+        );
+        assert_eq!(sheet_row(&root, "favored_class.skill_ranks"), Some(1), "the skill pool's +1");
+        assert_eq!(sheet_row(&root, "hit_points.max"), Some(before + 1));
+        let listed = list_ability_options_at_root(&root, "favored_class").expect("options");
+        assert_eq!(listed.selected.len(), 3, "the class and two bonuses: {:?}", listed.selected);
+        let skill_pick = listed.selected.iter().find(|id| id.starts_with(BONUS_SKILL_RANK)).expect("the skill pick").clone();
+        remove_ability_selection_at_root(&root, "favored_class", &skill_pick, SAVED_AT).expect("remove the skill rank");
+        assert_eq!(sheet_row(&root, "favored_class.skill_ranks"), Some(0));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A PCGen import carries its favored class bonus as Custom grants (`pcg_import/map.rs`
+    /// `add_favored_class_bonus`): three hit points are +3 once, and they spend the favored class pool,
+    /// so the sheet cannot take the same three levels' bonuses again.
+    #[test]
+    fn abilities_favored_class_an_imported_bonus_is_not_counted_twice() {
+        let dir = std::env::temp_dir().join(format!("codex-abilities-favored-import-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).expect("temp dir");
+        let pcg = dir.join("fighter.pcg");
+        let mut text = String::from("PCGVERSION:2.0\nCHARACTERNAME:Favored\nGAMEMODE:Pathfinder_RPG\nRACE:Human\nCLASS:Fighter|LEVEL:3\n");
+        text.push_str("STAT:STR|SCORE:16\nSTAT:DEX|SCORE:12\nSTAT:CON|SCORE:14\nSTAT:INT|SCORE:10\nSTAT:WIS|SCORE:10\nSTAT:CHA|SCORE:8\n");
+        text.push_str("ABILITY:Favored Class Bonus|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Class Bonus ~ Hit Point|APPLIEDTO:,,|TYPE:FavoredClassBonus\n");
+        std::fs::write(&pcg, text).expect("write the file");
+        let out = dir.join("out.json");
+        let repo = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..");
+        codex_ingest::pcg_import::run(&pcg, &out, &repo).expect("the converter reads the file");
+        let root = dir.join("character");
+        let json = std::fs::read_to_string(&out).expect("the converter's JSON");
+        crate::character_hub::import_pcg_json(&json, &root, "favored-import", SAVED_AT, "0.0.0-test").expect("the import runs");
+        let custom = crate::character_custom::load_character_custom_at_root(&root).expect("custom.json");
+        let imported: Vec<(&str, i32)> = custom.grants.iter().map(|g| (g.target.as_str(), g.value)).collect();
+        assert_eq!(imported, [("hit_points", 3)], "the import's own grant");
+        let with_grant = sheet_row(&root, "hit_points.max").expect("hit points");
+
+        add_ability_selection_at_root(&root, "favored_class", FIGHTER, SAVED_AT).expect("favored Fighter");
+        let listed = list_ability_options_at_root(&root, "favored_class").expect("options");
+        let row = |field: &str| listed.budget.iter().find(|r| r.id == format!("abilities.budget.favored_class.favored_class_bonus.{field}")).map(|r| r.value);
+        assert_eq!((row("granted"), row("spent"), row("remaining")), (Some(3), Some(3), Some(0)), "{:?}", listed.budget);
+        let refusal = add_ability_selection_at_root(&root, "favored_class", BONUS_HIT_POINT, SAVED_AT).expect_err("the import already took levels 1-3");
+        assert!(refusal.contains("favored_class_bonus pool"), "{refusal}");
+        assert_eq!(sheet_row(&root, "hit_points.max"), Some(with_grant), "the imported +3 counted once");
+        std::fs::remove_dir_all(&dir).ok();
     }
 }

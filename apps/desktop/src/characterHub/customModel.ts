@@ -283,6 +283,14 @@ export function withCustomSkillPoints(total: number | null, custom: CharacterCus
   return total === null ? null : Math.max(0, total + grantTotals(custom).skillPoints);
 }
 
+/**
+ * The skill point pool with the engine's favored class skill ranks (`favored_class.skill_ranks`, SD-43 E3.8:
+ * the engine counts them; this only places its row on the pool). An unknown pool stays unknown.
+ */
+export function withFavoredSkillRanks(total: number | null, explanations: readonly ExplanationDto[]): number | null {
+  return total === null ? null : total + (engineRowValue(explanations, 'favored_class.skill_ranks') ?? 0);
+}
+
 export function customIsEmpty(custom: CharacterCustom): boolean {
   return (
     custom.grants.length === 0 &&
