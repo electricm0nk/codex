@@ -29,7 +29,7 @@ use std::collections::BTreeMap;
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::feat_budget::{feat_pool_of, grant_amount, repeats_the_line};
 use crate::rules_core::feat_identity;
-use crate::rules_core::feat_prereqs::converted_gate::{verdicts, TermVerdict};
+use crate::rules_core::ability_prereqs;
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation, PilotBaseChassisComputation};
 use crate::rules_core::sheet_rule::{
     display_label, evaluate_applies, held_set, id_slug, offer_selects, sibling_line_gate, split_rule_id, Applies, BonusTarget, CharacterFacts,
@@ -161,7 +161,8 @@ impl AbilityBudget {
     }
 
     /// Why this character may not take `option_id` now, naming the pool or the category; `None`
-    /// when the budget has room. Prerequisites are [`ability_options`]' `unmet`.
+    /// when the budget has room. Prerequisites are [`ability_options`]' `unmet`, refused by
+    /// [`ability_prereqs::refusal`].
     pub fn refusal(&self, package: &SheetRulePackage, option_id: &str) -> Option<String> {
         if self.held.iter().any(|held| held.id == option_id) && !self.repeatable(package, option_id) {
             return Some(format!("This character already holds '{option_id}'."));
@@ -250,6 +251,7 @@ fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
             (taken > 0).then(|| CharacterClassLevel { level: taken, ..class.clone() })
         })
         .collect();
+    at.chosen.ability_selections.retain(|pick| pick.level <= level);
     at
 }
 
@@ -261,7 +263,19 @@ fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
 /// Racial Abilities or Traits sub-tab. A choice about a companion (its status, a trick) is the
 /// character's pick, so it is here.
 fn class_feature_grants(package: &SheetRulePackage, input: &CharacterInput) -> BTreeMap<String, (i64, Vec<String>)> {
-    class_feature_grants_holding(package, input, &[])
+    class_feature_grants_holding(package, input, &picked_rules(input))
+}
+
+/// The records of the Class Features picks `input` saves. A pick is held: a member whose prerequisite is
+/// another pick (Major Magic after Minor Magic) reads it, and a pick that grants a pool grants it.
+fn picked_rules(input: &CharacterInput) -> Vec<String> {
+    input
+        .chosen
+        .ability_selections
+        .iter()
+        .filter(|pick| pick.subtab == SubTab::ClassFeatures.id())
+        .map(|pick| pick.record_key.clone())
+        .collect()
 }
 
 /// [`class_feature_grants`] with `rule_ids` held outright besides what the character holds.
@@ -279,7 +293,7 @@ fn class_feature_grants_holding(package: &SheetRulePackage, input: &CharacterInp
         }
         let Some(rule) = package.rule(id) else { continue };
         let (Some(BonusTarget::Pool(pool)), SheetValue::Number(amount)) = (&rule.target, &rule.value) else { continue };
-        if feat_pool_of(rule).is_some() || rule.subject != Subject::Character || NOT_CLASS_FEATURE_KINDS.contains(&split_rule_id(id).1) {
+        if !is_class_feature_grant(rule) {
             continue;
         }
         if counted.iter().any(|earlier| repeats_the_line(rule, earlier)) {
@@ -308,6 +322,14 @@ fn class_feature_grants_holding(package: &SheetRulePackage, input: &CharacterInp
 
 /// Record kinds whose pools sit on another sub-tab (see [`class_feature_grants`]).
 const NOT_CLASS_FEATURE_KINDS: [&str; 7] = ["race", "race_trait", "template", "monster", "monster_ability", "trait", "equipment"];
+
+/// Whether `rule` grants picks into a Class Features pool (see [`class_feature_grants`]).
+pub(crate) fn is_class_feature_grant(rule: &SheetRule) -> bool {
+    matches!(rule.target, Some(BonusTarget::Pool(_)))
+        && feat_pool_of(rule).is_none()
+        && rule.subject == Subject::Character
+        && !NOT_CLASS_FEATURE_KINDS.contains(&split_rule_id(&rule.id).1)
+}
 
 fn class_feature_budget(package: &SheetRulePackage, input: &CharacterInput) -> AbilityBudget {
     class_feature_budget_from(package, input, true)
@@ -503,7 +525,8 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
             pools.push(pick.pool.clone());
         }
     }
-    let seed = HeldSeed::from_character(input, base);
+    let mut seed = HeldSeed::from_character(input, base);
+    seed.rule_ids.extend(picked_rules(input));
     let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
@@ -517,13 +540,7 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
                 continue;
             }
             labels.push(label.clone());
-            let unmet: Vec<String> = verdicts(package, &held, &facts, &rule.applies)
-                .into_iter()
-                .filter_map(|verdict| match verdict {
-                    TermVerdict::Unmet(words) => Some(words),
-                    _ => None,
-                })
-                .collect();
+            let unmet = ability_prereqs::unmet(package, &held, &facts, &rule.applies);
             let prose = catalog_prose(package, rule);
             options.push(AbilityOption {
                 id: format!("{pool}:{}", rule.id),
@@ -556,10 +573,7 @@ fn trait_options(package: &SheetRulePackage, input: &CharacterInput, base: &Pilo
             {
                 unmet.push(format!("one {} trait only: {} is held", category_words(category), clash.label));
             }
-            unmet.extend(verdicts(package, &held, &facts, &rule.applies).into_iter().filter_map(|verdict| match verdict {
-                TermVerdict::Unmet(words) => Some(words),
-                _ => None,
-            }));
+            unmet.extend(ability_prereqs::unmet(package, &held, &facts, &rule.applies));
             AbilityOption {
                 id,
                 label: display_label(rule),

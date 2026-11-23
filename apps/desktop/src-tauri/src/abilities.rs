@@ -7,6 +7,7 @@
 use std::path::Path;
 
 use codex::rules_core::ability_budget::{ability_budget, ability_options, AbilityOption, SubTab};
+use codex::rules_core::ability_prereqs;
 use codex::rules_core::character_input::AbilitySelection;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
@@ -139,8 +140,8 @@ pub(crate) fn add_ability_selection_at_root(
         .into_iter()
         .find(|option| option.id == option_id)
         .ok_or_else(|| format!("'{option_id}' is not an option of the {} sub-tab", subtab.id()))?;
-    if !option.qualified {
-        return Err(format!("'{}' cannot be taken by this character: {}", option.label, option.unmet.join("; ")));
+    if let Some(refusal) = ability_prereqs::refusal(&option) {
+        return Err(refusal);
     }
     match subtab {
         SubTab::Traits => mutate_saved_character_at_root(root, saved_at, |input| apply_add_trait_selection(input, option_id, None)),
@@ -264,6 +265,30 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("remove");
         assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [second]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Major Magic (Core Rulebook): "A rogue must have the minor magic rogue talent ... before selecting this talent."
+    #[test]
+    fn abilities_class_features_a_talent_whose_prerequisite_is_another_talent_is_refused_until_that_talent_is_held() {
+        let root = aldric_root("class-feature-prereqs");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 4 }];
+        })
+        .expect("make Aldric a Rogue 4");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let id_of = |label: &str| {
+            listed.options.iter().find(|o| o.pool == "rogue_talent" && o.label == label).map(|o| o.id.clone()).unwrap_or_else(|| panic!("no {label}"))
+        };
+        let (minor, major) = (id_of("Minor Magic"), id_of("Major Magic"));
+        let refusal = add_ability_selection_at_root(&root, "class_features", &major, SAVED_AT).expect_err("Major Magic before Minor Magic");
+        assert!(refusal.contains("Minor Magic"), "{refusal}");
+
+        add_ability_selection_at_root(&root, "class_features", &minor, SAVED_AT).expect("Minor Magic");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let major = listed.options.iter().find(|o| o.id == major).expect("Major Magic still offered");
+        assert!(!major.unmet.iter().any(|reason| reason.contains("Minor Magic")), "{:?}", major.unmet);
         std::fs::remove_dir_all(&root).ok();
     }
 }

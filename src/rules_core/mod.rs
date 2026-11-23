@@ -28,6 +28,7 @@ pub mod description_completion;
 pub mod desc_template;
 pub mod durability;
 pub mod ability_budget;
+pub mod ability_prereqs;
 pub mod encounters;
 pub mod encumbrance;
 pub mod equipment_effects;
