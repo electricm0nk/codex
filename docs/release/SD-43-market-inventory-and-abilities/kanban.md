@@ -64,7 +64,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | complete | E1.7 | sheet | no | hub | receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; SHA `10aefca95f0cec754665263d2028fa2fd49a4367` |
 | E2.2 | The shared layout on the SF and CPR sheets | sonnet | complete | E2.1 | sheet | no | no | receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; SHA `79f355f04ba4e4373fb5b7cc3f49be3bd86752f2`; settles Q-8.2 |
 | E2.3 | Open campaign button opens the folder; one banner per campaign; Manager banner smaller | opus | complete | E2.2 | sheet | no | hub | receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; SHA `85af984e595df395a86f2a12047e39f8e4861170` |
-| E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | todo | E0.5, E2.3 | sheet | yes (root + desktop) | hub | new runtime data read: `bundle.resources` + `packaged_resources.rs` |
+| E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | complete | E0.5, E2.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; SHA `4caf5d7df78eb51fb7e62a6d2bbfa7c165d8fc5e` |
 | E2.5 | Rest text read-only under the Biography text | sonnet | todo | E2.4 | sheet | no | hub | |
 | E2.MC | E2 merge check + epic report | opus | todo | E2.5 | sheet | yes (base build) | no | |
 | E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | Q-22.3 settled: rename |
