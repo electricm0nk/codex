@@ -3,6 +3,14 @@
 //! prerequisites are the engine's (`codex::rules_core::ability_budget`); this file loads the saved
 //! character, asks the engine, and saves through the same recompute-before-persist gate every add
 //! path uses. Feats keep their own commands.
+//!
+//! **Racial Abilities** (SD-43 E3.6) are the race's alternate racial traits, offered and refused by the
+//! race picker's own resolution (`race_trait_picker::build_alternate_racial_traits` /
+//! `build_race_selection`, the functions behind `list_alternate_racial_traits` /
+//! `resolve_race_alternate_selection`) and saved where creation saves them (`selected_choices`,
+//! `choice:race_alternate_trait`). Two alternates that replace the same racial trait are refused. They
+//! have no count budget, so the sub-tab serves no budget rows; a replaced trait that grants a feat
+//! leaves the Feats sub-tab's racial pool (`feat_budget` reads the applied racial traits).
 
 use std::path::Path;
 
@@ -10,14 +18,104 @@ use codex::rules_core::ability_budget::{ability_budget, ability_options, Ability
 use codex::rules_core::ability_prereqs;
 use codex::rules_core::character_input::AbilitySelection;
 use codex::rules_core::game_system::GameSystem;
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+use codex::rules_core::character_input::{CharacterInput, SelectedChoice};
+use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, race_alternate_trait_selection_id, RACE_ALTERNATE_TRAIT_CHOICE_ID};
 use codex::saved_character::local_store::SavedCharacterStore;
 use serde::{Deserialize, Serialize};
 
 use crate::character_hub::{
-    apply_add_trait_selection, map_explanations_dto, mutate_saved_character_at_root, remove_trait_selection_at_root,
-    resolve_character_root, sheet_rule_package_for, CreateCharacterResponse, ExplanationDto,
+    apply_add_trait_selection, map_explanations_dto, mutate_saved_character_at_root, read_alternate_trait_keys,
+    remove_trait_selection_at_root, resolve_alternate_trait_choices, resolve_character_root, sheet_rule_package_for,
+    CreateCharacterResponse, ExplanationDto,
 };
+use crate::race_trait_picker::{build_alternate_racial_traits, build_race_selection, RaceSelectionRequest};
+
+/// The Racial Abilities sub-tab's id; its picks are the race picker's, not an `ability_budget` sub-tab's.
+const RACIAL_ABILITIES: &str = "racial_abilities";
+/// The pool an alternate racial trait is listed under.
+const ALTERNATE_POOL: &str = "alternate_racial_trait";
+
+/// This character's race's alternate racial traits, each refused while a held alternate already replaces
+/// a trait it replaces (the `PREMULT` self-exclusion guard the picker reads) or while it replaces nothing
+/// in the loaded books; and the held keys.
+fn racial_options(input: &CharacterInput) -> Result<(Vec<AbilityOptionDto>, Vec<String>), String> {
+    let held = read_alternate_trait_keys(input);
+    let resolution =
+        build_race_selection(&RaceSelectionRequest { race_key: input.chosen.race_id.clone(), selected_alternate_keys: held.clone() });
+    if !resolution.errors.is_empty() {
+        return Err(resolution.errors.join("; "));
+    }
+    let menu = build_alternate_racial_traits();
+    let race = menu
+        .races
+        .iter()
+        .find(|race| race.race_key == resolution.race_key)
+        .ok_or_else(|| format!("the race picker lists no race {:?}", resolution.race_key))?;
+    let options = race
+        .alternates
+        .iter()
+        .map(|alternate| {
+            let replaced = |flag: &str| {
+                let names: Vec<&str> = alternate.replaces.iter().filter(|r| r.flag == flag).map(|r| r.name.as_str()).collect();
+                if names.is_empty() { flag.to_owned() } else { names.join(", ") }
+            };
+            let mut unmet: Vec<String> = resolution
+                .blocked_alternates
+                .iter()
+                .chain(&resolution.conflicting_selections)
+                .filter(|blocked| blocked.key == alternate.key)
+                .map(|blocked| {
+                    format!("replaces {}, which {} already replaces; a racial trait is replaced once", replaced(&blocked.flag), blocked.blocked_by_name)
+                })
+                .collect();
+            unmet.extend(alternate.unmatched_flags.iter().map(|flag| {
+                format!("its {flag} replaces and grants nothing in the loaded books, so the trait it names would stay")
+            }));
+            let replaces: Vec<&str> = alternate.replaces.iter().map(|r| r.name.as_str()).collect();
+            AbilityOptionDto {
+                id: alternate.key.clone(),
+                label: alternate.name.clone(),
+                pool: ALTERNATE_POOL.to_owned(),
+                category: (!replaces.is_empty()).then(|| format!("Replaces {}", replaces.join(", "))),
+                qualified: unmet.is_empty(),
+                unmet,
+                description: Some(alternate.description.clone()).filter(|d| !d.trim().is_empty()),
+            }
+        })
+        .collect();
+    Ok((options, held))
+}
+
+/// Saves `key` beside the held alternates once the creation path's validation accepts the new set.
+fn add_racial_ability_at_root(root: &Path, key: &str, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    let (options, mut held) = racial_options(&input)?;
+    if held.iter().any(|k| k == key) {
+        return Err(format!("This character already holds '{key}'."));
+    }
+    let option = options.iter().find(|o| o.id == key).ok_or_else(|| format!("'{key}' is not an alternate racial trait of this character's race"))?;
+    if !option.qualified {
+        return Err(format!("'{}' cannot be taken by this character: {}", option.label, option.unmet.join("; ")));
+    }
+    held.push(key.to_owned());
+    let choices: Vec<SelectedChoice> = resolve_alternate_trait_choices(&input.chosen.race_id, &held)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    mutate_saved_character_at_root(root, saved_at, |input| {
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != RACE_ALTERNATE_TRAIT_CHOICE_ID);
+        input.chosen.selected_choices.extend(choices);
+    })
+}
+
+fn remove_racial_ability_at_root(root: &Path, key: &str, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    if !read_alternate_trait_keys(&input).iter().any(|k| k == key) {
+        return Err(format!("This character does not hold '{key}'."));
+    }
+    let selection = race_alternate_trait_selection_id(key);
+    mutate_saved_character_at_root(root, saved_at, |input| {
+        input.chosen.selected_choices.retain(|c| !(c.choice_set_id == RACE_ALTERNATE_TRAIT_CHOICE_ID && c.selection_id == selection));
+    })
+}
 
 fn subtab_of(id: &str) -> Result<SubTab, String> {
     SubTab::from_id(id).ok_or_else(|| format!("'{id}' is not an Abilities sub-tab with an engine budget"))
@@ -73,7 +171,7 @@ pub struct AbilityOptionsDto {
 }
 
 /// The option ids of the picks a sub-tab saves, in saved order.
-fn selected_ids(input: &codex::rules_core::character_input::CharacterInput, subtab: SubTab) -> Vec<String> {
+fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
     match subtab {
         SubTab::Traits => input.chosen.selected_traits.clone(),
         SubTab::ClassFeatures => input
@@ -93,6 +191,11 @@ pub fn list_ability_options(app: tauri::AppHandle, request: ListAbilityOptionsRe
 }
 
 pub(crate) fn list_ability_options_at_root(root: &Path, subtab: &str) -> Result<AbilityOptionsDto, String> {
+    if subtab == RACIAL_ABILITIES {
+        let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+        let (options, selected) = racial_options(&input)?;
+        return Ok(AbilityOptionsDto { budget: Vec::new(), options, selected });
+    }
     let subtab = subtab_of(subtab)?;
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
@@ -128,6 +231,9 @@ pub(crate) fn add_ability_selection_at_root(
     option_id: &str,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    if subtab == RACIAL_ABILITIES {
+        return add_racial_ability_at_root(root, option_id, saved_at);
+    }
     let subtab = subtab_of(subtab)?;
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
@@ -170,6 +276,9 @@ pub(crate) fn remove_ability_selection_at_root(
     option_id: &str,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    if subtab == RACIAL_ABILITIES {
+        return remove_racial_ability_at_root(root, option_id, saved_at);
+    }
     match subtab_of(subtab)? {
         SubTab::Traits => remove_trait_selection_at_root(root, option_id, saved_at),
         subtab @ SubTab::ClassFeatures => {
@@ -265,6 +374,44 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("remove");
         assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [second]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The feat budget's racial pool, as the Feats sub-tab reads it: `feats.budget.racial.granted`, or 0 when no row.
+    fn racial_feat_pool(root: &Path) -> i64 {
+        let input = SavedCharacterStore::load(root).expect("reload").character_input;
+        let base = compute_pilot_base_chassis(&input);
+        let budget = crate::character_hub::feat_budget_for(&input, &base).expect("feat budget");
+        budget.pools().iter().find(|pool| pool.id == "racial").map_or(0, |pool| pool.granted)
+    }
+
+    /// Piety (Horror Adventures p.41): "This racial trait replaces the bonus feat racial trait." So does
+    /// Rationalize; a human replaces the bonus feat once.
+    #[test]
+    fn abilities_racial_abilities_a_human_alternate_replaces_the_bonus_feat_and_a_second_replacing_it_is_refused() {
+        let root = aldric_root("racial-abilities");
+        assert_eq!(racial_feat_pool(&root), 1, "a human's bonus feat before any alternate");
+        let listed = list_ability_options_at_root(&root, "racial_abilities").expect("options");
+        for key in ["Human ~ Piety", "Human ~ Rationalize"] {
+            assert!(listed.options.iter().any(|o| o.id == key && o.qualified), "{key} offered and qualified");
+        }
+
+        add_ability_selection_at_root(&root, "racial_abilities", "Human ~ Piety", SAVED_AT).expect("Piety");
+        let input = SavedCharacterStore::load(&root).expect("reload").character_input;
+        assert_eq!(crate::character_hub::read_alternate_trait_keys(&input), ["Human ~ Piety"]);
+        assert_eq!(racial_feat_pool(&root), 0, "the feat budget's racial pool follows the replaced trait");
+        let listed = list_ability_options_at_root(&root, "racial_abilities").expect("options");
+        assert_eq!(listed.selected, ["Human ~ Piety"]);
+        let rationalize = listed.options.iter().find(|o| o.id == "Human ~ Rationalize").expect("Rationalize still listed");
+        assert!(!rationalize.qualified && rationalize.unmet.iter().any(|r| r.contains("Piety") && r.contains("Bonus Feat")), "{:?}", rationalize.unmet);
+
+        let refusal = add_ability_selection_at_root(&root, "racial_abilities", "Human ~ Rationalize", SAVED_AT).expect_err("a second bonus-feat alternate");
+        assert!(refusal.contains("Piety") && refusal.contains("Bonus Feat"), "{refusal}");
+        let input = SavedCharacterStore::load(&root).expect("reload").character_input;
+        assert_eq!(crate::character_hub::read_alternate_trait_keys(&input), ["Human ~ Piety"], "the refusal saved nothing");
+
+        remove_ability_selection_at_root(&root, "racial_abilities", "Human ~ Piety", SAVED_AT).expect("remove Piety");
+        assert_eq!(racial_feat_pool(&root), 1, "the bonus feat comes back");
         std::fs::remove_dir_all(&root).ok();
     }
 

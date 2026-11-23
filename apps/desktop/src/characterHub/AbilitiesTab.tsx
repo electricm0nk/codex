@@ -10,7 +10,6 @@ export type AbilitySubTabName = (typeof ABILITY_SUB_TABS)[number];
 
 /** The card that brings each sub-tab's engine budget, picks and prerequisite checks (epic-breakdown.md Epic E3). */
 export const PENDING_ENGINE_CARD: Partial<Record<AbilitySubTabName, string>> = {
-  'Racial Abilities': 'E3.6',
   Archetype: 'E3.7',
   Background: 'E3.9',
   Misc: 'E3.9',

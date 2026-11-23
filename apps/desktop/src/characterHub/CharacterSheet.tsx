@@ -4356,7 +4356,19 @@ export function CharacterSheet(props: {
                           onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
                         />
                       ),
-                      'Racial Abilities': <RacialTraitsSection surface={racialTraits} raceLabel={props.row.raceLabel} />,
+                      'Racial Abilities': (
+                        <div>
+                          <AbilitySubTab
+                            characterId={props.row.characterId}
+                            subtab="racial_abilities"
+                            title="Alternate Racial Traits"
+                            info={() => null}
+                            onAdd={(id) => handleAddAbility(id, null, 'racial_abilities')}
+                            onRemove={(id) => handleRemoveAbility(id, 'racial_abilities')}
+                          />
+                          <RacialTraitsSection surface={racialTraits} raceLabel={props.row.raceLabel} />
+                        </div>
+                      ),
                       Traits: (
                         <TraitsSubTab
                           characterId={props.row.characterId}

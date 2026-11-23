@@ -10,8 +10,8 @@ import type { ExplanationDto } from './loadSavedCharacterDetail';
  * recompute-before-save gate as every other add.
  */
 
-/** A sub-tab id the engine budgets (`ability_budget::SubTab`). */
-export type AbilitySubTabId = 'traits' | 'class_features';
+/** A sub-tab id the engine serves: `ability_budget::SubTab`, and the race's alternate racial traits. */
+export type AbilitySubTabId = 'traits' | 'class_features' | 'racial_abilities';
 
 export interface AbilityOptionDto {
   id: string;

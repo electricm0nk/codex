@@ -1821,7 +1821,7 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 /// Refusing rather than dropping matters: a silently-ignored selection is
 /// exactly the failure `unresolved_spell_ids` / `unresolved_equipment_item_ids`
 /// were both added to stop.
-fn resolve_alternate_trait_choices(
+pub(crate) fn resolve_alternate_trait_choices(
     race_id: &str,
     selected_alternate_trait_keys: &[String],
 ) -> Result<Vec<SelectedChoice>, Vec<DiagnosticDto>> {
@@ -5290,12 +5290,9 @@ pub(crate) fn class_alignment_gate_at_root(root: &Path, class_id: &str) -> Resul
 // compute is discarded exactly like an add that does — the on-disk character
 // is never left holding a stale computed value.
 //
-// Deliberately NOT built here: post-creation alternate racial trait removal.
-// Alternate racial traits have no post-creation *add* path either
-// (`selected_alternate_trait_keys` is a `create_character` field, resolved
-// once by `resolve_alternate_trait_choices`); adding only the remove half
-// would give the sheet a one-way door in the other direction. See this
-// module's `read_alternate_trait_keys`.
+// Alternate racial traits are added and removed after creation on the Abilities
+// tab's Racial Abilities sub-tab (`abilities.rs`), validated by the same
+// `resolve_alternate_trait_choices` the creation path uses.
 
 /// Removes one held copy of `feat_id` from `chosen.selected_feats`, plus the
 /// chooser target that copy recorded.
