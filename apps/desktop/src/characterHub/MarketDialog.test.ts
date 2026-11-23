@@ -236,7 +236,7 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   }
   assert(sheet.includes('<MarketDialog'), 'the sheet renders the dialog');
   assert(sheet.includes('listMarket('), 'its rows are list_market\'s, not a bundled list');
-  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal)'), 'Sell names the copy, with its quantity and any negotiated price');
+  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal, copy.copies?.[0])'), 'Sell names the copy, with its quantity and any negotiated price');
   assert(sheet.includes('mapMarketTableRows(response.entries)'), 'the table rows carry weight, slot and description');
   assert(/takesDeals\s+onBuyCustom=\{handleMarketBuyCustom\}\s+onCreate=\{handleMarketCreate\}/.test(sheet), 'the sheet wires Quantity, Negotiate, Buy Custom and Create');
   assert(sheet.includes('purchaseCustomEquipment({') && sheet.includes('createCustomItem({'), 'Buy Custom and Create reach their commands');

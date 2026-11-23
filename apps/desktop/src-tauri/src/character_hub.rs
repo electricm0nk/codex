@@ -5658,11 +5658,22 @@ pub(crate) fn sell_held_pieces_at_root(
             None => format!("'{item_id}' cannot be removed: this character does not carry it"),
         });
     };
+    let sold = selection_copy_keys(held).swap_remove(index);
+    sell_copy_pieces_at_root(root, &sold, saved_at, mode, deal)
+}
+
+/// [`sell_held_pieces_at_root`] of the copy `copy` names, the one the player clicked (SD-43 E1.12).
+pub(crate) fn sell_copy_pieces_at_root(root: &Path, copy: &CopyKey, saved_at: &str, mode: PriceMode, deal: Deal) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let held = &envelope.character_input.chosen.equipment_selections;
+    let Some(index) = selection_copy_keys(held).iter().position(|key| key == copy) else {
+        return Err(format!("'{}' cannot be removed: this character does not hold that copy", copy.map_key()));
+    };
+    let offers = if held[index].applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&held[index].item_id) };
     let sold_bonus = copy_bonus(&held[index], &offers);
     let cost_gp = copy_price_gp(&held[index].item_id, sold_bonus, &offers);
-    let sold = selection_copy_keys(held).swap_remove(index);
 
-    let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), true, saved_at)?;
+    let taken = take_pieces_at_root(root, copy, deal.quantity, deal.quantity.is_none(), true, saved_at)?;
     if let CreateCharacterResponse::Saved { .. } = &taken.response {
         let listed = codex::rules_core::encumbrance::copy_listed_copper(cost_gp, taken.cost_override_copper, taken.pieces, taken.bundle_pieces).unwrap_or(0);
         let refund = match (mode, deal.negotiated_copper) {
@@ -7055,6 +7066,10 @@ pub struct RemoveEquipmentSelectionRequest {
     /// (`decisions.md §26`).
     #[serde(default)]
     pub negotiated_price_copper: Option<u64>,
+    /// The copy the row stands for (its `copies[0]`); named, it is the one sold, and `bonus` and
+    /// `from_state` are not read.
+    #[serde(default)]
+    pub copy: Option<CopyKey>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
@@ -7068,9 +7083,17 @@ pub fn remove_equipment_selection(
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
+    sell_requested_copy_at_root(&root, &request)
+}
+
+/// [`remove_equipment_selection`] on the character saved at `root`.
+pub(crate) fn sell_requested_copy_at_root(root: &Path, request: &RemoveEquipmentSelectionRequest) -> Result<CreateCharacterResponse, String> {
     let named = CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) };
     let deal = Deal { bonus: None, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
-    sell_held_pieces_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, named, deal)
+    match &request.copy {
+        Some(copy) => sell_copy_pieces_at_root(root, copy, &request.saved_at, request.price_mode, deal),
+        None => sell_held_pieces_at_root(root, &request.item_id, &request.saved_at, request.price_mode, named, deal),
+    }
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -22747,6 +22770,29 @@ mod tests {
         assert!(stacks_of(&root, "Backpack").is_empty());
         assert_eq!(worn_vs_carried_weight(&root), before - fixture_weight("Backpack"));
         assert_eq!(active_location(&root, &sets_key("item:dagger", 0)), Location::Carried);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-43 E1.12 (E0.4 `gear-repro.md` §12.2): two Sacks Carried, the second holding a Bedroll;
+    /// the Sell request names the second by its copy key, so the second goes and its Bedroll is
+    /// Carried, and the first, with its own name, stays.
+    #[test]
+    fn sell_names_the_copy() {
+        let root = sets_root(
+            "sell-names-the-copy",
+            &[("Sack", ActiveState::SelectedInactive), ("Sack", ActiveState::SelectedInactive), ("Bedroll", ActiveState::SelectedInactive)],
+        );
+        rename_equipment_copy_at_root(&root, &sets_key("Sack", 0), "Kept Sack").unwrap();
+        move_saved(&root, &sets_key("Bedroll", 0), Location::Inside { container: sets_key("Sack", 1) }, None);
+        let request: RemoveEquipmentSelectionRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": "Sack", "savedAt": MOVED_AT, "priceMode": "cashless", "bonus": 0,
+            "fromState": "SelectedInactive", "copy": { "itemId": "Sack", "bonus": 0, "ordinal": 1 },
+        }))
+        .unwrap();
+        saved_ok(sell_requested_copy_at_root(&root, &request));
+        let names: Vec<String> = stacks_of(&root, "Sack").into_iter().map(|row| row.name).collect();
+        assert_eq!(names, vec!["Kept Sack".to_owned()], "the first Sack, with its name, stays");
+        assert_eq!(active_location(&root, &sets_key("Bedroll", 0)), Location::Carried, "the sold Sack's Bedroll is Carried");
         std::fs::remove_dir_all(&root).ok();
     }
 

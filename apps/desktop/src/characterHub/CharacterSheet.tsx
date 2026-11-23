@@ -112,7 +112,7 @@ import { GearScreen } from './GearScreen';
 import type { CustomizeTarget } from './CustomizeCopyDialog';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { describeHeldEquipment } from '../boundary/describeHeldEquipment';
-import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { listHeldEquipment, sellableCopies, type CopyKeyDto, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { AdmittedRecordDto, ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
@@ -3600,6 +3600,7 @@ export function CharacterSheet(props: {
         priceMode,
         bonus: held.bonus,
         fromState: held.activeState,
+        copy: held.copies[0],
         ...(quantity === undefined ? {} : { quantity }),
         ...(negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(negotiatedGp) }),
       });
@@ -3642,7 +3643,7 @@ export function CharacterSheet(props: {
    * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
    * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto, deal?: MarketDeal): Promise<CharacterMoneyDto | null> {
+  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto, deal?: MarketDeal, copy?: CopyKeyDto): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3652,6 +3653,7 @@ export function CharacterSheet(props: {
         priceMode,
         ...(bonus === undefined ? {} : { bonus }),
         ...(fromState === undefined ? {} : { fromState }),
+        ...(copy === undefined ? {} : { copy }),
         ...(deal === undefined ? {} : { quantity: deal.quantity }),
         ...(deal?.negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(deal.negotiatedGp) }),
       });
@@ -3704,7 +3706,7 @@ export function CharacterSheet(props: {
   /** A Market sale, and what to tell the player about it. */
   async function handleMarketSell(copy: MarketHeldCopy, deal?: MarketDeal): Promise<string | null> {
     const before = money.totalCopper;
-    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal);
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal, copy.copies?.[0]);
     if (!after) {
       return null;
     }

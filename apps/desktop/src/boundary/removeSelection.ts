@@ -3,6 +3,7 @@ import type { PriceMode } from '../characterHub/priceMode';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { CreateCharacterOutcome } from './loadCreateCharacter';
 import type { ActiveStateDto } from './setEquipmentActiveState';
+import type { CopyKeyDto } from './listHeldEquipment';
 
 /**
  * Write desktop boundary for the three selection-removal commands — the
@@ -86,6 +87,8 @@ export interface RemoveEquipmentSelectionRequest {
   quantity?: number;
   /** The agreed total in copper, returned in place of the price mode's refund. */
   negotiatedPriceCopper?: number;
+  /** The copy the row stands for (its `copies[0]`); sent, that copy is sold, not the first match. */
+  copy?: CopyKeyDto;
 }
 
 export async function removeEquipmentSelection(

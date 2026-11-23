@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { gpToCopper } from '../boundary/characterMoney';
-import type { HeldEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import type { CopyKeyDto, HeldEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import type { MarketCategory } from '../boundary/listMarket';
 import type { CustomEquipmentBuild } from '../boundary/purchaseCustomEquipment';
 import { BuyCustomDialog } from './BuyCustomDialog';
@@ -52,7 +52,7 @@ export const MARKET_CATEGORIES: ReadonlyArray<{ value: MarketCategory; label: st
 ];
 
 /** A held stack the Sell list shows; a Pathfinder stack also says its pieces. */
-export type MarketHeldCopy = HeldEquipmentCopyDto & { quantity?: number; baseQuantity?: number };
+export type MarketHeldCopy = HeldEquipmentCopyDto & { quantity?: number; baseQuantity?: number; copies?: CopyKeyDto[] };
 
 /** Quantity (bundles to buy, pieces to sell) and the agreed total, when the player negotiated one. */
 export interface MarketDeal {
