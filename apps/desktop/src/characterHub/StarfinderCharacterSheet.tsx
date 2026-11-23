@@ -7,6 +7,7 @@ import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
 import { STARFINDER_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
 import { MarketButton } from './MarketButton';
 import { PrintDialog } from './PrintDialog';
+import { SheetFrame } from './SheetFrame';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
 /**
@@ -65,8 +66,10 @@ export function StarfinderCharacterSheet(props: {
       .catch((cause: unknown) => setStatus(cause instanceof Error ? cause.message : String(cause)));
   }
   return (
-    <section data-testid="sf-character-sheet" style={{ marginTop: '1.5rem' }}>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
+    <SheetFrame
+      testId="sf-character-sheet"
+      bar={
+        <div style={{ alignItems: 'center', display: 'flex', flex: 1, gap: '0.75rem', justifyContent: 'space-between', marginRight: '4rem' }}>
         <div>
           <h2 data-sf-name style={{ margin: 0 }}>{sheet.name}</h2>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.2rem 0 0' }}>
@@ -90,8 +93,10 @@ export function StarfinderCharacterSheet(props: {
             Close
           </button>
         </div>
-      </div>
-
+        </div>
+      }
+      centre={
+        <>
       <MarketButton testId="sf-sheet-market" onClick={openMarket} disabled={levelUpOpen || choicesOpen} />
 
       {status === null ? null : (
@@ -149,7 +154,9 @@ export function StarfinderCharacterSheet(props: {
       )}
 
       <RulesAndFeaturesSection lines={sheet.sheetLines} unavailableReason={sheet.sheetRulesUnavailableReason} />
-    </section>
+        </>
+      }
+    />
   );
 }
 

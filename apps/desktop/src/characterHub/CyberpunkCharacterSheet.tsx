@@ -9,6 +9,7 @@ import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
 import { MarketButton } from './MarketButton';
 import { PrintDialog } from './PrintDialog';
+import { SheetFrame } from './SheetFrame';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
   buildCyberpunkSheet,
@@ -155,9 +156,35 @@ export function CyberpunkCharacterSheet(props: {
       });
   };
   const boxById = new Map(sheet.boxes.map((box) => [box.id, box]));
+  // Each layout column is one frame column; the frame sizes it, so the column's own flex-basis is dropped.
+  const renderColumn = (column: (typeof CYBERPUNK_SHEET_COLUMNS)[number]) => (
+    <div data-cpr-column={column} style={{ ...CYBERPUNK_SHEET_COLUMN_STYLES[column], flex: 'none' }}>
+      {boxesInColumn(CYBERPUNK_SHEET_LAYOUT, column).map((placement) => {
+        const box = boxById.get(placement.id);
+        if (box === undefined) {
+          return null;
+        }
+        return box.id === 'criticalInjuries' ? (
+          <CriticalChecklist
+            key={box.id}
+            box={box}
+            style={placement.boxStyle}
+            saving={saving}
+            saveError={saveError}
+            catalogError={criticalCatalogError}
+            onToggle={onToggleCritical}
+          />
+        ) : (
+          <SheetBox key={box.id} box={box} style={placement.boxStyle} />
+        );
+      })}
+    </div>
+  );
   return (
-    <section data-testid="cpr-character-sheet" style={{ marginTop: '1.5rem' }}>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
+    <SheetFrame
+      testId="cpr-character-sheet"
+      bar={
+        <div style={{ alignItems: 'center', display: 'flex', flex: 1, gap: '0.75rem', justifyContent: 'space-between', marginRight: '4rem' }}>
         <div>
           <h2 data-cpr-name style={{ margin: 0 }}>{sheet.name}</h2>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.2rem 0 0' }}>Cyberpunk RED</p>
@@ -176,8 +203,12 @@ export function CyberpunkCharacterSheet(props: {
             Close
           </button>
         </div>
-      </div>
-
+        </div>
+      }
+      left={renderColumn('statBlock')}
+      leftWidth="320px"
+      centre={
+        <>
       <MarketButton testId="cpr-sheet-market" onClick={openMarket} />
 
       {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} pathfinder={false} onClose={() => setPrintOpen(false)} /> : null}
@@ -227,31 +258,7 @@ export function CyberpunkCharacterSheet(props: {
         </p>
       )}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {CYBERPUNK_SHEET_COLUMNS.map((column) => (
-          <div key={column} data-cpr-column={column} style={CYBERPUNK_SHEET_COLUMN_STYLES[column]}>
-            {boxesInColumn(CYBERPUNK_SHEET_LAYOUT, column).map((placement) => {
-              const box = boxById.get(placement.id);
-              if (box === undefined) {
-                return null;
-              }
-              return box.id === 'criticalInjuries' ? (
-                <CriticalChecklist
-                  key={box.id}
-                  box={box}
-                  style={placement.boxStyle}
-                  saving={saving}
-                  saveError={saveError}
-                  catalogError={criticalCatalogError}
-                  onToggle={onToggleCritical}
-                />
-              ) : (
-                <SheetBox key={box.id} box={box} style={placement.boxStyle} />
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {renderColumn('vitals')}
 
       {sheet.notes.length === 0 ? null : (
         <div data-testid="cpr-sheet-notes" style={{ marginTop: '1rem' }}>
@@ -264,7 +271,9 @@ export function CyberpunkCharacterSheet(props: {
       )}
 
       <RulesAndFeaturesSection lines={sheet.rules} unavailableReason={null} />
-    </section>
+        </>
+      }
+    />
   );
 }
 

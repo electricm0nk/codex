@@ -7,7 +7,8 @@ import type { CSSProperties, ReactNode } from 'react';
  * Sized from the viewport (`100dvh`), never from an assumed pixel height, so a window a dock bar
  * shortens still shows every column's last control (Show Progression) above the edge.
  *
- * The PF sheet renders inside it (E2.1); the Starfinder and Cyberpunk RED sheets adopt it in E2.2.
+ * The PF sheet renders inside it (E2.1); the Starfinder and Cyberpunk RED sheets render inside it too (E2.2).
+ * A sheet with one or two columns omits `left` / `right`: the frame then draws only the columns given.
  * Named SheetFrame, not SheetLayout: `sheetLayout.ts` (the box registry) already exists beside it and
  * the two names would differ only by case.
  */
@@ -45,30 +46,36 @@ export const SHEET_FRAME_STYLES: Readonly<Record<'root' | 'bar' | 'columns' | 'l
 
 export interface SheetFrameProps {
   bar: ReactNode;
-  left: ReactNode;
-  /** The left column's width (a flex-basis), e.g. a collapsed rail's narrower one. */
-  leftWidth: string;
+  left?: ReactNode;
+  /** The left column's width (a flex-basis), e.g. a collapsed rail's narrower one. Needed with `left`. */
+  leftWidth?: string;
   centre: ReactNode;
-  right: ReactNode;
-  rightWidth: string;
+  right?: ReactNode;
+  rightWidth?: string;
+  /** Becomes the root's `data-testid`. */
+  testId?: string;
   /** Dialogs and drawers: fixed overlays, drawn above the bar. */
   children?: ReactNode;
 }
 
 export function SheetFrame(props: SheetFrameProps) {
   return (
-    <div style={SHEET_FRAME_STYLES.root}>
+    <div data-testid={props.testId} style={SHEET_FRAME_STYLES.root}>
       <div style={SHEET_FRAME_STYLES.bar}>{props.bar}</div>
       <div className="sheet-cols" style={SHEET_FRAME_STYLES.columns}>
-        <div className="sheet-left" style={{ ...SHEET_FRAME_STYLES.left, flex: `0 0 ${props.leftWidth}` }}>
-          {props.left}
-        </div>
+        {props.left === undefined ? null : (
+          <div className="sheet-left" style={{ ...SHEET_FRAME_STYLES.left, flex: `0 0 ${props.leftWidth ?? 'auto'}` }}>
+            {props.left}
+          </div>
+        )}
         <div className="sheet-mid" style={SHEET_FRAME_STYLES.centre}>
           {props.centre}
         </div>
-        <div className="sheet-right" style={{ ...SHEET_FRAME_STYLES.right, flex: `0 0 ${props.rightWidth}` }}>
-          {props.right}
-        </div>
+        {props.right === undefined ? null : (
+          <div className="sheet-right" style={{ ...SHEET_FRAME_STYLES.right, flex: `0 0 ${props.rightWidth ?? 'auto'}` }}>
+            {props.right}
+          </div>
+        )}
       </div>
       {props.children}
     </div>
