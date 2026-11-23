@@ -67,7 +67,7 @@ import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
 import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
-import type { RuleSetId } from './LandingScreen';
+import { ActionBanner, CAMPAIGN_MANAGER_ART, type RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
 import { getHideUnmetFeats, setHideUnmetFeats } from '../settings/featPickerPreference';
@@ -2700,8 +2700,8 @@ export function CharacterSheet(props: {
   onOpen: () => void;
   /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
   onCloned: () => void;
-  /** SD-41 E3.5: an "Open <name>" button under Skills opens that campaign's sheet. */
-  onOpenCampaign: (campaignId: string) => void;
+  /** SD-41 E3.5: an "Open <name>" banner under Skills opens that campaign's sheet; the argument is the campaign folder. */
+  onOpenCampaign: (campaignDir: string) => void;
 }) {
   // SD-36 F4c: class labels, hit dice and skill ranks read the engine's served class roster;
   // re-render when it (or the announced fallback) is installed.
@@ -4399,21 +4399,7 @@ export function CharacterSheet(props: {
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />
-            {activeCampaigns(campaignMemberships).length > 0 ? (
-              <div className="no-print" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.5rem' }}>
-                {activeCampaigns(campaignMemberships).map((membership) => (
-                  <button
-                    key={membership.campaignId}
-                    type="button"
-                    data-testid={`sheet-campaign-open-${membership.campaignId}`}
-                    onClick={() => props.onOpenCampaign(membership.campaignId)}
-                    style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, padding: '0.3rem 0.7rem' }}
-                  >
-                    Open {membership.campaignName}
-                  </button>
-                ))}
-              </div>
-            ) : null}
+            {SheetCampaignBanners({ memberships: campaignMemberships, onOpen: props.onOpenCampaign })}
           </div>
         );
       case 'abilities':
@@ -4735,5 +4721,24 @@ export function CharacterSheet(props: {
         onSelect={(entry) => itemPickerConfig?.onSelect(entry)}
       />
     </SheetFrame>
+  );
+}
+
+/** One full-width "Open <name>" banner per active campaign, stacked under Skills; each opens that campaign's folder. */
+export function SheetCampaignBanners(props: { memberships: readonly CampaignMembershipDto[]; onOpen: (campaignDir: string) => void }) {
+  const active = activeCampaigns(props.memberships);
+  if (active.length === 0) return null;
+  return (
+    <div className="no-print" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+      {active.map((membership) => (
+        <ActionBanner
+          key={membership.campaignDir}
+          title={`Open ${membership.campaignName}`}
+          art={CAMPAIGN_MANAGER_ART}
+          minHeight={100}
+          onClick={() => props.onOpen(membership.campaignDir)}
+        />
+      ))}
+    </div>
   );
 }

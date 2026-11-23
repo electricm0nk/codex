@@ -154,7 +154,7 @@ function RuleSetChip(props: { ruleSet: RuleSet; selected: boolean; onSelect: () 
   );
 }
 
-export function ActionBanner(props: { title: string; art: string; onClick: () => void; disabled?: boolean; disabledHint?: string }) {
+export function ActionBanner(props: { title: string; art: string; onClick: () => void; disabled?: boolean; disabledHint?: string; minHeight?: number }) {
   const disabled = Boolean(props.disabled);
   return (
     <button
@@ -174,7 +174,7 @@ export function ActionBanner(props: { title: string; art: string; onClick: () =>
         display: 'flex',
         filter: disabled ? 'grayscale(0.8)' : 'none',
         justifyContent: 'flex-end',
-        minHeight: 160,
+        minHeight: props.minHeight ?? 160,
         opacity: disabled ? 0.55 : 1,
         overflow: 'hidden',
         padding: '1.1rem 1.4rem',

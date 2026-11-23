@@ -41,6 +41,14 @@ const cases: Array<[string, () => void]> = [
     },
   ],
   [
+    "open button is smaller than the main screen's banners (160 px)",
+    () => {
+      const html = banner(opened);
+      assert(html.includes('min-height:100px'), 'min-height 100 px');
+      assert(!html.includes('min-height:160px'), 'not the landing height');
+    },
+  ],
+  [
     'open button is disabled with the hint when nothing is selected',
     () => {
       const html = banner(null);

@@ -48,7 +48,7 @@ function formatDate(iso: string): string {
 
 export const OPEN_CAMPAIGN_HINT = 'Select a campaign to open it';
 
-/** The open button: the main screen's Campaign Manager banner, at the full width of the detail column. */
+/** The open button: the main screen's Campaign Manager banner, at the full width of the detail column, shorter (100 px, not 160). */
 export function OpenCampaignBanner(props: { opened: OpenedCampaign | null; onOpen: (campaignDir: string) => void }) {
   const { opened } = props;
   return (
@@ -58,6 +58,7 @@ export function OpenCampaignBanner(props: { opened: OpenedCampaign | null; onOpe
       onClick={() => opened && props.onOpen(opened.campaignDir)}
       disabled={!opened}
       disabledHint={OPEN_CAMPAIGN_HINT}
+      minHeight={100}
     />
   );
 }
