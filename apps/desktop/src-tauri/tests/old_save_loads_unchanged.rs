@@ -127,6 +127,36 @@ fn old_save_root() -> PathBuf {
 fn main() {
     old_save_loads_unchanged();
     println!("test old_save_loads_unchanged ... ok");
+    old_save_has_no_ability_selections_and_a_new_one_round_trips();
+    println!("test old_save_has_no_ability_selections_and_a_new_one_round_trips ... ok");
+}
+
+/// SD-43 E3.2: a save written before `ability_selections` existed reads it as empty, the load
+/// response carries the Traits budget rows, and a saved pick reads back unchanged.
+fn old_save_has_no_ability_selections_and_a_new_one_round_trips() {
+    use codex::rules_core::character_input::AbilitySelection;
+    use codex::saved_character::local_store::SavedCharacterStore;
+
+    let root = old_save_root();
+    let mut envelope = SavedCharacterStore::load(&root).expect("the old save loads");
+    assert!(envelope.character_input.chosen.ability_selections.is_empty(), "an old save has none");
+
+    let sheet = character_hub::load_saved_character_at_root(&root).expect("the old save loads on the sheet");
+    let traits_remaining = sheet.explanations.iter().find(|row| row.id == "abilities.budget.traits.traits.remaining");
+    assert_eq!(traits_remaining.map(|row| row.value), Some(2), "Aldric holds no trait of his two");
+
+    let pick = AbilitySelection {
+        subtab: "class_features".to_owned(),
+        pool: "rogue_talent".to_owned(),
+        record_key: "core_rulebook:ability:fast_stealth".to_owned(),
+        level: 2,
+        target: None,
+    };
+    envelope.character_input.chosen.ability_selections = vec![pick.clone(), AbilitySelection { target: Some("Longsword".to_owned()), ..pick }];
+    SavedCharacterStore::save(&envelope, &root).expect("a pick saves");
+    let reloaded = SavedCharacterStore::load(&root).expect("the save reloads");
+    assert_eq!(reloaded.character_input.chosen.ability_selections, envelope.character_input.chosen.ability_selections);
+    std::fs::remove_dir_all(&root).ok();
 }
 
 fn old_save_loads_unchanged() {

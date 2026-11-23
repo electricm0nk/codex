@@ -96,6 +96,7 @@ fn fighter_with_real_and_garbage_feats() -> CharacterInput {
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

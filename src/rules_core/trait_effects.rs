@@ -408,6 +408,7 @@ pub fn flat_skill_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -623,6 +624,7 @@ pub fn skill_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str)
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -855,6 +857,7 @@ pub fn family_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -1156,6 +1159,7 @@ pub fn initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
             selected_traits: vec![trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -1230,6 +1234,7 @@ pub fn save_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Opti
                 selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
@@ -1516,6 +1521,7 @@ pub fn ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -1737,6 +1743,7 @@ pub fn situational_skill_trait_magnitude_is_grounded_for_corpus_key(corpus_key: 
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -1954,6 +1961,7 @@ pub fn caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
             selected_traits: vec![entry.trait_id.to_owned()],
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -2859,6 +2867,7 @@ mod tests {
                 selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         };
@@ -3162,6 +3171,7 @@ mod tests {
                 selected_traits: vec!["trait:trait_almost_human".to_string()],
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         };
@@ -3311,6 +3321,7 @@ mod tests {
                 selected_traits: vec!["trait:trait_eldritch_delver".to_string()],
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         };

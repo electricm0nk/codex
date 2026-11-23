@@ -58,7 +58,27 @@ pub struct ChosenCharacterState {
     /// lines — every pre-existing fixture and construction site keeps
     /// compiling and passing unmodified.
     pub class_ability_activations: Vec<ClassAbilityActivation>,
+    /// Picks on the Abilities sub-tabs that have no saved field of their own (SD-43 E3.2,
+    /// `technical-design.md` §3.2): traits keep `selected_traits`, archetypes `selected_choices`.
+    /// Saved as `ability_selection=` lines; a save written before the field reads as empty.
+    pub ability_selections: Vec<AbilitySelection>,
 }
+
+/// One pick on an Abilities sub-tab (`ability_budget::SubTab`), charged to one of its pools.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AbilitySelection {
+    pub subtab: String,
+    pub pool: String,
+    /// The converted record's id (`book:kind:slug`).
+    pub record_key: String,
+    /// The character level the pick was taken at.
+    pub level: u8,
+    /// What the pick names when it takes a target (a weapon, a skill), else `None`.
+    pub target: Option<String>,
+}
+
+/// The separator on an `ability_selection=<subtab>|<pool>|<record_key>|<level>|<target>` line.
+pub const ABILITY_SELECTION_SEPARATOR: char = '|';
 
 /// One class ability's declared activation state and rounds-per-day
 /// consumption for this specific computed snapshot (e.g. Barbarian Rage,
@@ -220,6 +240,7 @@ struct ParsedFixture {
     selected_traits: Vec<String>,
     spells_selected: Vec<SpellSelection>,
     class_ability_activations: Vec<ClassAbilityActivation>,
+    ability_selections: Vec<AbilitySelection>,
     selection_provenance: Vec<SelectionProvenance>,
     diagnostics: Vec<CharacterInputDiagnostic>,
 }
@@ -273,6 +294,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
                     selected_traits: parsed.selected_traits,
                     spells_selected: parsed.spells_selected,
                     class_ability_activations: parsed.class_ability_activations,
+                    ability_selections: parsed.ability_selections,
                 },
                 selection_provenance: parsed.selection_provenance,
             }),
@@ -302,6 +324,7 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "rule_choice" => apply_rule_choice(value, parsed),
         "spell" => apply_spell_selection(value, parsed),
         "activation" => apply_class_ability_activation(value, parsed),
+        "ability_selection" => apply_ability_selection(value, parsed),
         "provenance" => parsed.selection_provenance.push(SelectionProvenance {
             source_ref: value.to_owned(),
         }),
@@ -600,6 +623,33 @@ fn apply_class_ability_activation(value: &str, parsed: &mut ParsedFixture) {
         active_state,
         rounds_consumed_today,
     });
+}
+
+fn apply_ability_selection(value: &str, parsed: &mut ParsedFixture) {
+    let parts: Vec<&str> = value.split(ABILITY_SELECTION_SEPARATOR).collect();
+    match parts.as_slice() {
+        [subtab, pool, record_key, level, target]
+            if !subtab.is_empty() && !pool.is_empty() && !record_key.is_empty() =>
+        {
+            match level.parse::<u8>() {
+                Ok(level) => parsed.ability_selections.push(AbilitySelection {
+                    subtab: (*subtab).to_owned(),
+                    pool: (*pool).to_owned(),
+                    record_key: (*record_key).to_owned(),
+                    level,
+                    target: (!target.is_empty()).then(|| (*target).to_owned()),
+                }),
+                Err(_) => parsed.diagnostics.push(diagnostic(
+                    "ability_selections",
+                    format!("invalid character input ability selection '{value}' has no level number"),
+                )),
+            }
+        }
+        _ => parsed.diagnostics.push(diagnostic(
+            "ability_selections",
+            format!("invalid character input ability selection '{value}' is not '<subtab>|<pool>|<record>|<level>|<target>'"),
+        )),
+    }
 }
 
 /// The separator on a `rule_choice=<choice_set_id>|<selection_id>` line.

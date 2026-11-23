@@ -88,6 +88,7 @@ fn fighter_with_rank_1_skills() -> CharacterInput {
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

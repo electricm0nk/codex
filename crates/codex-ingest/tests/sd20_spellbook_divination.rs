@@ -88,6 +88,7 @@ fn wizard_input_with_comprehend_languages_prepared(intelligence: i16) -> Charact
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

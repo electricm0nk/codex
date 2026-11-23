@@ -558,6 +558,7 @@ fn minimal_input_for(class_id: AcgClassId) -> CharacterInput {
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

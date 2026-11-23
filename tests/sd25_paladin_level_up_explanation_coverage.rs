@@ -109,6 +109,7 @@ fn paladin_at_level(level: u8) -> CharacterInput {
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

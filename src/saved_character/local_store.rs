@@ -11,6 +11,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
+    ABILITY_SELECTION_SEPARATOR,
     AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR, SelectedChoice,
     load_character_input_fixture,
 };
@@ -381,6 +382,20 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
             });
         }
     }
+    for pick in &input.chosen.ability_selections {
+        let target = pick.target.as_deref().unwrap_or("");
+        for (field, value) in [("subtab", pick.subtab.as_str()), ("pool", &pick.pool), ("record_key", &pick.record_key), ("target", target)] {
+            single_line("ability selection", value)?;
+            if value.contains(ABILITY_SELECTION_SEPARATOR) || (field != "target" && value.is_empty()) {
+                return Err(SavedCharacterStoreError {
+                    message: format!(
+                        "ability selection {field} '{value}' must not contain '{ABILITY_SELECTION_SEPARATOR}' and, \
+                         except the target, must be non-empty to round-trip through the ability_selection= line"
+                    ),
+                });
+            }
+        }
+    }
     for prov in &input.selection_provenance {
         single_line("selection provenance source_ref", &prov.source_ref)?;
     }
@@ -502,6 +517,18 @@ fn render_character_input(input: &CharacterInput) -> String {
                 choice.choice_set_id, choice.selection_id
             );
         }
+    }
+    for pick in &input.chosen.ability_selections {
+        let _ = writeln!(
+            out,
+            "ability_selection={}{sep}{}{sep}{}{sep}{}{sep}{}",
+            pick.subtab,
+            pick.pool,
+            pick.record_key,
+            pick.level,
+            pick.target.as_deref().unwrap_or(""),
+            sep = ABILITY_SELECTION_SEPARATOR
+        );
     }
     for prov in &input.selection_provenance {
         let _ = writeln!(out, "provenance={}", prov.source_ref);
@@ -738,6 +765,7 @@ mod tests {
                     selected_traits: Vec::new(),
                     spells_selected: Vec::new(),
                     class_ability_activations: Vec::new(),
+                    ability_selections: Vec::new(),
                 },
                 selection_provenance: Vec::new(),
             },

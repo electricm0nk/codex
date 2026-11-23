@@ -27,6 +27,7 @@ pub mod description_completion;
 /// with one character's numbers (SD-35 `AT-35-E6-003-RULED` cycle 16).
 pub mod desc_template;
 pub mod durability;
+pub mod ability_budget;
 pub mod encounters;
 pub mod encumbrance;
 pub mod equipment_effects;

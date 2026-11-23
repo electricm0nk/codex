@@ -1020,6 +1020,16 @@ fn feat_budget_rows(input: &CharacterInput, base: &PilotBaseChassisComputation) 
     feat_budget_for(input, base).map_or_else(|_| Vec::new(), |budget| map_explanations_dto(&budget.explanation_rows()))
 }
 
+/// `abilities.budget.<subtab>.*` rows for every Abilities sub-tab with an engine budget (SD-43 E3.2).
+/// An unreadable package serves none, as [`feat_budget_rows`] does.
+pub(crate) fn ability_budget_rows(input: &CharacterInput) -> Vec<ExplanationDto> {
+    use codex::rules_core::ability_budget::{ability_budget, SubTab};
+    sheet_rule_package().as_ref().map_or_else(
+        |_| Vec::new(),
+        |package| SubTab::ALL.iter().flat_map(|subtab| map_explanations_dto(&ability_budget(package, input, *subtab).explanation_rows())).collect(),
+    )
+}
+
 /// The character levels that grant a feat, for the level lists (the sheet's Progression, Create's
 /// per-level lines, the Level Up dialog's question of whether to ask for a feat).
 #[tauri::command]
@@ -3078,6 +3088,7 @@ fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSa
     let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
     explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
     explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
+    explanations.extend(ability_budget_rows(&sheet_input));
     budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
     // In hand, then carried, then the Unarmed row (`decisions.md §9, §22`); its attack rows beside.
     // A carried weapon's rows as if wielded in the main hand (`decisions.md §9`); a row in hand wins.
@@ -8131,6 +8142,22 @@ pub struct ChosenCharacterStateDto {
     pub selected_traits: Vec<String>,
     #[serde(default)]
     pub spells_selected: Vec<SpellSelectionImportDto>,
+    /// SD-43 E3.2: `ChosenCharacterState.ability_selections`. `#[serde(default)]` so an export
+    /// written before the field imports unchanged.
+    #[serde(default)]
+    pub ability_selections: Vec<AbilitySelectionDto>,
+}
+
+/// One `codex::rules_core::character_input::AbilitySelection` on the export/import wire.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AbilitySelectionDto {
+    pub subtab: String,
+    pub pool: String,
+    pub record_key: String,
+    pub level: u8,
+    #[serde(default)]
+    pub target: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -8249,6 +8276,18 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
             // backend-only slice, mirroring how `applied_modifiers` just
             // above is also not yet carried through the import DTO.
             class_ability_activations: Vec::new(),
+            ability_selections: dto
+                .chosen
+                .ability_selections
+                .into_iter()
+                .map(|pick| codex::rules_core::character_input::AbilitySelection {
+                    subtab: pick.subtab,
+                    pool: pick.pool,
+                    record_key: pick.record_key,
+                    level: pick.level,
+                    target: pick.target,
+                })
+                .collect(),
         },
         selection_provenance: Vec::new(),
     }
@@ -8321,6 +8360,18 @@ fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
                     spell_id: spell.spell_id.clone(),
                     source_class_id: spell.source_class_id.clone(),
                     acquisition_mode: spell.acquisition_mode.into(),
+                })
+                .collect(),
+            ability_selections: input
+                .chosen
+                .ability_selections
+                .iter()
+                .map(|pick| AbilitySelectionDto {
+                    subtab: pick.subtab.clone(),
+                    pool: pick.pool.clone(),
+                    record_key: pick.record_key.clone(),
+                    level: pick.level,
+                    target: pick.target.clone(),
                 })
                 .collect(),
         },
@@ -21863,13 +21914,14 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
-        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6), one
+        // The load appends the feat and ability budgets' rows, the sheet's Hit Points and Speed (E8.6), one
         // total per Skills panel row (E8.7) and one damage total per weapon in hand (SD-40 E2.14),
         // the ranged attack and a skill's trait/racial/class-feature row (SD-42 E4.17: this Rogue's
         // Trapfinding), which are not the chassis's records.
         let sheet_totals = ["hit_points.max", "speed.land", "combat.baseline_ranged_attack_bonus"];
         let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
             row.id.starts_with("feats.budget.")
+                || row.id.starts_with("abilities.budget.")
                 || row.id.starts_with("skill.total.")
                 || row.id.starts_with("skill.trait_modifier.")
                 || row.id.starts_with("combat.weapon_damage_total.")
@@ -21880,6 +21932,8 @@ mod tests {
         assert_eq!(damage_totals, response.weapon_damage.iter().filter(|weapon| weapon.base_dice.is_some()).count(), "one damage total per weapon");
         let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
+        let abilities = appended.iter().filter(|row| row.id.starts_with("abilities.budget.")).count();
+        assert_eq!(abilities, 6, "the Traits sub-tab's traits and drawbacks pools, three rows each (SD-43 E3.2)");
         let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
         assert_eq!(skill_totals, 35, "one total per Skills panel row");
         for id in sheet_totals {

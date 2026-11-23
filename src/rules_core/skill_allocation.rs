@@ -1103,6 +1103,7 @@ pub fn class_skill_bonus_is_grounded(class_id: &str, skill_id: &str) -> Option<i
             selected_traits: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -1176,6 +1177,7 @@ mod wizard_and_rogue_class_skill_grounding_tests {
                 selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
@@ -1307,6 +1309,7 @@ mod at_34_e3_003_full_class_skill_list_tests {
                 selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
@@ -1477,6 +1480,7 @@ mod sheet_skill_trait_modifier_tests {
                 selected_traits: traits.iter().map(|id| (*id).to_owned()).collect(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
@@ -1542,6 +1546,7 @@ mod meticulous_drawback_tests {
                 selected_traits: traits.iter().map(|id| (*id).to_owned()).collect(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }

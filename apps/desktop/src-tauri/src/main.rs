@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod abilities;
 mod browser_handoff;
 mod campaign_folder;
 mod character_custom;
@@ -302,6 +303,9 @@ fn main() {
             add_feat_selection,
             remove_feat_selection,
             add_trait_selection,
+            abilities::list_ability_options,
+            abilities::add_ability_selection,
+            abilities::remove_ability_selection,
             remove_trait_selection,
             set_equipment_active_state,
             move_equipment_copy,

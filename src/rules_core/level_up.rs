@@ -308,6 +308,7 @@ mod multiclass_dispatch_tests {
                 selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
+                ability_selections: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }

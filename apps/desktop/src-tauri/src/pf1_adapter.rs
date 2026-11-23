@@ -754,6 +754,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             selected_traits: request.selected_traits.clone(),
             spells_selected,
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

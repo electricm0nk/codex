@@ -554,6 +554,7 @@ fn character_input_from_fixture(input: &Json) -> CharacterInput {
             selected_choices,
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

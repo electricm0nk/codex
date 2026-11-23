@@ -1653,6 +1653,7 @@ fn engine_input(chosen: &ChosenWire) -> CharacterInput {
                 })
                 .collect(),
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

@@ -88,6 +88,7 @@ fn wizard_input_with_charm_person_prepared(intelligence: i16) -> CharacterInput 
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
             class_ability_activations: Vec::new(),
+            ability_selections: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
