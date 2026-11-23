@@ -43,11 +43,21 @@ assert(html.includes(budgetLine), `the Feats sub-tab renders the feat budget lin
 assert(html.includes('Add Feat'), 'the Feats sub-tab keeps its Add Feat control');
 
 // A sub-tab whose engine card has not landed names that card; Feats has no such notice.
-for (const name of PCGEN_ORDER.slice(1)) {
+// SD-43 E3.3: Traits is on the generic sub-tab with the engine's budget; it names no pending card.
+const PENDING = PCGEN_ORDER.slice(1).filter((name) => name !== 'Traits');
+for (const name of PENDING) {
   assert(typeof PENDING_ENGINE_CARD[name as keyof typeof PENDING_ENGINE_CARD] === 'string', `${name} names its pending engine card`);
 }
 assert(PENDING_ENGINE_CARD.Feats === undefined, 'Feats has an engine already');
-for (const name of PCGEN_ORDER.slice(1)) {
+assert(PENDING_ENGINE_CARD.Traits === undefined, 'Traits has an engine already (E3.2) and its UI (E3.3)');
+const traitsOpen = renderToStaticMarkup(
+  createElement(AbilitiesTab, {
+    initial: 'Traits',
+    panels: { Feats: null, 'Racial Abilities': null, Traits: 'TRAITS-PANEL', Archetype: null, Background: null, 'Class Features': null, Misc: null },
+  }),
+);
+assert(traitsOpen.includes('TRAITS-PANEL') && !traitsOpen.includes('engine card'), 'the Traits sub-tab shows its panel and no notice');
+for (const name of PENDING) {
   const sub = renderToStaticMarkup(
     createElement(AbilitiesTab, {
       initial: name as (typeof ABILITY_SUB_TABS)[number],

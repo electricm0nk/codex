@@ -59,7 +59,7 @@ import {
   removeSpellSelection,
 } from '../boundary/removeSelection';
 import { addTraitSelection } from '../boundary/addTraitSelection';
-import { removeTraitSelection } from '../boundary/removeTraitSelection';
+import { addAbilitySelection, removeAbilitySelection } from '../boundary/abilities';
 import { setEquipmentActiveState } from '../boundary/setEquipmentActiveState';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
@@ -185,6 +185,7 @@ import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import { CampaignMembershipDialog } from './CampaignMembershipDialog';
 import { RestTextPanel } from './RestText';
 import { AbilitiesTab } from './AbilitiesTab';
+import { AbilitySubTab, type AbilityOptionInfo } from './AbilitySubTab';
 import { activeCampaigns, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 
 /**
@@ -2485,110 +2486,47 @@ export function FeatsTab(props: {
 }
 
 /**
- * The character's chosen traits (v0.8 F-3, wired to real add/remove in SD-36 Epic E
- * desktop-P2-01). Names, prose and bonus lines come from the same
- * `list_available_character_traits` roster the create form's picker uses; see
- * `traitsTabModel.ts`. Adding offers every catalog trait not already held; an open-choice trait
- * (one whose option carries `choiceSetId`) additionally offers its `skillOptions` before the
- * Add button commits.
+ * The Traits sub-tab (SD-43 E3.3) on the generic {@link AbilitySubTab}: the engine lists the
+ * options, their qualification and the `abilities.budget.traits.*` rows; the trait roster
+ * (`list_available_character_traits`, see `traitsTabModel.ts`) adds each computed trait's prose,
+ * its grants line and, for an open-choice trait, the skills Add asks for.
  */
-function TraitsSection(props: {
+function TraitsSubTab(props: {
+  characterId: string;
   selectedTraits: string[];
-  onAddTrait: (traitId: string, skillChoice: string | null) => void;
-  onRemoveTrait: (traitId: string) => void;
+  onAdd: (traitId: string, skillChoice: string | null) => Promise<void>;
+  onRemove: (traitId: string) => Promise<void>;
 }) {
-  const [catalog, setCatalog] = useState<CharacterTraitOptionDto[] | null>(null);
-  const [pendingTraitId, setPendingTraitId] = useState<string>('');
-  const [pendingSkillChoice, setPendingSkillChoice] = useState<string>('');
+  const [catalog, setCatalog] = useState<CharacterTraitOptionDto[]>([]);
   useEffect(() => {
     let cancelled = false;
     loadCharacterTraits()
       .then((options) => {
-        if (!cancelled) {
-          setCatalog(options);
-        }
+        if (!cancelled) setCatalog(options);
       })
-      .catch(() => {
-        // Raw ids are still real data; render them rather than nothing.
-        if (!cancelled) {
-          setCatalog([]);
-        }
-      });
+      // Without the roster the engine's names and reasons still render; only prose is missing.
+      .catch(() => undefined);
     return () => {
       cancelled = true;
     };
   }, []);
-
-  const rows = resolveSelectedTraits(props.selectedTraits, catalog ?? []);
-  const available = (catalog ?? []).filter((option) => !props.selectedTraits.includes(option.id));
-  const pendingOption = available.find((option) => option.id === pendingTraitId) ?? null;
-
+  const info = (id: string): AbilityOptionInfo | null => {
+    const option = catalog.find((candidate) => candidate.id === id);
+    if (!option) return null;
+    const [row] = resolveSelectedTraits([id], catalog);
+    const choices = option.choiceSetId ? option.skillOptions.map((skill) => ({ id: skill.skillId, name: skill.name })) : [];
+    return { description: row.description, grants: row.grants, choices };
+  };
   return (
-    <div style={{ marginTop: '1.5rem' }}>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
-        Traits
-      </p>
-      {rows.length === 0 ? (
-        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No traits selected.</p>
-      ) : (
-        rows.map((row) => (
-          <div key={row.id} style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', padding: '0.5rem 0' }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
-                <span style={{ fontWeight: 700 }}>{row.name}</span>
-                {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
-              </div>
-              {row.description ? (
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
-              ) : null}
-            </div>
-            <button type="button" onClick={() => props.onRemoveTrait(row.id)} style={{ flexShrink: 0 }}>
-              Remove
-            </button>
-          </div>
-        ))
-      )}
-      {available.length > 0 ? (
-        <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
-          <select
-            aria-label="Trait to add"
-            value={pendingTraitId}
-            onChange={(event) => {
-              setPendingTraitId(event.target.value);
-              setPendingSkillChoice('');
-            }}
-          >
-            <option value="">Add a trait…</option>
-            {available.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-          {pendingOption?.choiceSetId && pendingOption.skillOptions.length > 0 ? (
-            <select aria-label="Skill for chosen trait" value={pendingSkillChoice} onChange={(event) => setPendingSkillChoice(event.target.value)}>
-              <option value="">Choose a skill…</option>
-              {pendingOption.skillOptions.map((skill) => (
-                <option key={skill.skillId} value={skill.skillId}>
-                  {skill.name}
-                </option>
-              ))}
-            </select>
-          ) : null}
-          <button
-            type="button"
-            disabled={!pendingTraitId}
-            onClick={() => {
-              props.onAddTrait(pendingTraitId, pendingSkillChoice || null);
-              setPendingTraitId('');
-              setPendingSkillChoice('');
-            }}
-          >
-            Add
-          </button>
-        </div>
-      ) : null}
-    </div>
+    <AbilitySubTab
+      characterId={props.characterId}
+      subtab="traits"
+      title="Traits"
+      selectedIds={props.selectedTraits}
+      info={info}
+      onAdd={props.onAdd}
+      onRemove={props.onRemove}
+    />
   );
 }
 
@@ -3549,13 +3487,38 @@ export function CharacterSheet(props: {
     }
   }
 
-  /** The inverse of {@link handleAddTrait} -- removes a held trait and its skill choice. */
+  /**
+   * SD-43 E3.3: an Abilities sub-tab's Add. A pick with a choice (a trait's skill) goes through
+   * {@link handleAddTrait}, which records the choice; any other goes through the engine's generic
+   * `add_ability_selection`, which refuses with the budget's or the prerequisites' reason.
+   */
+  async function handleAddAbility(optionId: string, choice: string | null) {
+    if (choice !== null) {
+      await handleAddTrait(optionId, choice);
+      return;
+    }
+    setMutationError(null);
+    try {
+      const outcome = await addAbilitySelection({ characterId: props.row.characterId, subtab: 'traits', optionId, savedAt: new Date().toISOString() });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** The inverse of {@link handleAddAbility} -- removes a held trait and its skill choice. */
   async function handleRemoveTrait(traitId: string) {
     setMutationError(null);
     try {
-      const outcome = await removeTraitSelection({
+      const outcome = await removeAbilitySelection({
         characterId: props.row.characterId,
-        traitId,
+        subtab: 'traits',
+        optionId: traitId,
         savedAt: new Date().toISOString(),
       });
       if (outcome.kind === 'Blocked') {
@@ -4492,10 +4455,11 @@ export function CharacterSheet(props: {
                       ),
                       'Racial Abilities': <RacialTraitsSection surface={racialTraits} raceLabel={props.row.raceLabel} />,
                       Traits: (
-                        <TraitsSection
+                        <TraitsSubTab
+                          characterId={props.row.characterId}
                           selectedTraits={props.detail?.selectedTraits ?? []}
-                          onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
-                          onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
+                          onAdd={handleAddAbility}
+                          onRemove={handleRemoveTrait}
                         />
                       ),
                       Archetype: null,
