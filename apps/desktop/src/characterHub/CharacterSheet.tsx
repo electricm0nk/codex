@@ -183,6 +183,7 @@ import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type 
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import { CampaignMembershipDialog } from './CampaignMembershipDialog';
+import { RestTextPanel } from './RestText';
 import { activeCampaigns, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 
 /**
@@ -4494,7 +4495,10 @@ export function CharacterSheet(props: {
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Biography' ? (
-                  <FreeTextTab label="Biography" hint="Your character's story: who they are and the events of their life." value={bio.biography} onChange={(biography) => updateBio({ biography })} onBlur={() => void handleBioBlur()} />
+                  <>
+                    <FreeTextTab label="Biography" hint="Your character's story: who they are and the events of their life." value={bio.biography} onChange={(biography) => updateBio({ biography })} onBlur={() => void handleBioBlur()} />
+                    <RestTextPanel characterId={props.row.characterId} />
+                  </>
                 ) : name === 'Notes' ? (
                   <FreeTextTab label="Notes" hint="Notes to yourself: plans, reminders, rulings from the table." value={bio.notes} onChange={(notes) => updateBio({ notes })} onBlur={() => void handleBioBlur()} />
                 ) : name === 'Custom' ? (
