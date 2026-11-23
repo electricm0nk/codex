@@ -60,7 +60,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | todo | E1.6 | gear | no | hub | discovered E1.6 (`artifacts/epic_1/E1.6_cycle_receipt.md`, "Discovered cards") |
 | E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |
 | E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | complete | E1.7 | sheet | no | hub | receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; SHA `10aefca95f0cec754665263d2028fa2fd49a4367` |
-| E2.2 | The shared layout on the SF and CPR sheets | sonnet | todo | E2.1 | sheet | no | no | settles Q-8.2 |
+| E2.2 | The shared layout on the SF and CPR sheets | sonnet | complete | E2.1 | sheet | no | no | receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; SHA `79f355f04ba4e4373fb5b7cc3f49be3bd86752f2`; settles Q-8.2 |
 | E2.3 | Open campaign button opens the folder; one banner per campaign; Manager banner smaller | opus | todo | E2.2 | sheet | no | hub | |
 | E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | todo | E0.5, E2.3 | sheet | yes (root + desktop) | hub | new runtime data read: `bundle.resources` + `packaged_resources.rs` |
 | E2.5 | Rest text read-only under the Biography text | sonnet | todo | E2.4 | sheet | no | hub | |
