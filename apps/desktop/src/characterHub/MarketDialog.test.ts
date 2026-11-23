@@ -13,8 +13,10 @@ import {
   marketPlacementWords,
   marketMoneyMoved,
   marketPriceGp,
+  marketFilterColumns,
   marketShownRows,
-  MARKET_ROW_LIMIT,
+  marketWindow,
+  MARKET_ROW_PX,
 } from './itemPickerFilter';
 import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, rowOfHeldCopy, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
 import { mapMarketTableRows } from './marketModel';
@@ -103,15 +105,53 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assertEqual(marketMoneyMoved(100, 100), 0, 'cashless moved nothing');
 }
 
-// A long list renders a bounded window and says so.
+// No cap: every row is shown (the list is windowed, not cut), and the header says N of N.
 {
-  const many = Array.from({ length: MARKET_ROW_LIMIT + 5 }, (_, index) => ({ ...SWORD, key: `k${index}`, name: `n${index}` }));
-  const shown = marketShownRows(mapMarketEntries(many));
-  assertEqual(shown.length, MARKET_ROW_LIMIT, 'bounded');
-  assert(
-    renderToStaticMarkup(createElement(MarketDialogView, { ...BASE, rows: mapMarketEntries(many) })).includes(`Showing the first ${MARKET_ROW_LIMIT} of ${many.length}.`),
-    'the dialog says the list is cut',
+  const many = Array.from({ length: 3680 }, (_, index) => ({ ...SWORD, key: `k${index}`, name: `n${String(index).padStart(4, '0')}` }));
+  const rows = mapMarketEntries(many);
+  assertEqual(marketShownRows(rows, 'weapon', {}).length, 3680, 'every row is shown');
+  const html = renderToStaticMarkup(createElement(MarketDialogView, { ...BASE, rows, totalRows: rows.length }));
+  assert(!html.includes('Showing the first'), 'no cut notice');
+  assert(html.includes('data-testid="market-count">3,680 of 3,680</'), 'header N of N');
+  // Windowed: only the rows in view are mounted, the rest are spacer height.
+  const mounted = (html.match(/aria-selected=/g) ?? []).length;
+  assert(mounted > 0 && mounted < 200, `a window of rows is mounted (${mounted})`);
+  assert(html.includes('n0000') && !html.includes('n3679'), 'the first rows, not the last');
+  const end = marketWindow(3680, 3679 * MARKET_ROW_PX, 600);
+  assertEqual(end.end, 3680, 'scrolled to the bottom, the last row is in the window');
+  assert(end.start > 3600, 'and the first rows are not');
+  const start = marketWindow(3680, 0, 600);
+  assertEqual(start.start, 0, 'top');
+  assertEqual(marketWindow(3, 0, 600).end, 3, 'a short list mounts every row');
+  // Filtering on a column narrows the shown rows; the header counts what is shown.
+  const melee = { ...SWORD, key: 'Club', name: 'Club', types: ['Weapon', 'Melee', 'Bludgeoning'] };
+  const bow = { ...SWORD, key: 'Longbow', name: 'Longbow', types: ['Weapon', 'Ranged', 'Piercing'] };
+  const two = mapMarketEntries([melee, bow]);
+  assertEqual(marketShownRows(two, 'weapon', { Kind: 'Ranged' }).map((row) => row.key).join(','), 'Longbow', 'a filter value narrows');
+  assertEqual(marketShownRows(two, 'weapon', { Kind: null }).length, 2, 'All is every row');
+}
+
+// The filter column: one block per column with All and each value with its count; the chosen value is pressed.
+{
+  const club = { ...SWORD, key: 'Club', name: 'Club', types: ['Weapon', 'Melee', 'Bludgeoning'] };
+  const bow = { ...SWORD, key: 'Longbow', name: 'Longbow', types: ['Weapon', 'Ranged', 'Piercing'] };
+  const rows = mapMarketEntries([club, bow]);
+  const html = renderToStaticMarkup(
+    createElement(MarketDialogView, {
+      ...BASE,
+      category: 'weapon',
+      rows: marketShownRows(rows, 'weapon', { Kind: 'Ranged' }),
+      totalRows: 2,
+      filterColumns: marketFilterColumns('weapon', rows, { Kind: 'Ranged' }),
+      onFilter: () => {},
+    }),
   );
+  assert(html.includes('aria-label="Filters"'), 'the filter column');
+  assert(html.includes('>Kind</'), 'a Kind column');
+  assert(html.includes('>Melee (1)</button>') && html.includes('>Ranged (1)</button>'), 'values with counts');
+  assert(/aria-pressed="true"[^>]*>Ranged \(1\)/.test(html), 'the chosen value is pressed');
+  assert(html.includes('>All (2)</button>'), 'All with every row');
+  assert(html.includes('data-testid="market-count">1 of 2</'), 'header counts the shown rows');
 }
 
 // Tabs, search, inventory Sell, the reused price control under its own radio group.

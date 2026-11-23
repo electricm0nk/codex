@@ -8,7 +8,16 @@ import { BuyCustomDialog } from './BuyCustomDialog';
 import { CreateItemDialog, type CreateItemFields } from './CreateItemDialog';
 import { ItemStats, type ItemStatsDto } from './GearDetail';
 import { wornLabel } from './gearScreenModel';
-import { filterItemPickerEntries, formatMarketPrice, MARKET_ROW_LIMIT, marketPriceGp, marketShownRows } from './itemPickerFilter';
+import {
+  filterItemPickerEntries,
+  formatMarketPrice,
+  MARKET_ROW_PX,
+  marketFilterColumns,
+  marketPriceGp,
+  marketShownRows,
+  marketWindow,
+  type MarketFilterColumnView,
+} from './itemPickerFilter';
 import {
   affordable,
   buyNegotiateGp,
@@ -154,6 +163,12 @@ export interface MarketDialogViewProps {
   stats?: ItemStatsDto | null;
   /** Why the stats could not be read. */
   statsError?: string | null;
+  /** How many rows the current category holds before search and filters (the header's second N). */
+  totalRows?: number;
+  /** The filter column (`marketFilters.ts`); absent or empty, there is none. */
+  filterColumns?: MarketFilterColumnView[];
+  /** Picks a column's value; `null` is All. */
+  onFilter?: (column: string, value: string | null) => void;
 }
 
 function weightLabel(row: MarketTableRow): string {
@@ -164,10 +179,23 @@ function slotLabel(row: MarketTableRow): string {
   return row.slot && row.slot !== 'none' ? wornLabel(row.slot) : '—';
 }
 
+// Fixed widths so the windowed rows keep one height; Item takes the rest.
+const SORT_COLUMN_WIDTH: Record<MarketSortColumn, string | undefined> = { item: undefined, price: '6.5rem', weight: '5rem', slot: '6.5rem' };
+
 /** The dialog's face, without state or portal, so a test can render it. */
 export function MarketDialogView(props: MarketDialogViewProps) {
   const selected = props.rows.find((row) => row.key === props.selectedKey) ?? null;
-  const shown = marketShownRows(props.rows) as MarketTableRow[];
+  // The windowed list: only the rows in view (and a few either side) are mounted; spacers keep the scroll height.
+  const scroller = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState({ scrollTop: 0, height: 600 });
+  const measure = () => scroller.current && setView({ scrollTop: scroller.current.scrollTop, height: scroller.current.clientHeight });
+  useEffect(() => {
+    if (scroller.current) scroller.current.scrollTop = 0;
+    measure();
+  }, [props.category, props.rows.length]);
+  const { start, end } = marketWindow(props.rows.length, view.scrollTop, view.height);
+  const shown = props.rows.slice(start, end);
+  const columns = props.onFilter ? props.filterColumns ?? [] : [];
   const price = selected ? marketPriceGp(selected, props.bonus) : null;
   const deals = props.deals;
   const quantity = deals ? parseQuantity(deals.quantity) : 1;
@@ -263,26 +291,59 @@ export function MarketDialogView(props: MarketDialogViewProps) {
       </div>
 
       <div data-testid="market-body" style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+        {columns.length > 0 ? (
+          <aside aria-label="Filters" style={{ borderRight: '1px solid var(--color-border)', flex: '0 0 11rem', minHeight: 0, overflowY: 'auto', padding: '0.5rem 0.6rem' }}>
+            {columns.map((col) => (
+              <div key={col.label} role="group" aria-label={`Filter by ${col.label}`} style={{ marginBottom: '0.75rem' }}>
+                <h3 style={{ fontSize: '0.75rem', letterSpacing: '0.04em', margin: '0.25rem 0 0.3rem', textTransform: 'uppercase' }}>{col.label}</h3>
+                {[{ label: 'All', value: null as string | null, count: col.total }, ...col.options.map((option) => ({ ...option, value: option.label as string | null }))].map((choice) => {
+                  const pressed = choice.value === col.chosen;
+                  return (
+                    <button
+                      key={choice.label}
+                      type="button"
+                      aria-pressed={pressed}
+                      onClick={() => props.onFilter?.(col.label, choice.value)}
+                      style={{
+                        background: pressed ? 'var(--color-surface-2)' : 'none',
+                        border: 'none',
+                        borderLeft: pressed ? '3px solid var(--color-accent)' : '3px solid transparent',
+                        color: pressed ? 'var(--color-accent)' : 'var(--color-text)',
+                        cursor: 'pointer',
+                        display: 'block',
+                        fontSize: '0.8rem',
+                        fontWeight: pressed ? 700 : 400,
+                        padding: '0.15rem 0.4rem',
+                        textAlign: 'left',
+                        width: '100%',
+                      }}
+                    >{`${choice.label} (${choice.count.toLocaleString('en-US')})`}</button>
+                  );
+                })}
+              </div>
+            ))}
+          </aside>
+        ) : null}
         <div style={{ display: 'flex', flex: '2 1 480px', flexDirection: 'column', minHeight: 0 }}>
-          <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+          {!props.loading && !props.loadError ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: 0, padding: '0.35rem 0.75rem' }}>
+              <span data-testid="market-count">{`${props.rows.length.toLocaleString('en-US')} of ${(props.totalRows ?? props.rows.length).toLocaleString('en-US')}`}</span> items
+            </p>
+          ) : null}
+          <div ref={scroller} onScroll={measure} style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
             {props.loadError ? <p role="alert" style={{ color: 'var(--color-error, #c0392b)', fontSize: '0.85rem', padding: '1rem' }}>{props.loadError}</p> : null}
             {props.loading ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', padding: '1rem' }}>Loading…</p> : null}
             {!props.loading && !props.loadError && props.rows.length === 0 ? (
               <p style={{ color: 'var(--color-text-faint)', fontSize: '0.85rem', padding: '1rem', textAlign: 'center' }}>No matches.</p>
             ) : null}
-            {shown.length < props.rows.length ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: 0, padding: '0.5rem 0.75rem' }}>
-                Showing the first {MARKET_ROW_LIMIT} of {props.rows.length.toLocaleString('en-US')}. Search to narrow the list.
-              </p>
-            ) : null}
-            <table data-testid="market-table" style={{ borderCollapse: 'collapse', fontSize: '0.85rem', width: '100%' }}>
+            <table data-testid="market-table" style={{ borderCollapse: 'collapse', fontSize: '0.85rem', tableLayout: 'fixed', width: '100%' }}>
               <thead>
                 <tr>
                   {MARKET_SORT_COLUMNS.map(({ column, label }) => {
                     const sorted = props.sort?.column === column;
                     const arrow = sorted ? (props.sort?.direction === 'asc' ? ' ▲' : ' ▼') : '';
                     return (
-                      <th key={column} style={cell} aria-sort={sorted ? (props.sort?.direction === 'asc' ? 'ascending' : 'descending') : 'none'}>
+                      <th key={column} style={{ ...cell, width: SORT_COLUMN_WIDTH[column] }} aria-sort={sorted ? (props.sort?.direction === 'asc' ? 'ascending' : 'descending') : 'none'}>
                         {props.onSort ? (
                           <button
                             type="button"
@@ -302,29 +363,33 @@ export function MarketDialogView(props: MarketDialogViewProps) {
                 </tr>
               </thead>
               <tbody>
-                {shown.map((row, index) => {
+                {start > 0 ? <tr aria-hidden="true" style={{ height: start * MARKET_ROW_PX }} /> : null}
+                {shown.map((row, offset) => {
+                  const index = start + offset;
                   const active = row.key === props.selectedKey;
                   return (
-                    <tr key={`${row.key}::${index}`} aria-selected={active} onClick={() => props.onSelectRow(row.key)} style={{ background: active ? 'var(--color-surface-2)' : 'none', cursor: 'pointer' }}>
-                      <td style={cell}>
+                    <tr key={`${row.key}::${index}`} aria-selected={active} onClick={() => props.onSelectRow(row.key)} style={{ background: active ? 'var(--color-surface-2)' : 'none', cursor: 'pointer', height: MARKET_ROW_PX }}>
+                      <td style={{ ...cell, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         <button
                           type="button"
                           aria-pressed={active}
+                          title={row.name}
                           onClick={(event) => {
                             event.stopPropagation();
                             props.onSelectRow(row.key);
                           }}
-                          style={{ background: 'none', border: 'none', color: active ? 'var(--color-accent)' : 'var(--color-text)', cursor: 'pointer', fontWeight: 700, padding: 0, textAlign: 'left' }}
+                          style={{ background: 'none', border: 'none', color: active ? 'var(--color-accent)' : 'var(--color-text)', cursor: 'pointer', fontWeight: 700, maxWidth: '100%', overflow: 'hidden', padding: 0, textAlign: 'left', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                         >
                           {row.name}
                         </button>
                       </td>
-                      <td style={cell}>{formatMarketPrice(row.priceGp, props.currency)}</td>
-                      <td style={cell}>{weightLabel(row)}</td>
-                      <td style={cell}>{slotLabel(row)}</td>
+                      <td style={{ ...cell, whiteSpace: 'nowrap' }}>{formatMarketPrice(row.priceGp, props.currency)}</td>
+                      <td style={{ ...cell, whiteSpace: 'nowrap' }}>{weightLabel(row)}</td>
+                      <td style={{ ...cell, whiteSpace: 'nowrap' }}>{slotLabel(row)}</td>
                     </tr>
                   );
                 })}
+                {end < props.rows.length ? <tr aria-hidden="true" style={{ height: (props.rows.length - end) * MARKET_ROW_PX }} /> : null}
               </tbody>
             </table>
           </div>
@@ -505,6 +570,7 @@ export function MarketDialog(props: {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<{ column: MarketSortColumn; direction: SortDirection }>({ column: 'item', direction: 'asc' });
   const [onlyAffordable, setOnlyAffordable] = useState(false);
+  const [chosen, setChosen] = useState<Record<string, string | null>>({});
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [bonus, setBonus] = useState(0);
   const [quantity, setQuantity] = useState('1');
@@ -623,8 +689,8 @@ export function MarketDialog(props: {
 
   const searched = filterItemPickerEntries(rows ?? [], search) as MarketTableRow[];
   const funds = gpToCopper(props.balance);
-  const filtered = onlyAffordable ? searched.filter((row) => affordable(row, 0, props.priceMode, funds)) : searched;
-  const table = sortEntries(filtered, sort.column, sort.direction);
+  const narrowed = onlyAffordable ? searched.filter((row) => affordable(row, 0, props.priceMode, funds)) : searched;
+  const table = sortEntries(marketShownRows(narrowed, category, chosen), sort.column, sort.direction);
   const selectedRow = table.find((candidate) => candidate.key === selectedKey) ?? null;
   const count = parseQuantity(quantity);
   const deal = (negotiated?: string): MarketDeal => {
@@ -680,6 +746,7 @@ export function MarketDialog(props: {
         category={category}
         onCategory={(next) => {
           setCategory(next);
+          setChosen({});
           setSelectedKey(null);
           setBonus(0);
           setNegotiation(null);
@@ -730,6 +797,9 @@ export function MarketDialog(props: {
         onCreate={props.onCreate ? () => setSubDialog('create') : undefined}
         stats={shownStats?.stats ?? null}
         statsError={shownStats?.error ?? null}
+        totalRows={rows?.length}
+        filterColumns={marketFilterColumns(category, narrowed, chosen)}
+        onFilter={(column, value) => setChosen((held) => ({ ...held, [column]: value }))}
       />
       {subDialog === 'buyCustom' && selectedRow && props.onBuyCustom ? (
         <BuyCustomDialog

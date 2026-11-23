@@ -5,6 +5,7 @@ import type { MarketCategory, MarketEntryDto, MarketVariantDto } from '../bounda
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import { copperToGp } from '../boundary/characterMoney';
 import { EQUIPMENT_CATEGORY_ORDER, equipmentCategoryFor } from './equipmentCategories';
+import { applyMarketFilters, filterOptions, MARKET_FILTERS, OTHER, type FilterEntry } from './marketFilters';
 
 /**
  * Pure logic backing `ItemPickerModal`: mapping the two real catalog DTOs
@@ -113,7 +114,10 @@ export function summariseItemDescription(
  * then says so, so a missing category list is stated rather than looking like "everything is
  * uncategorized".
  */
-export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[], typesError?: string | null): ItemPickerEntry[] {
+export function mapEquipmentCatalogEntries(
+  entries: EquipmentCatalogEntryDto[],
+  typesError?: string | null,
+): Array<ItemPickerEntry & FilterEntry> {
   return entries.map((entry) => {
     // Unknown/future categories fall back to the raw variant string verbatim
     // rather than a fabricated label.
@@ -141,6 +145,9 @@ export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[], 
       name: entry.name,
       detail: [category, cost, weight, description].filter((part): part is string => part !== null).join(' · '),
       group: equipmentCategoryFor(entry),
+      // The raw catalog category and tags, for the Market's filter columns (`marketFilters.ts`).
+      category: entry.category,
+      types: entry.types,
       ...(typesError ? { unverifiedNote: `Categories unavailable: ${typesError}` } : {}),
     };
   });
@@ -332,7 +339,7 @@ export function itemPickerGroupCounts(
 }
 
 /** A `list_market` row in the picker's row shape, plus what Market buys it at. */
-export interface MarketRow extends ItemPickerEntry {
+export interface MarketRow extends ItemPickerEntry, FilterEntry {
   /** The plain item's catalog price; `null` when the record has none. */
   priceGp: number | null;
   /** Empty when the row takes no `+N`. */
@@ -355,14 +362,40 @@ export function formatMarketPrice(amount: number | null, currency: string): stri
   return amount === null ? 'No listed price' : `${amount.toLocaleString('en-US', { maximumFractionDigits: 2 })} ${currency}`;
 }
 
-/**
- * How many rows the Market renders at once. The Magic items list holds thousands, and search reaches
- * the rest; the dialog says so when this bites.
- */
-export const MARKET_ROW_LIMIT = 200;
+/** The rows the Market lists: every row under the chosen filter values (no cap; the list is windowed). */
+export function marketShownRows<T extends MarketRow>(rows: T[], category: MarketCategory, chosen: MarketFilterChoice): T[] {
+  return applyMarketFilters(category, rows, chosen);
+}
 
-export function marketShownRows(rows: MarketRow[]): MarketRow[] {
-  return rows.slice(0, MARKET_ROW_LIMIT);
+export type MarketFilterChoice = Readonly<Record<string, string | null | undefined>>;
+
+/** One filter column as the dialog shows it: its values with counts over the rows the other columns leave. */
+export interface MarketFilterColumnView {
+  label: string;
+  chosen: string | null;
+  /** The rows `All` holds: those every other column's choice leaves. */
+  total: number;
+  options: Array<{ label: string; count: number }>;
+}
+
+/** The filter columns for `category` over `rows`; a column whose rows are all `Other` (it would split nothing) is left out. */
+export function marketFilterColumns(category: MarketCategory, rows: MarketRow[], chosen: MarketFilterChoice): MarketFilterColumnView[] {
+  return MARKET_FILTERS[category]
+    .map((col) => {
+      const base = applyMarketFilters(category, rows, { ...chosen, [col.label]: null });
+      return { label: col.label, chosen: chosen[col.label] ?? null, total: base.length, options: filterOptions(col, base) };
+    })
+    .filter((col) => col.options.some((option) => option.label !== OTHER));
+}
+
+/** The fixed height of one Market row; the windowed list places rows by it. */
+export const MARKET_ROW_PX = 30;
+
+/** The rows `[start, end)` to mount for a scroll position, with `overscan` rows either side. */
+export function marketWindow(total: number, scrollTop: number, viewportPx: number, overscan = 10): { start: number; end: number } {
+  const visible = Math.ceil(viewportPx / MARKET_ROW_PX);
+  const top = Math.min(Math.max(0, Math.floor(scrollTop / MARKET_ROW_PX)), Math.max(0, total - visible));
+  return { start: Math.max(0, top - overscan), end: Math.min(total, top + visible + overscan) };
 }
 
 /** Where a Market purchase went, in the words after its price: worn, carried with the slot refusal, or carried. */

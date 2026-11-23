@@ -24,7 +24,8 @@ export const STARFINDER_MARKET_CATEGORIES = MARKET_CATEGORIES;
 export const CYBERPUNK_MARKET_CATEGORIES = MARKET_CATEGORIES.filter((category) => category.value !== 'magicItem');
 
 export function rowsOfShell(rows: MarketShellRowDto[]): MarketRow[] {
-  return rows.map((row) => ({ key: row.key, name: row.name, detail: row.detail, priceGp: row.price, variants: [] }));
+  // No PCGen tags on a shell row, so the filter column has nothing to split and is not shown.
+  return rows.map((row) => ({ key: row.key, name: row.name, detail: row.detail, priceGp: row.price, variants: [], category: '', types: [] }));
 }
 
 /** The held copies in the dialog's row shape; `itemId` is the key the sale names the copy by. */
