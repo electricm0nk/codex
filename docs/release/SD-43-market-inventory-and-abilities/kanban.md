@@ -70,7 +70,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E2.MC | E2 merge check + epic report | opus | complete | E2.5 | sheet | yes (base build) | no | receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; SHA `8b84bc240323d132d5eb996f41a0297b67455e3a`; discovered E2.6 |
 | E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | complete | E0.1, E2.5 | sheet | no | hub | receipt `artifacts/epic_3/E3.1_cycle_receipt.md`; SHA `23f5984466610573b3ada4acda5e3a45f72b98b1` |
 | E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | complete | E3.1 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.2_cycle_receipt.md`; SHA `110abeaa104f325c42ae70d1588782daac520ab9` |
-| E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | todo | E3.2 | sheet | no | hub | |
+| E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | complete | E3.2 | sheet | no | hub | receipt `artifacts/epic_3/E3.3_cycle_receipt.md`; SHA `260275938f1bdb14f141f0db3bc30d7f002e9517` |
 | E3.4 | Class Features: grants per level for every catalog pool | opus | todo | E3.3 | sheet | yes (root + desktop) | hub | split rule per E0.1 |
 | E3.5 | Class Features: pool-member prerequisite evaluator and refusal reasons | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | |
 | E3.6 | Racial Abilities: alternate racial traits on the sheet; replaces-conflict refused | opus | todo | E3.5 | sheet | yes (root + desktop) | hub | |
