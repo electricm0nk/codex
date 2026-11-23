@@ -71,7 +71,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | complete | E0.1, E2.5 | sheet | no | hub | receipt `artifacts/epic_3/E3.1_cycle_receipt.md`; SHA `23f5984466610573b3ada4acda5e3a45f72b98b1` |
 | E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | complete | E3.1 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.2_cycle_receipt.md`; SHA `110abeaa104f325c42ae70d1588782daac520ab9` |
 | E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | complete | E3.2 | sheet | no | hub | receipt `artifacts/epic_3/E3.3_cycle_receipt.md`; SHA `260275938f1bdb14f141f0db3bc30d7f002e9517` |
-| E3.4 | Class Features: grants per level for every catalog pool | opus | todo | E3.3 | sheet | yes (root + desktop) | hub | split rule per E0.1 |
+| E3.4 | Class Features: grants per level for every catalog pool | opus | complete | E3.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.4_cycle_receipt.md`; SHA `1391c72f1ea5b393f3b750c83f0e222fe5afe8d0`; discovered E3.13, E3.14 (split rule) |
 | E3.5 | Class Features: pool-member prerequisite evaluator and refusal reasons | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | |
 | E3.6 | Racial Abilities: alternate racial traits on the sheet; replaces-conflict refused | opus | todo | E3.5 | sheet | yes (root + desktop) | hub | |
 | E3.7 | Archetype: select per class; slot conflicts refused; grants feed pools | opus | todo | E3.6 | sheet | yes (root + desktop) | hub | |
@@ -80,6 +80,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E3.10 | Overrides on the six new sub-tabs (two flags) | sonnet | todo | E3.9 | sheet | yes (desktop) | hub | |
 | E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus | opus | todo | E3.10 | sheet | yes (desktop) | no | |
 | E3.12 | DISCOVERED (E0.1): ingest the oracle's member typing (`<record>.MOD TYPE:` lines) so the 30 ingest-gap pools in E0.1's data-gap list get members; add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with no ABILITYCATEGORY | opus | todo | E0.1 | sheet | yes (root) | no | must be complete before E3.MC; E3.MC's notice count then = the 4 book gaps; `artifacts/epic_0/abilities-census.json` `data_gap_list[].cause` |
+| E3.13 | DISCOVERED (E3.4): level-1 `ABILITYSELECTION` picks — the 5 bloodline pools whose size is an `offers` count with no `Pool` target — get `abilities.budget.class_features.*` rows and picks | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | must be complete before E3.MC; E3.4's census then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` |
+| E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` list their members (converter carries the category's member filter) | opus | todo | E3.4 | sheet | yes (root + desktop) | no | must be complete before E3.MC; `python3 -I artifacts/epic_3/E3.4/pool_shapes.py .` → `… of which no offer 31` |
 | E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | |
 | E4.1 | One display-name derivation; the all-kinds test; proposed names from book text | opus | todo | E0.3, E3.MC | sheet | yes (root + desktop) | no | |
 | E4.G | Operator wait: approve the proposed names; confirm the reading of "1" (Q-20.1) | operator | todo | E4.1 | lead | no | no | the operator's reply quoted in `progress.md` |
@@ -101,7 +103,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E7.4 | PR LAST → lead merges when green → watch the develop publish (graphify out of scope, operator 2026-11-22) | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |
 
 Count at authoring, by epic (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++} END {for (e in n) print e, n[e]}' kanban.md | sort`):
-C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; E1.14 and E1.15 (E1.MC, 2026-11-22) → E1 16; E2.6 (E2.MC, 2026-11-23) → E2 7; with E0.1's E3.12 the total is **62**.
+C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; E1.14 and E1.15 (E1.MC, 2026-11-22) → E1 16; E2.6 (E2.MC, 2026-11-23) → E2 7; with E0.1's E3.12 the total is 62; E3.13 and E3.14 (E3.4, 2026-11-23) → E3 15, total **64**.
 
 `Depends on` equals `epic-breakdown.md §0`'s `After` column except three rows, where it carries the card sections'
 own wording: E1.10 adds E0.2 ("Depends: E1.9 (lane order), E0.2 (data)"), E5.4 adds E2.3 ("Depends: E5.3, E2.3"),

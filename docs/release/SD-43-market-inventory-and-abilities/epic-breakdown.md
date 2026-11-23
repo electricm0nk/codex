@@ -74,6 +74,8 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.10 | Overrides on the six new sub-tabs: two flags, admitted flags shown | sheet | E3.9 | sonnet | yes (desktop) | hub |
 | E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus, as text | sheet | E3.10 | opus | yes (desktop) | no |
 | E3.12 | DISCOVERED (E0.1): ingest `.MOD TYPE:` member typing for the 30 ingest-gap pools; `Ninja ~ Ninja Trick` grant row; 7 unresolved pool names | sheet | E0.1 | opus | yes (root) | no |
+| E3.13 | DISCOVERED (E3.4): level-1 `ABILITYSELECTION` picks (5 bloodline pools: an `offers` count with no `Pool` target) get grant rows and picks on Class Features | sheet | E3.4 | opus | yes (root + desktop) | hub |
+| E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` (oracle mystery revelations, kineticist elements, shaman hex, …) list their members | sheet | E3.4 | opus | yes (root + desktop) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -95,7 +97,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 62 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC; the per-card headings below use `###`).
+→ 64 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -611,6 +613,35 @@ so no card ships a picker the engine does not check.
   after E3.11, before E3.MC). **Tier:** opus.
 - **Does not cover:** the 4 book gaps (they stay as on-screen data-gap notices, E3.MC).
 
+### E3.13 — level-1 ABILITYSELECTION picks on Class Features (discovered by E3.4, 2026-11-23)
+- **Objective:** E3.4's split rule: the pool-size shape that is not a `Pool` grant. E0.1 counts 5 class-owned pools whose
+  only mechanism is `abilityselection` (Blood of Dragons Bloodline, Bloodrager Bloodline, Crossblooded Bloodline,
+  Crossblooded Rager Bloodline, Sorcerer Bloodline); the converter writes them as an `offers` with a count and no
+  `Pool` target (`core_rulebook:class_feature:sorcerer_standard_bloodline_selection`, count 1, from pool
+  `sorcerer_bloodline`). Give them `abilities.budget.class_features.<pool>.*` rows sized by the offer's count, members
+  from the offer, and picks saved in `ability_selections`; reconcile with the per-class choice ids creation already
+  records (`selected_choices`) so a bloodline is not held twice.
+- **Figure:** `python3 -c "import json;p=json.load(open('docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_0/abilities-census.json'))['class_feature_pools']['pools'];print(sorted(n for n,v in p.items() if 'class' in v['granted_by'] and v['mechanisms']==['abilityselection']))"` → the 5 names above.
+- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `apps/desktop/src-tauri/src/abilities.rs`; second call sites per the prefix.
+- **Failing test first:** Sorcerer 1 → `abilities.budget.class_features.sorcerer_bloodline.granted` = 1 (CRB: a sorcerer
+  chooses one bloodline at 1st level); E3.4's census test then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` to empty.
+- **Acceptance:** that test; E3.4's census test green with no split-off list. **Depends:** E3.4. **Tier:** opus.
+
+### E3.14 — members for pools whose grants carry no offer (discovered by E3.4, 2026-11-23)
+- **Objective:** 31 of the 148 class-owned class-feature pools (E0.1 census, class among `granted_by`, a converted
+  `Pool` grant, not a feat pool) have no `offers` on any grant rule, so E3.4's sub-tab shows their pool line with no
+  members: the ABILITYCATEGORY's member filter (`TYPE`) never reached the package. The converter carries each pool's
+  member filter (an `offers` or a pool → tags table in the package) so `class_feature_options` lists them; until then
+  the sub-tab names this card for a pool with no members.
+- **Figure:** `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.4/pool_shapes.py .` printed `class-owned 181 no Pool target 5 feat pools 28 class-feature pools 148 of which no offer 31`
+  (the list: 20 oracle mystery revelation pools, 5 kineticist element pools, Amateur Gunslinger, Craft Skill Bonus,
+  Guileful Polyglot Additional Language, Gun Training Choice, Gunslinger Battered Gun, Samurai Expertise, Shaman Hex —
+  the script prints it).
+- **FILES YOU OWN:** the sheet-rule converter's offer emission (located by the card: `git grep -n "offers" crates/ src/rules_core/sheet_rule*.rs`),
+  the regenerated `data/sheet_rules` records, `src/rules_core/ability_budget.rs`.
+- **Failing test first:** an Oracle 1 with the Flame mystery lists ≥ 1 Flame revelation option (0 today).
+- **Acceptance:** that test; a census that every class-owned class-feature pool with a grant lists ≥ 1 member or is on
+  E0.1's data-gap list. **Depends:** E3.4. **Tier:** opus.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
