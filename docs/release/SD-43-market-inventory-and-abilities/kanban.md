@@ -75,7 +75,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E3.5 | Class Features: pool-member prerequisite evaluator and refusal reasons | opus | complete | E3.4 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.5_cycle_receipt.md`; SHA `9ee4fe96de5db045a6260a80afe4dcd6723ef697`; coverage 7,657 members evaluated, unknown token shape 0; discovered E3.15 |
 | E3.6 | Racial Abilities: alternate racial traits on the sheet; replaces-conflict refused | opus | complete | E3.5 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.6_cycle_receipt.md`; SHA `f014e02fc7795f319e0a949453368a901fdd9816` |
 | E3.7 | Archetype: select per class; slot conflicts refused; grants feed pools | opus | complete | E3.6 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.7_cycle_receipt.md`; SHA `a85085a55ed73e07bb9318e0fb3ab73d57cc1c8c`; discovered E3.16 |
-| E3.8 | Favored class bonus: class pick, per-level HP / skill / race alternates; engine totals | opus | todo | E3.7 | sheet | yes (root + desktop) | hub | |
+| E3.8 | Favored class bonus: class pick, per-level HP / skill / race alternates; engine totals | opus | complete | E3.7 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.8_cycle_receipt.md`; SHA `c6a8b9f3fd98b1caa9fe930c550368e5b2d0d3f8` |
 | E3.9 | Background and Misc sub-tabs per E0.1's mapping | opus | todo | E3.8 | sheet | yes (root + desktop) | hub | |
 | E3.10 | Overrides on the six new sub-tabs (two flags) | sonnet | todo | E3.9 | sheet | yes (desktop) | hub | |
 | E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus | opus | todo | E3.10 | sheet | yes (desktop) | no | |
