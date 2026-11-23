@@ -54,7 +54,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | todo | E1.6 | sheet | no | hub | |
 | E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `7adf7e494d1b376c76ba01a0ee41e66721bf6d79` |
 | E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | complete | E1.8 | market | yes (desktop) | hub | receipt `artifacts/epic_1/E1.9_cycle_receipt.md`; SHA `7701cae42e4cfd50140833f8ad06c82bf45913a1` |
-| E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | todo | E1.9, E0.2 | market | no | no | |
+| E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | complete | E1.9, E0.2 | market | no | no | receipt `artifacts/epic_1/E1.10_cycle_receipt.md`; SHA `a1b361d7df3ce84762680108ffcc8a9c752d8164` |
 | E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |
 | E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | todo | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2) |
 | E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |
