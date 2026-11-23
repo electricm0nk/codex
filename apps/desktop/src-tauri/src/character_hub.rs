@@ -5662,7 +5662,7 @@ pub(crate) fn sell_held_pieces_at_root(
     let cost_gp = copy_price_gp(&held[index].item_id, sold_bonus, &offers);
     let sold = selection_copy_keys(held).swap_remove(index);
 
-    let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), saved_at)?;
+    let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), true, saved_at)?;
     if let CreateCharacterResponse::Saved { .. } = &taken.response {
         let listed = codex::rules_core::encumbrance::copy_listed_copper(cost_gp, taken.cost_override_copper, taken.pieces, taken.bundle_pieces).unwrap_or(0);
         let refund = match (mode, deal.negotiated_copper) {
@@ -5708,9 +5708,10 @@ fn split_stack(stack: &[&HeldEquipmentCopyDto], wanted: u32) -> (Vec<CopyKey>, O
 
 /// Takes `quantity` pieces (absent: all) of the stack `copy` is in, from `copy` on (`line_only`:
 /// `copy`'s own line alone), for no money: whole lines leave the saved input and every set (what
-/// they held becomes Carried), and a line taken in part keeps the rest. An unknown copy, a created
+/// they held becomes Carried; `left_behind_stay`: Not Carried in a set where the line was itself left
+/// behind, `decisions.md §12`), and a line taken in part keeps the rest. An unknown copy, a created
 /// item, or more pieces than the stack holds is an error.
-fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_only: bool, saved_at: &str) -> Result<TakenPieces, String> {
+fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_only: bool, left_behind_stay: bool, saved_at: &str) -> Result<TakenPieces, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let input = &envelope.character_input;
     let (rows, mut sets) = synced_rows_and_sets(root, input)?;
@@ -5739,6 +5740,16 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
         if let Some((from, kept, _)) = split {
             sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
         }
+        if left_behind_stay {
+            for set in &mut sets.sets {
+                let left_behind: Vec<CopyKey> = whole.iter().filter(|line| equipment_sets::project(set, std::slice::from_ref(*line))[0] == ActiveState::Absent).cloned().collect();
+                for entry in &mut set.locations {
+                    if matches!(&entry.location, Location::Inside { container } if left_behind.contains(container)) {
+                        entry.location = Location::NotCarried;
+                    }
+                }
+            }
+        }
         save_sets(root, &sets)?;
         // Highest ordinal first, so each removal renumbers only copies still held.
         whole.sort_by_key(|copy| std::cmp::Reverse(copy.ordinal));
@@ -5752,7 +5763,7 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
 /// Discards `quantity` pieces (absent: the whole stack) of the stack `copy` is in, for no money
 /// (`decisions.md §27`); see [`take_pieces_at_root`].
 pub(crate) fn discard_equipment_copy_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, saved_at: &str) -> Result<CreateCharacterResponse, String> {
-    take_pieces_at_root(root, copy, quantity, false, saved_at).map(|taken| taken.response)
+    take_pieces_at_root(root, copy, quantity, false, false, saved_at).map(|taken| taken.response)
 }
 
 /// Names one copy (`decisions.md §24` (b)): kept in the sets file's copies map, shown wherever the
@@ -22715,6 +22726,151 @@ mod tests {
         assert_eq!((std::fs::read(&file).unwrap(), held_selections(&root)), before, "a refusal writes nothing");
         let unknown = move_equipment_copy_at_root(&root, &sets_key("Backpack", 3), Location::NotCarried, None, MOVED_AT).expect_err("no fourth backpack");
         assert!(unknown.contains("does not hold"), "{unknown}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Sells the first held `item_id` whole under Standard (half its price) and returns the copper
+    /// it paid.
+    fn sell_container_standard(root: &Path, item_id: &str) -> u64 {
+        let start = load_character_money_at_root(root).unwrap().total_copper;
+        saved_ok(sell_held_pieces_at_root(root, item_id, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal::default()));
+        load_character_money_at_root(root).unwrap().total_copper - start
+    }
+
+    /// Item 12 (`decisions.md §12`): an empty Backpack sells for half its 2 gp and takes its 2 lb
+    /// off the load; nothing else moves.
+    #[test]
+    fn sell_container_empty() {
+        let root = sets_root("sell-container-empty", &[("Backpack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let before = worn_vs_carried_weight(&root);
+        assert_eq!(sell_container_standard(&root, "Backpack"), 100);
+        assert!(stacks_of(&root, "Backpack").is_empty());
+        assert_eq!(worn_vs_carried_weight(&root), before - fixture_weight("Backpack"));
+        assert_eq!(active_location(&root, &sets_key("item:dagger", 0)), Location::Carried);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Backpack ⊃ {Sack ⊃ Bedroll, Rope, Dagger}: selling the Backpack pays for it alone; the
+    /// loose Rope and Dagger and the Sack are Carried, and the load is only the Backpack lighter.
+    #[test]
+    fn sell_container_loose_contents_become_carried() {
+        let root = sets_root(
+            "sell-container-loose",
+            &[
+                ("Backpack", ActiveState::SelectedInactive),
+                ("Sack", ActiveState::SelectedInactive),
+                ("Bedroll", ActiveState::SelectedInactive),
+                ("Rope (50 ft.)", ActiveState::SelectedInactive),
+                ("item:dagger", ActiveState::SelectedInactive),
+            ],
+        );
+        let (pack, sack) = (sets_key("Backpack", 0), sets_key("Sack", 0));
+        for loose in [sack.clone(), sets_key("Rope (50 ft.)", 0), sets_key("item:dagger", 0)] {
+            move_saved(&root, &loose, Location::Inside { container: pack.clone() }, None);
+        }
+        move_saved(&root, &sets_key("Bedroll", 0), Location::Inside { container: sack.clone() }, None);
+        let before = worn_vs_carried_weight(&root);
+        assert_eq!(sell_container_standard(&root, "Backpack"), 100, "half the Backpack's 2 gp, nothing for its contents");
+        assert!(stacks_of(&root, "Backpack").is_empty());
+        for loose in [&sack, &sets_key("Rope (50 ft.)", 0), &sets_key("item:dagger", 0)] {
+            assert_eq!(active_location(&root, loose), Location::Carried, "{loose:?}");
+        }
+        assert_eq!(active_location(&root, &sets_key("Bedroll", 0)), Location::Inside { container: sack });
+        assert_eq!(worn_vs_carried_weight(&root), before - fixture_weight("Backpack"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Backpack ⊃ Sack ⊃ Pouch (Belt) ⊃ Dagger: selling the Backpack frees the Sack only; the
+    /// Pouch stays in the Sack and the Dagger in the Pouch.
+    #[test]
+    fn sell_container_nested_keeps_its_own() {
+        const POUCH: &str = "Pouch (Belt)";
+        let root = sets_root(
+            "sell-container-nested",
+            &[
+                ("Backpack", ActiveState::SelectedInactive),
+                ("Sack", ActiveState::SelectedInactive),
+                (POUCH, ActiveState::SelectedInactive),
+                ("item:dagger", ActiveState::SelectedInactive),
+            ],
+        );
+        let (pack, sack, pouch) = (sets_key("Backpack", 0), sets_key("Sack", 0), sets_key(POUCH, 0));
+        move_saved(&root, &sack, Location::Inside { container: pack.clone() }, None);
+        move_saved(&root, &pouch, Location::Inside { container: sack.clone() }, None);
+        move_saved(&root, &sets_key("item:dagger", 0), Location::Inside { container: pouch.clone() }, None);
+        assert_eq!(sell_container_standard(&root, "Backpack"), 100);
+        assert_eq!(active_location(&root, &sack), Location::Carried);
+        assert_eq!(active_location(&root, &pouch), Location::Inside { container: sack });
+        assert_eq!(active_location(&root, &sets_key("item:dagger", 0)), Location::Inside { container: pouch });
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Bag of Holding (Type I) ⊃ Backpack ⊃ Rope: the Bag's contents weigh nothing, so selling the
+    /// Backpack puts the Rope on the load (Carried), not back in the Bag.
+    #[test]
+    fn sell_container_in_a_bag_of_holding() {
+        const BAG: &str = "Bag of Holding (Type I)";
+        const ROPE: &str = "Rope (50 ft.)";
+        let root = sets_root("sell-container-bag", &[(BAG, ActiveState::SelectedInactive), ("Backpack", ActiveState::SelectedInactive), (ROPE, ActiveState::SelectedInactive)]);
+        let pack = sets_key("Backpack", 0);
+        move_saved(&root, &pack, Location::Inside { container: sets_key(BAG, 0) }, None);
+        move_saved(&root, &sets_key(ROPE, 0), Location::Inside { container: pack }, None);
+        let before = worn_vs_carried_weight(&root);
+        assert_eq!(sell_container_standard(&root, "Backpack"), 100);
+        assert_eq!(active_location(&root, &sets_key(ROPE, 0)), Location::Carried);
+        assert_eq!(worn_vs_carried_weight(&root), before + fixture_weight(ROPE), "the Rope leaves the Bag for the load");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Pouch (Belt) worn (it takes no slot) holding a Dagger: sold, the Dagger is Carried and the load is
+    /// only the Pouch lighter (the Dagger weighed on the load before and after).
+    #[test]
+    fn sell_container_worn_belt_pouch_and_encumbrance() {
+        const POUCH: &str = "Pouch (Belt)";
+        let root = sets_root("sell-container-pouch", &[(POUCH, ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let pouch = sets_key(POUCH, 0);
+        move_saved(&root, &pouch, Location::Equipped, None);
+        move_saved(&root, &sets_key("item:dagger", 0), Location::Inside { container: pouch }, None);
+        let before = worn_vs_carried_weight(&root);
+        assert_eq!(sell_container_standard(&root, POUCH), 50, "half the pouch's 1 gp");
+        assert_eq!(active_location(&root, &sets_key("item:dagger", 0)), Location::Carried);
+        assert_eq!(worn_vs_carried_weight(&root), before - fixture_weight(POUCH));
+        let dagger: Vec<ActiveState> = held_selections(&root).iter().filter(|s| s.item_id == "item:dagger").map(|s| s.active_state).collect();
+        assert_eq!(dagger, vec![ActiveState::SelectedInactive]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `decisions.md §12` default: contents of a sold container that were Not Carried stay Not
+    /// Carried — a Not Carried Sack's Bedroll, and a Sack inside a Not Carried Backpack's Rope.
+    #[test]
+    fn sell_container_not_carried_contents_stay_not_carried() {
+        const ROPE: &str = "Rope (50 ft.)";
+        let root = sets_root(
+            "sell-container-not-carried",
+            &[
+                ("Sack", ActiveState::SelectedInactive),
+                ("Bedroll", ActiveState::SelectedInactive),
+                ("Backpack", ActiveState::SelectedInactive),
+                ("Sack", ActiveState::SelectedInactive),
+                (ROPE, ActiveState::SelectedInactive),
+            ],
+        );
+        let (left_sack, pack, packed_sack) = (sets_key("Sack", 0), sets_key("Backpack", 0), sets_key("Sack", 1));
+        move_saved(&root, &left_sack, Location::NotCarried, None);
+        move_saved(&root, &sets_key("Bedroll", 0), Location::Inside { container: left_sack }, None);
+        move_saved(&root, &pack, Location::NotCarried, None);
+        move_saved(&root, &packed_sack, Location::Inside { container: pack.clone() }, None);
+        move_saved(&root, &sets_key(ROPE, 0), Location::Inside { container: packed_sack }, None);
+        let before = worn_vs_carried_weight(&root);
+        assert_eq!(sell_container_standard(&root, "Sack"), 5, "half the Sack's 1 sp");
+        assert_eq!(active_location(&root, &sets_key("Bedroll", 0)), Location::NotCarried);
+        // The packed Sack was ordinal 1; with Sack 0 sold it is Sack 0 now.
+        assert_eq!(sell_container_standard(&root, "Sack"), 5);
+        assert_eq!(active_location(&root, &sets_key(ROPE, 0)), Location::NotCarried);
+        let states: Vec<ActiveState> = held_selections(&root).iter().filter(|s| s.item_id == "Bedroll" || s.item_id == ROPE).map(|s| s.active_state).collect();
+        assert_eq!(states, vec![ActiveState::Absent, ActiveState::Absent]);
+        assert_eq!(worn_vs_carried_weight(&root), before, "nothing left behind reaches the load");
+        assert_eq!(active_location(&root, &pack), Location::NotCarried);
         std::fs::remove_dir_all(&root).ok();
     }
 
