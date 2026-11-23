@@ -51,6 +51,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E1.10 | Filter model: per-list columns and values, `Other`, counts account for every row | market | E1.9 | opus | no | no |
 | E1.11 | Filter column in the dialog; no 200 cap; windowed list; first-paint measured | market | E1.10 | opus | no | no |
 | E1.12 | Sell removes the copy the player clicked (copy key, not item id + state); discovered by E0.4 | gear | E1.5 | opus | yes (desktop) | hub |
+| E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1); discovered by E1.6 | gear | E1.6 | sonnet | no | hub |
 | E1.MC | E1 merge check + epic report (adversarial; screenshots of gear screen, Market, sell window) | gear | E1.7, E1.11 | opus | yes (base build) | no |
 | E2.1 | Fixed layout on the PF sheet: bar, rail and right column fixed, centre scrolls, `100dvh`; Show Progression visible (17 + 21) | sheet | E1.7 | opus | no | hub |
 | E2.2 | The same shared layout on the SF and CPR sheets | sheet | E2.1 | sonnet | no | no |
@@ -91,7 +92,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 58 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4; the per-card headings below use `###`).
+→ 59 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -368,6 +369,18 @@ change); **Does not cover** (rule 7). Every code-bearing card also runs the four
   frontend test that `handleGearSell`'s request carries `row.held.copies[0]`.
 - **Depends:** E1.5. **Tier:** opus.
 - **Does not cover:** what the sale pays (E1.6) and Drop/Discard (already by copy key).
+
+### E1.13 — the sell window's choice under Cashless (discovered by E1.6)
+- **Objective:** `decisions.md §10` / §30 Q-9.1: the Gear sell window returns money per its own option even when
+  the session Market mode is Cashless. Today `sell_held_pieces_at_root` (`desktop/character_hub.rs`, `(PriceMode::Cashless, _) => 0`)
+  ignores `negotiated_copper` under Cashless, and `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends the
+  session `priceMode`. Fix: `handleGearSell` sends `priceMode: 'standard'` whenever `negotiatedGp` is given (the
+  window always sends its total when a price is listed), so the backend pays the window's total; the Market's own Sell is unchanged.
+- **FILES YOU OWN:** `ui/characterHub/CharacterSheet.tsx` (`handleGearSell`) (`hub`) + a frontend test.
+- **Failing test first:** with the session mode `cashless`, the gear sell request for a window total of 7.5 gp carries a
+  non-cashless `priceMode` and `negotiatedPriceCopper: 750`.
+- **Depends:** E1.6. **Tier:** sonnet.
+- **Does not cover:** the Market window's own Sell (Cashless there still pays nothing, Q-12.2).
 
 ### E1.MC — E1 merge check
 - **Objective:** adversarial review of E1's diff against the rulings; screenshots of gear (all sections),

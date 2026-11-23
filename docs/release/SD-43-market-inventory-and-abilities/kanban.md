@@ -50,13 +50,14 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.3 | Whole container box is a drop target (nearest container) | sonnet | complete | E1.2 | gear | no | no | receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; SHA `1a72bf730baad31aad1b8a5d4d3d3af4dc774b88`; repair SHA `f1090131dfea7c3af48c2346682bcc864219cfe9` |
 | E1.4 | Double-click / Enter: first free slot, else swap; to Carried; one piece | opus | complete | E1.3 | gear | no | no | receipt `artifacts/epic_1/E1.4_cycle_receipt.md`; SHA `e761ee7072a94a26dc50766c7872d1adf20ea207` |
 | E1.5 | Selling a container moves its direct contents to Carried | opus | complete | E1.4 | gear | yes (desktop) | hub | receipt `artifacts/epic_1/E1.5_cycle_receipt.md`; SHA `d72cf744c7d897e1316c2b29239ad29902ee8026` |
-| E1.6 | Sell window: Market Rate / Build / Negotiate | opus | todo | E1.5 | gear | no | no | |
+| E1.6 | Sell window: Market Rate / Build / Negotiate | opus | complete | E1.5 | gear | no | no | receipt `artifacts/epic_1/E1.6_cycle_receipt.md`; SHA `fffb58ccf515ed741f3c8ce15abf4739fda47669`; discovered E1.13 |
 | E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | todo | E1.6 | sheet | no | hub | |
 | E1.8 | Market inventory sell value column (`sellNegotiateGp`) | sonnet | complete | E0.2 | market | no | no | receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; SHA `7adf7e494d1b376c76ba01a0ee41e66721bf6d79` |
 | E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | complete | E1.8 | market | yes (desktop) | hub | receipt `artifacts/epic_1/E1.9_cycle_receipt.md`; SHA `7701cae42e4cfd50140833f8ad06c82bf45913a1` |
 | E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | complete | E1.9, E0.2 | market | no | no | receipt `artifacts/epic_1/E1.10_cycle_receipt.md`; SHA `a1b361d7df3ce84762680108ffcc8a9c752d8164` |
 | E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |
 | E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | todo | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2) |
+| E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | todo | E1.6 | gear | no | hub | discovered E1.6 (`artifacts/epic_1/E1.6_cycle_receipt.md`, "Discovered cards") |
 | E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |
 | E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | todo | E1.7 | sheet | no | hub | |
 | E2.2 | The shared layout on the SF and CPR sheets | sonnet | todo | E2.1 | sheet | no | no | settles Q-8.2 |
@@ -97,7 +98,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E7.4 | PR LAST → lead merges when green → watch the develop publish (graphify out of scope, operator 2026-11-22) | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |
 
 Count at authoring, by epic (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++} END {for (e in n) print e, n[e]}' kanban.md | sort`):
-C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; with E0.1's E3.12 the total is **58**.
+C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; with E0.1's E3.12 the total is **59**.
 
 `Depends on` equals `epic-breakdown.md §0`'s `After` column except three rows, where it carries the card sections'
 own wording: E1.10 adds E0.2 ("Depends: E1.9 (lane order), E0.2 (data)"), E5.4 adds E2.3 ("Depends: E5.3, E2.3"),
