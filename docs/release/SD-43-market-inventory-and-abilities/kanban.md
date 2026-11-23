@@ -84,7 +84,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E5.1 | Report API client in Rust; key stamped at build; every reply handled | opus | complete | C1 | settings | yes (desktop) | hub | precondition P-8 (CI secret) is checked at E7.2, not waived; receipt `artifacts/epic_5/E5.1_cycle_receipt.md`; SHA `f9416a5d0712d3931d209ad4dfb8b87405f1cf9f` |
 | E5.2 | Anonymous selector + optional Handle; GitHub-unavailable message | opus | complete | E5.1 | settings | no | no | fence exit App.tsx (composers live there; retro incident); receipt `artifacts/epic_5/E5.2_cycle_receipt.md`; SHA `96e241f7310ae4ec3728a46f649857e150e5afff` |
 | E5.3 | Update menu: channel selector beside `Channel:`; wider text blocks | sonnet | complete | E5.2 | settings | no | no | receipt `artifacts/epic_5/E5.3_cycle_receipt.md`; SHA `7c82126eeb0a612d786000a9ac15201b58e8eb29` |
-| E5.4 | Developer tab slimmed + Corpus Ingest Diagnostic embedded | sonnet | todo | E5.3, E2.3 | settings | no | no | `CharacterHubPage.tsx` shared with E2.3 |
+| E5.4 | Developer tab slimmed + Corpus Ingest Diagnostic embedded | sonnet | complete | E5.3, E2.3 | settings | no | no | receipt `artifacts/epic_5/E5.4_cycle_receipt.md`; SHA `152ca44ab809a8398e9619b149466a61cb98e4a7` |
 | E5.MC | E5 merge check + epic report | opus | todo | E5.4 | settings | yes (base build) | no | |
 | E6.1 | Campaign folder relocation: copy, verify, switch, skeleton | opus | complete | C1 | campaign | yes (desktop) | hub | RED: 0 tests matched `relocate_campaign` (exit 1); GREEN 3 passed; receipt `artifacts/epic_6/E6.1_cycle_receipt.md`; SHA `a2530d82d746d8efeb568dfa209636dcce8af2a7` |
 | E6.2 | House Rules ☰ menu per character and system | opus | todo | E3.MC | sheet | yes (desktop) | hub | |
