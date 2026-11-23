@@ -68,7 +68,7 @@ assertEqual(marketLine('sell', 'Flak', 0, 'eddies'), 'Removed Flak; no money mov
 for (const sheet of ['./StarfinderCharacterSheet.tsx', './CyberpunkCharacterSheet.tsx']) {
   const text = source(sheet);
   assert(text.includes('<SystemMarketDialog'), `${sheet} renders the Market`);
-  assert(/>\s*Market\s*</.test(text), `${sheet} has a Market button`);
+  assert(text.includes('<MarketButton'), `${sheet} has a Market button`);
   assert(!/Add (Weapon|Armor|Gear)/.test(text), `${sheet} has no Add button`);
 }
 for (const dialog of ['./StarfinderChoicesDialog.tsx', './StarfinderLevelUpDialog.tsx']) {

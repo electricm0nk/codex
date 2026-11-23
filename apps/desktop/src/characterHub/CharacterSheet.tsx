@@ -40,7 +40,7 @@ import type {
 import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './encumbranceTabModel';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
-import { PriceModeControl } from './PriceModeControl';
+import { MarketButton } from './MarketButton';
 import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
@@ -783,9 +783,6 @@ function WeaponsTab(props: {
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onOpenMarket: () => void;
-  onPrint: () => void;
-  priceMode: PriceMode;
-  onPriceModeChange: (mode: PriceMode) => void;
   /**
    * Drop: moves the row's own copy to Not Carried, kept with its equipmods and no money moved
    * (`decisions.md §27`); the caption below states it.
@@ -848,15 +845,7 @@ function WeaponsTab(props: {
         Proficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.
       </p>
 
-      <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
-      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
-          Market
-        </button>
-        <button type="button" onClick={props.onPrint} style={addItemButtonStyle}>
-          Print
-        </button>
-      </div>
+      <MarketButton onClick={props.onOpenMarket} testId="pf-weapons-market" />
 
       {/* PF1 weapon table header */}
       <div
@@ -1394,11 +1383,7 @@ function DefenseTab(props: {
 }) {
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
-          Market
-        </button>
-      </div>
+      <MarketButton onClick={props.onOpenMarket} testId="pf-defense-market" />
       <EquipmentEffectsPanel effects={props.equipmentEffects} />
       <AcBySourcePanel effects={props.equipmentEffects} encumbrance={props.encumbrance} />
       <ResistancesPanel resistances={props.resistances} />
@@ -1589,8 +1574,6 @@ function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onOpenMarket: () => void;
-  priceMode: PriceMode;
-  onPriceModeChange: (mode: PriceMode) => void;
   /** Customize's Attach modifier: the Equipmods picker for this copy. */
   onPickModifier: (target: CustomizeTarget) => void;
   characterId: string;
@@ -1614,12 +1597,7 @@ function GearTab(props: {
     <div>
       <MoneyPanel money={props.money} busy={props.moneyBusy} error={props.moneyError} onAdjust={props.onAdjustMoney} />
       <EncumbrancePanel encumbrance={encumbrance} />
-      <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
-      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
-          Market
-        </button>
-      </div>
+      <MarketButton onClick={props.onOpenMarket} testId="pf-gear-market" />
       <GearScreen
         characterId={props.characterId}
         load={props.loadHeldEquipment}
@@ -4470,9 +4448,6 @@ export function CharacterSheet(props: {
                     weaponDamage={engineRecords.weaponDamage}
                     corpusDerived={props.detail?.corpusDerived ?? null}
                     onOpenMarket={() => setMarketCategory('weapon')}
-                    onPrint={handlePrint}
-                    priceMode={priceMode}
-                    onPriceModeChange={setPriceMode}
                     onDropWeapon={(drop) => void handleDropWeapon(drop)}
                   />
                 ) : name === 'Defense' ? (
@@ -4502,8 +4477,6 @@ export function CharacterSheet(props: {
                   <GearTab
                     corpusDerived={props.detail?.corpusDerived}
                     onOpenMarket={() => setMarketCategory('gear')}
-                    priceMode={priceMode}
-                    onPriceModeChange={setPriceMode}
                     onPickModifier={handlePickModifier}
                     characterId={props.row.characterId}
                     loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}

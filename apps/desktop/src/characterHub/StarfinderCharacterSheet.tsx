@@ -5,6 +5,7 @@ import { RulesAndFeaturesSection } from './CharacterSheet';
 import { StarfinderChoicesDialog } from './StarfinderChoicesDialog';
 import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
 import { STARFINDER_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
+import { MarketButton } from './MarketButton';
 import { PrintDialog } from './PrintDialog';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
@@ -79,9 +80,6 @@ export function StarfinderCharacterSheet(props: {
           <button type="button" data-testid="sf-sheet-choices" onClick={() => setChoicesOpen(true)} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
             Feats, spells and gear
           </button>
-          <button type="button" data-testid="sf-sheet-market" onClick={openMarket} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
-            Market
-          </button>
           <button type="button" data-testid="sf-sheet-print" onClick={() => setPrintOpen(true)} style={buttonStyle}>
             Print
           </button>
@@ -93,6 +91,8 @@ export function StarfinderCharacterSheet(props: {
           </button>
         </div>
       </div>
+
+      <MarketButton testId="sf-sheet-market" onClick={openMarket} disabled={levelUpOpen || choicesOpen} />
 
       {status === null ? null : (
         <p data-testid="sf-sheet-status" style={{ fontWeight: 700, margin: '0 0 1rem' }}>

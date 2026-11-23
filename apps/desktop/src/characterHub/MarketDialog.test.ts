@@ -230,7 +230,7 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   const here = dirname(fileURLToPath(import.meta.url));
   const sheet = readFileSync(join(here, 'CharacterSheet.tsx'), 'utf8');
   assertEqual(sheet.match(/Add Weapon|Add Armor|Add Gear/g)?.length ?? 0, 0, 'the old names');
-  assertEqual(sheet.match(/>\s*Market\s*</g)?.length, 3, 'a Market button on each of Weapons, Defense and Gear');
+  assertEqual(sheet.match(/<MarketButton/g)?.length, 3, 'a Market button on each of Weapons, Defense and Gear');
   for (const category of ['weapon', 'armor', 'gear']) {
     assert(sheet.includes(`onOpenMarket={() => setMarketCategory('${category}')}`), `a tab opens on ${category}`);
   }
