@@ -167,7 +167,7 @@ function aSelectedRowIsMarkedAndItsPanelMountsUnderTheTables() {
       refusal: null,
       onMove: noop,
       onDrop: noop,
-      onSell: noop,
+      onSell: noop, loadSellPrice: async () => null,
       onDiscard: noop,
       onSets: { activate: noop, create: noop, rename: noop, remove: noop },
       onCustomizeName: noop,

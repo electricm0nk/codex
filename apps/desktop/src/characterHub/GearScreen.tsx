@@ -7,6 +7,11 @@ import { moveEquipmentCopy } from '../boundary/moveEquipmentCopy';
 import { renameEquipmentCopy } from '../boundary/renameEquipmentCopy';
 import { CustomizeCopyDialog, renameRequest, type CustomizeTarget } from './CustomizeCopyDialog';
 import { GearDetail } from './GearDetail';
+import { listMarket } from '../boundary/listMarket';
+import { MARKET_CATEGORIES, rowOfHeldCopy } from './MarketDialog';
+import { mapMarketTableRows } from './marketModel';
+import { SellDialog } from './SellDialog';
+import { sellBundleGp } from './sellDialogModel';
 import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDetail';
 import { OverrideTag } from './OverrideTag';
 import {
@@ -31,7 +36,7 @@ import {
 } from './gearScreenModel';
 
 const DROP_SELL_DISCARD_CAPTION =
-  'Drop keeps the item and marks it Not Carried; Sell returns money under the pricing above; Discard removes it for nothing.';
+  'Drop keeps the item and marks it Not Carried; Sell opens the sell window (Market Rate, Build or Negotiate); Discard removes it for nothing.';
 
 const panel: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 6, minWidth: 0, padding: '0.5rem 0.75rem' };
 /** A container's light box (today's panel border, tighter); nested boxes sit inside the parent's. */
@@ -79,6 +84,8 @@ export interface GearPanelsProps {
   onMove: (row: GearRow, location: LocationDto, quantity?: number, swapOut?: { row: GearRow; quantity?: number }) => void;
   onDrop: (row: GearRow, quantity?: number) => void;
   onSell: (row: GearRow, quantity?: number, negotiatedGp?: number) => void;
+  /** The sell window's bundle price for a row (`sellBundleGp`); `null` when none is listed. */
+  loadSellPrice: (row: GearRow) => Promise<number | null>;
   onDiscard: (row: GearRow, quantity?: number) => void;
   onSets: GearSetActions;
   /** Customize's Save: names `copy` `text` (blank restores the record's name). */
@@ -175,12 +182,11 @@ function MoveToMenu(props: { model: GearModel; row: GearRow; busy: boolean; onCh
   );
 }
 
-/** The inline "how many?" (and Sell's Negotiate, Discard's confirm) under a row. */
-function PendingForm(props: { pending: Pending; busy: boolean; onConfirm: (quantity?: number, negotiatedGp?: number) => void; onCancel: () => void }) {
+/** The inline "how many?" (and Discard's confirm) under a row; Sell has its own window. */
+function PendingForm(props: { pending: Pending; busy: boolean; onConfirm: (quantity?: number) => void; onCancel: () => void }) {
   const held = props.pending.row.held;
   const prompt = quantityPrompt(held);
   const [count, setCount] = useState(String(held.quantity));
-  const [negotiated, setNegotiated] = useState('');
   const [error, setError] = useState<string | null>(null);
   const verb = { move: `Move to ${props.pending.targetLabel ?? ''}`.trim(), drop: 'Drop', sell: 'Sell', discard: 'Discard' }[props.pending.kind];
   const confirm = () => {
@@ -189,12 +195,7 @@ function PendingForm(props: { pending: Pending; busy: boolean; onConfirm: (quant
       setError(quantity);
       return;
     }
-    const gp = negotiated.trim() === '' ? undefined : Number(negotiated);
-    if (gp !== undefined && !(Number.isFinite(gp) && gp >= 0)) {
-      setError('Enter the agreed total in gp, or leave it blank for the pricing above.');
-      return;
-    }
-    props.onConfirm(quantity, gp);
+    props.onConfirm(quantity);
   };
   return (
     <div role="group" aria-label={`${verb} ${props.pending.row.label}`} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', padding: '0.25rem 0 0.4rem 1rem' }}>
@@ -204,12 +205,6 @@ function PendingForm(props: { pending: Pending; busy: boolean; onConfirm: (quant
           How many?{' '}
           <input type="number" min={prompt.min} max={prompt.max} step={1} value={count} onChange={(event) => setCount(event.target.value)} style={input} />
           {` of ${prompt.max}`}
-        </label>
-      ) : null}
-      {props.pending.kind === 'sell' ? (
-        <label style={{ fontSize: '0.75rem' }}>
-          Negotiate (gp, blank = the pricing above){' '}
-          <input type="number" min={0} step="any" value={negotiated} onChange={(event) => setNegotiated(event.target.value)} style={input} />
         </label>
       ) : null}
       <button type="button" disabled={props.busy} onClick={confirm} style={button}>
@@ -349,7 +344,7 @@ export function GearPanels(props: GearPanelsProps) {
     }
   };
   const formAt = (at: string) =>
-    pending && pending.at === at ? <PendingForm key={`${pending.kind}-${at}`} pending={pending} busy={props.busy} onConfirm={confirm} onCancel={() => setPending(null)} /> : null;
+    pending && pending.kind !== 'sell' && pending.at === at ? <PendingForm key={`${pending.kind}-${at}`} pending={pending} busy={props.busy} onConfirm={confirm} onCancel={() => setPending(null)} /> : null;
   // Drag (`decisions.md §14`, SD-g): HTML5 only. `dragover` cannot read the drag data, so the dragged
   // row's id is kept here too; the drop itself reads the data.
   const dragging = useRef('');
@@ -528,6 +523,17 @@ export function GearPanels(props: GearPanelsProps) {
         ))}
         <p style={{ ...quiet, marginTop: '0.5rem' }}>{DROP_SELL_DISCARD_CAPTION}</p>
         {props.detail}
+        {pending?.kind === 'sell' ? (
+          <SellDialog
+            key={`sell-${pending.row.id}`}
+            label={pending.row.label}
+            held={pending.row.held}
+            busy={props.busy}
+            loadBundleGp={() => props.loadSellPrice(pending.row)}
+            onConfirm={confirm}
+            onCancel={() => setPending(null)}
+          />
+        ) : null}
         {customizing ? (
           <CustomizeCopyDialog
             key={copyId(customizing.copy)}
@@ -564,7 +570,7 @@ export interface GearScreenProps {
    * resolves to the refusal, word for word, or null when it saved.
    */
   onChange: (write: (savedAt: string) => Promise<unknown>) => Promise<string | null>;
-  /** Sells pieces of a stack, at the pricing above or the negotiated total; resolves like `onChange`. */
+  /** Sells pieces of a stack for the sell window's gp total (none when no price is listed); resolves like `onChange`. */
   onSell: (held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number) => Promise<string | null>;
   /** Customize's Attach modifier: opens the Equipmods picker for this copy. */
   onPickModifier: (target: CustomizeTarget) => void;
@@ -679,6 +685,14 @@ export function GearScreen(props: GearScreenProps) {
       }
       onDrop={(row, quantity) => write((savedAt) => moveEquipmentCopy({ characterId, copy: row.held.copies[0], location: { kind: 'notCarried' }, quantity, savedAt }))}
       onSell={(row, quantity, negotiatedGp) => act(props.onSell(row.held, quantity, negotiatedGp))}
+      loadSellPrice={async ({ held }) => {
+        // A `+N` copy is priced at the Market's offer, as `copy_price_gp` prices it; a plain one at its record.
+        if (held.bonus > 0 && held.costOverrideCopper === undefined) {
+          const lists = await Promise.all(MARKET_CATEGORIES.map(({ value }) => listMarket({ category: value, nameContains: held.baseName })));
+          return sellBundleGp(held, null, rowOfHeldCopy(lists.flatMap((list) => mapMarketTableRows(list.entries)), held));
+        }
+        return sellBundleGp(held, (await props.describe(held.copies[0])).entry.costGp, null);
+      }}
       onDiscard={(row, quantity) => write((savedAt) => discardEquipmentCopy({ characterId, copy: row.held.copies[0], quantity, savedAt }))}
       onCustomizeName={(copy, text) => write(() => renameEquipmentCopy(renameRequest(characterId, copy, text)))}
       onCustomizeModifier={props.onPickModifier}

@@ -211,7 +211,7 @@ const html = renderToStaticMarkup(
     refusal: 'equipment.slot_taken: Main hand is full',
     onMove: noop,
     onDrop: noop,
-    onSell: noop,
+    onSell: noop, loadSellPrice: async () => null,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
     onCustomizeName: noop,
@@ -224,7 +224,7 @@ assert(html.includes('data-testid="gear-row-customize-item:longsword-0-0"'), 'vi
 assert(html.includes('data-testid="gear-location-slot-ring"') && html.includes('data-testid="gear-location-notCarried"'), 'view: tree location testids');
 assert(html.includes('data-testid="gear-set-select"') && html.includes('>Travel<'), 'view: the set picker lists the sets');
 assert(html.includes('data-testid="gear-filter"'), 'view: filter');
-assert(html.includes('Drop keeps the item and marks it Not Carried; Sell returns money under the pricing above; Discard removes it for nothing.'), 'view: caption');
+assert(html.includes('Drop keeps the item and marks it Not Carried; Sell opens the sell window (Market Rate, Build or Negotiate); Discard removes it for nothing.'), 'view: caption');
 assert(html.includes('>Drop<') && html.includes('>Sell<') && html.includes('>Discard<'), 'view: Drop / Sell / Discard');
 assert(html.includes('Backpack holds 61 lb, over its 60 lb.'), 'view: the warning row');
 assert(html.includes('equipment.slot_taken: Main hand is full'), 'view: a refusal word for word');
@@ -239,7 +239,7 @@ const tagged = renderToStaticMarkup(
     refusal: null,
     onMove: noop,
     onDrop: noop,
-    onSell: noop,
+    onSell: noop, loadSellPrice: async () => null,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
     onCustomizeName: noop,
@@ -324,7 +324,7 @@ const nestHtml = renderToStaticMarkup(
     refusal: null,
     onMove: noop,
     onDrop: noop,
-    onSell: noop,
+    onSell: noop, loadSellPrice: async () => null,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
     onCustomizeName: noop,
@@ -455,7 +455,7 @@ const columnHtml = renderToStaticMarkup(
     refusal: null,
     onMove: noop,
     onDrop: noop,
-    onSell: noop,
+    onSell: noop, loadSellPrice: async () => null,
     onDiscard: noop,
     onSets: { activate: noop, create: noop, rename: noop, remove: noop },
     onCustomizeName: noop,
@@ -509,7 +509,7 @@ assert(!rowActivates({ type: 'dblclick', target: target(true) }), 'double-click 
 assert(rowActivates({ type: 'keydown', key: 'Enter', target: target(false) }), 'Enter on a focused row fires the same function');
 assert(!rowActivates({ type: 'keydown', key: 'Enter', target: target(true) }) && !rowActivates({ type: 'keydown', key: ' ', target: target(false) }), 'Enter on a button, or another key, does not');
 const rowHtml = renderToStaticMarkup(
-  createElement(GearPanels, { model: ropeModel, armorClass: null, carriedLbs: null, busy: false, refusal: null, onMove: noop, onDrop: noop, onSell: noop, onDiscard: noop, onSets: { activate: noop, create: noop, rename: noop, remove: noop }, onCustomizeName: noop, onCustomizeModifier: noop }),
+  createElement(GearPanels, { model: ropeModel, armorClass: null, carriedLbs: null, busy: false, refusal: null, onMove: noop, onDrop: noop, onSell: noop, loadSellPrice: async () => null, onDiscard: noop, onSets: { activate: noop, create: noop, rename: noop, remove: noop }, onCustomizeName: noop, onCustomizeModifier: noop }),
 );
 assert(/data-testid="gear-row-item:rope-0-0"[^>]*tabindex="0"/.test(rowHtml), 'Enter: the row takes focus');
 
