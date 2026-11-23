@@ -52,6 +52,8 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E1.11 | Filter column in the dialog; no 200 cap; windowed list; first-paint measured | market | E1.10 | opus | no | no |
 | E1.12 | Sell removes the copy the player clicked (copy key, not item id + state); discovered by E0.4 | gear | E1.5 | opus | yes (desktop) | hub |
 | E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1); discovered by E1.6 | gear | E1.6 | sonnet | no | hub |
+| E1.14 | Market inventory sell value / Negotiate prefill resolve every held copy, not only opened lists; discovered by E1.MC | market | E1.8 | sonnet | no | no |
+| E1.15 | Gear Sell opens its window on the first click after launch; discovered by E1.MC | gear | E1.6 | opus | no | no |
 | E1.MC | E1 merge check + epic report (adversarial; screenshots of gear screen, Market, sell window) | gear | E1.7, E1.11 | opus | yes (base build) | no |
 | E2.1 | Fixed layout on the PF sheet: bar, rail and right column fixed, centre scrolls, `100dvh`; Show Progression visible (17 + 21) | sheet | E1.7 | opus | no | hub |
 | E2.2 | The same shared layout on the SF and CPR sheets | sheet | E2.1 | sonnet | no | no |
@@ -92,7 +94,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 59 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6; the per-card headings below use `###`).
+→ 61 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -381,6 +383,30 @@ change); **Does not cover** (rule 7). Every code-bearing card also runs the four
   non-cashless `priceMode` and `negotiatedPriceCopper: 750`.
 - **Depends:** E1.6. **Tier:** sonnet.
 - **Does not cover:** the Market window's own Sell (Cashless there still pays nothing, Q-12.2).
+
+### E1.14 — Market inventory sell value for every held copy (discovered by E1.MC)
+- **Objective:** `decisions.md §10`: the Market inventory's value cell and its Negotiate prefill show
+  `sellNegotiateGp` for every held copy with a listed price, whatever list is open. Today `rowOfCopy`
+  (`ui/characterHub/MarketDialog.tsx:702`) searches only the lists already loaded (`loaded`), so on a fresh Market
+  opened on Gear a Longsword (15 gp) and a Chain Shirt (100 gp) both read `—` under Buy 100% / Sell 50%; each shows
+  its value only after its own list (Weapons, Armor) has been opened (E1.MC images `03`, `04`, `05`).
+- **FILES YOU OWN:** `ui/characterHub/MarketDialog.tsx` (`rowOfCopy`, list loading), `MarketDialog.test.ts`; a
+  backend read only if the dialog cannot resolve a held copy's row without one (then the command, its registration
+  and boundary file are named in the receipt first).
+- **Failing test first:** with only the Gear list loaded, a held Longsword's sell value under `standard` is 7.5 gp,
+  not `null`.
+- **Depends:** E1.8. **Tier:** sonnet.
+- **Does not cover:** Cashless (`—` by Q-12.2).
+
+### E1.15 — Gear Sell opens on the first click (discovered by E1.MC)
+- **Objective:** a Gear-screen Sell click always opens the sell window. E1.6 (retro incident, "first two Sell clicks
+  after a fresh launch opened no window while Customize opened") and E1.MC (images `13`, `14`, `16`: two Sell clicks
+  on a Bedroll in a Backpack opened nothing; Customize opened; the next Sell click opened the window) saw it on a
+  debug build under Xvfb. Cause not established; diagnose first (state of `pending` / `props.busy` at the click).
+- **FILES YOU OWN:** `ui/characterHub/GearScreen.tsx`, `SellDialog.tsx`, their tests; others named after diagnosis.
+- **Failing test first:** the reproduced mechanism as a test (a Sell click on a fresh screen sets the sell window open).
+- **Depends:** E1.6. **Tier:** opus.
+- **Does not cover:** the Market window's own Sell.
 
 ### E1.MC — E1 merge check
 - **Objective:** adversarial review of E1's diff against the rulings; screenshots of gear (all sections),

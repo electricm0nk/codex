@@ -58,6 +58,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | complete | E1.10 | market | no | no | receipt `artifacts/epic_1/E1.11_cycle_receipt.md`; SHA `d171f57676ecf6ef1810ab9da6fecd90cae76525` |
 | E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | complete | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2); receipt `artifacts/epic_1/E1.12_cycle_receipt.md`; SHA `52d1ff8f0fd3f707768867154e59d61c9393ced6` |
 | E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | todo | E1.6 | gear | no | hub | discovered E1.6 (`artifacts/epic_1/E1.6_cycle_receipt.md`, "Discovered cards") |
+| E1.14 | Market inventory sell value and Negotiate prefill read every held copy's catalog row, not only the lists already opened (`rowOfCopy` `MarketDialog.tsx:702`); a priced item never shows `—` — discovered by E1.MC | sonnet | todo | E1.8 | market | no | no | discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, "Discovered cards") |
+| E1.15 | Gear Sell opens its window on the first click after launch (E1.6 and E1.MC both saw the first Sell clicks open nothing while Customize opened) — discovered by E1.MC | opus | todo | E1.6 | gear | no | no | discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, "Discovered cards"); retro key `gear-sell-first-click-no-window` |
 | E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |
 | E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | complete | E1.7 | sheet | no | hub | receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; SHA `10aefca95f0cec754665263d2028fa2fd49a4367` |
 | E2.2 | The shared layout on the SF and CPR sheets | sonnet | complete | E2.1 | sheet | no | no | receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; SHA `79f355f04ba4e4373fb5b7cc3f49be3bd86752f2`; settles Q-8.2 |
@@ -98,7 +100,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E7.4 | PR LAST → lead merges when green → watch the develop publish (graphify out of scope, operator 2026-11-22) | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |
 
 Count at authoring, by epic (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++} END {for (e in n) print e, n[e]}' kanban.md | sort`):
-C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; with E0.1's E3.12 the total is **59**.
+C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; E1.14 and E1.15 (E1.MC, 2026-11-22) → E1 16; with E0.1's E3.12 the total is **61**.
 
 `Depends on` equals `epic-breakdown.md §0`'s `After` column except three rows, where it carries the card sections'
 own wording: E1.10 adds E0.2 ("Depends: E1.9 (lane order), E0.2 (data)"), E5.4 adds E2.3 ("Depends: E5.3, E2.3"),
