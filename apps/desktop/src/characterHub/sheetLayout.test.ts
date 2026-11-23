@@ -157,7 +157,9 @@ function verifiesThePrintVocabularyIsTheScreens() {
   const sources: Record<NonNullable<VocabularyEntry['ui']>, Set<string>> = {
     SheetBoxId: new Set(SHEET_LAYOUT.map((box) => box.id)),
     SquareBoxId: new Set(SQUARE_BLOCK_LAYOUT.map((box) => box.id)),
-    SHEET_TABS: new Set(SHEET_TABS.map((tab) => tab.toLowerCase())),
+    // SD-43 E3.1 (Q-22.3): Abilities is a container tab (its id would collide with the ability-score box and it
+    // prints no block of its own); its Feats sub-tab is the screen surface the print's `feats` block names.
+    SHEET_TABS: new Set([...SHEET_TABS.filter((tab) => tab !== 'Abilities'), 'Feats'].map((tab) => tab.toLowerCase())),
   };
   for (const [id, entry] of Object.entries(vocabulary)) {
     if (entry.ui === null) {

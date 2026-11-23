@@ -184,6 +184,7 @@ import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import { CampaignMembershipDialog } from './CampaignMembershipDialog';
 import { RestTextPanel } from './RestText';
+import { AbilitiesTab } from './AbilitiesTab';
 import { activeCampaigns, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 
 /**
@@ -580,7 +581,7 @@ function SkillsPanel(props: {
 // 'Overrides' was removed for the same reason (v0.8 F-5): it had no panel
 // behind it, and a visible affordance with no behavior is a stub. Every
 // tab listed here has a real panel in the switch below.
-export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom', 'Biography', 'Notes'] as const;
+export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Abilities', 'Actions', 'Custom', 'Biography', 'Notes'] as const;
 type Tab = (typeof SHEET_TABS)[number];
 
 export interface BioFields {
@@ -2059,60 +2060,41 @@ export function RulesAndFeaturesSection(props: { lines: readonly SheetLineDto[];
   );
 }
 
-function ActionsTab(props: {
-  levelEntries: LevelEntry[];
+/**
+ * The Abilities tab's Class Features sub-tab (SD-43 E3.1): the two class-feature reference lists that sat at the
+ * foot of the Actions tab, moved unchanged.
+ */
+function ClassFeatureReferencesPanel(props: {
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
-  racialTraits: RacialTraitsSurface;
-  raceLabel: string;
   /** T4-L9 (`decisions.md §13`): the feat-held reachability arm needs the
    * character's own selection list to check against — see
    * `unmatchedClassFeatureDescriptions`'s own doc comment. */
   selectedFeats: readonly string[];
+}) {
+  const classFeatureDescriptions = useClassFeatureDescriptions();
+  return (
+    <div>
+      <ClassFeatureDescriptionReferenceSection
+        explanations={props.explanations}
+        heldClasses={props.heldClasses}
+        descriptions={classFeatureDescriptions}
+        selectedFeats={props.selectedFeats}
+      />
+      <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
+    </div>
+  );
+}
+
+function ActionsTab(props: {
+  levelEntries: LevelEntry[];
+  explanations: readonly ExplanationDto[];
+  heldClasses: HeldClass[];
   /** SD-35 AT-35-E2-002: the "Rules and features" lines the engine rendered. */
   sheetLines: readonly SheetLineDto[];
   sheetRulesUnavailableReason: string | null;
 }) {
-  // SD31-D7-PROSE-003: the real corpus description text, fetched once and joined
-  // in `buildClassFeatureSurface` -- a SECOND, additive data source
-  // alongside `props.explanations`, never a replacement for the engine's own
-  // computed `detail`. Self-contained (fetched here rather than threaded
-  // through more prop layers) so a caller with no Tauri runtime (the browser
-  // preview) simply renders with `corpusDescription: null` everywhere,
-  // exactly as `loadClassFeatureDescriptions`'s own empty-array fallback
-  // intends.
-  const [classFeatureDescriptions, setClassFeatureDescriptions] = useState<
-    ClassFeatureDescriptionDto[]
-  >([]);
-  useEffect(() => {
-    let cancelled = false;
-    // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a SECOND,
-    // disjoint source of the same DTO shape -- records with no local
-    // description whose entire content is a grant of an already-modelled
-    // feat. Fetched alongside and concatenated, exactly the way
-    // `buildClassFeatureSurface`'s own `descriptions` param already
-    // expects a flat list; `findCorpusDescription` picks the first match
-    // by `(classSlug, featureSlug)`, and the two Rust-side populations
-    // never name the same record (see `class_feature_feat_bridge.rs`'s own
-    // doc comment), so concatenation order does not matter here.
-    Promise.all([loadClassFeatureDescriptions(), loadClassFeatureFeatBridgeDescriptions()])
-      .then(([descriptions, bridged]) => {
-        if (!cancelled) {
-          setClassFeatureDescriptions([...descriptions, ...bridged]);
-        }
-      })
-      .catch(() => {
-        // Real corpus prose is a player-visible enhancement, not a
-        // load-bearing dependency of the Class Features section: the
-        // engine's own `detail` still renders either way. Swallowed rather
-        // than surfaced as an error banner, matching `loadClassFeatureDescriptions`'s
-        // own no-Tauri-runtime fallback.
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  const classFeatureDescriptions = useClassFeatureDescriptions();
   const surface = buildClassFeatureSurface(
     props.explanations,
     props.heldClasses,
@@ -2122,26 +2104,13 @@ function ActionsTab(props: {
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
-  const holdsRogue = props.heldClasses.some(
-    (held) => held.classId.split(':').pop() === 'rogue'
-  );
-  const unmatchedDescriptions = unmatchedClassFeatureDescriptions(
-    props.explanations,
-    props.heldClasses,
-    classFeatureDescriptions,
-    props.selectedFeats
-  );
 
   if (
     surface.features.length === 0 &&
     surface.notComputed.length === 0 &&
     generalBenefits.length === 0 &&
-    props.racialTraits.rows.length === 0 &&
-    props.racialTraits.unavailableReason === null &&
-    unmatchedDescriptions.length === 0 &&
     props.sheetLines.length === 0 &&
-    props.sheetRulesUnavailableReason === null &&
-    !holdsRogue
+    props.sheetRulesUnavailableReason === null
   ) {
     return (
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -2152,7 +2121,6 @@ function ActionsTab(props: {
 
   return (
     <div>
-      <RacialTraitsSection surface={props.racialTraits} raceLabel={props.raceLabel} />
       {surface.features.length > 0 ? (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
@@ -2284,15 +2252,51 @@ function ActionsTab(props: {
         </div>
       ) : null}
 
-      <ClassFeatureDescriptionReferenceSection
-        explanations={props.explanations}
-        heldClasses={props.heldClasses}
-        descriptions={classFeatureDescriptions}
-        selectedFeats={props.selectedFeats}
-      />
-      <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
   );
+}
+
+function useClassFeatureDescriptions(): ClassFeatureDescriptionDto[] {
+  // SD31-D7-PROSE-003: the real corpus description text, fetched once and joined
+  // in `buildClassFeatureSurface` -- a SECOND, additive data source
+  // alongside `props.explanations`, never a replacement for the engine's own
+  // computed `detail`. Self-contained (fetched here rather than threaded
+  // through more prop layers) so a caller with no Tauri runtime (the browser
+  // preview) simply renders with `corpusDescription: null` everywhere,
+  // exactly as `loadClassFeatureDescriptions`'s own empty-array fallback
+  // intends.
+  const [classFeatureDescriptions, setClassFeatureDescriptions] = useState<
+    ClassFeatureDescriptionDto[]
+  >([]);
+  useEffect(() => {
+    let cancelled = false;
+    // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a SECOND,
+    // disjoint source of the same DTO shape -- records with no local
+    // description whose entire content is a grant of an already-modelled
+    // feat. Fetched alongside and concatenated, exactly the way
+    // `buildClassFeatureSurface`'s own `descriptions` param already
+    // expects a flat list; `findCorpusDescription` picks the first match
+    // by `(classSlug, featureSlug)`, and the two Rust-side populations
+    // never name the same record (see `class_feature_feat_bridge.rs`'s own
+    // doc comment), so concatenation order does not matter here.
+    Promise.all([loadClassFeatureDescriptions(), loadClassFeatureFeatBridgeDescriptions()])
+      .then(([descriptions, bridged]) => {
+        if (!cancelled) {
+          setClassFeatureDescriptions([...descriptions, ...bridged]);
+        }
+      })
+      .catch(() => {
+        // Real corpus prose is a player-visible enhancement, not a
+        // load-bearing dependency of the Class Features section: the
+        // engine's own `detail` still renders either way. Swallowed rather
+        // than surfaced as an error banner, matching `loadClassFeatureDescriptions`'s
+        // own no-Tauri-runtime fallback.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return classFeatureDescriptions;
 }
 
 /**
@@ -2322,11 +2326,9 @@ function ActionsTab(props: {
  * the response via `describeFeatCatalogCoverage` rather than asserting a book
  * list that goes stale the next time a book lands.
  */
-function FeatsTab(props: {
+export function FeatsTab(props: {
   selectedFeats: string[];
   chosenFeatTargets: ChosenFeatTargetsDto[];
-  /** Persisted `chosen.selected_traits` ids, rendered in the Traits section below the feats. */
-  selectedTraits: string[];
   /** The engine's `feats.budget.*` rows, read: the badge and the Add control follow them. */
   featBudget: FeatBudgetView;
   /** What the character holds under an override; a feat's row shows its flags. */
@@ -2339,10 +2341,6 @@ function FeatsTab(props: {
    * character recorded is the one that unmatches.
    */
   onRemoveFeat: (featId: string, target: string | null) => void;
-  /** SD-36 Epic E desktop-P2-01: records a new trait/drawback selection. */
-  onAddTrait: (traitId: string, skillChoice: string | null) => void;
-  /** SD-36 Epic E desktop-P2-01: removes a held trait/drawback selection. */
-  onRemoveTrait: (traitId: string) => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
   // Derived from the same response the picker rows come from, so the caption
@@ -2482,7 +2480,6 @@ function FeatsTab(props: {
           </div>
         ))
       )}
-      <TraitsSection selectedTraits={props.selectedTraits} onAddTrait={props.onAddTrait} onRemoveTrait={props.onRemoveTrait} />
     </div>
   );
 }
@@ -4480,18 +4477,39 @@ export function CharacterSheet(props: {
                     onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
                     ignoreSlotLimits={customOverrides(custom).ignoreSlotLimits}
                   />
-                ) : name === 'Feats' ? (
-                  <FeatsTab
-              selectedFeats={props.detail?.selectedFeats ?? []}
-              selectedTraits={props.detail?.selectedTraits ?? []}
-              chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
-              featBudget={withBudgetOverride(readFeatBudget(engineRecords.explanations), customOverrides(custom).ignoreFeatBudget)}
-              admitted={engineRecords.admittedUnderOverride}
-              onAddFeat={() => setItemPickerOpen('feat')}
-              onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
-              onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
-              onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
-            />
+                ) : name === 'Abilities' ? (
+                  <AbilitiesTab
+                    panels={{
+                      Feats: (
+                        <FeatsTab
+                          selectedFeats={props.detail?.selectedFeats ?? []}
+                          chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
+                          featBudget={withBudgetOverride(readFeatBudget(engineRecords.explanations), customOverrides(custom).ignoreFeatBudget)}
+                          admitted={engineRecords.admittedUnderOverride}
+                          onAddFeat={() => setItemPickerOpen('feat')}
+                          onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
+                        />
+                      ),
+                      'Racial Abilities': <RacialTraitsSection surface={racialTraits} raceLabel={props.row.raceLabel} />,
+                      Traits: (
+                        <TraitsSection
+                          selectedTraits={props.detail?.selectedTraits ?? []}
+                          onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
+                          onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
+                        />
+                      ),
+                      Archetype: null,
+                      Background: null,
+                      'Class Features': (
+                        <ClassFeatureReferencesPanel
+                          explanations={engineRecords.explanations}
+                          heldClasses={heldClasses}
+                          selectedFeats={props.detail?.selectedFeats ?? []}
+                        />
+                      ),
+                      Misc: null,
+                    }}
+                  />
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Biography' ? (
@@ -4508,9 +4526,6 @@ export function CharacterSheet(props: {
                     levelEntries={currentBenefits}
                     explanations={engineRecords.explanations}
                     heldClasses={heldClasses}
-                    racialTraits={racialTraits}
-                    raceLabel={props.row.raceLabel}
-                    selectedFeats={props.detail?.selectedFeats ?? []}
                     sheetLines={engineRecords.sheetLines}
                     sheetRulesUnavailableReason={engineRecords.sheetRulesUnavailableReason}
                   />

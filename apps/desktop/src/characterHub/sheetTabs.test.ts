@@ -12,7 +12,7 @@ import { assert } from '../testSupport/asserts';
 const tabs: readonly string[] = SHEET_TABS;
 assert(!tabs.includes('Overrides'), 'no Overrides tab: nothing is wired behind it');
 assert(
-  ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'].every((t) => tabs.includes(t)),
+  ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Abilities', 'Actions', 'Custom'].every((t) => tabs.includes(t)),
   'every wired tab is still offered',
 );
 // SD-40 E3.6 (decisions.md §24.9): the two free-text tabs sit together at the end.
