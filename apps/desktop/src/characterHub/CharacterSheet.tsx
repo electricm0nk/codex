@@ -4377,7 +4377,16 @@ export function CharacterSheet(props: {
                           onRemove={(traitId) => handleRemoveAbility(traitId)}
                         />
                       ),
-                      Archetype: null,
+                      Archetype: (
+                        <AbilitySubTab
+                          characterId={props.row.characterId}
+                          subtab="archetype"
+                          title="Archetypes"
+                          info={() => null}
+                          onAdd={(id) => handleAddAbility(id, null, 'archetype')}
+                          onRemove={(id) => handleRemoveAbility(id, 'archetype')}
+                        />
+                      ),
                       Background: null,
                       'Class Features': (
                         <ClassFeatureReferencesPanel

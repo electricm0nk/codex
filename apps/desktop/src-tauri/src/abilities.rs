@@ -11,11 +11,16 @@
 //! `choice:race_alternate_trait`). Two alternates that replace the same racial trait are refused. They
 //! have no count budget, so the sub-tab serves no budget rows; a replaced trait that grants a feat
 //! leaves the Feats sub-tab's racial pool (`feat_budget` reads the applied racial traits).
+//!
+//! **Archetype** (SD-43 E3.7) is an `ability_budget` sub-tab: the engine lists each held class's
+//! archetypes and refuses one replacing a class feature a held archetype already replaces; a pick is
+//! saved as a `SelectedChoice` under `ARCHETYPE_CHOICE_ID`.
 
 use std::path::Path;
 
 use codex::rules_core::ability_budget::{ability_budget, ability_options, AbilityOption, SubTab};
 use codex::rules_core::ability_prereqs;
+use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
 use codex::rules_core::character_input::AbilitySelection;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::character_input::{CharacterInput, SelectedChoice};
@@ -181,6 +186,13 @@ fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
             .filter(|pick| pick.subtab == subtab.id())
             .map(|pick| format!("{}:{}", pick.pool, pick.record_key))
             .collect(),
+        SubTab::Archetype => input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|choice| choice.choice_set_id == ARCHETYPE_CHOICE_ID)
+            .map(|choice| choice.selection_id.clone())
+            .collect(),
     }
 }
 
@@ -260,6 +272,10 @@ pub(crate) fn add_ability_selection_at_root(
             let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
             mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
         }
+        SubTab::Archetype => {
+            let choice = SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: option_id.to_owned() };
+            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
+        }
     }
 }
 
@@ -293,6 +309,14 @@ pub(crate) fn remove_ability_selection_at_root(
             mutate_saved_character_at_root(root, saved_at, |input| {
                 input.chosen.ability_selections.remove(at);
             })
+        }
+        SubTab::Archetype => {
+            let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+            let held = |c: &SelectedChoice| c.choice_set_id == ARCHETYPE_CHOICE_ID && c.selection_id == option_id;
+            if !input.chosen.selected_choices.iter().any(held) {
+                return Err(format!("This character does not hold '{option_id}'."));
+            }
+            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.retain(|c| !held(c)))
         }
     }
 }
@@ -412,6 +436,50 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "racial_abilities", "Human ~ Piety", SAVED_AT).expect("remove Piety");
         assert_eq!(racial_feat_pool(&root), 1, "the bonus feat comes back");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Acrobat and Rake (Advanced Player's Guide) both replace trapfinding; a class feature is replaced once.
+    /// Pirate (Ultimate Combat) replaces the 2nd-level rogue talent, so the Class Features rogue talent pool shrinks.
+    #[test]
+    fn abilities_archetype_a_rogue_with_two_archetypes_replacing_trapfinding_is_refused_naming_the_slot() {
+        let root = aldric_root("archetype");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 4 }];
+        })
+        .expect("make Aldric a Rogue 4");
+        let talents = |root: &Path| {
+            let listed = list_ability_options_at_root(root, "class_features").expect("class features");
+            listed.budget.iter().find(|r| r.id == "abilities.budget.class_features.rogue_talent.granted").map_or(0, |r| r.value)
+        };
+        assert_eq!(talents(&root), 2, "a Rogue 4's rogue talents before any archetype");
+
+        let listed = list_ability_options_at_root(&root, "archetype").expect("archetype options");
+        for key in ["archetype:Rogue Archetype ~ Acrobat", "archetype:Rogue Archetype ~ Rake", "archetype:Rogue Archetype ~ Pirate"] {
+            assert!(listed.options.iter().any(|o| o.id == key && o.qualified), "{key} offered and qualified");
+        }
+        assert!(listed.options.iter().all(|o| o.pool == "rogue"), "only the held class's archetypes are offered");
+
+        add_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Acrobat", SAVED_AT).expect("Acrobat");
+        let input = SavedCharacterStore::load(&root).expect("reload").character_input;
+        assert!(codex::rules_core::archetype_resolver::archetype_claims_slot(&input, "Rogue", "RogueTrapfinding"), "saved as choice:archetype");
+        let listed = list_ability_options_at_root(&root, "archetype").expect("archetype options");
+        assert_eq!(listed.selected, ["archetype:Rogue Archetype ~ Acrobat"]);
+        let rake = listed.options.iter().find(|o| o.id == "archetype:Rogue Archetype ~ Rake").expect("Rake still listed");
+        assert!(!rake.qualified && rake.unmet.iter().any(|r| r.contains("Trapfinding") && r.contains("Acrobat")), "{:?}", rake.unmet);
+
+        let refusal = add_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Rake", SAVED_AT).expect_err("a second trapfinding archetype");
+        assert!(refusal.contains("Trapfinding") && refusal.contains("Acrobat"), "{refusal}");
+        let input = SavedCharacterStore::load(&root).expect("reload").character_input;
+        let held: Vec<&str> = input.chosen.selected_choices.iter().filter(|c| c.choice_set_id == "choice:archetype").map(|c| c.selection_id.as_str()).collect();
+        assert_eq!(held, ["archetype:Rogue Archetype ~ Acrobat"], "the refusal saved nothing");
+
+        add_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Pirate", SAVED_AT)
+            .expect_err("Pirate also replaces trapfinding");
+        remove_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Acrobat", SAVED_AT).expect("remove Acrobat");
+        add_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Pirate", SAVED_AT).expect("Pirate");
+        assert_eq!(talents(&root), 1, "Pirate replaces the 2nd-level rogue talent: the pool follows");
         std::fs::remove_dir_all(&root).ok();
     }
 

@@ -11,7 +11,7 @@ import type { ExplanationDto } from './loadSavedCharacterDetail';
  */
 
 /** A sub-tab id the engine serves: `ability_budget::SubTab`, and the race's alternate racial traits. */
-export type AbilitySubTabId = 'traits' | 'class_features' | 'racial_abilities';
+export type AbilitySubTabId = 'traits' | 'class_features' | 'archetype' | 'racial_abilities';
 
 export interface AbilityOptionDto {
   id: string;

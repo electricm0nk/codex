@@ -40,6 +40,11 @@ use crate::rules_core::rules_catalog::{
 /// not assume at most one.
 pub const ARCHETYPE_CHOICE_ID: &str = "choice:archetype";
 
+/// The namespace a saved archetype selection carries: the saved-character grammar persists a
+/// `selection_id` of at least two colon-segments only, so a bare corpus key cannot be saved
+/// (`race_alternate_trait_selection_id`'s precedent). [`archetype_resolve`] reads either shape.
+pub const ARCHETYPE_SELECTION_PREFIX: &str = "archetype:";
+
 /// Every tier-1 book's archetype-swap catalog, chained into one lookup
 /// surface. `§51`'s own seven landed tables, in the same book order their
 /// own tier-1 closure receipts landed in.
@@ -60,6 +65,7 @@ pub fn archetype_catalog_entries() -> &'static [ArchetypeSwapEntry] {
 
 /// Resolves one archetype's own catalog entry by its real corpus `KEY:`.
 pub fn archetype_resolve(key: &str) -> Option<&'static ArchetypeSwapEntry> {
+    let key = key.strip_prefix(ARCHETYPE_SELECTION_PREFIX).unwrap_or(key);
     archetype_catalog_entries().iter().find(|entry| entry.key == key)
 }
 

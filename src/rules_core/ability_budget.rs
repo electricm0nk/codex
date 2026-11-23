@@ -23,6 +23,14 @@
 //! at is read by evaluating the same rules at every character level up to the character's own.
 //! Picks are saved as `ability_selections` rows (`class_features|<pool>|<record>|<level>|`); an option
 //! id is `<pool>:<record id>`. The members a pool offers are its grant's `offers` (`offer_selects`).
+//!
+//! **Archetype.** An archetype of a held class is one converted record in the `archetype` pool, named by
+//! its class (`rogue_archetype_acrobat`). It is saved as a `SelectedChoice` under
+//! [`ARCHETYPE_CHOICE_ID`], the selection being the corpus `KEY:` `archetype_resolver` reads, prefixed to
+//! persist (`"archetype:Rogue Archetype ~ Acrobat"`), or the record id for a book that table does not carry. The class features it
+//! replaces are its record's tags and that table's `replaces`; a class feature is replaced once, so an
+//! archetype replacing one a held archetype already replaces is refused, naming the feature. A held
+//! archetype's record is held when the Class Features pools are read, so a pool it shrinks or grants follows.
 
 use std::collections::BTreeMap;
 
@@ -30,9 +38,10 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::feat_budget::{feat_pool_of, grant_amount, repeats_the_line};
 use crate::rules_core::feat_identity;
 use crate::rules_core::ability_prereqs;
+use crate::rules_core::archetype_resolver::{archetype_catalog_entries, archetype_resolve, ARCHETYPE_CHOICE_ID, ARCHETYPE_SELECTION_PREFIX};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation, PilotBaseChassisComputation};
 use crate::rules_core::sheet_rule::{
-    display_label, evaluate_applies, held_set, id_slug, offer_selects, sibling_line_gate, split_rule_id, Applies, BonusTarget, CharacterFacts,
+    display_label, evaluate_applies, held_set, id_slug, slug, offer_selects, sibling_line_gate, split_rule_id, Applies, BonusTarget, CharacterFacts,
     Choice, EvalContext, HeldSeed, Holdable, SheetRule, SheetRulePackage, SheetValue, Subject,
 };
 use crate::rules_core::sheet_rule_catalog::catalog_prose;
@@ -57,15 +66,17 @@ pub const DRAWBACKS_POOL: &str = "drawbacks";
 pub enum SubTab {
     Traits,
     ClassFeatures,
+    Archetype,
 }
 
 impl SubTab {
-    pub const ALL: [SubTab; 2] = [SubTab::Traits, SubTab::ClassFeatures];
+    pub const ALL: [SubTab; 3] = [SubTab::Traits, SubTab::ClassFeatures, SubTab::Archetype];
 
     pub fn id(self) -> &'static str {
         match self {
             SubTab::Traits => "traits",
             SubTab::ClassFeatures => "class_features",
+            SubTab::Archetype => "archetype",
         }
     }
 
@@ -173,6 +184,8 @@ impl AbilityBudget {
                 Some((pool, _)) => pool,
                 None => return Some(format!("'{option_id}' names no class feature pool.")),
             },
+            // An archetype has no count budget; a replaced-feature clash is its option's `unmet`.
+            SubTab::Archetype => return None,
         };
         if self.subtab == SubTab::ClassFeatures && self.pool(pool_id).is_none() {
             return Some(format!("This character has no {} pool.", pool_words(pool_id)));
@@ -223,6 +236,7 @@ pub fn ability_budget(package: &SheetRulePackage, input: &CharacterInput, subtab
     match subtab {
         SubTab::Traits => trait_budget(package, input),
         SubTab::ClassFeatures => class_feature_budget(package, input),
+        SubTab::Archetype => archetype_budget(package, input),
     }
 }
 
@@ -234,6 +248,7 @@ pub fn ability_budget_now(package: &SheetRulePackage, input: &CharacterInput, su
     match subtab {
         SubTab::Traits => trait_budget(package, input),
         SubTab::ClassFeatures => class_feature_budget_from(package, input, false),
+        SubTab::Archetype => archetype_budget(package, input),
     }
 }
 
@@ -263,18 +278,20 @@ fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
 /// Racial Abilities or Traits sub-tab. A choice about a companion (its status, a trick) is the
 /// character's pick, so it is here.
 fn class_feature_grants(package: &SheetRulePackage, input: &CharacterInput) -> BTreeMap<String, (i64, Vec<String>)> {
-    class_feature_grants_holding(package, input, &picked_rules(input))
+    class_feature_grants_holding(package, input, &picked_rules(package, input))
 }
 
-/// The records of the Class Features picks `input` saves. A pick is held: a member whose prerequisite is
-/// another pick (Major Magic after Minor Magic) reads it, and a pick that grants a pool grants it.
-fn picked_rules(input: &CharacterInput) -> Vec<String> {
+/// The records of the Class Features picks and the archetypes `input` saves. A pick is held: a member
+/// whose prerequisite is another pick (Major Magic after Minor Magic) reads it, and a pick that grants a
+/// pool grants it; an archetype's record is what the class features it replaces read.
+fn picked_rules(package: &SheetRulePackage, input: &CharacterInput) -> Vec<String> {
     input
         .chosen
         .ability_selections
         .iter()
         .filter(|pick| pick.subtab == SubTab::ClassFeatures.id())
         .map(|pick| pick.record_key.clone())
+        .chain(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()))
         .collect()
 }
 
@@ -501,7 +518,160 @@ pub fn ability_options(
     match subtab {
         SubTab::Traits => trait_options(package, input, base),
         SubTab::ClassFeatures => class_feature_options(package, input, base),
+        SubTab::Archetype => archetype_options(package, input),
     }
+}
+
+/// The package pool every archetype record is converted under.
+const ARCHETYPE_POOL: &str = "archetype";
+
+/// The corpus `KEY:` of each archetype `archetype_resolver` carries, by its record's slug
+/// (`rogue_archetype_acrobat` -> `"Rogue Archetype ~ Acrobat"`).
+fn archetype_keys() -> BTreeMap<String, &'static str> {
+    archetype_catalog_entries()
+        .iter()
+        .map(|entry| (format!("{}_archetype_{}", slug(entry.subject), slug(entry.archetype_name)), entry.key))
+        .collect()
+}
+
+/// `(selection id, record)` for every archetype record in the package: the selection is the prefixed
+/// corpus key (`archetype:Rogue Archetype ~ Acrobat`) when `archetype_resolver` carries it, else the record id.
+fn archetype_records<'a>(package: &'a SheetRulePackage, keys: &BTreeMap<String, &'static str>) -> Vec<(String, &'a SheetRule)> {
+    package
+        .rules_of_kind("class_feature")
+        .filter(|rule| rule.pool == ARCHETYPE_POOL && !rule.id.contains('#') && rule.id.contains("_archetype_"))
+        .map(|rule| (keys.get(split_rule_id(&rule.id).2).map_or_else(|| rule.id.clone(), |key| format!("{ARCHETYPE_SELECTION_PREFIX}{key}")), rule))
+        .collect()
+}
+
+/// The record an archetype selection names: a record id as is, a (prefixed) corpus key through its record's slug.
+fn archetype_record<'a>(package: &'a SheetRulePackage, selection: &str) -> Option<&'a SheetRule> {
+    if let Some(rule) = package.rule(selection) {
+        return Some(rule);
+    }
+    let entry = archetype_resolve(selection)?;
+    let slug = format!("{}_archetype_{}", slug(entry.subject), slug(entry.archetype_name));
+    package.rules_of_kind("class_feature").find(|rule| rule.pool == ARCHETYPE_POOL && split_rule_id(&rule.id).2 == slug)
+}
+
+/// The archetypes `input` holds, `(selection id, record)`, in saved order.
+fn held_archetypes<'a>(package: &'a SheetRulePackage, input: &CharacterInput) -> Vec<(String, &'a SheetRule)> {
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == ARCHETYPE_CHOICE_ID)
+        .filter_map(|choice| archetype_record(package, &choice.selection_id).map(|rule| (choice.selection_id.clone(), rule)))
+        .collect()
+}
+
+/// The class an archetype record belongs to (`rogue_archetype_acrobat` -> `rogue`).
+fn archetype_class(rule: &SheetRule) -> &str {
+    split_rule_id(&rule.id).2.split("_archetype_").next().unwrap_or("")
+}
+
+/// The class features an archetype replaces: its record's tags (less the archetype and society tags)
+/// and `archetype_resolver`'s `replaces`, as printed (`RogueTrapfinding`).
+fn replaced_features(rule: &SheetRule, selection: &str) -> Vec<String> {
+    let mut slots: Vec<String> = rule
+        .tags
+        .iter()
+        .filter(|tag| !tag.ends_with("Archetype") && !tag.to_ascii_uppercase().starts_with("PFS") && !tag.starts_with('['))
+        .cloned()
+        .collect();
+    for slot in archetype_resolve(selection).and_then(|entry| entry.replaces).unwrap_or(&[]) {
+        if !slots.iter().any(|s| s.eq_ignore_ascii_case(slot)) {
+            slots.push((*slot).to_owned());
+        }
+    }
+    slots
+}
+
+/// Whether two replaced-feature names name one feature: equal ignoring case, or one the other's
+/// numbered step (`RogueTrapSense` and `RogueTrapSense1`).
+fn same_feature(a: &str, b: &str) -> bool {
+    let (a, b) = (a.to_ascii_lowercase(), b.to_ascii_lowercase());
+    let (short, long) = if a.len() <= b.len() { (&a, &b) } else { (&b, &a) };
+    long.strip_prefix(short.as_str()).is_some_and(|rest| rest.chars().all(|c| c.is_ascii_digit()))
+        && !short.ends_with(|c: char| c.is_ascii_digit())
+}
+
+/// `RogueTrapSense1` of a rogue -> `Trap Sense 1`.
+fn feature_words(slot: &str, class: &str) -> String {
+    let prefix = class.replace('_', "");
+    let rest = match (slot.get(..prefix.len()), slot.get(prefix.len()..)) {
+        (Some(head), Some(rest)) if !rest.is_empty() && head.eq_ignore_ascii_case(&prefix) => rest,
+        _ => slot,
+    };
+    let rest = rest.strip_prefix("CF_").unwrap_or(rest);
+    let mut words = String::new();
+    let mut prev: Option<char> = None;
+    for c in rest.chars() {
+        if let Some(p) = prev
+            && ((c.is_ascii_uppercase() && p.is_ascii_lowercase()) || (c.is_ascii_digit() && !p.is_ascii_digit()))
+        {
+            words.push(' ');
+        }
+        words.push(c);
+        prev = Some(c);
+    }
+    words
+}
+
+/// The held archetypes, as the sub-tab lists them; no pool counts an archetype.
+fn archetype_budget(package: &SheetRulePackage, input: &CharacterInput) -> AbilityBudget {
+    let held = held_archetypes(package, input)
+        .into_iter()
+        .map(|(id, rule)| HeldAbility { id, label: display_label(rule), category: None })
+        .collect();
+    AbilityBudget { subtab: SubTab::Archetype, pools: Vec::new(), held }
+}
+
+/// Every archetype of every class `input` holds, its pool the class; one replacing a class feature a held
+/// archetype already replaces is refused, naming the feature and that archetype.
+fn archetype_options(package: &SheetRulePackage, input: &CharacterInput) -> Vec<AbilityOption> {
+    let classes: Vec<String> = input.chosen.class_levels.iter().map(|class| id_slug(&class.class_id)).collect();
+    let held: Vec<(String, &SheetRule, Vec<String>)> = held_archetypes(package, input)
+        .into_iter()
+        .map(|(id, rule)| {
+            let slots = replaced_features(rule, &id);
+            (id, rule, slots)
+        })
+        .collect();
+    let mut options: Vec<AbilityOption> = archetype_records(package, &archetype_keys())
+        .into_iter()
+        .filter(|(_, rule)| classes.iter().any(|class| class == archetype_class(rule)))
+        .map(|(id, rule)| {
+            let class = archetype_class(rule);
+            let slots = replaced_features(rule, &id);
+            let unmet = held
+                .iter()
+                .filter(|(held_id, held_rule, _)| held_id != &id && archetype_class(held_rule) == class)
+                .flat_map(|(_, held_rule, held_slots)| {
+                    slots.iter().filter(|slot| held_slots.iter().any(|h| same_feature(slot, h))).map(move |slot| {
+                        format!(
+                            "replaces {}, which {} already replaces; a class feature is replaced once",
+                            feature_words(slot, class),
+                            display_label(held_rule)
+                        )
+                    })
+                })
+                .collect::<Vec<_>>();
+            let words: Vec<String> = slots.iter().map(|slot| feature_words(slot, class)).collect();
+            let prose = catalog_prose(package, rule);
+            AbilityOption {
+                id,
+                label: display_label(rule),
+                pool: class.to_owned(),
+                category: (!words.is_empty()).then(|| format!("Replaces {}", words.join(", "))),
+                qualified: unmet.is_empty(),
+                unmet,
+                description: (!prose.trim().is_empty()).then_some(prose),
+            }
+        })
+        .collect();
+    options.sort_by(|a, b| (&a.pool, &a.label, &a.id).cmp(&(&b.pool, &b.label, &b.id)));
+    options
 }
 
 /// The offer that lists a pool's members: a held grant's first, else any converted grant's.
@@ -526,7 +696,7 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
         }
     }
     let mut seed = HeldSeed::from_character(input, base);
-    seed.rule_ids.extend(picked_rules(input));
+    seed.rule_ids.extend(picked_rules(package, input));
     let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
