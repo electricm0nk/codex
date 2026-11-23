@@ -66,6 +66,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E2.3 | Open campaign button opens the folder; one banner per campaign; Manager banner smaller | opus | complete | E2.2 | sheet | no | hub | receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; SHA `85af984e595df395a86f2a12047e39f8e4861170` |
 | E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | complete | E0.5, E2.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; SHA `4caf5d7df78eb51fb7e62a6d2bbfa7c165d8fc5e` |
 | E2.5 | Rest text read-only under the Biography text | sonnet | complete | E2.4 | sheet | no | hub | receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; SHA `74cb141f8877f85038de2c769aebf0808a75a4e0` |
+| E2.6 | Rest-and-recovery override editor: the Custom dialog writes `custom.json` `restText` (decisions.md §8 "in the custom rules menu"); clearing it restores the table text — discovered by E2.MC | sonnet | todo | E2.5 | sheet | no | hub | discovered E2.MC (`artifacts/epic_2/E2.MC_cycle_receipt.md`, "Discovered cards"); retro key `dod-clause-without-owner-card` |
 | E2.MC | E2 merge check + epic report | opus | todo | E2.5 | sheet | yes (base build) | no | |
 | E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | Q-22.3 settled: rename |
 | E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | todo | E3.1 | sheet | yes (root + desktop) | hub | |
@@ -100,7 +101,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E7.4 | PR LAST → lead merges when green → watch the develop publish (graphify out of scope, operator 2026-11-22) | sonnet | todo | E7.3 | main | no | no | a red publish is a blocker |
 
 Count at authoring, by epic (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); g=(a[1] ~ /^C/)?"C":a[1]; n[g]++} END {for (e in n) print e, n[e]}' kanban.md | sort`):
-C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; E1.14 and E1.15 (E1.MC, 2026-11-22) → E1 16; with E0.1's E3.12 the total is **61**.
+C 3, E0 5, E1 12, E2 6, E3 12, E4 3, E5 5, E6 6, E7 4 = 56. Discovered: E1.12 (E0.4, 2026-11-22) → E1 13; E1.13 (E1.6, 2026-11-22) → E1 14; E1.14 and E1.15 (E1.MC, 2026-11-22) → E1 16; E2.6 (E2.MC, 2026-11-23) → E2 7; with E0.1's E3.12 the total is **62**.
 
 `Depends on` equals `epic-breakdown.md §0`'s `After` column except three rows, where it carries the card sections'
 own wording: E1.10 adds E0.2 ("Depends: E1.9 (lane order), E0.2 (data)"), E5.4 adds E2.3 ("Depends: E5.3, E2.3"),

@@ -60,6 +60,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E2.3 | Open campaign button opens the folder; one full-width banner per campaign; Manager banner smaller | sheet | E2.2 | opus | no | hub |
 | E2.4 | Rest-and-recovery: cited rules-text table, engine command, print block under the bio page, override field | sheet | E0.5, E2.3 | opus | yes (root + desktop) | hub |
 | E2.5 | Rest text read-only under the Biography text; never saved into `bio.biography` | sheet | E2.4 | sonnet | no | hub |
+| E2.6 | Rest-and-recovery override editor in the Custom dialog (`custom.json` `restText`); discovered by E2.MC | sheet | E2.5 | sonnet | no | hub |
 | E2.MC | E2 merge check + epic report (screenshots at a short window, all three sheets) | sheet | E2.5 | opus | yes (base build) | no |
 | E3.1 | Abilities tab shell: `Feats` → `Abilities`, seven sub-tabs, today's Feats/Traits/racial/pool surfaces moved, no behaviour change | sheet | E0.1, E2.5 | opus | no | hub |
 | E3.2 | Engine: generic ability-budget module (`abilities.budget.<subtab>.<pool>.*` rows + `refusal`), saved selections, list/add/remove commands; proved on Traits | sheet | E3.1 | opus | yes (root + desktop) | hub |
@@ -94,7 +95,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 61 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC; the per-card headings below use `###`).
+→ 62 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -457,6 +458,19 @@ change); **Does not cover** (rule 7). Every code-bearing card also runs the four
 - **Failing test first:** after a blur on the biography field, the saved `bio.biography` does not contain the rest
   text; the rest text renders below the field in the print order.
 - **Acceptance:** the test. **Depends:** E2.4. **Tier:** sonnet.
+
+### E2.6 — rest-and-recovery override editor (discovered by E2.MC)
+- **Objective:** `decisions.md §8`: the override is set "in the custom rules menu". E2.4 added the
+  `custom.json` field (`character_custom.rs:170` `rest_text`, length-checked `:273`) and both surfaces honour it,
+  but no screen writes it: `git grep -n restText -- apps/desktop/src` hits only `boundary/loadRestText.ts` (a
+  reader); `boundary/characterCustom.ts` carries no `restText`. A player can set it only by editing `custom.json`.
+- **FILES YOU OWN:** `CharacterSheet.tsx` (`hub`, the Custom dialog), `boundary/characterCustom.ts` (the DTO
+  field), their tests; `character_custom.rs` only if the save path drops the field (named in the receipt first).
+- **Failing test first:** saving the Custom dialog with rest text "X" writes `restText: "X"`; the Biography tab and
+  `load_rest_text` then return the override; clearing it (empty) removes the field and the table rows return.
+- **Acceptance:** the test; a screenshot of the field and of the Biography tab with the override. **Depends:** E2.5.
+  **Tier:** sonnet.
+- **Does not cover:** per-line override (Q-2.2 whole-text replace); the House Rules menu (E6.2).
 
 ### E2.MC — E2 merge check
 - **Acceptance:** screenshots of all three sheets at a short window; the PDF's bio page with the rest block
