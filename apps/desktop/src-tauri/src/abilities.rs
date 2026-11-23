@@ -460,12 +460,19 @@ mod tests {
             assert!(listed.options.iter().any(|o| o.id == key && o.qualified), "{key} offered and qualified");
         }
         assert!(listed.options.iter().all(|o| o.pool == "rogue"), "only the held class's archetypes are offered");
+        // Escapologist (Occult Adventures) names no replaced feature; its own converted gate excludes it beside Acrobat.
+        const ESCAPOLOGIST: &str = "occult_adventures:class_feature:rogue_archetype_escapologist";
+        assert!(listed.options.iter().any(|o| o.id == ESCAPOLOGIST && o.qualified), "Escapologist offered and qualified");
+        let cat_burglar = listed.options.iter().find(|o| o.id == "archetype:Rogue Archetype ~ Cat Burglar").expect("Cat Burglar listed");
+        assert!(!cat_burglar.qualified && cat_burglar.unmet.iter().any(|r| r.contains("Catfolk")), "a human is no catfolk: {:?}", cat_burglar.unmet);
 
         add_ability_selection_at_root(&root, "archetype", "archetype:Rogue Archetype ~ Acrobat", SAVED_AT).expect("Acrobat");
         let input = SavedCharacterStore::load(&root).expect("reload").character_input;
         assert!(codex::rules_core::archetype_resolver::archetype_claims_slot(&input, "Rogue", "RogueTrapfinding"), "saved as choice:archetype");
         let listed = list_ability_options_at_root(&root, "archetype").expect("archetype options");
         assert_eq!(listed.selected, ["archetype:Rogue Archetype ~ Acrobat"]);
+        let escapologist = listed.options.iter().find(|o| o.id == ESCAPOLOGIST).expect("Escapologist still listed");
+        assert!(!escapologist.qualified && escapologist.unmet.iter().any(|r| r.contains("Acrobat")), "{:?}", escapologist.unmet);
         let rake = listed.options.iter().find(|o| o.id == "archetype:Rogue Archetype ~ Rake").expect("Rake still listed");
         assert!(!rake.qualified && rake.unmet.iter().any(|r| r.contains("Trapfinding") && r.contains("Acrobat")), "{:?}", rake.unmet);
 

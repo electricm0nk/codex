@@ -518,7 +518,7 @@ pub fn ability_options(
     match subtab {
         SubTab::Traits => trait_options(package, input, base),
         SubTab::ClassFeatures => class_feature_options(package, input, base),
-        SubTab::Archetype => archetype_options(package, input),
+        SubTab::Archetype => archetype_options(package, input, base),
     }
 }
 
@@ -588,9 +588,16 @@ fn replaced_features(rule: &SheetRule, selection: &str) -> Vec<String> {
 }
 
 /// Whether two replaced-feature names name one feature: equal ignoring case, or one the other's
-/// numbered step (`RogueTrapSense` and `RogueTrapSense1`).
+/// numbered step (`RogueTrapSense` or `FighterArmorTraining_ALL` and `RogueTrapSense1`).
 fn same_feature(a: &str, b: &str) -> bool {
-    let (a, b) = (a.to_ascii_lowercase(), b.to_ascii_lowercase());
+    let whole = |s: &str| {
+        let s = s.to_ascii_lowercase();
+        s.strip_suffix("_all").map_or_else(|| s.clone(), str::to_owned)
+    };
+    let (a, b) = (whole(a), whole(b));
+    if a == b {
+        return true;
+    }
     let (short, long) = if a.len() <= b.len() { (&a, &b) } else { (&b, &a) };
     long.strip_prefix(short.as_str()).is_some_and(|rest| rest.chars().all(|c| c.is_ascii_digit()))
         && !short.ends_with(|c: char| c.is_ascii_digit())
@@ -604,6 +611,10 @@ fn feature_words(slot: &str, class: &str) -> String {
         _ => slot,
     };
     let rest = rest.strip_prefix("CF_").unwrap_or(rest);
+    let (rest, all) = match rest.strip_suffix("_ALL") {
+        Some(rest) => (rest, " (all)"),
+        None => (rest, ""),
+    };
     let mut words = String::new();
     let mut prev: Option<char> = None;
     for c in rest.chars() {
@@ -615,7 +626,7 @@ fn feature_words(slot: &str, class: &str) -> String {
         words.push(c);
         prev = Some(c);
     }
-    words
+    words + all
 }
 
 /// The held archetypes, as the sub-tab lists them; no pool counts an archetype.
@@ -628,8 +639,14 @@ fn archetype_budget(package: &SheetRulePackage, input: &CharacterInput) -> Abili
 }
 
 /// Every archetype of every class `input` holds, its pool the class; one replacing a class feature a held
-/// archetype already replaces is refused, naming the feature and that archetype.
-fn archetype_options(package: &SheetRulePackage, input: &CharacterInput) -> Vec<AbilityOption> {
+/// archetype already replaces is refused, naming the feature and that archetype. An archetype whose
+/// record names no replaced feature is read through its own converted gate instead (the held archetypes
+/// held), which carries the corpus's exclusions and prerequisites.
+fn archetype_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<AbilityOption> {
+    let mut seed = HeldSeed::from_character(input, base);
+    seed.rule_ids.extend(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()));
+    let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
+    let held_set = held_set(package, &seed, &facts);
     let classes: Vec<String> = input.chosen.class_levels.iter().map(|class| id_slug(&class.class_id)).collect();
     let held: Vec<(String, &SheetRule, Vec<String>)> = held_archetypes(package, input)
         .into_iter()
@@ -644,7 +661,7 @@ fn archetype_options(package: &SheetRulePackage, input: &CharacterInput) -> Vec<
         .map(|(id, rule)| {
             let class = archetype_class(rule);
             let slots = replaced_features(rule, &id);
-            let unmet = held
+            let mut unmet = held
                 .iter()
                 .filter(|(held_id, held_rule, _)| held_id != &id && archetype_class(held_rule) == class)
                 .flat_map(|(_, held_rule, held_slots)| {
@@ -657,6 +674,9 @@ fn archetype_options(package: &SheetRulePackage, input: &CharacterInput) -> Vec<
                     })
                 })
                 .collect::<Vec<_>>();
+            if unmet.is_empty() && !held.iter().any(|(held_id, _, _)| held_id == &id) {
+                unmet = ability_prereqs::unmet(package, &held_set, &facts, &rule.applies);
+            }
             let words: Vec<String> = slots.iter().map(|slot| feature_words(slot, class)).collect();
             let prose = catalog_prose(package, rule);
             AbilityOption {
@@ -782,6 +802,21 @@ mod tests {
     fn package() -> &'static SheetRulePackage {
         static PACKAGE: OnceLock<SheetRulePackage> = OnceLock::new();
         PACKAGE.get_or_init(|| load_sheet_rules(&std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules")).package)
+    }
+
+    /// The archetype tables spell one feature several ways: case, a numbered step, a whole `_ALL`.
+    #[test]
+    fn ability_budget_archetype_replaced_features_match_across_spellings_and_read_as_words() {
+        assert!(same_feature("RogueTrapFinding", "RogueTrapfinding"));
+        assert!(same_feature("RogueTrapSense", "RogueTrapSense3"));
+        assert!(same_feature("FighterArmorTraining_ALL", "FighterArmorTraining3"));
+        assert!(same_feature("FighterWeaponTraining_ALL", "FighterWeaponTraining"));
+        assert!(!same_feature("RogueTalent2", "RogueTalent4"));
+        assert!(same_feature("RogueTalent2", "rogueTalent2"));
+        assert!(!same_feature("FighterBonusFeat1", "FighterBonusFeats"));
+        assert_eq!(feature_words("RogueTrapSense1", "rogue"), "Trap Sense 1");
+        assert_eq!(feature_words("FighterArmorTraining_ALL", "fighter"), "Armor Training (all)");
+        assert_eq!(feature_words("CF_WitchHex", "witch"), "Witch Hex");
     }
 
     fn level_one_with(traits: &[&str]) -> CharacterInput {
