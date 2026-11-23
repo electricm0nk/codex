@@ -1021,12 +1021,13 @@ fn feat_budget_rows(input: &CharacterInput, base: &PilotBaseChassisComputation) 
 }
 
 /// `abilities.budget.<subtab>.*` rows for every Abilities sub-tab with an engine budget (SD-43 E3.2).
-/// An unreadable package serves none, as [`feat_budget_rows`] does.
+/// An unreadable package serves none, as [`feat_budget_rows`] does. Read at the current level only
+/// (SD-43 E3.4): the sub-tab's own list names the level each Class Features pick opened at.
 pub(crate) fn ability_budget_rows(input: &CharacterInput) -> Vec<ExplanationDto> {
-    use codex::rules_core::ability_budget::{ability_budget, SubTab};
+    use codex::rules_core::ability_budget::{ability_budget_now, SubTab};
     sheet_rule_package().as_ref().map_or_else(
         |_| Vec::new(),
-        |package| SubTab::ALL.iter().flat_map(|subtab| map_explanations_dto(&ability_budget(package, input, *subtab).explanation_rows())).collect(),
+        |package| SubTab::ALL.iter().flat_map(|subtab| map_explanations_dto(&ability_budget_now(package, input, *subtab).explanation_rows())).collect(),
     )
 }
 
@@ -20043,8 +20044,9 @@ mod tests {
             .explanations
             .iter()
             .map(|e| e.id.as_str())
-            // `skill.total.knowledge_*` (E8.7) holds "ledge" too, and is no talent's record.
-            .filter(|id| !id.starts_with("skill.total.") && (id.contains("talent") || id.contains("ledge")))
+            // `skill.total.knowledge_*` (E8.7) holds "ledge" too, and is no talent's record; nor is the Class
+            // Features pool budget (`abilities.budget.class_features.rogue_talent.*`, SD-43 E3.4).
+            .filter(|id| !id.starts_with("skill.total.") && !id.starts_with("abilities.budget.") && (id.contains("talent") || id.contains("ledge")))
             .collect();
         assert_eq!(talent_records, vec!["class_chassis.rogue.talent_choice"], "recognition only, value 0");
         assert_eq!(
@@ -21932,8 +21934,11 @@ mod tests {
         assert_eq!(damage_totals, response.weapon_damage.iter().filter(|weapon| weapon.base_dice.is_some()).count(), "one damage total per weapon");
         let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
-        let abilities = appended.iter().filter(|row| row.id.starts_with("abilities.budget.")).count();
+        let abilities = appended.iter().filter(|row| row.id.starts_with("abilities.budget.traits.")).count();
         assert_eq!(abilities, 6, "the Traits sub-tab's traits and drawbacks pools, three rows each (SD-43 E3.2)");
+        // SD-43 E3.4: a Rogue 11's talents, one at 2nd level and every 2 levels thereafter (Core Rulebook, Rogue).
+        let talents = appended.iter().find(|row| row.id == "abilities.budget.class_features.rogue_talent.granted").map(|row| row.value);
+        assert_eq!(talents, Some(5), "the Class Features sub-tab's rogue talent pool");
         let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
         assert_eq!(skill_totals, 35, "one total per Skills panel row");
         for id in sheet_totals {

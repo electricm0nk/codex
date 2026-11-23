@@ -225,6 +225,17 @@ pub fn ability_budget(package: &SheetRulePackage, input: &CharacterInput, subtab
     }
 }
 
+/// [`ability_budget`] read at the character's current level only: the same pools and the same
+/// granted / spent / remaining, but a Class Features grant names its rules without the level each
+/// pick opened at, so it costs one held set instead of one per character level. For a surface that
+/// shows the rows (the sheet's load); the sub-tab and the add path use [`ability_budget`].
+pub fn ability_budget_now(package: &SheetRulePackage, input: &CharacterInput, subtab: SubTab) -> AbilityBudget {
+    match subtab {
+        SubTab::Traits => trait_budget(package, input),
+        SubTab::ClassFeatures => class_feature_budget_from(package, input, false),
+    }
+}
+
 /// `input` as it stood at character level `level`: its class levels taken in saved order.
 fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
     let mut left = level;
@@ -299,11 +310,16 @@ fn class_feature_grants_holding(package: &SheetRulePackage, input: &CharacterInp
 const NOT_CLASS_FEATURE_KINDS: [&str; 7] = ["race", "race_trait", "template", "monster", "monster_ability", "trait", "equipment"];
 
 fn class_feature_budget(package: &SheetRulePackage, input: &CharacterInput) -> AbilityBudget {
+    class_feature_budget_from(package, input, true)
+}
+
+/// The Class Features budget; `by_level` reads every character level to name where each pick opened.
+fn class_feature_budget_from(package: &SheetRulePackage, input: &CharacterInput, by_level: bool) -> AbilityBudget {
     let level: u8 = input.chosen.class_levels.iter().map(|class| class.level).sum();
     let now = class_feature_grants(package, input);
     let mut pools: BTreeMap<String, AbilityPool> = BTreeMap::new();
     // A character no rule grants a pool to needs no level-by-level reading (one held set, not one per level).
-    let first = if now.values().all(|(granted, _)| *granted == 0) { level } else { 1 };
+    let first = if !by_level || now.values().all(|(granted, _)| *granted == 0) { level } else { 1 };
     for at in first..=level {
         let grants = if at == level { now.clone() } else { class_feature_grants(package, &at_character_level(input, at)) };
         let ids: Vec<String> = pools.keys().chain(grants.keys()).cloned().collect();
@@ -322,7 +338,7 @@ fn class_feature_budget(package: &SheetRulePackage, input: &CharacterInput) -> A
                 continue;
             }
             let words = if labels.is_empty() { "no rule".to_owned() } else { labels.join(" + ") };
-            pool.sources.push((Some(at), format!("{words} {gained:+}")));
+            pool.sources.push((by_level.then_some(at), format!("{words} {gained:+}")));
             if gained > 0 {
                 pool.opened.extend(std::iter::repeat_n(at, usize::try_from(gained).unwrap_or(0)));
             } else {
@@ -797,6 +813,15 @@ mod tests {
     const ABILITY_SELECTION_POOLS_SPLIT_OFF: [&str; 5] =
         ["Blood of Dragons Bloodline", "Bloodrager Bloodline", "Crossblooded Bloodline", "Crossblooded Rager Bloodline", "Sorcerer Bloodline"];
     const FEAT_POOL_ID: &str = "feat";
+
+    #[test]
+    fn ability_budget_class_features_now_serves_the_same_numbers_without_levels() {
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "rogue", 6);
+        let numbers = |budget: &AbilityBudget| budget.explanation_rows().into_iter().map(|row| (row.id, row.value)).collect::<Vec<_>>();
+        let now = ability_budget_now(package(), &input, SubTab::ClassFeatures);
+        assert_eq!(numbers(&now), numbers(&ability_budget(package(), &input, SubTab::ClassFeatures)));
+        assert!(now.pool("rogue_talent").expect("pool").sources.iter().all(|(level, _)| level.is_none()));
+    }
 
     #[test]
     fn ability_budget_class_features_barbarian_4_is_granted_two_rage_powers() {
