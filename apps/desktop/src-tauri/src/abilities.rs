@@ -7,6 +7,7 @@
 use std::path::Path;
 
 use codex::rules_core::ability_budget::{ability_budget, ability_options, AbilityOption, SubTab};
+use codex::rules_core::character_input::AbilitySelection;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -42,6 +43,8 @@ pub struct AbilityOptionDto {
     pub category: Option<String>,
     pub qualified: bool,
     pub unmet: Vec<String>,
+    /// The record's rule text when the engine carries it.
+    pub description: Option<String>,
 }
 
 impl From<AbilityOption> for AbilityOptionDto {
@@ -53,6 +56,7 @@ impl From<AbilityOption> for AbilityOptionDto {
             category: option.category,
             qualified: option.qualified,
             unmet: option.unmet,
+            description: option.description,
         }
     }
 }
@@ -63,6 +67,22 @@ impl From<AbilityOption> for AbilityOptionDto {
 pub struct AbilityOptionsDto {
     pub budget: Vec<ExplanationDto>,
     pub options: Vec<AbilityOptionDto>,
+    /// The option ids the character holds, in saved order (Class Features: `<pool>:<record id>`).
+    pub selected: Vec<String>,
+}
+
+/// The option ids of the picks a sub-tab saves, in saved order.
+fn selected_ids(input: &codex::rules_core::character_input::CharacterInput, subtab: SubTab) -> Vec<String> {
+    match subtab {
+        SubTab::Traits => input.chosen.selected_traits.clone(),
+        SubTab::ClassFeatures => input
+            .chosen
+            .ability_selections
+            .iter()
+            .filter(|pick| pick.subtab == subtab.id())
+            .map(|pick| format!("{}:{}", pick.pool, pick.record_key))
+            .collect(),
+    }
 }
 
 #[tauri::command]
@@ -79,6 +99,7 @@ pub(crate) fn list_ability_options_at_root(root: &Path, subtab: &str) -> Result<
     Ok(AbilityOptionsDto {
         budget: map_explanations_dto(&ability_budget(package, &input, subtab).explanation_rows()),
         options: ability_options(package, &input, &base, subtab).into_iter().map(AbilityOptionDto::from).collect(),
+        selected: selected_ids(&input, subtab),
     })
 }
 
@@ -109,7 +130,8 @@ pub(crate) fn add_ability_selection_at_root(
     let subtab = subtab_of(subtab)?;
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
-    if let Some(refusal) = ability_budget(package, &input, subtab).refusal(package, option_id) {
+    let budget = ability_budget(package, &input, subtab);
+    if let Some(refusal) = budget.refusal(package, option_id) {
         return Err(refusal);
     }
     let base = compute_pilot_base_chassis(&input);
@@ -122,6 +144,15 @@ pub(crate) fn add_ability_selection_at_root(
     }
     match subtab {
         SubTab::Traits => mutate_saved_character_at_root(root, saved_at, |input| apply_add_trait_selection(input, option_id, None)),
+        SubTab::ClassFeatures => {
+            let (pool, record_key) = option_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no class feature pool"))?;
+            let level = budget
+                .pool(pool)
+                .and_then(|pool| pool.next_pick_level())
+                .ok_or_else(|| format!("The {pool} pool has no grant left to charge '{}' to", option.label))?;
+            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
+            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+        }
     }
 }
 
@@ -140,6 +171,19 @@ pub(crate) fn remove_ability_selection_at_root(
 ) -> Result<CreateCharacterResponse, String> {
     match subtab_of(subtab)? {
         SubTab::Traits => remove_trait_selection_at_root(root, option_id, saved_at),
+        subtab @ SubTab::ClassFeatures => {
+            let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+            let held = |pick: &AbilitySelection| pick.subtab == subtab.id() && format!("{}:{}", pick.pool, pick.record_key) == option_id;
+            let at = input
+                .chosen
+                .ability_selections
+                .iter()
+                .rposition(held)
+                .ok_or_else(|| format!("This character does not hold '{option_id}'."))?;
+            mutate_saved_character_at_root(root, saved_at, |input| {
+                input.chosen.ability_selections.remove(at);
+            })
+        }
     }
 }
 
@@ -186,6 +230,40 @@ mod tests {
         remove_ability_selection_at_root(&root, "traits", "trait:trait_acrobat", SAVED_AT).expect("remove");
         assert_eq!(held_traits(&root), ["trait:trait_axe_to_grind"]);
         assert!(list_ability_options_at_root(&root, "background").is_err(), "a sub-tab with no engine budget is refused");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn abilities_class_features_a_rogue_4_takes_two_talents_charged_to_levels_2_and_4_then_is_refused() {
+        let root = aldric_root("class-features");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 4 }];
+        })
+        .expect("make Aldric a Rogue 4");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let row = |rows: &[ExplanationDto], field: &str| {
+            rows.iter().find(|r| r.id == format!("abilities.budget.class_features.rogue_talent.{field}")).map(|r| r.value)
+        };
+        assert_eq!(row(&listed.budget, "granted"), Some(2));
+        let talents: Vec<&AbilityOptionDto> = listed.options.iter().filter(|o| o.pool == "rogue_talent" && o.qualified).collect();
+        assert!(talents.len() >= 2, "{} qualified rogue talents", talents.len());
+        let (first, second) = (talents[0].id.clone(), talents[1].id.clone());
+
+        add_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("first talent");
+        add_ability_selection_at_root(&root, "class_features", &second, SAVED_AT).expect("second talent");
+        let picks = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        let levels: Vec<(String, u8)> = picks.iter().map(|p| (format!("{}:{}", p.pool, p.record_key), p.level)).collect();
+        assert_eq!(levels, [(first.clone(), 2), (second.clone(), 4)]);
+        let third = talents.iter().map(|o| o.id.clone()).find(|id| *id != first && *id != second).expect("a third talent");
+        let refusal = add_ability_selection_at_root(&root, "class_features", &third, SAVED_AT).expect_err("no third talent at Rogue 4");
+        assert!(refusal.contains("rogue_talent pool"), "{refusal}");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        assert_eq!(row(&listed.budget, "remaining"), Some(0));
+        assert_eq!(listed.selected, [first.clone(), second.clone()]);
+
+        remove_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("remove");
+        assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [second]);
         std::fs::remove_dir_all(&root).ok();
     }
 }

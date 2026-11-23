@@ -11,7 +11,7 @@ import type { ExplanationDto } from './loadSavedCharacterDetail';
  */
 
 /** A sub-tab id the engine budgets (`ability_budget::SubTab`). */
-export type AbilitySubTabId = 'traits';
+export type AbilitySubTabId = 'traits' | 'class_features';
 
 export interface AbilityOptionDto {
   id: string;
@@ -20,11 +20,15 @@ export interface AbilityOptionDto {
   category: string | null;
   qualified: boolean;
   unmet: string[];
+  /** The record's rule text when the engine carries it (Class Features). */
+  description?: string | null;
 }
 
 export interface AbilityOptionsDto {
   budget: ExplanationDto[];
   options: AbilityOptionDto[];
+  /** The option ids the character holds, in saved order. */
+  selected: string[];
 }
 
 export interface AbilitySelectionRequest {

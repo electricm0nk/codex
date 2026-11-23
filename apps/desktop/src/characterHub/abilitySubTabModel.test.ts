@@ -113,4 +113,28 @@ assert(html.includes('title="one Social trait only: Acrobat is held"'), 'the dis
 assert(html.includes('You are ambitious.'), 'the Info pane shows the focused option');
 assert(html.includes('Remove'), 'Selected rows have Remove');
 
+// SD-43 E3.4: a Class Features option carries the engine's rule text; the Info pane prints it when the sub-tab
+// has no roster of its own (info() answers null).
+const talent: AbilityOptionDto = { ...option('rogue_talent:core_rulebook:class_feature:rogue_talent_fast_stealth', 'Fast Stealth', 'rogue_talent'), description: 'Move at full speed using Stealth.' };
+const talentModel = buildAbilitySubTabModel({ subtab: 'class_features', budget: [], options: [talent], selectedIds: [], search: '', qualifiedOnly: false });
+assertEqual(talentModel.available[0]?.description ?? '', 'Move at full speed using Stealth.', 'the option row carries the engine description');
+const talentHtml = renderToStaticMarkup(
+  createElement(AbilitySubTabView, {
+    title: 'Class Features',
+    model: talentModel,
+    search: '',
+    qualifiedOnly: false,
+    focusedId: talent.id,
+    info: () => null,
+    busy: false,
+    error: null,
+    onSearch: () => undefined,
+    onQualifiedOnly: () => undefined,
+    onFocus: () => undefined,
+    onAdd: () => undefined,
+    onRemove: () => undefined,
+  }),
+);
+assert(talentHtml.includes('Move at full speed using Stealth.') && !talentHtml.includes('bundled roster'), 'the Info pane prints the engine description');
+
 console.log('abilitySubTabModel tests passed');

@@ -243,7 +243,7 @@ fn assign(pools: &[FeatPool], held: &[HeldFeat]) -> Vec<Option<usize>> {
 /// The rule's feat pool, when its `target` hands out picks the character itself spends on feats.
 /// `Pool(feat)` itself, a pool whose offer lists feats, or a pool named for feats by a whole word
 /// (`mythic_path_feature_*` is not one). A pick on the companion is the companion's.
-fn feat_pool_of(rule: &SheetRule) -> Option<&str> {
+pub(crate) fn feat_pool_of(rule: &SheetRule) -> Option<&str> {
     let Some(BonusTarget::Pool(pool)) = &rule.target else { return None };
     let offers_feats = matches!(rule.offers.as_ref().map(|o| &o.from), Some(OptionSet::Rules { pool, .. }) if pool == FEAT_POOL);
     (pool == FEAT_POOL || offers_feats || named_for_the_characters_feats(pool)).then_some(pool.as_str())
@@ -309,7 +309,7 @@ fn admitted_sets(tags: &[String]) -> Vec<Vec<String>> {
 /// Whether `rule` says again what `earlier`, a line of the same record, already said. The converter
 /// writes a source `.MOD` row twice, so `hunter_teamwork_feats#bonus6..11` repeat `#bonus0..5`, and a
 /// `-1` line of `fighter_bonus_feats` repeats too. The offer's own id names the line, not the grant.
-fn repeats_the_line(rule: &SheetRule, earlier: &SheetRule) -> bool {
+pub(crate) fn repeats_the_line(rule: &SheetRule, earlier: &SheetRule) -> bool {
     let offered = |r: &SheetRule| r.offers.as_ref().map(|offer| (offer.count.clone(), offer.from.clone()));
     split_rule_id(&rule.id) == split_rule_id(&earlier.id)
         && rule.target == earlier.target
@@ -321,7 +321,7 @@ fn repeats_the_line(rule: &SheetRule, earlier: &SheetRule) -> bool {
 /// A grant's value. When it is a variable, a contribution the converter repeated counts once, for the
 /// same reason as [`repeats_the_line`]: the `.MOD` rows of `swashbuckler_bonus_feats` reach its pool
 /// variable twice, so the variable alone reads 2 at 4th. The sum is the engine's, less the repeats.
-fn grant_amount(amount: &Expr, held: &HeldSet, package: &SheetRulePackage, facts: &CharacterFacts, ctx: EvalContext) -> Rat {
+pub(crate) fn grant_amount(amount: &Expr, held: &HeldSet, package: &SheetRulePackage, facts: &CharacterFacts, ctx: EvalContext) -> Rat {
     let mut total = evaluate_expr(amount, held, package, facts, ctx.clone());
     let (Expr::Var(var), false) = (amount, total.is_zero()) else { return total };
     let Some(table) = package.vars.get(var) else { return total };

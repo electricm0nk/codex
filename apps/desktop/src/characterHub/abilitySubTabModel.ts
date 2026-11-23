@@ -22,6 +22,8 @@ export interface AbilityAvailableRow {
   category: string | null;
   qualified: boolean;
   unmet: string[];
+  /** The engine's rule text for the record, when it carries one. */
+  description: string | null;
   /** Why Add is disabled, in the engine's words; `null` when Add is live. */
   addBlockedBy: string | null;
 }
@@ -87,7 +89,7 @@ export function buildAbilitySubTabModel(input: {
         : pool !== undefined && pool.remaining <= 0
           ? `No room in the ${option.pool} pool: ${pool.spent} of ${pool.granted} spent, ${pool.remaining} remaining.`
           : null;
-      return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, addBlockedBy };
+      return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, description: option.description ?? null, addBlockedBy };
     });
 
   const selected = input.selectedIds.map((id): AbilitySelectedRow => {

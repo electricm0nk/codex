@@ -104,7 +104,7 @@ export function AbilitySubTabView(props: {
                 <p key={reason} style={{ ...muted, color: 'var(--color-danger, #b42318)' }}>{reason}</p>
               ))}
               {focusedInfo?.grants ? <p style={{ fontSize: '0.78rem', margin: '0.4rem 0 0' }}>{focusedInfo.grants}</p> : null}
-              <p style={muted}>{focusedInfo?.description ?? `The bundled roster carries no rules text for ${focused.label}; its name, pool and prerequisites above are the engine's.`}</p>
+              <p style={muted}>{focusedInfo?.description ?? focused.description ?? `The bundled roster carries no rules text for ${focused.label}; its name, pool and prerequisites above are the engine's.`}</p>
               <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.6rem' }}>
                 {needsChoice ? (
                   <select aria-label={`Choice for ${focused.label}`} value={choice} onChange={(event) => setChoice(event.target.value)}>
@@ -157,7 +157,8 @@ export function AbilitySubTab(props: {
   characterId: string;
   subtab: AbilitySubTabId;
   title: string;
-  selectedIds: readonly string[];
+  /** The held ids as the sheet knows them; when omitted, the engine's list says which are held. */
+  selectedIds?: readonly string[];
   info: (id: string) => AbilityOptionInfo | null;
   onAdd: (id: string, choice: string | null) => Promise<void>;
   onRemove: (id: string) => Promise<void>;
@@ -168,7 +169,9 @@ export function AbilitySubTab(props: {
   const [qualifiedOnly, setQualifiedOnly] = useState(false);
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const heldKey = props.selectedIds.join('\n');
+  // Bumped after every Add/Remove so a sub-tab whose held ids come from the engine re-reads them.
+  const [changes, setChanges] = useState(0);
+  const heldKey = props.selectedIds?.join('\n') ?? '';
 
   useEffect(() => {
     let cancelled = false;
@@ -185,19 +188,22 @@ export function AbilitySubTab(props: {
     return () => {
       cancelled = true;
     };
-  }, [props.characterId, props.subtab, heldKey]);
+  }, [props.characterId, props.subtab, heldKey, changes]);
 
   const model = buildAbilitySubTabModel({
     subtab: props.subtab,
     budget: listed?.budget ?? [],
     options: listed?.options ?? [],
-    selectedIds: props.selectedIds,
+    selectedIds: props.selectedIds ?? listed?.selected ?? [],
     search,
     qualifiedOnly,
   });
   const run = (action: Promise<void>) => {
     setBusy(true);
-    void action.finally(() => setBusy(false));
+    void action.finally(() => {
+      setBusy(false);
+      setChanges((count) => count + 1);
+    });
   };
 
   if (listed === null && error === null) {

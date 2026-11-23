@@ -20,10 +20,6 @@ import {
 } from '../boundary/loadClassFeatureDescriptions';
 import { loadClassFeatureFeatBridgeDescriptions } from '../boundary/loadClassFeatureFeatBridgeDescriptions';
 import {
-  loadClassFeaturePoolOptions,
-  type ClassFeaturePoolOptionDto,
-} from '../boundary/loadClassFeaturePoolOptions';
-import {
   buildRacialTraitsSurface,
   type RacialTraitRow,
   type RacialTraitsSurface,
@@ -59,7 +55,7 @@ import {
   removeSpellSelection,
 } from '../boundary/removeSelection';
 import { addTraitSelection } from '../boundary/addTraitSelection';
-import { addAbilitySelection, removeAbilitySelection } from '../boundary/abilities';
+import { addAbilitySelection, removeAbilitySelection, type AbilitySubTabId } from '../boundary/abilities';
 import { setEquipmentActiveState } from '../boundary/setEquipmentActiveState';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
@@ -1772,111 +1768,6 @@ function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: s
 }
 
 /**
- * One registered option pool's own class gate + heading copy for
- * {@link ClassFeaturePoolReferenceSection} — data-driven so widening
- * `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` (rules_core) only
- * needs a new row here, not a new component. `classSlug` matches
- * `HeldClass.classId`'s trailing segment (`"class:core_rulebook:rogue"` ->
- * `"rogue"`), the same convention the pre-existing Rogue gate already used.
- */
-const POOL_REFERENCE_SECTIONS: ReadonlyArray<{
-  poolGroup: string;
-  classSlug: string;
-  heading: string;
-  note: string;
-}> = [
-  {
-    poolGroup: 'Rogue Talent',
-    classSlug: 'rogue',
-    heading: 'Available Rogue Talents (reference)',
-    note: 'Every Rogue Talent this catalog can render without a missing value, whether or not this build has selected one. A talent whose only magnitude depends on a value this catalog cannot compute (e.g. sneak attack dice) is not listed here.',
-  },
-  {
-    // SD31-W23-POOLMEMBER-002
-    poolGroup: 'Rage Power',
-    classSlug: 'barbarian',
-    heading: 'Available Rage Powers (reference)',
-    note: "Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rage power whose only magnitude depends on a value this catalog cannot compute (e.g. an unresolved bonus token) is not listed here, nor is one whose magnitude scales on this character's own class level and applies to a value this sheet already tracks (e.g. damage reduction, energy resistance) -- wave-23 integration review finding, pending an operator ruling. A rage power whose scaled value is inflicted on an opponent (e.g. a save DC) is still shown.",
-  },
-];
-
-/**
- * Browsable option-pool reference — every real pool member a registered
- * pool's corpus rows declare, described, shown regardless of whether this
- * character has selected it (`SD31-W22-POOLMEMBER-001`, widened to a second
- * pool by `SD31-W23-POOLMEMBER-002`).
- *
- * Modelled on `RacialTraitsSection`'s own ARG-alternate-trait precedent:
- * `list_class_feature_pool_options` serves a menu, not a per-character
- * computation, so each section below renders whenever the character holds a
- * level in that pool's owning class, independent of `props.explanations` —
- * a pool member is never named by an `ExplanationDto.id` until it is
- * actually chosen, which is exactly the gap `class_feature_pool_picker.rs`'s
- * own doc comment names.
- */
-function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
-  const [options, setOptions] = useState<ClassFeaturePoolOptionDto[]>([]);
-  useEffect(() => {
-    let cancelled = false;
-    loadClassFeaturePoolOptions()
-      .then((loaded) => {
-        if (!cancelled) {
-          setOptions(loaded);
-        }
-      })
-      .catch(() => {
-        // A reference list is a player-visible enhancement, not a
-        // load-bearing dependency of the sheet — swallowed rather than
-        // surfaced as an error banner, matching this file's sibling loaders.
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const sections = POOL_REFERENCE_SECTIONS.map((section) => {
-    const holdsClass = props.heldClasses.some(
-      (held) => held.classId.split(':').pop() === section.classSlug
-    );
-    const members = options.filter((option) => option.poolGroup === section.poolGroup);
-    return { section, holdsClass, members };
-  }).filter(({ holdsClass, members }) => holdsClass && members.length > 0);
-
-  if (sections.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      {sections.map(({ section, members }) => (
-        <div key={section.poolGroup} style={{ marginTop: '1.25rem' }}>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
-            {section.heading}
-          </p>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
-            {section.note}
-          </p>
-          {members.map((option) => (
-            <div key={`${option.book}:${option.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
-              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
-              <p
-                style={{
-                  color: 'var(--color-text-secondary)',
-                  fontSize: '0.72rem',
-                  margin: '0.15rem 0 0',
-                }}
-              >
-                {option.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      ))}
-    </>
-  );
-}
-
-/**
  * T4 closure (`epic-breakdown.md` Epic 2 "built-but-unreachable render
  * surface" / `classFeaturesModel.ts`'s `unmatchedClassFeatureDescriptions`).
  *
@@ -1889,7 +1780,7 @@ function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
  * renders, no matter how many of them the catalog held — this is the fix
  * site the module's own doc comment (`class_feature_descriptions.rs`) names.
  *
- * Modelled directly on `ClassFeaturePoolReferenceSection`'s own browsable-
+ * Modelled directly on the former `ClassFeaturePoolReferenceSection`'s browsable-
  * reference shape (shown whenever the character holds the owning class,
  * independent of whether an engine explanation exists) — but data-driven off
  * `props.heldClasses` rather than a hand-maintained per-pool list, so it
@@ -2062,10 +1953,15 @@ export function RulesAndFeaturesSection(props: { lines: readonly SheetLineDto[];
 }
 
 /**
- * The Abilities tab's Class Features sub-tab (SD-43 E3.1): the two class-feature reference lists that sat at the
- * foot of the Actions tab, moved unchanged.
+ * The Abilities tab's Class Features sub-tab: every class-feature pool the engine grants this character
+ * (SD-43 E3.4: `abilities.budget.class_features.<pool>.*` rows, sized by the rules the character holds, each
+ * pick charged to the level that granted it) on the generic sub-tab, then the class features no engine
+ * row claims (SD-43 E3.1, moved from the Actions tab).
  */
 function ClassFeatureReferencesPanel(props: {
+  characterId: string;
+  onAdd: (optionId: string) => Promise<void>;
+  onRemove: (optionId: string) => Promise<void>;
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
   /** T4-L9 (`decisions.md §13`): the feat-held reachability arm needs the
@@ -2076,13 +1972,20 @@ function ClassFeatureReferencesPanel(props: {
   const classFeatureDescriptions = useClassFeatureDescriptions();
   return (
     <div>
+      <AbilitySubTab
+        characterId={props.characterId}
+        subtab="class_features"
+        title="Class Features"
+        info={() => null}
+        onAdd={(id) => props.onAdd(id)}
+        onRemove={props.onRemove}
+      />
       <ClassFeatureDescriptionReferenceSection
         explanations={props.explanations}
         heldClasses={props.heldClasses}
         descriptions={classFeatureDescriptions}
         selectedFeats={props.selectedFeats}
       />
-      <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
   );
 }
@@ -3492,14 +3395,14 @@ export function CharacterSheet(props: {
    * {@link handleAddTrait}, which records the choice; any other goes through the engine's generic
    * `add_ability_selection`, which refuses with the budget's or the prerequisites' reason.
    */
-  async function handleAddAbility(optionId: string, choice: string | null) {
+  async function handleAddAbility(optionId: string, choice: string | null, subtab: AbilitySubTabId = 'traits') {
     if (choice !== null) {
       await handleAddTrait(optionId, choice);
       return;
     }
     setMutationError(null);
     try {
-      const outcome = await addAbilitySelection({ characterId: props.row.characterId, subtab: 'traits', optionId, savedAt: new Date().toISOString() });
+      const outcome = await addAbilitySelection({ characterId: props.row.characterId, subtab, optionId, savedAt: new Date().toISOString() });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return;
@@ -3511,14 +3414,14 @@ export function CharacterSheet(props: {
     }
   }
 
-  /** The inverse of {@link handleAddAbility} -- removes a held trait and its skill choice. */
-  async function handleRemoveTrait(traitId: string) {
+  /** The inverse of {@link handleAddAbility} -- removes a held pick (a trait with its skill choice). */
+  async function handleRemoveAbility(optionId: string, subtab: AbilitySubTabId = 'traits') {
     setMutationError(null);
     try {
       const outcome = await removeAbilitySelection({
         characterId: props.row.characterId,
-        subtab: 'traits',
-        optionId: traitId,
+        subtab,
+        optionId,
         savedAt: new Date().toISOString(),
       });
       if (outcome.kind === 'Blocked') {
@@ -4459,13 +4362,16 @@ export function CharacterSheet(props: {
                           characterId={props.row.characterId}
                           selectedTraits={props.detail?.selectedTraits ?? []}
                           onAdd={handleAddAbility}
-                          onRemove={handleRemoveTrait}
+                          onRemove={(traitId) => handleRemoveAbility(traitId)}
                         />
                       ),
                       Archetype: null,
                       Background: null,
                       'Class Features': (
                         <ClassFeatureReferencesPanel
+                          characterId={props.row.characterId}
+                          onAdd={(optionId) => handleAddAbility(optionId, null, 'class_features')}
+                          onRemove={(optionId) => handleRemoveAbility(optionId, 'class_features')}
                           explanations={engineRecords.explanations}
                           heldClasses={heldClasses}
                           selectedFeats={props.detail?.selectedFeats ?? []}

@@ -13,7 +13,6 @@ export const PENDING_ENGINE_CARD: Partial<Record<AbilitySubTabName, string>> = {
   'Racial Abilities': 'E3.6',
   Archetype: 'E3.7',
   Background: 'E3.9',
-  'Class Features': 'E3.4',
   Misc: 'E3.9',
 };
 
