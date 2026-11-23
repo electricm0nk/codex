@@ -21941,6 +21941,8 @@ mod tests {
         let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
             row.id.starts_with("feats.budget.")
                 || row.id.starts_with("abilities.budget.")
+                // SD-43 E3.8: the favored class bonus the sheet's hit points and skill pool add.
+                || row.id.starts_with("favored_class.")
                 || row.id.starts_with("skill.total.")
                 || row.id.starts_with("skill.trait_modifier.")
                 || row.id.starts_with("combat.weapon_damage_total.")
