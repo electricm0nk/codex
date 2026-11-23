@@ -11392,6 +11392,8 @@ mod tests {
             devices: vec![record("d1", "Rod of Small Mercies")],
             conditions: Vec::new(),
             overrides: Default::default(),
+            // SD-43 E2.4: the rest and recovery override round-trips with the rest.
+            rest_text: Some("A night at the inn restores every hit point.".to_owned()),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");

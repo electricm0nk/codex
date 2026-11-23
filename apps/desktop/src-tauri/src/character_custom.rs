@@ -163,6 +163,11 @@ pub struct CharacterCustomDto {
     /// `#[serde(default)]`: a `custom.json` saved before this field existed has every flag off.
     #[serde(default)]
     pub overrides: Overrides,
+    /// SD-43 E2.4 (`decisions.md §8`, §30 Q-2.2): the GM's own rest and recovery words; set, they
+    /// print instead of the rest table's rows on the Bio page and the Biography tab. Left out: the
+    /// table prints.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rest_text: Option<String>,
 }
 
 /// The targets a custom item's bonus may name (`decisions.md §13`). `ability:<name>` and
@@ -265,6 +270,9 @@ pub(crate) fn validate_custom(custom: &CharacterCustomDto) -> Result<(), String>
     validate_records("equipment", &custom.equipment, &mut seen)?;
     validate_records("spell", &custom.spells, &mut seen)?;
     validate_records("device", &custom.devices, &mut seen)?;
+    if custom.rest_text.as_ref().is_some_and(|text| text.chars().count() > MAX_DESCRIPTION) {
+        return Err(format!("the rest and recovery text is over {MAX_DESCRIPTION} characters"));
+    }
     Ok(())
 }
 

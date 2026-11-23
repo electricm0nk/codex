@@ -20,6 +20,7 @@ use codex::rules_core::class_census::{
 use codex::rules_core::class_seeds::FIXTURE_RELATIVE_PATH;
 use codex::rules_core::equipment_types::{equipment_types, EQUIPMENT_TYPES_PATH};
 use codex::rules_core::record_vars::RECORD_VARS_PATH;
+use codex::rules_core::rest_text::{parse_rest_table, rest_table, REST_TABLE_PATH};
 
 fn src_tauri() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -75,6 +76,7 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         MIX_PANEL_RELATIVE_PATH,
         RECORD_VARS_PATH,
         EQUIPMENT_TYPES_PATH,
+        REST_TABLE_PATH,
         "data/sheet_rules",
         "data/starfinder-1e/sheet_rules",
         "data/rules_tables",
@@ -100,6 +102,9 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         "the equipment type sidecar does not load from the packaged root: {:?}",
         equipment_types().as_ref().err()
     );
+
+    // SD-43 E2.4: the rest and recovery table the Bio page and the Biography tab print.
+    assert!(rest_table().is_ok(), "the rest table does not load from the packaged root: {:?}", rest_table().as_ref().err());
 
     assert!(
         codex::rules_core::corpus_loader::live_sheet_rules().is_some(),
@@ -134,6 +139,24 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
     );
 
     the_cyberpunk_corpus_and_a_starter_sheet_load_from_the_packaged_root(&cpr.corpus);
+}
+
+/// SD-43 E2.4 (`decisions.md §8`): `bundle.resources` maps the rest and recovery table to the path
+/// the engine reads under its data root, and the bundled file parses. (No data root is installed
+/// here: the test above holds the process's one `set_data_root` and loads the table through it.)
+#[test]
+fn the_rest_and_recovery_table_is_bundled_at_the_path_the_engine_reads() {
+    let conf: serde_json::Value =
+        serde_json::from_str(&fs::read_to_string(src_tauri().join("tauri.conf.json")).unwrap()).unwrap();
+    let resources = conf["bundle"]["resources"].as_object().expect("bundle.resources is a map");
+    let source = resources
+        .iter()
+        .find(|(_, dest)| dest.as_str() == Some(REST_TABLE_PATH))
+        .map(|(source, _)| source.clone())
+        .unwrap_or_else(|| panic!("tauri.conf.json bundles nothing at {REST_TABLE_PATH}"));
+    let text = fs::read_to_string(src_tauri().join(&source)).unwrap_or_else(|e| panic!("bundled {source}: {e}"));
+    let rows = parse_rest_table(&text).expect("the bundled rest table parses");
+    assert!(!rows.is_empty(), "the bundled rest table holds rows");
 }
 
 /// Nyx Calder, the Complete Package Netrunner starter (`cpr_adapter::starter_requests`), as the

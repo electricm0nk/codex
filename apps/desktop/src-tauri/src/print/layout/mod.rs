@@ -310,6 +310,8 @@ pub(crate) fn with_options(mut sheet: Vec<SheetBlock>, spellbook: impl FnOnce() 
     }
     if ticked.bio {
         sheet.push(blocks::bio_notes(sources));
+        // SD-43 E2.4 (`decisions.md §8`): the rest and recovery text after the bio page.
+        sheet.push(blocks::rest(sources).on_new_page());
     }
     if !ticked.main {
         sheet.drain(..main);

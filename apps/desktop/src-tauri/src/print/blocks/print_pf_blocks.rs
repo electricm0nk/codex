@@ -129,8 +129,8 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
-        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Progression", "", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 38 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Rest and Recovery", "Progression", "", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 39 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -2098,7 +2098,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
             ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
             ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
-            ("Bio", vec!["characterDetails"]),
+            ("Bio", vec!["characterDetails", "restAndRecovery"]),
             ("Progression", vec!["showProgression"]),
             ("Math", vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
         ];
@@ -3063,8 +3063,10 @@ fn print_pf_blocks_bio_prints_every_detail_then_notes_then_ruled_lines() {
         let pdf = render(&root, &printed);
         let pages = page_count(&pdf);
         let on_pages = pages_text(&pdf_text(&pdf), &document.title, pages);
-        let page = on_pages.last().expect("a page");
-        assert!(page.starts_with("Bio Details"), "{tag}: the Bio section is the last page, opening with the details: {page}");
+        // SD-43 E2.4: the Rest and Recovery block follows on the page after the details page.
+        let at = on_pages.iter().position(|page| page.starts_with("Bio Details")).unwrap_or_else(|| panic!("{tag}: a page opens with the details: {on_pages:?}"));
+        assert!(on_pages.last().is_some_and(|last| last.starts_with("Rest and Recovery")), "{tag}: the rest block is the last page: {on_pages:?}");
+        let page = &on_pages[at];
         let values = [
             "Lawful Good",
             "Iomedae",
@@ -3422,7 +3424,7 @@ fn print_pf_blocks_each_section_is_a_list() {
         (Section::Feats, Some("Abilities and Feats"), vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
         (Section::Inventory, Some("Inventory"), vec!["defense", "gear", "money"]),
         (Section::Spellbook, Some("Spellbook"), vec!["spellbook"]),
-        (Section::Bio, Some("Bio"), vec!["characterDetails"]),
+        (Section::Bio, Some("Bio"), vec!["characterDetails", "restAndRecovery"]),
         (Section::Progression, Some("Progression"), vec!["showProgression"]),
         (Section::Math, Some("Math"), vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
         (Section::Notes, Some("Notes"), vec!["notes"]),
@@ -3673,4 +3675,72 @@ fn print_pf_blocks_page1_speed_is_a_2x2_with_climb_dash() {
             assert_eq!((fact["columns"].as_u64(), fact["rows"].as_u64()), (Some(2), Some(2)), "{tag} {paper:?}: a 2×2 grid: {fact}");
         }
     }
+}
+
+/// SD-43 E2.4 (`decisions.md §8`): the Bio section ends with the Rest and Recovery block on a page
+/// after the details page. A Wizard 5 / Elf prints the table's rows for every Pathfinder character
+/// and the Wizard's rows, each with its book and page, and no other class's row; with the
+/// `custom.json` override set, the override's words print instead of the table's (whole-text
+/// replace, `decisions.md §30` Q-2.2). The expected rows are typed from the books here, not read
+/// back from the table.
+#[test]
+fn print_pf_blocks_rest_prints_the_wizard_elf_rows_after_the_bio_page_and_the_override_instead() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    let root = seeded("rest-wizard-elf", ELOWEN_ID);
+    let mut envelope = SavedCharacterStore::load(&root).expect("the seed's envelope loads");
+    envelope.character_input.chosen.race_id = "race:elf".to_owned();
+    SavedCharacterStore::save(&envelope, &root).expect("the elf saves");
+    let loaded = load_saved_character_at_root(&root).expect("the elf loads");
+    assert_eq!(loaded.summary.race_id, "race:elf");
+    assert!(loaded.summary.class_summary.split(',').any(|held| held.trim() == "class:wizard:5"), "a Wizard 5: {}", loaded.summary.class_summary);
+
+    let printed = PrintRequest { paper: Paper::Letter, sections: Some(only(Section::Bio)), campaigns: Vec::new() };
+    let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+    let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+    assert_eq!(ids, ["bioTitle", "characterDetails", "restAndRecovery"], "the rest block closes the Bio section");
+    let rest = &document.blocks[2];
+    assert_eq!(rest.heading, "Rest and Recovery");
+    let rows: Vec<(&str, Vec<&str>)> = rest.rows.iter().map(|row| (row.label.as_str(), row.notes.iter().map(String::as_str).collect())).collect();
+    assert_eq!(
+        rows,
+        [
+            ("Natural healing", vec!["With a full night's rest (8 hours of sleep or more), you recover 1 hit point per character level. Any significant interruption during your rest prevents you from healing that night.", "Core Rulebook, p.191"]),
+            ("Healing ability damage", vec!["Temporary ability damage returns at the rate of 1 point per night of rest (8 hours) for each affected ability score.", "Core Rulebook, p.191"]),
+            ("Wizard: rest", vec!["To prepare his daily spells, a wizard must first sleep for 8 hours.", "Core Rulebook, p.218"]),
+            ("Wizard: preparation time", vec!["After resting, a wizard must study his spellbook to prepare any spells that day. If he wants to prepare all his spells, the process takes 1 hour.", "Core Rulebook, p.218"]),
+        ],
+        "the Pathfinder rows, then the Wizard's; an Elf has no race row and no other class's row prints"
+    );
+
+    let pdf = render(&root, &printed);
+    if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+        std::fs::create_dir_all(&out).expect("the output dir is creatable");
+        std::fs::write(Path::new(&out).join("rest-wizard-elf-Letter.pdf"), &pdf).expect("the PDF writes");
+    }
+    let pages = page_count(&pdf);
+    let on_pages = pages_text(&pdf_text(&pdf), &document.title, pages);
+    let details = on_pages.iter().position(|page| page.starts_with("Bio Details")).expect("the details page");
+    let after = on_pages.iter().position(|page| page.starts_with("Rest and Recovery")).unwrap_or_else(|| panic!("a page opens with the rest block: {on_pages:?}"));
+    assert!(after > details, "the rest block prints after the bio page");
+    assert!(on_pages[after].contains("Core Rulebook, p.218"), "{}", on_pages[after]);
+    // The Biography tab's command reads the same rows (one source, two surfaces).
+    let command = super::rest::rest_text_at_root(&root).expect("the command reads");
+    assert_eq!(command.rows.iter().map(|row| row.rule.as_str()).collect::<Vec<_>>(), rows.iter().map(|(rule, _)| *rule).collect::<Vec<_>>());
+    assert_eq!((command.override_text, command.gap), (None, None));
+
+    let house = "At the Rusty Dragon a night's rest restores every hit point.\nSpells are prepared at dawn.";
+    let custom = crate::character_custom::CharacterCustomDto { rest_text: Some(house.to_owned()), ..load_character_custom_at_root(&root).expect("the custom loads") };
+    save_character_custom_at_root(&root, &custom, AT).expect("the override saves");
+    let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+    let rest = document.blocks.iter().find(|block| block.id == "restAndRecovery").expect("the rest block");
+    let notes: Vec<&str> = rest.rows.iter().flat_map(|row| row.notes.iter().map(String::as_str)).collect();
+    assert_eq!(notes, house.lines().collect::<Vec<_>>(), "the override replaces the table's text");
+    let command = super::rest::rest_text_at_root(&root).expect("the command reads");
+    assert_eq!((command.rows.len(), command.override_text.as_deref()), (0, Some(house)), "the command returns the override instead");
+    let pdf = render(&root, &printed);
+    if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+        std::fs::write(Path::new(&out).join("rest-override-Letter.pdf"), &pdf).expect("the PDF writes");
+    }
+    let text = pdf_text(&pdf);
+    assert!(text.contains("Spells are prepared at dawn.") && !text.contains("Core Rulebook, p.191"), "{text}");
 }

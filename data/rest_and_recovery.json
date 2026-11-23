@@ -1,0 +1,119 @@
+{
+  "about": "SD-43 E2.4 (decisions.md §8): the rest and recovery rules the Bio page and the Biography tab print, one row per rule, each row's text the book's words with its book and page. `applies` names who a row is for: `all` (every character of `system`), `class:<slug>` (a held class), `race:<slug>` (the character's race) or `trait:<record key>` (a held alternate racial trait). A row with `record` is quoted from that corpus record's description; a row without one is the book's chapter prose, which the corpus does not hold (E0.5 receipt, 'Does not cover'). No number is computed from this table: it is printed as text.",
+  "rows": [
+    {
+      "id": "pf1.all.natural_healing",
+      "system": "pf1",
+      "applies": ["all"],
+      "rule": "Natural healing",
+      "text": "With a full night's rest (8 hours of sleep or more), you recover 1 hit point per character level. Any significant interruption during your rest prevents you from healing that night.",
+      "book": "Core Rulebook",
+      "page": "p.191"
+    },
+    {
+      "id": "pf1.all.ability_damage",
+      "system": "pf1",
+      "applies": ["all"],
+      "rule": "Healing ability damage",
+      "text": "Temporary ability damage returns at the rate of 1 point per night of rest (8 hours) for each affected ability score.",
+      "book": "Core Rulebook",
+      "page": "p.191"
+    },
+    {
+      "id": "pf1.class.wizard.rest",
+      "system": "pf1",
+      "applies": ["class:wizard"],
+      "rule": "Wizard: rest",
+      "text": "To prepare his daily spells, a wizard must first sleep for 8 hours.",
+      "book": "Core Rulebook",
+      "page": "p.218"
+    },
+    {
+      "id": "pf1.class.wizard.preparation_time",
+      "system": "pf1",
+      "applies": ["class:wizard"],
+      "rule": "Wizard: preparation time",
+      "text": "After resting, a wizard must study his spellbook to prepare any spells that day. If he wants to prepare all his spells, the process takes 1 hour.",
+      "book": "Core Rulebook",
+      "page": "p.218"
+    },
+    {
+      "id": "pf1.class.sorcerer_bard.daily_readying",
+      "system": "pf1",
+      "applies": ["class:sorcerer", "class:bard"],
+      "rule": "Sorcerers and bards: daily readying of spells",
+      "text": "A sorcerer or bard needs 8 hours of rest (just like a wizard), after which she spends 15 minutes concentrating.",
+      "book": "Core Rulebook",
+      "page": "p.220"
+    },
+    {
+      "id": "pf1.class.divine.time_of_day",
+      "system": "pf1",
+      "applies": ["class:cleric", "class:druid", "class:paladin", "class:ranger"],
+      "rule": "Divine spellcasters: time of day",
+      "text": "A divine spellcaster chooses and prepares spells ahead of time, just as a wizard does. However, a divine spellcaster does not require a period of rest to prepare spells. Instead, the character chooses a particular time of day to pray and receive spells.",
+      "book": "Core Rulebook",
+      "page": "p.221"
+    },
+    {
+      "id": "pf1.class.barbarian.rage",
+      "system": "pf1",
+      "applies": ["class:barbarian"],
+      "rule": "Barbarian: rage",
+      "text": "The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive.",
+      "book": "Core Rulebook",
+      "page": "p.32",
+      "record": "data/corpus/core_rulebook/class_feature/barbarian/rage.json"
+    },
+    {
+      "id": "pf1.class.paladin.smite_evil",
+      "system": "pf1",
+      "applies": ["class:paladin"],
+      "rule": "Paladin: smite evil",
+      "text": "The Smite Evil effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.",
+      "book": "Core Rulebook",
+      "page": "p.60",
+      "record": "data/corpus/core_rulebook/class_feature/paladin/smite_evil.json"
+    },
+    {
+      "id": "pf1.class.bloodrager.bloodrage",
+      "system": "pf1",
+      "applies": ["class:bloodrager"],
+      "rule": "Bloodrager: bloodrage",
+      "text": "The total number of rounds of bloodrage per day is renewed after resting for 8 hours, although these hours don't need to be consecutive.",
+      "book": "Advanced Class Guide",
+      "page": "p.15",
+      "record": "data/corpus/advanced_class_guide/class_feature/bloodrager/bloodrage.json"
+    },
+    {
+      "id": "pf1.class.magus.arcane_pool",
+      "system": "pf1",
+      "applies": ["class:magus"],
+      "rule": "Magus: arcane pool",
+      "text": "The pool refreshes once per day when you prepare your spells.",
+      "book": "Ultimate Magic",
+      "page": "p.9",
+      "record": "data/corpus/ultimate_magic/class_feature/magus/arcane_pool.json"
+    },
+    {
+      "id": "pf1.class.kineticist.burn",
+      "system": "pf1",
+      "applies": ["class:kineticist"],
+      "rule": "Kineticist: burn",
+      "text": "This damage can't be healed by any means other than getting a full night's rest, which removes all burn and associated nonlethal damage.",
+      "book": "Occult Adventures",
+      "page": "p.11",
+      "record": "data/corpus/occult_adventures/class_feature/kineticist/burn.json"
+    },
+    {
+      "id": "pf1.trait.gnome_vivacious",
+      "system": "pf1",
+      "applies": ["trait:Gnome ~ Vivacious"],
+      "rule": "Gnome: vivacious",
+      "text": "These gnomes recover 50% more hit points (minimum 1) whenever they recover hit points from rest.",
+      "book": "Inner Sea Races",
+      "page": "p.211",
+      "record": "data/corpus/inner_sea_races/race_trait/gnome/gnome_vivacious.json"
+    }
+  ]
+}

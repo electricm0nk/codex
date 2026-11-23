@@ -340,6 +340,7 @@ fn main() {
             export_character_json,
             print::save_sheet_pdf,
             print::print_sheet_pdf,
+            print::blocks::rest::load_rest_text,
             export_character,
             import_character,
             import_pcg,

@@ -46,6 +46,7 @@
       "../../../data/class_feature_grants/": "data/class_feature_grants/",
       "../../../data/converted/record_vars.json": "data/converted/record_vars.json",
       "../../../data/equipment_types.json": "data/equipment_types.json",
+      "../../../data/rest_and_recovery.json": "data/rest_and_recovery.json",
       "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt",
       "../../../tests/fixtures/rules_core/multiclass_census_panel.json": "tests/fixtures/rules_core/multiclass_census_panel.json"
     },

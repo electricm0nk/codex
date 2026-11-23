@@ -53,6 +53,7 @@ pub mod race_creation;
 // race-trait records, the race-side sibling of `equipment_record`.
 pub mod race_record;
 pub mod record_vars;
+pub mod rest_text;
 pub mod race_resolver;
 pub mod racial_sla;
 // SD-37 E4a.1: the `rules_tables` data package (format, loader, schema, licence/PI stamp).

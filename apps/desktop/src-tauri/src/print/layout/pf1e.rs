@@ -58,7 +58,8 @@ const INVENTORY: &[Placed] = &[
     Placed::full("money", blocks::money),
 ];
 const SPELLBOOK: &[Placed] = &[Placed::full("spellbook", blocks::spellbook)];
-const BIO: &[Placed] = &[Placed::full("characterDetails", blocks::character_details)];
+// SD-43 E2.4 (`decisions.md §8`): the Rest and Recovery block follows the details page.
+const BIO: &[Placed] = &[Placed::full("characterDetails", blocks::character_details), Placed::full("restAndRecovery", blocks::rest)];
 const PROGRESSION: &[Placed] = &[Placed::full("showProgression", progression)];
 const NOTES: &[Placed] = &[Placed::full("notes", blocks::notes)];
 

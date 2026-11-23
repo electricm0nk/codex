@@ -395,14 +395,17 @@ mod print_sf {
         for (index, option) in OPTION_HEADINGS.iter().enumerate() {
             let one = request(Paper::A4, index == 0, index == 1, index == 2);
             let document = sheet_document_at_root(root, &one).expect("lays out");
-            assert_eq!(headings(&document).last().copied(), Some(*option), "{option} prints last");
+            // SD-43 E2.4: the Bio box ends with the Rest and Recovery block, after the bio page.
+            let last = if index == 2 { "Rest and Recovery" } else { *option };
+            assert_eq!(headings(&document).last().copied(), Some(last), "{option} prints last");
             assert!(pages(&one) > basic, "{option} adds a page");
         }
         let mut full = request(Paper::Letter, true, true, true);
         full.campaigns = vec![CampaignNote { name: "Drift Run".to_owned(), description: "Absalom Station to the Vast.".to_owned() }];
         let document = sheet_document_at_root(root, &full).expect("lays out");
         let heads = headings(&document);
-        assert_eq!(&heads[heads.len() - 3..], &OPTION_HEADINGS, "{heads:?}");
+        assert_eq!(&heads[heads.len() - 4..heads.len() - 1], &OPTION_HEADINGS, "{heads:?}");
+        assert_eq!(heads.last().copied(), Some("Rest and Recovery"), "{heads:?}");
         let spellbook = document.blocks.iter().find(|block| block.heading == "Spellbook").expect("Spellbook");
         let loaded = loaded(root);
         let spells: Vec<_> = loaded.sheet_lines.iter().filter(|line| line.kind == "spell").collect();

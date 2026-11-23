@@ -629,13 +629,16 @@ mod print_cpr {
         for (index, option) in OPTION_HEADINGS.iter().enumerate() {
             let one = request(Paper::A4, index == 0, index == 1, index == 2);
             let document = sheet_document_at_root(root, &one).expect("lays out");
-            assert_eq!(headings(&document).last().copied(), Some(*option), "{option} prints last");
+            // SD-43 E2.4: the Bio box ends with the Rest and Recovery block, after the bio page.
+            let last = if index == 2 { "Rest and Recovery" } else { *option };
+            assert_eq!(headings(&document).last().copied(), Some(last), "{option} prints last");
             assert!(pages(&one) > basic, "{option} adds a page");
         }
         let full = request(Paper::Letter, true, true, true);
         let document = sheet_document_at_root(root, &full).expect("lays out");
         let heads = headings(&document);
-        assert_eq!(&heads[heads.len() - 3..], &OPTION_HEADINGS, "{heads:?}");
+        assert_eq!(&heads[heads.len() - 4..heads.len() - 1], &OPTION_HEADINGS, "{heads:?}");
+        assert_eq!(heads.last().copied(), Some("Rest and Recovery"), "{heads:?}");
         let text = pdf_text(&render(root, &full));
         assert!(text.contains("cpr.derived.hit_points ="), "the math cites the Hit Points row: {text}");
         assert!(text.contains("No campaign lists this character."), "{text}");

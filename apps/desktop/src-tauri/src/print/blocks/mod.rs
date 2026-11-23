@@ -18,6 +18,7 @@ mod gear;
 mod math;
 mod notes;
 mod progression;
+pub mod rest;
 mod skills;
 mod spells;
 
@@ -30,6 +31,7 @@ pub use gear::{armor, inventory, money, weapons};
 pub use math::{breakdowns, math};
 pub use notes::notes;
 pub use progression::progression;
+pub use rest::rest;
 pub use skills::skills;
 pub use spells::{spellbook, spells};
 
