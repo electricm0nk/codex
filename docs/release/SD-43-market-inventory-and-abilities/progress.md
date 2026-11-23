@@ -125,6 +125,15 @@ window, the lane sweep's found/removed counts.)
 - **Retro (`scripts/retro.py summary --since 2026-11-22T11:38:24-05:00 --actor sd43-e5.1 … sd43-e5.4 --json`):** 4 events (incident 3, correction 1); key firing more than once: `files-you-own-not-closed` 2 (9 bundle-wide).
 - **Lane sweep:** found 1 (settings tree, `sd43/settings` branch, target dir); target dir removed before the receipt commit; tree and branch removed after the push (settings lane has no card left).
 
+### Epic report — E2 (E2.MC, 2026-11-23, work SHA `8b84bc240323d132d5eb996f41a0297b67455e3a`)
+
+- **Shipped (5 cards complete):** the PF sheet in a fixed `100dvh` frame, only the columns scroll, Show Progression always in view (E2.1); the same `SheetFrame` on the Starfinder and Cyberpunk RED sheets (E2.2); Open campaign passes the campaign folder, one full-width banner per campaign, Manager banner 160 → 100 px (E2.3); the cited rest-and-recovery table, `load_rest_text`, the print block after the bio page, the `custom.json` override field (E2.4); the rest text read-only under the Biography text (E2.5).
+- **Open in E2 (todo):** E2.6 (discovered here: no screen writes the rest override — decisions.md §8 "in the custom rules menu"). E2 is not closed until it is complete.
+- **Verified:** frontend 228/228 files; desktop crate 6 suites, 1,761 ok, 0 FAILED; root 301 suites, 6,912 passed, 0 FAILED; identifier + four-check audit over the branch: all OK (receipt).
+- **Looked at:** 8 images under `artifacts/epic_2/E2.MC/` — PF sheet and Biography rest text, CPR sheet, SF sheet (each at rest and centre-scrolled) at 1280×640; the PDF bio page and the rest block page (`pdftotext` excerpt in the receipt). Seen in passing: a literal `&nbsp;` in a Starfinder Biohacker feature text (retro `sheet-rules-html-entity-residue`, for the lead).
+- **Retro (E2 shards, `docs/retro/events/sd43-e2*.jsonl`):** 5 events before the MC (incident 4, correction 1), 7 after; key firing more than once: `files-you-own-not-closed` 3 (owes a non-zero-exit check in the lead's dispatch closure step — not built by the MC).
+- **Lane sweep:** found 1 (sheet tree, branch, target dir), removed 0 — sheet lane has E2.6, E3.*, E6.2–E6.4 left.
+
 ## Open blockers
 
 **A filed blocker pauses the work; it is never a closure path.** An entry here is a request for an operator
@@ -182,3 +191,4 @@ final-acceptance scan (E7.2), and only the operator may move blocked scope anywh
 | 2026-11-23 | E2.5 | r4 | complete | Biography tab shows the engine's rest text read-only below the field (`load_rest_text` via new `boundary/loadRestText.ts`, `RestTextPanel`); never part of `bio.biography`; RED TS2307 (no RestText module) -> GREEN; tsc clean, npm test 228/228; receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; SHA `74cb141f8877f85038de2c769aebf0808a75a4e0` |
 | 2026-11-23 | E2.MC | r4 | `test -f docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_2/E2.MC_cycle_receipt.md` (existence RED; deps E2.1-E2.5 complete) | 1 | receipt absent (`test -f` exit 1) | `git grep -n -e "rest block" -e "rest_text" -e "restText" -- apps src crates ':!*.json'` (character_custom.rs:170,273; character_hub.rs:11396; main.rs:343; print/blocks/rest.rs; print_pf_blocks.rs:3068,3700-3738) |
 | 2026-11-23 | E5.MC | r4 | complete | merge check: widest scope green on `e5b75764ac` (frontend 227/227, desktop 1,759 ok, root 6,909 ok, 0 FAILED); audits OK; 8 PNGs looked at (both report screens, Anonymous on, Developer tab + embedded diagnostic); no discovered card; receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` | `c33c636f736ede95f5e07c7a32b89c179dec2359` |
+| 2026-11-23 | E2.MC | r4 | complete | merge check: three sheets looked at 1280x640 (PF + Biography rest text, CPR, SF; each at rest and centre-scrolled); PDF bio page + rest block page (pdftotext pasted); rulings §8/§24 read against them; discovered E2.6 (no UI writes the rest override); SF `&nbsp;` residue seen (retro, for the lead); frontend 228/228, desktop 1,761 ok / 0 FAILED, root 301 suites 6,912 passed / 0 FAILED; audits OK; cards 61 → 62; receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; SHA `8b84bc240323d132d5eb996f41a0297b67455e3a` |

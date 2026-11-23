@@ -67,7 +67,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {print $5}' kanban.md | sort | uniq -c   # 56 tod
 | E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | complete | E0.5, E2.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; SHA `4caf5d7df78eb51fb7e62a6d2bbfa7c165d8fc5e` |
 | E2.5 | Rest text read-only under the Biography text | sonnet | complete | E2.4 | sheet | no | hub | receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; SHA `74cb141f8877f85038de2c769aebf0808a75a4e0` |
 | E2.6 | Rest-and-recovery override editor: the Custom dialog writes `custom.json` `restText` (decisions.md §8 "in the custom rules menu"); clearing it restores the table text — discovered by E2.MC | sonnet | todo | E2.5 | sheet | no | hub | discovered E2.MC (`artifacts/epic_2/E2.MC_cycle_receipt.md`, "Discovered cards"); retro key `dod-clause-without-owner-card` |
-| E2.MC | E2 merge check + epic report | opus | todo | E2.5 | sheet | yes (base build) | no | |
+| E2.MC | E2 merge check + epic report | opus | complete | E2.5 | sheet | yes (base build) | no | receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; SHA `8b84bc240323d132d5eb996f41a0297b67455e3a`; discovered E2.6 |
 | E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | Q-22.3 settled: rename |
 | E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | todo | E3.1 | sheet | yes (root + desktop) | hub | |
 | E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | todo | E3.2 | sheet | no | hub | |
