@@ -317,9 +317,10 @@ fn trait_options(package: &SheetRulePackage, input: &CharacterInput, base: &Pilo
         qualified: true,
         unmet: Vec::new(),
     }));
-    options.sort_by(|a, b| (&a.pool, &a.label, &a.id).cmp(&(&b.pool, &b.label, &b.id)));
     // Two books printing one slug resolve to one record (`SheetRulePackage::find`): offer it once.
+    options.sort_by(|a, b| a.id.cmp(&b.id));
     options.dedup_by(|a, b| a.id == b.id);
+    options.sort_by(|a, b| (&a.pool, &a.label, &a.id).cmp(&(&b.pool, &b.label, &b.id)));
     options
 }
 
@@ -390,5 +391,9 @@ mod tests {
         assert!(find("trait:trait_air_touched").qualified);
         assert_eq!(find("drawback:vain").pool, DRAWBACKS_POOL);
         assert_eq!(options.iter().filter(|o| o.pool == DRAWBACKS_POOL).count(), DRAWBACKS.len());
+        let mut ids: Vec<&str> = options.iter().map(|o| o.id.as_str()).collect();
+        ids.sort_unstable();
+        ids.dedup();
+        assert_eq!(ids.len(), options.len(), "a slug two books print is offered once");
     }
 }
