@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { SHEET_COLUMN_BOTTOM_PADDING } from './SheetFrame';
 
 /**
  * Declarative box placement for the character sheet and the Create screen (Brief 2 L0).
@@ -83,7 +84,21 @@ export const SHEET_LAYOUT: readonly LayoutBox<SheetBoxId, SheetStack>[] = [
   // Race, any alternate racial traits, Class.
   { id: 'classPanel', column: 'leftRail', order: 2, boxStyle: RAIL_BOX },
   { id: 'characterDetails', column: 'leftRail', order: 3, boxStyle: { minWidth: 0 } },
-  { id: 'showProgression', column: 'leftRail', order: 4, boxStyle: RAIL_BOX },
+  // Sticks to the bottom of the scrolling rail, so the button shows in full at any window height (SD-43 item 21).
+  {
+    id: 'showProgression',
+    column: 'leftRail',
+    order: 4,
+    // A sticky box stops at the scroller's padding edge; the negative offset covers that padding band too.
+    boxStyle: {
+      ...RAIL_BOX,
+      backgroundColor: 'var(--color-page)',
+      bottom: `calc(-1 * ${SHEET_COLUMN_BOTTOM_PADDING})`,
+      paddingBottom: `calc(${SHEET_COLUMN_BOTTOM_PADDING} + 0.5rem)`,
+      paddingTop: '0.5rem',
+      position: 'sticky',
+    },
+  },
   { id: 'squareBlock', column: 'combatRow', order: 0, boxStyle: { flex: `0 1 ${SQUARE_BLOCK_STYLE.maxWidth}`, minWidth: 0 } },
   { id: 'combatStrip', column: 'combatRow', order: 1, boxStyle: SHEET_REGION_STYLES.combatStrip },
   { id: 'armorClass', column: 'combatStrip', order: 0, boxStyle: TILE_ROW },

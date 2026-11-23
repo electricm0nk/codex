@@ -175,6 +175,7 @@ import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
 import { AppMenu } from '../layout/AppMenu';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
+import { SheetFrame } from './SheetFrame';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
@@ -4528,17 +4529,9 @@ export function CharacterSheet(props: {
   }
 
   return (
-    <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
-      {/* Top menu bar */}
-      <div
-        style={{
-          alignItems: 'center',
-          borderBottom: '2px solid var(--color-accent)',
-          display: 'flex',
-          gap: '1.5rem',
-          padding: '0.95rem 4rem 0.95rem 1.5rem',
-        }}
-      >
+    <SheetFrame
+      bar={
+        <>
         {/* Menu dropdown: the shared ☰ menu, Options last (decisions.md §24.10). */}
         <AppMenu items={menuItems} />
         <button
@@ -4552,20 +4545,12 @@ export function CharacterSheet(props: {
         <span style={{ fontWeight: 600 }}>
           {props.row.displayLabel} — {classLabel}
         </span>
-      </div>
-
-
-      {/* Body: collapsible left rail | identity + combat + tabs | abilities + skills */}
-      <div className="sheet-cols" style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
-        {/* LEFT: collapsible rail, separated by a vertical line */}
-        <div
-          className="sheet-left"
-          style={{
-            borderRight: '1px solid var(--color-border)',
-            flex: railCollapsed ? '0 0 34px' : '0 0 240px',
-            paddingRight: '0.75rem',
-          }}
-        >
+        </>
+      }
+      // Body: collapsible left rail | identity + combat + tabs | abilities + skills. Only these scroll (E2.1).
+      leftWidth={railCollapsed ? '34px' : '240px'}
+      left={
+        <>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: railCollapsed ? 'center' : 'space-between', marginBottom: '0.6rem' }}>
             {!railCollapsed ? (
               <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -4583,10 +4568,11 @@ export function CharacterSheet(props: {
           </div>
 
           {!railCollapsed ? <div style={SHEET_REGION_STYLES.leftRail}>{renderSheetRegion('leftRail')}</div> : null}
-        </div>
-
-        {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
-        <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
+        </>
+      }
+      // MIDDLE: stat panels on top, weapons/defense/gear at the bottom
+      centre={
+        <>
           <IdentityPanel name={props.row.displayLabel} campaign={campaignFieldText(campaignMemberships)} onEditCampaigns={() => setCampaignDialogOpen(true)} />
           {standInCampaigns(campaignMemberships).length > 0 ? (
             <div role="status" data-testid="sheet-stand-in-banner" className="no-print" style={{ ...panel, backgroundColor: 'var(--color-surface-2)', fontSize: '0.8rem', padding: '0.5rem 0.75rem' }}>
@@ -4639,14 +4625,12 @@ export function CharacterSheet(props: {
               {renderTabContent(tab)}
             </div>
           </div>
-        </div>
-
-        {/* RIGHT: Abilities, then Skills */}
-        <div className="sheet-right" style={SHEET_REGION_STYLES.rightColumn}>
-          {renderSheetRegion('rightColumn')}
-        </div>
-      </div>
-
+        </>
+      }
+      // RIGHT: Abilities, then Skills
+      rightWidth="300px"
+      right={renderSheetRegion('rightColumn')}
+    >
       {campaignDialogOpen ? (
         <CampaignMembershipDialog
           characterId={props.row.characterId}
@@ -4750,6 +4734,6 @@ export function CharacterSheet(props: {
         }}
         onSelect={(entry) => itemPickerConfig?.onSelect(entry)}
       />
-    </div>
+    </SheetFrame>
   );
 }

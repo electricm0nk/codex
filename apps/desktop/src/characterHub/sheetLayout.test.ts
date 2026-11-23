@@ -104,7 +104,8 @@ function verifiesTheSheetRendersEveryRegionFromTheRegistry() {
 function verifiesTheRailHeadingAndTheProgressionButton() {
   const source = readFileSync(new URL('./CharacterSheet.tsx', import.meta.url), 'utf8');
   assert(!/>\s*Progression\s*</.test(source), 'the left rail no longer carries a "Progression" heading');
-  const rail = source.slice(source.indexOf('className="sheet-left"'), source.indexOf('className="sheet-mid"'));
+  // The rail is SheetFrame's left slot (SD-43 E2.1).
+  const rail = source.slice(source.indexOf('left={'), source.indexOf('centre={'));
   assert(/>\s*Character Details\s*</.test(rail), 'the left-rail heading reads Character Details');
   assert(source.includes('Show Progression'), 'the rail offers Show Progression');
   assert(source.includes("dispatchProgressionDrawer({ type: 'open' })"), 'Show Progression opens its drawer; it is not a dead button');
