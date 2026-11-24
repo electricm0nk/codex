@@ -27,8 +27,8 @@
 use std::path::Path;
 
 use codex::rules_core::ability_budget::{
-    ability_budget, ability_options, favored_class_budget, favored_next_level, favored_pick_of, AbilityOption, SubTab, FAVORED_BONUS_POOL,
-    FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL,
+    ability_budget, ability_options, creation_choice_picks, creation_choice_swap, favored_class_budget, favored_next_level, favored_pick_of, AbilityOption, SubTab,
+    FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL,
 };
 use codex::rules_core::ability_prereqs;
 use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
@@ -98,6 +98,7 @@ fn racial_options(input: &CharacterInput) -> Result<(Vec<AbilityOptionDto>, Vec<
                 qualified: unmet.is_empty(),
                 unmet,
                 description: Some(alternate.description.clone()).filter(|d| !d.trim().is_empty()),
+                replaces: None,
             }
         })
         .collect();
@@ -180,6 +181,9 @@ pub struct AbilityOptionDto {
     pub unmet: Vec<String>,
     /// The record's rule text when the engine carries it.
     pub description: Option<String>,
+    /// The held pick this option replaces instead of taking room: another member of a level-1 selection pool a
+    /// creation choice fills renames that choice (E3.13, [`creation_choice_swap`]).
+    pub replaces: Option<String>,
 }
 
 impl From<AbilityOption> for AbilityOptionDto {
@@ -192,6 +196,7 @@ impl From<AbilityOption> for AbilityOptionDto {
             qualified: option.qualified,
             unmet: option.unmet,
             description: option.description,
+            replaces: None,
         }
     }
 }
@@ -222,11 +227,17 @@ pub(crate) fn list_ability_options_at_root(root: &Path, subtab: &str) -> Result<
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
     let base = compute_pilot_base_chassis(&input);
-    Ok(AbilityOptionsDto {
-        budget: map_explanations_dto(&budget_at_root(root, package, &input, subtab).explanation_rows()),
-        options: ability_options(package, &input, &base, subtab).into_iter().map(AbilityOptionDto::from).collect(),
-        selected: selected_ids(&input, subtab),
-    })
+    let mut selected = selected_ids(&input, subtab);
+    let mut options: Vec<AbilityOptionDto> = ability_options(package, &input, &base, subtab).into_iter().map(AbilityOptionDto::from).collect();
+    // A bloodline chosen at creation is its Class Features pool's pick (E3.13); another member replaces it.
+    if subtab == SubTab::ClassFeatures {
+        let chosen: Vec<String> = creation_choice_picks(package, &input).into_iter().map(|(id, _)| id).collect();
+        for option in &mut options {
+            option.replaces = chosen.iter().find(|held| **held != option.id && held.split_once(':').is_some_and(|(pool, _)| pool == option.pool)).cloned();
+        }
+        selected.extend(chosen);
+    }
+    Ok(AbilityOptionsDto { budget: map_explanations_dto(&budget_at_root(root, package, &input, subtab).explanation_rows()), options, selected })
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -262,7 +273,9 @@ pub(crate) fn add_ability_selection_at_root(
     let overrides = crate::character_custom::load_character_custom_at_root(root).map(|custom| custom.overrides).unwrap_or_default();
     let mut flags: Vec<OverrideFlag> = Vec::new();
     let budget = budget_at_root(root, package, &input, subtab);
-    if let Some(refusal) = budget.refusal(package, option_id) {
+    // A member of a level-1 selection pool a creation choice fills renames that choice (E3.13): the pool keeps one pick.
+    let swap = if subtab == SubTab::ClassFeatures { creation_choice_swap(package, &input, option_id) } else { None };
+    if let Some(refusal) = budget.refusal(package, option_id).filter(|_| swap.is_none()) {
         if !overrides.ignore_ability_budget {
             return Err(refusal);
         }
@@ -282,6 +295,11 @@ pub(crate) fn add_ability_selection_at_root(
     // Past the pool there is no grant to charge a pick to: it lands on the character's level.
     let character_level = input.chosen.class_levels.iter().map(|class| class.level).sum::<u8>().max(1);
     let admit = |id: &str| admitted_rows(id, &flags);
+    if let Some((old, new)) = swap {
+        return mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| {
+            input.chosen.selected_choices.iter_mut().filter(|c| **c == old).for_each(|c| *c = new.clone());
+        });
+    }
     match subtab {
         SubTab::Traits => mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| apply_add_trait_selection(input, option_id, None)),
         SubTab::ClassFeatures => {
@@ -345,12 +363,12 @@ pub(crate) fn remove_ability_selection_at_root(
         subtab @ (SubTab::ClassFeatures | SubTab::Background | SubTab::Misc) => {
             let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
             let held = |pick: &AbilitySelection| pick.subtab == subtab.id() && format!("{}:{}", pick.pool, pick.record_key) == option_id;
-            let at = input
-                .chosen
-                .ability_selections
-                .iter()
-                .rposition(held)
-                .ok_or_else(|| format!("This character does not hold '{option_id}'."))?;
+            let Some(at) = input.chosen.ability_selections.iter().rposition(held) else {
+                // A pick a creation choice holds (E3.13: the bloodline chosen at creation) is removed with its choice.
+                let chosen = if subtab == SubTab::ClassFeatures { creation_choice_picks(package()?, &input) } else { Vec::new() };
+                let (_, choice) = chosen.into_iter().find(|(id, _)| id == option_id).ok_or_else(|| format!("This character does not hold '{option_id}'."))?;
+                return mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.retain(|c| *c != choice));
+            };
             mutate_saved_character_at_root(root, saved_at, |input| {
                 input.chosen.ability_selections.remove(at);
             })
@@ -458,6 +476,49 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("remove");
         assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [second]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Sorcerer 1 chooses one bloodline (Core Rulebook, Sorcerer). The bloodline chosen at creation is the pool's
+    /// pick: listed as held, the pool full; picking another bloodline renames that creation choice, so the character
+    /// never holds two.
+    #[test]
+    fn abilities_class_features_a_sorcerer_1_holds_one_bloodline_and_a_second_renames_the_creation_choice() {
+        let root = aldric_root("sorcerer-bloodline");
+        let made = mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:sorcerer".to_owned(), level: 1 }];
+            input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:fighter_bonus_feat");
+            // The creation seeds: `choice:sorcerer_bloodline -> bloodline:arcane` and the arcane bond.
+            input.chosen.selected_choices.extend(codex::rules_core::class_seeds::canonical_seeds_for("sorcerer", 1).0);
+        })
+        .expect("make Aldric a Sorcerer 1 of the Arcane bloodline");
+        assert!(matches!(made, CreateCharacterResponse::Saved { .. }), "{made:?}");
+        let arcane = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_arcane_bloodline";
+        let draconic = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline";
+        let row = |rows: &[ExplanationDto], field: &str| {
+            rows.iter().find(|r| r.id == format!("abilities.budget.class_features.sorcerer_bloodline.{field}")).map(|r| r.value)
+        };
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        assert_eq!(row(&listed.budget, "granted"), Some(1));
+        assert_eq!(row(&listed.budget, "remaining"), Some(0));
+        assert_eq!(listed.selected, [arcane]);
+        let offered = listed.options.iter().find(|o| o.id == draconic).expect("draconic offered");
+        assert_eq!(offered.replaces.as_deref(), Some(arcane), "another bloodline replaces the creation one");
+        // Picking another bloodline renames the creation choice: one bloodline, the sheet's bloodline seam reads it.
+        let swapped = add_ability_selection_at_root(&root, "class_features", draconic, SAVED_AT).expect("the draconic bloodline");
+        assert!(matches!(swapped, CreateCharacterResponse::Saved { .. }), "{swapped:?}");
+        let saved = SavedCharacterStore::load(&root).expect("reload").character_input;
+        let bloodlines: Vec<&str> =
+            saved.chosen.selected_choices.iter().filter(|c| c.choice_set_id == "choice:sorcerer_bloodline").map(|c| c.selection_id.as_str()).collect();
+        assert_eq!(bloodlines, ["bloodline:draconic"]);
+        assert!(saved.chosen.ability_selections.is_empty(), "no second pick beside the choice");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        assert_eq!((listed.selected, row(&listed.budget, "remaining")), (vec![draconic.to_owned()], Some(0)));
+        // Removing it would leave a Sorcerer with no bloodline: the sheet refuses that save and the bloodline stays.
+        let removed = remove_ability_selection_at_root(&root, "class_features", draconic, SAVED_AT).expect("a response");
+        assert!(matches!(removed, CreateCharacterResponse::Blocked { .. }), "{removed:?}");
+        assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [draconic]);
         std::fs::remove_dir_all(&root).ok();
     }
 

@@ -80,6 +80,16 @@ const roomless = buildAbilitySubTabModel({
   qualifiedOnly: false,
 });
 assertEqual(roomless.available[0].addBlockedBy, 'No room in the traits pool: 2 of 7 spent, 0 remaining.', 'a full pool names its rows');
+// An option the engine says replaces the held pick (E3.13: another bloodline renames the creation choice) is live in a full pool.
+const swap = buildAbilitySubTabModel({
+  subtab: 'traits',
+  budget,
+  options: [{ ...option('trait:trait_bastard', 'Bastard', 'traits'), replaces: 'trait:trait_acrobat' }],
+  selectedIds: [],
+  search: '',
+  qualifiedOnly: false,
+});
+assertEqual(swap.available[0].addBlockedBy, null, 'a replacing option is not blocked for room');
 
 // Search and the Qualified filter.
 const searched = buildAbilitySubTabModel({ subtab: 'traits', budget, options, selectedIds: [], search: 'AXE', qualifiedOnly: false });

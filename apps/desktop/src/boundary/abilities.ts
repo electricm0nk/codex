@@ -22,6 +22,8 @@ export interface AbilityOptionDto {
   unmet: string[];
   /** The record's rule text when the engine carries it (Class Features). */
   description?: string | null;
+  /** The held pick this option replaces instead of taking room (Class Features: a bloodline renames the creation choice). */
+  replaces?: string | null;
 }
 
 export interface AbilityOptionsDto {

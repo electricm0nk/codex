@@ -90,7 +90,7 @@ export function buildAbilitySubTabModel(input: {
       const pool = pools.get(option.pool);
       const addBlockedBy = !option.qualified && input.allowUnqualified !== true
         ? option.unmet.join('; ') || 'The engine marks this option unqualified.'
-        : pool !== undefined && pool.remaining <= 0 && input.ignoreBudget !== true
+        : pool !== undefined && pool.remaining <= 0 && input.ignoreBudget !== true && !option.replaces
           ? `No room in the ${option.pool} pool: ${pool.spent} of ${pool.granted} spent, ${pool.remaining} remaining.`
           : null;
       return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, description: option.description ?? null, addBlockedBy };
