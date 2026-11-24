@@ -1700,8 +1700,21 @@ impl HeldSeed {
             skills: chosen.skill_allocations.iter().filter(|a| a.ranks > 0).map(|a| id_slug(&a.skill_id)).collect(),
             race_traits: Vec::new(),
             class_features: Vec::new(),
-            // A saved Class Features pick (Minor Magic) is held outright, so its own rules reach the sheet (E3.15).
-            rule_ids: chosen.ability_selections.iter().filter(|pick| pick.subtab == "class_features").map(|pick| pick.record_key.clone()).collect(),
+            // A saved Class Features pick (Minor Magic) is held outright, so its own rules reach the sheet (E3.15); a saved
+            // archetype is carried as its selection id, which `held_set` resolves to its record (E3.16).
+            rule_ids: chosen
+                .ability_selections
+                .iter()
+                .filter(|pick| pick.subtab == "class_features")
+                .map(|pick| pick.record_key.clone())
+                .chain(
+                    chosen
+                        .selected_choices
+                        .iter()
+                        .filter(|choice| choice.choice_set_id == crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID)
+                        .map(|choice| choice.selection_id.clone()),
+                )
+                .collect(),
         }
     }
 }
@@ -2421,6 +2434,47 @@ pub fn evaluate_expr_from_facts(e: &Expr, facts: &CharacterFacts) -> Rat {
 /// monster holds -- is never held: `applies` says whether THIS character may hold it, not that
 /// it does.
 pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts) -> HeldSet {
+    let held = held_set_skipping(package, seed, facts, &BTreeSet::new());
+    let replaced = replaced_joins(package, seed, facts, &held);
+    if replaced.is_empty() { held } else { held_set_skipping(package, seed, facts, &replaced) }
+}
+
+/// The rules the computation's class-feature explanations join to (`HeldSeed::class_features`) whose converted
+/// record says the held class no longer grants them: every grant from a held granter has a `when` that excludes
+/// (Bravery's `Fighter CF Bravery == 0` once a held archetype replaces it, E3.16). The explanation still prints its
+/// own "superseded" line; the replaced rule's sheet line and note leave.
+fn replaced_joins(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts, held: &HeldSet) -> BTreeSet<RuleId> {
+    let seed_classes = package.class_lines_held(&seed.classes);
+    let mut replaced = BTreeSet::new();
+    for (class, explanation_id) in &seed.class_features {
+        let crate::rules_core::sheet_line_join::JoinResult::Matched(id) =
+            crate::rules_core::sheet_line_join::rule_for_explanation(package, class, explanation_id)
+        else {
+            continue;
+        };
+        let Some(rule) = package.rule(&id) else { continue };
+        let ctx = EvalContext { holder_class: Some(class.clone()), ..Default::default() };
+        let ev = Evaluator::new(package, held, facts, ctx);
+        let mut from_held = rule
+            .granted_by
+            .iter()
+            .filter(|grant| match &grant.by {
+                Granter::Rule(g) => held.holds(g),
+                Granter::Class { id: c, at_level } => {
+                    seed_classes.iter().filter(|(held_class, _)| held_class == c).map(|(_, l)| *l).sum::<i64>() >= i64::from(*at_level)
+                }
+                _ => false,
+            })
+            .peekable();
+        if from_held.peek().is_some() && from_held.all(|grant| ev.applies(&grant.when) == Gate::Exclude) {
+            replaced.insert(id);
+        }
+    }
+    replaced
+}
+
+/// [`held_set`], with the class-feature joins in `skip` left out of the seed.
+fn held_set_skipping(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts, skip: &BTreeSet<RuleId>) -> HeldSet {
     let mut held = HeldSet::default();
     let add = |held: &mut HeldSet, id: &RuleId, entry: HeldRule| {
         if !held.rules.contains_key(id) {
@@ -2466,13 +2520,15 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     for (class, explanation_id) in &seed.class_features {
         if let crate::rules_core::sheet_line_join::JoinResult::Matched(id) =
             crate::rules_core::sheet_line_join::rule_for_explanation(package, class, explanation_id)
+            && !skip.contains(&id)
         {
             add(&mut held, &id, HeldRule { holder_class: Some(class.clone()), ..Default::default() });
         }
     }
+    // A rule id is held as is; an archetype selection id (`archetype:<KEY>`) through its record.
     for id in &seed.rule_ids {
-        if package.rule(id).is_some() {
-            add(&mut held, id, HeldRule::default());
+        if let Some(rule) = crate::rules_core::ability_budget::archetype_record(package, id) {
+            add(&mut held, &rule.id, HeldRule::default());
         }
     }
 
@@ -3877,6 +3933,28 @@ mod evaluate_tests {
         let base = compute_pilot_base_chassis(&input);
         let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
         assert!(held.rules.contains_key(minor_magic), "the sheet holds the saved Minor Magic pick");
+    }
+
+    /// E3.16: a saved archetype (`choice:archetype`, `archetype:<KEY>`) is held by the sheet's own held set, so the
+    /// class feature its record replaces (Two-Handed Fighter replaces Bravery) leaves the sheet and the print.
+    #[test]
+    fn held_archetype_reaches_the_sheet_held_set() {
+        use crate::rules_core::character_input::SelectedChoice;
+        let two_handed = "advanced_players_guide:class_feature:fighter_archetype_two_handed_fighter";
+        let bravery = "core_rulebook:class_feature:fighter_bravery";
+        let fixture = crate::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = crate::rules_core::class_seeds::input_for(&fixture, "fighter", 2);
+        let base = compute_pilot_base_chassis(&input);
+        let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
+        assert!(held.rules.contains_key(bravery), "a Fighter 2 with no archetype holds Bravery");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:archetype".to_owned(),
+            selection_id: "archetype:Fighter Archetype ~ Two-Handed Fighter".to_owned(),
+        });
+        let base = compute_pilot_base_chassis(&input);
+        let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
+        assert!(held.rules.contains_key(two_handed), "the sheet holds the saved Two-Handed Fighter archetype");
+        assert!(!held.rules.contains_key(bravery), "Two-Handed Fighter replaces Bravery: no Bravery line or note");
     }
 }
 

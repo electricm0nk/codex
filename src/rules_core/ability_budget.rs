@@ -318,20 +318,19 @@ fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
 /// Racial Abilities or Traits sub-tab. A choice about a companion (its status, a trick) is the
 /// character's pick, so it is here.
 fn class_feature_grants(package: &SheetRulePackage, input: &CharacterInput) -> BTreeMap<String, (i64, Vec<String>)> {
-    class_feature_grants_holding(package, input, &picked_rules(package, input), SubTab::ClassFeatures)
+    class_feature_grants_holding(package, input, &picked_rules(input), SubTab::ClassFeatures)
 }
 
-/// The records of the Background and Misc picks and the archetypes `input` saves. A pick is held: a member
-/// whose prerequisite is another pick reads it, and a pick that grants a pool grants it; an archetype's record is
-/// what the class features it replaces read. Class Features picks are held by `HeldSeed::from_record` itself (E3.15).
-fn picked_rules(package: &SheetRulePackage, input: &CharacterInput) -> Vec<String> {
+/// The records of the Background and Misc picks `input` saves. A pick is held: a member whose prerequisite is
+/// another pick reads it, and a pick that grants a pool grants it. Class Features picks (E3.15) and archetypes
+/// (E3.16) are held by `HeldSeed::from_record` itself.
+fn picked_rules(input: &CharacterInput) -> Vec<String> {
     input
         .chosen
         .ability_selections
         .iter()
         .filter(|pick| [SubTab::Background, SubTab::Misc].iter().any(|subtab| pick.subtab == subtab.id()))
         .map(|pick| pick.record_key.clone())
-        .chain(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()))
         .collect()
 }
 
@@ -444,7 +443,7 @@ pub(crate) fn selection_pool<'a>(package: &SheetRulePackage, rule: &'a SheetRule
 pub fn creation_choice_picks(package: &SheetRulePackage, input: &CharacterInput) -> Vec<(String, SelectedChoice)> {
     let base = compute_pilot_base_chassis(input);
     let mut seed = HeldSeed::from_character(input, &base);
-    seed.rule_ids.extend(picked_rules(package, input));
+    seed.rule_ids.extend(picked_rules(input));
     let facts = CharacterFacts::from_character(input, &base);
     let held = held_set(package, &seed, &facts);
     link_path_a_picks(package, &held, &facts)
@@ -541,7 +540,7 @@ fn category_member(category: &AbilityCategory, rule: &SheetRule) -> bool {
 /// The Background or Misc budget: a pool per category the held rules (and picks) grant into, an editable
 /// pool none, every pick charged to its pool.
 fn category_budget(package: &SheetRulePackage, input: &CharacterInput, subtab: SubTab) -> AbilityBudget {
-    let grants = class_feature_grants_holding(package, input, &picked_rules(package, input), subtab);
+    let grants = class_feature_grants_holding(package, input, &picked_rules(input), subtab);
     let picks: Vec<_> = input.chosen.ability_selections.iter().filter(|pick| pick.subtab == subtab.id()).collect();
     let mut pools: BTreeMap<String, AbilityPool> = BTreeMap::new();
     for (id, (granted, labels)) in grants {
@@ -574,7 +573,7 @@ fn category_budget(package: &SheetRulePackage, input: &CharacterInput, subtab: S
 /// The members of every Background or Misc category this character has a pool in (granted, editable, or
 /// holding a pick), each with whether its own gate is met. Two printings of one name are offered once.
 fn category_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation, subtab: SubTab) -> Vec<AbilityOption> {
-    let picked = picked_rules(package, input);
+    let picked = picked_rules(input);
     let grants = class_feature_grants_holding(package, input, &picked, subtab);
     let shown: Vec<&AbilityCategory> = ability_categories()
         .iter()
@@ -828,7 +827,7 @@ fn archetype_records<'a>(package: &'a SheetRulePackage, keys: &BTreeMap<String, 
 }
 
 /// The record an archetype selection names: a record id as is, a (prefixed) corpus key through its record's slug.
-fn archetype_record<'a>(package: &'a SheetRulePackage, selection: &str) -> Option<&'a SheetRule> {
+pub(crate) fn archetype_record<'a>(package: &'a SheetRulePackage, selection: &str) -> Option<&'a SheetRule> {
     if let Some(rule) = package.rule(selection) {
         return Some(rule);
     }
@@ -926,8 +925,7 @@ fn archetype_budget(package: &SheetRulePackage, input: &CharacterInput) -> Abili
 /// record names no replaced feature is read through its own converted gate instead (the held archetypes
 /// held), which carries the corpus's exclusions and prerequisites.
 fn archetype_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<AbilityOption> {
-    let mut seed = HeldSeed::from_character(input, base);
-    seed.rule_ids.extend(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()));
+    let seed = HeldSeed::from_character(input, base);
     let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
     let held_set = held_set(package, &seed, &facts);
     let classes: Vec<String> = input.chosen.class_levels.iter().map(|class| id_slug(&class.class_id)).collect();
@@ -1038,7 +1036,7 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
         }
     }
     let mut seed = HeldSeed::from_character(input, base);
-    seed.rule_ids.extend(picked_rules(package, input));
+    seed.rule_ids.extend(picked_rules(input));
     let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
