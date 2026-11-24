@@ -1076,7 +1076,9 @@ async function runCard(c) {
     const red = await agent(redPrompt(c), { model: 'sonnet', label: `red:${c.id}`, phase: c.phase, schema: RED_SCHEMA })
     if (!red) return { id: c.id, status: 'red-failed', why: 'RED agent returned nothing' }
     if (red.diskFreeGb < 24) return { id: c.id, status: 'stopped-disk', why: `${red.diskFreeGb} GB free < 24 GB` }
-    if (red.exitCode === 0) return { id: c.id, status: 'declined', why: `RED exited 0: ${red.command}` }
+    // a cargo filter that matches 0 tests exits 0 but is a FAIL by the prefix rule (run 7, E3.11)
+    const zeroTests = /running 0 tests|\b0 passed; 0 failed/.test(red.failingLine || '')
+    if (red.exitCode === 0 && !zeroTests) return { id: c.id, status: 'declined', why: `RED exited 0: ${red.command}` }
     if (!red.logged) return { id: c.id, status: 'red-failed', why: 'RED not logged in progress.md' }
     log(`${c.id}: RED exit ${red.exitCode} — dispatching on ${c.tier}`)
     const r = await agent(implPrompt(c, red), { model: c.tier, label: c.id, phase: c.phase, schema: IMPL_SCHEMA })  // no isolation: run 1 showed worktree isolation blocks the lane tree
