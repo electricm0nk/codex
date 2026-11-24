@@ -321,15 +321,15 @@ fn class_feature_grants(package: &SheetRulePackage, input: &CharacterInput) -> B
     class_feature_grants_holding(package, input, &picked_rules(package, input), SubTab::ClassFeatures)
 }
 
-/// The records of the Class Features, Background and Misc picks and the archetypes `input` saves. A pick is held: a member
-/// whose prerequisite is another pick (Major Magic after Minor Magic) reads it, and a pick that grants a
-/// pool grants it; an archetype's record is what the class features it replaces read.
+/// The records of the Background and Misc picks and the archetypes `input` saves. A pick is held: a member
+/// whose prerequisite is another pick reads it, and a pick that grants a pool grants it; an archetype's record is
+/// what the class features it replaces read. Class Features picks are held by `HeldSeed::from_record` itself (E3.15).
 fn picked_rules(package: &SheetRulePackage, input: &CharacterInput) -> Vec<String> {
     input
         .chosen
         .ability_selections
         .iter()
-        .filter(|pick| [SubTab::ClassFeatures, SubTab::Background, SubTab::Misc].iter().any(|subtab| pick.subtab == subtab.id()))
+        .filter(|pick| [SubTab::Background, SubTab::Misc].iter().any(|subtab| pick.subtab == subtab.id()))
         .map(|pick| pick.record_key.clone())
         .chain(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()))
         .collect()

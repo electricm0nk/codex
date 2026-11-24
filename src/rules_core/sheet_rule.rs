@@ -1700,7 +1700,8 @@ impl HeldSeed {
             skills: chosen.skill_allocations.iter().filter(|a| a.ranks > 0).map(|a| id_slug(&a.skill_id)).collect(),
             race_traits: Vec::new(),
             class_features: Vec::new(),
-            rule_ids: Vec::new(),
+            // A saved Class Features pick (Minor Magic) is held outright, so its own rules reach the sheet (E3.15).
+            rule_ids: chosen.ability_selections.iter().filter(|pick| pick.subtab == "class_features").map(|pick| pick.record_key.clone()).collect(),
         }
     }
 }
@@ -3856,6 +3857,26 @@ mod evaluate_tests {
                 "{rel}: an ungated FactGrant row must serialize byte-for-byte unchanged now that GatedFactGrant exists"
             );
         }
+    }
+
+    /// E3.15: a saved Class Features pick is held by the sheet's own held set, so its rules reach the sheet and the
+    /// print -- not only the Class Features options (`ability_budget`).
+    #[test]
+    fn rogue_minor_magic_pick_is_held_by_the_sheet() {
+        use crate::rules_core::character_input::AbilitySelection;
+        let minor_magic = "core_rulebook:class_feature:rogue_talent_minor_magic";
+        let fixture = crate::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = crate::rules_core::class_seeds::input_for(&fixture, "rogue", 4);
+        input.chosen.ability_selections.push(AbilitySelection {
+            subtab: "class_features".to_owned(),
+            pool: "rogue_talent".to_owned(),
+            record_key: minor_magic.to_owned(),
+            level: 2,
+            target: None,
+        });
+        let base = compute_pilot_base_chassis(&input);
+        let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
+        assert!(held.rules.contains_key(minor_magic), "the sheet holds the saved Minor Magic pick");
     }
 }
 
