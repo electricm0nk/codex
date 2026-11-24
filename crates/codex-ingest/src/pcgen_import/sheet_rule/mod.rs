@@ -882,6 +882,9 @@ pub struct Run {
     pub tokens: TokenCensus,
     pub defects: BTreeMap<String, Vec<String>>,
     pub report: Report,
+    /// SD-43 E3.14: pool -> member filter, for the granted pools whose grants carry no `offers`
+    /// (`pool_link::pool_member_filters`); written as `_pool_members.json` when not empty.
+    pub pool_members: BTreeMap<String, pool_link::PoolMembers>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
@@ -1533,7 +1536,8 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     report.rules_written = files.values().map(|v| v.len()).sum();
     report.var_tables = vars.len();
     report.refused_by_token_type = refused.by_token_type.clone();
-    Run { files, vars, var_names, refused, tokens: census, defects, report }
+    let pool_members = pool_link::pool_member_filters(&pool_link::category_declarations(tree), |parent, key| ctx::resolve_rule_in(tree, index, parent, key), &files);
+    Run { files, vars, var_names, refused, tokens: census, defects, report, pool_members }
 }
 
 // ---- output -----------------------------------------------------------------------------------
@@ -1607,6 +1611,9 @@ pub fn render(run: &Run) -> BTreeMap<String, Vec<u8>> {
         out.insert(format!("_defects/{kind}.json"), json_colon_escaped(lines));
     }
     out.insert("_report.json".into(), json_colon_escaped(&run.report));
+    if !run.pool_members.is_empty() {
+        out.insert("_pool_members.json".into(), json_colon_escaped(&run.pool_members));
+    }
     out
 }
 
@@ -1791,6 +1798,7 @@ mod check_tests {
             tokens: TokenCensus::default(),
             defects: BTreeMap::new(),
             report: Report::default(),
+            pool_members: BTreeMap::new(),
         };
         // Never created, never written to -- `read_output` treats a missing directory as empty,
         // exactly like a fresh checkout before the first `sheet_rule_convert` run.

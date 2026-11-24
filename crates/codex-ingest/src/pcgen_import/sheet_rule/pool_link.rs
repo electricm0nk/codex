@@ -196,6 +196,86 @@ pub fn link_pool_choices(views: &BTreeMap<String, (String, Vec<String>)>, files:
     out
 }
 
+/// The member filter of a child ability category whose picks carry no `offers` (`_pool_members.json`).
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct PoolMembers {
+    /// The records of this package pool (the parent category's slug) ...
+    pub member_pool: String,
+    /// ... carrying ANY of these tags (case-insensitive): `TYPE:A.B` is either type
+    /// (`AbilityCategory.populate`), which `OptionSet::Rules` (every tag) cannot say ...
+    pub any_tags: Vec<String>,
+    /// ... and every rule its `ABILITYLIST:` names, resolved to converted ids.
+    pub rules: Vec<String>,
+}
+
+/// Every `ABILITYCATEGORY:` declaration with a parent: slug -> (parent name, `TYPE:` tags, `ABILITYLIST:` keys).
+pub type CategoryDeclarations = BTreeMap<String, CategoryDeclaration>;
+/// One declaration: (parent name, `TYPE:` tags, `ABILITYLIST:` keys).
+pub type CategoryDeclaration = (String, Vec<String>, Vec<String>);
+
+/// The [`CategoryDeclarations`] of `tree`.
+/// Declarations of one slug merge (tags and keys unite); one slug declared under two parents is left out.
+pub fn category_declarations(tree: &PinnedTree) -> CategoryDeclarations {
+    let mut out: BTreeMap<String, Option<CategoryDeclaration>> = BTreeMap::new();
+    for file in tree.files.iter().filter(|f| !f.is_pfs) {
+        for raw in &file.lines {
+            let (head, tokens) = super::closure::tokenize_row(raw);
+            let Some(name) = head.trim().strip_prefix("ABILITYCATEGORY:").map(str::trim).filter(|n| !n.is_empty()) else { continue };
+            let token = |key: &'static str| tokens.iter().filter(move |(k, _)| k.eq_ignore_ascii_case(key)).map(|(_, v)| v.trim());
+            let Some(parent) = token("CATEGORY").next().filter(|p| !p.is_empty() && !p.eq_ignore_ascii_case(name)) else { continue };
+            let tags: Vec<String> = token("TYPE").flat_map(|v| v.split('.')).map(str::trim).filter(|t| !t.is_empty() && *t != "*").map(str::to_string).collect();
+            let keys: Vec<String> = token("ABILITYLIST").flat_map(|v| v.split('|')).map(str::trim).filter(|k| !k.is_empty()).map(str::to_string).collect();
+            let entry = out.entry(slug(name)).or_insert_with(|| Some((parent.to_string(), Vec::new(), Vec::new())));
+            match entry {
+                Some((p, t, k)) if p.eq_ignore_ascii_case(parent) => {
+                    t.extend(tags.into_iter().filter(|x| !t.contains(x)).collect::<Vec<_>>());
+                    k.extend(keys.into_iter().filter(|x| !k.contains(x)).collect::<Vec<_>>());
+                }
+                _ => *entry = None,
+            }
+        }
+    }
+    out.into_iter().filter_map(|(k, v)| v.map(|v| (k, v))).collect()
+}
+
+/// SD-43 E3.14: the member filter of every pool a converted rule grants (a positive `Pool` target) whose
+/// grants carry no `offers` -- a `TYPE:A.B` category (either type) or an `ABILITYLIST:` one, which the
+/// single-`Rules` offer [`link_pool_choices`] writes cannot express. `resolve(parent, key)` names the
+/// converted rule an `ABILITYLIST:` key is; a key it cannot name is left out (never guessed). A pool whose
+/// name is itself a parent category, or whose filter is empty, is left out.
+pub fn pool_member_filters(
+    decls: &CategoryDeclarations,
+    resolve: impl Fn(&str, &str) -> Option<String>,
+    files: &BTreeMap<String, Vec<SheetRule>>,
+) -> BTreeMap<String, PoolMembers> {
+    use codex::rules_core::sheet_rule::BonusTarget;
+    let rules = || files.values().flatten();
+    let own_pools: std::collections::BTreeSet<&str> = rules().filter(|r| !r.id.contains('#')).map(|r| r.pool.as_str()).collect();
+    // pool -> (granted a positive count, some grant offers)
+    let mut grants: BTreeMap<&str, (bool, bool)> = BTreeMap::new();
+    for rule in rules() {
+        let (Some(BonusTarget::Pool(pool)), SheetValue::Number(count)) = (&rule.target, &rule.value) else { continue };
+        let entry = grants.entry(pool.as_str()).or_default();
+        entry.0 |= !matches!(count, Expr::Const(n) if *n <= 0);
+        entry.1 |= rule.offers.is_some();
+    }
+    let mut out = BTreeMap::new();
+    for (pool, (positive, offered)) in grants {
+        let Some((parent, tags, keys)) = decls.get(pool) else { continue };
+        if !positive || offered || own_pools.contains(pool) {
+            continue;
+        }
+        let mut members: Vec<String> = keys.iter().filter_map(|key| resolve(parent, key)).collect();
+        members.sort();
+        members.dedup();
+        if tags.is_empty() && members.is_empty() {
+            continue;
+        }
+        out.insert(pool.to_string(), PoolMembers { member_pool: slug(parent), any_tags: tags.clone(), rules: members });
+    }
+    out
+}
+
 /// SD-36 F6c: a `BONUS:DOMAIN|NUMBER` count on a CLASS record whose class grants its domains
 /// itself -- some domain record carries that class's own automatic grant (`Granter::Class`, the
 /// class's `DOMAIN:` rows) -- is the oracle's slot for those grants, not a pick the player makes:
@@ -326,6 +406,46 @@ mod tests {
             assert_eq!(offers(id), None, "{id}");
         }
         assert_eq!(offers("b:class_feature:offering_pick").map(|c| c.from), Some(OptionSet::FreeText));
+    }
+
+    /// SD-43 E3.14: a granted pool with no offer keeps its category's filter -- `TYPE:A.B` as either tag, an
+    /// `ABILITYLIST:` key as its resolved rule; an offered pool, an ungranted one, a parent-named one and a
+    /// key that resolves to nothing are left out.
+    #[test]
+    fn a_granted_pool_with_no_offer_keeps_its_category_member_filter() {
+        let n = |v: i32| SheetValue::Number(Expr::Const(v));
+        let pool = |p: &str| Some(BonusTarget::Pool(p.into()));
+        let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
+        for r in [
+            rule("b:class_feature:flame#bonus1", "special_ability", &[], SheetValue::Number(Expr::Var("v".into())), pool("fx_flame")),
+            rule("b:class_feature:listed", "special_ability", &[], n(1), pool("fx_listed")),
+            rule("b:class_feature:spend", "special_ability", &[], n(-1), pool("fx_spent")),
+            rule("b:class_feature:parent", "special_ability", &[], n(1), pool("special_ability")),
+        ] {
+            files.insert(r.id.clone(), vec![r]);
+        }
+        let mut offering = rule("b:class_feature:offering", "special_ability", &[], n(1), pool("fx_offered"));
+        offering.offers = Some(Choice { id: offering.id.clone(), count: Expr::Const(1), from: OptionSet::FreeText });
+        files.insert(offering.id.clone(), vec![offering]);
+        let decl = |tags: &[&str], keys: &[&str]| ("Special Ability".to_string(), tags.iter().map(|t| t.to_string()).collect(), keys.iter().map(|k| k.to_string()).collect());
+        let decls: CategoryDeclarations = [
+            ("fx_flame", decl(&["FlameRevelation", "GeneralRevelation"], &[])),
+            ("fx_listed", decl(&[], &["Known Key", "Unknown Key"])),
+            ("fx_spent", decl(&["Spent"], &[])),
+            ("fx_offered", decl(&["Offered"], &[])),
+            ("special_ability", decl(&["Any"], &[])),
+        ]
+        .into_iter()
+        .map(|(k, v)| (k.to_string(), v))
+        .collect();
+        let resolve = |parent: &str, key: &str| (parent == "Special Ability" && key == "Known Key").then(|| "b:class_feature:known".to_string());
+        let out = pool_member_filters(&decls, resolve, &files);
+        assert_eq!(out.keys().collect::<Vec<_>>(), ["fx_flame", "fx_listed"]);
+        assert_eq!(
+            out["fx_flame"],
+            PoolMembers { member_pool: "special_ability".into(), any_tags: vec!["FlameRevelation".into(), "GeneralRevelation".into()], rules: Vec::new() }
+        );
+        assert_eq!(out["fx_listed"].rules, ["b:class_feature:known"]);
     }
 
     /// SD-36 F6c: a class's domain count is withheld exactly when a domain record carries that

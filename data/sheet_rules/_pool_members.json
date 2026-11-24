@@ -1,0 +1,1610 @@
+{
+  "0_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard0",
+      "MetaLevel0"
+    ],
+    "rules": []
+  },
+  "0_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor0",
+      "MetaLevel0"
+    ],
+    "rules": []
+  },
+  "0_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle0",
+      "MetaLevel0"
+    ],
+    "rules": []
+  },
+  "0_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer0",
+      "MetaLevel0"
+    ],
+    "rules": []
+  },
+  "0_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner0",
+      "MetaLevel0"
+    ],
+    "rules": []
+  },
+  "1st_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard1",
+      "MetaLevel1"
+    ],
+    "rules": []
+  },
+  "1st_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor1",
+      "MetaLevel1"
+    ],
+    "rules": []
+  },
+  "1st_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle1",
+      "MetaLevel1"
+    ],
+    "rules": []
+  },
+  "1st_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer1",
+      "MetaLevel1"
+    ],
+    "rules": []
+  },
+  "1st_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner1",
+      "MetaLevel1"
+    ],
+    "rules": []
+  },
+  "2_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoost2",
+      "AbilityScoreNegative2"
+    ],
+    "rules": []
+  },
+  "2_mental_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoostMental2",
+      "AbilityScoreNegativeMental2"
+    ],
+    "rules": []
+  },
+  "2_physical_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoostPhysical2",
+      "AbilityScoreNegativePhysical2"
+    ],
+    "rules": []
+  },
+  "2_profane_bonus_to_stat": {
+    "member_pool": "internal",
+    "any_tags": [
+      "+2 Profane Bonus to Stat"
+    ],
+    "rules": []
+  },
+  "2nd_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard2",
+      "MetaLevel2"
+    ],
+    "rules": []
+  },
+  "2nd_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor2",
+      "MetaLevel2"
+    ],
+    "rules": []
+  },
+  "2nd_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle2",
+      "MetaLevel2"
+    ],
+    "rules": []
+  },
+  "2nd_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer2",
+      "MetaLevel2"
+    ],
+    "rules": []
+  },
+  "2nd_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner2",
+      "MetaLevel2"
+    ],
+    "rules": []
+  },
+  "3rd_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard3",
+      "MetaLevel3"
+    ],
+    "rules": []
+  },
+  "3rd_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor3",
+      "MetaLevel3"
+    ],
+    "rules": []
+  },
+  "3rd_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle3",
+      "MetaLevel3"
+    ],
+    "rules": []
+  },
+  "3rd_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer3",
+      "MetaLevel3"
+    ],
+    "rules": []
+  },
+  "3rd_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner3",
+      "MetaLevel3"
+    ],
+    "rules": []
+  },
+  "4_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoost4",
+      "AbilityScoreNegative4"
+    ],
+    "rules": []
+  },
+  "4_mental_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoostMental4",
+      "AbilityScoreNegativeMental4"
+    ],
+    "rules": []
+  },
+  "4_physical_ability_selection": {
+    "member_pool": "builder",
+    "any_tags": [
+      "AbilityScoreBoostPhysical4",
+      "AbilityScoreNegativePhysical4"
+    ],
+    "rules": []
+  },
+  "4th_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard4",
+      "MetaLevel4"
+    ],
+    "rules": []
+  },
+  "4th_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor4",
+      "MetaLevel4"
+    ],
+    "rules": []
+  },
+  "4th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle4",
+      "MetaLevel4"
+    ],
+    "rules": []
+  },
+  "4th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer4",
+      "MetaLevel4"
+    ],
+    "rules": []
+  },
+  "4th_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner4",
+      "MetaLevel4"
+    ],
+    "rules": []
+  },
+  "5th_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard5",
+      "MetaLevel5"
+    ],
+    "rules": []
+  },
+  "5th_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor5",
+      "MetaLevel5"
+    ],
+    "rules": []
+  },
+  "5th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle5",
+      "MetaLevel5"
+    ],
+    "rules": []
+  },
+  "5th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer5",
+      "MetaLevel5"
+    ],
+    "rules": []
+  },
+  "5th_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner5",
+      "MetaLevel5"
+    ],
+    "rules": []
+  },
+  "6th_level_bard_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Bard6",
+      "MetaLevel6"
+    ],
+    "rules": []
+  },
+  "6th_level_inquisitor_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Inquisitor6",
+      "MetaLevel6"
+    ],
+    "rules": []
+  },
+  "6th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle6",
+      "MetaLevel6"
+    ],
+    "rules": []
+  },
+  "6th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer6",
+      "MetaLevel6"
+    ],
+    "rules": []
+  },
+  "6th_level_summoner_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Summoner6",
+      "MetaLevel6"
+    ],
+    "rules": []
+  },
+  "7th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle7",
+      "MetaLevel7"
+    ],
+    "rules": []
+  },
+  "7th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer7",
+      "MetaLevel7"
+    ],
+    "rules": []
+  },
+  "8th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle8",
+      "MetaLevel8"
+    ],
+    "rules": []
+  },
+  "8th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer8",
+      "MetaLevel8"
+    ],
+    "rules": []
+  },
+  "9th_level_oracle_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Oracle9",
+      "MetaLevel9"
+    ],
+    "rules": []
+  },
+  "9th_level_sorcerer_word": {
+    "member_pool": "words_of_power",
+    "any_tags": [
+      "Sorcerer9",
+      "MetaLevel9"
+    ],
+    "rules": []
+  },
+  "advanced_masked_performer_talent": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "MaskedPerformerTalent",
+      "AdvancedMaskedPerformerTalent"
+    ],
+    "rules": []
+  },
+  "alignment_selection": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aorder_of_the_sword_alignment_selection"
+    ]
+  },
+  "amateur_gunslinger": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003afeat\u003aamateur_gunslinger",
+      "ultimate_combat\u003afeat\u003aextra_grit"
+    ]
+  },
+  "amateur_gunslinger_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003afeat\u003aamateur_gunslinger",
+      "ultimate_combat\u003afeat\u003aextra_grit"
+    ]
+  },
+  "ancestor_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "AncestorRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "animal_friend_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_magic\u003aclass_feature\u003aanimal_speaker_animal_friend_choice"
+    ]
+  },
+  "ape_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003adiehard",
+      "core_rulebook\u003afeat\u003aendurance",
+      "core_rulebook\u003afeat\u003agreat_fortitude",
+      "core_rulebook\u003afeat\u003aimproved_bull_rush",
+      "core_rulebook\u003afeat\u003atoughness"
+    ]
+  },
+  "apocalypse_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ApocalypseRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "arcane_bloodline_school_power": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003aclass_feature\u003aarcane_bloodline_school_power_choice"
+    ]
+  },
+  "arcane_bomber_opposition_school_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003aschool_of_the_bomb_display"
+    ]
+  },
+  "armiger_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Combat",
+      "Hellknight"
+    ],
+    "rules": []
+  },
+  "aspis_agent_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "AspisAgentBonusFeat"
+    ],
+    "rules": [
+      "ultimate_magic\u003afeat\u003askill_focus_intimidate"
+    ]
+  },
+  "bat_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003aacrobatic",
+      "core_rulebook\u003afeat\u003aagile_maneuvers",
+      "core_rulebook\u003afeat\u003aimproved_initiative",
+      "core_rulebook\u003afeat\u003alightning_reflexes"
+    ]
+  },
+  "battle_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "BattleRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "boar_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003ableeding_critical",
+      "core_rulebook\u003afeat\u003ablind_fight",
+      "core_rulebook\u003afeat\u003adiehard",
+      "core_rulebook\u003afeat\u003aimproved_overrun"
+    ]
+  },
+  "bone_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "BoneRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "brawler_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Combat",
+      "Meditation"
+    ],
+    "rules": []
+  },
+  "broken_soul_stat_bonus": {
+    "member_pool": "internal",
+    "any_tags": [
+      "BrokenSoulStatBonus"
+    ],
+    "rules": []
+  },
+  "canine_ferocity_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003amounted_combat",
+      "core_rulebook\u003afeat\u003aride_by_attack",
+      "core_rulebook\u003afeat\u003aspirited_charge",
+      "core_rulebook\u003afeat\u003atrample",
+      "core_rulebook\u003afeat\u003aunseat"
+    ]
+  },
+  "canny_foe": {
+    "member_pool": "internal",
+    "any_tags": [
+      "CannyFoeSelection"
+    ],
+    "rules": []
+  },
+  "catfolk_curiosity": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Catfolk Curiosity"
+    ],
+    "rules": []
+  },
+  "cavalier_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "CavalierFeat",
+      "Combat"
+    ],
+    "rules": []
+  },
+  "class_level_2_ability_adjustment": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ClassLevelAdjustmentPlus2",
+      "ClassLevelAdjustmentMinus2"
+    ],
+    "rules": []
+  },
+  "class_level_4_ability_adjustment": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ClassLevelAdjustmentPlus4"
+    ],
+    "rules": []
+  },
+  "clockwork_familiar_tinkering_choice": {
+    "member_pool": "internal",
+    "any_tags": [
+      "ClockworkFamiliarTinkering"
+    ],
+    "rules": []
+  },
+  "clockwork_spy_tinkering_choice": {
+    "member_pool": "internal",
+    "any_tags": [
+      "ClockworkSpyTinkering"
+    ],
+    "rules": []
+  },
+  "contemplative_knowledge_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003afeat\u003aexpanded_knowledge",
+      "ultimate_psionics\u003afeat\u003aextra_power_known"
+    ]
+  },
+  "craft_skill_bonus": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003aclass_feature\u003aaegis_craftsman_skill_bonus"
+    ]
+  },
+  "crossbow_training_selection": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "advanced_class_guide\u003aclass_feature\u003acrossbow_training_selection"
+    ]
+  },
+  "crystal_mask": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003aability\u003aequipment_crystal_mask"
+    ]
+  },
+  "dark_tapestry_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "DarkTapestryRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "disciple_of_the_raging_sea_feat_or_rage_power": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "RagePower",
+      "MonkBonusFeat"
+    ],
+    "rules": []
+  },
+  "drakainia_spawn_stat_bonus": {
+    "member_pool": "internal",
+    "any_tags": [
+      "DrakainiaSpawnStatBonus"
+    ],
+    "rules": []
+  },
+  "druid_domain": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "DruidDomainSelection",
+      "Inquisition"
+    ],
+    "rules": []
+  },
+  "druid_eagle_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "DruidShamanEagle"
+    ],
+    "rules": []
+  },
+  "druid_lion_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "DruidShamanLion"
+    ],
+    "rules": []
+  },
+  "druid_serpent_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "DruidShamanSerpent"
+    ],
+    "rules": []
+  },
+  "druid_wolf_shaman_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "DruidShamanWolf"
+    ],
+    "rules": []
+  },
+  "duergardsp_race_trait": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "DuergarDSPTrait"
+    ],
+    "rules": []
+  },
+  "eldritch_heritage_selection": {
+    "member_pool": "eldritch_heritage_bloodline",
+    "any_tags": [
+      "Eldritch Heritage Selection"
+    ],
+    "rules": []
+  },
+  "elemental_fist_choice": {
+    "member_pool": "internal",
+    "any_tags": [
+      "ElementalFistChoice"
+    ],
+    "rules": []
+  },
+  "elf_elemental_resistance": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Elf Elemental Resistance"
+    ],
+    "rules": []
+  },
+  "emissary_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Combat"
+    ],
+    "rules": [
+      "core_rulebook\u003afeat\u003aendurance",
+      "core_rulebook\u003afeat\u003afleet",
+      "core_rulebook\u003afeat\u003arun"
+    ]
+  },
+  "evolved_companion": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Evolved Companion"
+    ],
+    "rules": []
+  },
+  "expanded_knowledge": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003afeat\u003aexpanded_knowledge"
+    ]
+  },
+  "feral_combat_training": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003afeat\u003aferal_combat_training"
+    ]
+  },
+  "finesse_marksman_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "MarksmanBonus",
+      "FinesseMarksmanBonus"
+    ],
+    "rules": []
+  },
+  "flame_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "FlameRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "focused_study_choice": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Focused Study Choice"
+    ],
+    "rules": []
+  },
+  "forgeborn_race_trait": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ForgebornTrait"
+    ],
+    "rules": []
+  },
+  "forgesteed_rider_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Psionic",
+      "CavalierFeat",
+      "Combat"
+    ],
+    "rules": []
+  },
+  "geisha_knowledge_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_magic\u003aclass_feature\u003ageisha_knowledge_choice"
+    ]
+  },
+  "gendarme_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003aimproved_bull_rush",
+      "core_rulebook\u003afeat\u003amounted_combat",
+      "core_rulebook\u003afeat\u003apower_attack",
+      "core_rulebook\u003afeat\u003aride_by_attack",
+      "core_rulebook\u003afeat\u003aspirited_charge",
+      "core_rulebook\u003afeat\u003aspring_attack",
+      "core_rulebook\u003afeat\u003aunseat",
+      "ultimate_combat\u003afeat\u003agundarme_bonus_feat"
+    ]
+  },
+  "giant_spider_type": {
+    "member_pool": "internal",
+    "any_tags": [
+      "GiantSpiderType"
+    ],
+    "rules": []
+  },
+  "gnome_obsessive_skill_bonus": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Gnome Obsessive Skill Bonus"
+    ],
+    "rules": []
+  },
+  "guided_hand_selection": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Guided Hand"
+    ],
+    "rules": []
+  },
+  "guileful_polyglot_additional_language": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aguileful_polyglot_language_selection"
+    ]
+  },
+  "gun_training_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003agunslinger_gun_training_choice"
+    ]
+  },
+  "gunslinger_battered_gun": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003agunslinger_battered_gun"
+    ]
+  },
+  "harrowed_trumps": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "HarrowedTrump"
+    ],
+    "rules": []
+  },
+  "hatred": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Hatred"
+    ],
+    "rules": []
+  },
+  "healing_surge_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003afeat\u003aexpanded_knowledge",
+      "ultimate_psionics\u003afeat\u003aextra_power_known"
+    ]
+  },
+  "heavens_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "HeavensRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "hex_selection": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Hex Selection"
+    ],
+    "rules": []
+  },
+  "hexenhammer_major_hex_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "HexenhammerMinorHex",
+      "HexenhammerMajorHex"
+    ],
+    "rules": []
+  },
+  "house_of_perfection": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "HouseOfPerfection"
+    ],
+    "rules": []
+  },
+  "house_of_perfection_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "HouseOfPerfectionFeat"
+    ],
+    "rules": []
+  },
+  "insightful_deed": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "DeedsLvl1",
+      "DeedsLvl3"
+    ],
+    "rules": []
+  },
+  "intelligent_item_languages": {
+    "member_pool": "intelligent_item",
+    "any_tags": [
+      "IntItemLang"
+    ],
+    "rules": []
+  },
+  "intelligent_item_power": {
+    "member_pool": "intelligent_item",
+    "any_tags": [
+      "ItemStandardPower"
+    ],
+    "rules": []
+  },
+  "intelligent_item_purpose_power": {
+    "member_pool": "intelligent_item",
+    "any_tags": [
+      "ItemPurposePower"
+    ],
+    "rules": []
+  },
+  "intrigue_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "IntrigueRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "kensai_weapon_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003akensai_weapon_proficiency"
+    ]
+  },
+  "kensai_weapon_focus": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003akensai_weapon_focus_display"
+    ]
+  },
+  "kineticist_infusion_or_wild_talent_aether": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Aether",
+      "Utility Wild Talent Aether"
+    ],
+    "rules": []
+  },
+  "kineticist_infusion_or_wild_talent_air": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Air",
+      "Utility Wild Talent Air"
+    ],
+    "rules": []
+  },
+  "kineticist_infusion_or_wild_talent_earth": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Earth",
+      "Utility Wild Talent Earth"
+    ],
+    "rules": []
+  },
+  "kineticist_infusion_or_wild_talent_fire": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Fire",
+      "Utility Wild Talent Fire"
+    ],
+    "rules": []
+  },
+  "kineticist_infusion_or_wild_talent_water": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Water",
+      "Utility Wild Talent Water"
+    ],
+    "rules": []
+  },
+  "kineticist_infusion_or_wild_talent_wood": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Infusion Wild Talent Wood",
+      "Utility Wild Talent Wood"
+    ],
+    "rules": []
+  },
+  "life_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "LifeRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "lore_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "LoreRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "magus_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Combat",
+      "ItemCreation",
+      "Metamagic"
+    ],
+    "rules": []
+  },
+  "martial_kineticist_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Psionic",
+      "Metapsionic"
+    ],
+    "rules": []
+  },
+  "martial_weapon_proficiency": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003amartial_weapon_proficiency"
+    ]
+  },
+  "master_craftsman_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003amaster_craftsman"
+    ]
+  },
+  "mendevian_priest_teamwork_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Teamwork",
+      "MendevianPriest"
+    ],
+    "rules": []
+  },
+  "metal_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "MetalRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "monk_bonus_feat": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "MonkBonusFeat",
+      "Meditation"
+    ],
+    "rules": []
+  },
+  "mounted_mastery_selection": {
+    "member_pool": "feat",
+    "any_tags": [
+      "MountedMastery"
+    ],
+    "rules": []
+  },
+  "mystic_past_life_base_cha": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Mystic Past Life Base Cha"
+    ],
+    "rules": []
+  },
+  "mystic_past_life_base_int": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Mystic Past Life Base Int"
+    ],
+    "rules": []
+  },
+  "mystic_past_life_base_wis": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Mystic Past Life Base Wis"
+    ],
+    "rules": []
+  },
+  "mythic_aspect_of_the_beast_selection": {
+    "member_pool": "internal",
+    "any_tags": [
+      "MythicAspectsOfTheBeast"
+    ],
+    "rules": []
+  },
+  "mythic_improved_familiar_ability_score_bonus": {
+    "member_pool": "internal",
+    "any_tags": [
+      "MythicImprovedFamiliarAbilityScoreBonus"
+    ],
+    "rules": []
+  },
+  "nature_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "NatureRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "noral_additional_language": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003arace_trait\u003anoral_language_selections"
+    ]
+  },
+  "noral_race_trait": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "NoralTrait"
+    ],
+    "rules": []
+  },
+  "ophiduan_scholar_bonus": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "OphiduanScholar"
+    ],
+    "rules": []
+  },
+  "outer_rifts_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "OuterRiftsRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "outsider_plane_choice": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Outsider Plane Choice"
+    ],
+    "rules": []
+  },
+  "psion_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Psionic",
+      "Metapsionic",
+      "ItemCreation"
+    ],
+    "rules": []
+  },
+  "psychic_bloodline_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "PsychicBloodline"
+    ],
+    "rules": []
+  },
+  "psychic_mage_arcane_bond": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ArcaneBond",
+      "PsychicMageArcaneBond"
+    ],
+    "rules": []
+  },
+  "psychic_mage_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "WizardBonus",
+      "ItemCreation",
+      "Metamagic",
+      "Metapsionic",
+      "PsychicMageBonus"
+    ],
+    "rules": []
+  },
+  "racial_heritage_choice": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aability\u003aracial_heritage_choice"
+    ]
+  },
+  "racial_heritage_racial_trait_android": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Android MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "racial_heritage_racial_trait_aquatic_elf": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Aquatic Elf MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "racial_heritage_racial_trait_lashunta": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Lashunta MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "racial_heritage_racial_trait_monkey_goblin": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Monkey Goblin MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "racial_heritage_racial_trait_syrinx": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Syrinx MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "racial_heritage_racial_trait_triaxian": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Triaxian MA Racial Trait"
+    ],
+    "rules": []
+  },
+  "ranger_combat_style_feat": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "RangerBonusFeat",
+      "Ranger Combat Style Feat"
+    ],
+    "rules": []
+  },
+  "rapid_reload": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003arapid_reload"
+    ]
+  },
+  "rapid_reload_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003arapid_reload"
+    ]
+  },
+  "reincarnated_oracle_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ReincarnatedOracleRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "samurai_expertise": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003asamurai_expertise_selection"
+    ]
+  },
+  "samurai_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "SamuraiFeat",
+      "Combat"
+    ],
+    "rules": []
+  },
+  "saving_throw_selection": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aorder_of_the_sword_bonus_to_saving_throw"
+    ]
+  },
+  "secrets_of_the_grave_spell_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_magic\u003aclass_feature\u003asecrets_of_the_grave_spell_choice"
+    ]
+  },
+  "shaman_battle_wandering_hex": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ShamanSpiritHex",
+      "ShamanBattleHex"
+    ],
+    "rules": []
+  },
+  "shaman_bones_wandering_hex": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ShamanSpiritHex",
+      "ShamanBonesHex"
+    ],
+    "rules": []
+  },
+  "shaman_hex": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ShamanHex",
+      "ShamanSpiritHex"
+    ],
+    "rules": []
+  },
+  "shards_of_the_past_knowledge_skill": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "ShardsOfPastKnowledge"
+    ],
+    "rules": []
+  },
+  "siege_mage_opposition_school_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003asiege_school_display"
+    ]
+  },
+  "slotted_ioun_rule": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Slotted Ioun Rule"
+    ],
+    "rules": []
+  },
+  "sniper_marksman_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "MarksmanBonus",
+      "SniperMarksmanBonus"
+    ],
+    "rules": []
+  },
+  "sohei_weapon_training_i": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_bows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_crossbows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_monk",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_pole_arms",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_spears",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_1_thrown"
+    ]
+  },
+  "sohei_weapon_training_ii": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_bows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_crossbows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_monk",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_pole_arms",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_spears",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_2_thrown"
+    ]
+  },
+  "sohei_weapon_training_iii": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_bows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_crossbows",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_monk",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_pole_arms",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_spears",
+      "core_rulebook\u003aclass_feature\u003aweapon_training_3_thrown"
+    ]
+  },
+  "spellbreaker_arcane_defense": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003aspellbreaker_arcane_defense_choice"
+    ]
+  },
+  "spellbreaker_impervious_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003aspellbreaker_impervious_choice"
+    ]
+  },
+  "spellscar_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "SpellscarRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "spellslinger_gun_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003aarcane_gun_display"
+    ]
+  },
+  "spellslinger_opposition_school_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003aschool_of_the_gun_display"
+    ]
+  },
+  "spindle_of_perfect_knowledge": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aability\u003aequipment_spindle_of_perfect_knowledge"
+    ]
+  },
+  "stone_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "StoneRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "suli_language_choice": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Suli Language Choice"
+    ],
+    "rules": []
+  },
+  "tactician_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "Teamwork",
+      "Combat"
+    ],
+    "rules": [
+      "core_rulebook\u003afeat\u003askill_focus"
+    ]
+  },
+  "tactician_teamwork_feat": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003acavalier_tactician_feat"
+    ]
+  },
+  "tiefling_language_choice": {
+    "member_pool": "choice",
+    "any_tags": [
+      "Tiefling Language Choice"
+    ],
+    "rules": []
+  },
+  "time_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "TimeRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "udaeus_energy_resistance": {
+    "member_pool": "internal",
+    "any_tags": [
+      "UdaeusEnergyResistance"
+    ],
+    "rules": []
+  },
+  "unchained_rage_power": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Unchained Rage Power",
+      "UnchainedRagePower"
+    ],
+    "rules": []
+  },
+  "unlocked_talent_feat": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "ultimate_psionics\u003afeat\u003aunlocked_talent"
+    ]
+  },
+  "vigilante_agent_talent": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "Social Talent",
+      "Vigilante Talent"
+    ],
+    "rules": []
+  },
+  "viking_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "VikingBonusFeatChoice"
+    ],
+    "rules": []
+  },
+  "volley_marksman_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "MarksmanBonus",
+      "VolleyMarksmanBonus"
+    ],
+    "rules": []
+  },
+  "waves_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "WavesRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "weapon_adept_monk_weapon_focus_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aweapon_focus_weapon_adept"
+    ]
+  },
+  "weapon_adept_monk_weapon_specialization_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aweapon_specialization_weapon_adept"
+    ]
+  },
+  "weapon_focus": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003aweapon_focus"
+    ]
+  },
+  "wildborn_rage_power_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "RagePower",
+      "Rage Power",
+      "Wildborn Bonus Feat"
+    ],
+    "rules": []
+  },
+  "wind_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "WindRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "wizard_bonus_feat": {
+    "member_pool": "feat",
+    "any_tags": [
+      "WizardBonus",
+      "ItemCreation",
+      "Metamagic"
+    ],
+    "rules": []
+  },
+  "wood_mystery_revelation": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "WoodRevelation",
+      "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "zen_archer_point_blank_master": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003azen_archer_point_blank_master__5fc5073d622d1a8d"
+    ]
+  },
+  "zen_archer_weapon_focus_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aweapon_focus_zen_archer"
+    ]
+  },
+  "zen_archer_weapon_specialization_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "advanced_players_guide\u003aclass_feature\u003aweapon_specialization_zen_archer"
+    ]
+  }
+}

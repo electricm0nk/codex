@@ -977,22 +977,59 @@ fn archetype_options(package: &SheetRulePackage, input: &CharacterInput, base: &
     options
 }
 
-/// The offer that lists a pool's members: a held grant's first, else any converted grant's.
+/// The offer that lists a pool's members: a held grant's first, else any converted grant's. Only an offer of
+/// records lists members: the Ranger's own `Favored Enemy` grant offers a number (its +2 to +10 bonus), not an enemy.
 fn pool_offer<'a>(package: &'a SheetRulePackage, held_rules: &[&'a SheetRule], pool: &str) -> Option<&'a Choice> {
     let targets = |rule: &&SheetRule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
+    fn members(rule: &SheetRule) -> Option<&Choice> {
+        rule.offers.as_ref().filter(|offer| matches!(offer.from, OptionSet::Rules { .. } | OptionSet::Domains))
+    }
     held_rules
         .iter()
         .copied()
         .filter(targets)
-        .find_map(|rule| rule.offers.as_ref())
-        .or_else(|| package.rules.values().filter(targets).find_map(|rule| rule.offers.as_ref()))
+        .find_map(members)
+        .or_else(|| package.rules.values().filter(targets).find_map(members))
         // A level-1 `ABILITYSELECTION` pool's members are its chooser's offer (E3.13).
         .or_else(|| package.rules_of_kind("class_feature").filter(|rule| selection_offer(rule) == Some(pool)).find(|rule| selection_pool(package, rule).is_some()).and_then(|rule| rule.offers.as_ref()))
 }
 
+/// The member filter the converter keeps for a granted pool whose grants carry no offer
+/// (`data/sheet_rules/_pool_members.json`, SD-43 E3.14): a `TYPE:A.B` category takes either type, an
+/// `ABILITYLIST:` category the rules it names.
+#[derive(Debug, Clone, serde::Deserialize)]
+struct PoolMembers {
+    member_pool: String,
+    any_tags: Vec<String>,
+    rules: Vec<String>,
+}
+
+fn pool_members(pool: &str) -> Option<&'static PoolMembers> {
+    static MEMBERS: OnceLock<BTreeMap<String, PoolMembers>> = OnceLock::new();
+    MEMBERS
+        .get_or_init(|| serde_json::from_str(include_str!("../../data/sheet_rules/_pool_members.json")).expect("data/sheet_rules/_pool_members.json parses"))
+        .get(pool)
+}
+
+/// Whether `rule` is a member of `pool`: its grant's offer selects it, else the converter's member filter does.
+type MemberSelector<'a> = Box<dyn Fn(&SheetRule) -> bool + 'a>;
+
+fn pool_member_selector<'a>(package: &'a SheetRulePackage, held_rules: &[&'a SheetRule], pool: &str) -> Option<MemberSelector<'a>> {
+    if let Some(offer) = pool_offer(package, held_rules, pool) {
+        return Some(Box::new(move |rule| offer_selects(offer, rule)));
+    }
+    let members = pool_members(pool)?;
+    Some(Box::new(move |rule| {
+        !rule.id.contains('#')
+            && (members.rules.contains(&rule.id)
+                || (rule.pool == members.member_pool && rule.tags.iter().any(|tag| members.any_tags.iter().any(|t| t.eq_ignore_ascii_case(tag)))))
+    }))
+}
+
 /// Every member of every class-feature pool this character holds, each with whether the record's own
-/// gate is met (the converted-gate verdicts the Traits sub-tab reads). A pool whose grants carry no
-/// offer lists no members. Two printings of one name are offered once, the first by record id.
+/// gate is met (the converted-gate verdicts the Traits sub-tab reads). A pool lists the members its grant's
+/// offer selects, else its category's ([`pool_member_selector`]). Two printings of one name are offered once,
+/// the first by record id.
 fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<AbilityOption> {
     let mut pools: Vec<String> = class_feature_grants(package, input).into_iter().filter(|(_, (n, _))| *n > 0).map(|(pool, _)| pool).collect();
     for pick in input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::ClassFeatures.id()) {
@@ -1007,9 +1044,9 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
     let mut options = Vec::new();
     for pool in &pools {
-        let Some(offer) = pool_offer(package, &held_rules, pool) else { continue };
+        let Some(selects) = pool_member_selector(package, &held_rules, pool) else { continue };
         let mut labels: Vec<String> = Vec::new();
-        for rule in package.rules.values().filter(|rule| offer_selects(offer, rule) && !rule.label.is_empty()) {
+        for rule in package.rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()) {
             let label = display_label(rule);
             if labels.contains(&label) {
                 continue;
@@ -1626,6 +1663,63 @@ mod tests {
         let budget = ability_budget(package(), &picked, SubTab::ClassFeatures);
         assert_eq!(row(&budget, "abilities.budget.class_features.sorcerer_bloodline.remaining"), 0);
         assert!(creation_choice_picks(package(), &picked).is_empty());
+    }
+
+    // "An oracle's mystery grants ... revelations" (Advanced Player's Guide, Oracle). PCGen's `Flame Mystery Revelation`
+    // takes any ability typed `FlameRevelation` or `GeneralRevelation` (`apg_abilitycategories.lst:54`, `TYPE:A.B` is
+    // either type, `AbilityCategory.populate`), so the pool lists both kinds.
+    #[test]
+    fn oracle_flame_mystery_lists_revelation_options() {
+        let mut input = input_for(&load_sweep_fixture().expect("census fixture"), "oracle", 1);
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:oracle_mystery");
+        input.chosen.ability_selections.push(pick(SubTab::ClassFeatures, "oracle_mystery:advanced_players_guide:class_feature:oracle_flame_mystery"));
+        assert!(row(&ability_budget(package(), &input, SubTab::ClassFeatures), "abilities.budget.class_features.flame_mystery_revelation.granted") >= 1);
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        let flame: Vec<&AbilityOption> = options.iter().filter(|o| o.pool == "flame_mystery_revelation").collect();
+        let typed = |tag: &str| flame.iter().any(|o| package().rule(o.id.split_once(':').expect("pool:record").1).is_some_and(|r| r.tags.iter().any(|t| t == tag)));
+        assert!(typed("FlameRevelation") && typed("GeneralRevelation"), "Flame revelation options: {:?}", flame.iter().map(|o| &o.label).collect::<Vec<_>>());
+    }
+
+    // "At 1st level, a ranger selects a creature type from the ranger favored enemies table" (Core Rulebook, Ranger).
+    // The Ranger's own grant offers the bonus number, so the pool lists the enemies another grant offers.
+    #[test]
+    fn ranger_1_lists_favored_enemy_options() {
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "ranger", 1);
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        assert!(options.iter().any(|o| o.pool == "favored_enemy"), "no favored enemy option");
+    }
+
+    /// Acceptance census (E3.14): every pool E0.1 counts with a class among its granting records, granted by a
+    /// converted `Pool` rule and not a Feats-sub-tab pool, lists at least one member, or is on E0.1's data-gap list.
+    #[test]
+    fn ability_budget_class_features_census_every_granted_class_owned_pool_lists_a_member_or_is_a_listed_gap() {
+        let census = census();
+        let gaps: Vec<&str> = census["data_gap_list"].as_array().expect("gap list").iter().filter_map(|gap| gap["pool"].as_str()).collect();
+        let (mut pools, mut listed, mut gap) = (0, 0, 0);
+        let mut memberless: Vec<String> = Vec::new();
+        for (name, pool) in census["class_feature_pools"]["pools"].as_object().expect("pools") {
+            if pool["granted_by"].get("class").is_none() {
+                continue;
+            }
+            let slug = crate::rules_core::sheet_rule::id_slug(name);
+            let grants: Vec<&SheetRule> =
+                package().rules.values().filter(|rule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if *p == slug)).collect();
+            if grants.is_empty() || slug == FEAT_POOL_ID || grants.iter().any(|rule| feat_pool_of(rule).is_some()) {
+                continue;
+            }
+            pools += 1;
+            let members = pool_member_selector(package(), &[], &slug)
+                .map_or(0, |selects| package().rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()).count());
+            if members > 0 {
+                listed += 1;
+            } else if gaps.contains(&name.as_str()) {
+                gap += 1;
+            } else {
+                memberless.push(name.clone());
+            }
+        }
+        eprintln!("census: granted class-owned class-feature pools {pools}; listing members {listed}; data gap {gap}; memberless {memberless:?}");
+        assert!(memberless.is_empty(), "pools listing no member: {memberless:?}");
     }
 
     #[test]
