@@ -78,6 +78,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` (oracle mystery revelations, kineticist elements, shaman hex, …) list their members | sheet | E3.4 | opus | yes (root + desktop) | no |
 | E3.15 | DISCOVERED (E3.5): saved Class Features picks seeded into the sheet's held set (`HeldSeed::from_record`) so a pick's rules reach the sheet and the print | sheet | E3.5 | opus | yes (root + desktop) | no |
 | E3.16 | DISCOVERED (E3.7): a held archetype's record seeded into the sheet's held set (`HeldSeed::from_record`) so a replaced feature's sheet lines and print follow | sheet | E3.7 | opus | yes (root + desktop) | no |
+| E3.17 | DISCOVERED (E3.9): Background and Misc picks seeded into the sheet's held set (`HeldSeed::from_record`) so a pick's own rules reach the sheet and print | sheet | E3.9 | opus | yes (root + desktop) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -99,7 +100,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 66 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7; the per-card headings below use `###`).
+→ 67 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -668,6 +669,17 @@ so no card ships a picker the engine does not check.
   (`held_set` over `HeldSeed::from_character`) holds `advanced_players_guide:class_feature:fighter_archetype_two_handed_fighter`
   and no Bravery conditional note (both absent / present today).
 - **Acceptance:** that test; root and desktop suites green. **Depends:** E3.7. **Tier:** opus.
+### E3.17 — Background and Misc picks held by the sheet (discovered by E3.9, 2026-11-23)
+- **Objective:** a saved Background or Misc pick (`ability_selections` with sub-tab `background` or `misc`) is held
+  wherever the character's held set is built, so the pick's own rules reach the sheet and the print (Fleshforge
+  Enhancement's +2 to an ability score; a corruption's rule text). E3.9 holds the picks only where the Background and
+  Misc pools and options are read (`ability_budget::picked_rules`); `HeldSeed::from_record`
+  (`src/rules_core/sheet_rule.rs`) still omits them. Same mechanism as E3.15 (Class Features picks); one change may close both.
+- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed`), `src/rules_core/ability_budget.rs` (drop the
+  Background/Misc half of `picked_rules` once the seed carries the picks), the sheet's load path in `desktop/character_hub.rs` if a test needs it.
+- **Failing test first:** a Fighter 1 holding the Misc pick `optional_rules_systems:horror_adventures:ability:rules_use_corruption_standard`:
+  the sheet's held set (`held_set` over `HeldSeed::from_character`) holds `horror_adventures:ability:rules_use_corruption_standard` (absent today).
+- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.9. **Tier:** opus.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
