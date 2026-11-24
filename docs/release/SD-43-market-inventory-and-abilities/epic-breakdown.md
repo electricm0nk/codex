@@ -79,6 +79,8 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.15 | DISCOVERED (E3.5): saved Class Features picks seeded into the sheet's held set (`HeldSeed::from_record`) so a pick's rules reach the sheet and the print | sheet | E3.5 | opus | yes (root + desktop) | no |
 | E3.16 | DISCOVERED (E3.7): a held archetype's record seeded into the sheet's held set (`HeldSeed::from_record`) so a replaced feature's sheet lines and print follow | sheet | E3.7 | opus | yes (root + desktop) | no |
 | E3.17 | DISCOVERED (E3.9): Background and Misc picks seeded into the sheet's held set (`HeldSeed::from_record`) so a pick's own rules reach the sheet and print | sheet | E3.9 | opus | yes (root + desktop) | no |
+| E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member list members on the sheet (engine test per pool) | sheet | E3.12 | opus | yes (root + desktop) | no |
+| E3.19 | DISCOVERED (E3.12): `gen_class_feature_grants` reads `*_abilities_globalvar.lst` (UC Ninja 64 / Samurai 99 class grant rows) and re-runs without drift | sheet | E3.12 | opus | yes (root) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -100,7 +102,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 67 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9; the per-card headings below use `###`).
+→ 69 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -680,6 +682,35 @@ so no card ships a picker the engine does not check.
 - **Failing test first:** a Fighter 1 holding the Misc pick `optional_rules_systems:horror_adventures:ability:rules_use_corruption_standard`:
   the sheet's held set (`held_set` over `HeldSeed::from_character`) holds `horror_adventures:ability:rules_use_corruption_standard` (absent today).
 - **Acceptance:** that test; root and desktop suites green. **Depends:** E3.9. **Tier:** opus.
+### E3.18 — E3.12's pools list their members on the sheet (discovered by E3.12, 2026-11-24)
+- **Objective:** E3.12 gave the corpus members for 29 class-granted pools, but the sheet lists a Class Features pool's
+  members from a converted grant's `offers` (`ability_budget::pool_offer`), and for 10 of the 29 no converted rule
+  granting into the pool carries an offer that selects a member: Advanced Masked Performer Talent, Druid Eagle / Lion /
+  Serpent / Wolf Shaman Feat, Finesse / Sniper / Volley Marksman Bonus Feat, Hexenhammer Major Hex Choice (no offer: a
+  second `ABILITYPOOL` row on one record, `#bonusN`, carries none) and Lantern Bearer Favored Enemy (offer is a
+  `Number` 2–4). Re-derive: `python3 -I artifacts/epic_3/E3.12/offer_probe.py | tail -1` → `10 of 29`. A PROXY: it reads
+  the package, not the engine, and feat-parent pools may be listed by `feat_budget` (`feat_list_of`) instead — the
+  card's first step is the engine test below, which settles the real count.
+- **FILES YOU OWN:** the sheet-rule converter's pool offer (`crates/codex-ingest/src/pcgen_import/sheet_rule/pool_pick.rs`
+  and its ABILITYPOOL caller) or the engine's member fallback (`src/rules_core/ability_budget.rs`), whichever the test
+  shows; the regenerated `data/sheet_rules` rows if the converter changes.
+- **Failing test first:** for each of the 29 pools, a character holding one of its grants is offered ≥ 1 member by
+  `ability_options` (Class Features) or the Feats options (feat-parent pools).
+- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete
+  before E3.MC (else those pools show a count with nothing to pick).
+### E3.19 — Class grant rows from the global-variable files (discovered by E3.12, 2026-11-24)
+- **Objective:** `gen_class_feature_grants` reads only `class_feature::BOOK_PRIMARY_FILES`
+  (`uc_abilities_class.lst` for Ultimate Combat), but the Ninja and Samurai grant rows live in
+  `uc_abilities_globalvar.lst` (`awk -F'\t' '/^CATEGORY=Class\|/ {split($1,a,"|"); c[a[2]]++} END{for(k in c) print c[k], k}'
+  "$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst"` → Ninja.MOD 64,
+  Samurai.MOD 99, Gunslinger.MOD 98): `data/class_feature_grants/ultimate_combat/` had no `ninja.json` or `samurai.json`.
+  E3.12 hand-added the one row its card named (`Ninja ~ Ninja Trick`, level 2, cited to `uc_abilities_globalvar.lst:21`).
+  The generator also cannot be re-run as is: on the E3.12 tree it rewrote 58 committed files
+  (`cargo run --locked -p codex-ingest --bin gen_class_feature_grants && git status --porcelain data/class_feature_grants | awk 'END{print NR}'`).
+- **FILES YOU OWN:** `crates/codex-ingest/src/pcgen_import/cache_gen/class_feature_grants.rs`, its bin, `data/class_feature_grants`.
+- **Failing test first:** the UC Ninja table holds every `Ninja.MOD` grant row of `uc_abilities_globalvar.lst` the
+  generator's rules resolve (1 of 64 today); a generator re-run leaves `data/class_feature_grants` unchanged.
+- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
