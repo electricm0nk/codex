@@ -81,6 +81,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.17 | DISCOVERED (E3.9): Background and Misc picks seeded into the sheet's held set (`HeldSeed::from_record`) so a pick's own rules reach the sheet and print | sheet | E3.9 | opus | yes (root + desktop) | no |
 | E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member list members on the sheet (engine test per pool) | sheet | E3.12 | opus | yes (root + desktop) | no |
 | E3.19 | DISCOVERED (E3.12): `gen_class_feature_grants` reads `*_abilities_globalvar.lst` (UC Ninja 64 / Samurai 99 class grant rows) and re-runs without drift | sheet | E3.12 | opus | yes (root) | no |
+| E3.20 | DISCOVERED (E3.13): the `Bloodline` pool (Standard Bloodline) is reconciled with the held level-1 bloodline, and Standard Bloodline's qualification agrees with its gate | sheet | E3.13 | opus | yes (root + desktop) | hub |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -102,7 +103,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 69 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12; the per-card headings below use `###`).
+→ 70 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -711,6 +712,18 @@ so no card ships a picker the engine does not check.
 - **Failing test first:** the UC Ninja table holds every `Ninja.MOD` grant row of `uc_abilities_globalvar.lst` the
   generator's rules resolve (1 of 64 today); a generator re-run leaves `data/class_feature_grants` unchanged.
 - **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete before E3.MC.
+### E3.20 — the Bloodline kind pick beside the held bloodline (discovered by E3.13, 2026-11-24)
+- **Objective:** on a Sorcerer 1 whose creation bloodline is held (E3.13: `Sorcerer bloodline: 1 of 1 spent, 0 remaining`),
+  the Class Features sub-tab still reads `Bloodline: 0 of 1 spent, 1 remaining` (the pool `core_rulebook:class_feature:sorcerer_standard_bloodline`
+  grants, `Pool(bloodline)` 1; PCGen's `Bloodline` category, `cr_abilitycategories.lst:127`, members typed `Bloodline Selection`), and its member
+  Standard Bloodline (`sorcerer_standard_bloodline_selection`) is struck `requires Bloodline` although the record its gate names is held
+  (the same gate opens the Sorcerer bloodline pool: `chooser_offered`). Seen on screen:
+  `artifacts/epic_3/E3.13/01-sorcerer-1-class-features.png`, `02-standard-bloodline-pool.png`. The bloodline kind a held bloodline implies
+  (Standard unless an archetype's selection is held) fills that pool, and the option's verdict (`ability_prereqs::unmet`) agrees with the gate.
+- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `src/rules_core/ability_prereqs.rs`; second call sites per the prefix.
+- **Failing test first:** Sorcerer 1 (canonical seeds) → `abilities.budget.class_features.bloodline.remaining` = 0, and no Class Features
+  option of a held record's own gate reads unmet.
+- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.13. **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
