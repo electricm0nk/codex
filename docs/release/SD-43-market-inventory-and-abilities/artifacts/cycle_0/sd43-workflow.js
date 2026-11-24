@@ -185,7 +185,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": true,
   "hub": true,
-  "row": "| E1.5 | Selling a container moves its direct contents to Carried | opus | todo | E1.4 | gear | yes (desktop) | hub | |",
+  "row": "| E1.5 | Selling a container moves its direct contents to Carried | opus | complete | E1.4 | gear | yes (desktop) | hub | receipt `artifacts/epic_1/E1.5_cycle_receipt.md`; SHA `d72cf744c7d897e1316c2b29239ad29902ee8026` |",
   "section": "### E1.5 — selling a container (item 12 ask 2)\n- **Objective:** `sell_held_pieces_at_root` (`desktop/character_hub.rs:5635`) moves a sold container's direct\n  contents to Carried; nested containers keep theirs; Not Carried contents stay Not Carried.\n- **FILES YOU OWN:** `desktop/character_hub.rs` (sell path and its tests) (`hub`).\n- **Failing test first:** Backpack ⊃ {Sack ⊃ Bedroll, loose items}; sell Backpack → expected locations and money.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test sell_container` (≥ 6 tests: empty, loose, nested, in a\n  Bag of Holding, worn belt pouch + encumbrance, Not Carried contents).\n- **Depends:** E1.4. **Tier:** opus.\n- **Does not cover:** Drop and Discard (Q-12.1).",
   "phase": "E1 — Market and inventory"
  },
@@ -198,7 +198,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": false,
   "hub": false,
-  "row": "| E1.6 | Sell window: Market Rate / Build / Negotiate | opus | todo | E1.5 | gear | no | no | |",
+  "row": "| E1.6 | Sell window: Market Rate / Build / Negotiate | opus | complete | E1.5 | gear | no | no | receipt `artifacts/epic_1/E1.6_cycle_receipt.md`; SHA `fffb58ccf515ed741f3c8ce15abf4739fda47669`; discovered E1.13 |",
   "section": "### E1.6 — sell window (item 9)\n- **Objective:** Sell opens `SellDialog` (new): Market Rate (default) / Build / Negotiate, default amount from\n  `sellNegotiateGp` (`ui/characterHub/marketModel.ts:115`), How many?, Sell/Cancel, Escape/Enter, focus return;\n  the existing negative/non-number check kept; \"the pricing above\" removed (`GearScreen.tsx:31`, `:188`, `:205`,\n  `:572`).\n- **FILES YOU OWN:** `ui/characterHub/SellDialog.tsx` + `sellDialogModel.ts` + test (new), `GearScreen.tsx`\n  (`PendingForm` sell branch).\n- **Failing test first:** `sellDialogModel.test.ts`: option list is exactly `Market Rate`, `Build`, `Negotiate`;\n  default `Market Rate`; amount for a stack of 3 scales; null price → blank.\n- **Acceptance:** the test; `grep -rn \"pricing above\\|Normal\" apps/desktop/src/characterHub/GearScreen.tsx\n  apps/desktop/src/characterHub/SellDialog.tsx | awk 'END{print NR}'` → 0; `git diff --stat\n  apps/desktop/src/characterHub/priceMode.ts` empty (PRICE_MODE_OPTIONS untouched).\n- **Depends:** E1.5. **Tier:** opus.\n- **Does not cover:** the Market window's own Sell (unchanged).",
   "phase": "E1 — Market and inventory"
  },
@@ -211,7 +211,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | todo | E1.6 | sheet | no | hub | |",
+  "row": "| E1.7 | One `MarketButton` on every panel (PF, SF, CPR); Print and pricing control leave the panels | sonnet | complete | E1.6 | sheet | no | hub | receipt `artifacts/epic_1/E1.7_cycle_receipt.md`; SHA `917043576d7e5735797e496c416812f34fccbc7a` |",
   "section": "### E1.7 — the Market button (item 8)\n- **Objective:** `MarketButton` (new) top-left on Weapons, Defense, Gear (PF) and on the SF and CPR sheets; 2×\n  today's size, accent colour; panel Print removed (`CharacterSheet.tsx:854`); `PriceModeControl` removed from\n  Gear (`:1615`) and Weapons (`:849`, DEFAULT); the ☰ Print (`:4153`) still opens `PrintDialog`.\n- **FILES YOU OWN:** `ui/characterHub/MarketButton.tsx` + test (new), `CharacterSheet.tsx` (`hub`),\n  `StarfinderCharacterSheet.tsx`, `CyberpunkCharacterSheet.tsx`.\n- **Failing test first:** a test that the three PF panels render one `MarketButton` each and no `PriceModeControl`.\n- **Acceptance:** the test; `grep -n \"props.onPrint\\|PriceModeControl\" apps/desktop/src/characterHub/CharacterSheet.tsx\n  | awk 'END{print NR}'` → 1 (the import line only, if kept; else 0, stated in the receipt);\n  `grep -c PriceModeControl apps/desktop/src/characterHub/MarketDialog.tsx` ≥ 1 (kept there); the receipt states\n  old and new height and font size.\n- **Depends:** E1.6 (serial on the sheet lane). **Tier:** sonnet.\n- **Does not cover:** SF/CPR Print placement beyond Q-8.2.",
   "phase": "E1 — Market and inventory"
  },
@@ -237,7 +237,7 @@ const CARDS = [
   "lane": "market",
   "cargo": true,
   "hub": true,
-  "row": "| E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | todo | E1.8 | market | yes (desktop) | hub | |",
+  "row": "| E1.9 | Item stats in the Market description box (engine-stated, shared renderer) | opus | complete | E1.8 | market | yes (desktop) | hub | receipt `artifacts/epic_1/E1.9_cycle_receipt.md`; SHA `7701cae42e4cfd50140833f8ad06c82bf45913a1` |",
   "section": "### E1.9 — stats in the Market (item 10)\n- **Objective:** per `decisions.md §13`.\n- **FILES YOU OWN:** `desktop/equipment_catalog.rs` or `desktop/character_hub.rs` (whichever holds the shared\n  describe function, `hub`), `desktop/main.rs` (registration if a new command, `hub`), `ui/boundary/`\n  `describeMarketEntry.ts` (new if a new command), `ui/characterHub/MarketDialog.tsx`, `GearDetail.tsx` (shared\n  renderer), tests on both sides.\n- **Failing test first:** bastard sword shows damage and critical; a full plate shows armor bonus, max Dex, check\n  penalty, spell failure; a missing stat renders `—`.\n- **Acceptance:** those tests; a sampling test over every category and `TYPE` shape that prints, per stat, the\n  count of `—` (the receipt pastes the table).\n- **Depends:** E1.8. **Tier:** opus.\n- **Does not cover:** the printed sheet.",
   "phase": "E1 — Market and inventory"
  },
@@ -251,7 +251,7 @@ const CARDS = [
   "lane": "market",
   "cargo": false,
   "hub": false,
-  "row": "| E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | todo | E1.9, E0.2 | market | no | no | |",
+  "row": "| E1.10 | Filter model: per-list columns and values, `Other`, counts cover every row | opus | complete | E1.9, E0.2 | market | no | no | receipt `artifacts/epic_1/E1.10_cycle_receipt.md`; SHA `a1b361d7df3ce84762680108ffcc8a9c752d8164` |",
   "section": "### E1.10 — filter model (item 11)\n- **Objective:** `marketFilters.ts` (new): per list, columns and values, `Other`, a two-tag rule; values confirmed\n  against E0.2's tag counts.\n- **FILES YOU OWN:** `ui/characterHub/marketFilters.ts`, `marketFilters.test.ts` (new); `equipmentCategories.ts`\n  (reuse only).\n- **Failing test first:** for each list and column, sum of value counts + `Other` covers every row of E0.2's\n  per-list rows; a piercing-and-slashing weapon appears under both.\n- **Acceptance:** the test.\n- **Depends:** E1.9 (lane order), E0.2 (data). **Tier:** opus.",
   "phase": "E1 — Market and inventory"
  },
@@ -264,7 +264,7 @@ const CARDS = [
   "lane": "market",
   "cargo": false,
   "hub": false,
-  "row": "| E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | todo | E1.10 | market | no | no | |",
+  "row": "| E1.11 | Filter column; 200 cap removed; windowed list; first paint measured | opus | complete | E1.10 | market | no | no | receipt `artifacts/epic_1/E1.11_cycle_receipt.md`; SHA `d171f57676ecf6ef1810ab9da6fecd90cae76525` |",
   "section": "### E1.11 — filter column, no cap, windowed list (item 11)\n- **Objective:** the dialog's filter column; `MARKET_ROW_LIMIT` (`itemPickerFilter.ts:362`) and the notice\n  (`MarketDialog.tsx:248`) removed; a windowed list; header \"N of N\".\n- **FILES YOU OWN:** `ui/characterHub/MarketDialog.tsx`, `itemPickerFilter.ts`, their tests.\n- **Failing test first:** `marketShownRows` returns every row (fails today at 200).\n- **Acceptance:** `grep -rn \"MARKET_ROW_LIMIT\" apps/desktop/src | awk 'END{print NR}'` → 0; keyboard selection,\n  description, sort, Only Show Affordable and `+N` tests green; time to first paint on Magic items measured and\n  stated \"on this machine\".\n- **Depends:** E1.10. **Tier:** opus.",
   "phase": "E1 — Market and inventory"
  },
@@ -277,8 +277,47 @@ const CARDS = [
   "lane": "gear",
   "cargo": true,
   "hub": true,
-  "row": "| E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | todo | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2) |",
+  "row": "| E1.12 | Sell removes the copy the player clicked (copy key, not item id + state) — discovered by E0.4 | opus | complete | E1.5 | gear | yes (desktop) | hub | discovered E0.4 (`artifacts/epic_0/gear-repro.md` §12.2); receipt `artifacts/epic_1/E1.12_cycle_receipt.md`; SHA `52d1ff8f0fd3f707768867154e59d61c9393ced6` |",
   "section": "### E1.12 — Sell names the copy (discovered by E0.4)\n- **Objective:** the Gear screen's Sell (and the Market inventory's) removes the copy the player clicked. Today\n  `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends `itemId` + `bonus` + `fromState`, and\n  `sell_held_pieces_at_root` (`desktop/character_hub.rs:5635`) takes `first_copy_in_hand` (`desktop/pf1_adapter.rs:1349`),\n  so with several Sacks it sells a different one (E0.4 `artifacts/epic_0/gear-repro.md` §12.2: clicked `Sack|0|2`,\n  removed `Sack|0|1` and its custom name). Drop, Discard and Move already send `copies[0]`.\n- **FILES YOU OWN:** `desktop/character_hub.rs` (sell path and its tests), the remove/sell request DTO and its\n  command registration if it changes, `ui/boundary/removeEquipmentSelection` (or its file), `ui/characterHub/CharacterSheet.tsx`\n  (`handleGearSell`, `handleMarketSell`) (`hub`). Closure check first: `git grep -n \"removeEquipmentSelection\\|sell_held_pieces_at_root\"`.\n- **Failing test first:** two Sack lines Carried, the second holding a Bedroll; sell the second by its copy key →\n  the second line is gone, the first stays, the Bedroll is Carried.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test sell_names_the_copy` (≥ 1 test, 0 filtered = FAIL); a\n  frontend test that `handleGearSell`'s request carries `row.held.copies[0]`.\n- **Depends:** E1.5. **Tier:** opus.\n- **Does not cover:** what the sale pays (E1.6) and Drop/Discard (already by copy key).",
+  "phase": "E1 — Market and inventory"
+ },
+ {
+  "id": "E1.13",
+  "tier": "sonnet",
+  "deps": [
+   "E1.6"
+  ],
+  "lane": "gear",
+  "cargo": false,
+  "hub": true,
+  "row": "| E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | todo | E1.6 | gear | no | hub | discovered E1.6 (`artifacts/epic_1/E1.6_cycle_receipt.md`, \"Discovered cards\") |",
+  "section": "### E1.13 — the sell window's choice under Cashless (discovered by E1.6)\n- **Objective:** `decisions.md §10` / §30 Q-9.1: the Gear sell window returns money per its own option even when\n  the session Market mode is Cashless. Today `sell_held_pieces_at_root` (`desktop/character_hub.rs`, `(PriceMode::Cashless, _) => 0`)\n  ignores `negotiated_copper` under Cashless, and `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends the\n  session `priceMode`. Fix: `handleGearSell` sends `priceMode: 'standard'` whenever `negotiatedGp` is given (the\n  window always sends its total when a price is listed), so the backend pays the window's total; the Market's own Sell is unchanged.\n- **FILES YOU OWN:** `ui/characterHub/CharacterSheet.tsx` (`handleGearSell`) (`hub`) + a frontend test.\n- **Failing test first:** with the session mode `cashless`, the gear sell request for a window total of 7.5 gp carries a\n  non-cashless `priceMode` and `negotiatedPriceCopper: 750`.\n- **Depends:** E1.6. **Tier:** sonnet.\n- **Does not cover:** the Market window's own Sell (Cashless there still pays nothing, Q-12.2).",
+  "phase": "E1 — Market and inventory"
+ },
+ {
+  "id": "E1.14",
+  "tier": "sonnet",
+  "deps": [
+   "E1.8"
+  ],
+  "lane": "market",
+  "cargo": false,
+  "hub": false,
+  "row": "| E1.14 | Market inventory sell value and Negotiate prefill read every held copy's catalog row, not only the lists already opened (`rowOfCopy` `MarketDialog.tsx:702`); a priced item never shows `—` — discovered by E1.MC | sonnet | todo | E1.8 | market | no | no | discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, \"Discovered cards\") |",
+  "section": "### E1.14 — Market inventory sell value for every held copy (discovered by E1.MC)\n- **Objective:** `decisions.md §10`: the Market inventory's value cell and its Negotiate prefill show\n  `sellNegotiateGp` for every held copy with a listed price, whatever list is open. Today `rowOfCopy`\n  (`ui/characterHub/MarketDialog.tsx:702`) searches only the lists already loaded (`loaded`), so on a fresh Market\n  opened on Gear a Longsword (15 gp) and a Chain Shirt (100 gp) both read `—` under Buy 100% / Sell 50%; each shows\n  its value only after its own list (Weapons, Armor) has been opened (E1.MC images `03`, `04`, `05`).\n- **FILES YOU OWN:** `ui/characterHub/MarketDialog.tsx` (`rowOfCopy`, list loading), `MarketDialog.test.ts`; a\n  backend read only if the dialog cannot resolve a held copy's row without one (then the command, its registration\n  and boundary file are named in the receipt first).\n- **Failing test first:** with only the Gear list loaded, a held Longsword's sell value under `standard` is 7.5 gp,\n  not `null`.\n- **Depends:** E1.8. **Tier:** sonnet.\n- **Does not cover:** Cashless (`—` by Q-12.2).",
+  "phase": "E1 — Market and inventory"
+ },
+ {
+  "id": "E1.15",
+  "tier": "opus",
+  "deps": [
+   "E1.6"
+  ],
+  "lane": "gear",
+  "cargo": false,
+  "hub": false,
+  "row": "| E1.15 | Gear Sell opens its window on the first click after launch (E1.6 and E1.MC both saw the first Sell clicks open nothing while Customize opened) — discovered by E1.MC | opus | todo | E1.6 | gear | no | no | discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, \"Discovered cards\"); retro key `gear-sell-first-click-no-window` |",
+  "section": "### E1.15 — Gear Sell opens on the first click (discovered by E1.MC)\n- **Objective:** a Gear-screen Sell click always opens the sell window. E1.6 (retro incident, \"first two Sell clicks\n  after a fresh launch opened no window while Customize opened\") and E1.MC (images `13`, `14`, `16`: two Sell clicks\n  on a Bedroll in a Backpack opened nothing; Customize opened; the next Sell click opened the window) saw it on a\n  debug build under Xvfb. Cause not established; diagnose first (state of `pending` / `props.busy` at the click).\n- **FILES YOU OWN:** `ui/characterHub/GearScreen.tsx`, `SellDialog.tsx`, their tests; others named after diagnosis.\n- **Failing test first:** the reproduced mechanism as a test (a Sell click on a fresh screen sets the sell window open).\n- **Depends:** E1.6. **Tier:** opus.\n- **Does not cover:** the Market window's own Sell.",
   "phase": "E1 — Market and inventory"
  },
  {
@@ -291,7 +330,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": true,
   "hub": false,
-  "row": "| E1.MC | E1 merge check + epic report | opus | todo | E1.7, E1.11 | gear | yes (base build) | no | |",
+  "row": "| E1.MC | E1 merge check + epic report | opus | complete | E1.7, E1.11 | gear | yes (base build) | no | receipt `artifacts/epic_1/E1.MC_cycle_receipt.md`; SHA `b76a410c4d5e00df57da5f4fbad2daf9e62f8757`; discovered E1.14, E1.15 |",
   "section": "### E1.MC — E1 merge check\n- **Objective:** adversarial review of E1's diff against the rulings; screenshots of gear (all sections),\n  Market (each list, a filter), sell window; the four-check audit over the epic; epic retro summary.\n- **Acceptance:** `npm test && npm run typecheck`; `cd apps/desktop/src-tauri && cargo test` (whole crate),\n  every `test result:` attributed to its `Running` line. **Tier:** opus.",
   "phase": "E1 — Market and inventory"
  },
@@ -304,7 +343,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | todo | E1.7 | sheet | no | hub | |",
+  "row": "| E2.1 | Fixed layout on the PF sheet; Show Progression visible (items 17 + 21) | opus | complete | E1.7 | sheet | no | hub | receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; SHA `10aefca95f0cec754665263d2028fa2fd49a4367` |",
   "section": "### E2.1 — fixed layout, PF sheet (items 17 + 21, one cycle)\n- **Objective:** per `decisions.md §24`; one shared layout component the SF/CPR sheets adopt in E2.2.\n- **FILES YOU OWN:** `ui/characterHub/SheetLayout.tsx` + test (new), `CharacterSheet.tsx` (`hub`).\n- **Failing test first:** a layout model test that the root is `100dvh` with no page scroll and the centre is the\n  only `overflow: auto` region (plus side columns per Q-17.1).\n- **Acceptance:** the test; screenshots at full height, at −40 px and at the smallest allowed window with Show\n  Progression fully visible; dialogs and the progression drawer above the bar.\n- **Depends:** E1.7. **Tier:** opus.",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
@@ -317,7 +356,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": false,
-  "row": "| E2.2 | The shared layout on the SF and CPR sheets | sonnet | todo | E2.1 | sheet | no | no | settles Q-8.2 |",
+  "row": "| E2.2 | The shared layout on the SF and CPR sheets | sonnet | complete | E2.1 | sheet | no | no | receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; SHA `79f355f04ba4e4373fb5b7cc3f49be3bd86752f2`; settles Q-8.2 |",
   "section": "### E2.2 — SF and CPR sheets\n- **FILES YOU OWN:** `StarfinderCharacterSheet.tsx`, `CyberpunkCharacterSheet.tsx`, `SheetLayout.tsx`.\n- **Failing test first:** each sheet renders inside `SheetLayout`.\n- **Acceptance:** the test; screenshots of both. **Depends:** E2.1. **Tier:** sonnet.",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
@@ -330,7 +369,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E2.3 | Open campaign button opens the folder; one banner per campaign; Manager banner smaller | opus | todo | E2.2 | sheet | no | hub | |",
+  "row": "| E2.3 | Open campaign button opens the folder; one banner per campaign; Manager banner smaller | opus | complete | E2.2 | sheet | no | hub | receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; SHA `85af984e595df395a86f2a12047e39f8e4861170` |",
   "section": "### E2.3 — the campaign button (item 18)\n- **FILES YOU OWN:** `CharacterSheet.tsx` (`hub`), `CharacterHubPage.tsx`, `ui/campaign/CampaignManagerScreen.tsx`,\n  the membership DTO producer if the path is not on it (to verify in the card), tests.\n- **Failing test first:** clicking Open with a real membership row calls the handler with an absolute path (fails\n  today: passes the UUID).\n- **Acceptance:** the test; one banner per membership; the Manager banner's height stated before/after.\n- **Depends:** E2.2. **Tier:** opus.",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
@@ -344,7 +383,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | todo | E0.5, E2.3 | sheet | yes (root + desktop) | hub | new runtime data read: `bundle.resources` + `packaged_resources.rs` |",
+  "row": "| E2.4 | Rest and recovery: cited table, engine command, print block, override field | opus | complete | E0.5, E2.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; SHA `4caf5d7df78eb51fb7e62a6d2bbfa7c165d8fc5e` |",
   "section": "### E2.4 — rest and recovery text (item 2)\n- **Objective:** per `decisions.md §8`: the cited table, one engine command, the print block after the bio page,\n  the `custom.json` override field.\n- **FILES YOU OWN:** the table file (a new JSON under `data/` read through `repo_root()`) **plus** its\n  `tauri.conf.json` `bundle.resources` entry **and** an assertion in `apps/desktop/src-tauri/tests/packaged_resources.rs`;\n  `src/rules_core/rest_text.rs` (new); `desktop/print/blocks/rest.rs` (new) and `print/layout/mod.rs:312`\n  region; `desktop/character_custom.rs` (one field); `desktop/main.rs` (`hub`).\n- **Failing test first:** a Wizard 5 / Elf prints its rows under the bio page; with the override set, the\n  override prints instead.\n- **Acceptance:** those tests; `cd apps/desktop/src-tauri && cargo test --test packaged_resources`; every table\n  row has a citation (a test).\n- **Depends:** E0.5, E2.3. **Tier:** opus.",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
@@ -357,8 +396,21 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E2.5 | Rest text read-only under the Biography text | sonnet | todo | E2.4 | sheet | no | hub | |",
+  "row": "| E2.5 | Rest text read-only under the Biography text | sonnet | complete | E2.4 | sheet | no | hub | receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; SHA `74cb141f8877f85038de2c769aebf0808a75a4e0` |",
   "section": "### E2.5 — rest text on the Biography tab (item 2 adjustment)\n- **FILES YOU OWN:** `CharacterSheet.tsx` (`hub`, the Biography branch at `:4532`), a boundary file for the\n  command.\n- **Failing test first:** after a blur on the biography field, the saved `bio.biography` does not contain the rest\n  text; the rest text renders below the field in the print order.\n- **Acceptance:** the test. **Depends:** E2.4. **Tier:** sonnet.",
+  "phase": "E2 — sheet layout, campaign button, rest text"
+ },
+ {
+  "id": "E2.6",
+  "tier": "sonnet",
+  "deps": [
+   "E2.5"
+  ],
+  "lane": "sheet",
+  "cargo": false,
+  "hub": true,
+  "row": "| E2.6 | Rest-and-recovery override editor: the Custom dialog writes `custom.json` `restText` (decisions.md §8 \"in the custom rules menu\"); clearing it restores the table text — discovered by E2.MC | sonnet | todo | E2.5 | sheet | no | hub | discovered E2.MC (`artifacts/epic_2/E2.MC_cycle_receipt.md`, \"Discovered cards\"); retro key `dod-clause-without-owner-card` |",
+  "section": "### E2.6 — rest-and-recovery override editor (discovered by E2.MC)\n- **Objective:** `decisions.md §8`: the override is set \"in the custom rules menu\". E2.4 added the\n  `custom.json` field (`character_custom.rs:170` `rest_text`, length-checked `:273`) and both surfaces honour it,\n  but no screen writes it: `git grep -n restText -- apps/desktop/src` hits only `boundary/loadRestText.ts` (a\n  reader); `boundary/characterCustom.ts` carries no `restText`. A player can set it only by editing `custom.json`.\n- **FILES YOU OWN:** `CharacterSheet.tsx` (`hub`, the Custom dialog), `boundary/characterCustom.ts` (the DTO\n  field), their tests; `character_custom.rs` only if the save path drops the field (named in the receipt first).\n- **Failing test first:** saving the Custom dialog with rest text \"X\" writes `restText: \"X\"`; the Biography tab and\n  `load_rest_text` then return the override; clearing it (empty) removes the field and the table rows return.\n- **Acceptance:** the test; a screenshot of the field and of the Biography tab with the override. **Depends:** E2.5.\n  **Tier:** sonnet.\n- **Does not cover:** per-line override (Q-2.2 whole-text replace); the House Rules menu (E6.2).",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
  {
@@ -370,7 +422,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E2.MC | E2 merge check + epic report | opus | todo | E2.5 | sheet | yes (base build) | no | |",
+  "row": "| E2.MC | E2 merge check + epic report | opus | complete | E2.5 | sheet | yes (base build) | no | receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; SHA `8b84bc240323d132d5eb996f41a0297b67455e3a`; discovered E2.6 |",
   "section": "### E2.MC — E2 merge check\n- **Acceptance:** screenshots of all three sheets at a short window; the PDF's bio page with the rest block\n  (`pdftotext` excerpt); the four-check audit. **Tier:** opus.",
   "phase": "E2 — sheet layout, campaign button, rest text"
  },
@@ -384,7 +436,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | todo | E0.1, E2.5 | sheet | no | hub | Q-22.3 settled: rename |",
+  "row": "| E3.1 | Rename the Feats tab to Abilities (operator ruling Q-22.3, 2026-11-22): seven sub-tabs with Feats as one of them, existing surfaces moved, no behaviour change | opus | complete | E0.1, E2.5 | sheet | no | hub | receipt `artifacts/epic_3/E3.1_cycle_receipt.md`; SHA `23f5984466610573b3ada4acda5e3a45f72b98b1` |",
   "section": "### E3.1 — the tab shell\n- **Objective:** `SHEET_TABS` `Feats` → `Abilities` (OPERATOR 2026-11-22, Q-22.3: rename); seven sub-tabs; Feats sub-tab = `FeatsTab`\n  unchanged; `TraitsSection`, `RacialTraitsSection`, the pool reference lists and\n  `ClassFeatureDescriptionReferenceSection` moved to their sub-tabs. Sub-tabs whose engine card has not landed\n  show a notice naming that card; E3.MC asserts none remain.\n- **FILES YOU OWN:** `CharacterSheet.tsx` (`hub`), `ui/characterHub/AbilitiesTab.tsx` (new) + test.\n- **Failing test first:** `AbilitiesTab.test.ts`: seven sub-tab labels in PCGen's order; Feats sub-tab renders\n  the feat budget line.\n- **Acceptance:** the test; the existing FeatsTab tests unchanged and green. **Depends:** E0.1, E2.5.\n  **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -397,7 +449,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | todo | E3.1 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.2 | Engine: generic ability-budget module, saved selections, list/add/remove commands; proved on Traits | opus | complete | E3.1 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.2_cycle_receipt.md`; SHA `110abeaa104f325c42ae70d1588782daac520ab9` |",
   "section": "### E3.2 — the generic engine, proved on Traits\n- **Objective:** `src/rules_core/ability_budget.rs` (new) in `feat_budget.rs`'s shape: pools per sub-tab with\n  sources per level, `explanation_rows()` → `abilities.budget.<subtab>.<pool>.{granted,spent,remaining}`,\n  `refusal()`; a saved selections field on `ChosenCharacterState` with `#[serde(default)]`; commands\n  `list_ability_options` (each option with `qualified` and the unmet reasons), `add_ability_selection`,\n  `remove_ability_selection`, registered in `main.rs`. Traits: the budget and the one-per-category rule as the\n  books state them (E0.1 cites the source).\n- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `src/rules_core/mod.rs`, `src/rules_core/character_input.rs`\n  (field), the saved-character serializer, `desktop/abilities.rs` (new), `desktop/main.rs` and\n  `desktop/character_hub.rs` (rows into the load response) (`hub`), `ui/boundary/abilities.ts` (new),\n  `apps/desktop/src-tauri/tests/old_save_loads_unchanged.rs` (a new case).\n- **Failing test first:** a Traits case: a level-1 character with two traits → `remaining 0`; a third is refused\n  with the pool named; two traits of one category → refused with the category named.\n- **Acceptance:** `cargo test --lib ability_budget` (root) ≥ 1; `cd apps/desktop/src-tauri && cargo test --test\n  old_save_loads_unchanged` green.\n- **Depends:** E3.1. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -410,7 +462,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": false,
   "hub": true,
-  "row": "| E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | todo | E3.2 | sheet | no | hub | |",
+  "row": "| E3.3 | Generic sub-tab UI; Traits sub-tab on it | opus | complete | E3.2 | sheet | no | hub | receipt `artifacts/epic_3/E3.3_cycle_receipt.md`; SHA `260275938f1bdb14f141f0db3bc30d7f002e9517` |",
   "section": "### E3.3 — the generic sub-tab UI on Traits\n- **Objective:** `AbilitySubTab.tsx` (new): Available (search, Qualified filter, unqualified drawn differently),\n  Selected (with Choices), Info pane, remaining per pool, Add/Remove disabled with the engine's reason. Traits\n  sub-tab on it.\n- **FILES YOU OWN:** `ui/characterHub/AbilitySubTab.tsx` + `abilitySubTabModel.ts` + tests (new),\n  `AbilitiesTab.tsx`, `CharacterSheet.tsx` (`hub`).\n- **Failing test first:** the model renders `granted/spent/remaining` from rows only; a test that no number in the\n  model is computed from anything but rows.\n- **Acceptance:** the tests; `npm test && npm run typecheck`. **Depends:** E3.2. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -423,7 +475,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.4 | Class Features: grants per level for every catalog pool | opus | todo | E3.3 | sheet | yes (root + desktop) | hub | split rule per E0.1 |",
+  "row": "| E3.4 | Class Features: grants per level for every catalog pool | opus | complete | E3.3 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.4_cycle_receipt.md`; SHA `1391c72f1ea5b393f3b750c83f0e222fe5afe8d0`; discovered E3.13, E3.14 (split rule) |",
   "section": "### E3.4 — Class Features: grants per level\n- **Objective:** pool sizes per level for every Class Features pool in the catalog (not two), from the class\n  records' tokens E0.1 named; rows per pool with the class level that granted each pick.\n- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `src/rules_core/class_feature_pool_catalog.rs` (read\n  API only), `desktop/abilities.rs`, `AbilitiesTab.tsx`; `POOL_REFERENCE_SECTIONS` removed from\n  `CharacterSheet.tsx` (`hub`).\n- **Failing test first:** Rogue 6 → Rogue Talent granted 3; Barbarian 4 → Rage Power 2; Ninja 2 → Ninja Trick 1\n  (the expected values transcribed from the book text, not from the engine's read path).\n- **Acceptance:** those tests; a census test that every pool in the catalog with a class owner yields a grant row\n  or appears in E0.1's data-gap list. **Depends:** E3.3. **Tier:** opus.\n- **Split rule:** if E0.1 shows more than one token shape for pool size, this card covers the shapes for the\n  pools named in the test and files a discovered card per further shape before E3.5 starts.",
   "phase": "E3 — the Abilities tab"
  },
@@ -436,7 +488,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.5 | Class Features: pool-member prerequisite evaluator and refusal reasons | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.5 | Class Features: pool-member prerequisite evaluator and refusal reasons | opus | complete | E3.4 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.5_cycle_receipt.md`; SHA `9ee4fe96de5db045a6260a80afe4dcd6723ef697`; coverage 7,657 members evaluated, unknown token shape 0; discovered E3.15 |",
   "section": "### E3.5 — Class Features: prerequisites\n- **Objective:** evaluate pool members' `PRE*` tokens (the shapes E0.1 counted) in the engine; options carry\n  `qualified` and the unmet reasons; refusal names them.\n- **FILES YOU OWN:** `src/rules_core/ability_prereqs.rs` (new, reusing `feat_prereqs/` evaluators where the\n  token shape matches), `ability_budget.rs`, `desktop/abilities.rs`.\n- **Failing test first:** Silent Kill without Assassinate → refused, reason names Assassinate.\n- **Acceptance:** that test; a coverage count over every pool member: evaluated / unknown token shape (the\n  unknown count must be 0 at E3.MC, or each unknown shape is a discovered card). **Depends:** E3.4. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -449,7 +501,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.6 | Racial Abilities: alternate racial traits on the sheet; replaces-conflict refused | opus | todo | E3.5 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.6 | Racial Abilities: alternate racial traits on the sheet; replaces-conflict refused | opus | complete | E3.5 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.6_cycle_receipt.md`; SHA `f014e02fc7795f319e0a949453368a901fdd9816` |",
   "section": "### E3.6 — Racial Abilities\n- **Objective:** alternate racial traits selectable on the sheet, reusing `list_alternate_racial_traits` /\n  `resolve_race_alternate_selection` (`desktop/race_trait_picker.rs:1067`, `:1075`); two alternates replacing\n  the same trait refused.\n- **FILES YOU OWN:** `ability_budget.rs`, `desktop/abilities.rs`, `desktop/race_trait_picker.rs` (if a shared\n  function is extracted), `AbilitiesTab.tsx`.\n- **Failing test first:** a Human with an alternate that replaces the bonus feat; a second alternate replacing it\n  refused; the feat budget's racial pool follows (`feat_budget.rs` reads replaced traits).\n- **Acceptance:** those tests. **Depends:** E3.5. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -462,7 +514,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.7 | Archetype: select per class; slot conflicts refused; grants feed pools | opus | todo | E3.6 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.7 | Archetype: select per class; slot conflicts refused; grants feed pools | opus | complete | E3.6 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.7_cycle_receipt.md`; SHA `a85085a55ed73e07bb9318e0fb3ab73d57cc1c8c`; discovered E3.16 |",
   "section": "### E3.7 — Archetype\n- **Objective:** select an archetype per held class as `SelectedChoice{choice:archetype}`\n  (`src/rules_core/archetype_resolver.rs:41`); two archetypes claiming the same slot refused (`archetype_claims_slot`);\n  archetype-granted pools feed E3.4.\n- **FILES YOU OWN:** `ability_budget.rs`, `archetype_resolver.rs` (read API), `desktop/abilities.rs`,\n  `AbilitiesTab.tsx`.\n- **Failing test first:** Rogue with two archetypes that both replace Trapfinding → refused, reason names the\n  slot.\n- **Acceptance:** the test. **Depends:** E3.6. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -475,7 +527,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.8 | Favored class bonus: class pick, per-level HP / skill / race alternates; engine totals | opus | todo | E3.7 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.8 | Favored class bonus: class pick, per-level HP / skill / race alternates; engine totals | opus | complete | E3.7 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.8_cycle_receipt.md`; SHA `c6a8b9f3fd98b1caa9fe930c550368e5b2d0d3f8` |",
   "section": "### E3.8 — favored class bonus\n- **Objective:** per `decisions.md §19`.\n- **FILES YOU OWN:** `ability_budget.rs`, the HP and skill-point producers that read it (to verify:\n  `grep -rn \"favored_hit_points\\|skill_points\" src/rules_core apps/desktop/src-tauri/src --include=*.rs`),\n  `desktop/abilities.rs`, `AbilitiesTab.tsx`, the PCGen import mapping only if a double count is found.\n- **Failing test first:** Fighter 3 favored Fighter with HP at 1–3 → HP total +3; skill at level 2 → skill pool +1;\n  an imported character with `favored_hit_points` grants is not counted twice.\n- **Acceptance:** those tests. **Depends:** E3.7. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -488,7 +540,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.9 | Background and Misc sub-tabs per E0.1's mapping | opus | todo | E3.8 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E3.9 | Background and Misc sub-tabs per E0.1's mapping | opus | complete | E3.8 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.9_cycle_receipt.md`; SHA `bb7d887eeb8f568fc4f932cdee45b74384b0a7f9`; discovered E3.17 |",
   "section": "### E3.9 — Background and Misc\n- **Objective:** per E0.1's mapping: engine budget and prerequisites for whatever records exist; a data-gap\n  sentence where E0.1 found none.\n- **FILES YOU OWN:** `ability_budget.rs`, `desktop/abilities.rs`, `AbilitiesTab.tsx`.\n- **Failing test first:** written from E0.1's mapping (the card states it).\n- **Acceptance:** each sub-tab either renders engine rows or the data-gap sentence matching E0.1's list.\n  **Depends:** E3.8. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -501,7 +553,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.10 | Overrides on the six new sub-tabs (two flags) | sonnet | todo | E3.9 | sheet | yes (desktop) | hub | |",
+  "row": "| E3.10 | Overrides on the six new sub-tabs (two flags) | sonnet | complete | E3.9 | sheet | yes (desktop) | hub | receipt `artifacts/epic_3/E3.10_cycle_receipt.md`; SHA `9be9340ad3e5392c2f583aa6652440e21d9b0871` |",
   "section": "### E3.10 — overrides\n- **Objective:** `abilities_without_prerequisites`, `ignore_ability_budget` in `Overrides`\n  (`desktop/character_custom.rs:131`); admitted picks show their flag.\n- **FILES YOU OWN:** `desktop/character_custom.rs`, `desktop/character_ledger.rs` (admitted records),\n  `desktop/abilities.rs`, `AbilitySubTab.tsx`, `ui/characterHub/customModel.ts`.\n- **Failing test first:** with the flag on, an unqualified pick is admitted and flagged; off, refused.\n- **Acceptance:** the test. **Depends:** E3.9. **Tier:** sonnet.",
   "phase": "E3 — the Abilities tab"
  },
@@ -529,6 +581,71 @@ const CARDS = [
   "hub": false,
   "row": "| E3.12 | DISCOVERED (E0.1): ingest the oracle's member typing (`<record>.MOD TYPE:` lines) so the 30 ingest-gap pools in E0.1's data-gap list get members; add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with no ABILITYCATEGORY | opus | todo | E0.1 | sheet | yes (root) | no | must be complete before E3.MC; E3.MC's notice count then = the 4 book gaps; `artifacts/epic_0/abilities-census.json` `data_gap_list[].cause` |",
   "section": "### E3.12 — ingest-gap pools get members (discovered by E0.1, 2026-11-22)\n- **Objective:** close the 30 ingest-cause entries of E0.1's data-gap list (`artifacts/epic_0/abilities-census.json`\n  `data_gap_list[]`, 34 entries: 30 `cause` starting `ingest:`, 4 `the books in the corpus define no members` —\n  `python3 -c \"import json,collections;g=json.load(open('artifacts/epic_0/abilities-census.json'))['data_gap_list'];print(len(g),sum(x['cause'].startswith('ingest:') for x in g))\"`\n  → `34 30`): apply the oracle's member typing (`<record>.MOD TYPE:` lines) in the ingest so those pools get members;\n  add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with\n  no ABILITYCATEGORY (E0.1 receipt, \"Discovered cards\").\n- **FILES YOU OWN:** the ingest step that applies `.MOD` lines (located by the card: `git grep -n 'MOD' crates/codex-ingest/src/pcgen_import`),\n  its test, the regenerated corpus records it writes, `data/class_feature_grants`; second call sites by `git grep` per the prefix.\n  Nothing from the oracle is read at runtime (prefix: THE ORACLE).\n- **Failing test first:** a test that the 30 ingest-gap pools have ≥ 1 member each fails today (E0.1: 0 members).\n- **Acceptance:** `python3 -I artifacts/epic_0/abilities_census.py --check` exits 0 and the re-run census reports\n  `data_gap_list` = 4 entries, every one `the books in the corpus define no members`; the new test green; root\n  `cargo test --locked -j 8 --lib -- --test-threads=8` and the desktop workspace green. **Depends:** E0.1 (lane order:\n  after E3.11, before E3.MC). **Tier:** opus.\n- **Does not cover:** the 4 book gaps (they stay as on-screen data-gap notices, E3.MC).",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.13",
+  "tier": "opus",
+  "deps": [
+   "E3.4"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": true,
+  "row": "| E3.13 | DISCOVERED (E3.4): level-1 `ABILITYSELECTION` picks — the 5 bloodline pools whose size is an `offers` count with no `Pool` target — get `abilities.budget.class_features.*` rows and picks | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | must be complete before E3.MC; E3.4's census then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` |",
+  "section": "### E3.13 — level-1 ABILITYSELECTION picks on Class Features (discovered by E3.4, 2026-11-23)\n- **Objective:** E3.4's split rule: the pool-size shape that is not a `Pool` grant. E0.1 counts 5 class-owned pools whose\n  only mechanism is `abilityselection` (Blood of Dragons Bloodline, Bloodrager Bloodline, Crossblooded Bloodline,\n  Crossblooded Rager Bloodline, Sorcerer Bloodline); the converter writes them as an `offers` with a count and no\n  `Pool` target (`core_rulebook:class_feature:sorcerer_standard_bloodline_selection`, count 1, from pool\n  `sorcerer_bloodline`). Give them `abilities.budget.class_features.<pool>.*` rows sized by the offer's count, members\n  from the offer, and picks saved in `ability_selections`; reconcile with the per-class choice ids creation already\n  records (`selected_choices`) so a bloodline is not held twice.\n- **Figure:** `python3 -c \"import json;p=json.load(open('docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_0/abilities-census.json'))['class_feature_pools']['pools'];print(sorted(n for n,v in p.items() if 'class' in v['granted_by'] and v['mechanisms']==['abilityselection']))\"` → the 5 names above.\n- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `apps/desktop/src-tauri/src/abilities.rs`; second call sites per the prefix.\n- **Failing test first:** Sorcerer 1 → `abilities.budget.class_features.sorcerer_bloodline.granted` = 1 (CRB: a sorcerer\n  chooses one bloodline at 1st level); E3.4's census test then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` to empty.\n- **Acceptance:** that test; E3.4's census test green with no split-off list. **Depends:** E3.4. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.14",
+  "tier": "opus",
+  "deps": [
+   "E3.4"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` list their members (converter carries the category's member filter) | opus | todo | E3.4 | sheet | yes (root + desktop) | no | must be complete before E3.MC; `python3 -I artifacts/epic_3/E3.4/pool_shapes.py .` → `… of which no offer 31` |",
+  "section": "### E3.14 — members for pools whose grants carry no offer (discovered by E3.4, 2026-11-23)\n- **Objective:** 31 of the 148 class-owned class-feature pools (E0.1 census, class among `granted_by`, a converted\n  `Pool` grant, not a feat pool) have no `offers` on any grant rule, so E3.4's sub-tab shows their pool line with no\n  members: the ABILITYCATEGORY's member filter (`TYPE`) never reached the package. The converter carries each pool's\n  member filter (an `offers` or a pool → tags table in the package) so `class_feature_options` lists them; until then\n  the sub-tab names this card for a pool with no members.\n- **Figure:** `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.4/pool_shapes.py .` printed `class-owned 181 no Pool target 5 feat pools 28 class-feature pools 148 of which no offer 31`\n  (the list: 20 oracle mystery revelation pools, 5 kineticist element pools, Amateur Gunslinger, Craft Skill Bonus,\n  Guileful Polyglot Additional Language, Gun Training Choice, Gunslinger Battered Gun, Samurai Expertise, Shaman Hex —\n  the script prints it).\n- **FILES YOU OWN:** the sheet-rule converter's offer emission (located by the card: `git grep -n \"offers\" crates/ src/rules_core/sheet_rule*.rs`),\n  the regenerated `data/sheet_rules` records, `src/rules_core/ability_budget.rs`.\n- **Failing test first:** an Oracle 1 with the Flame mystery lists ≥ 1 Flame revelation option (0 today).\n- **Acceptance:** that test; a census that every class-owned class-feature pool with a grant lists ≥ 1 member or is on\n  E0.1's data-gap list. **Depends:** E3.4. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.15",
+  "tier": "opus",
+  "deps": [
+   "E3.5"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.15 | DISCOVERED (E3.5): Class Features picks held by the sheet — `HeldSeed::from_record` seeds saved `ability_selections` (Class Features) so a pick's own rules reach the sheet and its print, not only the options and the add path | opus | todo | E3.5 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.5 receipt \"Rulings\" (picks held for options/grants only, `ability_budget::picked_rules`) |",
+  "section": "### E3.15 — Class Features picks held by the sheet (discovered by E3.5, 2026-11-23)\n- **Objective:** a saved Class Features pick (`ChosenCharacterState.ability_selections`, subtab `class_features`) is\n  held wherever the character's held set is built, so the pick's own rules (a bonus, a granted pool, a printed\n  line) reach the sheet and the print. E3.5 holds picks only where the Class Features options and grants are\n  evaluated (`ability_budget::picked_rules`); `HeldSeed::from_record` (`src/rules_core/sheet_rule.rs`) still omits them.\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed::from_record`), `src/rules_core/ability_budget.rs`\n  (drop `picked_rules` once the seed carries the picks), the sheet's load path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Rogue 4 holding the Minor Magic pick: the sheet's held set (`held_set` over\n  `HeldSeed::from_character`) holds `core_rulebook:class_feature:rogue_talent_minor_magic` (absent today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.5. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.16",
+  "tier": "opus",
+  "deps": [
+   "E3.7"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.16 | DISCOVERED (E3.7): a held archetype held by the sheet — `HeldSeed::from_record` seeds the saved `choice:archetype` records so a replaced feature's sheet lines and print follow (Two-Handed Fighter still shows the Bravery note) | opus | todo | E3.7 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.7 receipt \"Does not cover\" (d), `artifacts/epic_3/E3.7/07-sheet-reloaded.png` |",
+  "section": "### E3.16 — Archetypes held by the sheet (discovered by E3.7, 2026-11-23)\n- **Objective:** a saved archetype (`selected_choices`, `choice:archetype`, `archetype:<KEY>` or a record id) is held\n  wherever the character's held set is built, so the class features its record replaces leave the sheet and the print\n  (their converted gates read `RuleTag archetype` / the archetype record). E3.7 holds the record only where the\n  Class Features options and grants are read (`ability_budget::picked_rules`); `HeldSeed::from_record`\n  (`src/rules_core/sheet_rule.rs`) still omits it, so Brother Tomas Vane with Two-Handed Fighter keeps the\n  \"Will: Bravery: +1 Will vs. fear\" conditional note (`artifacts/epic_3/E3.7/07-sheet-reloaded.png`).\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed`), `src/rules_core/ability_budget.rs` (the selection →\n  record resolver it can reuse; drop the archetype half of `picked_rules` once the seed carries it), the sheet's load\n  path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Fighter 2 holding `archetype:Fighter Archetype ~ Two-Handed Fighter`: the sheet's held set\n  (`held_set` over `HeldSeed::from_character`) holds `advanced_players_guide:class_feature:fighter_archetype_two_handed_fighter`\n  and no Bravery conditional note (both absent / present today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.7. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.17",
+  "tier": "opus",
+  "deps": [
+   "E3.9"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.17 | DISCOVERED (E3.9): Background and Misc picks held by the sheet — `HeldSeed::from_record` seeds the saved `ability_selections` of the `background` and `misc` sub-tabs so a pick's own rules reach the sheet and its print (a Fleshforge Enhancement's +2, a corruption's text), not only the options and the grants | opus | todo | E3.9 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.9 receipt \"Does not cover\" (b), `ability_budget::picked_rules` |",
+  "section": "### E3.17 — Background and Misc picks held by the sheet (discovered by E3.9, 2026-11-23)\n- **Objective:** a saved Background or Misc pick (`ability_selections` with sub-tab `background` or `misc`) is held\n  wherever the character's held set is built, so the pick's own rules reach the sheet and the print (Fleshforge\n  Enhancement's +2 to an ability score; a corruption's rule text). E3.9 holds the picks only where the Background and\n  Misc pools and options are read (`ability_budget::picked_rules`); `HeldSeed::from_record`\n  (`src/rules_core/sheet_rule.rs`) still omits them. Same mechanism as E3.15 (Class Features picks); one change may close both.\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed`), `src/rules_core/ability_budget.rs` (drop the\n  Background/Misc half of `picked_rules` once the seed carries the picks), the sheet's load path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Fighter 1 holding the Misc pick `optional_rules_systems:horror_adventures:ability:rules_use_corruption_standard`:\n  the sheet's held set (`held_set` over `HeldSeed::from_character`) holds `horror_adventures:ability:rules_use_corruption_standard` (absent today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.9. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
  {
@@ -633,7 +750,7 @@ const CARDS = [
   "lane": "settings",
   "cargo": false,
   "hub": false,
-  "row": "| E5.4 | Developer tab slimmed + Corpus Ingest Diagnostic embedded | sonnet | todo | E5.3, E2.3 | settings | no | no | `CharacterHubPage.tsx` shared with E2.3 |",
+  "row": "| E5.4 | Developer tab slimmed + Corpus Ingest Diagnostic embedded | sonnet | complete | E5.3, E2.3 | settings | no | no | receipt `artifacts/epic_5/E5.4_cycle_receipt.md`; SHA `152ca44ab809a8398e9619b149466a61cb98e4a7` |",
   "section": "### E5.4 — Developer tab and the diagnostic (items 16 + 19)\n- **FILES YOU OWN:** `ui/App.tsx`, `ui/settings/SettingsModal.tsx`, `ui/characterHub/LandingScreen.tsx`,\n  `CharacterHubPage.tsx`, `CorpusIngestDiagnosticPanel.tsx`, their tests; `desktop/authoring_workbench.rs:480` if\n  no reader remains; `apps/desktop/scripts/ui-smoke/spec.json` is NOT owned (E7.1).\n- **Failing test first:** the Developer tab renders exactly the kept sections and the diagnostic section.\n- **Acceptance:** the test; `grep -rn \"corpusIngestDiagnostic\\|onCorpusIngestDiagnostic\"\n  apps/desktop/src --include=*.tsx --include=*.ts | awk 'END{print NR}'` → 0. **Depends:** E5.3, E2.3 (shared\n  `CharacterHubPage.tsx`). **Tier:** sonnet.",
   "phase": "E5 — reports, Update menu, Developer tab"
  },
@@ -646,7 +763,7 @@ const CARDS = [
   "lane": "settings",
   "cargo": true,
   "hub": false,
-  "row": "| E5.MC | E5 merge check + epic report | opus | todo | E5.4 | settings | yes (base build) | no | |",
+  "row": "| E5.MC | E5 merge check + epic report | opus | complete | E5.4 | settings | yes (base build) | no | widest scope green on `e5b75764ac` (frontend 227/227; desktop 6 suites 1,759 ok; root 301 results 6,909 ok; 0 FAILED); audits all OK; 8 PNGs looked at; receipt `artifacts/epic_5/E5.MC_cycle_receipt.md`; SHA `c33c636f736ede95f5e07c7a32b89c179dec2359` |",
   "section": "### E5.MC — E5 merge check\n- **Tier:** opus. Screenshots of both report screens and the Developer tab; the four-check audit.",
   "phase": "E5 — reports, Update menu, Developer tab"
  },
@@ -787,7 +904,7 @@ const CARDS = [
   "phase": "E7 — closure"
  }
 ]
-const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
+const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
