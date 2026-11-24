@@ -8,15 +8,8 @@ import { useState, type ReactNode } from 'react';
 export const ABILITY_SUB_TABS = ['Feats', 'Racial Abilities', 'Traits', 'Archetype', 'Background', 'Class Features', 'Misc'] as const;
 export type AbilitySubTabName = (typeof ABILITY_SUB_TABS)[number];
 
-/** The card that brings each sub-tab's engine budget, picks and prerequisite checks (epic-breakdown.md Epic E3). */
-export const PENDING_ENGINE_CARD: Partial<Record<AbilitySubTabName, string>> = {
-  Background: 'E3.9',
-  Misc: 'E3.9',
-};
-
 export function AbilitiesTab(props: { panels: Record<AbilitySubTabName, ReactNode>; initial?: AbilitySubTabName }) {
   const [active, setActive] = useState<AbilitySubTabName>(props.initial ?? 'Feats');
-  const card = PENDING_ENGINE_CARD[active];
   return (
     <div>
       <div role="tablist" aria-label="Abilities" style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '0.9rem', marginBottom: '1rem' }}>
@@ -42,12 +35,6 @@ export function AbilitiesTab(props: { panels: Record<AbilitySubTabName, ReactNod
           </button>
         ))}
       </div>
-      {card !== undefined ? (
-        <p role="status" style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 1rem', textAlign: 'center' }}>
-          Picking {active.toLowerCase()} on the sheet arrives with engine card {card}: its budget, choices and
-          prerequisite checks are not wired yet.
-        </p>
-      ) : null}
       {props.panels[active]}
     </div>
   );

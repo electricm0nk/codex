@@ -20,6 +20,9 @@
 //! Class Features: the favored class, then a bonus per level of it. A PCGen import's favored class bonus
 //! is already Custom grants (`pcg_import/map.rs` `add_favored_class_bonus`, ids `favored-class-…`); those
 //! spend the bonus pool here ([`imported_favored_bonuses`]) so the same levels are not paid twice.
+//!
+//! **Background** and **Misc** (SD-43 E3.9) are `ability_budget` sub-tabs over PCGen's ability categories shown
+//! there; a pick is saved as an `ability_selections` row like a Class Features pick, at the character's level.
 
 use std::path::Path;
 
@@ -205,7 +208,7 @@ pub struct AbilityOptionsDto {
 fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
     match subtab {
         SubTab::Traits => input.chosen.selected_traits.clone(),
-        SubTab::ClassFeatures => input
+        SubTab::ClassFeatures | SubTab::Background | SubTab::Misc => input
             .chosen
             .ability_selections
             .iter()
@@ -313,6 +316,12 @@ pub(crate) fn add_ability_selection_at_root(
             let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
             mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
         }
+        SubTab::Background | SubTab::Misc => {
+            let (pool, record_key) = option_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no {} pool", subtab.id()))?;
+            let level = input.chosen.class_levels.iter().map(|class| class.level).sum::<u8>().max(1);
+            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
+            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+        }
         SubTab::Archetype => {
             let choice = SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: option_id.to_owned() };
             mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
@@ -351,7 +360,7 @@ pub(crate) fn remove_ability_selection_at_root(
     }
     match subtab_of(subtab)? {
         SubTab::Traits => remove_trait_selection_at_root(root, option_id, saved_at),
-        subtab @ SubTab::ClassFeatures => {
+        subtab @ (SubTab::ClassFeatures | SubTab::Background | SubTab::Misc) => {
             let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
             let held = |pick: &AbilitySelection| pick.subtab == subtab.id() && format!("{}:{}", pick.pool, pick.record_key) == option_id;
             let at = input
@@ -432,7 +441,7 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "traits", "trait:trait_acrobat", SAVED_AT).expect("remove");
         assert_eq!(held_traits(&root), ["trait:trait_axe_to_grind"]);
-        assert!(list_ability_options_at_root(&root, "background").is_err(), "a sub-tab with no engine budget is refused");
+        assert!(list_ability_options_at_root(&root, "no_such_subtab").is_err(), "a sub-tab with no engine budget is refused");
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -467,6 +476,34 @@ mod tests {
 
         remove_ability_selection_at_root(&root, "class_features", &first, SAVED_AT).expect("remove");
         assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [second]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Background (E0.1: 22 categories, 162 records): every character takes one region of origin (Inner Sea World
+    /// Guide); a second is refused naming the pool; the pick saves, lists as selected, and removes.
+    #[test]
+    fn abilities_background_one_region_of_origin_then_refused_and_misc_lists_the_gm_awards() {
+        let root = aldric_root("background");
+        let listed = list_ability_options_at_root(&root, "background").expect("background options");
+        let granted = listed.budget.iter().find(|r| r.id == "abilities.budget.background.region_of_origin.granted").map(|r| r.value);
+        assert_eq!(granted, Some(1));
+        let regions: Vec<&AbilityOptionDto> = listed.options.iter().filter(|o| o.pool == "region_of_origin" && o.qualified).collect();
+        assert!(regions.len() >= 2, "{} regions", regions.len());
+        let (first, second) = (regions[0].id.clone(), regions[1].id.clone());
+        add_ability_selection_at_root(&root, "background", &first, SAVED_AT).expect("a region");
+        let refusal = add_ability_selection_at_root(&root, "background", &second, SAVED_AT).expect_err("a second region");
+        assert!(refusal.contains("region_of_origin pool"), "{refusal}");
+        let listed = list_ability_options_at_root(&root, "background").expect("background options");
+        assert_eq!(listed.selected, std::slice::from_ref(&first));
+        let pick = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        assert_eq!((pick[0].subtab.as_str(), pick[0].level), ("background", 3), "saved at Aldric's level");
+        remove_ability_selection_at_root(&root, "background", &first, SAVED_AT).expect("remove");
+        assert!(list_ability_options_at_root(&root, "background").expect("options").selected.is_empty());
+
+        let misc = list_ability_options_at_root(&root, "misc").expect("misc options");
+        let award = misc.options.iter().find(|o| o.pool == "gm_awards" && o.qualified).expect("a GM award");
+        add_ability_selection_at_root(&root, "misc", &award.id, SAVED_AT).expect("a GM award (an editable pool)");
+        assert_eq!(list_ability_options_at_root(&root, "misc").expect("misc").selected, std::slice::from_ref(&award.id));
         std::fs::remove_dir_all(&root).ok();
     }
 

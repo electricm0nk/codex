@@ -1,0 +1,2414 @@
+{
+ "generator": "python3 scripts/derive_ability_categories.py",
+ "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
+ "categories": [
+  {
+   "pool": "acadamae_reward",
+   "name": "Acadamae Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AcadamaeReward"
+   ]
+  },
+  {
+   "pool": "arcanamirium_reward",
+   "name": "Arcanamirium Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ArcanamiriumReward"
+   ]
+  },
+  {
+   "pool": "citadel_enferac_reward",
+   "name": "Citadel Enferac Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "CitadelEnferacReward"
+   ]
+  },
+  {
+   "pool": "crimson_citadel_reward",
+   "name": "Crimson Citadel Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "CrimsonCitadelReward"
+   ]
+  },
+  {
+   "pool": "eclectic_training_choice",
+   "name": "Eclectic Training Choice",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GuildEclecticTraining"
+   ]
+  },
+  {
+   "pool": "esoteric_training_choice",
+   "name": "Esoteric Training Choice",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GuildEsotericTraining"
+   ]
+  },
+  {
+   "pool": "fleshforge_enhancement",
+   "name": "Fleshforge Enhancement",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "FleshforgeAbilityBonus"
+   ]
+  },
+  {
+   "pool": "fleshforge_penalty",
+   "name": "Fleshforge Penalty",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "FleshforgeAbilityPenalty"
+   ]
+  },
+  {
+   "pool": "harrowed_trumps",
+   "name": "Harrowed Trumps",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HarrowedTrump"
+   ]
+  },
+  {
+   "pool": "human_ethnicity",
+   "name": "Human Ethnicity",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "background",
+   "member_tags": [
+    "HumanEthnicity"
+   ]
+  },
+  {
+   "pool": "kintargo_opera_house_reward",
+   "name": "Kintargo Opera House Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "KintargoOperaHouseReward"
+   ]
+  },
+  {
+   "pool": "magaambya_reward",
+   "name": "Magaambya Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "MagaambyaReward"
+   ]
+  },
+  {
+   "pool": "magic_school_choice",
+   "name": "Magic School Choice",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "MagicSchool"
+   ]
+  },
+  {
+   "pool": "monastery_reward",
+   "name": "Monastery Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "MonasteryReward"
+   ]
+  },
+  {
+   "pool": "oenopion_fleshforges_reward",
+   "name": "Oenopion Fleshforges Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "OenopionFleshforgesReward"
+   ]
+  },
+  {
+   "pool": "poisioners_guild_reward",
+   "name": "Poisioners Guild Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PoisionersGuildReward"
+   ]
+  },
+  {
+   "pool": "region_of_origin",
+   "name": "Region of Origin",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "background",
+   "member_tags": [
+    "Region"
+   ]
+  },
+  {
+   "pool": "senior_guild_member_choice",
+   "name": "Senior Guild Member Choice",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GuildSeniorMember"
+   ]
+  },
+  {
+   "pool": "shoanti_clan",
+   "name": "Shoanti Clan",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "background",
+   "member_tags": [
+    "ShoantiClan"
+   ]
+  },
+  {
+   "pool": "skill_specialization",
+   "name": "Skill Specialization",
+   "subtab": "background",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "SkillSpecialization"
+   ]
+  },
+  {
+   "pool": "the_harrowed_society_reward",
+   "name": "The Harrowed Society Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "TheHarrowedSocietyReward"
+   ]
+  },
+  {
+   "pool": "white_grotto_reward",
+   "name": "White Grotto Reward",
+   "subtab": "background",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "WhiteGrottoReward"
+   ]
+  },
+  {
+   "pool": "accursed_baleful_glare_gift_choice",
+   "name": "Accursed Baleful Glare Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedBalefulGlareGift"
+   ]
+  },
+  {
+   "pool": "accursed_baleful_glare_stain_choice",
+   "name": "Accursed Baleful Glare Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedBalefulGlareStain"
+   ]
+  },
+  {
+   "pool": "accursed_cold_iron_allergy_gift_choice",
+   "name": "Accursed Cold Iron Allergy Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedColdIronAllergyGift"
+   ]
+  },
+  {
+   "pool": "accursed_cold_iron_allergy_stain_choice",
+   "name": "Accursed Cold Iron Allergy Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedColdIronAllergyStain"
+   ]
+  },
+  {
+   "pool": "accursed_cruel_deceiver_gift_choice",
+   "name": "Accursed Cruel Deceiver Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedCruelDeceiverGift"
+   ]
+  },
+  {
+   "pool": "accursed_cruel_deceiver_stain_choice",
+   "name": "Accursed Cruel Deceiver Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedCruelDeceiverStain"
+   ]
+  },
+  {
+   "pool": "accursed_grim_fate_gift_choice",
+   "name": "Accursed Grim Fate Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedGrimFateGift"
+   ]
+  },
+  {
+   "pool": "accursed_grim_fate_stain_choice",
+   "name": "Accursed Grim Fate Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedGrimFateStain"
+   ]
+  },
+  {
+   "pool": "accursed_horrific_shock_gift_choice",
+   "name": "Accursed Horrific Shock Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedHorrificShockGift"
+   ]
+  },
+  {
+   "pool": "accursed_horrific_shock_stain_choice",
+   "name": "Accursed Horrific Shock Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedHorrificShockStain"
+   ]
+  },
+  {
+   "pool": "accursed_manifestation_choice",
+   "name": "Accursed Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedManifestation"
+   ]
+  },
+  {
+   "pool": "accursed_spiteful_transformation_gift_choice",
+   "name": "Accursed Spiteful Transformation Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedSpitefulTransformationGift"
+   ]
+  },
+  {
+   "pool": "accursed_spiteful_transformation_stain_choice",
+   "name": "Accursed Spiteful Transformation Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedSpitefulTransformationStain"
+   ]
+  },
+  {
+   "pool": "accursed_undying_hatred_gift_choice",
+   "name": "Accursed Undying Hatred Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedUndyingHatredGift"
+   ]
+  },
+  {
+   "pool": "accursed_undying_hatred_stain_choice",
+   "name": "Accursed Undying Hatred Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedUndyingHatredStain"
+   ]
+  },
+  {
+   "pool": "accursed_weakening_claws_gift_choice",
+   "name": "Accursed Weakening Claws Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedWeakeningClawsGift"
+   ]
+  },
+  {
+   "pool": "accursed_weakening_claws_stain_choice",
+   "name": "Accursed Weakening Claws Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedWeakeningClawsStain"
+   ]
+  },
+  {
+   "pool": "accursed_wish_peddler_gift_choice",
+   "name": "Accursed Wish Peddler Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedWishPeddlerGift"
+   ]
+  },
+  {
+   "pool": "accursed_wish_peddler_stain_choice",
+   "name": "Accursed Wish Peddler Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "AccursedWishPeddlerStain"
+   ]
+  },
+  {
+   "pool": "afflictions",
+   "name": "Afflictions",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "afflictions",
+   "member_tags": []
+  },
+  {
+   "pool": "corruption_type_choice",
+   "name": "Corruption Type Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "CorruptionType"
+   ]
+  },
+  {
+   "pool": "deep_one_bloodthirst_gift_choice",
+   "name": "Deep One Bloodthirst Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneBloodthirstGift"
+   ]
+  },
+  {
+   "pool": "deep_one_bloodthirst_stain_choice",
+   "name": "Deep One Bloodthirst Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneBloodthirstStain"
+   ]
+  },
+  {
+   "pool": "deep_one_call_of_the_deep_gift_choice",
+   "name": "Deep One Call of the Deep Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneCallOfTheDeepGift"
+   ]
+  },
+  {
+   "pool": "deep_one_call_of_the_deep_stain_choice",
+   "name": "Deep One Call of the Deep Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneCallOfTheDeepStain"
+   ]
+  },
+  {
+   "pool": "deep_one_claws_of_the_deep_gift_choice",
+   "name": "Deep One Claws of the Deep Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneClawsOfTheDeepGift"
+   ]
+  },
+  {
+   "pool": "deep_one_claws_of_the_deep_stain_choice",
+   "name": "Deep One Claws of the Deep Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneClawsOfTheDeepStain"
+   ]
+  },
+  {
+   "pool": "deep_one_deep_adaptation_gift_choice",
+   "name": "Deep One Deep Adaptation Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneDeepAdaptationGift"
+   ]
+  },
+  {
+   "pool": "deep_one_deep_adaptation_stain_choice",
+   "name": "Deep One Deep Adaptation Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneDeepAdaptationStain"
+   ]
+  },
+  {
+   "pool": "deep_one_deepsight_gift_choice",
+   "name": "Deep One Deepsight Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneDeepsightGift"
+   ]
+  },
+  {
+   "pool": "deep_one_deepsight_stain_choice",
+   "name": "Deep One Deepsight Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneDeepsightStain"
+   ]
+  },
+  {
+   "pool": "deep_one_landwalker_gift_choice",
+   "name": "Deep One Landwalker Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneLandwalkerGift"
+   ]
+  },
+  {
+   "pool": "deep_one_landwalker_stain_choice",
+   "name": "Deep One Landwalker Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneLandwalkerStain"
+   ]
+  },
+  {
+   "pool": "deep_one_loathsome_gills_gift_choice",
+   "name": "Deep One Loathsome Gills Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneLoathsomeGillsGift"
+   ]
+  },
+  {
+   "pool": "deep_one_loathsome_gills_stain_choice",
+   "name": "Deep One Loathsome Gills Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneLoathsomeGillsStain"
+   ]
+  },
+  {
+   "pool": "deep_one_manifestation_choice",
+   "name": "Deep One Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneManifestation"
+   ]
+  },
+  {
+   "pool": "deep_one_siltsight_gift_choice",
+   "name": "Deep One Siltsight Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSiltsightGift"
+   ]
+  },
+  {
+   "pool": "deep_one_siltsight_stain_choice",
+   "name": "Deep One Siltsight Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSiltsightStain"
+   ]
+  },
+  {
+   "pool": "deep_one_slow_aging_gift_choice",
+   "name": "Deep One Slow Aging Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSlowAgingGift"
+   ]
+  },
+  {
+   "pool": "deep_one_slow_aging_stain_choice",
+   "name": "Deep One Slow Aging Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSlowAgingStain"
+   ]
+  },
+  {
+   "pool": "deep_one_swimmer_in_the_deep_gift_choice",
+   "name": "Deep One Swimmer in the Deep Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSwimmerInTheDeepGift"
+   ]
+  },
+  {
+   "pool": "deep_one_swimmer_in_the_deep_stain_choice",
+   "name": "Deep One Swimmer in the Deep Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "DeepOneSwimmerInTheDeepStain"
+   ]
+  },
+  {
+   "pool": "ghoul_brain_eater_gift_choice",
+   "name": "Ghoul Brain Eater Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulBrainEaterGift"
+   ]
+  },
+  {
+   "pool": "ghoul_brain_eater_stain_choice",
+   "name": "Ghoul Brain Eater Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulBrainEaterStain"
+   ]
+  },
+  {
+   "pool": "ghoul_corpse_armor_gift_choice",
+   "name": "Ghoul Corpse Armor Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulCorpseArmorGift"
+   ]
+  },
+  {
+   "pool": "ghoul_corpse_armor_stain_choice",
+   "name": "Ghoul Corpse Armor Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulCorpseArmorStain"
+   ]
+  },
+  {
+   "pool": "ghoul_diseased_bite_gift_choice",
+   "name": "Ghoul Diseased Bite Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulDiseasedBiteGift"
+   ]
+  },
+  {
+   "pool": "ghoul_diseased_bite_stain_choice",
+   "name": "Ghoul Diseased Bite Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulDiseasedBiteStain"
+   ]
+  },
+  {
+   "pool": "ghoul_gnashing_bite_gift_choice",
+   "name": "Ghoul Gnashing Bite Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGnashingBiteGift"
+   ]
+  },
+  {
+   "pool": "ghoul_gnashing_bite_stain_choice",
+   "name": "Ghoul Gnashing Bite Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGnashingBiteStain"
+   ]
+  },
+  {
+   "pool": "ghoul_greater_paralysis_gift_choice",
+   "name": "Ghoul Greater Paralysis Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGreaterParalysisGift"
+   ]
+  },
+  {
+   "pool": "ghoul_greater_paralysis_stain_choice",
+   "name": "Ghoul Greater Paralysis Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGreaterParalysisStain"
+   ]
+  },
+  {
+   "pool": "ghoul_greater_stench_gift_choice",
+   "name": "Ghoul Greater Stench Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGreaterStenchGift"
+   ]
+  },
+  {
+   "pool": "ghoul_greater_stench_stain_choice",
+   "name": "Ghoul Greater Stench Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulGreaterStenchStain"
+   ]
+  },
+  {
+   "pool": "ghoul_manifestation_choice",
+   "name": "Ghoul Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulManifestation"
+   ]
+  },
+  {
+   "pool": "ghoul_paralysis_gift_choice",
+   "name": "Ghoul Paralysis Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulParalysisGift"
+   ]
+  },
+  {
+   "pool": "ghoul_paralysis_stain_choice",
+   "name": "Ghoul Paralysis Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulParalysisStain"
+   ]
+  },
+  {
+   "pool": "ghoul_rending_claws_gift_choice",
+   "name": "Ghoul Rending Claws Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulRendingClawsGift"
+   ]
+  },
+  {
+   "pool": "ghoul_rending_claws_stain_choice",
+   "name": "Ghoul Rending Claws Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulRendingClawsStain"
+   ]
+  },
+  {
+   "pool": "ghoul_staggering_claw_gift_choice",
+   "name": "Ghoul Staggering Claw Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulStaggeringClawGift"
+   ]
+  },
+  {
+   "pool": "ghoul_staggering_claw_stain_choice",
+   "name": "Ghoul Staggering Claw Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GhoulStaggeringClawStain"
+   ]
+  },
+  {
+   "pool": "gm_awards",
+   "name": "GM Awards",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GM_Award"
+   ]
+  },
+  {
+   "pool": "gm_bonus_spell_cast",
+   "name": "GM Bonus Spell Cast",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GM Bonus Spell Cast"
+   ]
+  },
+  {
+   "pool": "gm_bonus_spell_known",
+   "name": "GM Bonus Spell Known",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GM Bonus Spell Known"
+   ]
+  },
+  {
+   "pool": "gm_penalized_spell_cast",
+   "name": "GM Penalized Spell Cast",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GM Penalized Spell Cast"
+   ]
+  },
+  {
+   "pool": "gm_penalized_spell_known",
+   "name": "GM Penalized Spell Known",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "GM Penalized Spell Known"
+   ]
+  },
+  {
+   "pool": "headband_knowledge_skill",
+   "name": "Headband Knowledge Skill",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HeadbandKnowledgeSkill"
+   ]
+  },
+  {
+   "pool": "headband_of_intellect_skill_choice",
+   "name": "Headband of Intellect Skill Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HeadbandSkill"
+   ]
+  },
+  {
+   "pool": "hellbound_devil_s_mark_gift_choice",
+   "name": "Hellbound Devil's Mark Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundDevilsMarkGift"
+   ]
+  },
+  {
+   "pool": "hellbound_devil_s_mark_spell",
+   "name": "Hellbound Devil's Mark Spell",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundDevilsMarkSpell"
+   ]
+  },
+  {
+   "pool": "hellbound_devil_s_mark_stain_choice",
+   "name": "Hellbound Devil's Mark Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundDevilsMarkStain"
+   ]
+  },
+  {
+   "pool": "hellbound_diabolical_servitor_gift_choice",
+   "name": "Hellbound Diabolical Servitor Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundDiabolicalServitorGift"
+   ]
+  },
+  {
+   "pool": "hellbound_diabolical_servitor_stain_choice",
+   "name": "Hellbound Diabolical Servitor Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundDiabolicalServitorStain"
+   ]
+  },
+  {
+   "pool": "hellbound_fiendish_tutelage_gift_choice",
+   "name": "Hellbound Fiendish Tutelage Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundFiendishTutelageGift"
+   ]
+  },
+  {
+   "pool": "hellbound_fiendish_tutelage_stain_choice",
+   "name": "Hellbound Fiendish Tutelage Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundFiendishTutelageStain"
+   ]
+  },
+  {
+   "pool": "hellbound_manifestation_choice",
+   "name": "Hellbound Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundManifestation"
+   ]
+  },
+  {
+   "pool": "hellbound_murky_futures_gift_choice",
+   "name": "Hellbound Murky Futures Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundMurkyFuturesGift"
+   ]
+  },
+  {
+   "pool": "hellbound_murky_futures_stain_choice",
+   "name": "Hellbound Murky Futures Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundMurkyFuturesStain"
+   ]
+  },
+  {
+   "pool": "hellbound_passage_through_the_pit_gift_choice",
+   "name": "Hellbound Passage through the Pit Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundPassageThroughPitGift"
+   ]
+  },
+  {
+   "pool": "hellbound_passage_through_the_pit_stain_choice",
+   "name": "Hellbound Passage through the Pit Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundPassageThroughPitStain"
+   ]
+  },
+  {
+   "pool": "hellbound_serpent_s_tongue_gift_choice",
+   "name": "Hellbound Serpent's Tongue Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundSerpentsTongueGift"
+   ]
+  },
+  {
+   "pool": "hellbound_serpent_s_tongue_stain_choice",
+   "name": "Hellbound Serpent's Tongue Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundSerpentsTongueStain"
+   ]
+  },
+  {
+   "pool": "hellbound_tenuous_soul_gift_choice",
+   "name": "Hellbound Tenuous Soul Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundTenuousSoulGift"
+   ]
+  },
+  {
+   "pool": "hellbound_tenuous_soul_stain_choice",
+   "name": "Hellbound Tenuous Soul Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HellboundTenuousSoulStain"
+   ]
+  },
+  {
+   "pool": "hive_acid_blood_gift_choice",
+   "name": "Hive Acid Blood Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveAcidBloodGift"
+   ]
+  },
+  {
+   "pool": "hive_acid_blood_stain_choice",
+   "name": "Hive Acid Blood Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveAcidBloodStain"
+   ]
+  },
+  {
+   "pool": "hive_blindsense_gift_choice",
+   "name": "Hive Blindsense Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveBlindsenseGift"
+   ]
+  },
+  {
+   "pool": "hive_blindsense_stain_choice",
+   "name": "Hive Blindsense Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveBlindsenseStain"
+   ]
+  },
+  {
+   "pool": "hive_bristling_spines_gift_choice",
+   "name": "Hive Bristling Spines Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveBristlingSpinesGift"
+   ]
+  },
+  {
+   "pool": "hive_bristling_spines_stain_choice",
+   "name": "Hive Bristling Spines Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveBristlingSpinesStain"
+   ]
+  },
+  {
+   "pool": "hive_greater_acid_blood_gift_choice",
+   "name": "Hive Greater Acid Blood Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveGreaterAcidBloodGift"
+   ]
+  },
+  {
+   "pool": "hive_greater_acid_blood_stain_choice",
+   "name": "Hive Greater Acid Blood Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveGreaterAcidBloodStain"
+   ]
+  },
+  {
+   "pool": "hive_greater_hive_mind_gift_choice",
+   "name": "Hive Greater Hive Mind Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveGreaterHiveMindGift"
+   ]
+  },
+  {
+   "pool": "hive_greater_hive_mind_stain_choice",
+   "name": "Hive Greater Hive Mind Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveGreaterHiveMindStain"
+   ]
+  },
+  {
+   "pool": "hive_hive_mind_gift_choice",
+   "name": "Hive Hive Mind Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveHiveMindGift"
+   ]
+  },
+  {
+   "pool": "hive_hive_mind_stain_choice",
+   "name": "Hive Hive Mind Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveHiveMindStain"
+   ]
+  },
+  {
+   "pool": "hive_living_weapon_gift_choice",
+   "name": "Hive Living Weapon Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveLivingWeaponGift"
+   ]
+  },
+  {
+   "pool": "hive_living_weapon_stain_choice",
+   "name": "Hive Living Weapon Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveLivingWeaponStain"
+   ]
+  },
+  {
+   "pool": "hive_manifestation_choice",
+   "name": "Hive Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveManifestation"
+   ]
+  },
+  {
+   "pool": "hive_transformed_flesh_gift_choice",
+   "name": "Hive Transformed Flesh Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveTransformedFleshGift"
+   ]
+  },
+  {
+   "pool": "hive_transformed_flesh_stain_choice",
+   "name": "Hive Transformed Flesh Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "HiveTransformedFleshStain"
+   ]
+  },
+  {
+   "pool": "lich_agonizing_touch_gift_choice",
+   "name": "Lich Agonizing Touch Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichAgonizingTouchGift"
+   ]
+  },
+  {
+   "pool": "lich_agonizing_touch_stain_choice",
+   "name": "Lich Agonizing Touch Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichAgonizingTouchStain"
+   ]
+  },
+  {
+   "pool": "lich_bleak_aura_gift_choice",
+   "name": "Lich Bleak Aura Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichBleakAuraGift"
+   ]
+  },
+  {
+   "pool": "lich_bleak_aura_stain_choice",
+   "name": "Lich Bleak Aura Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichBleakAuraStain"
+   ]
+  },
+  {
+   "pool": "lich_cadaver_s_countenance_gift_choice",
+   "name": "Lich Cadaver's Countenance Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichCadaversCountenanceGift"
+   ]
+  },
+  {
+   "pool": "lich_cadaver_s_countenance_stain_choice",
+   "name": "Lich Cadaver's Countenance Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichCadaversCountenanceStain"
+   ]
+  },
+  {
+   "pool": "lich_death_s_caress_gift_choice",
+   "name": "Lich Death's Caress Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichDeathsCaressGift"
+   ]
+  },
+  {
+   "pool": "lich_death_s_caress_stain_choice",
+   "name": "Lich Death's Caress Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichDeathsCaressStain"
+   ]
+  },
+  {
+   "pool": "lich_deathless_gift_choice",
+   "name": "Lich Deathless Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichDeathlessGift"
+   ]
+  },
+  {
+   "pool": "lich_deathless_stain_choice",
+   "name": "Lich Deathless Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichDeathlessStain"
+   ]
+  },
+  {
+   "pool": "lich_greater_cadaver_s_countenance_gift_choice",
+   "name": "Lich Greater Cadaver's Countenance Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichGreaterCadaversCountenanceGift"
+   ]
+  },
+  {
+   "pool": "lich_greater_cadaver_s_countenance_stain_choice",
+   "name": "Lich Greater Cadaver's Countenance Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichGreaterCadaversCountenanceStain"
+   ]
+  },
+  {
+   "pool": "lich_malevolence_gift_choice",
+   "name": "Lich Malevolence Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichMalevolenceGift"
+   ]
+  },
+  {
+   "pool": "lich_malevolence_stain_choice",
+   "name": "Lich Malevolence Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichMalevolenceStain"
+   ]
+  },
+  {
+   "pool": "lich_manifestation_choice",
+   "name": "Lich Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichManifestation"
+   ]
+  },
+  {
+   "pool": "lich_master_of_the_dead_gift_choice",
+   "name": "Lich Master of the Dead Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichMasterOfTheDeadGift"
+   ]
+  },
+  {
+   "pool": "lich_master_of_the_dead_stain_choice",
+   "name": "Lich Master of the Dead Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichMasterOfTheDeadStain"
+   ]
+  },
+  {
+   "pool": "lich_necromantic_knowledge_gift_choice",
+   "name": "Lich Necromantic Knowledge Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichNecromanticKnowledgeGift"
+   ]
+  },
+  {
+   "pool": "lich_necromantic_knowledge_stain_choice",
+   "name": "Lich Necromantic Knowledge Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LichNecromanticKnowledgeStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_animalistic_health_gift_choice",
+   "name": "Lycanthropy Animalistic Health Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyAnimalisticHealthGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_animalistic_health_stain_choice",
+   "name": "Lycanthropy Animalistic Health Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyAnimalisticHealthStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_animalistic_might_gift_choice",
+   "name": "Lycanthropy Animalistic Might Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyAnimalisticMightGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_animalistic_might_stain_choice",
+   "name": "Lycanthropy Animalistic Might Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyAnimalisticMightStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_feral_senses_gift_choice",
+   "name": "Lycanthropy Feral Senses Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyFeralSensesGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_feral_senses_stain_choice",
+   "name": "Lycanthropy Feral Senses Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyFeralSensesStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_fur_armor_gift_choice",
+   "name": "Lycanthropy Fur Armor Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyFurArmorGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_fur_armor_stain_choice",
+   "name": "Lycanthropy Fur Armor Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyFurArmorStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_greater_shift_form_gift_choice",
+   "name": "Lycanthropy Greater Shift Form Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyGreaterShiftFormGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_greater_shift_form_stain_choice",
+   "name": "Lycanthropy Greater Shift Form Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyGreaterShiftFormStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_lunar_call_gift_choice",
+   "name": "Lycanthropy Lunar Call Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyLunarCallGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_lunar_call_stain_choice",
+   "name": "Lycanthropy Lunar Call Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyLunarCallStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_lycanthropic_empathy_gift_choice",
+   "name": "Lycanthropy Lycanthropic Empathy Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyLycanthropicEmpathyGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_lycanthropic_empathy_stain_choice",
+   "name": "Lycanthropy Lycanthropic Empathy Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyLycanthropicEmpathyStain"
+   ]
+  },
+  {
+   "pool": "lycanthropy_manifestation_choice",
+   "name": "Lycanthropy Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropyManifestation"
+   ]
+  },
+  {
+   "pool": "lycanthropy_silver_allergy_gift_choice",
+   "name": "Lycanthropy Silver Allergy Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropySilverAllergyGift"
+   ]
+  },
+  {
+   "pool": "lycanthropy_silver_allergy_stain_choice",
+   "name": "Lycanthropy Silver Allergy Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "LycanthropySilverAllergyStain"
+   ]
+  },
+  {
+   "pool": "optional_rules_systems",
+   "name": "Optional Rules Systems",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "internal",
+   "member_tags": [
+    "OptionalRules"
+   ]
+  },
+  {
+   "pool": "pact",
+   "name": "Pact",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "Pact"
+   ]
+  },
+  {
+   "pool": "permanency_applied_effects",
+   "name": "Permanency Applied Effects",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PermanencySpell"
+   ]
+  },
+  {
+   "pool": "possessed_blurred_soul_gift_choice",
+   "name": "Possessed Blurred Soul Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedBlurredSoulGift"
+   ]
+  },
+  {
+   "pool": "possessed_blurred_soul_stain_choice",
+   "name": "Possessed Blurred Soul Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedBlurredSoulStain"
+   ]
+  },
+  {
+   "pool": "possessed_contaminated_personality_gift_choice",
+   "name": "Possessed Contaminated Personality Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedContaminatedPersonalityGift"
+   ]
+  },
+  {
+   "pool": "possessed_contaminated_personality_stain_choice",
+   "name": "Possessed Contaminated Personality Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedContaminatedPersonalityStain"
+   ]
+  },
+  {
+   "pool": "possessed_hateful_voices_gift_choice",
+   "name": "Possessed Hateful Voices Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedHatefulVoicesGift"
+   ]
+  },
+  {
+   "pool": "possessed_hateful_voices_stain_choice",
+   "name": "Possessed Hateful Voices Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedHatefulVoicesStain"
+   ]
+  },
+  {
+   "pool": "possessed_manifestation_choice",
+   "name": "Possessed Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedManifestation"
+   ]
+  },
+  {
+   "pool": "possessed_temporary_clarity_gift_choice",
+   "name": "Possessed Temporary Clarity Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTemporaryClarityGift"
+   ]
+  },
+  {
+   "pool": "possessed_temporary_clarity_stain_choice",
+   "name": "Possessed Temporary Clarity Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTemporaryClarityStain"
+   ]
+  },
+  {
+   "pool": "possessed_traitorous_hand_gift_choice",
+   "name": "Possessed Traitorous Hand Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTraitorousHandGift"
+   ]
+  },
+  {
+   "pool": "possessed_traitorous_hand_stain_choice",
+   "name": "Possessed Traitorous Hand Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTraitorousHandStain"
+   ]
+  },
+  {
+   "pool": "possessed_two_minds_gift_choice",
+   "name": "Possessed Two Minds Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTwoMindsGift"
+   ]
+  },
+  {
+   "pool": "possessed_two_minds_stain_choice",
+   "name": "Possessed Two Minds Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedTwoMindsStain"
+   ]
+  },
+  {
+   "pool": "possessed_unrestrained_gift_choice",
+   "name": "Possessed Unrestrained Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedUnrestrainedGift"
+   ]
+  },
+  {
+   "pool": "possessed_unrestrained_stain_choice",
+   "name": "Possessed Unrestrained Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedUnrestrainedStain"
+   ]
+  },
+  {
+   "pool": "possessed_violent_will_gift_choice",
+   "name": "Possessed Violent Will Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedViolentWillGift"
+   ]
+  },
+  {
+   "pool": "possessed_violent_will_stain_choice",
+   "name": "Possessed Violent Will Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedViolentWillStain"
+   ]
+  },
+  {
+   "pool": "possessed_weightlessness_gift_choice",
+   "name": "Possessed Weightlessness Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedWeightlessnessGift"
+   ]
+  },
+  {
+   "pool": "possessed_weightlessness_stain_choice",
+   "name": "Possessed Weightlessness Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PossessedWeightlessnessStain"
+   ]
+  },
+  {
+   "pool": "promethean_greater_armored_gift_choice",
+   "name": "Promethean Greater Armored Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterArmoredGift"
+   ]
+  },
+  {
+   "pool": "promethean_greater_armored_stain_choice",
+   "name": "Promethean Greater Armored Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterArmoredStain"
+   ]
+  },
+  {
+   "pool": "promethean_greater_shattered_body_gift_choice",
+   "name": "Promethean Greater Shattered Body Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterShatteredBodyGift"
+   ]
+  },
+  {
+   "pool": "promethean_greater_shattered_body_stain_choice",
+   "name": "Promethean Greater Shattered Body Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterShatteredBodyStain"
+   ]
+  },
+  {
+   "pool": "promethean_greater_shattered_mind_gift_choice",
+   "name": "Promethean Greater Shattered Mind Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterShatteredMindGift"
+   ]
+  },
+  {
+   "pool": "promethean_greater_shattered_mind_stain_choice",
+   "name": "Promethean Greater Shattered Mind Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanGreaterShatteredMindStain"
+   ]
+  },
+  {
+   "pool": "promethean_manifestation_choice",
+   "name": "Promethean Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanManifestation"
+   ]
+  },
+  {
+   "pool": "promethean_promethean_transfiguration_gift_choice",
+   "name": "Promethean Promethean Transfiguration Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanPrometheanTransfigurationGift"
+   ]
+  },
+  {
+   "pool": "promethean_promethean_transfiguration_stain_choice",
+   "name": "Promethean Promethean Transfiguration Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanPrometheanTransfigurationStain"
+   ]
+  },
+  {
+   "pool": "promethean_rampage_gift_choice",
+   "name": "Promethean Rampage Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanRampageGift"
+   ]
+  },
+  {
+   "pool": "promethean_rampage_stain_choice",
+   "name": "Promethean Rampage Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanRampageStain"
+   ]
+  },
+  {
+   "pool": "promethean_replacement_limb_gift_choice",
+   "name": "Promethean Replacement Limb Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanReplacementLimbGift"
+   ]
+  },
+  {
+   "pool": "promethean_replacement_limb_stain_choice",
+   "name": "Promethean Replacement Limb Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanReplacementLimbStain"
+   ]
+  },
+  {
+   "pool": "promethean_shattered_body_gift_choice",
+   "name": "Promethean Shattered Body Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanShatteredBodyGift"
+   ]
+  },
+  {
+   "pool": "promethean_shattered_body_stain_choice",
+   "name": "Promethean Shattered Body Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanShatteredBodyStain"
+   ]
+  },
+  {
+   "pool": "promethean_shattered_mind_gift_choice",
+   "name": "Promethean Shattered Mind Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanShatteredMindGift"
+   ]
+  },
+  {
+   "pool": "promethean_shattered_mind_stain_choice",
+   "name": "Promethean Shattered Mind Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "PrometheanShatteredMindStain"
+   ]
+  },
+  {
+   "pool": "retraining",
+   "name": "Retraining",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "Retraining"
+   ]
+  },
+  {
+   "pool": "retraining_ability_score_increase",
+   "name": "Retraining Ability Score Increase",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "RetrainingAbilityScoreIncrease"
+   ]
+  },
+  {
+   "pool": "retraining_skill_ranks_added",
+   "name": "Retraining Skill Ranks Added",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "RetrainingSkillRanksAdded"
+   ]
+  },
+  {
+   "pool": "retraining_skill_ranks_removed",
+   "name": "Retraining Skill Ranks Removed",
+   "subtab": "misc",
+   "editable_pool": true,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "RetrainingSkillRanksRemoved"
+   ]
+  },
+  {
+   "pool": "scarlet_and_blue_sphere_ioun_stone_skill_choice",
+   "name": "Scarlet and blue Sphere Ioun Stone Skill Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "IounStoneSkill"
+   ]
+  },
+  {
+   "pool": "shadowbound_eerie_perception_gift_choice",
+   "name": "Shadowbound Eerie Perception Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundEeriePerceptionGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_eerie_perception_stain_choice",
+   "name": "Shadowbound Eerie Perception Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundEeriePerceptionStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_emptiness_of_the_void_gift_choice",
+   "name": "Shadowbound Emptiness of the Void Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundEmptinessOfTheVoidGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_emptiness_of_the_void_stain_choice",
+   "name": "Shadowbound Emptiness of the Void Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundEmptinessOfTheVoidStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_frightful_gift_choice",
+   "name": "Shadowbound Frightful Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundFrightfulGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_frightful_stain_choice",
+   "name": "Shadowbound Frightful Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundFrightfulStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_insubstantiality_gift_choice",
+   "name": "Shadowbound Insubstantiality Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundInsubstantialityGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_insubstantiality_stain_choice",
+   "name": "Shadowbound Insubstantiality Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundInsubstantialityStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_manifestation_choice",
+   "name": "Shadowbound Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundManifestation"
+   ]
+  },
+  {
+   "pool": "shadowbound_refuge_in_pain_gift_choice",
+   "name": "Shadowbound Refuge in Pain Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundRefugeInPainGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_refuge_in_pain_stain_choice",
+   "name": "Shadowbound Refuge in Pain Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundRefugeInPainStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_regretful_gaze_gift_choice",
+   "name": "Shadowbound Regretful Gaze Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundRegretfulGazeGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_regretful_gaze_stain_choice",
+   "name": "Shadowbound Regretful Gaze Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundRegretfulGazeStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_touch_of_ruin_gift_choice",
+   "name": "Shadowbound Touch of Ruin Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundTouchOfRuinGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_touch_of_ruin_stain_choice",
+   "name": "Shadowbound Touch of Ruin Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundTouchOfRuinStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_weaver_of_lies_gift_choice",
+   "name": "Shadowbound Weaver of Lies Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundWeaverOfLiesGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_weaver_of_lies_stain_choice",
+   "name": "Shadowbound Weaver of Lies Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundWeaverOfLiesStain"
+   ]
+  },
+  {
+   "pool": "shadowbound_wretched_pain_gift_choice",
+   "name": "Shadowbound Wretched Pain Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundWretchedPainGift"
+   ]
+  },
+  {
+   "pool": "shadowbound_wretched_pain_stain_choice",
+   "name": "Shadowbound Wretched Pain Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "ShadowboundWretchedPainStain"
+   ]
+  },
+  {
+   "pool": "vampirism_allure_gift_choice",
+   "name": "Vampirism Allure Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismAllureGift"
+   ]
+  },
+  {
+   "pool": "vampirism_allure_stain_choice",
+   "name": "Vampirism Allure Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismAllureStain"
+   ]
+  },
+  {
+   "pool": "vampirism_children_of_the_night_gift_choice",
+   "name": "Vampirism Children of the Night Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismChildrenOfTheNightGift"
+   ]
+  },
+  {
+   "pool": "vampirism_children_of_the_night_stain_choice",
+   "name": "Vampirism Children of the Night Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismChildrenOfTheNightStain"
+   ]
+  },
+  {
+   "pool": "vampirism_dreadful_charm_gift_choice",
+   "name": "Vampirism Dreadful Charm Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismDreadfulCharmGift"
+   ]
+  },
+  {
+   "pool": "vampirism_dreadful_charm_stain_choice",
+   "name": "Vampirism Dreadful Charm Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismDreadfulCharmStain"
+   ]
+  },
+  {
+   "pool": "vampirism_fangs_gift_choice",
+   "name": "Vampirism Fangs Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismFangsGift"
+   ]
+  },
+  {
+   "pool": "vampirism_fangs_stain_choice",
+   "name": "Vampirism Fangs Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismFangsStain"
+   ]
+  },
+  {
+   "pool": "vampirism_greater_unlife_gift_choice",
+   "name": "Vampirism Greater Unlife Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismGreaterUnlifeGift"
+   ]
+  },
+  {
+   "pool": "vampirism_greater_unlife_stain_choice",
+   "name": "Vampirism Greater Unlife Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismGreaterUnlifeStain"
+   ]
+  },
+  {
+   "pool": "vampirism_life_drain_gift_choice",
+   "name": "Vampirism Life Drain Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismLifeDrainGift"
+   ]
+  },
+  {
+   "pool": "vampirism_life_drain_stain_choice",
+   "name": "Vampirism Life Drain Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismLifeDrainStain"
+   ]
+  },
+  {
+   "pool": "vampirism_manifestation_choice",
+   "name": "Vampirism Manifestation Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismManifestation"
+   ]
+  },
+  {
+   "pool": "vampirism_true_unlife_gift_choice",
+   "name": "Vampirism True Unlife Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismTrueUnlifeGift"
+   ]
+  },
+  {
+   "pool": "vampirism_true_unlife_stain_choice",
+   "name": "Vampirism True Unlife Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismTrueUnlifeStain"
+   ]
+  },
+  {
+   "pool": "vampirism_unlife_gift_choice",
+   "name": "Vampirism Unlife Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismUnlifeGift"
+   ]
+  },
+  {
+   "pool": "vampirism_unlife_stain_choice",
+   "name": "Vampirism Unlife Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismUnlifeStain"
+   ]
+  },
+  {
+   "pool": "vampirism_vampiric_grace_gift_choice",
+   "name": "Vampirism Vampiric Grace Gift Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismVampiricGraceGift"
+   ]
+  },
+  {
+   "pool": "vampirism_vampiric_grace_stain_choice",
+   "name": "Vampirism Vampiric Grace Stain Choice",
+   "subtab": "misc",
+   "editable_pool": false,
+   "member_pool": "special_ability",
+   "member_tags": [
+    "VampirismVampiricGraceStain"
+   ]
+  }
+ ]
+}

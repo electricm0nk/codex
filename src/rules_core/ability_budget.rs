@@ -36,8 +36,18 @@
 //! under [`FAVORED_CLASS_CHOICE_ID`]; then one bonus per level of it, +1 hit point or +1 skill rank, saved
 //! as `ability_selections` rows (`favored_class|favored_class_bonus|<record>|<character level>|`).
 //! [`favored_class_bonus_taken`] is what the sheet's maximum hit points and skill point pool add.
+//!
+//! **Background and Misc** (SD-43 E3.9). PCGen titles a sub-tab with its ability category's display location;
+//! `data/ability_categories.json` (`scripts/derive_ability_categories.py`, E0.1's 22 + 219 categories) names
+//! each Background and Misc category's pool, its members (parent category slug + type tags) and whether PCGen
+//! leaves its size to the player. A pool is granted the way a Class Features pool is (held rules targeting
+//! `Pool(<category>)`); an editable pool has no count budget (no rule grants it; the player or GM sets it), so
+//! it serves no rows and refuses no pick for room. Picks are `ability_selections` rows
+//! (`background|<pool>|<record>|<level>|`), held when pools are read, so a pick that grants a pool grants it
+//! (Horror Adventures: the corruption optional rule grants a corruption).
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
+use std::sync::OnceLock;
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::feat_budget::{feat_pool_of, grant_amount, repeats_the_line};
@@ -47,7 +57,7 @@ use crate::rules_core::archetype_resolver::{archetype_catalog_entries, archetype
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation, PilotBaseChassisComputation};
 use crate::rules_core::sheet_rule::{
     display_label, evaluate_applies, held_set, id_slug, slug, offer_selects, sibling_line_gate, split_rule_id, Applies, BonusTarget, CharacterFacts,
-    Choice, EvalContext, HeldSeed, Holdable, SheetRule, SheetRulePackage, SheetValue, Subject,
+    Choice, EvalContext, HeldRule, HeldSeed, Holdable, SheetRule, SheetRulePackage, SheetValue, Subject,
 };
 use crate::rules_core::sheet_rule_catalog::catalog_prose;
 use crate::rules_core::trait_effects::{is_drawback, CREATION_TRAIT_LIMIT, DRAWBACKS};
@@ -73,10 +83,12 @@ pub enum SubTab {
     ClassFeatures,
     Archetype,
     FavoredClass,
+    Background,
+    Misc,
 }
 
 impl SubTab {
-    pub const ALL: [SubTab; 4] = [SubTab::Traits, SubTab::ClassFeatures, SubTab::Archetype, SubTab::FavoredClass];
+    pub const ALL: [SubTab; 6] = [SubTab::Traits, SubTab::ClassFeatures, SubTab::Archetype, SubTab::FavoredClass, SubTab::Background, SubTab::Misc];
 
     pub fn id(self) -> &'static str {
         match self {
@@ -84,6 +96,8 @@ impl SubTab {
             SubTab::ClassFeatures => "class_features",
             SubTab::Archetype => "archetype",
             SubTab::FavoredClass => "favored_class",
+            SubTab::Background => "background",
+            SubTab::Misc => "misc",
         }
     }
 
@@ -187,7 +201,7 @@ impl AbilityBudget {
         }
         let pool_id = match self.subtab {
             SubTab::Traits => pool_of(option_id),
-            SubTab::ClassFeatures | SubTab::FavoredClass => match option_id.split_once(':') {
+            SubTab::ClassFeatures | SubTab::FavoredClass | SubTab::Background | SubTab::Misc => match option_id.split_once(':') {
                 Some((pool, _)) => pool,
                 None => return Some(format!("'{option_id}' names no class feature pool.")),
             },
@@ -200,7 +214,10 @@ impl AbilityBudget {
         {
             return Some(format!("This character's favored class is already {}; remove it to choose another.", held.label));
         }
-        if matches!(self.subtab, SubTab::ClassFeatures | SubTab::FavoredClass) && self.pool(pool_id).is_none() {
+        if ability_category(pool_id).is_some_and(|category| category.editable_pool) {
+            return None;
+        }
+        if matches!(self.subtab, SubTab::ClassFeatures | SubTab::FavoredClass | SubTab::Background | SubTab::Misc) && self.pool(pool_id).is_none() {
             return Some(format!("This character has no {} pool.", pool_words(pool_id)));
         }
         if let Some(pool) = self.pool(pool_id)
@@ -231,7 +248,7 @@ impl AbilityBudget {
     /// Whether the record an option names may be taken more than once (PCGen `MULT:YES`).
     fn repeatable(&self, package: &SheetRulePackage, option_id: &str) -> bool {
         (self.subtab == SubTab::FavoredClass && option_id.starts_with(FAVORED_BONUS_POOL))
-            || self.subtab == SubTab::ClassFeatures
+            || matches!(self.subtab, SubTab::ClassFeatures | SubTab::Background | SubTab::Misc)
             && option_id.split_once(':').and_then(|(_, record)| package.rule(record)).is_some_and(|rule| rule.repeatable)
     }
 }
@@ -252,6 +269,7 @@ pub fn ability_budget(package: &SheetRulePackage, input: &CharacterInput, subtab
         SubTab::ClassFeatures => class_feature_budget(package, input),
         SubTab::Archetype => archetype_budget(package, input),
         SubTab::FavoredClass => favored_class_budget(package, input, 0),
+        SubTab::Background | SubTab::Misc => category_budget(package, input, subtab),
     }
 }
 
@@ -265,6 +283,7 @@ pub fn ability_budget_now(package: &SheetRulePackage, input: &CharacterInput, su
         SubTab::ClassFeatures => class_feature_budget_from(package, input, false),
         SubTab::Archetype => archetype_budget(package, input),
         SubTab::FavoredClass => favored_class_budget(package, input, 0),
+        SubTab::Background | SubTab::Misc => category_budget(package, input, subtab),
     }
 }
 
@@ -294,10 +313,10 @@ fn at_character_level(input: &CharacterInput, level: u8) -> CharacterInput {
 /// Racial Abilities or Traits sub-tab. A choice about a companion (its status, a trick) is the
 /// character's pick, so it is here.
 fn class_feature_grants(package: &SheetRulePackage, input: &CharacterInput) -> BTreeMap<String, (i64, Vec<String>)> {
-    class_feature_grants_holding(package, input, &picked_rules(package, input))
+    class_feature_grants_holding(package, input, &picked_rules(package, input), SubTab::ClassFeatures)
 }
 
-/// The records of the Class Features picks and the archetypes `input` saves. A pick is held: a member
+/// The records of the Class Features, Background and Misc picks and the archetypes `input` saves. A pick is held: a member
 /// whose prerequisite is another pick (Major Magic after Minor Magic) reads it, and a pick that grants a
 /// pool grants it; an archetype's record is what the class features it replaces read.
 fn picked_rules(package: &SheetRulePackage, input: &CharacterInput) -> Vec<String> {
@@ -305,14 +324,20 @@ fn picked_rules(package: &SheetRulePackage, input: &CharacterInput) -> Vec<Strin
         .chosen
         .ability_selections
         .iter()
-        .filter(|pick| pick.subtab == SubTab::ClassFeatures.id())
+        .filter(|pick| [SubTab::ClassFeatures, SubTab::Background, SubTab::Misc].iter().any(|subtab| pick.subtab == subtab.id()))
         .map(|pick| pick.record_key.clone())
         .chain(held_archetypes(package, input).into_iter().map(|(_, rule)| rule.id.clone()))
         .collect()
 }
 
-/// [`class_feature_grants`] with `rule_ids` held outright besides what the character holds.
-fn class_feature_grants_holding(package: &SheetRulePackage, input: &CharacterInput, rule_ids: &[String]) -> BTreeMap<String, (i64, Vec<String>)> {
+/// [`class_feature_grants`] with `rule_ids` held outright besides what the character holds; the pools of
+/// `subtab` (Class Features, Background or Misc).
+fn class_feature_grants_holding(
+    package: &SheetRulePackage,
+    input: &CharacterInput,
+    rule_ids: &[String],
+    subtab: SubTab,
+) -> BTreeMap<String, (i64, Vec<String>)> {
     let base = compute_pilot_base_chassis(input);
     let mut seed = HeldSeed::from_character(input, &base);
     seed.rule_ids.extend(rule_ids.iter().cloned());
@@ -320,13 +345,21 @@ fn class_feature_grants_holding(package: &SheetRulePackage, input: &CharacterInp
     let held = held_set(package, &seed, &facts);
     let mut pools: BTreeMap<String, (i64, Vec<String>)> = BTreeMap::new();
     let mut counted: Vec<&SheetRule> = Vec::new();
-    for (id, entry) in &held.rules {
+    // A record every character holds (`always_held`: Inner Sea World Guide's `Default`, one region of origin)
+    // is not seeded into the held set, but its own `Always` grants count for every character.
+    let base_state = HeldRule { holder_class: None, spell_level: None, via: None };
+    let always = package.always_held_ids().filter(|id| subtab != SubTab::ClassFeatures && !held.rules.contains_key(*id)).map(|id| (id, &base_state));
+    for (id, entry) in held.rules.iter().chain(always) {
         if held.removed.contains(id) {
             continue;
         }
         let Some(rule) = package.rule(id) else { continue };
         let (Some(BonusTarget::Pool(pool)), SheetValue::Number(amount)) = (&rule.target, &rule.value) else { continue };
-        if !is_class_feature_grant(rule) {
+        let grants = match subtab {
+            SubTab::ClassFeatures => is_class_feature_grant(rule),
+            _ => rule.subject == Subject::Character && ability_category(pool).is_some_and(|category| category.subtab == subtab.id()),
+        };
+        if !grants {
             continue;
         }
         if counted.iter().any(|earlier| repeats_the_line(rule, earlier)) {
@@ -362,6 +395,128 @@ pub(crate) fn is_class_feature_grant(rule: &SheetRule) -> bool {
         && feat_pool_of(rule).is_none()
         && rule.subject == Subject::Character
         && !NOT_CLASS_FEATURE_KINDS.contains(&split_rule_id(&rule.id).1)
+        && !matches!(&rule.target, Some(BonusTarget::Pool(pool)) if ability_category(pool).is_some())
+}
+
+/// One PCGen ability category shown on the Background or Misc sub-tab (`data/ability_categories.json`).
+#[derive(Debug, Clone, serde::Deserialize)]
+pub struct AbilityCategory {
+    /// The category's slug: the `Pool(<pool>)` its grants target.
+    pub pool: String,
+    pub name: String,
+    /// `background` or `misc` ([`SubTab::id`]).
+    pub subtab: String,
+    /// PCGen leaves the pool's size to the player: no rule grants it, so it has no count budget.
+    pub editable_pool: bool,
+    /// The members: records of this package pool (the parent category's slug) ...
+    pub member_pool: String,
+    /// ... carrying one of these tags (case-insensitive), or every record of it when empty.
+    pub member_tags: Vec<String>,
+}
+
+/// Every Background and Misc category, read once from the generated table.
+pub fn ability_categories() -> &'static [AbilityCategory] {
+    #[derive(serde::Deserialize)]
+    struct File {
+        categories: Vec<AbilityCategory>,
+    }
+    static CATEGORIES: OnceLock<Vec<AbilityCategory>> = OnceLock::new();
+    CATEGORIES.get_or_init(|| {
+        serde_json::from_str::<File>(include_str!("../../data/ability_categories.json")).expect("data/ability_categories.json parses").categories
+    })
+}
+
+fn ability_category(pool: &str) -> Option<&'static AbilityCategory> {
+    ability_categories().iter().find(|category| category.pool == pool)
+}
+
+/// Whether `rule` is a member a category offers.
+fn category_member(category: &AbilityCategory, rule: &SheetRule) -> bool {
+    rule.pool == category.member_pool
+        && (category.member_tags.is_empty() || rule.tags.iter().any(|tag| category.member_tags.iter().any(|t| t.eq_ignore_ascii_case(tag))))
+}
+
+/// The Background or Misc budget: a pool per category the held rules (and picks) grant into, an editable
+/// pool none, every pick charged to its pool.
+fn category_budget(package: &SheetRulePackage, input: &CharacterInput, subtab: SubTab) -> AbilityBudget {
+    let grants = class_feature_grants_holding(package, input, &picked_rules(package, input), subtab);
+    let picks: Vec<_> = input.chosen.ability_selections.iter().filter(|pick| pick.subtab == subtab.id()).collect();
+    let mut pools: BTreeMap<String, AbilityPool> = BTreeMap::new();
+    for (id, (granted, labels)) in grants {
+        if granted <= 0 {
+            continue;
+        }
+        let words = format!("{} {granted:+}", labels.join(" + "));
+        pools.insert(id.clone(), AbilityPool { subtab, id, granted, spent: 0, sources: vec![(None, words)], opened: Vec::new() });
+    }
+    for pick in &picks {
+        if ability_category(&pick.pool).is_some_and(|category| category.editable_pool) {
+            continue;
+        }
+        pools
+            .entry(pick.pool.clone())
+            .or_insert_with(|| AbilityPool { subtab, id: pick.pool.clone(), granted: 0, spent: 0, sources: Vec::new(), opened: Vec::new() })
+            .spent += 1;
+    }
+    let held = picks
+        .iter()
+        .map(|pick| HeldAbility {
+            id: format!("{}:{}", pick.pool, pick.record_key),
+            label: package.rule(&pick.record_key).map_or_else(|| pick.record_key.clone(), display_label),
+            category: None,
+        })
+        .collect();
+    AbilityBudget { subtab, pools: pools.into_values().collect(), held }
+}
+
+/// The members of every Background or Misc category this character has a pool in (granted, editable, or
+/// holding a pick), each with whether its own gate is met. Two printings of one name are offered once.
+fn category_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation, subtab: SubTab) -> Vec<AbilityOption> {
+    let picked = picked_rules(package, input);
+    let grants = class_feature_grants_holding(package, input, &picked, subtab);
+    let shown: Vec<&AbilityCategory> = ability_categories()
+        .iter()
+        .filter(|category| category.subtab == subtab.id())
+        .filter(|category| {
+            category.editable_pool
+                || grants.get(&category.pool).is_some_and(|(granted, _)| *granted > 0)
+                || input.chosen.ability_selections.iter().any(|pick| pick.subtab == subtab.id() && pick.pool == category.pool)
+        })
+        .collect();
+    let mut by_member_pool: HashMap<&str, Vec<&AbilityCategory>> = HashMap::new();
+    for category in &shown {
+        by_member_pool.entry(category.member_pool.as_str()).or_default().push(category);
+    }
+    let mut seed = HeldSeed::from_character(input, base);
+    seed.rule_ids.extend(picked);
+    let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
+    let held = held_set(package, &seed, &facts);
+    let mut seen: Vec<(String, String)> = Vec::new();
+    let mut options = Vec::new();
+    for rule in package.rules.values().filter(|rule| !rule.id.contains('#') && !rule.label.is_empty()) {
+        let Some(categories) = by_member_pool.get(rule.pool.as_str()) else { continue };
+        for category in categories.iter().filter(|category| category_member(category, rule)) {
+            let label = display_label(rule);
+            let key = (category.pool.clone(), label.clone());
+            if seen.contains(&key) {
+                continue;
+            }
+            seen.push(key);
+            let unmet = ability_prereqs::unmet(package, &held, &facts, &rule.applies);
+            let prose = catalog_prose(package, rule);
+            options.push(AbilityOption {
+                id: format!("{}:{}", category.pool, rule.id),
+                label,
+                pool: category.pool.clone(),
+                category: Some(category.name.clone()),
+                qualified: unmet.is_empty(),
+                unmet,
+                description: (!prose.trim().is_empty()).then_some(prose),
+            });
+        }
+    }
+    options.sort_by(|a, b| (&a.pool, &a.label, &a.id).cmp(&(&b.pool, &b.label, &b.id)));
+    options
 }
 
 fn class_feature_budget(package: &SheetRulePackage, input: &CharacterInput) -> AbilityBudget {
@@ -536,6 +691,7 @@ pub fn ability_options(
         SubTab::ClassFeatures => class_feature_options(package, input, base),
         SubTab::Archetype => archetype_options(package, input, base),
         SubTab::FavoredClass => favored_class_options(package, input),
+        SubTab::Background | SubTab::Misc => category_options(package, input, base, subtab),
     }
 }
 
@@ -1037,6 +1193,78 @@ mod tests {
         assert!(!wizard.qualified && wizard.unmet[0].contains("Fighter"), "{:?}", wizard.unmet);
     }
 
+    /// E0.1's mapping (`artifacts/epic_0/abilities-census.json` `subtabs.<tab>.pcgen_categories_player_editable`):
+    /// Background 22 categories, Misc 219; the engine's category table holds exactly those.
+    #[test]
+    fn ability_budget_background_and_misc_categories_are_e0_1s() {
+        let census = census();
+        for (tab, subtab) in [("Background", SubTab::Background), ("Misc", SubTab::Misc)] {
+            let want = census["subtabs"][tab]["pcgen_categories_player_editable"].as_u64().expect("census count");
+            let have = ability_categories().iter().filter(|c| c.subtab == subtab.id()).count() as u64;
+            assert_eq!(have, want, "{tab}");
+        }
+    }
+
+    fn pick(subtab: SubTab, option_id: &str) -> crate::rules_core::character_input::AbilitySelection {
+        let (pool, record) = option_id.split_once(':').expect("pool:record");
+        crate::rules_core::character_input::AbilitySelection {
+            subtab: subtab.id().to_owned(),
+            pool: pool.to_owned(),
+            record_key: record.to_owned(),
+            level: 1,
+            target: None,
+        }
+    }
+
+    /// Inner Sea World Guide: every character has one region of origin (`iswg_abilities.lst:6`, converted as
+    /// `inner_sea_world_guide:ability:default`, `Pool(region_of_origin)` 1, always held). E0.1: Region of Origin
+    /// is a Background category with 43 corpus records. It is a Background pool, not a Class Features one.
+    #[test]
+    fn ability_budget_background_every_character_takes_one_region_of_origin_and_a_second_is_refused() {
+        let mut input = level_one_with(&[]);
+        let budget = ability_budget(package(), &input, SubTab::Background);
+        assert_eq!(row(&budget, "abilities.budget.background.region_of_origin.granted"), 1);
+        assert_eq!(row(&budget, "abilities.budget.background.region_of_origin.remaining"), 1);
+        assert!(ability_budget(package(), &input, SubTab::ClassFeatures).pool("region_of_origin").is_none(), "not a class feature pool");
+        let base = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let options = ability_options(package(), &input, &base, SubTab::Background);
+        let regions: Vec<&AbilityOption> = options.iter().filter(|o| o.pool == "region_of_origin" && o.qualified).collect();
+        assert!(regions.len() >= 30, "{} qualified regions", regions.len());
+        // An editable pool (PCGen leaves its size to the player: Monastery Reward) is offered with no count budget.
+        assert!(options.iter().any(|o| o.pool == "monastery_reward"), "monastery rewards offered");
+        assert!(budget.pool("monastery_reward").is_none(), "no count row for an editable pool");
+
+        input.chosen.ability_selections.push(pick(SubTab::Background, &regions[0].id));
+        let budget = ability_budget(package(), &input, SubTab::Background);
+        assert_eq!(row(&budget, "abilities.budget.background.region_of_origin.spent"), 1);
+        let refusal = budget.refusal(package(), &regions[1].id).expect("a second region refused");
+        assert!(refusal.contains("region_of_origin pool"), "{refusal}");
+        let monastery = options.iter().find(|o| o.pool == "monastery_reward").expect("a monastery reward");
+        assert_eq!(budget.refusal(package(), &monastery.id), None, "an editable pool has no count to refuse on");
+    }
+
+    /// Horror Adventures: corruption is an optional rule (Misc, Optional Rules Systems, an editable pool);
+    /// using it grants one corruption (`Corruption Type Choice`, E0.1: 11 corpus records), so the pool follows the pick.
+    #[test]
+    fn ability_budget_misc_an_optional_rule_picked_grants_the_corruption_type_choice() {
+        let mut input = level_one_with(&[]);
+        let base = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let options = ability_options(package(), &input, &base, SubTab::Misc);
+        let rule = "optional_rules_systems:horror_adventures:ability:rules_use_corruption_standard";
+        assert!(options.iter().any(|o| o.id == rule && o.qualified), "the corruption optional rule offered");
+        for pool in ["afflictions", "gm_awards"] {
+            assert!(options.iter().any(|o| o.pool == pool), "{pool} offered");
+        }
+        assert!(ability_budget(package(), &input, SubTab::Misc).pool("corruption_type_choice").is_none());
+
+        input.chosen.ability_selections.push(pick(SubTab::Misc, rule));
+        let budget = ability_budget(package(), &input, SubTab::Misc);
+        assert_eq!(row(&budget, "abilities.budget.misc.corruption_type_choice.granted"), 1);
+        let options = ability_options(package(), &input, &base, SubTab::Misc);
+        let corruptions = options.iter().filter(|o| o.pool == "corruption_type_choice").count();
+        assert!(corruptions >= 10, "{corruptions} corruptions offered");
+    }
+
     fn level_one_with(traits: &[&str]) -> CharacterInput {
         let mut input = input_for(&load_sweep_fixture().expect("census fixture"), "fighter", 1);
         input.chosen.selected_traits = traits.iter().map(|t| (*t).to_owned()).collect();
@@ -1232,7 +1460,7 @@ mod tests {
             }
         }
         let proved = in_parallel(&through_a_choice, |(slug, class, principals)| {
-            (slug.clone(), granted_to(class_feature_grants_holding(package(), &input_for(&fixture, class, 20), principals)).any(|p| p == *slug))
+            (slug.clone(), granted_to(class_feature_grants_holding(package(), &input_for(&fixture, class, 20), principals, SubTab::ClassFeatures)).any(|p| p == *slug))
         });
         let not_proved: Vec<String> = proved.iter().filter(|(_, ok)| !ok).map(|(slug, _)| slug.clone()).collect();
         eprintln!(

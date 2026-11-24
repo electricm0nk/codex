@@ -4398,7 +4398,16 @@ export function CharacterSheet(props: {
                           onRemove={(id) => handleRemoveAbility(id, 'archetype')}
                         />
                       ),
-                      Background: null,
+                      Background: (
+                        <AbilitySubTab
+                          characterId={props.row.characterId}
+                          subtab="background"
+                          title="Background"
+                          info={() => null}
+                          onAdd={(id) => handleAddAbility(id, null, 'background')}
+                          onRemove={(id) => handleRemoveAbility(id, 'background')}
+                        />
+                      ),
                       'Class Features': (
                         <ClassFeatureReferencesPanel
                           characterId={props.row.characterId}
@@ -4411,7 +4420,16 @@ export function CharacterSheet(props: {
                           selectedFeats={props.detail?.selectedFeats ?? []}
                         />
                       ),
-                      Misc: null,
+                      Misc: (
+                        <AbilitySubTab
+                          characterId={props.row.characterId}
+                          subtab="misc"
+                          title="Misc"
+                          info={() => null}
+                          onAdd={(id) => handleAddAbility(id, null, 'misc')}
+                          onRemove={(id) => handleRemoveAbility(id, 'misc')}
+                        />
+                      ),
                     }}
                   />
                 ) : name === 'Pets' ? (

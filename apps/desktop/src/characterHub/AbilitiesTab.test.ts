@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { readFeatBudget } from './characterProgression';
-import { ABILITY_SUB_TABS, AbilitiesTab, PENDING_ENGINE_CARD } from './AbilitiesTab';
+import { ABILITY_SUB_TABS, AbilitiesTab } from './AbilitiesTab';
 import { FeatsTab, SHEET_TABS } from './CharacterSheet';
 
 // SD-43 E3.1 (operator ruling Q-22.3, 2026-11-22): the Feats tab is renamed Abilities; Feats is one of
@@ -42,37 +42,16 @@ assert(html.includes('aria-selected="true"') && /aria-selected="true"[^>]*>Feats
 assert(html.includes(budgetLine), `the Feats sub-tab renders the feat budget line "${budgetLine}"`);
 assert(html.includes('Add Feat'), 'the Feats sub-tab keeps its Add Feat control');
 
-// A sub-tab whose engine card has not landed names that card; Feats has no such notice.
-// SD-43 E3.3: Traits is on the generic sub-tab with the engine's budget; it names no pending card.
-// SD-43 E3.4: Class Features is on the generic sub-tab with the engine's pool grants; it names no pending card.
-// SD-43 E3.6: Racial Abilities picks the race's alternate racial traits on the generic sub-tab; it names no pending card.
-// SD-43 E3.7: Archetype lists each held class's archetypes on the generic sub-tab; it names no pending card.
-const PENDING = PCGEN_ORDER.slice(1).filter((name) => name !== 'Traits' && name !== 'Class Features' && name !== 'Racial Abilities' && name !== 'Archetype');
-for (const name of PENDING) {
-  assert(typeof PENDING_ENGINE_CARD[name as keyof typeof PENDING_ENGINE_CARD] === 'string', `${name} names its pending engine card`);
-}
-assert(PENDING_ENGINE_CARD.Feats === undefined, 'Feats has an engine already');
-assert(PENDING_ENGINE_CARD.Traits === undefined, 'Traits has an engine already (E3.2) and its UI (E3.3)');
-assert(PENDING_ENGINE_CARD['Class Features'] === undefined, 'Class Features has its engine pools and UI (E3.4)');
-assert(PENDING_ENGINE_CARD['Racial Abilities'] === undefined, 'Racial Abilities has its alternates, refusals and UI (E3.6)');
-assert(PENDING_ENGINE_CARD.Archetype === undefined, 'Archetype has its options, slot refusals and UI (E3.7)');
-const traitsOpen = renderToStaticMarkup(
-  createElement(AbilitiesTab, {
-    initial: 'Traits',
-    panels: { Feats: null, 'Racial Abilities': null, Traits: 'TRAITS-PANEL', Archetype: null, Background: null, 'Class Features': null, Misc: null },
-  }),
-);
-assert(traitsOpen.includes('TRAITS-PANEL') && !traitsOpen.includes('engine card'), 'the Traits sub-tab shows its panel and no notice');
-for (const name of PENDING) {
+// SD-43 E3.9: every sub-tab has its engine (Traits E3.2/E3.3, Class Features E3.4, Racial Abilities E3.6,
+// Archetype E3.7, Background and Misc E3.9): none renders a pending-engine notice; each shows its panel.
+for (const name of PCGEN_ORDER) {
   const sub = renderToStaticMarkup(
     createElement(AbilitiesTab, {
       initial: name as (typeof ABILITY_SUB_TABS)[number],
-      panels: { Feats: null, 'Racial Abilities': null, Traits: null, Archetype: null, Background: null, 'Class Features': null, Misc: null },
+      panels: { Feats: 'P-Feats', 'Racial Abilities': 'P-Racial Abilities', Traits: 'P-Traits', Archetype: 'P-Archetype', Background: 'P-Background', 'Class Features': 'P-Class Features', Misc: 'P-Misc' },
     }),
   );
-  const card = PENDING_ENGINE_CARD[name as keyof typeof PENDING_ENGINE_CARD] ?? '';
-  assert(sub.includes(card) && sub.includes('engine card'), `${name}: the notice names ${card}`);
-  assert(!sub.includes('Add Feat'), `${name}: the Feats panel is not shown`);
+  assert(sub.includes(`P-${name}`) && !sub.includes('engine card'), `${name}: its panel and no pending-engine notice`);
 }
 
 console.log('AbilitiesTab tests passed');
