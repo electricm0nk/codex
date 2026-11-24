@@ -596,7 +596,7 @@ so no card ships a picker the engine does not check.
 - **FILES YOU OWN:** `desktop/print/blocks/abilities.rs` (new), `print/layout/mod.rs`, print golden files if the
   golden test covers the page.
 - **Failing test first:** a Rogue 6 with three talents and a favored class prints each under its heading.
-- **Acceptance:** `cd apps/desktop/src-tauri && cargo test print_pf_blocks_abilities` ≥ 1. **Depends:** E3.10.
+- **Acceptance:** `cd apps/desktop/src-tauri && cargo test print_pf_blocks_chosen_abilities_per_subtab` ≥ 1 (a new test; the old filter `print_pf_blocks_abilities` matched the existing six-boxes test, run 6 RED exit 0). **Depends:** E3.10.
   **Tier:** opus.
 
 ### E3.12 — ingest-gap pools get members (discovered by E0.1, 2026-11-22)
