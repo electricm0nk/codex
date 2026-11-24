@@ -47,6 +47,15 @@ for line in kb.splitlines():
         "row": line.strip(), "section": secs.get(cid, ""),
     })
 
+# A discovered row that says "must be complete before X" becomes a dependency of X (run 8: E3.MC
+# started while E3.18-E3.20 were todo, because only the note said so).
+by_id = {c["id"]: c for c in cards}
+for c in cards:
+    for target in re.findall(r"must be complete before ((?:C|E)\d+\.\w+)", c["row"]):
+        if c["id"] not in by_id[target]["deps"]:
+            by_id[target]["deps"].append(c["id"])
+            by_id[target]["row"] += f" [script: depends on {c['id']} by its note]"
+
 eb_ids = set(re.findall(r"^\| ((?:C|E)\d+(?:\.\w+)?) \|", eb, re.M))
 assert {c["id"] for c in cards} == eb_ids, ({c["id"] for c in cards} ^ eb_ids)
 missing = [c["id"] for c in cards if not c["section"]]
@@ -74,6 +83,15 @@ lanes = {}
 for c in cards:
     lanes.setdefault(c["lane"], []).append(c["id"])
 lanes["sheet"] = [i for i in lanes["sheet"] if i not in sheet_tail] + sheet_tail
+# Stable reorder: a card moves after any same-lane dependency listed later (discovered rows sit below their MC).
+for lane, seq in lanes.items():
+    out = []
+    pending = list(seq)
+    while pending:
+        cid = next(i for i in pending if all(d not in pending for d in by_id[i]["deps"]))
+        pending.remove(cid)
+        out.append(cid)
+    lanes[lane] = out
 # every dependency inside a lane must come earlier in that lane (no self-deadlock)
 for lane, seq in lanes.items():
     for i, cid in enumerate(seq):

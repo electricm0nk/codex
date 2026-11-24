@@ -566,7 +566,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus | opus | todo | E3.10 | sheet | yes (desktop) | no | |",
+  "row": "| E3.11 | Printout: chosen abilities per sub-tab and the favored class bonus | opus | complete | E3.10 | sheet | yes (desktop) | no | receipt `artifacts/epic_3/E3.11_cycle_receipt.md`; SHA `5c0fcbfbe8b6f2330d41b7a6fd73ff3b0d4b3776` |",
   "section": "### E3.11 — printout\n- **Objective:** per `decisions.md §20`.\n- **FILES YOU OWN:** `desktop/print/blocks/abilities.rs` (new), `print/layout/mod.rs`, print golden files if the\n  golden test covers the page.\n- **Failing test first:** a Rogue 6 with three talents and a favored class prints each under its heading.\n- **Acceptance:** `cd apps/desktop/src-tauri && cargo test print_pf_blocks_chosen_abilities_per_subtab` ≥ 1 (a new test; the old filter `print_pf_blocks_abilities` matched the existing six-boxes test, run 6 RED exit 0). **Depends:** E3.10.\n  **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -579,7 +579,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.12 | DISCOVERED (E0.1): ingest the oracle's member typing (`<record>.MOD TYPE:` lines) so the 30 ingest-gap pools in E0.1's data-gap list get members; add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with no ABILITYCATEGORY | opus | todo | E0.1 | sheet | yes (root) | no | must be complete before E3.MC; E3.MC's notice count then = the 4 book gaps; `artifacts/epic_0/abilities-census.json` `data_gap_list[].cause` |",
+  "row": "| E3.12 | DISCOVERED (E0.1): ingest the oracle's member typing (`<record>.MOD TYPE:` lines) so the 30 ingest-gap pools in E0.1's data-gap list get members; add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with no ABILITYCATEGORY | opus | complete | E0.1 | sheet | yes (root) | no | receipt `artifacts/epic_3/E3.12_cycle_receipt.md`; SHA `233dcf906fcd25209648ccc1f00471eebf839706`; data_gap_list 34 -> 3, all book gaps (Canny Foe, Swift Powder Choice, Viking Bonus Feat; the card's '4' and '30' were E0.1 census errors, corrected); E3.MC's notice count = 3; discovered E3.18, E3.19 |",
   "section": "### E3.12 — ingest-gap pools get members (discovered by E0.1, 2026-11-22)\n- **Objective:** close the 30 ingest-cause entries of E0.1's data-gap list (`artifacts/epic_0/abilities-census.json`\n  `data_gap_list[]`, 34 entries: 30 `cause` starting `ingest:`, 4 `the books in the corpus define no members` —\n  `python3 -c \"import json,collections;g=json.load(open('artifacts/epic_0/abilities-census.json'))['data_gap_list'];print(len(g),sum(x['cause'].startswith('ingest:') for x in g))\"`\n  → `34 30`): apply the oracle's member typing (`<record>.MOD TYPE:` lines) in the ingest so those pools get members;\n  add the missing `Ninja ~ Ninja Trick` grant row (level 2) to `data/class_feature_grants`; resolve the 7 pool names with\n  no ABILITYCATEGORY (E0.1 receipt, \"Discovered cards\").\n- **FILES YOU OWN:** the ingest step that applies `.MOD` lines (located by the card: `git grep -n 'MOD' crates/codex-ingest/src/pcgen_import`),\n  its test, the regenerated corpus records it writes, `data/class_feature_grants`; second call sites by `git grep` per the prefix.\n  Nothing from the oracle is read at runtime (prefix: THE ORACLE).\n- **Failing test first:** a test that the 30 ingest-gap pools have ≥ 1 member each fails today (E0.1: 0 members).\n- **Acceptance:** `python3 -I artifacts/epic_0/abilities_census.py --check` exits 0 and the re-run census reports\n  `data_gap_list` = 4 entries, every one `the books in the corpus define no members`; the new test green; root\n  `cargo test --locked -j 8 --lib -- --test-threads=8` and the desktop workspace green. **Depends:** E0.1 (lane order:\n  after E3.11, before E3.MC). **Tier:** opus.\n- **Does not cover:** the 4 book gaps (they stay as on-screen data-gap notices, E3.MC).",
   "phase": "E3 — the Abilities tab"
  },
@@ -592,7 +592,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E3.13 | DISCOVERED (E3.4): level-1 `ABILITYSELECTION` picks — the 5 bloodline pools whose size is an `offers` count with no `Pool` target — get `abilities.budget.class_features.*` rows and picks | opus | todo | E3.4 | sheet | yes (root + desktop) | hub | must be complete before E3.MC; E3.4's census then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` |",
+  "row": "| E3.13 | DISCOVERED (E3.4): level-1 `ABILITYSELECTION` picks — the 5 bloodline pools whose size is an `offers` count with no `Pool` target — get `abilities.budget.class_features.*` rows and picks | opus | complete | E3.4 | sheet | yes (root + desktop) | hub | receipt `artifacts/epic_3/E3.13_cycle_receipt.md`; SHA `b75ebe66d4f149cd4cee6d10d4499e2a9186d851`; discovered E3.20 |",
   "section": "### E3.13 — level-1 ABILITYSELECTION picks on Class Features (discovered by E3.4, 2026-11-23)\n- **Objective:** E3.4's split rule: the pool-size shape that is not a `Pool` grant. E0.1 counts 5 class-owned pools whose\n  only mechanism is `abilityselection` (Blood of Dragons Bloodline, Bloodrager Bloodline, Crossblooded Bloodline,\n  Crossblooded Rager Bloodline, Sorcerer Bloodline); the converter writes them as an `offers` with a count and no\n  `Pool` target (`core_rulebook:class_feature:sorcerer_standard_bloodline_selection`, count 1, from pool\n  `sorcerer_bloodline`). Give them `abilities.budget.class_features.<pool>.*` rows sized by the offer's count, members\n  from the offer, and picks saved in `ability_selections`; reconcile with the per-class choice ids creation already\n  records (`selected_choices`) so a bloodline is not held twice.\n- **Figure:** `python3 -c \"import json;p=json.load(open('docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_0/abilities-census.json'))['class_feature_pools']['pools'];print(sorted(n for n,v in p.items() if 'class' in v['granted_by'] and v['mechanisms']==['abilityselection']))\"` → the 5 names above.\n- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `apps/desktop/src-tauri/src/abilities.rs`; second call sites per the prefix.\n- **Failing test first:** Sorcerer 1 → `abilities.budget.class_features.sorcerer_bloodline.granted` = 1 (CRB: a sorcerer\n  chooses one bloodline at 1st level); E3.4's census test then drops `ABILITY_SELECTION_POOLS_SPLIT_OFF` to empty.\n- **Acceptance:** that test; E3.4's census test green with no split-off list. **Depends:** E3.4. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -605,7 +605,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` list their members (converter carries the category's member filter) | opus | todo | E3.4 | sheet | yes (root + desktop) | no | must be complete before E3.MC; `python3 -I artifacts/epic_3/E3.4/pool_shapes.py .` → `… of which no offer 31` |",
+  "row": "| E3.14 | DISCOVERED (E3.4): the 31 class-feature pools whose converted grants carry no `offers` list their members (converter carries the category's member filter) | opus | complete | E3.4 | sheet | yes (root + desktop) | no | receipt `artifacts/epic_3/E3.14_cycle_receipt.md`; SHA `5f42b51cd708c91945b7c255338156abb29e7614`; members listed 148 of 148 granted class-owned pools, 31 of 31 no-offer pools |",
   "section": "### E3.14 — members for pools whose grants carry no offer (discovered by E3.4, 2026-11-23)\n- **Objective:** 31 of the 148 class-owned class-feature pools (E0.1 census, class among `granted_by`, a converted\n  `Pool` grant, not a feat pool) have no `offers` on any grant rule, so E3.4's sub-tab shows their pool line with no\n  members: the ABILITYCATEGORY's member filter (`TYPE`) never reached the package. The converter carries each pool's\n  member filter (an `offers` or a pool → tags table in the package) so `class_feature_options` lists them; until then\n  the sub-tab names this card for a pool with no members.\n- **Figure:** `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.4/pool_shapes.py .` printed `class-owned 181 no Pool target 5 feat pools 28 class-feature pools 148 of which no offer 31`\n  (the list: 20 oracle mystery revelation pools, 5 kineticist element pools, Amateur Gunslinger, Craft Skill Bonus,\n  Guileful Polyglot Additional Language, Gun Training Choice, Gunslinger Battered Gun, Samurai Expertise, Shaman Hex —\n  the script prints it).\n- **FILES YOU OWN:** the sheet-rule converter's offer emission (located by the card: `git grep -n \"offers\" crates/ src/rules_core/sheet_rule*.rs`),\n  the regenerated `data/sheet_rules` records, `src/rules_core/ability_budget.rs`.\n- **Failing test first:** an Oracle 1 with the Flame mystery lists ≥ 1 Flame revelation option (0 today).\n- **Acceptance:** that test; a census that every class-owned class-feature pool with a grant lists ≥ 1 member or is on\n  E0.1's data-gap list. **Depends:** E3.4. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -618,7 +618,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.15 | DISCOVERED (E3.5): Class Features picks held by the sheet — `HeldSeed::from_record` seeds saved `ability_selections` (Class Features) so a pick's own rules reach the sheet and its print, not only the options and the add path | opus | todo | E3.5 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.5 receipt \"Rulings\" (picks held for options/grants only, `ability_budget::picked_rules`) |",
+  "row": "| E3.15 | DISCOVERED (E3.5): Class Features picks held by the sheet — `HeldSeed::from_record` seeds saved `ability_selections` (Class Features) so a pick's own rules reach the sheet and its print, not only the options and the add path | opus | complete | E3.5 | sheet | yes (root + desktop) | no | receipt `artifacts/epic_3/E3.15_cycle_receipt.md`; SHA `fa2ee038e3537a7bfd74f8be96b02220d8f28778` |",
   "section": "### E3.15 — Class Features picks held by the sheet (discovered by E3.5, 2026-11-23)\n- **Objective:** a saved Class Features pick (`ChosenCharacterState.ability_selections`, subtab `class_features`) is\n  held wherever the character's held set is built, so the pick's own rules (a bonus, a granted pool, a printed\n  line) reach the sheet and the print. E3.5 holds picks only where the Class Features options and grants are\n  evaluated (`ability_budget::picked_rules`); `HeldSeed::from_record` (`src/rules_core/sheet_rule.rs`) still omits them.\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed::from_record`), `src/rules_core/ability_budget.rs`\n  (drop `picked_rules` once the seed carries the picks), the sheet's load path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Rogue 4 holding the Minor Magic pick: the sheet's held set (`held_set` over\n  `HeldSeed::from_character`) holds `core_rulebook:class_feature:rogue_talent_minor_magic` (absent today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.5. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -631,7 +631,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.16 | DISCOVERED (E3.7): a held archetype held by the sheet — `HeldSeed::from_record` seeds the saved `choice:archetype` records so a replaced feature's sheet lines and print follow (Two-Handed Fighter still shows the Bravery note) | opus | todo | E3.7 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.7 receipt \"Does not cover\" (d), `artifacts/epic_3/E3.7/07-sheet-reloaded.png` |",
+  "row": "| E3.16 | DISCOVERED (E3.7): a held archetype held by the sheet — `HeldSeed::from_record` seeds the saved `choice:archetype` records so a replaced feature's sheet lines and print follow (Two-Handed Fighter still shows the Bravery note) | opus | complete | E3.7 | sheet | yes (root + desktop) | no | receipt `artifacts/epic_3/E3.16_cycle_receipt.md`; SHA `3e6b68938c535e3032ffb005d060f86dd05af9f8` |",
   "section": "### E3.16 — Archetypes held by the sheet (discovered by E3.7, 2026-11-23)\n- **Objective:** a saved archetype (`selected_choices`, `choice:archetype`, `archetype:<KEY>` or a record id) is held\n  wherever the character's held set is built, so the class features its record replaces leave the sheet and the print\n  (their converted gates read `RuleTag archetype` / the archetype record). E3.7 holds the record only where the\n  Class Features options and grants are read (`ability_budget::picked_rules`); `HeldSeed::from_record`\n  (`src/rules_core/sheet_rule.rs`) still omits it, so Brother Tomas Vane with Two-Handed Fighter keeps the\n  \"Will: Bravery: +1 Will vs. fear\" conditional note (`artifacts/epic_3/E3.7/07-sheet-reloaded.png`).\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed`), `src/rules_core/ability_budget.rs` (the selection →\n  record resolver it can reuse; drop the archetype half of `picked_rules` once the seed carries it), the sheet's load\n  path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Fighter 2 holding `archetype:Fighter Archetype ~ Two-Handed Fighter`: the sheet's held set\n  (`held_set` over `HeldSeed::from_character`) holds `advanced_players_guide:class_feature:fighter_archetype_two_handed_fighter`\n  and no Bravery conditional note (both absent / present today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.7. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -644,20 +644,62 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.17 | DISCOVERED (E3.9): Background and Misc picks held by the sheet — `HeldSeed::from_record` seeds the saved `ability_selections` of the `background` and `misc` sub-tabs so a pick's own rules reach the sheet and its print (a Fleshforge Enhancement's +2, a corruption's text), not only the options and the grants | opus | todo | E3.9 | sheet | yes (root + desktop) | no | must be complete before E3.MC; E3.9 receipt \"Does not cover\" (b), `ability_budget::picked_rules` |",
+  "row": "| E3.17 | DISCOVERED (E3.9): Background and Misc picks held by the sheet — `HeldSeed::from_record` seeds the saved `ability_selections` of the `background` and `misc` sub-tabs so a pick's own rules reach the sheet and its print (a Fleshforge Enhancement's +2, a corruption's text), not only the options and the grants | opus | complete | E3.9 | sheet | yes (root + desktop) | no | receipt `artifacts/epic_3/E3.17_cycle_receipt.md`; SHA `694b352ce3a57417b247434f1125399ff6a47d39` |",
   "section": "### E3.17 — Background and Misc picks held by the sheet (discovered by E3.9, 2026-11-23)\n- **Objective:** a saved Background or Misc pick (`ability_selections` with sub-tab `background` or `misc`) is held\n  wherever the character's held set is built, so the pick's own rules reach the sheet and the print (Fleshforge\n  Enhancement's +2 to an ability score; a corruption's rule text). E3.9 holds the picks only where the Background and\n  Misc pools and options are read (`ability_budget::picked_rules`); `HeldSeed::from_record`\n  (`src/rules_core/sheet_rule.rs`) still omits them. Same mechanism as E3.15 (Class Features picks); one change may close both.\n- **FILES YOU OWN:** `src/rules_core/sheet_rule.rs` (`HeldSeed`), `src/rules_core/ability_budget.rs` (drop the\n  Background/Misc half of `picked_rules` once the seed carries the picks), the sheet's load path in `desktop/character_hub.rs` if a test needs it.\n- **Failing test first:** a Fighter 1 holding the Misc pick `optional_rules_systems:horror_adventures:ability:rules_use_corruption_standard`:\n  the sheet's held set (`held_set` over `HeldSeed::from_character`) holds `horror_adventures:ability:rules_use_corruption_standard` (absent today).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.9. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.18",
+  "tier": "opus",
+  "deps": [
+   "E3.12"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member (proxy `artifacts/epic_3/E3.12/offer_probe.py` → 10 of 29) list their members on the sheet; engine test per pool first | opus | todo | E3.12 | sheet | yes (root + desktop) | no | must be complete before E3.MC |",
+  "section": "### E3.18 — E3.12's pools list their members on the sheet (discovered by E3.12, 2026-11-24)\n- **Objective:** E3.12 gave the corpus members for 29 class-granted pools, but the sheet lists a Class Features pool's\n  members from a converted grant's `offers` (`ability_budget::pool_offer`), and for 10 of the 29 no converted rule\n  granting into the pool carries an offer that selects a member: Advanced Masked Performer Talent, Druid Eagle / Lion /\n  Serpent / Wolf Shaman Feat, Finesse / Sniper / Volley Marksman Bonus Feat, Hexenhammer Major Hex Choice (no offer: a\n  second `ABILITYPOOL` row on one record, `#bonusN`, carries none) and Lantern Bearer Favored Enemy (offer is a\n  `Number` 2–4). Re-derive: `python3 -I artifacts/epic_3/E3.12/offer_probe.py | tail -1` → `10 of 29`. A PROXY: it reads\n  the package, not the engine, and feat-parent pools may be listed by `feat_budget` (`feat_list_of`) instead — the\n  card's first step is the engine test below, which settles the real count.\n- **FILES YOU OWN:** the sheet-rule converter's pool offer (`crates/codex-ingest/src/pcgen_import/sheet_rule/pool_pick.rs`\n  and its ABILITYPOOL caller) or the engine's member fallback (`src/rules_core/ability_budget.rs`), whichever the test\n  shows; the regenerated `data/sheet_rules` rows if the converter changes.\n- **Failing test first:** for each of the 29 pools, a character holding one of its grants is offered ≥ 1 member by\n  `ability_options` (Class Features) or the Feats options (feat-parent pools).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete\n  before E3.MC (else those pools show a count with nothing to pick).",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.19",
+  "tier": "opus",
+  "deps": [
+   "E3.12"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.19 | DISCOVERED (E3.12): `gen_class_feature_grants` reads `uc_abilities_globalvar.lst` (Ninja.MOD 64, Samurai.MOD 99 grant rows; 1 Ninja row hand-added by E3.12) and re-runs without rewriting the 58 committed files it drifts today | opus | todo | E3.12 | sheet | yes (root) | no | must be complete before E3.MC |",
+  "section": "### E3.19 — Class grant rows from the global-variable files (discovered by E3.12, 2026-11-24)\n- **Objective:** `gen_class_feature_grants` reads only `class_feature::BOOK_PRIMARY_FILES`\n  (`uc_abilities_class.lst` for Ultimate Combat), but the Ninja and Samurai grant rows live in\n  `uc_abilities_globalvar.lst` (`awk -F'\\t' '/^CATEGORY=Class\\|/ {split($1,a,\"|\"); c[a[2]]++} END{for(k in c) print c[k], k}'\n  \"$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst\"` → Ninja.MOD 64,\n  Samurai.MOD 99, Gunslinger.MOD 98): `data/class_feature_grants/ultimate_combat/` had no `ninja.json` or `samurai.json`.\n  E3.12 hand-added the one row its card named (`Ninja ~ Ninja Trick`, level 2, cited to `uc_abilities_globalvar.lst:21`).\n  The generator also cannot be re-run as is: on the E3.12 tree it rewrote 58 committed files\n  (`cargo run --locked -p codex-ingest --bin gen_class_feature_grants && git status --porcelain data/class_feature_grants | awk 'END{print NR}'`).\n- **FILES YOU OWN:** `crates/codex-ingest/src/pcgen_import/cache_gen/class_feature_grants.rs`, its bin, `data/class_feature_grants`.\n- **Failing test first:** the UC Ninja table holds every `Ninja.MOD` grant row of `uc_abilities_globalvar.lst` the\n  generator's rules resolve (1 of 64 today); a generator re-run leaves `data/class_feature_grants` unchanged.\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete before E3.MC.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.20",
+  "tier": "opus",
+  "deps": [
+   "E3.13"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": true,
+  "row": "| E3.20 | DISCOVERED (E3.13): the Class Features `Bloodline` pool (granted 1 by `Sorcerer ~ Standard Bloodline`) reads `0 of 1 spent, 1 remaining` for a Sorcerer whose bloodline is held, and its member Standard Bloodline is struck `requires Bloodline` although the engine holds that record (it gates the Sorcerer bloodline pool E3.13 sizes); the level-1 bloodline kind pick is reconciled with the held bloodline and its qualification verdict agrees with the gate | opus | todo | E3.13 | sheet | yes (root + desktop) | hub | must be complete before E3.MC |",
+  "section": "### E3.20 — the Bloodline kind pick beside the held bloodline (discovered by E3.13, 2026-11-24)\n- **Objective:** on a Sorcerer 1 whose creation bloodline is held (E3.13: `Sorcerer bloodline: 1 of 1 spent, 0 remaining`),\n  the Class Features sub-tab still reads `Bloodline: 0 of 1 spent, 1 remaining` (the pool `core_rulebook:class_feature:sorcerer_standard_bloodline`\n  grants, `Pool(bloodline)` 1; PCGen's `Bloodline` category, `cr_abilitycategories.lst:127`, members typed `Bloodline Selection`), and its member\n  Standard Bloodline (`sorcerer_standard_bloodline_selection`) is struck `requires Bloodline` although the record its gate names is held\n  (the same gate opens the Sorcerer bloodline pool: `chooser_offered`). Seen on screen:\n  `artifacts/epic_3/E3.13/01-sorcerer-1-class-features.png`, `02-standard-bloodline-pool.png`. The bloodline kind a held bloodline implies\n  (Standard unless an archetype's selection is held) fills that pool, and the option's verdict (`ability_prereqs::unmet`) agrees with the gate.\n- **FILES YOU OWN:** `src/rules_core/ability_budget.rs`, `src/rules_core/ability_prereqs.rs`; second call sites per the prefix.\n- **Failing test first:** Sorcerer 1 (canonical seeds) → `abilities.budget.class_features.bloodline.remaining` = 0, and no Class Features\n  option of a held record's own gate reads unmet.\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.13. **Tier:** opus. Must be complete before E3.MC.",
   "phase": "E3 — the Abilities tab"
  },
  {
   "id": "E3.MC",
   "tier": "opus",
   "deps": [
-   "E3.11"
+   "E3.11",
+   "E3.18",
+   "E3.19",
+   "E3.20"
   ],
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | |",
+  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | | [script: depends on E3.18 by its note] [script: depends on E3.19 by its note] [script: depends on E3.20 by its note]",
   "section": "### E3.MC — E3 merge check\n- **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an\n  archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains\n  (`grep -rn \"engine card\" apps/desktop/src/characterHub/AbilitiesTab.tsx | awk 'END{print NR}'` → 0); the\n  four-check audit; whole-crate tests attributed. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -904,7 +946,7 @@ const CARDS = [
   "phase": "E7 — closure"
  }
 ]
-const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
+const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.18", "E3.19", "E3.20", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
