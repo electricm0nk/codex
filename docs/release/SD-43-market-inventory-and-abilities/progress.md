@@ -40,6 +40,7 @@ run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
 - **Run 4** (2026-11-22): run id `wf_4c0d3c94-145`, script @ `eff2584ae3`; `done` += E0.3, E0.5, E1.2; `repair` = E1.3, E1.8 (look step); `skip` = C2. Expected stop: E4.G.
   - Result (2026-11-23): 42 complete; stopped at E3.10 `partial` (live-app screenshots all black, incident `run-desktop-black-webview`). Discovered E3.13–E3.17 were added, so there are now 67 cards (`python3 artifacts/cycle_0/gen_workflow.py`).
 - **Run 5** (2026-11-23): run id `wf_f4f5e924-dba`, script @ `8773e93813`; `done` = run 4's complete list + C2 (out of scope by ruling); `repair` = E3.10 (look step, black webview). Expected stop: E4.G.
+  - Result (2026-11-23): 9 agents ran. E1.13 complete. E1.14 `partial`: no look; the agent did not find the driver, which is at `apps/desktop/.claude/skills/run-desktop/driver.sh` (`git ls-tree -r --name-only origin/tranche-43 | grep run-desktop/driver.sh`). E2.6 `partial`: black window again; the sheet lane stopped there, so E3.10's repair did not run. E1.15 `blocked-escalated`: it needs a hub write to `character_hub.rs:7319`. The lead re-scoped E1.15 to hub=yes and cargo=desktop (kanban row). The black window recurs only in the sheet lane (E3.10, E2.6), while E1.15 in the gear lane took real PNGs, so a diagnosis agent is bisecting from 953e456b85 (E3.9, last good look).
 
 ## Operator replies
 

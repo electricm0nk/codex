@@ -290,7 +290,7 @@ const CARDS = [
   "lane": "gear",
   "cargo": false,
   "hub": true,
-  "row": "| E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | todo | E1.6 | gear | no | hub | discovered E1.6 (`artifacts/epic_1/E1.6_cycle_receipt.md`, \"Discovered cards\") |",
+  "row": "| E1.13 | Gear sell window's choice holds under a Cashless session (Q-9.1): `handleGearSell` sends a non-cashless mode when the window sends a total — discovered by E1.6 | sonnet | complete | E1.6 | gear | no | hub | receipt `artifacts/epic_1/E1.13_cycle_receipt.md`; SHA `7d4d8cf3fe925ce770b1b13662221bd6f754b4c0`; discovered E1.6 |",
   "section": "### E1.13 — the sell window's choice under Cashless (discovered by E1.6)\n- **Objective:** `decisions.md §10` / §30 Q-9.1: the Gear sell window returns money per its own option even when\n  the session Market mode is Cashless. Today `sell_held_pieces_at_root` (`desktop/character_hub.rs`, `(PriceMode::Cashless, _) => 0`)\n  ignores `negotiated_copper` under Cashless, and `handleGearSell` (`ui/characterHub/CharacterSheet.tsx`) sends the\n  session `priceMode`. Fix: `handleGearSell` sends `priceMode: 'standard'` whenever `negotiatedGp` is given (the\n  window always sends its total when a price is listed), so the backend pays the window's total; the Market's own Sell is unchanged.\n- **FILES YOU OWN:** `ui/characterHub/CharacterSheet.tsx` (`handleGearSell`) (`hub`) + a frontend test.\n- **Failing test first:** with the session mode `cashless`, the gear sell request for a window total of 7.5 gp carries a\n  non-cashless `priceMode` and `negotiatedPriceCopper: 750`.\n- **Depends:** E1.6. **Tier:** sonnet.\n- **Does not cover:** the Market window's own Sell (Cashless there still pays nothing, Q-12.2).",
   "phase": "E1 — Market and inventory"
  },
@@ -314,9 +314,9 @@ const CARDS = [
    "E1.6"
   ],
   "lane": "gear",
-  "cargo": false,
-  "hub": false,
-  "row": "| E1.15 | Gear Sell opens its window on the first click after launch (E1.6 and E1.MC both saw the first Sell clicks open nothing while Customize opened) — discovered by E1.MC | opus | todo | E1.6 | gear | no | no | discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, \"Discovered cards\"); retro key `gear-sell-first-click-no-window` |",
+  "cargo": true,
+  "hub": true,
+  "row": "| E1.15 | Gear Sell opens its window on the first click after launch (E1.6 and E1.MC both saw the first Sell clicks open nothing while Customize opened) — discovered by E1.MC | opus | todo | E1.6 | gear | yes (desktop) | hub | RE-SCOPED by lead 2026-11-23: hub=yes, cargo=desktop, so the card owns `apps/desktop/src-tauri/src/character_hub.rs` (`describe_held_equipment` → `#[tauri::command(async)]`); discovered E1.MC (`artifacts/epic_1/E1.MC_cycle_receipt.md`, \"Discovered cards\"); retro key `gear-sell-first-click-no-window`; receipt `artifacts/epic_1/E1.15_cycle_receipt.md`; SHA `29f6c070c4cf987cdbcc6f6ba0d5d27f208617da`; BLOCKED: needs HUB write to `apps/desktop/src-tauri/src/character_hub.rs:7319` (`#[tauri::command(async)]` on `describe_held_equipment`) |",
   "section": "### E1.15 — Gear Sell opens on the first click (discovered by E1.MC)\n- **Objective:** a Gear-screen Sell click always opens the sell window. E1.6 (retro incident, \"first two Sell clicks\n  after a fresh launch opened no window while Customize opened\") and E1.MC (images `13`, `14`, `16`: two Sell clicks\n  on a Bedroll in a Backpack opened nothing; Customize opened; the next Sell click opened the window) saw it on a\n  debug build under Xvfb. Cause not established; diagnose first (state of `pending` / `props.busy` at the click).\n- **FILES YOU OWN:** `ui/characterHub/GearScreen.tsx`, `SellDialog.tsx`, their tests; others named after diagnosis.\n- **Failing test first:** the reproduced mechanism as a test (a Sell click on a fresh screen sets the sell window open).\n- **Depends:** E1.6. **Tier:** opus.\n- **Does not cover:** the Market window's own Sell.",
   "phase": "E1 — Market and inventory"
  },
