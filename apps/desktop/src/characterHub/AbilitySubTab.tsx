@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { AdmittedRecordDto, OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
+import { OverrideTag, flagsOf } from './OverrideTag';
 import { listAbilityOptions, type AbilityOptionsDto, type AbilitySubTabId } from '../boundary/abilities';
 import { buildAbilitySubTabModel, formatPoolLine, type AbilitySubTabModel } from './abilitySubTabModel';
 
@@ -9,6 +11,20 @@ export interface AbilityOptionInfo {
   /** The choices Add asks for first (e.g. a trait's skill); empty when none. */
   choices: { id: string; name: string }[];
 }
+
+/**
+ * The character's Abilities overrides and what they let in, provided once around the sub-tabs. Off,
+ * which is the default, Add stays disabled with the engine's reason and no pick carries a tag.
+ */
+export interface AbilityOverrides {
+  abilitiesWithoutPrerequisites: boolean;
+  ignoreAbilityBudget: boolean;
+  admitted: readonly AdmittedRecordDto[];
+}
+export const AbilityOverridesContext = createContext<AbilityOverrides>({ abilitiesWithoutPrerequisites: false, ignoreAbilityBudget: false, admitted: [] });
+
+/** Racial Abilities are the race picker's, not an `ability_budget` sub-tab: the two flags do not reach them. */
+const OVERRIDABLE = (subtab: string): boolean => subtab !== 'racial_abilities';
 
 const label = { color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.4rem', textTransform: 'uppercase' } as const;
 const muted = { color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.25rem 0 0' } as const;
@@ -27,6 +43,8 @@ export function AbilitySubTabView(props: {
   info: (id: string) => AbilityOptionInfo | null;
   busy: boolean;
   error: string | null;
+  /** The flags that let each held pick in, by option id. */
+  flagsOfPick?: (id: string) => OverrideFlagDto[];
   onSearch: (search: string) => void;
   onQualifiedOnly: (on: boolean) => void;
   onFocus: (id: string) => void;
@@ -135,6 +153,9 @@ export function AbilitySubTabView(props: {
                 <div style={{ flex: 1 }}>
                   <span style={{ fontWeight: 700 }}>{row.label}</span>
                   {row.category ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>{row.category}</span> : null}
+                  {(props.flagsOfPick?.(row.id) ?? []).map((flag) => (
+                    <OverrideTag key={flag} flag={flag} />
+                  ))}
                   {info?.grants ? <p style={muted}>{info.grants}</p> : null}
                 </div>
                 <button type="button" disabled={props.busy} onClick={() => props.onRemove(row.id)} style={{ flexShrink: 0 }}>
@@ -171,6 +192,8 @@ export function AbilitySubTab(props: {
   const [busy, setBusy] = useState(false);
   // Bumped after every Add/Remove so a sub-tab whose held ids come from the engine re-reads them.
   const [changes, setChanges] = useState(0);
+  const overrides = useContext(AbilityOverridesContext);
+  const overridable = OVERRIDABLE(props.subtab);
   const heldKey = props.selectedIds?.join('\n') ?? '';
 
   useEffect(() => {
@@ -197,6 +220,8 @@ export function AbilitySubTab(props: {
     selectedIds: props.selectedIds ?? listed?.selected ?? [],
     search,
     qualifiedOnly,
+    allowUnqualified: overridable && overrides.abilitiesWithoutPrerequisites,
+    ignoreBudget: overridable && overrides.ignoreAbilityBudget,
   });
   const run = (action: Promise<void>) => {
     setBusy(true);
@@ -219,6 +244,7 @@ export function AbilitySubTab(props: {
       info={props.info}
       busy={busy}
       error={error}
+      flagsOfPick={(id) => flagsOf(overrides.admitted, 'ability', id)}
       onSearch={setSearch}
       onQualifiedOnly={setQualifiedOnly}
       onFocus={setFocusedId}

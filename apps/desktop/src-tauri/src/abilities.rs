@@ -39,6 +39,8 @@ use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, race_alternat
 use codex::saved_character::local_store::SavedCharacterStore;
 use serde::{Deserialize, Serialize};
 
+use crate::character_ledger::{selected_ids, AdmittedKind, AdmittedRecordDto, OverrideFlag};
+use crate::pf1_adapter::mutate_saved_character_admitting_at_root;
 use crate::character_hub::{
     apply_add_trait_selection, map_explanations_dto, mutate_saved_character_at_root, read_alternate_trait_keys,
     remove_trait_selection_at_root, resolve_alternate_trait_choices, resolve_character_root, sheet_rule_package_for,
@@ -204,42 +206,6 @@ pub struct AbilityOptionsDto {
     pub selected: Vec<String>,
 }
 
-/// The option ids of the picks a sub-tab saves, in saved order.
-fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
-    match subtab {
-        SubTab::Traits => input.chosen.selected_traits.clone(),
-        SubTab::ClassFeatures | SubTab::Background | SubTab::Misc => input
-            .chosen
-            .ability_selections
-            .iter()
-            .filter(|pick| pick.subtab == subtab.id())
-            .map(|pick| format!("{}:{}", pick.pool, pick.record_key))
-            .collect(),
-        SubTab::Archetype => input
-            .chosen
-            .selected_choices
-            .iter()
-            .filter(|choice| choice.choice_set_id == ARCHETYPE_CHOICE_ID)
-            .map(|choice| choice.selection_id.clone())
-            .collect(),
-        SubTab::FavoredClass => input
-            .chosen
-            .selected_choices
-            .iter()
-            .filter(|choice| choice.choice_set_id == FAVORED_CLASS_CHOICE_ID)
-            .map(|choice| format!("{FAVORED_CLASS_POOL}:{}", choice.selection_id))
-            .chain(
-                input
-                    .chosen
-                    .ability_selections
-                    .iter()
-                    .filter(|pick| pick.subtab == subtab.id())
-                    .map(|pick| format!("{FAVORED_BONUS_POOL}:{}@{}", pick.record_key, pick.level)),
-            )
-            .collect(),
-    }
-}
-
 #[tauri::command]
 pub fn list_ability_options(app: tauri::AppHandle, request: ListAbilityOptionsRequest) -> Result<AbilityOptionsDto, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
@@ -293,9 +259,14 @@ pub(crate) fn add_ability_selection_at_root(
     let subtab = subtab_of(subtab)?;
     let package = package()?;
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    let overrides = crate::character_custom::load_character_custom_at_root(root).map(|custom| custom.overrides).unwrap_or_default();
+    let mut flags: Vec<OverrideFlag> = Vec::new();
     let budget = budget_at_root(root, package, &input, subtab);
     if let Some(refusal) = budget.refusal(package, option_id) {
-        return Err(refusal);
+        if !overrides.ignore_ability_budget {
+            return Err(refusal);
+        }
+        flags.push(OverrideFlag::IgnoreAbilityBudget);
     }
     let base = compute_pilot_base_chassis(&input);
     let option = ability_options(package, &input, &base, subtab)
@@ -303,43 +274,54 @@ pub(crate) fn add_ability_selection_at_root(
         .find(|option| option.id == option_id)
         .ok_or_else(|| format!("'{option_id}' is not an option of the {} sub-tab", subtab.id()))?;
     if let Some(refusal) = ability_prereqs::refusal(&option) {
-        return Err(refusal);
+        if !overrides.abilities_without_prerequisites {
+            return Err(refusal);
+        }
+        flags.push(OverrideFlag::AbilitiesWithoutPrerequisites);
     }
+    // Past the pool there is no grant to charge a pick to: it lands on the character's level.
+    let character_level = input.chosen.class_levels.iter().map(|class| class.level).sum::<u8>().max(1);
+    let admit = |id: &str| admitted_rows(id, &flags);
     match subtab {
-        SubTab::Traits => mutate_saved_character_at_root(root, saved_at, |input| apply_add_trait_selection(input, option_id, None)),
+        SubTab::Traits => mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| apply_add_trait_selection(input, option_id, None)),
         SubTab::ClassFeatures => {
             let (pool, record_key) = option_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no class feature pool"))?;
             let level = budget
                 .pool(pool)
                 .and_then(|pool| pool.next_pick_level())
+                .or_else(|| flags.contains(&OverrideFlag::IgnoreAbilityBudget).then_some(character_level))
                 .ok_or_else(|| format!("The {pool} pool has no grant left to charge '{}' to", option.label))?;
             let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
-            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+            mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| input.chosen.ability_selections.push(pick))
         }
         SubTab::Background | SubTab::Misc => {
             let (pool, record_key) = option_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no {} pool", subtab.id()))?;
-            let level = input.chosen.class_levels.iter().map(|class| class.level).sum::<u8>().max(1);
-            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
-            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level: character_level, target: None };
+            mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| input.chosen.ability_selections.push(pick))
         }
         SubTab::Archetype => {
             let choice = SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: option_id.to_owned() };
-            mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
+            mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| input.chosen.selected_choices.push(choice))
         }
         SubTab::FavoredClass => match option_id.split_once(':') {
             Some((FAVORED_CLASS_POOL, class)) => {
                 let choice = SelectedChoice { choice_set_id: FAVORED_CLASS_CHOICE_ID.to_owned(), selection_id: class.to_owned() };
-                mutate_saved_character_at_root(root, saved_at, |input| input.chosen.selected_choices.push(choice))
+                mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| input.chosen.selected_choices.push(choice))
             }
             Some((_, record_key)) => {
                 let level = favored_next_level(&input, imported_favored_bonuses(root))
+                    .or_else(|| flags.contains(&OverrideFlag::IgnoreAbilityBudget).then_some(character_level))
                     .ok_or_else(|| format!("No level of the favored class is left to charge '{}' to", option.label))?;
                 let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: FAVORED_BONUS_POOL.to_owned(), record_key: record_key.to_owned(), level, target: None };
-                mutate_saved_character_at_root(root, saved_at, |input| input.chosen.ability_selections.push(pick))
+                mutate_saved_character_admitting_at_root(root, saved_at, admit(&format!("{option_id}@{level}")), |input| input.chosen.ability_selections.push(pick))
             }
             None => Err(format!("'{option_id}' names no favored class pool")),
         },
     }
+}
+
+fn admitted_rows(id: &str, flags: &[OverrideFlag]) -> Vec<AdmittedRecordDto> {
+    flags.iter().map(|flag| AdmittedRecordDto::new(AdmittedKind::Ability, id, *flag)).collect()
 }
 
 /// Removes a held pick; `Err` when the character does not hold it.
@@ -617,6 +599,69 @@ mod tests {
         let listed = list_ability_options_at_root(&root, "class_features").expect("options");
         let major = listed.options.iter().find(|o| o.id == major).expect("Major Magic still offered");
         assert!(!major.unmet.iter().any(|reason| reason.contains("Minor Magic")), "{:?}", major.unmet);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn set_override(root: &Path, flip: impl FnOnce(&mut crate::character_custom::Overrides)) {
+        let mut custom = crate::character_custom::load_character_custom_at_root(root).expect("custom");
+        flip(&mut custom.overrides);
+        crate::character_custom::save_character_custom_at_root(root, &custom, SAVED_AT).expect("saving the flag");
+    }
+
+    fn admitted(root: &Path) -> Vec<(String, crate::character_ledger::OverrideFlag)> {
+        let input = SavedCharacterStore::load(root).expect("reload").character_input;
+        crate::character_ledger::admitted_records_at_root(root, &input)
+            .into_iter()
+            .filter(|row| row.kind == crate::character_ledger::AdmittedKind::Ability)
+            .map(|row| (row.id, row.override_flag))
+            .collect()
+    }
+
+    /// Major Magic needs Minor Magic. `abilities_without_prerequisites` off, refused; on, admitted and flagged; the
+    /// flag does not lift the count budget, and removing the pick takes the flag row with it.
+    #[test]
+    fn abilities_without_prerequisites_admits_an_unqualified_pick_and_flags_it_off_refuses() {
+        let root = aldric_root("override-prereq");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 4 }];
+        })
+        .expect("make Aldric a Rogue 4");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let major = listed.options.iter().find(|o| o.pool == "rogue_talent" && o.label == "Major Magic").expect("Major Magic").id.clone();
+        add_ability_selection_at_root(&root, "class_features", &major, SAVED_AT).expect_err("off: refused");
+        assert!(admitted(&root).is_empty());
+
+        set_override(&root, |flags| flags.abilities_without_prerequisites = true);
+        add_ability_selection_at_root(&root, "class_features", &major, SAVED_AT).expect("on: admitted");
+        assert_eq!(admitted(&root), [(major.clone(), crate::character_ledger::OverrideFlag::AbilitiesWithoutPrerequisites)]);
+        assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, std::slice::from_ref(&major));
+
+        remove_ability_selection_at_root(&root, "class_features", &major, SAVED_AT).expect("remove");
+        assert!(admitted(&root).is_empty(), "the row goes when the pick does");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Rogue 4 has two talents. `ignore_ability_budget` off, a third is refused; on, it is admitted and flagged.
+    #[test]
+    fn ignore_ability_budget_admits_a_pick_past_the_pool_and_flags_it_off_refuses() {
+        let root = aldric_root("override-budget");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 4 }];
+        })
+        .expect("make Aldric a Rogue 4");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let talents: Vec<String> = listed.options.iter().filter(|o| o.pool == "rogue_talent" && o.qualified).map(|o| o.id.clone()).take(3).collect();
+        assert_eq!(talents.len(), 3);
+        add_ability_selection_at_root(&root, "class_features", &talents[0], SAVED_AT).expect("first");
+        add_ability_selection_at_root(&root, "class_features", &talents[1], SAVED_AT).expect("second");
+        add_ability_selection_at_root(&root, "class_features", &talents[2], SAVED_AT).expect_err("off: a third is refused");
+        assert!(admitted(&root).is_empty());
+
+        set_override(&root, |flags| flags.ignore_ability_budget = true);
+        add_ability_selection_at_root(&root, "class_features", &talents[2], SAVED_AT).expect("on: admitted");
+        assert_eq!(admitted(&root), [(talents[2].clone(), crate::character_ledger::OverrideFlag::IgnoreAbilityBudget)]);
         std::fs::remove_dir_all(&root).ok();
     }
 

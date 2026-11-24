@@ -46,6 +46,8 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
         (flags.ignore_feat_budget, crate::character_ledger::OverrideFlag::IgnoreFeatBudget),
         (flags.ignore_alignment_restrictions, crate::character_ledger::OverrideFlag::IgnoreAlignmentRestrictions),
         (flags.ignore_encumbrance, crate::character_ledger::OverrideFlag::IgnoreEncumbrance),
+        (flags.abilities_without_prerequisites, crate::character_ledger::OverrideFlag::AbilitiesWithoutPrerequisites),
+        (flags.ignore_ability_budget, crate::character_ledger::OverrideFlag::IgnoreAbilityBudget),
     ]
     .into_iter()
     .filter(|(set, _)| *set)

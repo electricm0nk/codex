@@ -33,7 +33,7 @@ export interface LoadSavedCharacterRequest {
 /** The backend's `OverrideFlag`: one of the `Overrides` keys `custom.json` saves. */
 export type OverrideFlagDto = keyof CustomOverrides;
 
-export type AdmittedKindDto = 'feat' | 'spell' | 'equipment' | 'class_level';
+export type AdmittedKindDto = 'feat' | 'spell' | 'equipment' | 'class_level' | 'ability';
 
 /** One thing the character holds that the rules would have refused, and the flag that let it in. */
 export interface AdmittedRecordDto {

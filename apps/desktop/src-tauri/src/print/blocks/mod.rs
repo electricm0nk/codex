@@ -98,6 +98,8 @@ pub(crate) fn override_tag(flag: OverrideFlag) -> String {
         OverrideFlag::IgnoreFeatBudget => "Ignore the feat budget",
         OverrideFlag::IgnoreAlignmentRestrictions => "Ignore alignment restrictions",
         OverrideFlag::IgnoreEncumbrance => "Ignore encumbrance",
+        OverrideFlag::AbilitiesWithoutPrerequisites => "Abilities without prerequisites",
+        OverrideFlag::IgnoreAbilityBudget => "Ignore the ability budget",
     };
     format!("Override: {label}")
 }

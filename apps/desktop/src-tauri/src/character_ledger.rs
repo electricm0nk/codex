@@ -27,11 +27,54 @@ use crate::feat_catalog::build_feat_catalog;
 use crate::pf1_adapter::OVERRIDE_SPELL_SOURCE;
 use codex::rules_core::character_input::{ActiveState, CharacterClassLevel, CharacterInput};
 use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::ability_budget::{SubTab, FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL};
+use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
 use codex::rules_core::feat_budget::feat_slot_levels;
 use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, spells_known_table, PilotBaseChassisComputation};
 use codex::rules_core::rules_catalog::class_spell_levels::class_spell_level;
 use codex::rules_core::{feat_effects, feat_identity};
 use codex::saved_character::local_store::SavedCharacterStore;
+
+/// The option ids of the picks a sub-tab saves, in saved order.
+pub(crate) fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String> {
+    match subtab {
+        SubTab::Traits => input.chosen.selected_traits.clone(),
+        SubTab::ClassFeatures | SubTab::Background | SubTab::Misc => input
+            .chosen
+            .ability_selections
+            .iter()
+            .filter(|pick| pick.subtab == subtab.id())
+            .map(|pick| format!("{}:{}", pick.pool, pick.record_key))
+            .collect(),
+        SubTab::Archetype => input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|choice| choice.choice_set_id == ARCHETYPE_CHOICE_ID)
+            .map(|choice| choice.selection_id.clone())
+            .collect(),
+        SubTab::FavoredClass => input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|choice| choice.choice_set_id == FAVORED_CLASS_CHOICE_ID)
+            .map(|choice| format!("{FAVORED_CLASS_POOL}:{}", choice.selection_id))
+            .chain(
+                input
+                    .chosen
+                    .ability_selections
+                    .iter()
+                    .filter(|pick| pick.subtab == subtab.id())
+                    .map(|pick| format!("{FAVORED_BONUS_POOL}:{}@{}", pick.record_key, pick.level)),
+            )
+            .collect(),
+    }
+}
+
+/// How many of the picks on the Abilities sub-tabs are the option `id` (an admitted row's `Held` count).
+pub(crate) fn ability_held_count(input: &CharacterInput, id: &str) -> usize {
+    SubTab::ALL.into_iter().map(|subtab| selected_ids(input, subtab).iter().filter(|held| *held == id).count()).sum()
+}
 
 const LEDGER_FILE_NAME: &str = "ledger.json";
 
@@ -71,6 +114,8 @@ pub enum OverrideFlag {
     IgnoreFeatBudget,
     IgnoreAlignmentRestrictions,
     IgnoreEncumbrance,
+    AbilitiesWithoutPrerequisites,
+    IgnoreAbilityBudget,
 }
 
 impl OverrideFlag {
@@ -88,6 +133,8 @@ pub enum AdmittedKind {
     Spell,
     Equipment,
     ClassLevel,
+    /// A pick on one of the Abilities sub-tabs, by the id the sub-tab lists it under.
+    Ability,
 }
 
 /// One thing the character holds that the rules would have refused, and the flag that let it in. A
@@ -416,6 +463,7 @@ fn holders_of(row: &mut AdmittedRecordDto, input: &CharacterInput, custom: &Char
             }
             held.len()
         }
+        AdmittedKind::Ability => ability_held_count(input, &row.id),
         AdmittedKind::Spell => chosen.spells_selected.iter().filter(|spell| spell.spell_id == row.id).count(),
         AdmittedKind::ClassLevel => chosen.class_levels.iter().find(|class| class.class_id == row.id).map_or(0, |class| usize::from(class.level)),
         AdmittedKind::Equipment => match row.id.strip_prefix(CUSTOM_ITEM_PREFIX) {

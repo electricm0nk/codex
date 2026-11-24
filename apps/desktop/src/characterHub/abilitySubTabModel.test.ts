@@ -138,3 +138,14 @@ const talentHtml = renderToStaticMarkup(
 assert(talentHtml.includes('Move at full speed using Stealth.') && !talentHtml.includes('bundled roster'), 'the Info pane prints the engine description');
 
 console.log('abilitySubTabModel tests passed');
+
+// SD-43 E3.10: the two Abilities overrides lift Add's block, and only when on.
+{
+  const full = buildAbilitySubTabModel({ subtab: 'traits', budget, options, selectedIds: [], search: '', qualifiedOnly: false });
+  const lifted = buildAbilitySubTabModel({ subtab: 'traits', budget, options, selectedIds: [], search: '', qualifiedOnly: false, allowUnqualified: true, ignoreBudget: true });
+  const row = (m: typeof full, id: string) => m.available.find((r) => r.id === id)?.addBlockedBy ?? null;
+  assert(row(full, 'trait:trait_ambitious') !== null, 'off: an unqualified option blocks Add');
+  assert(row(full, 'trait:trait_axe_to_grind') !== null, 'off: a full pool blocks Add');
+  assertEqual(row(lifted, 'trait:trait_ambitious'), null, 'on: an unqualified option can be added');
+  assertEqual(row(lifted, 'trait:trait_axe_to_grind'), null, 'on: a full pool does not block Add');
+}

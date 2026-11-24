@@ -140,6 +140,10 @@ pub struct Overrides {
     /// SD-41 `decisions.md §32` (b): no container is flagged over its capacity (the screen and the
     /// print read it off the load response; the load figure stays the engine's).
     pub ignore_container_capacity: bool,
+    /// An Abilities sub-tab pick is admitted although its prerequisites are unmet (`abilities::add_ability_selection_at_root`).
+    pub abilities_without_prerequisites: bool,
+    /// An Abilities sub-tab pick is admitted although its pool has no room left.
+    pub ignore_ability_budget: bool,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]

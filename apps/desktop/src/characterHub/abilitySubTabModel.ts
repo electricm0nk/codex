@@ -60,6 +60,10 @@ export function buildAbilitySubTabModel(input: {
   selectedIds: readonly string[];
   search: string;
   qualifiedOnly: boolean;
+  /** `abilitiesWithoutPrerequisites` is on: an unqualified option can be added (the engine flags it). */
+  allowUnqualified?: boolean;
+  /** `ignoreAbilityBudget` is on: a full pool does not block Add. */
+  ignoreBudget?: boolean;
 }): AbilitySubTabModel {
   const prefix = `abilities.budget.${input.subtab}.`;
   const pools = new Map<string, AbilityPoolLine>();
@@ -84,9 +88,9 @@ export function buildAbilitySubTabModel(input: {
     .filter((option) => query === '' || option.label.toLowerCase().includes(query))
     .map((option): AbilityAvailableRow => {
       const pool = pools.get(option.pool);
-      const addBlockedBy = !option.qualified
+      const addBlockedBy = !option.qualified && input.allowUnqualified !== true
         ? option.unmet.join('; ') || 'The engine marks this option unqualified.'
-        : pool !== undefined && pool.remaining <= 0
+        : pool !== undefined && pool.remaining <= 0 && input.ignoreBudget !== true
           ? `No room in the ${option.pool} pool: ${pool.spent} of ${pool.granted} spent, ${pool.remaining} remaining.`
           : null;
       return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, description: option.description ?? null, addBlockedBy };

@@ -181,7 +181,7 @@ import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
 import { CampaignMembershipDialog } from './CampaignMembershipDialog';
 import { RestTextPanel } from './RestText';
 import { AbilitiesTab } from './AbilitiesTab';
-import { AbilitySubTab, type AbilityOptionInfo } from './AbilitySubTab';
+import { AbilityOverridesContext, AbilitySubTab, type AbilityOptionInfo } from './AbilitySubTab';
 import { activeCampaigns, campaignFieldText, standInCampaigns } from './campaignMembershipModel';
 
 /**
@@ -4355,6 +4355,13 @@ export function CharacterSheet(props: {
                     ignoreSlotLimits={customOverrides(custom).ignoreSlotLimits}
                   />
                 ) : name === 'Abilities' ? (
+                  <AbilityOverridesContext.Provider
+                    value={{
+                      abilitiesWithoutPrerequisites: customOverrides(custom).abilitiesWithoutPrerequisites,
+                      ignoreAbilityBudget: customOverrides(custom).ignoreAbilityBudget,
+                      admitted: engineRecords.admittedUnderOverride,
+                    }}
+                  >
                   <AbilitiesTab
                     panels={{
                       Feats: (
@@ -4432,6 +4439,7 @@ export function CharacterSheet(props: {
                       ),
                     }}
                   />
+                  </AbilityOverridesContext.Provider>
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Biography' ? (

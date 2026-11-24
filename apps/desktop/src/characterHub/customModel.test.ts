@@ -166,10 +166,12 @@ function verifiesTheMarketCannotSellACustomItem() {
   assertEqual(sellableCopies([copy('item:longsword'), copy('custom:a')]).map((row) => row.itemId).join(), 'item:longsword', 'the custom row is off the Sell list');
 }
 
-function verifiesTheOverridesGroupHoldsTheBackendsNineFlags() {
-  assertEqual(OVERRIDE_TOGGLES.length, 9, 'nine toggles');
-  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 9, 'each flag once');
+function verifiesTheOverridesGroupHoldsTheBackendsElevenFlags() {
+  assertEqual(OVERRIDE_TOGGLES.length, 11, 'eleven toggles');
+  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 11, 'each flag once');
   assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'ignoreContainerCapacity')?.label, 'Ignore container capacity limits', 'decisions.md §32 (b)');
+  assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'ignoreAbilityBudget')?.label, 'Ignore the ability budget', 'SD-43 E3.10');
+  assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'abilitiesWithoutPrerequisites')?.label, 'Abilities without prerequisites', 'SD-43 E3.10');
   assertEqual(customOverrides(EMPTY_CUSTOM).ignoreContainerCapacity, false, 'off for data saved before it');
   assertEqual(OVERRIDE_TOGGLES.map((toggle) => toggle.key).sort().join(), Object.keys(NO_OVERRIDES).sort().join(), 'every flag has its toggle');
   assertEqual(customOverrides(EMPTY_CUSTOM).ignoreSlotLimits, false, 'data saved before the flags reads all off');
@@ -191,6 +193,6 @@ verifiesTheBonusProblemsMatchTheBackend();
 verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow();
 verifiesSwimAndFlyReadTheEngineRows();
 verifiesTheMarketCannotSellACustomItem();
-verifiesTheOverridesGroupHoldsTheBackendsNineFlags();
+verifiesTheOverridesGroupHoldsTheBackendsElevenFlags();
 verifiesTheCreatedItemFieldsMatchTheBackend();
 console.log('customModel.test.ts: all assertions passed');

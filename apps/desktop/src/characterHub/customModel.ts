@@ -65,7 +65,7 @@ export interface CharacterCustom {
   devices: CustomRecord[];
   /** Conditions the character is under (`'Shaken'`); empty means the sheet shows `Normal`. */
   conditions: string[];
-  /** What the GM lets this character do without qualifying; the backend sends all nine. */
+  /** What the GM lets this character do without qualifying; the backend sends all eleven. */
   overrides?: CustomOverrides;
 }
 
@@ -80,6 +80,8 @@ export interface CustomOverrides {
   ignoreAlignmentRestrictions: boolean;
   ignoreEncumbrance: boolean;
   ignoreContainerCapacity: boolean;
+  abilitiesWithoutPrerequisites: boolean;
+  ignoreAbilityBudget: boolean;
 }
 
 export const NO_OVERRIDES: CustomOverrides = {
@@ -92,6 +94,8 @@ export const NO_OVERRIDES: CustomOverrides = {
   ignoreAlignmentRestrictions: false,
   ignoreEncumbrance: false,
   ignoreContainerCapacity: false,
+  abilitiesWithoutPrerequisites: false,
+  ignoreAbilityBudget: false,
 };
 
 /** The Custom tab's Overrides group, one checkbox each. */
@@ -105,6 +109,8 @@ export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label
   { key: 'ignoreAlignmentRestrictions', label: 'Ignore alignment restrictions' },
   { key: 'ignoreEncumbrance', label: 'Ignore encumbrance' },
   { key: 'ignoreContainerCapacity', label: 'Ignore container capacity limits' },
+  { key: 'abilitiesWithoutPrerequisites', label: 'Abilities without prerequisites' },
+  { key: 'ignoreAbilityBudget', label: 'Ignore the ability budget' },
 ];
 
 /** The character's flags, all off for data saved before they existed. */
