@@ -18,7 +18,7 @@ import {
   marketWindow,
   MARKET_ROW_PX,
 } from './itemPickerFilter';
-import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, rowOfHeldCopy, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
+import { MARKET_CATEGORIES, MarketDialogView, sellValueGp, rowOfHeldCopy, loadHeldLists, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
 import { mapMarketTableRows } from './marketModel';
 import { buildOf, BuyCustomDialogView, EMPTY_BUY_CUSTOM } from './BuyCustomDialog';
 import { createItemFields, CreateItemDialogView, EMPTY_CREATE_ITEM } from './CreateItemDialog';
@@ -194,6 +194,26 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assert(rowOfHeldCopy(rows, legacy) === rows[0], 'a legacy item: id finds its Market row');
   assert(rowOfHeldCopy(rows, { ...legacy, itemId: 'item:longspear', name: 'Longspear' }) === null, 'another item does not');
   assert(rowOfHeldCopy(rows, { ...legacy, name: 'Mine' }) === null, 'a custom name does not');
+}
+
+// E1.14: a held copy's value never waits on its own list being opened: with only Gear on screen, the other
+// lists are read for the held copies, and a Longsword (15 gp) sells for 7.5 gp under `standard`.
+{
+  const sword = mapMarketTableRows([{ ...SWORD, costGp: 15 } as MarketEntryDto]);
+  const gear = mapMarketTableRows([{ ...ROPE, category: 'General' } as MarketEntryDto]);
+  const asked: string[] = [];
+  const lists = await loadHeldLists(
+    async (category) => {
+      asked.push(category);
+      return category === 'weapon' ? sword : gear;
+    },
+    [{ value: 'gear' as const }, { value: 'weapon' as const }],
+    { gear },
+  );
+  assertEqual(asked.join(), 'weapon', 'only the lists not yet loaded are read');
+  const held = { itemId: 'Longsword (Base)', name: 'Longsword (Base)', bonus: 0 };
+  const row = rowOfHeldCopy(Object.values(lists).flat(), held);
+  assertEqual(sellValueGp(row, held, 'standard'), 7.5, 'a held Longsword sells for 7.5 gp with only Gear opened');
 }
 
 // A pick offers its bonuses and prices the one chosen.

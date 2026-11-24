@@ -118,6 +118,17 @@ export function rowOfHeldCopy(rows: MarketTableRow[], copy: MarketHeldCopy): Mar
   );
 }
 
+/** `loaded` plus every category's list not yet in it, so a held copy finds its row whatever tab is open. */
+export async function loadHeldLists(
+  loadRows: (category: MarketCategory) => Promise<MarketTableRow[]>,
+  categories: ReadonlyArray<{ value: MarketCategory }>,
+  loaded: Partial<Record<MarketCategory, MarketTableRow[]>>,
+): Promise<Partial<Record<MarketCategory, MarketTableRow[]>>> {
+  const missing = categories.map((entry) => entry.value).filter((value) => !loaded[value]);
+  const lists = await Promise.all(missing.map((value) => loadRows(value).catch(() => undefined)));
+  return Object.fromEntries([...Object.entries(loaded), ...missing.flatMap((value, at) => (lists[at] ? [[value, lists[at]]] : []))]);
+}
+
 export interface MarketDialogViewProps {
   category: MarketCategory;
   onCategory: (category: MarketCategory) => void;
@@ -607,6 +618,20 @@ export function MarketDialog(props: {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, rows]);
+
+  // Held copies are priced from their own lists, whichever tab is open; a list that fails here shows its dash.
+  useEffect(() => {
+    let current = true;
+    void loadHeldLists(props.loadRows, props.categories ?? MARKET_CATEGORIES, {}).then((all) => {
+      if (current) {
+        setLoaded((held) => ({ ...all, ...held }));
+      }
+    });
+    return () => {
+      current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function reloadInventory() {
     return props
