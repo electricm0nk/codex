@@ -1700,12 +1700,13 @@ impl HeldSeed {
             skills: chosen.skill_allocations.iter().filter(|a| a.ranks > 0).map(|a| id_slug(&a.skill_id)).collect(),
             race_traits: Vec::new(),
             class_features: Vec::new(),
-            // A saved Class Features pick (Minor Magic) is held outright, so its own rules reach the sheet (E3.15); a saved
-            // archetype is carried as its selection id, which `held_set` resolves to its record (E3.16).
+            // A saved Class Features, Background or Misc pick (Minor Magic, a corruption) is held outright, so its own
+            // rules reach the sheet (E3.15, E3.17); a saved archetype is carried as its selection id, which `held_set`
+            // resolves to its record (E3.16).
             rule_ids: chosen
                 .ability_selections
                 .iter()
-                .filter(|pick| pick.subtab == "class_features")
+                .filter(|pick| ["class_features", "background", "misc"].contains(&pick.subtab.as_str()))
                 .map(|pick| pick.record_key.clone())
                 .chain(
                     chosen
@@ -3955,6 +3956,26 @@ mod evaluate_tests {
         let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
         assert!(held.rules.contains_key(two_handed), "the sheet holds the saved Two-Handed Fighter archetype");
         assert!(!held.rules.contains_key(bravery), "Two-Handed Fighter replaces Bravery: no Bravery line or note");
+    }
+
+    /// E3.17: a saved Misc pick (Horror Adventures' corruption optional rule) is held by the sheet's own held set, so
+    /// its rules reach the sheet and the print -- not only the Misc options and pools (`ability_budget`).
+    #[test]
+    fn misc_pick_is_held_by_the_sheet() {
+        use crate::rules_core::character_input::AbilitySelection;
+        let corruption = "horror_adventures:ability:rules_use_corruption_standard";
+        let fixture = crate::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = crate::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        input.chosen.ability_selections.push(AbilitySelection {
+            subtab: "misc".to_owned(),
+            pool: "optional_rules_systems".to_owned(),
+            record_key: corruption.to_owned(),
+            level: 1,
+            target: None,
+        });
+        let base = compute_pilot_base_chassis(&input);
+        let held = held_set(package(), &HeldSeed::from_character(&input, &base), &CharacterFacts::from_character(&input, &base));
+        assert!(held.rules.contains_key(corruption), "the sheet holds the saved corruption optional rule");
     }
 }
 
