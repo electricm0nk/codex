@@ -27,7 +27,7 @@ export function RestTextView(props: { rest: RestTextDto }) {
 }
 
 /** Loads the character's rest text and shows it; a failed read says so rather than hiding the section. */
-export function RestTextPanel(props: { characterId: string }) {
+export function RestTextPanel(props: { characterId: string; overrideText?: string }) {
   const [rest, setRest] = useState<RestTextDto | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -41,7 +41,7 @@ export function RestTextPanel(props: { characterId: string }) {
     return () => {
       live = false;
     };
-  }, [props.characterId]);
+  }, [props.characterId, props.overrideText]);
   if (error) {
     return <p role="alert" style={textStyle}>{error}</p>;
   }

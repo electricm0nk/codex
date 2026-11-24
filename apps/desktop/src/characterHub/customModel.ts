@@ -67,6 +67,8 @@ export interface CharacterCustom {
   conditions: string[];
   /** What the GM lets this character do without qualifying; the backend sends all eleven. */
   overrides?: CustomOverrides;
+  /** The GM's own rest and recovery words; set, they print instead of the rest table's rows. Absent: the table prints. */
+  restText?: string;
 }
 
 /** The backend's `Overrides`: each flag is read by the command enforcing that rule. */
@@ -120,6 +122,12 @@ export function customOverrides(custom: CharacterCustom): CustomOverrides {
 
 export function withOverride(custom: CharacterCustom, key: keyof CustomOverrides, on: boolean): CharacterCustom {
   return { ...custom, overrides: { ...customOverrides(custom), [key]: on } };
+}
+
+/** Sets the rest text override; blank removes the field so the table's rows return. */
+export function withRestText(custom: CharacterCustom, text: string): CharacterCustom {
+  const { restText: _dropped, ...rest } = custom;
+  return text.trim() === '' ? rest : { ...rest, restText: text };
 }
 
 export const EMPTY_CUSTOM: CharacterCustom = { grants: [], feats: [], equipment: [], spells: [], devices: [], conditions: [] };
@@ -317,6 +325,9 @@ export function customProblems(custom: CharacterCustom): string[] {
     if (!Number.isInteger(grant.value) || Math.abs(grant.value) > MAX_GRANT_VALUE) {
       problems.push(`The grant "${grant.label || 'unnamed'}" must be a whole number from -${MAX_GRANT_VALUE} to ${MAX_GRANT_VALUE}.`);
     }
+  }
+  if (custom.restText !== undefined && custom.restText.length > MAX_DESCRIPTION) {
+    problems.push(`The rest and recovery text is over ${MAX_DESCRIPTION} characters.`);
   }
   for (const { kind, singular } of CUSTOM_RECORD_KINDS) {
     for (const record of custom[kind]) {

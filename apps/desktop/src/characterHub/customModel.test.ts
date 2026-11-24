@@ -12,6 +12,7 @@ import {
   NO_OVERRIDES,
   OVERRIDE_TOGGLES,
   withOverride,
+  withRestText,
   customProblems,
   customSummaryLines,
   grantTargetLabel,
@@ -182,6 +183,16 @@ function verifiesTheOverridesGroupHoldsTheBackendsElevenFlags() {
   assertEqual(customIsEmpty(on), true, 'a flag alone prints no Custom page');
 }
 
+function verifiesTheRestTextOverrideSavesAndClears() {
+  const set = withRestText(EMPTY_CUSTOM, 'X');
+  assertEqual(JSON.stringify(set).includes('"restText":"X"'), true, 'saving rest text X writes restText: "X"');
+  const cleared = withRestText(set, '  ');
+  assertEqual('restText' in cleared, false, 'clearing removes the field so the table rows return');
+  assertEqual(customProblems(withRestText(EMPTY_CUSTOM, 'x'.repeat(10_001))).length, 1, 'over-long rest text is a named problem');
+  assertEqual(customProblems(withRestText(EMPTY_CUSTOM, 'x'.repeat(10_000))).length, 0, 'the limit itself is allowed');
+}
+
+verifiesTheRestTextOverrideSavesAndClears();
 verifiesGrantTotalsSumPerTarget();
 verifiesTheSheetNumbersFollowTheGrants();
 verifiesBlankEntriesAreNamedProblemsNotSilentlyDropped();

@@ -4445,7 +4445,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Biography' ? (
                   <>
                     <FreeTextTab label="Biography" hint="Your character's story: who they are and the events of their life." value={bio.biography} onChange={(biography) => updateBio({ biography })} onBlur={() => void handleBioBlur()} />
-                    <RestTextPanel characterId={props.row.characterId} />
+                    <RestTextPanel characterId={props.row.characterId} overrideText={custom.restText} />
                   </>
                 ) : name === 'Notes' ? (
                   <FreeTextTab label="Notes" hint="Notes to yourself: plans, reminders, rulings from the table." value={bio.notes} onChange={(notes) => updateBio({ notes })} onBlur={() => void handleBioBlur()} />

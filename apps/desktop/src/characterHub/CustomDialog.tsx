@@ -12,6 +12,7 @@ import {
   newBonus,
   newGrant,
   newRecord,
+  withRestText,
   type CharacterCustom,
   type CustomBonus,
   type CustomGrant,
@@ -19,7 +20,7 @@ import {
   type CustomRecordKind,
 } from './customModel';
 
-type Section = 'grants' | CustomRecordKind;
+type Section = 'grants' | CustomRecordKind | 'rest';
 
 /**
  * The Custom dialog (Create and the sheet's menu): the GM's grants (a +1 Wisdom from a god, extra
@@ -64,7 +65,7 @@ export function CustomDialog(props: {
 
   const problems = customProblems(draft);
   const newId = () => crypto.randomUUID();
-  const countFor = (key: Section) => (key === 'grants' ? draft.grants.length : draft[key].length);
+  const countFor = (key: Section) => (key === 'grants' ? draft.grants.length : key === 'rest' ? (draft.restText ? 1 : 0) : draft[key].length);
 
   function setGrant(index: number, patch: Partial<CustomGrant>) {
     setDraft({ ...draft, grants: draft.grants.map((grant, position) => (position === index ? { ...grant, ...patch } : grant)) });
@@ -110,7 +111,7 @@ export function CustomDialog(props: {
           Custom equipment may also state a weight (counted while carried), a price, a container capacity, bonuses and a slot: worn from the Gear tab's Equipment control, its bonuses apply; carried, they add nothing.
         </p>
         <div role="tablist" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-          {([{ key: 'grants' as Section, label: 'Grants' }, ...CUSTOM_RECORD_KINDS.map((entry) => ({ key: entry.kind as Section, label: entry.plural }))]).map((tab) => (
+          {([{ key: 'grants' as Section, label: 'Grants' }, ...CUSTOM_RECORD_KINDS.map((entry) => ({ key: entry.kind as Section, label: entry.plural })), { key: 'rest' as Section, label: 'Rest and recovery' }]).map((tab) => (
             <button
               key={tab.key}
               type="button"
@@ -127,6 +128,20 @@ export function CustomDialog(props: {
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
+          {section === 'rest' ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <p style={mutedStyle}>
+                Your own rest and recovery rule. Set, it prints on the Bio page and shows on the Biography tab instead of the rule table&apos;s rows. Leave it empty to use the table.
+              </p>
+              <textarea
+                aria-label="Rest and recovery text"
+                rows={10}
+                value={draft.restText ?? ''}
+                onChange={(event) => setDraft(withRestText(draft, event.target.value))}
+                style={{ ...inputStyle, resize: 'vertical', width: '100%' }}
+              />
+            </div>
+          ) : null}
           {section === 'grants' ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {draft.grants.length === 0 ? <p style={mutedStyle}>No grants yet. A grant is a number the GM changed: +1 Wisdom from a god, bonus hit points, extra skill points.</p> : null}
