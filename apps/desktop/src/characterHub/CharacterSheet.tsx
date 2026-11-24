@@ -3473,7 +3473,8 @@ export function CharacterSheet(props: {
         characterId: props.row.characterId,
         itemId: held.itemId,
         savedAt: new Date().toISOString(),
-        priceMode,
+        // Q-9.1: the window's own total pays even in a Cashless session (Cashless would ignore it).
+        priceMode: negotiatedGp === undefined ? priceMode : 'standard',
         bonus: held.bonus,
         fromState: held.activeState,
         copy: held.copies[0],
