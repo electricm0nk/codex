@@ -38,6 +38,8 @@ run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
 - **Run 3** (2026-11-22): run id `wf_683f124b-e1f`, script @ `9833284707`, args `done` = C0, C1, E0.1, E0.2, E0.4, E1.1, E5.1–E5.3, E6.1, E6.5; `repair` = E1.2 (Looked-at row). Expected stops: C2 (ruling), E4.G.
   - Result (~10 min, 15 agents): complete E0.3, E0.5, E1.2 (repair). C2 declined (receipt exists; awaiting ruling). E1.3, E1.8 skipped the §6 step 6 look (3rd and 4th… screen-card miss: retro key `screen-card-skipped-look`). Control built: empty `lookedAt` fails a screen card; one automatic repair + re-verify on any verify miss; `skip` arg for C2.
 - **Run 4** (2026-11-22): run id `wf_4c0d3c94-145`, script @ `eff2584ae3`; `done` += E0.3, E0.5, E1.2; `repair` = E1.3, E1.8 (look step); `skip` = C2. Expected stop: E4.G.
+  - Result (2026-11-23): 42 complete; stopped at E3.10 `partial` (live-app screenshots all black, incident `run-desktop-black-webview`). Discovered E3.13–E3.17 were added, so there are now 67 cards (`python3 artifacts/cycle_0/gen_workflow.py`).
+- **Run 5** (2026-11-23): run id `wf_f4f5e924-dba`, script @ `8773e93813`; `done` = run 4's complete list + C2 (out of scope by ruling); `repair` = E3.10 (look step, black webview). Expected stop: E4.G.
 
 ## Operator replies
 
