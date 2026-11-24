@@ -10,6 +10,7 @@
 //! bio. A number is printed as the engine computed it, never worked out here (NR-2, `decisions.md
 //! §19`): a value the screen derives in TypeScript and the backend does not hold prints as `—`.
 
+mod abilities;
 mod bio_notes;
 mod core;
 mod extras;
@@ -22,6 +23,8 @@ pub mod rest;
 mod skills;
 mod spells;
 
+pub(crate) use abilities::chosen_abilities_at_root;
+pub use abilities::{chosen_abilities, ChosenAbilities};
 pub use bio_notes::bio_notes;
 pub use core::{abilities, armor_class, attack, character_details, conditional_bonuses, languages, name_campaign, portrait, resistances, saves, speed, square_block};
 pub use extras::{custom, pets};
@@ -56,6 +59,9 @@ pub struct SheetSources<'a> {
     /// The Show Progression drawer's rows (`list_progression_ledger_at_root`): Pathfinder only, and
     /// only when the Progression section prints; `None` otherwise.
     pub progression: Option<ProgressionLedgerDto>,
+    /// The Abilities tab's picks per sub-tab (SD-43 E3.11): Pathfinder only, and only when the
+    /// Abilities and Feats section prints; empty otherwise.
+    pub chosen_abilities: Vec<ChosenAbilities>,
     pub request: &'a PrintRequest,
 }
 

@@ -4,7 +4,9 @@
 // words, a condition, an override tag) the width of the block. It formats; it computes nothing.
 
 #let sheet-row(r, columns) = {
-  let line = (r.label, ..r.values.map(v => strong(v)))
+  // A row of kind `heading` names the rows under it (the Chosen Abilities block's sub-tabs, SD-43 E3.11).
+  let label = if r.at("kind", default: "") == "heading" { strong(r.label) } else { r.label }
+  let line = (label, ..r.values.map(v => strong(v)))
   if r.notes.len() == 0 {
     line
   } else {

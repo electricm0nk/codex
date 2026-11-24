@@ -151,7 +151,8 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
     let portrait = if system == "pf1" { saved_portrait(root).or_else(|| typst::logo(system)) } else { None };
     // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
     let progression = if system == "pf1" && request.sections().progression { Some(list_progression_ledger_at_root(root)?) } else { None };
-    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };
+    let chosen_abilities = if system == "pf1" && request.sections().feats { blocks::chosen_abilities_at_root(root)? } else { Vec::new() };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, chosen_abilities, request };
     let document = layout(&sources);
     if document.blocks.is_empty() {
         return Err("print.no_sections: no section of this sheet is ticked, so there is nothing to print".to_owned());

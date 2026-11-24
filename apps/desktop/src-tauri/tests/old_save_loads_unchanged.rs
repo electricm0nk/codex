@@ -11,6 +11,8 @@
 //! a failed assertion.
 #![allow(dead_code, unused_imports, non_snake_case)]
 
+#[path = "../src/abilities.rs"]
+mod abilities;
 #[path = "../src/browser_handoff.rs"]
 mod browser_handoff;
 #[path = "../src/character_custom.rs"]

@@ -28,6 +28,7 @@
   "notes": {"ui": "SHEET_TABS"},
   "restAndRecovery": {"ui": null, "printOnly": "the rest and recovery rules after the Bio page (SD-43 E2.4); the screen shows the same text read-only under the Biography field (E2.5), not as a registry box or a tab"},
   "classFeatures": {"ui": null, "printOnly": "the screen's Class Features & Special Abilities section is not a registry box or a tab; the sheet prints it as a block of its own"},
+  "chosenAbilities": {"ui": null, "printOnly": "the Abilities tab's sub-tabs after Feats (Racial Abilities, Traits, Archetype, Background, Class Features, Favored Class Bonus, Misc) are not registry boxes or SHEET_TABS entries; the sheet prints their picks as one block after the Feats (SD-43 E3.11)"},
   "money": {"ui": null, "printOnly": "the screen's Money panel is not a registry box or a tab; the sheet gives it a block of its own (E3.2)"},
   "spellbook": {"ui": null, "printOnly": "the full text of every held spell, an option the screen has no box for"},
   "math": {"ui": null, "printOnly": "Show the math: the engine rows behind each printed number, an option the screen has no box for"},

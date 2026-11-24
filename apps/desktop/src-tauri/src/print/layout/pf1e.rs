@@ -46,6 +46,8 @@ const SHEET: &[Placed] = &[
 /// E3.4), Progression (the Show Progression drawer level by level, E3.7), Notes (§24.9, E4.1).
 const ABILITIES_AND_FEATS: &[Placed] = &[
     Placed::full("feats", blocks::feats),
+    // SD-43 E3.11 (`decisions.md §20`): the Abilities tab's other sub-tabs' picks, after the feats.
+    Placed::full("chosenAbilities", blocks::chosen_abilities),
     Placed::full("classFeatures", blocks::class_features),
     Placed::full("actions", blocks::actions),
     Placed::full("spells", blocks::spells),

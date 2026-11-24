@@ -30,7 +30,7 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// Conditional Bonuses box under it (E2.20; swapped by SD-41 `decisions.md §34` (2)); then the sections, each under its title (E2.23,
 /// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2): the
 /// first-time sections, 1 + 2 + 3 (E4.1, `decisions.md §23.4`; Bio is its own box since E4.1).
-const BASE_HEADINGS: [&str; 24] = [
+const BASE_HEADINGS: [&str; 25] = [
     "",
     "Languages",
     "Character Name",
@@ -46,6 +46,7 @@ const BASE_HEADINGS: [&str; 24] = [
     "Skills",
     "Abilities and Feats",
     "Feats",
+    "Chosen Abilities",
     "Class Features",
     "Actions",
     "Spells",
@@ -130,7 +131,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Rest and Recovery", "Progression", "", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 39 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
+        assert_eq!(headings, expected, "{tag}: the 40 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -516,6 +517,7 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
             money: Some(crate::character_hub::load_character_money_at_root(&root).expect("money loads")),
             portrait: None,
             progression: None,
+            chosen_abilities: Vec::new(),
             request: &basic,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -1920,6 +1922,7 @@ fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
             money: None,
             portrait: None,
             progression: None,
+            chosen_abilities: Vec::new(),
             request: &request,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -2095,7 +2098,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
             }
         }
         let expected: Vec<(&str, Vec<&str>)> = vec![
-            ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
+            ("Abilities and Feats", vec!["feats", "chosenAbilities", "classFeatures", "actions", "spells", "custom", "pets"]),
             ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
             ("Bio", vec!["characterDetails", "restAndRecovery"]),
@@ -3421,7 +3424,7 @@ fn print_pf_blocks_each_section_is_a_list() {
     let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "resistances", "conditionalBonuses", "abilities", "skills"];
     let expected: [(Section, Option<&str>, Vec<&str>); 8] = [
         (Section::Main, None, page_one.to_vec()),
-        (Section::Feats, Some("Abilities and Feats"), vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
+        (Section::Feats, Some("Abilities and Feats"), vec!["feats", "chosenAbilities", "classFeatures", "actions", "spells", "custom", "pets"]),
         (Section::Inventory, Some("Inventory"), vec!["defense", "gear", "money"]),
         (Section::Spellbook, Some("Spellbook"), vec!["spellbook"]),
         (Section::Bio, Some("Bio"), vec!["characterDetails", "restAndRecovery"]),
@@ -3743,4 +3746,59 @@ fn print_pf_blocks_rest_prints_the_wizard_elf_rows_after_the_bio_page_and_the_ov
     }
     let text = pdf_text(&pdf);
     assert!(text.contains("Spells are prepared at dawn.") && !text.contains("Core Rulebook, p.191"), "{text}");
+}
+
+/// SD-43 E3.11 (`decisions.md §20`): the abilities chosen on the Abilities tab's sub-tabs and the
+/// favored class bonus print as text after the Feats block, each under its sub-tab's heading, in the
+/// tab's order; each pick's name is the sub-tab's own Selected label (`list_ability_options_at_root`).
+/// A Rogue 6 with three rogue talents, favored Rogue and a hit point at level 1.
+#[test]
+fn print_pf_blocks_chosen_abilities_per_subtab_print_under_each_heading() {
+    use crate::abilities::{add_ability_selection_at_root, list_ability_options_at_root};
+    let root = seeded("chosen-abilities", ALDRIC_ID);
+    crate::pf1_adapter::mutate_saved_character_at_root(&root, AT, |input| {
+        input.chosen.class_levels = vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 6 }];
+    })
+    .expect("make Aldric a Rogue 6");
+    let listed = list_ability_options_at_root(&root, "class_features").expect("Class Features options");
+    let talents: Vec<(String, String)> =
+        listed.options.iter().filter(|o| o.pool == "rogue_talent" && o.qualified).take(3).map(|o| (o.id.clone(), o.label.clone())).collect();
+    assert_eq!(talents.len(), 3, "a Rogue 6 is offered three qualified rogue talents");
+    for (id, _) in &talents {
+        add_ability_selection_at_root(&root, "class_features", id, AT).expect("a rogue talent");
+    }
+    add_ability_selection_at_root(&root, "favored_class", "favored_class:class:rogue", AT).expect("favored Rogue");
+    add_ability_selection_at_root(&root, "favored_class", "favored_class_bonus:core_rulebook:class_feature:favored_class_bonus_hit_point", AT)
+        .expect("a hit point at level 1");
+    let favored = list_ability_options_at_root(&root, "favored_class").expect("Favored Class options");
+    let favored_labels: Vec<String> =
+        favored.selected.iter().map(|id| favored.options.iter().find(|o| &o.id == id).map_or_else(|| id.clone(), |o| o.label.clone())).collect();
+    assert_eq!(favored_labels.len(), 2, "favored Rogue and one bonus: {favored_labels:?}");
+
+    let printed = PrintRequest { paper: Paper::Letter, ..request(false, false, false) };
+    let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+    let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+    let at = ids.iter().position(|id| *id == "chosenAbilities").unwrap_or_else(|| panic!("a chosenAbilities block prints: {ids:?}"));
+    assert_eq!(ids[at - 1], "feats", "it follows the Feats block: {ids:?}");
+    let block = &document.blocks[at];
+    let labels: Vec<&str> = block.rows.iter().map(|row| row.label.as_str()).collect();
+    let mut expected: Vec<&str> = vec!["Class Features"];
+    expected.extend(talents.iter().map(|(_, label)| label.as_str()));
+    expected.push("Favored Class Bonus");
+    expected.extend(favored_labels.iter().map(String::as_str));
+    assert_eq!(labels, expected, "each pick under its sub-tab's heading, the empty sub-tabs left out");
+    assert!(block.rows.iter().all(|row| row.values.iter().all(String::is_empty)), "words only, no number: {:?}", block.rows);
+
+    let pdf = render(&root, &printed);
+    keep_pdf("chosen-abilities-rogue-6-Letter", &pdf);
+    let text = pdf_text(&pdf);
+    assert_in_order(&text, &["Feats", "Chosen Abilities", "Class Features"]);
+    let chosen = text_between(&text, "Chosen Abilities", "Class Features Rogue level 6");
+    assert_in_order(chosen, &expected);
+
+    // Nothing chosen: the block says so.
+    let seed = seeded("chosen-abilities-none", ELOWEN_ID);
+    let document = sheet_document_at_root(&seed, &printed).expect("the document builds");
+    let block = document.blocks.iter().find(|block| block.id == "chosenAbilities").expect("the block prints for every character");
+    assert_eq!(block.rows.iter().map(|row| row.label.as_str()).collect::<Vec<_>>(), ["No ability is chosen on the Abilities tab."]);
 }
