@@ -7315,8 +7315,9 @@ pub struct DescribeHeldEquipmentRequest {
     pub copy: CopyKey,
 }
 
-/// The gear detail panel's data for one held copy; see [`describe_held_equipment_at_root`].
-#[tauri::command]
+/// The gear detail panel's data for one held copy; see [`describe_held_equipment_at_root`]. Recomputes
+/// the sheet, so it stays off the main thread (SD-43 E1.15: the Sell window could not paint).
+#[tauri::command(async)]
 pub fn describe_held_equipment(app: tauri::AppHandle, request: DescribeHeldEquipmentRequest) -> Result<HeldEquipmentDetailDto, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     describe_held_equipment_at_root(&root, &request.copy)
@@ -9350,6 +9351,16 @@ mod tests {
     use super::*;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
+
+    // SD-43 E1.15: a sync Tauri 2 command runs on the main thread; this one recomputes the sheet, so
+    // the Gear Sell window could not paint until it returned.
+    #[test]
+    fn describe_held_equipment_runs_off_the_main_thread() {
+        let source = include_str!("character_hub.rs");
+        let at = source.find("\npub fn describe_held_equipment(").expect("describe_held_equipment is declared");
+        let attr = source[..at].lines().last().expect("a line precedes the declaration");
+        assert_eq!(attr, "#[tauri::command(async)]", "describe_held_equipment must be an async (thread-pool) command");
+    }
 
     // ----- SD-36 Epic E desktop-P1-01: character_id path-traversal validation -----
 
