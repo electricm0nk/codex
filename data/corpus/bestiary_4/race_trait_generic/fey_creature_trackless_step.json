@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "RacialTrait",
+      "FeyCreatureSelection"
+    ],
     "key": "Fey Creature ~ Trackless Step",
     "name": "Trackless Step",
     "description": "A fey creature does not leave a trail in natural surroundings and cannot be tracked. It can choose to leave a trail, if it so desires.",

@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Trait"
+    ],
     "description": "Choose a Craft, Perform, or Profession skill. You gain a +2 trait bonus on checks with that skill, and it is always a class skill for you.",
     "key": "Trait ~ Tattooed Focus",
     "name": "Tattooed Focus",

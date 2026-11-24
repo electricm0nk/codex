@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Grippli MA Racial Trait"
+    ],
     "key": "Grippli ~ Natural Climber",
     "name": "Natural Climber",
     "race_key": "Grippli",

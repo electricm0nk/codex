@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat",
+      "MountedMastery"
+    ],
     "key": "Mounted Combat",
     "category": "Mythic",
     "name": "Mounted Combat (Mythic)",

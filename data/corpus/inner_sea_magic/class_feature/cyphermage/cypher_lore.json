@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "ClassFeatures",
+      "Cyphermage Class Feature"
+    ],
     "key": "Cyphermage ~ Cypher Lore",
     "name": "Cypher Lore",
     "class": "Cyphermage",

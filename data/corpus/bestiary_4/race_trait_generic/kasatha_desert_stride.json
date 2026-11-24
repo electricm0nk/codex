@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Desert Stride",
     "name": "Desert Stride",
     "description": "A kasatha moves through nonmagical difficult terrain in desert environments at normal speed.",

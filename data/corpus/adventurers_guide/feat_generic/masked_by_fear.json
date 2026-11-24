@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "member_types": [
+      "EnlightenedBloodrager"
+    ],
     "key": "Masked by Fear",
     "name": "Masked by Fear",
     "description": "You embody all that you fear while wearing your mask.",

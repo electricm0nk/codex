@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Multi-Armed",
     "name": "Multi-Armed",
     "description": "A kasatha has four arms. One hand is considered its primary hand; all others are considered off hands. It can use any of its hands for other purposes that require free hands.",

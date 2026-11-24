@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Orc MA Racial Trait"
+    ],
     "key": "Orc ~ Light Sensitivity",
     "name": "Light Sensitivity",
     "race_key": "Orc",

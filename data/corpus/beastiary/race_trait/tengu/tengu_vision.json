@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Tengu MA Racial Trait"
+    ],
     "key": "Tengu ~ Vision",
     "name": "Senses",
     "race_key": "Tengu",

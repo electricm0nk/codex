@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Ratfolk MA Racial Trait"
+    ],
     "description": "Ratfolk can see in the dark up to 60 feet.",
     "key": "Ratfolk ~ Vision",
     "name": "Darkvision",

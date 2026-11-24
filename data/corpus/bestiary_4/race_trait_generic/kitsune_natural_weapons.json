@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Kitsune MA Racial Trait"
+    ],
     "description": "In her natural form, a kitsune has a bite attack that deals 1d4 points of damage.",
     "key": "Kitsune ~ Natural Weapons",
     "name": "Natural Weapons",

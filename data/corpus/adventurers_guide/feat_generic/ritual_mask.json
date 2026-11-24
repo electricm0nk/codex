@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "member_types": [
+      "EnlightenedBloodrager"
+    ],
     "key": "Ritual Mask",
     "name": "Ritual Mask",
     "description": "You can use your mask to enhance your occult powers.",

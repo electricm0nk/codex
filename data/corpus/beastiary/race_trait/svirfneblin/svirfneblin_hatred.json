@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Svirfneblin MA Racial Trait"
+    ],
     "key": "Svirfneblin ~ Hatred",
     "name": "Hatred",
     "race_key": "Svirfneblin",

@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "DeathSlayerBonusFeat"
+    ],
     "description": "Your channeled positive energy is irresistibly sweet to nearby undead.",
     "key": "Life Lure",
     "name": "Life Lure",

@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "SpecialQuality"
+    ],
     "key": "See in Darkness",
     "name": "See in Darkness",
     "description": "The creature can see perfectly in darkness of any kind, including that created by deeper darkness.",

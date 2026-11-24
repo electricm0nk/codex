@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:38:17Z",
   "data": {
+    "member_types": [
+      "Teamwork"
+    ],
     "key": "Coordinated Shot",
     "category": "Combat",
     "name": "Coordinated Shot",

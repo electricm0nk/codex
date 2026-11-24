@@ -3,6 +3,11 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "PsychicBloodline",
+      "DruidShamanLion",
+      "MammothRiderBonusFeat"
+    ],
     "key": "Iron Will",
     "category": "Mythic",
     "name": "Iron Will (Mythic)",

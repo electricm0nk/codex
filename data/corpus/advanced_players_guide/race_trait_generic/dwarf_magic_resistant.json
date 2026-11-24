@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Replaces Dwarf Hardy"
+    ],
     "description": "Some of the older dwarven clans are particularly resistant to magic. Dwarves with this racial trait gain spell resistance equal to 5 + their character level. This resistance can be lowered for 1 round as a standard action. Dwarves with this racial trait take a -2 penalty on all concentration checks made in relation to arcane spells.",
     "key": "Dwarf ~ Magic Resistant",
     "name": "Magic Resistant",

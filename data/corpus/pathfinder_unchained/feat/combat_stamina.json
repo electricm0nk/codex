@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-03T19:41:44Z",
   "data": {
+    "member_types": [
+      "Combat"
+    ],
     "key": "Combat Stamina",
     "category": "CombatStamina",
     "name": "Combat Stamina",

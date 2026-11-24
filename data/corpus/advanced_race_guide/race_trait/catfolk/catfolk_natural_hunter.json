@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Catfolk MA Racial Trait"
+    ],
     "key": "Catfolk ~ Natural Hunter",
     "name": "Natural Hunter",
     "race_key": "Catfolk",

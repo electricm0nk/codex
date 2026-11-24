@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Desert Runner",
     "name": "Desert Runner",
     "description": "A kasatha has a +4 racial bonus on Constitution checks and Fortitude saves to avoid fatigue, exhaustion, and other ill effects from running, forced marches, starvation, thirst, and hot or cold environments.",

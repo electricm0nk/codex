@@ -3,6 +3,11 @@
   "completeness": "chassis_only",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "Skald Class Feature",
+      "Rage Power",
+      "SpecialAttack"
+    ],
     "key": "Rage Power ~ Teamwork Feat",
     "name": "Teamwork Feat",
     "class": "Barbarian",

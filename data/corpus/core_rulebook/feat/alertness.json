@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:38:17Z",
   "data": {
+    "member_types": [
+      "CloakedWolfBonusFeat"
+    ],
     "key": "Alertness",
     "category": "General",
     "name": "Alertness",

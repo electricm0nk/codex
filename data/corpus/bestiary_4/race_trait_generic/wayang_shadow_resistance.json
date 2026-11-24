@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Wayang MA Racial Trait"
+    ],
     "description": "Wayangs get a +2 racial bonus on saving throws against spells of the shadow subschool.",
     "key": "Wayang ~ Shadow Resistance",
     "name": "Shadow Resistance",

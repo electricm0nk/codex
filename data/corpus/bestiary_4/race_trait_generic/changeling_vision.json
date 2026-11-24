@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Changeling MA Racial Trait"
+    ],
     "description": "Changelings can see in the dark up to 60 feet.",
     "key": "Changeling ~ Vision",
     "name": "Darkvision",

@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Trait"
+    ],
     "description": "You gain a +1 bonus on Appraise and Swim checks, and one of these skills (your choice) is always a class skill for you.",
     "key": "Trait ~ River Trader",
     "name": "River Trader",

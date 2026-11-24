@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "HexenhammerMinorHex",
+      "AutumnWitchHex"
+    ],
     "key": "Witch Hex ~ Slumber",
     "name": "Slumber",
     "class": "Witch",

@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-03T19:41:44Z",
   "data": {
+    "member_types": [
+      "Combat"
+    ],
     "key": "Twist the Knife",
     "category": "WoundThreshold",
     "name": "Twist the Knife",

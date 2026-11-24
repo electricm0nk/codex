@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Elf MA Racial Trait"
+    ],
     "key": "Elf ~ Weapon Familiarity",
     "name": "Weapon Familiarity",
     "race_key": "Elf",

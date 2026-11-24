@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Style"
+    ],
     "key": "Untwisting Iron Strength",
     "category": "Combat",
     "name": "Untwisting Iron Strength",

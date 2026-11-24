@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "Pay tuition for a semester.",
     "key": "Scholarship Aid ~ Secret Society",
     "name": "Scholarship Aid",

@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Strix MA Racial Trait"
+    ],
     "key": "Strix ~ Hatred",
     "name": "Hatred",
     "race_key": "Strix",

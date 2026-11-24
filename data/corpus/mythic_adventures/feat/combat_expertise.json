@@ -3,6 +3,12 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat",
+      "PsychicBloodline",
+      "DruidShamanSerpent",
+      "AspisAgentBonusFeat"
+    ],
     "key": "Combat Expertise",
     "category": "Mythic",
     "name": "Combat Expertise (Mythic)",

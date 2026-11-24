@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Gnome MA Racial Trait"
+    ],
     "key": "Gnome ~ Illusion Resistance",
     "name": "Illusion Resistance",
     "race_key": "Gnome",

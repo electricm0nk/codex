@@ -3,6 +3,11 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Psionic",
+      "MarksmanBonus",
+      "Teamwork"
+    ],
     "key": "Returning Throw",
     "category": "Combat",
     "name": "Returning Throw",

@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Kitsune MA Racial Trait"
+    ],
     "description": "Kitsune add 1 to the DCs of any saving throws to resist enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day--dancing lights.",
     "key": "Kitsune ~ Kitsune Magic",
     "name": "Kitsune Magic",

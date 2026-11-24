@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Kitsune MA Racial Trait"
+    ],
     "description": "Kitsune receive a +2 racial bonus on Acrobatics checks.",
     "key": "Kitsune ~ Agile",
     "name": "Agile",

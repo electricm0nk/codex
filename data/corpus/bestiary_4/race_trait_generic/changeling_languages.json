@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Changeling MA Racial Trait"
+    ],
     "description": "Changelings begin play speaking Common and the primary language of their host societies. Changelings with high Intelligence scores can choose from the following languages: Aklo, Draconic, Dwarven, Elven, Giant, Gnoll, Goblin, and Orc.",
     "key": "Changeling ~ Languages",
     "name": "Languages",

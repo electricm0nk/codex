@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "DeathSlayerBonusFeat"
+    ],
     "description": "Your deity blesses any strike you make with that deity's favored weapon.",
     "key": "Guided Hand",
     "name": "Guided Hand",

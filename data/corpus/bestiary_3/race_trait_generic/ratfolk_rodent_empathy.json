@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Ratfolk MA Racial Trait"
+    ],
     "description": "Ratfolk gain a +4 racial bonus on Handle Animal checks made to influence rodents.",
     "key": "Ratfolk ~ Rodent Empathy",
     "name": "Rodent Empathy",

@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T02:49:29Z",
   "data": {
+    "member_types": [
+      "Dhampir MA Racial Trait"
+    ],
     "key": "Dhampir ~ Languages",
     "name": "Languages",
     "race_key": "Dhampir",

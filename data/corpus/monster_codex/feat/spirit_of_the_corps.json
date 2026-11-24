@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Teamwork"
+    ],
     "key": "Spirit of the Corps",
     "category": "Combat",
     "name": "Spirit of the Corps",

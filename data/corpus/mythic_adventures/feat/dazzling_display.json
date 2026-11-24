@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat",
+      "DragonShamanBonus"
+    ],
     "key": "Dazzling Display",
     "category": "Mythic",
     "name": "Dazzling Display (Mythic)",

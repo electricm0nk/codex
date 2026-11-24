@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Nagaji MA Racial Trait"
+    ],
     "key": "Nagaji ~ Serpent's Sense",
     "name": "Serpent's Sense",
     "race_key": "Nagaji",

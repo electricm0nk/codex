@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Rougarou MA Racial Trait"
+    ],
     "key": "Rougarou ~ Languages",
     "name": "Languages",
     "race_key": "Rougarou",

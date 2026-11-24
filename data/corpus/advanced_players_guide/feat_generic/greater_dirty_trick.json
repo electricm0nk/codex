@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "AspisAgentBonusFeat"
+    ],
     "description": "When you pull a dirty trick, your foe is truly hindered.",
     "key": "Greater Dirty Trick",
     "name": "Greater Dirty Trick",

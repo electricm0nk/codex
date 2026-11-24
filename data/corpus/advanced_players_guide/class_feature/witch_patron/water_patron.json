@@ -3,6 +3,9 @@
   "completeness": "chassis_only",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "WinterWitchPatron"
+    ],
     "key": "Witch Patron ~ Water",
     "name": "Water Patron",
     "class": "Witch",

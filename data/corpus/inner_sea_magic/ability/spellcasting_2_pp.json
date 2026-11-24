@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "You can have any of the following spells cast for you (the CL in each case is the minimum possible for the spell): atonement, break enchantment, cure serious wounds, greater dispel magic, neutralize poison, restoration.",
     "key": "Spellcasting 2 ~ Secret Society",
     "name": "Spellcasting (2 PP)",

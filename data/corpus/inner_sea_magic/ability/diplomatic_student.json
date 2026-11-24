@@ -2,6 +2,10 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "MagaambyaReward"
+    ],
     "description": "[redacted PI]",
     "key": "Diplomatic Student ~ Academy",
     "name": "Diplomatic Student",

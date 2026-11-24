@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
+    "member_types": [
+      "Trait"
+    ],
     "key": "Trait ~ Effortless Aid",
     "name": "Effortless Aid",
     "description": "Once per day as a move action, you can select an adjacent ally. For the next minute, you can take 10 on attack rolls and skill checks to use the aid another action to aid that ally, even if you are distracted.",

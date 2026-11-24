@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:38:17Z",
   "data": {
+    "member_types": [
+      "SniperMarksmanBonus"
+    ],
     "key": "Improved Precise Shot",
     "category": "Combat",
     "name": "Improved Precise Shot",

@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "Unchained Rogue Advanced Talent",
+      "AdvancedMaskedPerformerTalent"
+    ],
     "key": "Rogue Talent ~ Fast Tumble",
     "name": "Fast Tumble",
     "class": "Rogue",

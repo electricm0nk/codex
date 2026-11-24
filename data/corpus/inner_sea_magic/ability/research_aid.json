@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "You can gain the aid of another student. This grants you a +4 circumstance bonus on any skill check, save for Education checks.",
     "key": "Research Aid ~ Secret Society",
     "name": "Research Aid",

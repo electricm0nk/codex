@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Catfolk MA Racial Trait"
+    ],
     "description": "In dim light, catfolk can see twice as far as humans.",
     "key": "Catfolk ~ Vision",
     "name": "Low-Light Vision",

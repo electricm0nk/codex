@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "Druid Class Feature"
+    ],
     "key": "Tempest Druid ~ Electrical Resistance",
     "name": "Electrical Resistance",
     "class": "Druid",

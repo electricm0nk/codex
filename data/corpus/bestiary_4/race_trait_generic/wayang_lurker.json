@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Wayang MA Racial Trait"
+    ],
     "description": "Wayangs gain a +2 racial bonus on Perception and Stealth checks.",
     "key": "Wayang ~ Lurker",
     "name": "Lurker",

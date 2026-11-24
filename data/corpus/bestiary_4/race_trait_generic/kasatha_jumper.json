@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Jumper",
     "name": "Jumper",
     "description": "A kasatha is always considered to have a running start when attempting Acrobatics checks to jump.",

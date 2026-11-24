@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Kitsune MA Racial Trait"
+    ],
     "description": "Kitsune can see twice as far as humans in conditions of dim light.",
     "key": "Kitsune ~ Vision",
     "name": "Low-Light Vision",

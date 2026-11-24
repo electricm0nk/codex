@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-03T19:41:44Z",
   "data": {
+    "member_types": [
+      "DruidShamanBear"
+    ],
     "key": "Endurance",
     "category": "WoundThreshold",
     "name": "Endurance",

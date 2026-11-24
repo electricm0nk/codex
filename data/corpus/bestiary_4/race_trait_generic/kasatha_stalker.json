@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Stalker",
     "name": "Stalker",
     "description": "Perception and Stealth are class skills for kasathas.",

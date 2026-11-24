@@ -3,6 +3,10 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat",
+      "AspisAgentBonusFeat"
+    ],
     "key": "Improved Dirty Trick",
     "category": "Mythic",
     "name": "Improved Dirty Trick (Mythic)",

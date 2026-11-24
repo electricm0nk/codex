@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Wayang MA Racial Trait"
+    ],
     "key": "Wayang ~ Light and Dark",
     "name": "Light and Dark",
     "race_key": "Wayang",

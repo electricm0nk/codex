@@ -114,27 +114,27 @@
  "subtabs": {
   "Feats": {
    "pcgen_categories_player_editable": 173,
-   "pcgen_categories_with_corpus_members": 126,
+   "pcgen_categories_with_corpus_members": 149,
    "top_categories_by_members": {
     "FEAT": 2093,
-    "Forgesteed Rider Bonus Feat": 592,
-    "Psionic Fighter Bonus Feat": 592,
-    "Psychic Warrior Feat": 592,
-    "Warpriest Bonus Feat": 484,
-    "Magus Bonus Feat": 481,
-    "Tactician Bonus Feat": 479,
-    "Emissary Bonus Feat": 446,
-    "Gunslinger Feat": 441,
-    "Temp Eldritch Scrapper Feat": 441,
-    "Armiger Bonus Feat": 439,
-    "Brawler Bonus Feat": 439,
-    "Brawler Martial Flexibility Feat": 439,
-    "Cavalier Feat": 439,
-    "Combat Feat": 439
+    "Forgesteed Rider Bonus Feat": 694,
+    "Psionic Fighter Bonus Feat": 694,
+    "Psychic Warrior Feat": 694,
+    "Magus Bonus Feat": 584,
+    "Tactician Bonus Feat": 582,
+    "Emissary Bonus Feat": 549,
+    "Gunslinger Feat": 544,
+    "Temp Eldritch Scrapper Feat": 543,
+    "Armiger Bonus Feat": 542,
+    "Brawler Bonus Feat": 542,
+    "Brawler Martial Flexibility Feat": 542,
+    "Cavalier Feat": 542,
+    "Combat Feat": 542,
+    "Combat Trick Feat": 542
    },
-   "corpus_records": 3982,
+   "corpus_records": 3990,
    "corpus_records_in_pick_granted_categories": 3678,
-   "pick_granted_categories_with_members": 86,
+   "pick_granted_categories_with_members": 104,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
     "advanced_class_guide": 706,
@@ -142,7 +142,7 @@
     "advanced_race_guide": 248,
     "adventurers_guide": 98,
     "beastiary": 4,
-    "book_of_the_damned_volume_2": 10,
+    "book_of_the_damned_volume_2": 18,
     "core_essentials": 15,
     "core_rulebook": 317,
     "horror_adventures": 81,
@@ -167,7 +167,7 @@
    },
    "corpus_records_by_kind": {
     "ability": 96,
-    "class_feature": 1766,
+    "class_feature": 1774,
     "feat": 1411,
     "feat_generic": 681,
     "race_trait": 10,
@@ -182,7 +182,7 @@
    "budget": "feats.budget.<pool>.{granted,spent,remaining} rows (feat_budget.rs)",
    "budget_grep": {
     "pattern": "feats\\.budget",
-    "matches": 30
+    "matches": 31
    },
    "prereq_add_path": "evaluate_*feat*_prerequisites + add_feat_selection_enforcing_prerequisites_at_root",
    "prereq_grep": {
@@ -192,26 +192,26 @@
   },
   "Racial Abilities": {
    "pcgen_categories_player_editable": 207,
-   "pcgen_categories_with_corpus_members": 123,
+   "pcgen_categories_with_corpus_members": 124,
    "top_categories_by_members": {
-    "Racial Trait": 14327,
+    "Racial Trait": 14354,
     "Skinwalker Racial Trait": 130,
     "Tiefling Racial Trait": 71,
     "Unchained Eidolon Evolution": 61,
+    "Dwarf Racial Trait": 52,
     "Aasimar Racial Trait": 51,
-    "Dwarf Racial Trait": 51,
-    "Half-Orc Racial Trait": 46,
-    "Halfling Racial Trait": 46,
-    "Human Racial Trait": 44,
-    "Elf Racial Trait": 43,
-    "Gnome Racial Trait": 42,
-    "Half-Elf Racial Trait": 37,
+    "Half-Orc Racial Trait": 47,
+    "Halfling Racial Trait": 47,
+    "Human Racial Trait": 45,
+    "Elf Racial Trait": 44,
+    "Gnome Racial Trait": 43,
+    "Half-Elf Racial Trait": 38,
     "Dhampir Racial Trait": 33,
     "Graven Guardian Domain Selection": 33,
     "Dwarf Paladin FCB Favored Enemy": 31
    },
-   "corpus_records": 14614,
-   "corpus_records_in_pick_granted_categories": 197,
+   "corpus_records": 14644,
+   "corpus_records_in_pick_granted_categories": 198,
    "pick_granted_categories_with_members": 13,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
@@ -220,25 +220,25 @@
     "advanced_race_guide": 1243,
     "adventurers_guide": 606,
     "beastiary": 164,
-    "bestiary_2": 110,
+    "bestiary_2": 111,
     "bestiary_3": 198,
     "bestiary_4": 72,
     "bestiary_5": 204,
     "bestiary_6": 21,
     "book_of_the_damned_volume_1": 10,
-    "book_of_the_damned_volume_2": 143,
-    "core_rulebook": 742,
+    "book_of_the_damned_volume_2": 147,
+    "core_rulebook": 745,
     "horror_adventures": 757,
     "inner_sea_combat": 166,
     "inner_sea_faiths": 132,
     "inner_sea_gods": 59,
     "inner_sea_intrigue": 138,
-    "inner_sea_magic": 261,
+    "inner_sea_magic": 281,
     "inner_sea_races": 118,
     "inner_sea_taverns": 9,
     "inner_sea_world_guide": 132,
     "monster_codex": 64,
-    "mythic_adventures": 462,
+    "mythic_adventures": 463,
     "occult_adventures": 838,
     "pathfinder_unchained": 926,
     "ultimate_campaign": 1,
@@ -246,14 +246,15 @@
     "ultimate_intrigue": 490,
     "ultimate_magic": 777,
     "ultimate_psionics": 1315,
-    "ultimate_wilderness": 785
+    "ultimate_wilderness": 786
    },
    "corpus_records_by_kind": {
-    "ability": 2005,
-    "class_feature": 10550,
+    "ability": 2025,
+    "class_feature": 10556,
+    "feat": 2,
     "feat_generic": 2,
     "race_trait": 889,
-    "race_trait_generic": 1168
+    "race_trait_generic": 1170
    },
    "data_gap": false,
    "saved_field": "ChosenCharacterState.selected_choices with RACE_ALTERNATE_TRAIT_CHOICE_ID (alternates, creation only)",
@@ -276,24 +277,24 @@
    "pcgen_categories_player_editable": 26,
    "pcgen_categories_with_corpus_members": 23,
    "top_categories_by_members": {
-    "Traits": 739,
+    "Traits": 749,
     "Adoptive Race": 65,
     "Drawbacks": 17,
     "Campaign Trait Choice": 14,
-    "Dwarf Race Trait": 10,
-    "Half-Orc Race Trait": 10,
-    "Elf Race Trait": 8,
-    "Gnome Race Trait": 8,
-    "Half-Elf Race Trait": 8,
-    "Human Race Trait": 8,
-    "Halfling Race Trait": 6,
-    "Aasimar Race Trait": 4,
+    "Dwarf Race Trait": 11,
+    "Half-Orc Race Trait": 11,
+    "Elf Race Trait": 9,
+    "Gnome Race Trait": 9,
+    "Half-Elf Race Trait": 9,
+    "Human Race Trait": 9,
+    "Halfling Race Trait": 7,
+    "Aasimar Race Trait": 5,
     "Blue Race Trait": 4,
     "Dromite Race Trait": 4,
     "Elan Race Trait": 4
    },
-   "corpus_records": 826,
-   "corpus_records_in_pick_granted_categories": 744,
+   "corpus_records": 837,
+   "corpus_records_in_pick_granted_categories": 754,
    "pick_granted_categories_with_members": 3,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
@@ -304,19 +305,19 @@
     "bestiary_4": 9,
     "bestiary_5": 2,
     "bestiary_6": 2,
-    "core_rulebook": 14,
+    "core_rulebook": 15,
     "inner_sea_gods": 43,
-    "inner_sea_races": 175,
+    "inner_sea_races": 185,
     "inner_sea_world_guide": 2,
     "ultimate_campaign": 321,
     "ultimate_psionics": 64,
     "ultimate_wilderness": 1
    },
    "corpus_records_by_kind": {
-    "ability": 373,
+    "ability": 378,
     "race_trait": 21,
-    "race_trait_generic": 44,
-    "trait_generic": 388
+    "race_trait_generic": 45,
+    "trait_generic": 393
    },
    "data_gap": false,
    "saved_field": "ChosenCharacterState.selected_traits",
@@ -324,10 +325,10 @@
     "pattern": "pub selected_traits: Vec<String>",
     "matches": 4
    },
-   "budget": "none (0 matches)",
+   "budget": "abilities.budget.traits.<pool>.{granted,spent,remaining} rows (ability_budget.rs trait_budget, E3.2)",
    "budget_grep": {
     "pattern": "traits\\.budget|trait_budget",
-    "matches": 0
+    "matches": 4
    },
    "prereq_add_path": "none",
    "prereq_grep": {
@@ -402,36 +403,36 @@
   },
   "Background": {
    "pcgen_categories_player_editable": 22,
-   "pcgen_categories_with_corpus_members": 18,
+   "pcgen_categories_with_corpus_members": 21,
    "top_categories_by_members": {
+    "Monastery Reward": 43,
     "Region of Origin": 43,
     "Human Ethnicity": 27,
-    "Monastery Reward": 24,
+    "Crimson Citadel Reward": 23,
+    "Acadamae Reward": 22,
+    "Arcanamirium Reward": 22,
+    "Kintargo Opera House Reward": 22,
+    "Oenopion Fleshforges Reward": 21,
+    "The Harrowed Society Reward": 21,
+    "White Grotto Reward": 21,
+    "Magaambya Reward": 20,
+    "Citadel Enferac Reward": 19,
+    "Poisioners Guild Reward": 19,
     "Skill Specialization": 16,
-    "Magic School Choice": 11,
-    "Shoanti Clan": 7,
-    "Fleshforge Enhancement": 6,
-    "Fleshforge Penalty": 6,
-    "Crimson Citadel Reward": 4,
-    "Acadamae Reward": 3,
-    "Arcanamirium Reward": 3,
-    "Kintargo Opera House Reward": 3,
-    "Oenopion Fleshforges Reward": 2,
-    "The Harrowed Society Reward": 2,
-    "White Grotto Reward": 2
+    "Magic School Choice": 11
    },
-   "corpus_records": 162,
+   "corpus_records": 182,
    "corpus_records_in_pick_granted_categories": 74,
    "pick_granted_categories_with_members": 7,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
     "core_rulebook": 6,
-    "inner_sea_magic": 85,
+    "inner_sea_magic": 105,
     "inner_sea_races": 7,
     "inner_sea_world_guide": 64
    },
    "corpus_records_by_kind": {
-    "ability": 156,
+    "ability": 176,
     "race_trait": 2,
     "race_trait_generic": 4
    },
@@ -454,7 +455,7 @@
   },
   "Class Features": {
    "pcgen_categories_player_editable": 654,
-   "pcgen_categories_with_corpus_members": 588,
+   "pcgen_categories_with_corpus_members": 615,
    "top_categories_by_members": {
     "Disciple of the Raging Sea Feat or Rage Power": 494,
     "Ranger Class Feature": 382,
@@ -463,7 +464,7 @@
     "Fighter Class Feature": 279,
     "Cleric Class Feature": 268,
     "Sorcerer Bloodline Bonus Spell": 250,
-    "Barbarian Class Feature": 226,
+    "Barbarian Class Feature": 227,
     "Monk Class Feature": 213,
     "Bard Class Feature": 209,
     "Wizard Class Feature": 198,
@@ -472,12 +473,12 @@
     "Wildborn Rage Power Choice": 181,
     "Ranger Combat Style Feat": 180
    },
-   "corpus_records": 10009,
-   "corpus_records_in_pick_granted_categories": 5909,
-   "pick_granted_categories_with_members": 413,
+   "corpus_records": 10051,
+   "corpus_records_in_pick_granted_categories": 5956,
+   "pick_granted_categories_with_members": 437,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
-    "advanced_class_guide": 1136,
+    "advanced_class_guide": 1141,
     "advanced_players_guide": 1526,
     "advanced_race_guide": 73,
     "adventurers_guide": 446,
@@ -489,28 +490,28 @@
     "bestiary_6": 5,
     "core_rulebook": 1090,
     "horror_adventures": 273,
-    "inner_sea_combat": 242,
+    "inner_sea_combat": 245,
     "inner_sea_faiths": 2,
     "inner_sea_gods": 87,
     "inner_sea_intrigue": 46,
     "inner_sea_magic": 152,
-    "inner_sea_races": 26,
+    "inner_sea_races": 41,
     "inner_sea_taverns": 1,
-    "inner_sea_world_guide": 11,
-    "monster_codex": 37,
+    "inner_sea_world_guide": 17,
+    "monster_codex": 41,
     "mythic_adventures": 16,
-    "occult_adventures": 697,
+    "occult_adventures": 703,
     "pathfinder_unchained": 307,
-    "ultimate_combat": 848,
+    "ultimate_combat": 850,
     "ultimate_intrigue": 464,
     "ultimate_magic": 758,
-    "ultimate_psionics": 1497,
+    "ultimate_psionics": 1498,
     "ultimate_wilderness": 250
    },
    "corpus_records_by_kind": {
     "ability": 321,
-    "class_feature": 9467,
-    "feat": 37,
+    "class_feature": 9475,
+    "feat": 71,
     "feat_generic": 5,
     "race_trait_generic": 179
    },
@@ -518,12 +519,12 @@
    "saved_field": "ChosenCharacterState.selected_choices, per-class choice ids only (no generic pool field)",
    "saved_field_grep": {
     "pattern": "_CHOICE_ID: &str = \\\"choice:",
-    "matches": 88
+    "matches": 89
    },
-   "budget": "none (0 matches)",
+   "budget": "abilities.budget.class_features.<pool>.{granted,spent,remaining} rows (ability_budget.rs, E3.4)",
    "budget_grep": {
     "pattern": "abilities\\.budget|pool_budget|class_feature[a-z_]*\\.budget",
-    "matches": 0
+    "matches": 31
    },
    "prereq_add_path": "none",
    "prereq_grep": {
@@ -601,9 +602,9 @@
  },
  "other_displaylocations_in_scope (records)": {
   "Class Abilities": 559,
-  "Mythic Abilities": 366,
+  "Mythic Abilities": 548,
   "Race Builder Design": 358,
-  "Equipment": 41,
+  "Equipment": 42,
   "Automatic Bonus Progression": 29,
   "Race Abilities": 4,
   "Racial Features": 3,
@@ -615,17 +616,9 @@
  },
  "class_feature_pools": {
   "count": 555,
-  "player_facing": 537,
+  "player_facing": 544,
   "not_player_facing (VISIBLE:NO or EDITABLE:NO)": 11,
-  "no_abilitycategory_in_pathfinder_data": [
-   "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1041) Focus",
-   "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_846)",
-   "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) Famous Region",
-   "Quick Shift Blade Skill",
-   "SPELLBREAKER Arcane Defense",
-   "SPELLBREAKER Impervious Choice",
-   "WILD STALKER Wild Talent"
-  ],
+  "no_abilitycategory_in_pathfinder_data": [],
   "pools": {
    "Adaptation Ability Selection": {
     "mechanisms": [
@@ -717,12 +710,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 11,
-     "mod_lines": 11
-    }
+    "member_records": 11,
+    "player_facing": true
    },
    "Advanced Nature Fang Talent": {
     "mechanisms": [
@@ -1172,12 +1161,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 0,
-     "mod_lines": 0
-    }
+    "member_records": 1,
+    "player_facing": true
    },
    "Arcane Bond": {
     "mechanisms": [
@@ -1546,7 +1531,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Armor Training Choice": {
@@ -1661,12 +1646,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 10,
-     "mod_lines": 10
-    }
+    "member_records": 9,
+    "player_facing": true
    },
    "Assiduous Gaze Ability": {
     "mechanisms": [
@@ -1757,12 +1738,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Bat Shaman Feat": {
     "mechanisms": [
@@ -2217,12 +2194,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 7,
-     "mod_lines": 7
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Boar Shaman Feat": {
     "mechanisms": [
@@ -2431,7 +2404,7 @@
     "member_records": 0,
     "player_facing": true,
     "oracle_lines_typed_into_category": {
-     "lines": 30,
+     "lines": 15,
      "mod_lines": 0
     }
    },
@@ -2456,7 +2429,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 153,
+    "member_records": 158,
     "player_facing": true
    },
    "Brawler Bonus Feat": {
@@ -2480,7 +2453,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Brawler's Strike Alignment Selection": {
@@ -2622,7 +2595,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Cavalier Order": {
@@ -2831,12 +2804,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 13,
-     "mod_lines": 13
-    }
+    "member_records": 22,
+    "player_facing": true
    },
    "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1041) Focus": {
     "mechanisms": [
@@ -2846,9 +2815,20 @@
     "granted_by": {
      "other": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilitycategories.lst",
+     "line": 84,
+     "parent": "Special Ability",
+     "types": [
+      "PathfindersPastFocus"
+     ],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 3,
+    "player_facing": true
    },
    "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_846)": {
     "mechanisms": [
@@ -2858,9 +2838,20 @@
     "granted_by": {
      "other": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilitycategories.lst",
+     "line": 14,
+     "parent": "Special Ability",
+     "types": [
+      "HKOrder"
+     ],
+     "displaylocation": "Class Abilities",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 14,
+    "player_facing": true
    },
    "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) Famous Region": {
     "mechanisms": [
@@ -2870,9 +2861,20 @@
     "granted_by": {
      "archetype": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilitycategories.lst",
+     "line": 44,
+     "parent": "Special Ability",
+     "types": [
+      "DivaFamous"
+     ],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 1,
+    "player_facing": true
    },
    "Combat Feat": {
     "mechanisms": [
@@ -2894,7 +2896,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Combat Style": {
@@ -2942,7 +2944,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Commando Gun Training Choice": {
@@ -3101,7 +3103,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 8,
+    "member_records": 12,
     "player_facing": true
    },
    "Craft Skill Bonus": {
@@ -3490,12 +3492,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 10,
-     "mod_lines": 10
-    }
+    "member_records": 8,
+    "player_facing": true
    },
    "Debilitating Aroma Choice": {
     "mechanisms": [
@@ -3657,7 +3655,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Divine Hunter Companion Template": {
@@ -3816,7 +3814,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 1,
+    "member_records": 8,
     "player_facing": true
    },
    "Dramaturgical Flourish Choice": {
@@ -3862,12 +3860,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 5,
-     "mod_lines": 5
-    }
+    "member_records": 9,
+    "player_facing": true
    },
    "Druid Domain": {
     "mechanisms": [
@@ -3914,12 +3908,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 4,
-     "mod_lines": 4
-    }
+    "member_records": 5,
+    "player_facing": true
    },
    "Druid Lion Shaman Feat": {
     "mechanisms": [
@@ -3941,12 +3931,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 4,
-     "mod_lines": 4
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Druid Serpent Shaman Feat": {
     "mechanisms": [
@@ -3968,12 +3954,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 4,
-     "mod_lines": 4
-    }
+    "member_records": 8,
+    "player_facing": true
    },
    "Druid Wolf Shaman Feat": {
     "mechanisms": [
@@ -3995,12 +3977,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 4,
-     "mod_lines": 4
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Eidolon Evolution": {
     "mechanisms": [
@@ -4227,7 +4205,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 446,
+    "member_records": 549,
     "player_facing": true
    },
    "Enlightened Bloodrager Feat Choice": {
@@ -4943,7 +4921,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Finesse Marksman Bonus Feat": {
@@ -4967,12 +4945,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 21,
-     "mod_lines": 15
-    }
+    "member_records": 29,
+    "player_facing": true
    },
    "Flame Mystery Revelation": {
     "mechanisms": [
@@ -5220,7 +5194,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Golden Legionnaire Bodyguard": {
@@ -5381,7 +5355,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 2,
+    "member_records": 5,
     "player_facing": true
    },
    "Guardian Knack": {
@@ -5746,12 +5720,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 6,
-     "mod_lines": 6
-    }
+    "member_records": 6,
+    "player_facing": true
    },
    "Hexenhammer Minor Hex Choice": {
     "mechanisms": [
@@ -5773,12 +5743,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 3,
-     "mod_lines": 3
-    }
+    "member_records": 3,
+    "player_facing": true
    },
    "Hidden Priest Arcane Magic Choice": {
     "mechanisms": [
@@ -5941,7 +5907,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Hunter's Bond": {
@@ -6705,12 +6671,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 6,
-     "mod_lines": 6
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Lantern Bearer Favored Enemy Bonus": {
     "mechanisms": [
@@ -6732,12 +6694,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 6,
-     "mod_lines": 6
-    }
+    "member_records": 6,
+    "player_facing": true
    },
    "Leafshifter Aspect Choice": {
     "mechanisms": [
@@ -6874,12 +6832,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Life Mystery Revelation": {
     "mechanisms": [
@@ -6974,7 +6928,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 481,
+    "member_records": 584,
     "player_facing": true
    },
    "Majordomo Teamwork Feat": {
@@ -6997,7 +6951,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Mammoth Rider Born Survivor Feat": {
@@ -7020,12 +6974,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 6,
-     "mod_lines": 6
-    }
+    "member_records": 9,
+    "player_facing": true
    },
    "Maneuver Training I Selection": {
     "mechanisms": [
@@ -7238,7 +7188,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 188,
+    "member_records": 193,
     "player_facing": true
    },
    "Martial Kineticist Skill Bonus": {
@@ -7305,12 +7255,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 7,
-     "mod_lines": 7
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Master Chymist Advanced Mutagen": {
     "mechanisms": [
@@ -7814,7 +7760,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 71,
     "player_facing": true
    },
    "Mercy": {
@@ -7908,12 +7854,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 1,
-     "mod_lines": 1
-    }
+    "member_records": 1,
+    "player_facing": true
    },
    "Mindwright Feat": {
     "mechanisms": [
@@ -8029,12 +7971,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 5,
-     "mod_lines": 5
-    }
+    "member_records": 10,
+    "player_facing": true
    },
    "Multiple Companion Combination": {
     "mechanisms": [
@@ -8218,7 +8156,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 3,
+    "member_records": 4,
     "player_facing": true
    },
    "Nature Fang Talent": {
@@ -8873,7 +8811,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 201,
+    "member_records": 206,
     "player_facing": true
    },
    "Psionic Fighter Bonus Feat": {
@@ -8897,7 +8835,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 592,
+    "member_records": 694,
     "player_facing": true
    },
    "Psionic Fighter Starting Feat": {
@@ -8920,12 +8858,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 3,
-     "mod_lines": 0
-    }
+    "member_records": 3,
+    "player_facing": true
    },
    "Psychic Bloodline Feat": {
     "mechanisms": [
@@ -8947,12 +8881,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 9,
-     "mod_lines": 9
-    }
+    "member_records": 13,
+    "player_facing": true
    },
    "Psychic Discipline": {
     "mechanisms": [
@@ -9025,7 +8955,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 79,
+    "member_records": 83,
     "player_facing": true
    },
    "Psychic Warrior Feat": {
@@ -9049,7 +8979,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 592,
+    "member_records": 694,
     "player_facing": true
    },
    "Quick Shift Blade Skill": {
@@ -9060,9 +8990,20 @@
     "granted_by": {
      "archetype": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilitycategories.lst",
+     "line": 166,
+     "parent": "Internal",
+     "types": [
+      "QuickShiftBladeSkill"
+     ],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 2,
+    "player_facing": true
    },
    "Rage Power": {
     "mechanisms": [
@@ -9133,7 +9074,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Ranger Combat Style Feat": {
@@ -9388,7 +9329,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 7,
+    "member_records": 14,
     "player_facing": true
    },
    "SPELLBREAKER Arcane Defense": {
@@ -9399,9 +9340,18 @@
     "granted_by": {
      "archetype": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilitycategories.lst",
+     "line": 66,
+     "parent": "Special Ability",
+     "types": [],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 1,
+    "player_facing": true
    },
    "SPELLBREAKER Impervious Choice": {
     "mechanisms": [
@@ -9411,9 +9361,18 @@
     "granted_by": {
      "archetype": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilitycategories.lst",
+     "line": 67,
+     "parent": "Special Ability",
+     "types": [],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 1,
+    "player_facing": true
    },
    "Samurai Expertise": {
     "mechanisms": [
@@ -9457,7 +9416,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 439,
+    "member_records": 542,
     "player_facing": true
    },
    "Samurai Order": {
@@ -9550,7 +9509,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 1,
+    "member_records": 9,
     "player_facing": true
    },
    "Savant Flexible Enhancement Bonus": {
@@ -10161,7 +10120,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 1,
+    "member_records": 9,
     "player_facing": true
    },
    "Shifter Aspect Choice": {
@@ -10575,12 +10534,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 23,
-     "mod_lines": 17
-    }
+    "member_records": 32,
+    "player_facing": true
    },
    "Sniper Training Choice": {
     "mechanisms": [
@@ -10850,12 +10805,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 3,
-     "mod_lines": 3
-    }
+    "member_records": 3,
+    "player_facing": true
    },
    "Soulknife Rogue Talent": {
     "mechanisms": [
@@ -10877,12 +10828,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 5,
-     "mod_lines": 5
-    }
+    "member_records": 5,
+    "player_facing": true
    },
    "Soulthief Knack": {
     "mechanisms": [
@@ -11038,12 +10985,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 0,
-     "mod_lines": 0
-    }
+    "member_records": 1,
+    "player_facing": true
    },
    "Spire Defender Exotic Weapon Proficiency": {
     "mechanisms": [
@@ -11111,12 +11054,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Steel Falcon Trap": {
     "mechanisms": [
@@ -11138,12 +11077,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 8,
-     "mod_lines": 8
-    }
+    "member_records": 8,
+    "player_facing": true
    },
    "Stone Mystery Revelation": {
     "mechanisms": [
@@ -11212,12 +11147,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 0
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Style Feat": {
     "mechanisms": [
@@ -11239,7 +11170,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 15,
+    "member_records": 30,
     "player_facing": true
    },
    "Summer Witch Hex Choice": {
@@ -11262,12 +11193,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Summoner Aspect": {
     "mechanisms": [
@@ -11359,12 +11286,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 3,
-     "mod_lines": 1
-    }
+    "member_records": 1,
+    "player_facing": true
    },
    "Swift Powder Choice": {
     "mechanisms": [
@@ -11457,7 +11380,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Tactician Bonus Feat": {
@@ -11481,7 +11404,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 479,
+    "member_records": 582,
     "player_facing": true
    },
    "Tactician Bonus Teamwork Feat": {
@@ -11505,7 +11428,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Tactician Feat": {
@@ -11528,7 +11451,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Tactician Strategy": {
@@ -11598,7 +11521,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Teamwork Feat Selection": {
@@ -11621,7 +11544,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 39,
+    "member_records": 65,
     "player_facing": true
    },
    "Tempest Druid Domain Choice": {
@@ -11644,12 +11567,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 14,
-     "mod_lines": 14
-    }
+    "member_records": 7,
+    "player_facing": true
    },
    "Terrain Dominance Selection": {
     "mechanisms": [
@@ -12157,7 +12076,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 18,
+    "member_records": 31,
     "player_facing": true
    },
    "Undead Lord Bonus Feat": {
@@ -12180,7 +12099,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 1,
+    "member_records": 7,
     "player_facing": true
    },
    "Undead Master Arcane Bond": {
@@ -12203,12 +12122,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Unsworn Shaman Spirit Animal Bonus": {
     "mechanisms": [
@@ -12322,12 +12237,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 5,
-     "mod_lines": 0
-    }
+    "member_records": 5,
+    "player_facing": true
    },
    "Vexing Daredevil Martial Weapon Proficiency": {
     "mechanisms": [
@@ -12515,7 +12426,7 @@
     "member_records": 0,
     "player_facing": true,
     "oracle_lines_typed_into_category": {
-     "lines": 2,
+     "lines": 0,
      "mod_lines": 0
     }
    },
@@ -12563,12 +12474,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 21,
-     "mod_lines": 15
-    }
+    "member_records": 29,
+    "player_facing": true
    },
    "Vow": {
     "mechanisms": [
@@ -12601,9 +12508,20 @@
     "granted_by": {
      "archetype": 1
     },
-    "abilitycategory": null,
-    "member_records": null,
-    "player_facing": false
+    "abilitycategory": {
+     "file": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilitycategories.lst",
+     "line": 76,
+     "parent": "Special Ability",
+     "types": [
+      "WILDSTALKERWildTalent"
+     ],
+     "displaylocation": "Class Features",
+     "visible": "QUALIFY",
+     "editable": "YES",
+     "in_scope": true
+    },
+    "member_records": 7,
+    "player_facing": true
    },
    "Warpriest Blessing": {
     "mechanisms": [
@@ -12924,12 +12842,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 0
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Weapon Training I": {
     "mechanisms": [
@@ -13257,12 +13171,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 2,
-     "mod_lines": 2
-    }
+    "member_records": 2,
+    "player_facing": true
    },
    "Winter Witch Patron": {
     "mechanisms": [
@@ -13284,12 +13194,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 14,
-     "mod_lines": 14
-    }
+    "member_records": 15,
+    "player_facing": true
    },
    "Witch Hex": {
     "mechanisms": [
@@ -13336,12 +13242,8 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 0,
-    "player_facing": true,
-    "oracle_lines_typed_into_category": {
-     "lines": 8,
-     "mod_lines": 8
-    }
+    "member_records": 8,
+    "player_facing": true
    },
    "Witch Patron": {
     "mechanisms": [
@@ -13389,7 +13291,7 @@
      "editable": "YES",
      "in_scope": true
     },
-    "member_records": 44,
+    "member_records": 46,
     "player_facing": true
    },
    "Wood Mystery Revelation": {
@@ -13616,8 +13518,8 @@
     "inside": 9
    },
    "pool_member_records_by_membership": {
-    "inside": 24356,
-    "outside": 18760
+    "inside": 24493,
+    "outside": 20743
    },
    "domain_records_outside (kind domain)": 183
   }
@@ -13716,166 +13618,16 @@
     "10": 5,
     "20": 10
    },
-   "grant_level_in_data/class_feature_grants": null,
+   "grant_level_in_data/class_feature_grants": 2,
    "grant_level_in_oracle_class_mod_line": 2
   }
  },
  "data_gap_list": [
   {
    "subtab": "Class Features",
-   "pool": "Advanced Masked Performer Talent",
-   "sentence": "The corpus holds no Advanced Masked Performer Talent records to select.",
-   "cause": "ingest: the oracle types members into it on 11 line(s) (11 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Arcane Bomber Opposition School Choice",
-   "sentence": "The corpus holds no Arcane Bomber Opposition School Choice records to select.",
-   "cause": "the books in the corpus define no members"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Autumn Witch Hex Choice",
-   "sentence": "The corpus holds no Autumn Witch Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Bloody Jake Terrain",
-   "sentence": "The corpus holds no Bloody Jake Terrain records to select.",
-   "cause": "ingest: the oracle types members into it on 7 line(s) (7 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
    "pool": "Canny Foe",
    "sentence": "The corpus holds no Canny Foe records to select.",
    "cause": "the books in the corpus define no members"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Cloaked Wolf Bonus Feat",
-   "sentence": "The corpus holds no Cloaked Wolf Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 13 line(s) (13 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Death Slayer Bonus Feat",
-   "sentence": "The corpus holds no Death Slayer Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 10 line(s) (10 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Druid Bear Shaman Feat",
-   "sentence": "The corpus holds no Druid Bear Shaman Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 5 line(s) (5 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Druid Eagle Shaman Feat",
-   "sentence": "The corpus holds no Druid Eagle Shaman Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 4 line(s) (4 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Druid Lion Shaman Feat",
-   "sentence": "The corpus holds no Druid Lion Shaman Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 4 line(s) (4 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Druid Serpent Shaman Feat",
-   "sentence": "The corpus holds no Druid Serpent Shaman Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 4 line(s) (4 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Druid Wolf Shaman Feat",
-   "sentence": "The corpus holds no Druid Wolf Shaman Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 4 line(s) (4 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Finesse Marksman Bonus Feat",
-   "sentence": "The corpus holds no Finesse Marksman Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 21 line(s) (15 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Hexenhammer Major Hex Choice",
-   "sentence": "The corpus holds no Hexenhammer Major Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 6 line(s) (6 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Hexenhammer Minor Hex Choice",
-   "sentence": "The corpus holds no Hexenhammer Minor Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 3 line(s) (3 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Lantern Bearer Favored Enemy",
-   "sentence": "The corpus holds no Lantern Bearer Favored Enemy records to select.",
-   "cause": "ingest: the oracle types members into it on 6 line(s) (6 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Lantern Bearer Favored Enemy Bonus",
-   "sentence": "The corpus holds no Lantern Bearer Favored Enemy Bonus records to select.",
-   "cause": "ingest: the oracle types members into it on 6 line(s) (6 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Life Channeler Domain",
-   "sentence": "The corpus holds no Life Channeler Domain records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Mammoth Rider Born Survivor Feat",
-   "sentence": "The corpus holds no Mammoth Rider Born Survivor Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 6 line(s) (6 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Masked Performer Talent",
-   "sentence": "The corpus holds no Masked Performer Talent records to select.",
-   "cause": "ingest: the oracle types members into it on 7 line(s) (7 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Psionic Fighter Starting Feat",
-   "sentence": "The corpus holds no Psionic Fighter Starting Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 3 line(s) (0 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Sniper Marksman Bonus Feat",
-   "sentence": "The corpus holds no Sniper Marksman Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 23 line(s) (17 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Spellslinger Opposition School Choice",
-   "sentence": "The corpus holds no Spellslinger Opposition School Choice records to select.",
-   "cause": "the books in the corpus define no members"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Spring Witch Hex Choice",
-   "sentence": "The corpus holds no Spring Witch Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Summer Witch Hex Choice",
-   "sentence": "The corpus holds no Summer Witch Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Swashbuckler Weapon Proficiency",
-   "sentence": "The corpus holds no Swashbuckler Weapon Proficiency records to select.",
-   "cause": "ingest: the oracle types members into it on 3 line(s) (1 .MOD) that the corpus does not apply"
   },
   {
    "subtab": "Class Features",
@@ -13885,45 +13637,9 @@
   },
   {
    "subtab": "Class Features",
-   "pool": "Tempest Druid Domain Choice",
-   "sentence": "The corpus holds no Tempest Druid Domain Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 14 line(s) (14 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Undead Master Arcane Bond",
-   "sentence": "The corpus holds no Undead Master Arcane Bond records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Vexing Daredevil Bonus Stare Feat",
-   "sentence": "The corpus holds no Vexing Daredevil Bonus Stare Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 5 line(s) (0 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
    "pool": "Viking Bonus Feat",
    "sentence": "The corpus holds no Viking Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (0 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Volley Marksman Bonus Feat",
-   "sentence": "The corpus holds no Volley Marksman Bonus Feat records to select.",
-   "cause": "ingest: the oracle types members into it on 21 line(s) (15 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Winter Witch Hex Choice",
-   "sentence": "The corpus holds no Winter Witch Hex Choice records to select.",
-   "cause": "ingest: the oracle types members into it on 2 line(s) (2 .MOD) that the corpus does not apply"
-  },
-  {
-   "subtab": "Class Features",
-   "pool": "Winter Witch Patron",
-   "sentence": "The corpus holds no Winter Witch Patron records to select.",
-   "cause": "ingest: the oracle types members into it on 14 line(s) (14 .MOD) that the corpus does not apply"
+   "cause": "the books in the corpus define no members"
   }
  ]
 }

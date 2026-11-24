@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Catfolk MA Racial Trait"
+    ],
     "description": "Once per day when a catfolk attempts a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted.",
     "key": "Catfolk ~ Cat's Luck",
     "name": "Cat's Luck",

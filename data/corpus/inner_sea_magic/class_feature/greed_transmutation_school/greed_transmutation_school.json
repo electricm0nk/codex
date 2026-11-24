@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "ThassilonianSchool"
+    ],
     "key": "Greed (Transmutation) School",
     "name": "Greed (Transmutation) School",
     "class": null,

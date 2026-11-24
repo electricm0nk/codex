@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Catfolk MA Racial Trait"
+    ],
     "description": "Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks.",
     "key": "Catfolk ~ Natural Hunter",
     "name": "Natural Hunter",

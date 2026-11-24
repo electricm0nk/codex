@@ -3,6 +3,16 @@
   "completeness": "chassis_only",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Gnome Race Trait",
+      "Half-Elf Race Trait",
+      "Half-Orc Race Trait",
+      "Halfling Race Trait",
+      "Human Race Trait",
+      "Aasimar Race Trait",
+      "Dwarf Race Trait",
+      "Elf Race Trait"
+    ],
     "key": "No Race Trait Available",
     "name": "No Race Trait Available",
     "description": null,

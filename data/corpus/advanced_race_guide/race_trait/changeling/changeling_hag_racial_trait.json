@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Changeling MA Racial Trait"
+    ],
     "key": "Changeling ~ Hag Racial Trait",
     "name": "Hag Racial Trait",
     "race_key": "Changeling",

@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Changeling MA Racial Trait"
+    ],
     "description": "Each changeling inherits one of the following racial traits, depending on her mother's hag type. (As outsiders, night hags produce half-fiend children, not changelings.)",
     "key": "Changeling ~ Hag Racial Trait",
     "name": "Hag Racial Trait",

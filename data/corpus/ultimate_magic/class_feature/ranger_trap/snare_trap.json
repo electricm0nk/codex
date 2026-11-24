@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "SteelFalconTrap"
+    ],
     "key": "Ranger Trap ~ Snare Trap",
     "name": "Snare Trap",
     "class": "Ranger",

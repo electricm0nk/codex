@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "description": "Kasathas have a +2 dodge bonus to Armor Class.",
     "key": "Kasatha ~ Defensive Training",
     "name": "Defensive Training",

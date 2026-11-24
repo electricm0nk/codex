@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Changeling MA Racial Trait"
+    ],
     "description": "Changelings have a +1 natural armor bonus.",
     "key": "Changeling ~ Natural Armor",
     "name": "Natural Armor",

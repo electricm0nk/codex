@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat"
+    ],
     "key": "Critical Focus",
     "category": "Mythic",
     "name": "Critical Focus (Mythic)",

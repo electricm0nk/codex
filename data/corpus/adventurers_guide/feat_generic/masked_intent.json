@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "member_types": [
+      "EnlightenedBloodrager"
+    ],
     "key": "Masked Intent",
     "name": "Masked Intent",
     "description": "Your masked face makes your intentions nearly impossible to discern.",

@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat"
+    ],
     "key": "Medusa's Wrath",
     "category": "Mythic",
     "name": "Medusa's Wrath (Mythic)",

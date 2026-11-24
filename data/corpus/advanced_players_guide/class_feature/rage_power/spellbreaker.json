@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "WitchKillerRagePower"
+    ],
     "key": "Rage Power ~ Spellbreaker",
     "name": "Spellbreaker",
     "class": "Barbarian",

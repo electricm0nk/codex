@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "You can have a 6th-level spell of your choice either transcribed into your spellbook (for magi and wizards) or taught to your familiar (for witches).",
     "key": "Spell Transcription 6 ~ Secret Society",
     "name": "Spell Transcription (6th)",

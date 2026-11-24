@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "member_types": [
+      "Kasatha MA Racial Trait"
+    ],
     "key": "Kasatha ~ Languages",
     "name": "Languages",
     "description": "Kasathas speak Common and Kasatha. Kasathas with high Intelligence scores can choose from the following: Dwarven, Draconic, Gnoll, Orc, and Sphinx.",

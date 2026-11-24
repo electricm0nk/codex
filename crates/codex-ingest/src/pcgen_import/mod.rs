@@ -92,6 +92,8 @@ pub mod equipment_bonus_reader;
 // ingest-row predicates `src/rules_core/class_feature_pool_catalog.rs` gates pool membership
 // on. Behaviour-identical, and KEPT for Starfinder.
 pub mod pool_member_tokens;
+// SD-43 E3.12: the oracle's ability-category member typing (base TYPE + `.MOD` rows) the corpus lacked.
+pub mod member_typing;
 pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;

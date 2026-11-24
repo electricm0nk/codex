@@ -2,6 +2,9 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "EnlightenedBloodrager"
+    ],
     "description": "Your research has revealed new spells.",
     "key": "Expanded Arcana",
     "name": "Expanded Arcana",

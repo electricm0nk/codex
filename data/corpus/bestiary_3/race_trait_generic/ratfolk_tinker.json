@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Ratfolk MA Racial Trait"
+    ],
     "description": "Ratfolk gain a +2 racial bonus on Craft (alchemy), Perception, and Use Magic Device checks.",
     "key": "Ratfolk ~ Tinker",
     "name": "Tinker",

@@ -153,6 +153,10 @@ def load_corpus(root: str) -> list[dict]:
             types.update(x for x in data["category"].split(".") if x)
         if isinstance(data.get("type_tokens"), list):
             types.update(x for x in data["type_tokens"] if isinstance(x, str) and x)
+        # The oracle's member typing the base row lacks (base TYPE + `.MOD` rows), written by
+        # `enrich_member_typing` (SD-43 E3.12).
+        if isinstance(data.get("member_types"), list):
+            types.update(x for x in data["member_types"] if isinstance(x, str) and x)
         types = {x.lower() for x in types}  # PCGen compares TYPE case-insensitively
         key = data.get("key") if isinstance(data.get("key"), str) else (doc.get("source") or {}).get("record_key")
         recs.append({"path": rel, "book": book, "kind": kind, "key": key or "", "category": cat,
@@ -309,7 +313,8 @@ def matches(rec, d) -> bool:
         return False
     if not d["types"] and not d["abilitylist"]:
         return True
-    return bool(rec["types"] & {x.lower() for x in d["types"]}) or rec["key"] in d["abilitylist"]
+    # PCGen keys and category names compare case-insensitively (`SPELLBREAKER Arcane Defense Choice`).
+    return bool(rec["types"] & {x.lower() for x in d["types"]}) or rec["key"].lower() in {x.lower() for x in d["abilitylist"]}
 
 
 def selectable(d) -> bool:
@@ -332,7 +337,8 @@ ENGINE = {
     "Racial Abilities": ("ChosenCharacterState.selected_choices with RACE_ALTERNATE_TRAIT_CHOICE_ID (alternates, creation only)",
                          r"RACE_ALTERNATE_TRAIT_CHOICE_ID: &str", None, r"racial[a-z_]*\.budget|race_trait_budget", None,
                          r"fn add_[a-z_]*(racial|race_trait)[a-z_]*enforcing"),
-    "Traits": ("ChosenCharacterState.selected_traits", r"pub selected_traits: Vec<String>", None,
+    "Traits": ("ChosenCharacterState.selected_traits", r"pub selected_traits: Vec<String>",
+               "abilities.budget.traits.<pool>.{granted,spent,remaining} rows (ability_budget.rs trait_budget, E3.2)",
                r"traits\.budget|trait_budget", None, r"fn add_[a-z_]*trait[a-z_]*enforcing"),
     "Archetype": ("ChosenCharacterState.selected_choices with ARCHETYPE_CHOICE_ID (engine only, no UI)",
                   r"ARCHETYPE_CHOICE_ID: &str", None, r"archetype[a-z_]*\.budget", None,
@@ -340,7 +346,9 @@ ENGINE = {
     "Background": (None, r"selected_background|background_selection", None, r"background[a-z_]*\.budget", None,
                    r"fn add_[a-z_]*background[a-z_]*enforcing"),
     "Class Features": ("ChosenCharacterState.selected_choices, per-class choice ids only (no generic pool field)",
-                       r"_CHOICE_ID: &str = \"choice:", None, r"abilities\.budget|pool_budget|class_feature[a-z_]*\.budget",
+                       r"_CHOICE_ID: &str = \"choice:",
+                       "abilities.budget.class_features.<pool>.{granted,spent,remaining} rows (ability_budget.rs, E3.4)",
+                       r"abilities\.budget|pool_budget|class_feature[a-z_]*\.budget",
                        None, r"fn add_[a-z_]*(pool|class_feature|ability)[a-z_]*enforcing"),
     "Misc": (None, r"selected_misc|misc_selection", None, r"misc[a-z_]*\.budget", None, r"fn add_[a-z_]*misc[a-z_]*enforcing"),
 }
@@ -516,9 +524,27 @@ def build(root) -> dict:
     sites_b = choice_sites_b(root)
     cat_by_name = collections.defaultdict(list)
     for d in defs:
-        cat_by_name[d["name"]].append(d)
+        cat_by_name[d["name"].lower()].append(d)  # PCGen names compare case-insensitively (`Quick Shift Blade SKill`)
+    site_paths = collections.defaultdict(list)
+    for path, mech, target, _ in sorted(sites_a):
+        site_paths[target].append(path)
+
+    def oracle_name(name):
+        """A pool named after a PI-redacted record (`Codex-Named Unit (<coordinate>)...`) is looked up by the
+        oracle row's own name; the redacted name stays the census key (no PI enters the artifact)."""
+        m = re.match(r"Codex-Named Unit \([^)]*\)", name)
+        if not m:
+            return name
+        for path in site_paths.get(name, []):
+            src = json.load(open(os.path.join(root, path), encoding="utf-8")).get("source") or {}
+            f = os.path.join(oracle["corpus_root"], src.get("path") or "")
+            if os.path.isfile(f) and src.get("line"):
+                row = open(f, encoding="utf-8", errors="replace").read().split("\n")[src["line"] - 1]
+                return split_lst(row)[0].strip() + name[m.end():]
+        return name
 
     def pool_members(name):
+        name = oracle_name(name).lower()
         ds = [d for d in cat_by_name.get(name, []) if d["in_scope"]] or cat_by_name.get(name, [])
         if not ds:
             return None, None, None
@@ -612,22 +638,31 @@ def build(root) -> dict:
     for name, row in pool_rows.items():
         if row["member_records"] == 0 and row["abilitycategory"]:
             for t in row["abilitycategory"]["types"]:
-                gap_types.setdefault(t.lower(), set()).add(name)
+                gap_types.setdefault(t.lower(), set()).add((name, (row["abilitycategory"]["parent"] or "").lower()))
     oracle_hits = collections.defaultdict(lambda: {"lines": 0, "mod_lines": 0})
     if gap_types:
         for f in glob.glob(os.path.join(oracle["corpus_root"], "pathfinder", "**", "*.lst"), recursive=True):
             relf = os.path.relpath(f, oracle["corpus_root"])
             if not any(relf.startswith(b + "/") for b in book_roots):
                 continue
+            feat_file = "feat" in os.path.basename(f).lower()
             for line in open(f, encoding="utf-8", errors="replace"):
                 if line.startswith("ABILITYCATEGORY:") or "TYPE:" not in line:
                     continue
-                for tok in split_lst(line):
+                toks = split_lst(line)
+                # A line types a member only inside the category's parent: its CATEGORY token (a
+                # `.MOD` row's `CATEGORY=` prefix); a feat file's rows default to FEAT.
+                head = toks[0]
+                cat = (head[9:].split("|", 1)[0] if head.startswith("CATEGORY=")
+                       else next((t[9:] for t in toks[1:] if t.startswith("CATEGORY:")), "FEAT" if feat_file else ""))
+                for tok in toks:
                     if tok.startswith("TYPE:"):
                         for t in tok[5:].split("."):
-                            for name in gap_types.get(t.lower(), ()):
+                            for name, parent in gap_types.get(t.lower(), ()):
+                                if cat.strip().lower() != parent:
+                                    continue
                                 oracle_hits[name]["lines"] += 1
-                                oracle_hits[name]["mod_lines"] += ".MOD" in split_lst(line)[0]
+                                oracle_hits[name]["mod_lines"] += ".MOD" in head
     for name, row in pool_rows.items():
         if row["member_records"] == 0 and row["abilitycategory"]:
             row["oracle_lines_typed_into_category"] = dict(oracle_hits.get(name, {"lines": 0, "mod_lines": 0}))

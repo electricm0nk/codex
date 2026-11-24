@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "You can have the following spell cast for you (CL 9): atonement (restore cleric/druid powers).",
     "key": "Spellcasting 8 ~ Secret Society",
     "name": "Spellcasting (8 PP)",

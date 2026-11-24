@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Wayang MA Racial Trait"
+    ],
     "key": "Wayang ~ Vision",
     "name": "Darkvision",
     "race_key": "Wayang",

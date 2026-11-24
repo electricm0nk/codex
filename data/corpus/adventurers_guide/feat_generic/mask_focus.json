@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "member_types": [
+      "EnlightenedBloodrager"
+    ],
     "key": "Mask Focus",
     "name": "Mask Focus",
     "description": "You can use your mask as an additional focus for your arcane spells, enhancing their power.",

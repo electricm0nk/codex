@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
+    "member_types": [
+      "Goblin MA Racial Trait"
+    ],
     "key": "Goblin ~ Languages",
     "name": "Languages",
     "race_key": "Goblin",

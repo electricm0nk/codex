@@ -1,6 +1,15 @@
 {
   "completeness": "chassis_only",
   "data": {
+    "member_types": [
+      "Dwarf Racial Trait",
+      "Elf Racial Trait",
+      "Gnome Racial Trait",
+      "Half-Elf Racial Trait",
+      "Half-Orc Racial Trait",
+      "Halfling Racial Trait",
+      "Human Racial Trait"
+    ],
     "description": null,
     "key": "Remove Excess Points from Pool",
     "name": "Remove Excess Points from Pool",

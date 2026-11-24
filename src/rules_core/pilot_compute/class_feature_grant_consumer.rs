@@ -2407,9 +2407,14 @@ mod tests {
         // else changed. Re-derive:
         // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
         // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned -- --nocapture`.
+        //
+        // `already_admitted` moved 131 -> 132 (SD-43 E3.12): a concrete grant-data change, the one
+        // row added to `data/class_feature_grants/ultimate_combat/ninja.json` (`ninja/Ninja ~ Ninja
+        // Trick@2`, cited to `uc_abilities_globalvar.lst:21`), whose record has a real description.
+        // No other bucket moved.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (131, 37, 0, 43, 1),
+            (132, 37, 0, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

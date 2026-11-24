@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
+    "member_types": [
+      "Trait"
+    ],
     "key": "Trait ~ Zealous",
     "name": "Zealous",
     "description": "Once per day, you can add a +2 trait bonus on any attack roll, saving throw, or skill check. You must choose to apply this bonus before rolling the die. When you use this ability, you take a -2 penalty to your AC and on saving throws until the end of your next turn.",

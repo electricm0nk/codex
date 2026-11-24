@@ -3,6 +3,11 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T11:41:53Z",
   "data": {
+    "member_types": [
+      "Combat",
+      "CloakedWolfBonusFeat",
+      "SharkShamanBonus"
+    ],
     "key": "Improved Initiative",
     "category": "Mythic",
     "name": "Improved Initiative (Mythic)",

@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "Wayang MA Racial Trait"
+    ],
     "description": "Wayangs can see in the dark up to 60 feet.",
     "key": "Wayang ~ Vision",
     "name": "Darkvision",

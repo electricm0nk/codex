@@ -1,6 +1,9 @@
 {
   "completeness": "full",
   "data": {
+    "member_types": [
+      "LanternBearerFavoredEnemy"
+    ],
     "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Elfs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidElf",
     "key": "Favored Enemy ~ Humanoid (Elf)",
     "name": "Humanoid (Elf)",

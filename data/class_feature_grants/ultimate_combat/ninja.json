@@ -1,0 +1,17 @@
+[
+  {
+    "key": "Ninja ~ Ninja Trick",
+    "class": "Ninja",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 21
+    }
+  }
+]

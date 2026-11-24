@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
+    "member_types": [
+      "TempestDruidDomain"
+    ],
     "key": "Druid Domain ~ Weather",
     "name": "Weather",
     "class": "Druid",

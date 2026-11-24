@@ -2,6 +2,20 @@
   "codex_generated_name": false,
   "completeness": "full",
   "data": {
+    "member_types": [
+      "SpecialQuality",
+      "AcadamaeReward",
+      "ArcanamiriumReward",
+      "MagaambyaReward",
+      "KintargoOperaHouseReward",
+      "OenopionFleshforgesReward",
+      "PoisionersGuildReward",
+      "WhiteGrottoReward",
+      "MonasteryReward",
+      "CitadelEnferacReward",
+      "TheHarrowedSocietyReward",
+      "CrimsonCitadelReward"
+    ],
     "description": "You can have any of the following spells cast for you (the CL in each case is the minimum possible for the spell): cure moderate wounds, dispel magic, lesser restoration, make whole, remove blindness/deafness, remove curse, remove disease, remove paralysis.",
     "key": "Spellcasting 1 ~ Secret Society",
     "name": "Spellcasting (1 PP)",

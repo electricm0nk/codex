@@ -3,6 +3,9 @@
   "completeness": "chassis_only",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "InquisitorClassFeatures"
+    ],
     "key": "Cleric ~ Domains",
     "name": "Domains",
     "class": "Cleric",

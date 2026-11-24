@@ -3,6 +3,11 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T12:38:17Z",
   "data": {
+    "member_types": [
+      "PsychicBloodline",
+      "DruidShamanLion",
+      "MammothRiderBonusFeat"
+    ],
     "key": "Iron Will",
     "category": "General",
     "name": "Iron Will",

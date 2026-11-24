@@ -3,6 +3,9 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
+    "member_types": [
+      "Unchained Rogue Advanced Talent"
+    ],
     "key": "Rogue Talent ~ Knock-Out Blow",
     "name": "Knock-Out Blow",
     "class": "Rogue",
