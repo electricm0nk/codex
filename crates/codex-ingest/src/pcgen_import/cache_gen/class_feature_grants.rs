@@ -704,14 +704,29 @@ pub fn generate_for_book(
     real_keys: &BTreeSet<String>,
     book: &str,
     rel_dir: &str,
-    file_name: &str,
+    file_names: &[&str],
 ) -> std::io::Result<GenerationReport> {
     let mut report = GenerationReport::default();
     let book_dir = oracle_root.join(rel_dir);
-    let file_path = book_dir.join(file_name);
-    let text = std::fs::read_to_string(&file_path)?;
-    let sha256 = sha256_file(&file_path)?;
-    let (facts, unresolved) = parse_grant_facts(&text);
+    // Files are read in the order given and concatenated, so `resolve_grants`'
+    // first-occurrence rule lets an earlier file win a `(class, key)` both
+    // carry; `cited` records which file (and its sha) that winner came from.
+    let mut facts = Vec::new();
+    let mut unresolved = Vec::new();
+    let mut cited: BTreeMap<(String, String), (String, String)> = BTreeMap::new();
+    for file_name in file_names {
+        let file_path = book_dir.join(file_name);
+        let text = std::fs::read_to_string(&file_path)?;
+        let sha256 = sha256_file(&file_path)?;
+        let (file_facts, file_unresolved) = parse_grant_facts(&text);
+        for fact in &file_facts {
+            cited
+                .entry((fact.class.clone(), fact.key.clone()))
+                .or_insert_with(|| (format!("{rel_dir}/{file_name}"), sha256.clone()));
+        }
+        facts.extend(file_facts);
+        unresolved.extend(file_unresolved);
+    }
     let (resolved, refused) = resolve_grants(facts, unresolved);
 
     for u in refused.values() {
@@ -754,11 +769,9 @@ pub fn generate_for_book(
                 gate: fact.gate,
                 granted_via_archetype: fact.granted_via_archetype,
                 corpus_record_exists: exists,
-                source: GrantCitation {
-                    kind: "class_feature_grant",
-                    path: format!("{rel_dir}/{file_name}"),
-                    sha256: sha256.clone(),
-                    line: fact.source_line,
+                source: {
+                    let (path, sha256) = cited[&(fact.class.clone(), fact.key.clone())].clone();
+                    GrantCitation { kind: "class_feature_grant", path, sha256, line: fact.source_line }
                 },
             });
         }
@@ -777,6 +790,23 @@ pub fn generate_for_book(
         report.books_written.push(book.to_string());
     }
     Ok(report)
+}
+
+/// The `*_abilities_globalvar.lst` files in a book's directory, sorted. They
+/// carry `CATEGORY=Class|<Class>.MOD` grant rows the book's
+/// [`BOOK_PRIMARY_FILES`] entry does not (Ultimate Combat's Ninja and Samurai
+/// progressions, Ultimate Magic's Magus, most of the APG classes), so
+/// [`generate_all`] reads them after the primary file.
+pub fn grant_supplement_files(book_dir: &Path) -> Vec<String> {
+    let mut names: Vec<String> = std::fs::read_dir(book_dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter_map(|e| e.file_name().into_string().ok())
+        .filter(|n| n.ends_with("_abilities_globalvar.lst"))
+        .collect();
+    names.sort();
+    names
 }
 
 /// Runs [`generate_for_book`] over every book [`BOOK_PRIMARY_FILES`]
@@ -805,7 +835,10 @@ pub fn generate_all(oracle_root: &Path, repo_corpus_root: &Path, grants_root: &P
     let real_keys = real_class_feature_keys(repo_corpus_root)?;
     let mut total = GenerationReport::default();
     for (book, rel_dir, file_name) in BOOK_PRIMARY_FILES {
-        let report = generate_for_book(oracle_root, grants_root, &real_keys, book, rel_dir, file_name)?;
+        let supplements = grant_supplement_files(&oracle_root.join(rel_dir));
+        let mut file_names = vec![*file_name];
+        file_names.extend(supplements.iter().map(String::as_str));
+        let report = generate_for_book(oracle_root, grants_root, &real_keys, book, rel_dir, &file_names)?;
         total.written += report.written;
         total.corpus_record_exists += report.corpus_record_exists;
         total.corpus_record_missing += report.corpus_record_missing;
@@ -1451,5 +1484,120 @@ mod tests {
             .expect("Sigilus ~ Inscribe Sihedron must resolve");
         assert_eq!(fact.class, "Magus");
         assert_eq!(fact.level, 7);
+    }
+
+    // -----------------------------------------------------------------
+    // The global-variable files: Ultimate Combat keeps its Ninja and
+    // Samurai `CATEGORY=Class|<Class>.MOD` grant rows in
+    // `uc_abilities_globalvar.lst`, not in `uc_abilities_class.lst`. Both
+    // tests need the pinned oracle (CI fetches it) and fail, never skip,
+    // without it.
+    // -----------------------------------------------------------------
+
+    fn pinned_oracle_root() -> std::path::PathBuf {
+        pcgen_corpus_root()
+            .filter(|p| p.is_dir())
+            .expect("the pinned PCGen oracle checkout is required (scripts/fetch-pcgen-oracle.sh)")
+    }
+
+    #[test]
+    fn uc_ninja_and_samurai_tables_hold_every_globalvar_grant_the_rules_resolve() {
+        let lst = pinned_oracle_root()
+            .join("pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst");
+        let text = std::fs::read_to_string(&lst).unwrap_or_else(|e| panic!("{}: {e}", lst.display()));
+        let (facts, _) = parse_grant_facts(&text);
+        let (resolved, _) = resolve_grants(facts, Vec::new());
+        for class in ["Ninja", "Samurai"] {
+            let want: BTreeSet<(String, u64)> =
+                resolved.values().filter(|f| f.class == class).map(|f| (f.key.clone(), u64::from(f.level))).collect();
+            assert!(!want.is_empty(), "{class}: the globalvar file resolved no grant at all");
+            let have: BTreeSet<(String, u64)> = committed_rows("ultimate_combat")
+                .iter()
+                .filter(|r| r["class"] == class)
+                .filter_map(|r| Some((r["key"].as_str()?.to_string(), r["level"].as_u64()?)))
+                .collect();
+            let missing: Vec<&(String, u64)> = want.difference(&have).collect();
+            assert!(missing.is_empty(), "{class}: {} of {} globalvar grants missing: {missing:?}", missing.len(), want.len());
+        }
+    }
+
+    fn committed_rows(book: &str) -> Vec<serde_json::Value> {
+        let dir = crate::repo_root().join("data/class_feature_grants").join(book);
+        let mut rows = Vec::new();
+        for entry in std::fs::read_dir(&dir).into_iter().flatten().flatten() {
+            let text = std::fs::read_to_string(entry.path()).unwrap_or_default();
+            rows.extend(serde_json::from_str::<Vec<serde_json::Value>>(&text).unwrap_or_default());
+        }
+        rows
+    }
+
+    /// Every in-scope book's `*_abilities_globalvar.lst` (core_rulebook, APG, ACG, UM, UC, ...):
+    /// each `(class, key)` its rows resolve, PI-screened as the generator screens, is in that
+    /// book's committed tables. UM's Magus progression lives only there.
+    #[test]
+    fn every_in_scope_globalvar_grant_the_rules_resolve_is_in_its_books_tables() {
+        let oracle = pinned_oracle_root();
+        let mut checked = 0;
+        let mut missing: Vec<String> = Vec::new();
+        for (book, rel_dir, _) in BOOK_PRIMARY_FILES {
+            for file in grant_supplement_files(&oracle.join(rel_dir)) {
+                let text = std::fs::read_to_string(oracle.join(rel_dir).join(&file)).unwrap();
+                let (facts, _) = parse_grant_facts(&text);
+                let (resolved, _) = resolve_grants(facts, Vec::new());
+                let have: BTreeSet<(String, String)> = committed_rows(book)
+                    .iter()
+                    .filter_map(|r| Some((r["class"].as_str()?.to_string(), r["key"].as_str()?.to_string())))
+                    .collect();
+                for (class, key) in resolved.keys() {
+                    let pi = |v: &str| pi_screening::classify_field("name", v).0 == License::PiRedacted;
+                    if pi(class) || pi(key) {
+                        continue;
+                    }
+                    checked += 1;
+                    if !have.contains(&(class.clone(), key.clone())) {
+                        missing.push(format!("{book}/{file}: {class} / {key}"));
+                    }
+                }
+            }
+        }
+        assert!(checked > 0, "no globalvar grant resolved in any in-scope book");
+        assert!(missing.is_empty(), "{} of {checked} globalvar grants missing (first 10: {:?})", missing.len(), &missing[..missing.len().min(10)]);
+    }
+
+    fn snapshot_tree(root: &Path) -> BTreeMap<String, String> {
+        fn walk(dir: &Path, root: &Path, out: &mut BTreeMap<String, String>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, root, out);
+                } else {
+                    let rel = path.strip_prefix(root).unwrap().display().to_string();
+                    out.insert(rel, std::fs::read_to_string(&path).unwrap_or_default());
+                }
+            }
+        }
+        let mut out = BTreeMap::new();
+        walk(root, root, &mut out);
+        out
+    }
+
+    #[test]
+    fn a_generator_rerun_leaves_the_committed_grants_tree_unchanged() {
+        let repo = crate::repo_root();
+        let out = std::env::temp_dir().join(format!("class_feature_grants_rerun_{}", std::process::id()));
+        generate_all(&pinned_oracle_root(), &repo.join("data/corpus"), &out).expect("generate_all");
+        let regenerated = snapshot_tree(&out);
+        let _ = std::fs::remove_dir_all(&out);
+        let committed = snapshot_tree(&repo.join("data/class_feature_grants"));
+        let paths: BTreeSet<&String> = regenerated.keys().chain(committed.keys()).collect();
+        let drifted: Vec<&&String> = paths.iter().filter(|p| regenerated.get(**p) != committed.get(**p)).collect();
+        assert!(
+            drifted.is_empty(),
+            "a re-run drifts {} of {} files under data/class_feature_grants (first 10: {:?})",
+            drifted.len(),
+            paths.len(),
+            drifted.iter().take(10).collect::<Vec<_>>()
+        );
     }
 }

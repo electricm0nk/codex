@@ -1,0 +1,482 @@
+[
+  {
+    "key": "Arcane Mind ~ Arcane Trappings",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1935
+    }
+  },
+  {
+    "key": "Arcane Mind ~ Mysterious Magic",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1935
+    }
+  },
+  {
+    "key": "Arcane Mind ~ Mystic Mind",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1935
+    }
+  },
+  {
+    "key": "Arcane Mind ~ Strange Synergy",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1935
+    }
+  },
+  {
+    "key": "Ascendant Psion ~ Ascension",
+    "class": "Psion",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1942
+    }
+  },
+  {
+    "key": "Ascendant Psion ~ Assume Likeness",
+    "class": "Psion",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1942
+    }
+  },
+  {
+    "key": "Ascendant Psion ~ Hide Mind",
+    "class": "Psion",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1942
+    }
+  },
+  {
+    "key": "Clairsentience ~ Alter the Waves",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1968
+    }
+  },
+  {
+    "key": "Clairsentience ~ Recovered Information",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1968
+    }
+  },
+  {
+    "key": "Dominator ~ Always There",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1940
+    }
+  },
+  {
+    "key": "Dominator ~ Lingering Presence",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1940
+    }
+  },
+  {
+    "key": "Dominator ~ Master's Whisper",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1940
+    }
+  },
+  {
+    "key": "Fleshbinder ~ Fleshbound Allies",
+    "class": "Psion",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1944
+    }
+  },
+  {
+    "key": "Fleshbinder ~ Fleshbound Familiar",
+    "class": "Psion",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1944
+    }
+  },
+  {
+    "key": "Fleshbinder ~ Mine is the Gift",
+    "class": "Psion",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1944
+    }
+  },
+  {
+    "key": "Fleshbinder ~ Through the Blood",
+    "class": "Psion",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1944
+    }
+  },
+  {
+    "key": "Metacreativity ~ Ectoplasmic Protection",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1969
+    }
+  },
+  {
+    "key": "Metacreativity ~ Summoner's Call",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1969
+    }
+  },
+  {
+    "key": "Mindwright ~ Efficient Artisan",
+    "class": "Psion",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1984
+    }
+  },
+  {
+    "key": "Mindwright ~ Greater Ectoplasmic Creation",
+    "class": "Psion",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1984
+    }
+  },
+  {
+    "key": "Mindwright ~ Psionic Identification",
+    "class": "Psion",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1984
+    }
+  },
+  {
+    "key": "Mindwright ~ Psionic Infusion",
+    "class": "Psion",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1984
+    }
+  },
+  {
+    "key": "Peacekeeper ~ No Raised Hand",
+    "class": "Psion",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1943
+    }
+  },
+  {
+    "key": "Peacekeeper ~ Peace Through Force",
+    "class": "Psion",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1943
+    }
+  },
+  {
+    "key": "Psychokinesis ~ Kinetic Aura",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1966
+    }
+  },
+  {
+    "key": "Psychokinesis ~ Telekinetic Hurl",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1966
+    }
+  },
+  {
+    "key": "Psychometabolism ~ Metabolic Healing",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1965
+    }
+  },
+  {
+    "key": "Psychometabolism ~ Shared Effect",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1965
+    }
+  },
+  {
+    "key": "Psychoportation ~ Inconstant Position",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1967
+    }
+  },
+  {
+    "key": "Psychoportation ~ Nomad's Step",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1967
+    }
+  },
+  {
+    "key": "Telepathy ~ Mental Intrusion",
+    "class": "Psion",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1970
+    }
+  },
+  {
+    "key": "Telepathy ~ Telepathy",
+    "class": "Psion",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1970
+    }
+  }
+]

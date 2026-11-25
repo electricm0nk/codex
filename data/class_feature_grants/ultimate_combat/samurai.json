@@ -1,0 +1,212 @@
+[
+  {
+    "key": "Samurai ~ Banner",
+    "class": "Samurai",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 35
+    }
+  },
+  {
+    "key": "Samurai ~ Bonus Feat",
+    "class": "Samurai",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 36
+    }
+  },
+  {
+    "key": "Samurai ~ Challenge",
+    "class": "Samurai",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 29
+    }
+  },
+  {
+    "key": "Samurai ~ Demanding Challenge",
+    "class": "Samurai",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 39
+    }
+  },
+  {
+    "key": "Samurai ~ Greater Banner",
+    "class": "Samurai",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 40
+    }
+  },
+  {
+    "key": "Samurai ~ Greater Resolve",
+    "class": "Samurai",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 37
+    }
+  },
+  {
+    "key": "Samurai ~ Honorable Stand",
+    "class": "Samurai",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 38
+    }
+  },
+  {
+    "key": "Samurai ~ Last Stand",
+    "class": "Samurai",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 42
+    }
+  },
+  {
+    "key": "Samurai ~ Mount",
+    "class": "Samurai",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 30
+    }
+  },
+  {
+    "key": "Samurai ~ Mounted Archer",
+    "class": "Samurai",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Samurai ~ Order",
+    "class": "Samurai",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 31
+    }
+  },
+  {
+    "key": "Samurai ~ Resolve",
+    "class": "Samurai",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 32
+    }
+  },
+  {
+    "key": "Samurai ~ True Resolve",
+    "class": "Samurai",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 41
+    }
+  },
+  {
+    "key": "Samurai ~ Weapon Expertise",
+    "class": "Samurai",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 33
+    }
+  }
+]

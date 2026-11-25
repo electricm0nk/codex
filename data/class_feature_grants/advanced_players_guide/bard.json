@@ -396,7 +396,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",

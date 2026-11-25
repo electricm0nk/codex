@@ -1,0 +1,347 @@
+[
+  {
+    "key": "Brutal Disruptor ~ Channeled Disruption",
+    "class": "Cryptic",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1799
+    }
+  },
+  {
+    "key": "Brutal Disruptor ~ Intimidating Pattern",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1799
+    }
+  },
+  {
+    "key": "Brutal Disruptor ~ Unnerving Disruption",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1799
+    }
+  },
+  {
+    "key": "Distorter ~ Altered Appearance",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1800
+    }
+  },
+  {
+    "key": "Distorter ~ Blur Pattern",
+    "class": "Cryptic",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1800
+    }
+  },
+  {
+    "key": "Distorter ~ Silent Pattern",
+    "class": "Cryptic",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1800
+    }
+  },
+  {
+    "key": "Distorter ~ Warp Perception",
+    "class": "Cryptic",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1800
+    }
+  },
+  {
+    "key": "Lost Mind ~ Decipher Secrets",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1802
+    }
+  },
+  {
+    "key": "Lost Mind ~ Insight of the Madman",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1802
+    }
+  },
+  {
+    "key": "Lost Mind ~ Protection of Insanity",
+    "class": "Cryptic",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1802
+    }
+  },
+  {
+    "key": "Lost Mind ~ Symbols of the Void",
+    "class": "Cryptic",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1802
+    }
+  },
+  {
+    "key": "Pattern Breaker ~ Disable Lock",
+    "class": "Cryptic",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1803
+    }
+  },
+  {
+    "key": "Pattern Breaker ~ Disable Weapon or Armor",
+    "class": "Cryptic",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1803
+    }
+  },
+  {
+    "key": "Pattern Breaker ~ Disabling Aura",
+    "class": "Cryptic",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1803
+    }
+  },
+  {
+    "key": "Pattern Breaker ~ Sunder Pattern",
+    "class": "Cryptic",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1803
+    }
+  },
+  {
+    "key": "Pattern Wielder ~ Hurl Tattoo",
+    "class": "Cryptic",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1806
+    }
+  },
+  {
+    "key": "Pattern Wielder ~ Patterned Weapon",
+    "class": "Cryptic",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1806
+    }
+  },
+  {
+    "key": "Pattern Wielder ~ Tap Tattoo",
+    "class": "Cryptic",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1806
+    }
+  },
+  {
+    "key": "Ravager ~ Horrid Mind",
+    "class": "Cryptic",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1805
+    }
+  },
+  {
+    "key": "Ravager ~ Mind Ripper",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1805
+    }
+  },
+  {
+    "key": "Ravager ~ Ravage the Mind",
+    "class": "Cryptic",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1805
+    }
+  },
+  {
+    "key": "Ravager ~ Sense the Weakened Mind",
+    "class": "Cryptic",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1805
+    }
+  },
+  {
+    "key": "Ravager ~ Tear the Ravaged Mind",
+    "class": "Cryptic",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 1805
+    }
+  }
+]

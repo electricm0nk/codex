@@ -1,0 +1,107 @@
+[
+  {
+    "key": "Disciple of the Raging Sea ~ Eye of the Storm",
+    "class": "Monk",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2516
+    }
+  },
+  {
+    "key": "Disciple of the Raging Sea ~ Raging Ki",
+    "class": "Monk",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2516
+    }
+  },
+  {
+    "key": "Disciple of the Raging Sea ~ Unyielding Anger",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2516
+    }
+  },
+  {
+    "key": "Enlightened Monk ~ Augmented Stunning Fist",
+    "class": "Monk",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2514
+    }
+  },
+  {
+    "key": "Enlightened Monk ~ Ki Psionics",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2514
+    }
+  },
+  {
+    "key": "Enlightened Monk ~ Psionic Training",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2514
+    }
+  },
+  {
+    "key": "Enlightened Monk ~ Stunning Fist",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2514
+    }
+  }
+]

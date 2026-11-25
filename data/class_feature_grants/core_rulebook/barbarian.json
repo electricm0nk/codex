@@ -171,7 +171,7 @@
     "level_explicit": false,
     "gate": "mod_row_ungated",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
@@ -186,7 +186,7 @@
     "level_explicit": false,
     "gate": "mod_row_ungated",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",

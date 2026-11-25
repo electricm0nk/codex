@@ -1,0 +1,107 @@
+[
+  {
+    "key": "Witch ~ Cantrips",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 552
+    }
+  },
+  {
+    "key": "Witch ~ Class Skills",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 550
+    }
+  },
+  {
+    "key": "Witch ~ Familiar",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 551
+    }
+  },
+  {
+    "key": "Witch ~ Familiar Touch Spells",
+    "class": "Witch",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 555
+    }
+  },
+  {
+    "key": "Witch ~ Hex",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 553
+    }
+  },
+  {
+    "key": "Witch ~ Patron Spells",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 554
+    }
+  },
+  {
+    "key": "Witch ~ Weapon Proficiencies",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 549
+    }
+  }
+]

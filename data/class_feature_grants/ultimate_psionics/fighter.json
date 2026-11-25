@@ -1,0 +1,167 @@
+[
+  {
+    "key": "Ironborn ~ Always Armored",
+    "class": "Fighter",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Ironborn ~ Armor Aptitude",
+    "class": "Fighter",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Ironborn ~ Durable Plating",
+    "class": "Fighter",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Ironborn ~ Fusing of Man and Metal",
+    "class": "Fighter",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Ironborn ~ Iron Fists",
+    "class": "Fighter",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Ironborn ~ Shatterproof",
+    "class": "Fighter",
+    "level": 19,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2483
+    }
+  },
+  {
+    "key": "Psionic Fighter ~ Combat Focus",
+    "class": "Fighter",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2479
+    }
+  },
+  {
+    "key": "Psionic Fighter ~ Double Imbue",
+    "class": "Fighter",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2479
+    }
+  },
+  {
+    "key": "Psionic Fighter ~ Psionic Feats",
+    "class": "Fighter",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2479
+    }
+  },
+  {
+    "key": "Psionic Fighter ~ Telekinetic Draw",
+    "class": "Fighter",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2479
+    }
+  },
+  {
+    "key": "Psionic Fighter ~ Willpower",
+    "class": "Fighter",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2479
+    }
+  }
+]

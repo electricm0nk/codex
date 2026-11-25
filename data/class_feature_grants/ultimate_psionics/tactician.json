@@ -1,0 +1,407 @@
+[
+  {
+    "key": "Amplifier ~ Augmented Offense",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2226
+    }
+  },
+  {
+    "key": "Amplifier ~ Empowered Attack",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2226
+    }
+  },
+  {
+    "key": "Amplifier ~ Heightened Movement",
+    "class": "Tactician",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2226
+    }
+  },
+  {
+    "key": "Amplifier ~ Inevitable Strike",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2226
+    }
+  },
+  {
+    "key": "Battle Medic ~ Back Into the Fray",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2227
+    }
+  },
+  {
+    "key": "Battle Medic ~ Cushion the Blow",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2227
+    }
+  },
+  {
+    "key": "Battle Medic ~ Healing Bond",
+    "class": "Tactician",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2227
+    }
+  },
+  {
+    "key": "Battle Medic ~ Medic Tricks",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2227
+    }
+  },
+  {
+    "key": "Battle Medic ~ Transfer Wounds",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2227
+    }
+  },
+  {
+    "key": "Commander ~ Forced Participant",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2228
+    }
+  },
+  {
+    "key": "Commander ~ Issue Order",
+    "class": "Tactician",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2228
+    }
+  },
+  {
+    "key": "Commander ~ Thrall",
+    "class": "Tactician",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2228
+    }
+  },
+  {
+    "key": "Fear Projector ~ Collective Fear",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2229
+    }
+  },
+  {
+    "key": "Fear Projector ~ Permeating Fear",
+    "class": "Tactician",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2229
+    }
+  },
+  {
+    "key": "Fear Projector ~ Power from Fear",
+    "class": "Tactician",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2229
+    }
+  },
+  {
+    "key": "Fear Projector ~ Project Fear",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2229
+    }
+  },
+  {
+    "key": "Metanexus ~ Bridged Power",
+    "class": "Tactician",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2230
+    }
+  },
+  {
+    "key": "Metanexus ~ Collective Knowledge",
+    "class": "Tactician",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2230
+    }
+  },
+  {
+    "key": "Metanexus ~ Harness Ally",
+    "class": "Tactician",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2230
+    }
+  },
+  {
+    "key": "Metanexus ~ Pooled Traits",
+    "class": "Tactician",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2230
+    }
+  },
+  {
+    "key": "Swarmer ~ Death of a Thousand Cuts",
+    "class": "Tactician",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2232
+    }
+  },
+  {
+    "key": "Swarmer ~ Swarm Flanking",
+    "class": "Tactician",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2232
+    }
+  },
+  {
+    "key": "Swarmer ~ Unavoidable Swarm",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2232
+    }
+  },
+  {
+    "key": "Unifier ~ Collective",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2233
+    }
+  },
+  {
+    "key": "Unifier ~ Command the Field",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2233
+    }
+  },
+  {
+    "key": "Unifier ~ Strength From Within",
+    "class": "Tactician",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2233
+    }
+  },
+  {
+    "key": "Unifier ~ Strength through Unity",
+    "class": "Tactician",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+      "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+      "line": 2233
+    }
+  }
+]

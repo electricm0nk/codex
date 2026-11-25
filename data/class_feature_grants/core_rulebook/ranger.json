@@ -1,5 +1,35 @@
 [
   {
+    "key": "Armor Prof ~ Light",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 743
+    }
+  },
+  {
+    "key": "Armor Prof ~ Medium",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 744
+    }
+  },
+  {
     "key": "Ranger ~ Camouflage",
     "class": "Ranger",
     "level": 12,
@@ -222,6 +252,51 @@
       "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
       "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
       "line": 294
+    }
+  },
+  {
+    "key": "Weapon Prof ~ Martial",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 742
+    }
+  },
+  {
+    "key": "Weapon Prof ~ Simple",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 742
+    }
+  },
+  {
+    "key": "Weapon and Armor Proficiency ~ Ranger",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 741
     }
   }
 ]

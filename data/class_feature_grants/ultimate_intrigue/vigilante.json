@@ -81,7 +81,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -171,7 +171,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -201,7 +201,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -381,7 +381,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -726,7 +726,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -771,7 +771,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -876,7 +876,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
@@ -906,7 +906,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": true,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",

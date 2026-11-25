@@ -1,0 +1,197 @@
+[
+  {
+    "key": "Nature Warden ~ Animal Speech",
+    "class": "Nature Warden",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 134
+    }
+  },
+  {
+    "key": "Nature Warden ~ Companion Bond",
+    "class": "Nature Warden",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 132
+    }
+  },
+  {
+    "key": "Nature Warden ~ Companion Soul",
+    "class": "Nature Warden",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 141
+    }
+  },
+  {
+    "key": "Nature Warden ~ Companion Walk",
+    "class": "Nature Warden",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 138
+    }
+  },
+  {
+    "key": "Nature Warden ~ Guarded Lands",
+    "class": "Nature Warden",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 140
+    }
+  },
+  {
+    "key": "Nature Warden ~ Ironpaw",
+    "class": "Nature Warden",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 139
+    }
+  },
+  {
+    "key": "Nature Warden ~ Mystic Harmony",
+    "class": "Nature Warden",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 133
+    }
+  },
+  {
+    "key": "Nature Warden ~ Natural Empathy",
+    "class": "Nature Warden",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 132
+    }
+  },
+  {
+    "key": "Nature Warden ~ Silverclaw",
+    "class": "Nature Warden",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 135
+    }
+  },
+  {
+    "key": "Nature Warden ~ Survivalist",
+    "class": "Nature Warden",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 136
+    }
+  },
+  {
+    "key": "Nature Warden ~ Wild Stride",
+    "class": "Nature Warden",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 133
+    }
+  },
+  {
+    "key": "Nature Warden ~ Woodforging",
+    "class": "Nature Warden",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 137
+    }
+  },
+  {
+    "key": "Ranger ~ Favored Terrain",
+    "class": "Nature Warden",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 136
+    }
+  }
+]

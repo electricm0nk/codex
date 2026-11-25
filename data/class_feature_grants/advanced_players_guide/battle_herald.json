@@ -1,0 +1,167 @@
+[
+  {
+    "key": "Battle Herald ~ Banner",
+    "class": "Battle Herald",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 95
+    }
+  },
+  {
+    "key": "Battle Herald ~ Complex Commands",
+    "class": "Battle Herald",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 100
+    }
+  },
+  {
+    "key": "Battle Herald ~ Demanding Challenge",
+    "class": "Battle Herald",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 97
+    }
+  },
+  {
+    "key": "Battle Herald ~ Easy March",
+    "class": "Battle Herald",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 93
+    }
+  },
+  {
+    "key": "Battle Herald ~ Improved Leadership",
+    "class": "Battle Herald",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 92
+    }
+  },
+  {
+    "key": "Battle Herald ~ Inspire Greatness",
+    "class": "Battle Herald",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 94
+    }
+  },
+  {
+    "key": "Battle Herald ~ Inspire Last Stand",
+    "class": "Battle Herald",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 99
+    }
+  },
+  {
+    "key": "Battle Herald ~ Inspiring Command",
+    "class": "Battle Herald",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 92
+    }
+  },
+  {
+    "key": "Battle Herald ~ Persistent Commands",
+    "class": "Battle Herald",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 98
+    }
+  },
+  {
+    "key": "Battle Herald ~ Teamwork Feat",
+    "class": "Battle Herald",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 96
+    }
+  },
+  {
+    "key": "Battle Herald ~ Voice of Authority",
+    "class": "Battle Herald",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
+      "line": 92
+    }
+  }
+]

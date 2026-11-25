@@ -75,6 +75,51 @@
     }
   },
   {
+    "key": "Gunslinger ~ Bonus Feats",
+    "class": "Gunslinger",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 15
+    }
+  },
+  {
+    "key": "Gunslinger ~ Deeds",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 12
+    }
+  },
+  {
+    "key": "Gunslinger ~ Grit",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 13
+    }
+  },
+  {
     "key": "Gunslinger ~ Gun Training",
     "class": "Gunslinger",
     "level": 1,
@@ -87,6 +132,51 @@
       "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
       "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
       "line": 1970
+    }
+  },
+  {
+    "key": "Gunslinger ~ Gunsmith",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 11
+    }
+  },
+  {
+    "key": "Gunslinger ~ Nimble",
+    "class": "Gunslinger",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 14
+    }
+  },
+  {
+    "key": "Gunslinger ~ True Grit",
+    "class": "Gunslinger",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 17
     }
   },
   {

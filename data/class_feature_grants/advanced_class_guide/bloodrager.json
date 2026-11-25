@@ -45,6 +45,21 @@
     }
   },
   {
+    "key": "Bloodrager ~ Class Skills",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_globalvar.lst",
+      "sha256": "445be66ce9de147c9e781bae89358bf9239e53eef86ae4436d27ccaf6248a390",
+      "line": 85
+    }
+  },
+  {
     "key": "Bloodrider ~ Blood Bond",
     "class": "Bloodrager",
     "level": 9,
@@ -231,7 +246,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
@@ -246,7 +261,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
@@ -261,7 +276,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
@@ -276,7 +291,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
@@ -291,7 +306,7 @@
     "level_explicit": true,
     "gate": "preclass",
     "granted_via_archetype": false,
-    "corpus_record_exists": false,
+    "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
       "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",

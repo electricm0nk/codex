@@ -2412,9 +2412,22 @@ mod tests {
         // row added to `data/class_feature_grants/ultimate_combat/ninja.json` (`ninja/Ninja ~ Ninja
         // Trick@2`, cited to `uc_abilities_globalvar.lst:21`), whose record has a real description.
         // No other bucket moved.
+        //
+        // (132, 37, 0, 43, 1) -> (256, 56, 0, 68, 2) (SD-43 E3.19): the generator now reads every
+        // in-scope book's `*_abilities_globalvar.lst`, where PCGen keeps the `.MOD` grant rows of UC's
+        // Ninja / Samurai / Gunslinger, UM's Magus, most APG classes and some CRB / ACG ones (+198
+        // grant facts, 3,874 -> 4,072). The same regeneration also refreshed stale committed rows
+        // (`corpus_record_exists` flags, PI-screened Aldori / Magaambya keys, never-written PU and
+        // Ultimate Psionics tables); with only UC's globalvar file added this test read
+        // (152, 42, 0, 43, 1), the same as with only ninja.json / samurai.json / gunslinger.json
+        // regenerated over the prior commit, so the refresh moves no bucket and every move is a
+        // globalvar grant. New newly-resolved examples include `ninja ~ Sneak Attack@1`,
+        // `samurai ~ Challenge@1`, `cavalier ~ Challenge@1`, `inquisitor ~ Bane@5`,
+        // `alchemist ~ Mutagen@1`; `chain_unresolvable` +25 and `no_record_at_all` +1 are the
+        // same new grants landing in the buckets this census already reports.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (132, 37, 0, 43, 1),
+            (256, 56, 0, 68, 2),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

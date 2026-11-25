@@ -1,5 +1,50 @@
 [
   {
+    "key": "Ninja ~ Hidden Master",
+    "class": "Ninja",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 27
+    }
+  },
+  {
+    "key": "Ninja ~ Ki Pool",
+    "class": "Ninja",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Ninja ~ Light Steps",
+    "class": "Ninja",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 25
+    }
+  },
+  {
     "key": "Ninja ~ Ninja Trick",
     "class": "Ninja",
     "level": 2,
@@ -12,6 +57,81 @@
       "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
       "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
       "line": 21
+    }
+  },
+  {
+    "key": "Ninja ~ No Trace",
+    "class": "Ninja",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Ninja ~ Poison Use",
+    "class": "Ninja",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 19
+    }
+  },
+  {
+    "key": "Ninja ~ Sneak Attack",
+    "class": "Ninja",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 20
+    }
+  },
+  {
+    "key": "Ninja ~ Weapon Proficiencies",
+    "class": "Ninja",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 178
+    }
+  },
+  {
+    "key": "Uncanny Dodge ~ Base",
+    "class": "Ninja",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+      "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+      "line": 24
     }
   }
 ]

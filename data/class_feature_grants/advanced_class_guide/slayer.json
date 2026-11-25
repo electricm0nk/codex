@@ -300,6 +300,21 @@
     }
   },
   {
+    "key": "Slayer ~ Class Skills",
+    "class": "Slayer",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_globalvar.lst",
+      "sha256": "445be66ce9de147c9e781bae89358bf9239e53eef86ae4436d27ccaf6248a390",
+      "line": 591
+    }
+  },
+  {
     "key": "Stygian Slayer ~ Invisibility",
     "class": "Slayer",
     "level": 4,

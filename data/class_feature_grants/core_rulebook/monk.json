@@ -343,5 +343,35 @@
       "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
       "line": 184
     }
+  },
+  {
+    "key": "Weapon Proficiencies ~ Monk",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 582
+    }
+  },
+  {
+    "key": "Weapon and Armor Proficiency ~ Monk",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_globalvar.lst",
+      "sha256": "d139894adc19d4b16cd8236f6e32ac3ed49362993083039e5f9ff0c85ff0e864",
+      "line": 581
+    }
   }
 ]

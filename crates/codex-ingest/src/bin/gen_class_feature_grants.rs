@@ -7,7 +7,9 @@
 //!
 //! Writes `data/class_feature_grants/<book>/<class-slug>.json` (a sibling
 //! tree to `data/corpus/`, deliberately not inside it) for every book
-//! `class_feature::BOOK_PRIMARY_FILES` names. See
+//! `class_feature::BOOK_PRIMARY_FILES` names, plus every
+//! `*_abilities_globalvar.lst` in that book's directory
+//! (`class_feature_grants::grant_supplement_files`). See
 //! `codex_ingest::pcgen_import::cache_gen::class_feature_grants`'s module doc
 //! comment for the grant-token shapes, the resolution rules, and the
 //! correctness proof.

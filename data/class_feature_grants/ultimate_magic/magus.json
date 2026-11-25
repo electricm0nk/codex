@@ -45,6 +45,21 @@
     }
   },
   {
+    "key": "Magus ~ Class Skills",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": false,
+    "gate": "mod_row_ungated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "sha256": "614263767e175881131144ad470c45e96d5f3e6e5ba0636409b45f8db8e124a9",
+      "line": 30
+    }
+  },
+  {
     "key": "Spellblade ~ Force Athame",
     "class": "Magus",
     "level": 2,
