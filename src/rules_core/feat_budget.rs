@@ -962,4 +962,19 @@ mod tests {
         }
         assert!(failed.is_empty(), "{} of {} named-feat pools held by a seed fail: {failed:?}", failed.len(), POOLS.len());
     }
+
+    /// UP p.311: a blue with Psionic Prodigy "gain[s] Unlocked Talent as a bonus feat". Its grant is gated on
+    /// holding itself (`PREABILITY ... Blue ~ Psionic Prodigy`), which the converter resolves to its own id
+    /// (card E3.23), so the 11th named-feat pool is granted, once, and takes Unlocked Talent and no other feat.
+    #[test]
+    fn a_blue_holding_psionic_prodigy_gets_only_unlocked_talent() {
+        let prodigy = "ultimate_psionics:monster_ability:blue_psionic_prodigy";
+        assert!(package().rule(prodigy).is_some());
+        let budget = budget_holding("wilder", 1, &[prodigy]);
+        let pool = budget.pool("unlocked_talent_feat").unwrap_or_else(|| panic!("not granted: {:?}", budget.pools()));
+        assert_eq!(pool.granted, 1, "{pool:?}");
+        assert!(pool.admits(&held_feat(package(), "Unlocked Talent")), "{pool:?}");
+        assert!(!pool.admits(&held_feat(package(), "feat:alertness")) && !pool.admits(&held_feat(package(), "Power Attack")), "{pool:?}");
+        assert!(budget_holding("wilder", 1, &[]).pool("unlocked_talent_feat").is_none());
+    }
 }

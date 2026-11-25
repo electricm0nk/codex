@@ -802,6 +802,18 @@ fn is_chooser(ctx: &RecordCtx, id: &str) -> bool {
     })
 }
 
+/// Whether `(category, name)` is the record's own source row's `CATEGORY` and `KEY` (SD-43 E3.23).
+/// PCGen gates a record on holding itself (`PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,
+/// Blue ~ Psionic Prodigy],[...]`, `up_abilities_race.lst:41`: applies once held); a record whose
+/// corpus key is its codex id is indexed under no row KEY, so the self reference missed.
+fn names_own_row(ctx: &RecordCtx, category: &str, name: &str) -> bool {
+    let Some(file) = ctx.tree.file_index(&ctx.record.rel_path).filter(|_| ctx.record.line > 0) else {
+        return false;
+    };
+    let own = super::closure::row_identity(ctx.tree.row_text(super::closure::RowRef { file, line: ctx.record.line }));
+    !own.key.is_empty() && own.key == name.trim().to_ascii_uppercase() && own.category == category.trim().to_ascii_uppercase()
+}
+
 /// [`resolve_holdable_rule`], plus the `(base, option)` a parameterised `<Base> (<Option>)` name
 /// carried when only its base resolved (`None` for a name that resolved whole, or did not resolve).
 fn resolve_holdable_rule_with_option(ctx: &mut RecordCtx, category: &str, name: &str) -> (Holdable, Option<(String, String)>) {
@@ -812,6 +824,9 @@ fn resolve_holdable_rule_with_option(ctx: &mut RecordCtx, category: &str, name: 
             return (Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }, None);
         }
         RuleLookup::Missing => {}
+    }
+    if names_own_row(ctx, category, name) {
+        return (Holdable::Rule(ctx.record.id.clone()), None);
     }
     if let Some((base, option)) = name.rsplit_once(" (")
         && let Some(option) = option.strip_suffix(')')
@@ -940,6 +955,36 @@ mod tests {
 
         assert_eq!(held, Holdable::Rule("book:feat:alertness_only".into()));
         assert!(ctx.defects.is_empty(), "a clean resolution must carry no defect: {:?}", ctx.defects);
+    }
+
+    /// UP p.311, `up_abilities_race.lst:41`: Blue ~ Psionic Prodigy is gated
+    /// `PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Blue ~ Psionic Prodigy],[...]` -- it applies
+    /// once held. Its corpus key is the codex id, so no index answers its own row's KEY; the self
+    /// reference resolves to the record's own id, never an unholdable `MissingRule`.
+    #[test]
+    fn a_gate_naming_its_own_key_resolves_to_its_own_id() {
+        let mut tree = tree_with_parent(&[]);
+        tree.files.push(super::super::closure::LstFile {
+            rel_path: "book/source.lst".into(),
+            book: "book".into(),
+            family: super::super::closure::FileFamily::Ability,
+            is_pfs: false,
+            lines: vec!["Psionic Prodigy\tKEY:Blue ~ Psionic Prodigy\tCATEGORY:Special Ability\tBONUS:ABILITYPOOL|Unlocked Talent Feat|1".into()],
+        });
+        let index = CorpusIndex::default();
+        let mut record = minimal_record("ultimate_psionics:monster_ability:blue_psionic_prodigy");
+        record.key = "ultimate_psionics:monster_ability:blue_psionic_prodigy".into();
+        record.category = String::new();
+        let closure = Closure::default();
+        let mut ctx = RecordCtx::new(&tree, &index, &record, &closure);
+
+        let held = resolve_holdable_rule(&mut ctx, "Special Ability", "Blue ~ Psionic Prodigy");
+
+        assert_eq!(held, Holdable::Rule("ultimate_psionics:monster_ability:blue_psionic_prodigy".into()));
+        assert!(ctx.defects.is_empty(), "a self reference is no unresolved reference: {:?}", ctx.defects);
+        // Another record's key, or its own key under another category, is still a miss.
+        assert!(matches!(resolve_holdable_rule(&mut ctx, "Special Ability", "Blue ~ Stealthy"), Holdable::MissingRule { .. }));
+        assert!(matches!(resolve_holdable_rule(&mut ctx, "Feat", "Blue ~ Psionic Prodigy"), Holdable::MissingRule { .. }));
     }
 
     #[test]
