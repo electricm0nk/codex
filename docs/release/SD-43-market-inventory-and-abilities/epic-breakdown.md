@@ -82,6 +82,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member list members on the sheet (engine test per pool) | sheet | E3.12 | opus | yes (root + desktop) | no |
 | E3.19 | DISCOVERED (E3.12): `gen_class_feature_grants` reads `*_abilities_globalvar.lst` (UC Ninja 64 / Samurai 99 class grant rows) and re-runs without drift | sheet | E3.12 | opus | yes (root) | no |
 | E3.20 | DISCOVERED (E3.13): the `Bloodline` pool (Standard Bloodline) is reconciled with the held level-1 bloodline, and Standard Bloodline's qualification agrees with its gate | sheet | E3.13 | opus | yes (root + desktop) | hub |
+| E3.21 | DISCOVERED (E3.18): the Feats-sub-tab pools whose member filter names only `ABILITYLIST:` rules take only those feats (`feat_budget` reads the filter's `rules`) | sheet | E3.18 | opus | yes (root + desktop) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -103,7 +104,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 70 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13; the per-card headings below use `###`).
+→ 71 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -724,6 +725,18 @@ so no card ships a picker the engine does not check.
 - **Failing test first:** Sorcerer 1 (canonical seeds) → `abilities.budget.class_features.bloodline.remaining` = 0, and no Class Features
   option of a held record's own gate reads unmet.
 - **Acceptance:** that test; root and desktop suites green. **Depends:** E3.13. **Tier:** opus. Must be complete before E3.MC.
+### E3.21 — Feats pools filtered by named feats take only those (discovered by E3.18, 2026-11-24)
+- **Objective:** E3.18 made a Feats-sub-tab pool whose grant carries no offer read its member filter's `any_tags`
+  (`feat_budget::feat_grant_of`), so Druid Eagle Shaman Feat takes only `DruidShamanEagle` feats. A filter that names
+  only `ABILITYLIST:` rules is not read yet, so those pools still take any feat. Re-derive the population (a PROXY:
+  pools named for feats, `feat_budget::named_for_the_characters_feats`):
+  `python3 -I -c "import json; d=json.load(open('data/sheet_rules/_pool_members.json')); print(sum(1 for k,v in d.items() if v['member_pool']=='feat' and not v['any_tags'] and any(w in ('feat','feats') for w in k.split('_')) and 'companion' not in k.split('_')))"`
+  → 11 (Amateur Gunslinger Feat, Ape / Bat / Boar Shaman Feat, Canine Ferocity Feat, Contemplative Knowledge Bonus Feat,
+  Gendarme Bonus Feat, Healing Surge Feat, Master Craftsman Feat, Rapid Reload Feat, Unlocked Talent Feat).
+- **FILES YOU OWN:** `src/rules_core/feat_budget.rs` (`FeatPool` admission, `HeldFeat`, `feat_grant_of`'s filter fallback).
+- **Failing test first:** for each such pool, a character holding its grant has the pool, it admits a feat the filter names
+  (Ape Shaman Feat: Toughness) and refuses one it does not.
+- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.18. **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains

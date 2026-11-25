@@ -1,0 +1,143 @@
+diff --git a/src/rules_core/feat_budget.rs b/src/rules_core/feat_budget.rs
+index 7d34e4bd86..88c1b39e5b 100644
+--- a/src/rules_core/feat_budget.rs
++++ b/src/rules_core/feat_budget.rs
+@@ -16,6 +16,7 @@
+ 
+ use std::collections::BTreeMap;
+ 
++use crate::rules_core::ability_budget::pool_members;
+ use crate::rules_core::character_input::CharacterInput;
+ use crate::rules_core::level_up_option_filter::FEAT_POOL;
+ use crate::rules_core::pilot_compute::{ComputationExplanation, PilotBaseChassisComputation};
+@@ -260,7 +261,10 @@ struct FeatGrant<'a> {
+ /// The feat picks `rule` hands out: its `Pool` row, or a class feature's offer.
+ fn feat_grant_of<'a>(package: &'a SheetRulePackage, rule: &'a SheetRule) -> Option<FeatGrant<'a>> {
+     if let (Some(pool), SheetValue::Number(amount)) = (feat_pool_of(rule), &rule.value) {
+-        return Some(FeatGrant { pool, amount, lists: feat_list_of(rule).into_iter().collect() });
++        // A `TYPE:A.B` category the converter writes no offer for takes its member filter's types (E3.18).
++        // shortcut: a filter's `ABILITYLIST:` rules are not read, so a Feats pool filtered only by rules (11) still takes any feat; card E3.21.
++        let filter = || pool_members(pool).filter(|members| members.member_pool == FEAT_POOL && !members.any_tags.is_empty()).map(|members| members.any_tags.as_slice());
++        return Some(FeatGrant { pool, amount, lists: feat_list_of(rule).or_else(filter).into_iter().collect() });
+     }
+     offered_feat_grant(package, rule)
+ }
+@@ -816,4 +820,58 @@ mod tests {
+         assert!(named_for_the_characters_feats("hunter_teamwork_feats"));
+         assert!(!named_for_the_characters_feats("hunter_precise_companion_feat"), "a companion's pick is not the character's");
+     }
++
++    /// The feat-parent pools among the 29 E3.12 gave corpus members, with the class whose seed holds their grant:
++    /// a character holding the grant is granted the pool, and the pool takes its own list (one of its category's
++    /// types), not any feat. A `TYPE:A.B` category the converter writes no offer for (`DruidShamanEagle`,
++    /// `MarksmanBonus.FinesseMarksmanBonus`) is read through its member filter (`_pool_members.json`).
++    #[test]
++    fn feat_budget_every_member_typed_feat_pool_takes_its_own_list_for_a_holder_of_its_grant() {
++        const POOLS: [(&str, &str); 14] = [
++            ("Cloaked Wolf Bonus Feat", "inquisitor"),
++            ("Death Slayer Bonus Feat", "death_slayer"),
++            ("Druid Bear Shaman Feat", "druid"),
++            ("Druid Eagle Shaman Feat", "druid"),
++            ("Druid Lion Shaman Feat", "druid"),
++            ("Druid Serpent Shaman Feat", "druid"),
++            ("Druid Wolf Shaman Feat", "druid"),
++            ("Finesse Marksman Bonus Feat", "marksman"),
++            ("Mammoth Rider Born Survivor Feat", "mammoth_rider"),
++            ("Psionic Fighter Starting Feat", "fighter"),
++            ("Sniper Marksman Bonus Feat", "marksman"),
++            ("Swashbuckler Weapon Proficiency", "rogue"),
++            ("Vexing Daredevil Bonus Stare Feat", "mesmerist"),
++            ("Volley Marksman Bonus Feat", "marksman"),
++        ];
++        let fixture = load_sweep_fixture().expect("census fixture");
++        let feats: Vec<HeldFeat> =
++            package().rules_of_kind("feat").filter(|rule| !rule.id.contains('#')).map(|rule| HeldFeat { tag_sets: vec![rule.tags.clone()] }).collect();
++        let mut failed = Vec::new();
++        for (name, class) in POOLS {
++            let slug = id_slug(name);
++            let grants: Vec<&SheetRule> =
++                package().rules.values().filter(|rule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if *p == slug)).collect();
++            assert!(grants.iter().any(|rule| feat_pool_of(rule).is_some()), "{name} is a Feats-sub-tab pool");
++            let mut held: Vec<String> = grants.iter().map(|rule| rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).collect();
++            held.extend(grants.iter().flat_map(|rule| &rule.granted_by).filter_map(|grant| match &grant.by {
++                Granter::Rule(id) => Some(id.clone()),
++                _ => None,
++            }));
++            let input = input_for(&fixture, class, 20);
++            let base = compute_pilot_base_chassis(&input);
++            let mut seed = HeldSeed::from_character(&input, &base);
++            seed.rule_ids.extend(held);
++            let budget = feat_budget_of_seed(package(), &input, &base, &seed);
++            let verdict = match budget.pool(&slug) {
++                None => "not granted".to_owned(),
++                Some(pool) if pool.admits.is_none() => format!("takes any feat ({} granted)", pool.granted),
++                Some(pool) => match feats.iter().filter(|feat| pool.admits(feat)).count() {
++                    0 => "takes no feat".to_owned(),
++                    _ => continue,
++                },
++            };
++            failed.push(format!("{name}: {verdict}"));
++        }
++        assert!(failed.is_empty(), "{} of {} feat pools list no member of their own: {failed:?}", failed.len(), POOLS.len());
++    }
+ }
+--- a/src/rules_core/ability_budget.rs
++++ b/src/rules_core/ability_budget.rs
+@@ -980,13 +980,13 @@
+ /// (`data/sheet_rules/_pool_members.json`, SD-43 E3.14): a `TYPE:A.B` category takes either type, an
+ /// `ABILITYLIST:` category the rules it names.
+ #[derive(Debug, Clone, serde::Deserialize)]
+-struct PoolMembers {
+-    member_pool: String,
+-    any_tags: Vec<String>,
+-    rules: Vec<String>,
++pub(crate) struct PoolMembers {
++    pub(crate) member_pool: String,
++    pub(crate) any_tags: Vec<String>,
++    pub(crate) rules: Vec<String>,
+ }
+ 
+-fn pool_members(pool: &str) -> Option<&'static PoolMembers> {
++pub(crate) fn pool_members(pool: &str) -> Option<&'static PoolMembers> {
+     static MEMBERS: OnceLock<BTreeMap<String, PoolMembers>> = OnceLock::new();
+     MEMBERS
+         .get_or_init(|| serde_json::from_str(include_str!("../../data/sheet_rules/_pool_members.json")).expect("data/sheet_rules/_pool_members.json parses"))
+--- a/apps/desktop/src-tauri/src/character_hub.rs
++++ b/apps/desktop/src-tauri/src/character_hub.rs
+@@ -13169,7 +13169,7 @@
+         ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+         let ledger = list_progression_ledger_at_root(&root).expect("lists");
+         let apart: Vec<&str> = ledger.without_level.feats.iter().map(|feat| feat.name.as_str()).collect();
+-        assert_eq!(apart, ["Great Fortitude"]);
++        assert_eq!(apart, ["Iron Will", "Great Fortitude"], "the Wizard's bonus feat takes neither (E3.18)");
+         assert!(ledger.levels.iter().all(|level| level.unspent.feats == 0), "an over-budget character has no open slot: {ledger:?}");
+         let listed = ledger.levels.iter().map(|level| level.taken.feats.len()).sum::<usize>() + apart.len();
+         assert_eq!(listed, saved.len(), "every feat is kept (R9)");
+@@ -13400,8 +13400,9 @@
+         let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
+         ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+         let rows = ledger_migration_rows(&root);
+-        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, whose record
+-        // states no restriction (E1.1's receipt). Weapon Focus takes no slot (it is the posture's).
++        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, which takes a metamagic
++        // or item creation feat or Spell Mastery (Core Rulebook, Wizard; its member filter, E3.18), so neither
++        // Iron Will nor Great Fortitude fits it. Weapon Focus takes no slot (it is the posture's).
+         assert_eq!(
+             ledger_migration_levels(&rows, LedgerKind::Feat),
+             ledger_migration_named(&[
+@@ -13410,13 +13411,13 @@
+                 ("feat:weapon_focus", Some(1)),
+                 ("feat:toughness", Some(3)),
+                 ("feat:endurance", Some(5)),
+-                ("feat:iron_will", Some(5)),
++                ("feat:iron_will", None),
+                 ("feat:great_fortitude", None),
+             ]),
+         );
+         let input = SavedCharacterStore::load(&root).unwrap().character_input;
+         let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
+-        assert_eq!(budget.over_by(), 1, "the row with no level is the feat the badge counts");
++        assert_eq!(budget.over_by(), 2, "the rows with no level are the feats the badge counts");
+         std::fs::remove_dir_all(&dir).ok();
+     }
+ 
