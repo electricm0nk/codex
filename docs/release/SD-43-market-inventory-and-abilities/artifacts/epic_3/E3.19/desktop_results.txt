@@ -1,0 +1,14 @@
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/codex_desktop-210c3d069f01f2ab)
+test result: ok. 1494 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 4950.09s
+     Running tests/every_character_root_writer_mirrors.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/every_character_root_writer_mirrors-73b01c30022e86cb)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+     Running tests/market_counts.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/market_counts-6997e561f7d825c9)
+test result: ok. 137 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 394.03s
+     Running tests/market_price_census.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/market_price_census-0223dbb833a3d028)
+test result: ok. 139 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 411.88s
+     Running tests/old_save_loads_unchanged.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/old_save_loads_unchanged-c10bc3a696238d22)
+test old_save_loads_unchanged ... ok
+test old_save_has_no_ability_selections_and_a_new_one_round_trips ... ok
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd43-sheet/debug/deps/packaged_resources-5b5ee076701c9c29)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 136.59s
+EXIT=0
