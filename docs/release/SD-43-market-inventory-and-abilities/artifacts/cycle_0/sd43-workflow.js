@@ -656,8 +656,8 @@ const CARDS = [
   ],
   "lane": "sheet",
   "cargo": true,
-  "hub": false,
-  "row": "| E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member (proxy `artifacts/epic_3/E3.12/offer_probe.py` → 10 of 29) list their members on the sheet; engine test per pool first | opus | todo | E3.12 | sheet | yes (root + desktop) | no | must be complete before E3.MC |",
+  "hub": true,
+  "row": "| E3.18 | DISCOVERED (E3.12): the E3.12 pools whose converted grants carry no offer selecting a member (proxy `artifacts/epic_3/E3.12/offer_probe.py` → 10 of 29) list their members on the sheet; engine test per pool first | opus | todo | E3.12 | sheet | yes (root + desktop) | hub | RE-SCOPED by lead 2026-11-24: hub=yes, plus the restricted-slot ruling (progress.md Open blockers); receipt `artifacts/epic_3/E3.18_cycle_receipt.md`; SHA `4363452cb4587318fb4014043f464c7c8bd1fcac`; Class Features half landed (Lantern Bearer Favored Enemy lists its enemies; 15 of 15 Class Features pools list a member); Feats half (7 pools take any feat) is `artifacts/epic_3/E3.18/feat_side.patch`, needs the hub token for 2 tests in character_hub.rs; must be complete before E3.MC |",
   "section": "### E3.18 — E3.12's pools list their members on the sheet (discovered by E3.12, 2026-11-24)\n- **Objective:** E3.12 gave the corpus members for 29 class-granted pools, but the sheet lists a Class Features pool's\n  members from a converted grant's `offers` (`ability_budget::pool_offer`), and for 10 of the 29 no converted rule\n  granting into the pool carries an offer that selects a member: Advanced Masked Performer Talent, Druid Eagle / Lion /\n  Serpent / Wolf Shaman Feat, Finesse / Sniper / Volley Marksman Bonus Feat, Hexenhammer Major Hex Choice (no offer: a\n  second `ABILITYPOOL` row on one record, `#bonusN`, carries none) and Lantern Bearer Favored Enemy (offer is a\n  `Number` 2–4). Re-derive: `python3 -I artifacts/epic_3/E3.12/offer_probe.py | tail -1` → `10 of 29`. A PROXY: it reads\n  the package, not the engine, and feat-parent pools may be listed by `feat_budget` (`feat_list_of`) instead — the\n  card's first step is the engine test below, which settles the real count.\n- **FILES YOU OWN:** the sheet-rule converter's pool offer (`crates/codex-ingest/src/pcgen_import/sheet_rule/pool_pick.rs`\n  and its ABILITYPOOL caller) or the engine's member fallback (`src/rules_core/ability_budget.rs`), whichever the test\n  shows; the regenerated `data/sheet_rules` rows if the converter changes.\n- **Failing test first:** for each of the 29 pools, a character holding one of its grants is offered ≥ 1 member by\n  `ability_options` (Class Features) or the Feats options (feat-parent pools).\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.12. **Tier:** opus. Must be complete\n  before E3.MC (else those pools show a count with nothing to pick).",
   "phase": "E3 — the Abilities tab"
  },
@@ -688,18 +688,32 @@ const CARDS = [
   "phase": "E3 — the Abilities tab"
  },
  {
+  "id": "E3.21",
+  "tier": "opus",
+  "deps": [
+   "E3.18"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.21 | DISCOVERED (E3.18): the 11 Feats-sub-tab pools whose member filter (`data/sheet_rules/_pool_members.json`) names only `ABILITYLIST:` rules (Ape / Bat / Boar Shaman Feat, Gendarme Bonus Feat, ...) take only those feats, not any feat; `feat_budget` reads the filter's `rules` (E3.18 reads only its `any_tags`) | opus | todo | E3.18 | sheet | yes (root + desktop) | no | must be complete before E3.MC |",
+  "section": "### E3.21 — Feats pools filtered by named feats take only those (discovered by E3.18, 2026-11-24)\n- **Objective:** E3.18 made a Feats-sub-tab pool whose grant carries no offer read its member filter's `any_tags`\n  (`feat_budget::feat_grant_of`), so Druid Eagle Shaman Feat takes only `DruidShamanEagle` feats. A filter that names\n  only `ABILITYLIST:` rules is not read yet, so those pools still take any feat. Re-derive the population (a PROXY:\n  pools named for feats, `feat_budget::named_for_the_characters_feats`):\n  `python3 -I -c \"import json; d=json.load(open('data/sheet_rules/_pool_members.json')); print(sum(1 for k,v in d.items() if v['member_pool']=='feat' and not v['any_tags'] and any(w in ('feat','feats') for w in k.split('_')) and 'companion' not in k.split('_')))\"`\n  → 11 (Amateur Gunslinger Feat, Ape / Bat / Boar Shaman Feat, Canine Ferocity Feat, Contemplative Knowledge Bonus Feat,\n  Gendarme Bonus Feat, Healing Surge Feat, Master Craftsman Feat, Rapid Reload Feat, Unlocked Talent Feat).\n- **FILES YOU OWN:** `src/rules_core/feat_budget.rs` (`FeatPool` admission, `HeldFeat`, `feat_grant_of`'s filter fallback).\n- **Failing test first:** for each such pool, a character holding its grant has the pool, it admits a feat the filter names\n  (Ape Shaman Feat: Toughness) and refuses one it does not.\n- **Acceptance:** that test; root and desktop suites green. **Depends:** E3.18. **Tier:** opus. Must be complete before E3.MC.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
   "id": "E3.MC",
   "tier": "opus",
   "deps": [
    "E3.11",
    "E3.18",
    "E3.19",
-   "E3.20"
+   "E3.20",
+   "E3.21"
   ],
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | | [script: depends on E3.18 by its note] [script: depends on E3.19 by its note] [script: depends on E3.20 by its note]",
+  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | | [script: depends on E3.18 by its note] [script: depends on E3.19 by its note] [script: depends on E3.20 by its note] [script: depends on E3.21 by its note]",
   "section": "### E3.MC — E3 merge check\n- **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an\n  archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains\n  (`grep -rn \"engine card\" apps/desktop/src/characterHub/AbilitiesTab.tsx | awk 'END{print NR}'` → 0); the\n  four-check audit; whole-crate tests attributed. **Tier:** opus.",
   "phase": "E3 — the Abilities tab"
  },
@@ -946,7 +960,7 @@ const CARDS = [
   "phase": "E7 — closure"
  }
 ]
-const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.18", "E3.19", "E3.20", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
+const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.18", "E3.19", "E3.20", "E3.21", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
