@@ -86,6 +86,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.22 | DISCOVERED (E3.19): E3.12's `data.member_types` on 28 corpus records carries live PI blacklist terms; `enrich_member_typing` screens the field, declared-pi-audit passes | sheet | E3.12 | opus | yes (root) | no |
 | E3.23 | DISCOVERED (E3.21): a gate naming its own record's KEY is converted to `MissingRule` (never met); the converter resolves it, so Blue ~ Psionic Prodigy grants `unlocked_talent_feat` | sheet | E3.21 | opus | yes (root + desktop) | no |
 | E3.24 | DISCOVERED (E3.22): `data/ability_categories.json` ships the PI term `Magaambya` (pool `Magaambya Reward`, tag `MagaambyaReward`) to the Background sub-tab; the deriver screens it and a gate covers the file | sheet | E3.22 | opus | yes (root) | no |
+| E3.25 | DISCOVERED (E3.23): a reference to another record by its row CATEGORY + KEY misses when that record's corpus key is its codex id (`Xeph ~ Burst`); the converter's index answers the row KEY | sheet | E3.23 | opus | yes (root + desktop) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -107,7 +108,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 74 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19 + E3.23 discovered by E3.21 + E3.24 discovered by E3.22; the per-card headings below use `###`).
+→ 75 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19 + E3.23 discovered by E3.21 + E3.24 discovered by E3.22 + E3.25 discovered by E3.23; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -786,6 +787,22 @@ so no card ships a picker the engine does not check.
   (`pi_screening::classify_field`); then the screened re-derive.
 - **Acceptance:** that test; the gate covers the file; root and desktop suites green. **Depends:** E3.22.
   **Tier:** opus. Must be complete before E3.MC.
+### E3.25 — A reference to a codex-id-keyed record by its row KEY (discovered by E3.23, 2026-11-25)
+- **Objective:** `mod.rs` `record_from_json` takes a record's `data.key`; for many records (Dreamscarred Press monster
+  abilities, companion abilities, ...) that is the codex id, and the category is empty (no `raw_tokens`), so
+  `build_index` indexes no `(row CATEGORY, row KEY)` pair for them. Every other record that names one in a
+  `PREABILITY`, `ABILITY:` grant or similar is written as `MissingRule` (never met): Xeph Explorer and Call Blade
+  (`up_abilities_race.lst:341,343`) are gated on `Xeph ~ Burst` (`KEY:Xeph ~ Burst`, `up_abilities_race.lst:337`), which
+  converts as `ultimate_psionics:monster_ability:xeph_burst`. Population (a PROXY, an upper bound: a pair two records
+  declare is ambiguous): `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.23/row_key_misses.py`
+  (with `$PCGEN_CORPUS_ROOT`) → `unresolved references: 6138; naming a codex-id-keyed record's own row CATEGORY|KEY: 2486`.
+- **FILES YOU OWN:** `crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs` (`build_index`: index the row-declared
+  CATEGORY + KEY where no corpus key answers the pair, the F3b2 / F3c4b rule) and the regenerated `data/sheet_rules/**`;
+  the closure check names the rest (every engine test that pins a count the new resolutions move).
+- **Failing test first:** a converter test that `Xeph ~ Burst` resolves to `ultimate_psionics:monster_ability:xeph_burst`;
+  then the proxy count re-run, each remaining hit named or attributed to ambiguity.
+- **Acceptance:** that test; the proxy's count 0 or each remainder named by mechanism; root and desktop suites green.
+  **Depends:** E3.23. **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
