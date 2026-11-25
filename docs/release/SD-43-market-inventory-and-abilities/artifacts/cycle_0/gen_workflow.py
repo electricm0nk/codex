@@ -88,7 +88,8 @@ for lane, seq in lanes.items():
     out = []
     pending = list(seq)
     while pending:
-        cid = next(i for i in pending if all(d not in pending for d in by_id[i]["deps"]))
+        cid = next((i for i in pending if all(d not in pending for d in by_id[i]["deps"])), None)
+        assert cid, f"dependency cycle in lane {lane}: " + str({i: by_id[i]["deps"] for i in pending if any(d in pending for d in by_id[i]["deps"])})
         pending.remove(cid)
         out.append(cid)
     lanes[lane] = out
