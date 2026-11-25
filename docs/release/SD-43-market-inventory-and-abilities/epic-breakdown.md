@@ -84,6 +84,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.20 | DISCOVERED (E3.13): the `Bloodline` pool (Standard Bloodline) is reconciled with the held level-1 bloodline, and Standard Bloodline's qualification agrees with its gate | sheet | E3.13 | opus | yes (root + desktop) | hub |
 | E3.21 | DISCOVERED (E3.18): the Feats-sub-tab pools whose member filter names only `ABILITYLIST:` rules take only those feats (`feat_budget` reads the filter's `rules`) | sheet | E3.18 | opus | yes (root + desktop) | no |
 | E3.22 | DISCOVERED (E3.19): E3.12's `data.member_types` on 28 corpus records carries live PI blacklist terms; `enrich_member_typing` screens the field, declared-pi-audit passes | sheet | E3.12 | opus | yes (root) | no |
+| E3.23 | DISCOVERED (E3.21): a gate naming its own record's KEY is converted to `MissingRule` (never met); the converter resolves it, so Blue ~ Psionic Prodigy grants `unlocked_talent_feat` | sheet | E3.21 | opus | yes (root + desktop) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -105,7 +106,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 72 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19; the per-card headings below use `###`).
+→ 73 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19 + E3.23 discovered by E3.21; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -751,6 +752,24 @@ so no card ships a picker the engine does not check.
   `pi_screening::classify_field` applies); then the re-run, `declared-pi-audit` PASS.
 - **Acceptance:** that test; `declared-pi-audit` PASS; E3.18's pools still list a member; root and desktop suites green.
   **Depends:** E3.12. **Tier:** opus. Must be complete before E3.MC.
+
+### E3.23 — A gate that names its own key (discovered by E3.21, 2026-11-25)
+- **Objective:** PCGen writes `PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,<own KEY>],[...]` so a record applies
+  when it is held. The converter writes that self reference as `MissingRule { name: <own KEY> }`, which
+  `sheet_rule.rs` reads as false, so the branch can never be met. Blue ~ Psionic Prodigy
+  (`ultimate_psionics:monster_ability:blue_psionic_prodigy`, UP p.311, `BONUS:ABILITYPOOL|Unlocked Talent Feat|1`) is
+  gated `AtLeast 1 of [MissingRule(self), Not(holds BlueStealthy or BlueRepletion)]`, and it carries both tags itself,
+  so no character is granted `unlocked_talent_feat`: the one E3.21 pool (of 11) its test cannot hold. Population
+  (a PROXY: a `MissingRule` name whose slug equals the rule's own id slug):
+  `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.21/self_key_probe.py`
+  → 136 of 1260 rules with a `MissingRule` in `applies`.
+- **FILES YOU OWN:** `crates/codex-ingest/src/pcgen_import/sheet_rule/prereq.rs` (key resolution) and the regenerated
+  `data/sheet_rules/**` records it rewrites; the closure check names the rest.
+- **Failing test first:** a converter test that the self-key `PREABILITY` resolves to the record's own id; then a
+  `feat_budget` test that a Blue holding Psionic Prodigy has `unlocked_talent_feat` (1) taking only Unlocked Talent,
+  which completes E3.21's 11th pool.
+- **Acceptance:** those tests; the probe's self-key count 0 or each remaining one named; root and desktop suites green.
+  **Depends:** E3.21. **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
