@@ -61,6 +61,8 @@ pub struct FeatPool {
     pub spent: i64,
     /// `None`: any feat. `Some`: a feat carrying every tag of one of these sets ([`admitted_sets`]).
     admits: Option<Vec<Vec<String>>>,
+    /// The feat records an `ABILITYLIST:` member filter names; a feat that is one of them is admitted too.
+    named: Vec<String>,
     /// The labels of the rules that grant it.
     sources: Vec<String>,
 }
@@ -75,13 +77,17 @@ impl FeatPool {
         self.id.replace('_', " ")
     }
 
+    /// Whether the pool takes only some feats.
+    fn restricted(&self) -> bool {
+        self.admits.is_some() || !self.named.is_empty()
+    }
+
     fn admits(&self, feat: &HeldFeat) -> bool {
-        match &self.admits {
-            None => true,
-            Some(sets) => sets.iter().any(|tags| {
+        !self.restricted()
+            || self.admits.iter().flatten().any(|tags| {
                 feat.tag_sets.iter().any(|held| tags.iter().all(|t| held.iter().any(|h| h.eq_ignore_ascii_case(t))))
-            }),
-        }
+            })
+            || feat.ids.iter().any(|id| self.named.contains(id))
     }
 }
 
@@ -89,6 +95,8 @@ impl FeatPool {
 #[derive(Debug, Clone)]
 struct HeldFeat {
     tag_sets: Vec<Vec<String>>,
+    /// The ids of the records it can name.
+    ids: Vec<String>,
 }
 
 /// A character's feat pools with every held feat charged.
@@ -116,7 +124,7 @@ impl FeatBudget {
         // A feat no assignment fits is charged to the last open pool, so `remaining` goes negative
         // on one row and the rows alone say by how much.
         if over_by > 0
-            && let Some(open) = pools.iter_mut().rev().find(|pool| pool.admits.is_none())
+            && let Some(open) = pools.iter_mut().rev().find(|pool| !pool.restricted())
         {
             open.spent += over_by;
         }
@@ -189,7 +197,7 @@ impl FeatBudget {
 
 /// The order pools fill in: a restricted pool first, the open ones last, `level` very last.
 fn fill_rank(pool: &FeatPool) -> u8 {
-    match (pool.admits.is_some(), pool.id.as_str()) {
+    match (pool.restricted(), pool.id.as_str()) {
         (true, _) => 0,
         (false, LEVEL_POOL) => 4,
         (false, RACIAL_POOL) => 3,
@@ -256,15 +264,18 @@ struct FeatGrant<'a> {
     amount: &'a Expr,
     /// The tag lists of the offers it draws on; empty when the record names no list.
     lists: Vec<&'a [String]>,
+    /// The feat records its member filter names (`ABILITYLIST:`); empty when it names none.
+    named: &'a [String],
 }
 
 /// The feat picks `rule` hands out: its `Pool` row, or a class feature's offer.
 fn feat_grant_of<'a>(package: &'a SheetRulePackage, rule: &'a SheetRule) -> Option<FeatGrant<'a>> {
     if let (Some(pool), SheetValue::Number(amount)) = (feat_pool_of(rule), &rule.value) {
-        // A `TYPE:A.B` category the converter writes no offer for takes its member filter's types (E3.18).
-        // shortcut: a filter's `ABILITYLIST:` rules are not read, so a Feats pool filtered only by rules (11) still takes any feat; card E3.21.
-        let filter = || pool_members(pool).filter(|members| members.member_pool == FEAT_POOL && !members.any_tags.is_empty()).map(|members| members.any_tags.as_slice());
-        return Some(FeatGrant { pool, amount, lists: feat_list_of(rule).or_else(filter).into_iter().collect() });
+        // A category the converter writes no offer for takes its member filter: the `TYPE:A.B` types (E3.18)
+        // and the `ABILITYLIST:` feats it names (E3.21).
+        let filter = feat_list_of(rule).is_none().then(|| pool_members(pool)).flatten().filter(|members| members.member_pool == FEAT_POOL);
+        let lists = feat_list_of(rule).or(filter.map(|members| members.any_tags.as_slice()).filter(|tags| !tags.is_empty()));
+        return Some(FeatGrant { pool, amount, lists: lists.into_iter().collect(), named: filter.map_or(&[], |members| members.rules.as_slice()) });
     }
     offered_feat_grant(package, rule)
 }
@@ -289,7 +300,7 @@ fn offered_feat_grant<'a>(package: &'a SheetRulePackage, rule: &'a SheetRule) ->
         INTERNAL_POOL => package.rules.values().filter(|row| offer_selects(offer, row)).filter_map(feat_list_of).filter(|list| !list.is_empty()).collect(),
         _ => Vec::new(),
     };
-    (!lists.is_empty()).then(|| FeatGrant { pool: split_rule_id(&rule.id).2, amount: &offer.count, lists })
+    (!lists.is_empty()).then(|| FeatGrant { pool: split_rule_id(&rule.id).2, amount: &offer.count, lists, named: &[] })
 }
 
 /// The tags of `rule`'s offer, when it offers from the feat list.
@@ -349,13 +360,8 @@ fn named_for_the_characters_feats(pool: &str) -> bool {
 fn held_feat(package: &SheetRulePackage, feat_id: &str) -> HeldFeat {
     // `Weapon Focus (Longbow)` names the `weapon_focus` record.
     let base = feat_id.split_once('(').map_or(feat_id, |(base, _)| base).trim();
-    let tag_sets = package
-        .find_all(FEAT_POOL, &id_slug(base))
-        .iter()
-        .filter_map(|id| package.rule(id))
-        .map(|rule| rule.tags.clone())
-        .collect();
-    HeldFeat { tag_sets }
+    let rules: Vec<&SheetRule> = package.find_all(FEAT_POOL, &id_slug(base)).iter().filter_map(|id| package.rule(id)).collect();
+    HeldFeat { tag_sets: rules.iter().map(|rule| rule.tags.clone()).collect(), ids: rules.iter().map(|rule| rule.id.clone()).collect() }
 }
 
 /// The pools `input` holds and what it has spent. `race_traits` are the racial traits the race
@@ -385,6 +391,7 @@ fn feat_budget_of_seed(package: &SheetRulePackage, input: &CharacterInput, base:
             granted: level_feats,
             spent: 0,
             admits: None,
+            named: Vec::new(),
             sources: vec!["a feat at every odd character level".to_owned()],
         },
     );
@@ -424,6 +431,7 @@ fn feat_budget_of_seed(package: &SheetRulePackage, input: &CharacterInput, base:
             granted: 0,
             spent: 0,
             admits: None,
+            named: Vec::new(),
             sources: Vec::new(),
         });
         row.granted += amount;
@@ -433,6 +441,7 @@ fn feat_budget_of_seed(package: &SheetRulePackage, input: &CharacterInput, base:
         for list in grant.lists {
             row.admits.get_or_insert_with(Vec::new).extend(admitted_sets(list));
         }
+        row.named.extend(grant.named.iter().filter(|id| !row.named.contains(*id)).cloned().collect::<Vec<_>>());
     }
     pools.retain(|_, pool| pool.granted > 0 || pool.id == LEVEL_POOL);
 
@@ -616,9 +625,10 @@ mod tests {
             granted: 1,
             spent: 0,
             admits: tags.map(|t| vec![t.iter().map(|s| (*s).to_owned()).collect()]),
+            named: Vec::new(),
             sources: vec![id.to_owned()],
         };
-        let feat = |tags: &[&str]| HeldFeat { tag_sets: vec![tags.iter().map(|s| (*s).to_owned()).collect()] };
+        let feat = |tags: &[&str]| HeldFeat { tag_sets: vec![tags.iter().map(|s| (*s).to_owned()).collect()], ids: Vec::new() };
         let settled = FeatBudget::settled(
             vec![pool("x", Some(&["Combat"])), pool("y", Some(&["Teamwork"]))],
             vec![feat(&["Combat", "Teamwork"]), feat(&["Combat"])],
@@ -746,7 +756,7 @@ mod tests {
         assert!(package().rule(daring[0]).is_some());
         let budget = budget_holding("swashbuckler", 4, daring);
         let pool = budget.pool("daring_infiltrator_bonus_feats").unwrap_or_else(|| panic!("{:?}", budget.pools()));
-        assert!(pool.granted >= 1 && pool.admits(&HeldFeat { tag_sets: vec![vec!["Combat".to_owned()]] }), "{pool:?}");
+        assert!(pool.granted >= 1 && pool.admits(&HeldFeat { tag_sets: vec![vec!["Combat".to_owned()]], ids: Vec::new() }), "{pool:?}");
         assert!(budget_holding("swashbuckler", 3, daring).pool("daring_infiltrator_bonus_feats").is_none());
 
         // OA p.100: at 4th, 8th, 12th and 16th.
@@ -845,7 +855,7 @@ mod tests {
         ];
         let fixture = load_sweep_fixture().expect("census fixture");
         let feats: Vec<HeldFeat> =
-            package().rules_of_kind("feat").filter(|rule| !rule.id.contains('#')).map(|rule| HeldFeat { tag_sets: vec![rule.tags.clone()] }).collect();
+            package().rules_of_kind("feat").filter(|rule| !rule.id.contains('#')).map(|rule| HeldFeat { tag_sets: vec![rule.tags.clone()], ids: vec![rule.id.clone()] }).collect();
         let mut failed = Vec::new();
         for (name, class) in POOLS {
             let slug = id_slug(name);
@@ -864,7 +874,7 @@ mod tests {
             let budget = feat_budget_of_seed(package(), &input, &base, &seed);
             let verdict = match budget.pool(&slug) {
                 None => "not granted".to_owned(),
-                Some(pool) if pool.admits.is_none() => format!("takes any feat ({} granted)", pool.granted),
+                Some(pool) if !pool.restricted() => format!("takes any feat ({} granted)", pool.granted),
                 Some(pool) => match feats.iter().filter(|feat| pool.admits(feat)).count() {
                     0 => "takes no feat".to_owned(),
                     _ => continue,
@@ -873,5 +883,83 @@ mod tests {
             failed.push(format!("{name}: {verdict}"));
         }
         assert!(failed.is_empty(), "{} of {} feat pools list no member of their own: {failed:?}", failed.len(), POOLS.len());
+    }
+
+    /// The 11 Feats-sub-tab pools whose member filter names only `ABILITYLIST:` rules: every grant of each
+    /// reads the names. UC p.39: an ape shaman "gains one of the following bonus feats: Diehard, Endurance,
+    /// Great Fortitude, Improved Bull Rush, and Toughness". With the class whose seed holds its grant, the
+    /// pool takes the feats the filter names and no other. Not here: `unlocked_talent_feat`, whose one grant
+    /// (Blue ~ Psionic Prodigy) is gated on holding itself, a key the converter wrote as `MissingRule`, so no
+    /// character is granted it (card E3.23).
+    #[test]
+    fn named_feat_filter_pools_take_only_the_feats_they_name() {
+        const NAMED_ONLY: [&str; 11] = [
+            "amateur_gunslinger_feat",
+            "ape_shaman_feat",
+            "bat_shaman_feat",
+            "boar_shaman_feat",
+            "canine_ferocity_feat",
+            "contemplative_knowledge_bonus_feat",
+            "gendarme_bonus_feat",
+            "healing_surge_feat",
+            "master_craftsman_feat",
+            "rapid_reload_feat",
+            "unlocked_talent_feat",
+        ];
+        for pool_id in NAMED_ONLY {
+            let members = pool_members(pool_id).unwrap_or_else(|| panic!("{pool_id} has a member filter"));
+            for rule in package().rules.values().filter(|rule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool_id)) {
+                let grant = feat_grant_of(package(), rule).unwrap_or_else(|| panic!("{} is a feat grant", rule.id));
+                assert_eq!((grant.lists.len(), grant.named), (0, members.rules.as_slice()), "{}", rule.id);
+            }
+        }
+        const POOLS: [(&str, &str); 10] = [
+            ("amateur_gunslinger_feat", "cryptic"),
+            ("ape_shaman_feat", "druid"),
+            ("bat_shaman_feat", "druid"),
+            ("boar_shaman_feat", "druid"),
+            ("canine_ferocity_feat", "cavalier"),
+            ("contemplative_knowledge_bonus_feat", "wilder"),
+            ("gendarme_bonus_feat", "cavalier"),
+            ("healing_surge_feat", "wilder"),
+            ("master_craftsman_feat", "aegis"),
+            ("rapid_reload_feat", "marksman"),
+        ];
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let mut failed = Vec::new();
+        for (pool_id, class) in POOLS {
+            let members = pool_members(pool_id).unwrap_or_else(|| panic!("{pool_id} has a member filter"));
+            assert!(members.any_tags.is_empty() && !members.rules.is_empty(), "{pool_id} is filtered by named rules only");
+            let grants: Vec<&SheetRule> =
+                package().rules.values().filter(|rule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool_id)).collect();
+            assert!(grants.iter().any(|rule| feat_pool_of(rule).is_some()), "{pool_id} is a Feats-sub-tab pool");
+            let mut held: Vec<String> = grants.iter().map(|rule| rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).collect();
+            held.extend(grants.iter().flat_map(|rule| &rule.granted_by).filter_map(|grant| match &grant.by {
+                Granter::Rule(id) => Some(id.clone()),
+                _ => None,
+            }));
+            let input = input_for(&fixture, class, 20);
+            let base = compute_pilot_base_chassis(&input);
+            let mut seed = HeldSeed::from_character(&input, &base);
+            seed.rule_ids.extend(held);
+            let budget = feat_budget_of_seed(package(), &input, &base, &seed);
+            let Some(pool) = budget.pool(pool_id) else {
+                failed.push(format!("{pool_id}: not granted"));
+                continue;
+            };
+            let named = members.rules.iter().find(|id| package().rule(id).is_some()).expect("a named feat in the package");
+            if !pool.admits(&held_feat(package(), split_rule_id(named).2)) {
+                failed.push(format!("{pool_id}: refuses its own {named}"));
+            }
+            if pool.admits(&held_feat(package(), "feat:alertness")) {
+                failed.push(format!("{pool_id}: takes Alertness, which it does not name"));
+            }
+        }
+        let ape = budget_holding("druid", 20, &["ultimate_combat:class_feature:druid_archetype_ape_shaman", "ultimate_combat:class_feature:ape_shaman_bonus_feat"]);
+        let ape = ape.pool("ape_shaman_feat").unwrap_or_else(|| panic!("{:?}", ape.pools()));
+        if !ape.admits(&held_feat(package(), "Toughness")) || ape.admits(&held_feat(package(), "Power Attack")) {
+            failed.push(format!("ape_shaman_feat: Toughness in, Power Attack out: {ape:?}"));
+        }
+        assert!(failed.is_empty(), "{} of {} named-feat pools held by a seed fail: {failed:?}", failed.len(), POOLS.len());
     }
 }
