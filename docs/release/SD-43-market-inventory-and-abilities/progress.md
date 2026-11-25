@@ -54,6 +54,7 @@ run with parallel lanes is never resumed; a new run starts with `START=<card>`.)
 Q-22.3 (2026-11-22: rename the Feats tab to Abilities; Feats becomes a sub-tab); E4.G; any §30 overrule; P-8 when the secret is created. G-CL reads the E4.G line.)
 
 - C2 (2026-11-22): the graph refresh is out of scope, carry on
+- E3.18 (2026-11-25): 1 — confirms the lead ruling of 2026-11-24: a restricted bonus-feat slot takes only its listed feats; an off-list feat in a saved character shows unplaced and counts in the over-budget badge, never deleted.
 
 ## Dispatch log
 
