@@ -27,7 +27,9 @@
 //! grant: its size is the count of the chooser's own offer while the chooser is held or offered ([`selection_pool`]).
 //! A bloodline chosen at creation (`selected_choices`, `choice:sorcerer_bloodline`) is that pool's pick
 //! ([`creation_choice_picks`]): charged and held, so a second bloodline is refused for room; picking another
-//! member renames that choice ([`creation_choice_swap`]) instead of adding a second pick.
+//! member renames that choice ([`creation_choice_swap`]) instead of adding a second pick. The chooser it was picked
+//! through is itself the pick of a held pool whose offer selects it (E3.20: the bloodline implies its kind,
+//! `Standard Bloodline`, in the `Bloodline` pool `Sorcerer ~ Standard Bloodline` grants).
 //!
 //! **Archetype.** An archetype of a held class is one converted record in the `archetype` pool, named by
 //! its class (`rogue_archetype_acrobat`). It is saved as a `SelectedChoice` under
@@ -435,14 +437,30 @@ pub fn creation_choice_picks(package: &SheetRulePackage, input: &CharacterInput)
     link_path_a_picks(package, &held, &facts)
         .into_iter()
         .filter_map(|link| {
-            let pool = selection_pool(package, package.rule(&link.chooser)?)?;
+            let chooser = package.rule(&link.chooser)?;
+            let pool = selection_pool(package, chooser)?;
             let choice = input
                 .chosen
                 .selected_choices
                 .iter()
                 .find(|c| c.choice_set_id == link.choice_set_id && c.selection_id.rsplit(':').next() == Some(link.member.as_str()))?;
-            Some((format!("{pool}:{}", link.option), choice.clone()))
+            // The chooser is itself the pick of a held pool whose offer selects it (E3.20: the held bloodline implies its
+            // kind, `Standard Bloodline`, the `Bloodline` pool's member), unless that pick is saved.
+            let kinds = held.rules.keys().filter_map(|id| package.rule(id)).filter_map(|grant| match (&grant.target, &grant.offers) {
+                (Some(BonusTarget::Pool(kind_pool)), Some(offer)) if is_class_feature_grant(grant) && offer_selects(offer, chooser) => Some(kind_pool.as_str()),
+                _ => None,
+            });
+            let mut kind_picks: Vec<String> = Vec::new();
+            for kind_pool in kinds {
+                let saved = input.chosen.ability_selections.iter().any(|p| p.subtab == SubTab::ClassFeatures.id() && p.pool == kind_pool && p.record_key == chooser.id);
+                let id = format!("{kind_pool}:{}", chooser.id);
+                if !saved && !kind_picks.contains(&id) {
+                    kind_picks.push(id);
+                }
+            }
+            Some(std::iter::once(format!("{pool}:{}", link.option)).chain(kind_picks).map(|id| (id, choice.clone())).collect::<Vec<_>>())
         })
+        .flatten()
         .collect()
 }
 
@@ -1011,7 +1029,7 @@ fn pool_member_selector<'a>(package: &'a SheetRulePackage, held_rules: &[&'a She
 /// Every member of every class-feature pool this character holds, each with whether the record's own
 /// gate is met (the converted-gate verdicts the Traits sub-tab reads). A pool lists the members its grant's
 /// offer selects, else its category's ([`pool_member_selector`]). Two printings of one name are offered once,
-/// the first by record id.
+/// the first by record id that qualifies, else the first by record id.
 fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<AbilityOption> {
     let mut pools: Vec<String> = class_feature_grants(package, input).into_iter().filter(|(_, (n, _))| *n > 0).map(|(pool, _)| pool).collect();
     for pick in input.chosen.ability_selections.iter().filter(|pick| pick.subtab == SubTab::ClassFeatures.id()) {
@@ -1023,19 +1041,25 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
     let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
-    let mut options = Vec::new();
+    let mut options: Vec<AbilityOption> = Vec::new();
     for pool in &pools {
         let Some(selects) = pool_member_selector(package, &held_rules, pool) else { continue };
-        let mut labels: Vec<String> = Vec::new();
+        // label -> index in `options` of the record kept for it.
+        let mut labels: HashMap<String, usize> = HashMap::new();
         for rule in package.rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()) {
             let label = display_label(rule);
-            if labels.contains(&label) {
+            let kept = labels.get(&label).copied();
+            // Two records of one name are offered once: the first by id, unless a later one qualifies where it does
+            // not (E3.20: the bloodrager's `Standard Bloodline` sorts before the sorcerer's, gated on another class).
+            if kept.is_some_and(|at| options[at].qualified) {
                 continue;
             }
-            labels.push(label.clone());
             let unmet = ability_prereqs::unmet(package, &held, &facts, &rule.applies);
+            if kept.is_some() && !unmet.is_empty() {
+                continue;
+            }
             let prose = catalog_prose(package, rule);
-            options.push(AbilityOption {
+            let option = AbilityOption {
                 id: format!("{pool}:{}", rule.id),
                 label,
                 pool: pool.clone(),
@@ -1043,7 +1067,14 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
                 qualified: unmet.is_empty(),
                 unmet,
                 description: (!prose.trim().is_empty()).then_some(prose),
-            });
+            };
+            match kept {
+                Some(at) => options[at] = option,
+                None => {
+                    labels.insert(option.label.clone(), options.len());
+                    options.push(option);
+                }
+            }
         }
     }
     options.sort_by(|a, b| (&a.pool, &a.label, &a.id).cmp(&(&b.pool, &b.label, &b.id)));
@@ -1628,7 +1659,8 @@ mod tests {
         let arcane = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_arcane_bloodline";
         let draconic = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline";
         let picks = creation_choice_picks(package(), &input);
-        assert_eq!(picks.iter().map(|(id, _)| id.as_str()).collect::<Vec<_>>(), [arcane]);
+        let kind = "bloodline:core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
+        assert_eq!(picks.iter().map(|(id, _)| id.as_str()).collect::<Vec<_>>(), [arcane, kind], "the bloodline and its kind (E3.20)");
         assert_eq!(picks[0].1.choice_set_id, "choice:sorcerer_bloodline");
         let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
         assert!(options.iter().any(|o| o.id == draconic), "the pool's members are the offer's");
@@ -1644,6 +1676,38 @@ mod tests {
         let budget = ability_budget(package(), &picked, SubTab::ClassFeatures);
         assert_eq!(row(&budget, "abilities.budget.class_features.sorcerer_bloodline.remaining"), 0);
         assert!(creation_choice_picks(package(), &picked).is_empty());
+    }
+
+    // "A sorcerer must pick one bloodline upon taking her first level of sorcerer" (Core Rulebook, Sorcerer). PCGen's
+    // `Sorcerer ~ Standard Bloodline` grants one `Bloodline` pick, the kind of bloodline (`Standard Bloodline`, whose own
+    // chooser offers the bloodline itself). The held bloodline implies its kind: the pool is filled by the chooser it
+    // was picked through, and that kind's option reads the verdict of the gate that opens it (`chooser_offered`).
+    #[test]
+    fn sorcerer_bloodline_kind_pool_is_filled_by_the_held_bloodline_and_its_kind_qualifies() {
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "sorcerer", 1);
+        let budget = ability_budget(package(), &input, SubTab::ClassFeatures);
+        assert_eq!(row(&budget, "abilities.budget.class_features.bloodline.granted"), 1);
+        assert_eq!(row(&budget, "abilities.budget.class_features.bloodline.remaining"), 0, "the held bloodline implies its kind");
+        let standard = "bloodline:core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
+        assert!(creation_choice_picks(package(), &input).iter().any(|(id, _)| id == standard));
+        // The kind record is `MULT:YES`, so a second one is refused for room, not as already held.
+        assert!(budget.refusal(package(), standard).expect("full").contains("bloodline pool"));
+
+        let base = compute_pilot_base_chassis(&input);
+        let seed = HeldSeed::from_character(&input, &base);
+        let facts = CharacterFacts::from_character(&input, &base).with_linked_picks(package(), &seed);
+        let held = held_set(package(), &seed, &facts);
+        let options = ability_options(package(), &input, &base, SubTab::ClassFeatures);
+        let option = options.iter().find(|o| o.id == standard).expect("Standard Bloodline is the sorcerer's option");
+        assert!(option.qualified, "{:?}", option.unmet);
+        // No option whose own gate includes against the held set reads unmet.
+        let disagree: Vec<(&str, &Vec<String>)> = options
+            .iter()
+            .filter(|o| !o.qualified)
+            .filter(|o| package().rule(o.id.split_once(':').expect("pool:record").1).is_some_and(|r| evaluate_applies(&r.applies, &held, package(), &facts, EvalContext::default()) == crate::rules_core::sheet_rule::Gate::Include))
+            .map(|o| (o.id.as_str(), &o.unmet))
+            .collect();
+        assert!(disagree.is_empty(), "{disagree:?}");
     }
 
     // "An oracle's mystery grants ... revelations" (Advanced Player's Guide, Oracle). PCGen's `Flame Mystery Revelation`

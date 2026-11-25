@@ -496,13 +496,16 @@ mod tests {
         assert!(matches!(made, CreateCharacterResponse::Saved { .. }), "{made:?}");
         let arcane = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_arcane_bloodline";
         let draconic = "sorcerer_bloodline:core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline";
+        // The held bloodline implies its kind, the `Bloodline` pool's pick (E3.20).
+        let kind = "bloodline:core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
         let row = |rows: &[ExplanationDto], field: &str| {
             rows.iter().find(|r| r.id == format!("abilities.budget.class_features.sorcerer_bloodline.{field}")).map(|r| r.value)
         };
         let listed = list_ability_options_at_root(&root, "class_features").expect("options");
         assert_eq!(row(&listed.budget, "granted"), Some(1));
         assert_eq!(row(&listed.budget, "remaining"), Some(0));
-        assert_eq!(listed.selected, [arcane]);
+        assert_eq!(listed.selected, [arcane, kind]);
+        assert_eq!(listed.budget.iter().find(|r| r.id == "abilities.budget.class_features.bloodline.remaining").map(|r| r.value), Some(0));
         let offered = listed.options.iter().find(|o| o.id == draconic).expect("draconic offered");
         assert_eq!(offered.replaces.as_deref(), Some(arcane), "another bloodline replaces the creation one");
         // Picking another bloodline renames the creation choice: one bloodline, the sheet's bloodline seam reads it.
@@ -514,11 +517,11 @@ mod tests {
         assert_eq!(bloodlines, ["bloodline:draconic"]);
         assert!(saved.chosen.ability_selections.is_empty(), "no second pick beside the choice");
         let listed = list_ability_options_at_root(&root, "class_features").expect("options");
-        assert_eq!((listed.selected, row(&listed.budget, "remaining")), (vec![draconic.to_owned()], Some(0)));
+        assert_eq!((listed.selected, row(&listed.budget, "remaining")), (vec![draconic.to_owned(), kind.to_owned()], Some(0)));
         // Removing it would leave a Sorcerer with no bloodline: the sheet refuses that save and the bloodline stays.
         let removed = remove_ability_selection_at_root(&root, "class_features", draconic, SAVED_AT).expect("a response");
         assert!(matches!(removed, CreateCharacterResponse::Blocked { .. }), "{removed:?}");
-        assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [draconic]);
+        assert_eq!(list_ability_options_at_root(&root, "class_features").expect("options").selected, [draconic, kind]);
         std::fs::remove_dir_all(&root).ok();
     }
 
