@@ -1713,4 +1713,44 @@ mod tests {
         assert_eq!(row(&class_features_at("ninja", 2), "abilities.budget.class_features.ninja_trick.granted"), 1);
         assert!(class_features_at("ninja", 1).pool("ninja_trick").is_none(), "no trick before 2nd level");
     }
+
+    /// The 29 class-granted pools E3.12 gave corpus members: each Class Features pool lists at least one member to
+    /// a character holding its grants (the Feats-sub-tab pools are `feat_budget`'s test). A grant offering a number
+    /// (the Lantern Bearer's +2 to +4) lists no member, so its pool is read through its category's member filter.
+    #[test]
+    fn ability_budget_class_features_every_member_typed_pool_lists_a_member_to_a_holder_of_its_grant() {
+        const POOLS: [&str; 29] = [
+            "Advanced Masked Performer Talent", "Autumn Witch Hex Choice", "Bloody Jake Terrain", "Cloaked Wolf Bonus Feat",
+            "Death Slayer Bonus Feat", "Druid Bear Shaman Feat", "Druid Eagle Shaman Feat", "Druid Lion Shaman Feat",
+            "Druid Serpent Shaman Feat", "Druid Wolf Shaman Feat", "Finesse Marksman Bonus Feat", "Hexenhammer Major Hex Choice",
+            "Hexenhammer Minor Hex Choice", "Lantern Bearer Favored Enemy", "Lantern Bearer Favored Enemy Bonus",
+            "Life Channeler Domain", "Mammoth Rider Born Survivor Feat", "Masked Performer Talent", "Psionic Fighter Starting Feat",
+            "Sniper Marksman Bonus Feat", "Spring Witch Hex Choice", "Summer Witch Hex Choice", "Swashbuckler Weapon Proficiency",
+            "Tempest Druid Domain Choice", "Undead Master Arcane Bond", "Vexing Daredevil Bonus Stare Feat",
+            "Volley Marksman Bonus Feat", "Winter Witch Hex Choice", "Winter Witch Patron",
+        ];
+        let (mut class_features, mut memberless) = (0, Vec::new());
+        for name in POOLS {
+            let slug = crate::rules_core::sheet_rule::id_slug(name);
+            let grants: Vec<&SheetRule> =
+                package().rules.values().filter(|rule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if *p == slug)).collect();
+            assert!(!grants.is_empty(), "{name}: no converted grant");
+            if grants.iter().any(|rule| feat_pool_of(rule).is_some()) {
+                continue;
+            }
+            class_features += 1;
+            let members = pool_member_selector(package(), &grants, &slug)
+                .map_or(0, |selects| package().rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()).count());
+            if members == 0 {
+                memberless.push(name);
+            }
+        }
+        assert!(memberless.is_empty(), "{} of {class_features} Class Features pools list no member: {memberless:?}", memberless.len());
+
+        // End to end: "a lantern bearer selects a creature type" at 2nd level (Adventurer's Guide, Lantern Bearer).
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "lantern_bearer", 2);
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        let enemies: Vec<&str> = options.iter().filter(|o| o.pool == "lantern_bearer_favored_enemy").map(|o| o.label.as_str()).collect();
+        assert!(enemies.contains(&"Aberration"), "Lantern Bearer 2 favored enemy options: {enemies:?}");
+    }
 }

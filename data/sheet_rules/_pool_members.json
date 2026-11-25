@@ -496,6 +496,20 @@
     ],
     "rules": []
   },
+  "black_blade_selection": {
+    "member_pool": "internal",
+    "any_tags": [
+      "BlackBladeChoice"
+    ],
+    "rules": []
+  },
+  "blade_adept_blade_selection": {
+    "member_pool": "internal",
+    "any_tags": [
+      "AdeptBladeChoice"
+    ],
+    "rules": []
+  },
   "boar_shaman_feat": {
     "member_pool": "feat",
     "any_tags": [],
@@ -785,6 +799,13 @@
       "ultimate_magic\u003aclass_feature\u003ageisha_knowledge_choice"
     ]
   },
+  "geisha_weapon_proficiency_choice": {
+    "member_pool": "internal",
+    "any_tags": [],
+    "rules": [
+      "ultimate_magic\u003aclass_feature\u003ageisha_weapon_proficiency_choice"
+    ]
+  },
   "gendarme_bonus_feat": {
     "member_pool": "feat",
     "any_tags": [],
@@ -840,6 +861,20 @@
     "rules": [
       "ultimate_combat\u003aclass_feature\u003agunslinger_battered_gun"
     ]
+  },
+  "half_dragon_type": {
+    "member_pool": "internal",
+    "any_tags": [
+      "HalfDragonType"
+    ],
+    "rules": []
+  },
+  "half_fiend_ability_bonus": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "TemplateAbilityBonus"
+    ],
+    "rules": []
   },
   "harrowed_trumps": {
     "member_pool": "special_ability",
@@ -937,6 +972,13 @@
     ],
     "rules": []
   },
+  "kensai_chosen_weapon": {
+    "member_pool": "special_ability",
+    "any_tags": [],
+    "rules": [
+      "ultimate_combat\u003aclass_feature\u003akensai_chosen_weapon"
+    ]
+  },
   "kensai_weapon_choice": {
     "member_pool": "special_ability",
     "any_tags": [],
@@ -996,6 +1038,20 @@
     "any_tags": [
       "Infusion Wild Talent Wood",
       "Utility Wild Talent Wood"
+    ],
+    "rules": []
+  },
+  "lantern_bearer_favored_enemy": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "LanternBearerFavoredEnemy"
+    ],
+    "rules": []
+  },
+  "leshy_warden_domain_choice": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "DruidDomainSelection"
     ],
     "rules": []
   },
@@ -1267,6 +1323,13 @@
     "any_tags": [
       "ReincarnatedOracleRevelation",
       "GeneralRevelation"
+    ],
+    "rules": []
+  },
+  "retraining_skill_ranks_added": {
+    "member_pool": "special_ability",
+    "any_tags": [
+      "RetrainingSkillRanksAdded"
     ],
     "rules": []
   },

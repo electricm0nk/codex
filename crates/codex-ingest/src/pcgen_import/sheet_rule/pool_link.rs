@@ -239,7 +239,7 @@ pub fn category_declarations(tree: &PinnedTree) -> CategoryDeclarations {
 }
 
 /// SD-43 E3.14: the member filter of every pool a converted rule grants (a positive `Pool` target) whose
-/// grants carry no `offers` -- a `TYPE:A.B` category (either type) or an `ABILITYLIST:` one, which the
+/// grants carry no `offers` of records -- a `TYPE:A.B` category (either type) or an `ABILITYLIST:` one, which the
 /// single-`Rules` offer [`link_pool_choices`] writes cannot express. `resolve(parent, key)` names the
 /// converted rule an `ABILITYLIST:` key is; a key it cannot name is left out (never guessed). A pool whose
 /// name is itself a parent category, or whose filter is empty, is left out.
@@ -251,13 +251,14 @@ pub fn pool_member_filters(
     use codex::rules_core::sheet_rule::BonusTarget;
     let rules = || files.values().flatten();
     let own_pools: std::collections::BTreeSet<&str> = rules().filter(|r| !r.id.contains('#')).map(|r| r.pool.as_str()).collect();
-    // pool -> (granted a positive count, some grant offers)
+    // pool -> (granted a positive count, some grant offers members). Only an offer of records lists members (the
+    // engine's `ability_budget::pool_offer`): the Lantern Bearer's `Favored Enemy` grant offers its +2 to +4 bonus.
     let mut grants: BTreeMap<&str, (bool, bool)> = BTreeMap::new();
     for rule in rules() {
         let (Some(BonusTarget::Pool(pool)), SheetValue::Number(count)) = (&rule.target, &rule.value) else { continue };
         let entry = grants.entry(pool.as_str()).or_default();
         entry.0 |= !matches!(count, Expr::Const(n) if *n <= 0);
-        entry.1 |= rule.offers.is_some();
+        entry.1 |= rule.offers.as_ref().is_some_and(|offer| matches!(offer.from, OptionSet::Rules { .. } | OptionSet::Domains));
     }
     let mut out = BTreeMap::new();
     for (pool, (positive, offered)) in grants {
@@ -425,14 +426,23 @@ mod tests {
             files.insert(r.id.clone(), vec![r]);
         }
         let mut offering = rule("b:class_feature:offering", "special_ability", &[], n(1), pool("fx_offered"));
-        offering.offers = Some(Choice { id: offering.id.clone(), count: Expr::Const(1), from: OptionSet::FreeText });
+        offering.offers = Some(Choice {
+            id: offering.id.clone(),
+            count: Expr::Const(1),
+            from: OptionSet::Rules { pool: "special_ability".into(), tags: vec!["Offered".into()], requires: Applies::Always },
+        });
         files.insert(offering.id.clone(), vec![offering]);
+        // A grant offering a number (the Lantern Bearer's +2 to +4 bonus) offers no member: its pool keeps the filter.
+        let mut bonus = rule("b:class_feature:bonus", "special_ability", &[], n(1), pool("fx_numbered"));
+        bonus.offers = Some(Choice { id: bonus.id.clone(), count: Expr::Const(1), from: OptionSet::Number { min: Expr::Const(2), max: Expr::Const(4) } });
+        files.insert(bonus.id.clone(), vec![bonus]);
         let decl = |tags: &[&str], keys: &[&str]| ("Special Ability".to_string(), tags.iter().map(|t| t.to_string()).collect(), keys.iter().map(|k| k.to_string()).collect());
         let decls: CategoryDeclarations = [
             ("fx_flame", decl(&["FlameRevelation", "GeneralRevelation"], &[])),
             ("fx_listed", decl(&[], &["Known Key", "Unknown Key"])),
             ("fx_spent", decl(&["Spent"], &[])),
             ("fx_offered", decl(&["Offered"], &[])),
+            ("fx_numbered", decl(&["Enemy"], &[])),
             ("special_ability", decl(&["Any"], &[])),
         ]
         .into_iter()
@@ -440,7 +450,7 @@ mod tests {
         .collect();
         let resolve = |parent: &str, key: &str| (parent == "Special Ability" && key == "Known Key").then(|| "b:class_feature:known".to_string());
         let out = pool_member_filters(&decls, resolve, &files);
-        assert_eq!(out.keys().collect::<Vec<_>>(), ["fx_flame", "fx_listed"]);
+        assert_eq!(out.keys().collect::<Vec<_>>(), ["fx_flame", "fx_listed", "fx_numbered"]);
         assert_eq!(
             out["fx_flame"],
             PoolMembers { member_pool: "special_ability".into(), any_tags: vec!["FlameRevelation".into(), "GeneralRevelation".into()], rules: Vec::new() }
