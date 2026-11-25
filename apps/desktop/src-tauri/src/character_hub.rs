@@ -13169,8 +13169,9 @@ mod tests {
         ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
         let ledger = list_progression_ledger_at_root(&root).expect("lists");
         let apart: Vec<&str> = ledger.without_level.feats.iter().map(|feat| feat.name.as_str()).collect();
-        assert_eq!(apart, ["Great Fortitude"]);
-        assert!(ledger.levels.iter().all(|level| level.unspent.feats == 0), "an over-budget character has no open slot: {ledger:?}");
+        assert_eq!(apart, ["Iron Will", "Great Fortitude"], "the Wizard's bonus feat takes neither (E3.18)");
+        let open: Vec<(u8, i64)> = ledger.levels.iter().map(|level| (level.character_level, level.unspent.feats)).filter(|(_, feats)| *feats > 0).collect();
+        assert_eq!(open, [(5, 1)], "only the Wizard's restricted bonus slot at 5 is open; no saved feat fits it: {ledger:?}");
         let listed = ledger.levels.iter().map(|level| level.taken.feats.len()).sum::<usize>() + apart.len();
         assert_eq!(listed, saved.len(), "every feat is kept (R9)");
 
@@ -13400,8 +13401,9 @@ mod tests {
         let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
         ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
         let rows = ledger_migration_rows(&root);
-        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, whose record
-        // states no restriction (E1.1's receipt). Weapon Focus takes no slot (it is the posture's).
+        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, which takes a metamagic
+        // or item creation feat or Spell Mastery (Core Rulebook, Wizard; its member filter, E3.18), so neither
+        // Iron Will nor Great Fortitude fits it. Weapon Focus takes no slot (it is the posture's).
         assert_eq!(
             ledger_migration_levels(&rows, LedgerKind::Feat),
             ledger_migration_named(&[
@@ -13410,13 +13412,13 @@ mod tests {
                 ("feat:weapon_focus", Some(1)),
                 ("feat:toughness", Some(3)),
                 ("feat:endurance", Some(5)),
-                ("feat:iron_will", Some(5)),
+                ("feat:iron_will", None),
                 ("feat:great_fortitude", None),
             ]),
         );
         let input = SavedCharacterStore::load(&root).unwrap().character_input;
         let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
-        assert_eq!(budget.over_by(), 1, "the row with no level is the feat the badge counts");
+        assert_eq!(budget.over_by(), 2, "the rows with no level are the feats the badge counts");
         std::fs::remove_dir_all(&dir).ok();
     }
 

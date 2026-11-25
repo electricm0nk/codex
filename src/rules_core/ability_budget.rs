@@ -980,13 +980,13 @@ fn pool_offer<'a>(package: &'a SheetRulePackage, held_rules: &[&'a SheetRule], p
 /// (`data/sheet_rules/_pool_members.json`, SD-43 E3.14): a `TYPE:A.B` category takes either type, an
 /// `ABILITYLIST:` category the rules it names.
 #[derive(Debug, Clone, serde::Deserialize)]
-struct PoolMembers {
-    member_pool: String,
-    any_tags: Vec<String>,
-    rules: Vec<String>,
+pub(crate) struct PoolMembers {
+    pub(crate) member_pool: String,
+    pub(crate) any_tags: Vec<String>,
+    pub(crate) rules: Vec<String>,
 }
 
-fn pool_members(pool: &str) -> Option<&'static PoolMembers> {
+pub(crate) fn pool_members(pool: &str) -> Option<&'static PoolMembers> {
     static MEMBERS: OnceLock<BTreeMap<String, PoolMembers>> = OnceLock::new();
     MEMBERS
         .get_or_init(|| serde_json::from_str(include_str!("../../data/sheet_rules/_pool_members.json")).expect("data/sheet_rules/_pool_members.json parses"))
