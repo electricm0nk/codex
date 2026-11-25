@@ -85,6 +85,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E3.21 | DISCOVERED (E3.18): the Feats-sub-tab pools whose member filter names only `ABILITYLIST:` rules take only those feats (`feat_budget` reads the filter's `rules`) | sheet | E3.18 | opus | yes (root + desktop) | no |
 | E3.22 | DISCOVERED (E3.19): E3.12's `data.member_types` on 28 corpus records carries live PI blacklist terms; `enrich_member_typing` screens the field, declared-pi-audit passes | sheet | E3.12 | opus | yes (root) | no |
 | E3.23 | DISCOVERED (E3.21): a gate naming its own record's KEY is converted to `MissingRule` (never met); the converter resolves it, so Blue ~ Psionic Prodigy grants `unlocked_talent_feat` | sheet | E3.21 | opus | yes (root + desktop) | no |
+| E3.24 | DISCOVERED (E3.22): `data/ability_categories.json` ships the PI term `Magaambya` (pool `Magaambya Reward`, tag `MagaambyaReward`) to the Background sub-tab; the deriver screens it and a gate covers the file | sheet | E3.22 | opus | yes (root) | no |
 | E3.MC | E3 merge check + epic report: every sub-tab on three seeds; notice count = E0.1's data-gap list | sheet | E3.11 | opus | yes (base build) | no |
 | E4.1 | One display-name derivation for every item kind; the all-kinds test; proposed names list from book text | sheet | E0.3, E3.MC | opus | yes (root + desktop) | no |
 | E4.G | **Operator wait:** the operator approves the proposed names list (and confirms the reading of "1") | lead | E4.1 | operator | no | no |
@@ -106,7 +107,7 @@ warning). A card that only *adds registration lines* to `main.rs` still holds `h
 | E7.4 | PR `tranche-43 → develop` LAST (graphify out of scope) → merge when green → watch the develop publish | main | E7.3 | sonnet | no | no |
 
 Card count: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-43-market-inventory-and-abilities/epic-breakdown.md | awk 'END{print NR}'`
-→ 73 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19 + E3.23 discovered by E3.21; the per-card headings below use `###`).
+→ 74 (this table only; 56 at authoring + E3.12 discovered by E0.1 + E1.12 discovered by E0.4 + E1.13 discovered by E1.6 + E1.14 and E1.15 discovered by E1.MC + E2.6 discovered by E2.MC + E3.13 and E3.14 discovered by E3.4 + E3.15 discovered by E3.5 + E3.16 discovered by E3.7 + E3.17 discovered by E3.9 + E3.18 and E3.19 discovered by E3.12 + E3.20 discovered by E3.13 + E3.21 discovered by E3.18 + E3.22 discovered by E3.19 + E3.23 discovered by E3.21 + E3.24 discovered by E3.22; the per-card headings below use `###`).
 
 **Lanes and their files.** `gear`: `ui/characterHub/GearScreen.tsx`, `gearScreenModel.ts`, `GearDetail.tsx`,
 the sell/move paths of `desktop/character_hub.rs` (under `hub`). `market`: `ui/characterHub/MarketDialog.tsx`,
@@ -770,6 +771,21 @@ so no card ships a picker the engine does not check.
   which completes E3.21's 11th pool.
 - **Acceptance:** those tests; the probe's self-key count 0 or each remaining one named; root and desktop suites green.
   **Depends:** E3.21. **Tier:** opus. Must be complete before E3.MC.
+### E3.24 — PI screening of the ability-category list (discovered by E3.22, 2026-11-25)
+- **Objective:** `data/ability_categories.json` (`scripts/derive_ability_categories.py`, E3.9; compiled in by
+  `src/rules_core/ability_budget.rs` `include_str!`) carries one category of 241 whose name and member tag hold a live
+  PI blacklist term: `Magaambya Reward` / `MagaambyaReward` (count:
+  `python3 -I -c "import json,importlib.util as u; s=u.spec_from_file_location('p','scripts/pi_scrub.py'); m=u.module_from_spec(s); s.loader.exec_module(m); c=json.load(open('data/ability_categories.json'))['categories']; print(len(c), sum(any(t in json.dumps(x) for t in m.PI_BLACKLIST_TERMS) for x in c))"`
+  → `241 1`). The Background sub-tab shows the name. No gate scans the file: `pi-sweep` covers
+  `src/rules_core/rules_catalog` and `data/rules_tables`, `declared-pi-audit` covers `data/corpus`. E3.22 screened
+  the same tag in corpus `data.member_types` (20 Inner Sea Magic records).
+- **FILES YOU OWN:** `scripts/derive_ability_categories.py`, `data/ability_categories.json`, and the gate that covers
+  the file (`scripts/verify.sh` `pi-sweep` scope or a test beside `ability_budget.rs`'s category loader); the closure
+  check names the rest (the sheet-rule tags the pool filters on, the Background sub-tab's display).
+- **Failing test first:** a test that no `data/ability_categories.json` name or member tag carries a blacklist term
+  (`pi_screening::classify_field`); then the screened re-derive.
+- **Acceptance:** that test; the gate covers the file; root and desktop suites green. **Depends:** E3.22.
+  **Tier:** opus. Must be complete before E3.MC.
 ### E3.MC — E3 merge check
 - **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an
   archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains
