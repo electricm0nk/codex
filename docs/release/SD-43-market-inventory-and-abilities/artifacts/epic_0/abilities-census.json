@@ -114,7 +114,7 @@
  "subtabs": {
   "Feats": {
    "pcgen_categories_player_editable": 173,
-   "pcgen_categories_with_corpus_members": 149,
+   "pcgen_categories_with_corpus_members": 147,
    "top_categories_by_members": {
     "FEAT": 2093,
     "Forgesteed Rider Bonus Feat": 694,
@@ -132,7 +132,7 @@
     "Combat Feat": 542,
     "Combat Trick Feat": 542
    },
-   "corpus_records": 3990,
+   "corpus_records": 3982,
    "corpus_records_in_pick_granted_categories": 3678,
    "pick_granted_categories_with_members": 104,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
@@ -142,7 +142,7 @@
     "advanced_race_guide": 248,
     "adventurers_guide": 98,
     "beastiary": 4,
-    "book_of_the_damned_volume_2": 18,
+    "book_of_the_damned_volume_2": 10,
     "core_essentials": 15,
     "core_rulebook": 317,
     "horror_adventures": 81,
@@ -167,7 +167,7 @@
    },
    "corpus_records_by_kind": {
     "ability": 96,
-    "class_feature": 1774,
+    "class_feature": 1766,
     "feat": 1411,
     "feat_generic": 681,
     "race_trait": 10,
@@ -403,7 +403,7 @@
   },
   "Background": {
    "pcgen_categories_player_editable": 22,
-   "pcgen_categories_with_corpus_members": 21,
+   "pcgen_categories_with_corpus_members": 20,
    "top_categories_by_members": {
     "Monastery Reward": 43,
     "Region of Origin": 43,
@@ -415,24 +415,24 @@
     "Oenopion Fleshforges Reward": 21,
     "The Harrowed Society Reward": 21,
     "White Grotto Reward": 21,
-    "Magaambya Reward": 20,
     "Citadel Enferac Reward": 19,
     "Poisioners Guild Reward": 19,
     "Skill Specialization": 16,
-    "Magic School Choice": 11
+    "Magic School Choice": 11,
+    "Shoanti Clan": 7
    },
-   "corpus_records": 182,
+   "corpus_records": 181,
    "corpus_records_in_pick_granted_categories": 74,
    "pick_granted_categories_with_members": 7,
    "record_predicate": "a record counts when a player-editable (VISIBLE QUALIFY|YES and EDITABLE:YES) category of this DISPLAYLOCATION in the corpus books spans it: same parent CATEGORY, and a shared TYPE (OR over the '.'-list) or a key in ABILITYLIST, or no filter; one record can count under several sub-tabs. 'pick-granted' narrows to categories some corpus record grants picks into (BONUS:ABILITYPOOL / CHOOSE:ABILITYSELECTION target) plus FEAT",
    "corpus_records_by_book": {
     "core_rulebook": 6,
-    "inner_sea_magic": 105,
+    "inner_sea_magic": 104,
     "inner_sea_races": 7,
     "inner_sea_world_guide": 64
    },
    "corpus_records_by_kind": {
-    "ability": 176,
+    "ability": 175,
     "race_trait": 2,
     "race_trait_generic": 4
    },
@@ -524,7 +524,7 @@
    "budget": "abilities.budget.class_features.<pool>.{granted,spent,remaining} rows (ability_budget.rs, E3.4)",
    "budget_grep": {
     "pattern": "abilities\\.budget|pool_budget|class_feature[a-z_]*\\.budget",
-    "matches": 31
+    "matches": 39
    },
    "prereq_add_path": "none",
    "prereq_grep": {

@@ -16,6 +16,8 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
+use codex::rules_core::pi_screening::classify_field;
+use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 use serde_json::Value;
 
 /// Corpus kinds PCGen loads from ability and feat files: the records a category can select.
@@ -217,6 +219,18 @@ pub fn record_identity(doc: &Value, kind: &str) -> Option<(String, String, BTree
     Some((category, key, carried))
 }
 
+/// `tags` with every tag carrying a PI blacklist term (`pi_screening::classify_field`, the screen the
+/// sibling enrichment tools apply) replaced by [`REDACTED_PI_MARKER`], deduplicated in order.
+pub fn screen_member_tags(tags: Vec<String>) -> Vec<String> {
+    let mut out = Vec::new();
+    for tag in tags {
+        let (license, ..) = classify_field(MEMBER_TYPES_FIELD, &tag);
+        let tag = if license == License::PiRedacted { REDACTED_PI_MARKER.to_string() } else { tag };
+        push_unique(&mut out, &[tag]);
+    }
+    out
+}
+
 /// `text` (a corpus record as written: two-space JSON whose `data` object opens on its own line)
 /// with `data.member_types` set to `tags`, or removed when `tags` is empty. Every other byte is kept.
 pub fn with_member_types(text: &str, tags: &[String]) -> Option<String> {
@@ -275,6 +289,34 @@ mod tests {
         let again = with_member_types(&with, &["Stare".to_string(), "Combat".to_string()]).unwrap();
         assert_eq!(serde_json::from_str::<Value>(&again).unwrap()["data"]["member_types"].as_array().unwrap().len(), 2);
         assert_eq!(with_member_types(&again, &[]).unwrap(), text);
+    }
+
+    #[test]
+    fn a_member_tag_carrying_a_blacklist_term_is_screened_to_the_marker() {
+        let tags = screen_member_tags(vec!["MagaambyaReward".into(), "Stare".into(), "LamashtuTeratomaType".into()]);
+        assert_eq!(tags, vec![REDACTED_PI_MARKER.to_string(), "Stare".to_string()], "screened tags dedupe to one marker");
+    }
+
+    /// E3.22: no `member_types` tag written to the corpus carries a live blacklist term (the screen
+    /// `pi_screening::classify_field` applies; `declared-pi-audit` reads the same field).
+    #[test]
+    fn no_written_member_types_tag_carries_a_blacklist_term() {
+        let mut files = Vec::new();
+        corpus_json(&crate::repo_root().join("data/corpus"), &mut files);
+        let mut live = Vec::new();
+        for f in files {
+            let text = std::fs::read_to_string(&f).unwrap();
+            if !text.contains(MEMBER_TYPES_FIELD) {
+                continue;
+            }
+            let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+            for tag in doc["data"].get(MEMBER_TYPES_FIELD).and_then(Value::as_array).into_iter().flatten().filter_map(Value::as_str) {
+                if tag != REDACTED_PI_MARKER && classify_field(MEMBER_TYPES_FIELD, tag).0 == License::PiRedacted {
+                    live.push(format!("{}: {tag}", f.display()));
+                }
+            }
+        }
+        assert!(live.is_empty(), "{} member_types tag(s) carry a live blacklist term: {live:?}", live.len());
     }
 
     /// The 29 class-granted pools E0.1's census (`abilities-census.json` `data_gap_list`, cause

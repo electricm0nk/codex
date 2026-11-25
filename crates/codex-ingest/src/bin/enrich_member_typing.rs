@@ -1,7 +1,8 @@
 //! Writes `data.member_types` on every ability-shaped corpus record the pinned oracle types into an
 //! ability category through a tag the record does not carry (SD-43 E3.12; the rule is
 //! `pcgen_import::member_typing`'s module doc). Additive and idempotent: a record gains, keeps or
-//! loses only that one field; every other byte of every file is untouched.
+//! loses only that one field; every other byte of every file is untouched. Each tag is PI-screened
+//! (`screen_member_tags`, SD-43 E3.22) before it is written.
 //!
 //! Run: `source <(bash scripts/fetch-pcgen-oracle.sh --check --quiet)` (exports `PCGEN_CORPUS_ROOT`
 //! and `PCGEN_REPO_DIR`), then `cargo run --locked -p codex-ingest --bin enrich_member_typing`.
@@ -11,7 +12,7 @@ use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex_ingest::pcgen_import::member_typing::{record_identity, with_member_types, MemberTyping, ABILITY_KINDS};
+use codex_ingest::pcgen_import::member_typing::{record_identity, screen_member_tags, with_member_types, MemberTyping, ABILITY_KINDS};
 use serde_json::Value;
 
 fn json_files(dir: &Path, out: &mut Vec<PathBuf>) {
@@ -70,7 +71,7 @@ fn main() {
     let (mut written, mut tags_added, mut drift) = (0usize, 0usize, Vec::new());
     for (path, kind, text, doc) in &records {
         let Some((category, key, carried)) = record_identity(doc, kind) else { continue };
-        let tags = typing.missing(&category, &key, &carried);
+        let tags = screen_member_tags(typing.missing(&category, &key, &carried));
         let new = with_member_types(text, &tags).unwrap_or_else(|| panic!("{path:?}: no two-space `data` object to write into"));
         if !tags.is_empty() {
             written += 1;
