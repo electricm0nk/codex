@@ -58,6 +58,15 @@ Q-22.3 (2026-11-22: rename the Feats tab to Abilities; Feats becomes a sub-tab);
 - C2 (2026-11-22): the graph refresh is out of scope, carry on
 - E3.18 (2026-11-25): 1 — confirms the lead ruling of 2026-11-24: a restricted bonus-feat slot takes only its listed feats; an off-list feat in a saved character shows unplaced and counts in the over-budget badge, never deleted.
 
+### E4.G question (waiting)
+
+Operator, two things are needed to close E4.G (the bundle's one wait):
+
+(a) Approve or edit `docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_4/proposed-names.md` (201 proposed display names, from E4.1).
+(b) Confirm the reading of "1" (Q-20.1, see `decisions.md`).
+
+The lead records your reply here as `- E4.G (<date>): <verbatim>`.
+
 ## Dispatch log
 
 (One row per dispatch, written before the dispatch: card, run id, the RED command and its exit code and failing
