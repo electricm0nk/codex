@@ -24,7 +24,7 @@ pub fn display_name_of_slug(rule_slug: &str, label: &str) -> String {
     APPROVED.iter().find(|(k, _)| slug(k) == rule_slug).map_or_else(|| label.to_owned(), |(_, n)| (*n).to_owned())
 }
 
-/// Whether a name still holds a source placeholder: a `[`, a `]`, or the word `NAME` (§22, 20-b).
+/// Whether a name still holds an unfilled source template: a `[`, a `]`, or the word `NAME` (§22, 20-b).
 pub fn holds_placeholder(name: &str) -> bool {
     name.contains(['[', ']']) || name.split(|c: char| !c.is_ascii_alphanumeric()).any(|w| w == "NAME")
 }
@@ -138,7 +138,7 @@ mod tests {
 
         assert!(
             offenders.is_empty(),
-            "{} display names hold a placeholder no proposed name covers (first 5): {:#?}",
+            "{} display names hold an unfilled template no proposed name covers (first 5): {:#?}",
             offenders.len(),
             &offenders[..offenders.len().min(5)]
         );
