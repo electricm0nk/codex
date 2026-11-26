@@ -239,7 +239,7 @@ fn map_catalog_entry(
         // pinned by `feats_all`'s
         // `category_names_match_the_debug_form_of_every_variant`.
         category: entry.category.to_string(),
-        name: entry.name.to_string(),
+        name: codex::rules_core::display_name::display_name(entry.key, entry.name),
         // The converted record's own words, from [`row_description`]. The Add
         // Feat picker folds this straight into its `detail` line
         // (`itemPickerFilter::mapFeatCatalogEntries`), so whatever this field

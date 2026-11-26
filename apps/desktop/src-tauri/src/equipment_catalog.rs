@@ -745,7 +745,7 @@ fn hidden_from_market(entry: &EquipmentCatalogEntryDto) -> bool {
 /// The name a Market row shows. On a derived row the catalog's `name` is its base (`Arrows (20)`
 /// reads `Arrow (Base)`), which would describe another item.
 fn market_name(entry: &EquipmentCatalogEntryDto) -> String {
-    if entry.name.ends_with(" (Base)") { entry.key.clone() } else { entry.name.clone() }
+    if entry.name.ends_with(" (Base)") { entry.key.clone() } else { codex::rules_core::display_name::display_name(&entry.key, &entry.name) }
 }
 
 /// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one, and never a named

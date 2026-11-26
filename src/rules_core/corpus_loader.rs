@@ -112,7 +112,9 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
                 package.push_diagnostic(load_diagnostic(&path, "no settled record in this book's bundle"));
                 continue;
             };
-            let record: &'static CorpusEquipmentRecord = Box::leak(Box::new(entry.record.clone()));
+            let mut record = entry.record.clone();
+            record.name = crate::rules_core::display_name::display_name(&record.identity, &record.name);
+            let record: &'static CorpusEquipmentRecord = Box::leak(Box::new(record));
             package.push(SourceContentRecord::equipment(entry.source_ref.clone(), record));
         }
     }

@@ -26,6 +26,8 @@ pub mod description_completion;
 /// A record description settled into an op list at ingest, and the live renderer that fills it
 /// with one character's numbers (SD-35 `AT-35-E6-003-RULED` cycle 16).
 pub mod desc_template;
+/// The one display name every screen shows for a record, keyed by its variant (`data.key`).
+pub mod display_name;
 pub mod durability;
 pub mod ability_budget;
 pub mod ability_prereqs;

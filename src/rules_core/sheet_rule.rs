@@ -1142,10 +1142,10 @@ pub fn split_rule_id(id: &str) -> (&str, &str, &str) {
 /// to spaces, title-cased ("order_of_the_rack" -> "Order Of The Rack") -- readable, and traceable
 /// back to the record, unlike an internal `source_file_line` citation.
 pub fn display_label(rule: &SheetRule) -> String {
-    if !rule.label.starts_with(crate::rules_core::codex_neutral_name::NAME_PREFIX) {
-        return rule.label.clone();
-    }
     let (_, _, slug) = split_rule_id(&rule.id);
+    if !rule.label.starts_with(crate::rules_core::codex_neutral_name::NAME_PREFIX) {
+        return crate::rules_core::display_name::display_name_of_slug(slug, &rule.label);
+    }
     title_case_slug(slug)
 }
 
