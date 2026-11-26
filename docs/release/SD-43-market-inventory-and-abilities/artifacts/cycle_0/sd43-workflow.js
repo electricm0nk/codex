@@ -735,7 +735,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.25 | DISCOVERED (E3.23): a gate or grant naming ANOTHER record by its row `CATEGORY` + `KEY` misses when that record's corpus `data.key` is its codex id (`build_index` indexes no row KEY for it), written as `MissingRule` (never met): `Xeph ~ Burst` (`ultimate_psionics:monster_ability:xeph_burst` exists) on Xeph Explorer / Call Blade; proxy `artifacts/epic_3/E3.23/row_key_misses.py` -> 2486 of 6138 unresolved references (upper bound); the index answers the row KEY | opus | todo | E3.23 | sheet | yes (root + desktop) | no | must be complete before E3.MC |",
+  "row": "| E3.25 | DISCOVERED (E3.23): a gate or grant naming ANOTHER record by its row `CATEGORY` + `KEY` misses when that record's corpus `data.key` is its codex id (`build_index` indexes no row KEY for it), written as `MissingRule` (never met): `Xeph ~ Burst` (`ultimate_psionics:monster_ability:xeph_burst` exists) on Xeph Explorer / Call Blade; proxy `artifacts/epic_3/E3.23/row_key_misses.py` -> 2486 of 6138 unresolved references (upper bound); the index answers the row KEY | opus | complete | E3.23 | sheet | yes (root + desktop) | no | receipt `artifacts/epic_3/E3.25_cycle_receipt.md`; SHA `8665ae39da854ce11ab8c8047563b78f68507f04`; `build_index` indexes a codex-id-keyed record under its row CATEGORY + KEY, last and only where nothing answers the pair (F3b2 rule); `Xeph ~ Burst` -> `ultimate_psionics:monster_ability:xeph_burst`; proxy 2486 -> 0, unresolved references 6138 -> 3647, 0 newly unresolved; 1168 name-matched references retargeted to the KEY match (attributed in the receipt); Fighter eligible feats 534 -> 533 (Reactive Reversion); ingest 1934 passed, root 3243 passed, desktop 1494+1+137+139+3 passed |",
   "section": "### E3.25 — A reference to a codex-id-keyed record by its row KEY (discovered by E3.23, 2026-11-25)\n- **Objective:** `mod.rs` `record_from_json` takes a record's `data.key`; for many records (Dreamscarred Press monster\n  abilities, companion abilities, ...) that is the codex id, and the category is empty (no `raw_tokens`), so\n  `build_index` indexes no `(row CATEGORY, row KEY)` pair for them. Every other record that names one in a\n  `PREABILITY`, `ABILITY:` grant or similar is written as `MissingRule` (never met): Xeph Explorer and Call Blade\n  (`up_abilities_race.lst:341,343`) are gated on `Xeph ~ Burst` (`KEY:Xeph ~ Burst`, `up_abilities_race.lst:337`), which\n  converts as `ultimate_psionics:monster_ability:xeph_burst`. Population (a PROXY, an upper bound: a pair two records\n  declare is ambiguous): `python3 -I docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.23/row_key_misses.py`\n  (with `$PCGEN_CORPUS_ROOT`) → `unresolved references: 6138; naming a codex-id-keyed record's own row CATEGORY|KEY: 2486`.\n- **FILES YOU OWN:** `crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs` (`build_index`: index the row-declared\n  CATEGORY + KEY where no corpus key answers the pair, the F3b2 / F3c4b rule) and the regenerated `data/sheet_rules/**`;\n  the closure check names the rest (every engine test that pins a count the new resolutions move).\n- **Failing test first:** a converter test that `Xeph ~ Burst` resolves to `ultimate_psionics:monster_ability:xeph_burst`;\n  then the proxy count re-run, each remaining hit named or attributed to ambiguity.\n- **Acceptance:** that test; the proxy's count 0 or each remainder named by mechanism; root and desktop suites green.\n  **Depends:** E3.23. **Tier:** opus. Must be complete before E3.MC.",
   "phase": "E3 — the Abilities tab"
  },
@@ -748,7 +748,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.24 | DISCOVERED (E3.22): `data/ability_categories.json` (read at runtime through `include_str!` in `ability_budget.rs`, shown on the Background sub-tab) ships the pool name `Magaambya Reward` and member tag `MagaambyaReward`, a live PI blacklist term (`Magaambya`, decisions.md §19a 3d) no gate scans (`pi-sweep` covers `rules_catalog` + `data/rules_tables`; `declared-pi-audit` covers `data/corpus`); `derive_ability_categories.py` screens names and tags as the sibling generators do and a gate covers the file | opus | todo | E3.22 | sheet | yes (root) | no | must be complete before E3.MC |",
+  "row": "| E3.24 | DISCOVERED (E3.22): `data/ability_categories.json` (read at runtime through `include_str!` in `ability_budget.rs`, shown on the Background sub-tab) ships the pool name `Magaambya Reward` and member tag `MagaambyaReward`, a live PI blacklist term (`Magaambya`, decisions.md §19a 3d) no gate scans (`pi-sweep` covers `rules_catalog` + `data/rules_tables`; `declared-pi-audit` covers `data/corpus`); `derive_ability_categories.py` screens names and tags as the sibling generators do and a gate covers the file | opus | complete | E3.22 | sheet | yes (root) | no | receipt `artifacts/epic_3/E3.24_cycle_receipt.md`; SHA `f67baf1b7e68bfbd5673508d5c230259810585b1`; generator drops a category whose pool/name/tag carries a blacklist term and counts it (`pi_screened`: background 1); `Magaambya Reward` removed, 241 -> 240 (RED `241 1` -> `240 0`); test `no_ability_category_carries_a_blacklist_term` gates the file; root 3244 + desktop 1494 + 5 suites green |",
   "section": "### E3.24 — PI screening of the ability-category list (discovered by E3.22, 2026-11-25)\n- **Objective:** `data/ability_categories.json` (`scripts/derive_ability_categories.py`, E3.9; compiled in by\n  `src/rules_core/ability_budget.rs` `include_str!`) carries one category of 241 whose name and member tag hold a live\n  PI blacklist term: `Magaambya Reward` / `MagaambyaReward` (count:\n  `python3 -I -c \"import json,importlib.util as u; s=u.spec_from_file_location('p','scripts/pi_scrub.py'); m=u.module_from_spec(s); s.loader.exec_module(m); c=json.load(open('data/ability_categories.json'))['categories']; print(len(c), sum(any(t in json.dumps(x) for t in m.PI_BLACKLIST_TERMS) for x in c))\"`\n  → `241 1`). The Background sub-tab shows the name. No gate scans the file: `pi-sweep` covers\n  `src/rules_core/rules_catalog` and `data/rules_tables`, `declared-pi-audit` covers `data/corpus`. E3.22 screened\n  the same tag in corpus `data.member_types` (20 Inner Sea Magic records).\n- **FILES YOU OWN:** `scripts/derive_ability_categories.py`, `data/ability_categories.json`, and the gate that covers\n  the file (`scripts/verify.sh` `pi-sweep` scope or a test beside `ability_budget.rs`'s category loader); the closure\n  check names the rest (the sheet-rule tags the pool filters on, the Background sub-tab's display).\n- **Failing test first:** a test that no `data/ability_categories.json` name or member tag carries a blacklist term\n  (`pi_screening::classify_field`); then the screened re-derive.\n- **Acceptance:** that test; the gate covers the file; root and desktop suites green. **Depends:** E3.22.\n  **Tier:** opus. Must be complete before E3.MC.",
   "phase": "E3 — the Abilities tab"
  },
@@ -759,15 +759,104 @@ const CARDS = [
    "E3.11",
    "E3.18",
    "E3.21",
-   "E3.22",
-   "E3.25",
-   "E3.24"
+   "E3.22"
   ],
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | todo | E3.11 | sheet | yes (base build) | no | | [script: depends on E3.18 by its note] [script: depends on E3.21 by its note] [script: depends on E3.22 by its note] [script: depends on E3.25 by its note] [script: depends on E3.24 by its note]",
+  "row": "| E3.MC | E3 merge check: every sub-tab on three seeds; every class-granted choice reachable or a discovered card (intake §22c); notices = E0.1's data-gap list; no engine-gap notice | opus | complete | E3.11 | sheet | yes (base build) | no | receipt `artifacts/epic_3/E3.MC_cycle_receipt.md`; SHA `9b5aebbd9391de834bd321b160873ef9ee2d66db`; 1,329 choice sites: reachable 551, own sub-tab 224, data gap 2, discovered-card 552 (E3.26 225, E3.27 30, E3.28 42, E3.29 24, E3.30 231); E3.31 (rage powers 13 of 171) and E3.32 (notices 1 shown vs E0.1's 3) found live; 16 PNGs on three seeds | [script: depends on E3.18 by its note] [script: depends on E3.21 by its note] [script: depends on E3.22 by its note]",
   "section": "### E3.MC — E3 merge check\n- **Acceptance:** every sub-tab exercised on three seeds (a Rogue/Ninja, a Barbarian, a Human Fighter with an\n  archetype); the count of on-screen gap notices equals E0.1's data-gap list and no engine-gap notice remains\n  (`grep -rn \"engine card\" apps/desktop/src/characterHub/AbilitiesTab.tsx | awk 'END{print NR}'` → 0); the\n  four-check audit; whole-crate tests attributed. **Tier:** opus.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.26",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.26 | DISCOVERED (E3.MC, intake §22c): 225 class-granted choice sites are a parameter choice on a class feature (`CHOOSE:` of a weapon 69, spell 52, free text 39, skill 25, class 11, rule 9, school 6, language 5, equipment 3, race 1, no offer 5) that the Class Features sub-tab cannot take: `add_ability_selection_at_root` writes `target: None` on every pick; the sub-tab offers the record's choice and saves it as the pick's target; the census's `parameter_choose:` rows go to 0 | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.26 — the Class Features sub-tab takes a class feature's parameter choice (`CHOOSE:` weapon, spell, skill, school, class, language, free text) and saves it as the pick's `target` (discovered by E3.MC, 2026-11-26)\n- **Objective:** 225 class-granted choice sites are a parameter choice on a class feature (`CHOOSE:` of a weapon 69, spell 52, free text 39, skill 25, class 11, rule 9, school 6, language 5, equipment 3, race 1, no offer 5) that the Class Features sub-tab cannot take: `add_ability_selection_at_root` writes `target: None` on every pick; the sub-tab offers the record's choice and saves it as the pick's target; the census's `parameter_choose:` rows go to 0\n- **Failing test first:** the E3.MC census (`cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture`) prints this card's rows; a focused test on one named site of the population fails first.\n- **Acceptance:** the census prints no `unreachable` row this card owns (the card's entry leaves `UNREACHABLE_CARDS` in `src/rules_core/ability_budget.rs`); root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.27",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.27 | DISCOVERED (E3.MC, intake §22c): 30 class-granted `ADD:` sites (SPELLCASTER, EQUIP, ABILITY, LANGUAGE, VFEAT; offers: nothing 22, rules 5, languages 3) convert to no Class Features pool, so the engine offers no pick for them; each becomes a pick on the sub-tab (or a printed rule by a decisions.md ruling) and the census's `add_token:` rows go to 0 | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.27 — `ADD:` grants on class features (spellcaster class, equipment, ability, language) are picks on the Class Features sub-tab (discovered by E3.MC, 2026-11-26)\n- **Objective:** 30 class-granted `ADD:` sites (SPELLCASTER, EQUIP, ABILITY, LANGUAGE, VFEAT; offers: nothing 22, rules 5, languages 3) convert to no Class Features pool, so the engine offers no pick for them; each becomes a pick on the sub-tab (or a printed rule by a decisions.md ruling) and the census's `add_token:` rows go to 0\n- **Failing test first:** the E3.MC census (`cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture`) prints this card's rows; a focused test on one named site of the population fails first.\n- **Acceptance:** the census prints no `unreachable` row this card owns (the card's entry leaves `UNREACHABLE_CARDS` in `src/rules_core/ability_budget.rs`); root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.28",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.28 | DISCOVERED (E3.MC, intake §22c): 42 class-granted domain-count sites (`BONUS:DOMAIN NUMBER`: Cleric, Paladin, Shaman, Divine Hunter, ...) convert to the `Other(domains)` target, not a Class Features pool, so a domain is not selectable on the sub-tab (3 of the 45 sites target a pool and are reachable); domains become a pool the sub-tab lists and the census's `domain_count:` rows go to 0 | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.28 — domain picks (`BONUS:DOMAIN NUMBER`) are a Class Features pool (discovered by E3.MC, 2026-11-26)\n- **Objective:** 42 class-granted domain-count sites (`BONUS:DOMAIN NUMBER`: Cleric, Paladin, Shaman, Divine Hunter, ...) convert to the `Other(domains)` target, not a Class Features pool, so a domain is not selectable on the sub-tab (3 of the 45 sites target a pool and are reachable); domains become a pool the sub-tab lists and the census's `domain_count:` rows go to 0\n- **Failing test first:** the E3.MC census (`cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture`) prints this card's rows; a focused test on one named site of the population fails first.\n- **Acceptance:** the census prints no `unreachable` row this card owns (the card's entry leaves `UNREACHABLE_CARDS` in `src/rules_core/ability_budget.rs`); root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.29",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.29 | DISCOVERED (E3.MC, intake §22c): 24 sites whose choice converts to no Class Features pool: 19 `CHOOSE:ABILITYSELECTION` of PCGen's base categories (FEAT 9, warpriest bonus feats; Internal 8, magus spell blending and special bloodline feat; Special Ability 2, blade adept and magus arcana) and 5 `BONUS:ABILITYPOOL` lines the converter wrote no `Pool` target for (Blood God Disciple rage power, Myrmidarch Weapon Training I and II, ...); the census rows go to 0 | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.29 — the 24 choices the converter writes no Class Features pool for (base-category ABILITYSELECTION 19, unconverted ABILITYPOOL line 5) (discovered by E3.MC, 2026-11-26)\n- **Objective:** 24 sites whose choice converts to no Class Features pool: 19 `CHOOSE:ABILITYSELECTION` of PCGen's base categories (FEAT 9, warpriest bonus feats; Internal 8, magus spell blending and special bloodline feat; Special Ability 2, blade adept and magus arcana) and 5 `BONUS:ABILITYPOOL` lines the converter wrote no `Pool` target for (Blood God Disciple rage power, Myrmidarch Weapon Training I and II, ...); the census rows go to 0\n- **Failing test first:** the E3.MC census (`cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture`) prints this card's rows; a focused test on one named site of the population fails first.\n- **Acceptance:** the census prints no `unreachable` row this card owns (the card's entry leaves `UNREACHABLE_CARDS` in `src/rules_core/ability_budget.rs`); root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.30",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.30 | DISCOVERED (E3.MC, intake §22c): 231 class-granted pool sites the census could not prove reachable: not granted to the record's class at 20 holding the granting record (and its archetype) 135; no class or archetype the census can seed from the record's owner 91 (e.g. Blade Adept Blade Selection, Blood Arcanist Bloodline); granted but listing no member 5 (Spell Focus pools, one PI-redacted region pool). Each site is diagnosed and made reachable, or the census's seeding is corrected and then proves it; the census rows go to 0 | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.30 — the 231 pool sites the E3.MC census cannot prove reachable (not granted 135, no seed 91, no member 5): diagnose each, then close it or prove it (discovered by E3.MC, 2026-11-26)\n- **Objective:** 231 class-granted pool sites the census could not prove reachable: not granted to the record's class at 20 holding the granting record (and its archetype) 135; no class or archetype the census can seed from the record's owner 91 (e.g. Blade Adept Blade Selection, Blood Arcanist Bloodline); granted but listing no member 5 (Spell Focus pools, one PI-redacted region pool). Each site is diagnosed and made reachable, or the census's seeding is corrected and then proves it; the census rows go to 0\n- **Failing test first:** the E3.MC census (`cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture`) prints this card's rows; a focused test on one named site of the population fails first.\n- **Acceptance:** the census prints no `unreachable` row this card owns (the card's entry leaves `UNREACHABLE_CARDS` in `src/rules_core/ability_budget.rs`); root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.31",
+  "tier": "opus",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.31 | DISCOVERED (E3.MC, seen live on the Barbarian 4 seed): `offer_selects` matches an offer's tag list as all-of, so `Barbarian ~ Rage Powers` (offer tags `RagePower` and `Rage Power`) lists the 13 special abilities carrying both spellings out of 171 carrying either; the Core Rulebook's rage powers (Animal Fury, Powerful Blow, ...) are missing. 55 converted offers carry 2+ tags (19 distinct lists); PCGen reads a category's `TYPE:A.B` as either type; the card rules which lists are any-of and the Barbarian lists every rage power | opus | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.31 — an offer's 2+ tags from a category's `TYPE:A.B` select either type: the Barbarian lists every rage power (13 -> 171 carrying either tag) (discovered by E3.MC, 2026-11-26)\n- **Objective:** `offer_selects` matches an offer's tag list as all-of, so `Barbarian ~ Rage Powers` (offer tags `RagePower` and `Rage Power`) lists the 13 special abilities carrying both spellings out of 171 carrying either; the Core Rulebook's rage powers (Animal Fury, Powerful Blow, ...) are missing. 55 converted offers carry 2+ tags (19 distinct lists); PCGen reads a category's `TYPE:A.B` as either type; the card rules which lists are any-of and the Barbarian lists every rage power\n- **Failing test first:** the Barbarian 4 rage power options include Powerful Blow (fails: 13 options).\n- **Acceptance:** that test; the 55 multi-tag offers each ruled any-of or all-of in the receipt; root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
+  "phase": "E3 — the Abilities tab"
+ },
+ {
+  "id": "E3.32",
+  "tier": "sonnet",
+  "deps": [
+   "E3.MC"
+  ],
+  "lane": "sheet",
+  "cargo": true,
+  "hub": false,
+  "row": "| E3.32 | DISCOVERED (E3.MC): the on-screen data-gap notices do not equal E0.1's list: E0.1 lists 3 (Canny Foe, Swift Powder Choice, Viking Bonus Feat) and no code renders a sentence for any of them (a granted pool with no member lists nothing: `class_feature_options` skips a pool with no selector); the one gap sentence the app renders (Favored Class `Race alternate options`, `not in the corpus`, `RACE_ALTERNATES_GAP`) is not on E0.1's list. Each E0.1 gap renders its sentence where the pool is granted, and the rendered set equals E0.1's list | sonnet | todo | E3.MC | sheet | yes (root + desktop) | no | must be complete before E7.2 (G-CL); the census: `cargo test --locked -j 8 --lib ability_budget_class_features_census_every_class_granted_choice_site -- --nocapture` |",
+  "section": "### E3.32 — data-gap notices equal E0.1's list: the 3 E0.1 pool gaps render their sentence (discovered by E3.MC, 2026-11-26)\n- **Objective:** the on-screen data-gap notices do not equal E0.1's list: E0.1 lists 3 (Canny Foe, Swift Powder Choice, Viking Bonus Feat) and no code renders a sentence for any of them (a granted pool with no member lists nothing: `class_feature_options` skips a pool with no selector); the one gap sentence the app renders (Favored Class `Race alternate options`, `not in the corpus`, `RACE_ALTERNATES_GAP`) is not on E0.1's list. Each E0.1 gap renders its sentence where the pool is granted, and the rendered set equals E0.1's list\n- **Failing test first:** a granted Viking Bonus Feat / Canny Foe pool renders E0.1 sentence (fails: no sentence).\n- **Acceptance:** that test; on-screen gap notices counted in the built app = E0.1 data_gap_list length; root and desktop suites green. **Depends:** E3.MC. **Tier:** E3.MC. Must be complete before E7.2.",
   "phase": "E3 — the Abilities tab"
  },
  {
@@ -780,7 +869,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": false,
-  "row": "| E4.1 | One display-name derivation; the all-kinds test; proposed names from book text | opus | todo | E0.3, E3.MC | sheet | yes (root + desktop) | no | |",
+  "row": "| E4.1 | One display-name derivation; the all-kinds test; proposed names from book text | opus | complete | E0.3, E3.MC | sheet | yes (root + desktop) | no | receipt `artifacts/epic_4/E4.1_cycle_receipt.md`; SHA `b0eb51288b7836c03266fba232023718b031010b` (+ audit rewording `79e3f04701b5d0cc9d402a868779363c6bcb870f`); `display_name(key, name)` in `src/rules_core/display_name.rs` is the one name derivation (display_label, equipment loader, market_name, feat catalog ask it; approved table empty until E4.G); all-kinds test RED `563 display names hold a placeholder no proposed name covers` (corpus 201 + sheet rules 190 + rules tables 172) -> GREEN `8 passed`; proposed-names.md 201 rows; root 3247 + desktop 1494+1+137+139+2+3 passed; 4 fence exits (retro incident) |",
   "section": "### E4.1 — one display name; the guard; the proposal\n- **Objective:** derive the display name from the variant (`data.key`) in one place every screen reads; one test\n  over all item kinds fails on `[`, `]`, `NAME`; a proposed-names list for every hit (E0.3) written from the book\n  text to `artifacts/epic_4/proposed-names.md`.\n- **FILES YOU OWN:** the name function's file (named in the card after reading the catalog builders:\n  `desktop/equipment_catalog.rs` and the other kinds' catalogs), its test, the proposal.\n- **Failing test first:** the all-kinds test fails today (201 hits).\n- **Acceptance:** the test fails only on the hits the proposal covers. **Depends:** E0.3, E3.MC (lane order).\n  **Tier:** opus.",
   "phase": "E4 — item names (E4.G operator wait)"
  },
@@ -898,7 +987,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E6.2 | House Rules ☰ menu per character and system | opus | todo | E3.MC | sheet | yes (desktop) | hub | |",
+  "row": "| E6.2 | House Rules ☰ menu per character and system | opus | complete | E3.MC | sheet | yes (desktop) | hub | RED: `test -f apps/desktop/src/characterHub/houseRulesModel.test.ts` exit 1, then ERR_MODULE_NOT_FOUND houseRulesModel; GREEN houseRulesModel.test.ts ok + `house_rules` 1 passed; receipt `artifacts/epic_6/E6.2_cycle_receipt.md`; SHA `7488ad633a01d152d43950a0d9a19fed3088988d` |",
   "section": "### E6.2 — House Rules menu (item 3)\n- **FILES YOU OWN:** `ui/characterHub/HouseRulesDialog.tsx` + model + test (new), `CharacterSheet.tsx` (menu\n  entry, `hub`), the Custom dialog (the four flags leave it), `desktop/character_custom.rs`.\n- **Failing test first:** a CPR character shows no rules; a PF character shows six; a new character has all off;\n  setting one on character A leaves B off.\n- **Acceptance:** the tests. **Depends:** E3.MC (sheet lane). **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -911,7 +1000,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E6.3 | House rule: HP at level-up, seven methods | opus | todo | E6.2 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E6.3 | House rule: HP at level-up, seven methods | opus | complete | E6.2 | sheet | yes (root + desktop) | hub | RED: `hp_method` matched 0 tests, then E0425 `HpMethod` / `level_up_character_with_hit_points_at_root` not found; GREEN `hp_method` 6 passed + houseRulesModel.test.ts ok; receipt `artifacts/epic_6/E6.3_cycle_receipt.md`; SHA `8969eff14cc79bd55b9c8da67563fb50e574cdcf` |",
   "section": "### E6.3 — HP at level-up\n- **FILES YOU OWN:** `desktop/character_custom.rs` (method field), the level-up HP path that writes\n  `hit_points.json` (`character_hub.rs:526` region, `hub`), level-up UI, tests.\n- **Failing test first:** each of the seven methods on a d10 at level 2; Random 50 % floor never below 5;\n  regeneration keeps the stored result.\n- **Acceptance:** the tests. **Depends:** E6.2. **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -924,7 +1013,7 @@ const CARDS = [
   "lane": "sheet",
   "cargo": true,
   "hub": true,
-  "row": "| E6.4 | House rule: Ambidextrous removes the off-hand penalty | opus | todo | E6.3 | sheet | yes (root + desktop) | hub | |",
+  "row": "| E6.4 | House rule: Ambidextrous removes the off-hand penalty | opus | complete | E6.3 | sheet | yes (root + desktop) | hub | RED: `ambidextrous` matched 0 tests, then E0609 no field `ambidextrous` on `Overrides`; GREEN `ambidextrous` 2 passed (off hand Dagger -8 → -4 under the flag, printed) + `two_weapon_attack_penalty` 1 passed + houseRulesModel.test.ts ok; receipt `artifacts/epic_6/E6.4_cycle_receipt.md`; SHA `ea2ebd1291c89ffc00525873c147b3b71551260e` |",
   "section": "### E6.4 — Ambidextrous\n- **FILES YOU OWN:** the rules_core two-weapon attack path (to verify: `grep -rln \"off_hand\\|offhand\\|two_weapon\"\n  src/rules_core`), `desktop/character_custom.rs`.\n- **Failing test first:** with the flag, the off-hand attack row has no off-hand penalty; without, it does.\n- **Acceptance:** the test. **Depends:** E6.3. **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -951,7 +1040,7 @@ const CARDS = [
   "lane": "campaign",
   "cargo": true,
   "hub": false,
-  "row": "| E6.MC | E6 merge check + epic report | opus | todo | E6.4, E6.5 | campaign | yes (base build) | no | |",
+  "row": "| E6.MC | E6 merge check + epic report | opus | complete | E6.4, E6.5 | campaign | yes (base build) | no | RED: `test -f artifacts/epic_6/E6.MC_cycle_receipt.md` exit 1 (receipt absent); GREEN frontend 232/232, desktop 5 result lines 1783 passed + old_save 2 ok, root 301 result lines 6946 passed, 0 FAILED; audits OK; 11 PNGs looked at; receipt `artifacts/epic_6/E6.MC_cycle_receipt.md`; SHA `037def258887de242a7d6e45c390db6975afd2bf` |",
   "section": "### E6.MC — E6 merge check\n- **Tier:** opus.",
   "phase": "E6 — campaign folder, House Rules, custom items"
  },
@@ -977,12 +1066,19 @@ const CARDS = [
   "id": "E7.2",
   "tier": "opus",
   "deps": [
-   "E7.1"
+   "E7.1",
+   "E3.26",
+   "E3.27",
+   "E3.28",
+   "E3.29",
+   "E3.30",
+   "E3.31",
+   "E3.32"
   ],
   "lane": "main",
   "cargo": false,
   "hub": false,
-  "row": "| E7.2 | Final-acceptance scan (widest verify, packaged resources, fresh install, P-8) → retrospective written and cited → sweep | opus | todo | E7.1 | main | no | no | stops with no retro/sweep/PR if anything is short |",
+  "row": "| E7.2 | Final-acceptance scan (widest verify, packaged resources, fresh install, P-8) → retrospective written and cited → sweep | opus | todo | E7.1 | main | no | no | stops with no retro/sweep/PR if anything is short | [script: depends on E3.26 by its note] [script: depends on E3.27 by its note] [script: depends on E3.28 by its note] [script: depends on E3.29 by its note] [script: depends on E3.30 by its note] [script: depends on E3.31 by its note] [script: depends on E3.32 by its note]",
   "section": "### E7.2 — final-acceptance scan, retrospective, sweep\n- **Objective:** every card `complete` (a filed blocker does not satisfy it; if short, stop — no retro, no sweep,\n  no PR); the release-artifact checks of `acceptance-and-verification.md` G-R as part of the scan (widest verify\n  in both cargo workspaces + frontend, `packaged_resources`, `no_baked_manifest_dir_in_production`,\n  `pytest tools/release`, fresh-install of the .deb and the AppImage, P-8 the CI secret);\n  `scripts/retro.py summary --since 2026-11-22 --json` → `docs/retro/sd43-market-inventory-and-abilities-retrospective.md`\n  cited from `references/README.md`; every `sd43-*` worktree, branch and `CARGO_TARGET_DIR` removed with counts.\n- **Acceptance:** `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 !~ /complete/' docs/release/SD-43-market-inventory-and-abilities/kanban.md | awk 'END{print NR}'`\n  → 0 with E7.2–E7.4 exempted (the exact commands: `acceptance-and-verification.md` G-CL; kanban Status is\n  `$5`); `git worktree list | grep -c sd43` → 1 (only `sd43-main`, which E7.3–E7.4 still use; removed after the\n  merge). **Tier:** opus.",
   "phase": "E7 — closure"
  },
@@ -1013,7 +1109,7 @@ const CARDS = [
   "phase": "E7 — closure"
  }
 ]
-const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.18", "E3.19", "E3.20", "E3.21", "E3.22", "E3.23", "E3.25", "E3.24", "E3.MC", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
+const LANES = {"lead": ["C0", "E4.G"], "main": ["C1", "C2", "E7.1", "E7.2", "E7.3", "E7.4"], "census": ["E0.1", "E0.3", "E0.5"], "market": ["E0.2", "E1.8", "E1.9", "E1.10", "E1.11", "E1.14"], "gear": ["E0.4", "E1.1", "E1.2", "E1.3", "E1.4", "E1.5", "E1.6", "E1.12", "E1.13", "E1.15", "E1.MC"], "sheet": ["E1.7", "E2.1", "E2.2", "E2.3", "E2.4", "E2.5", "E2.6", "E2.MC", "E3.1", "E3.2", "E3.3", "E3.4", "E3.5", "E3.6", "E3.7", "E3.8", "E3.9", "E3.10", "E3.11", "E3.12", "E3.13", "E3.14", "E3.15", "E3.16", "E3.17", "E3.18", "E3.19", "E3.20", "E3.21", "E3.22", "E3.23", "E3.25", "E3.24", "E3.MC", "E3.26", "E3.27", "E3.28", "E3.29", "E3.30", "E3.31", "E3.32", "E4.1", "E6.2", "E6.3", "E6.4", "E4.2"], "settings": ["E5.1", "E5.2", "E5.3", "E5.4", "E5.MC"], "campaign": ["E6.1", "E6.5", "E6.MC"]}
 const PKG = 'docs/release/SD-43-market-inventory-and-abilities'
 const ROOT = '/home/ubuntu/workspace/repos/codex'
 const byId = Object.fromEntries(CARDS.map(c => [c.id, c]))
