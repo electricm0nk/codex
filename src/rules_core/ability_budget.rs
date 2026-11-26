@@ -45,7 +45,7 @@
 //! [`favored_class_bonus_taken`] is what the sheet's maximum hit points and skill point pool add.
 //!
 //! **Background and Misc** (SD-43 E3.9). PCGen titles a sub-tab with its ability category's display location;
-//! `data/ability_categories.json` (`scripts/derive_ability_categories.py`, E0.1's 22 + 219 categories) names
+//! `data/ability_categories.json` (`scripts/derive_ability_categories.py`, E0.1's 22 + 219 categories less 1 PI-screened Background one) names
 //! each Background and Misc category's pool, its members (parent category slug + type tags) and whether PCGen
 //! leaves its size to the player. A pool is granted the way a Class Features pool is (held rules targeting
 //! `Pool(<category>)`); an editable pool has no count budget (no rule grants it; the player or GM sets it), so
@@ -1355,15 +1355,32 @@ mod tests {
     }
 
     /// E0.1's mapping (`artifacts/epic_0/abilities-census.json` `subtabs.<tab>.pcgen_categories_player_editable`):
-    /// Background 22 categories, Misc 219; the engine's category table holds exactly those.
+    /// Background 22 categories, Misc 219; the engine's category table holds exactly those, less the ones the
+    /// generator's PI screen dropped (E3.24: Background 1), which the file counts.
     #[test]
     fn ability_budget_background_and_misc_categories_are_e0_1s() {
         let census = census();
+        let file: serde_json::Value = serde_json::from_str(include_str!("../../data/ability_categories.json")).expect("parses");
         for (tab, subtab) in [("Background", SubTab::Background), ("Misc", SubTab::Misc)] {
             let want = census["subtabs"][tab]["pcgen_categories_player_editable"].as_u64().expect("census count");
             let have = ability_categories().iter().filter(|c| c.subtab == subtab.id()).count() as u64;
-            assert_eq!(have, want, "{tab}");
+            let screened = file["pi_screened"][subtab.id()].as_u64().expect("screened count");
+            assert_eq!(have + screened, want, "{tab}");
         }
+    }
+
+    /// E3.24: no category the engine ships (its pool, name or a member tag) carries a live PI blacklist term
+    /// (`pi_screening::classify_field`, the screen the sibling generators apply).
+    #[test]
+    fn no_ability_category_carries_a_blacklist_term() {
+        use crate::rules_core::{pi_screening::classify_field, shape_b_v1::License};
+        let live: Vec<&str> = ability_categories()
+            .iter()
+            .flat_map(|c| [&c.pool, &c.name].into_iter().chain(&c.member_tags))
+            .filter(|value| classify_field("ability_category", value).0 == License::PiRedacted)
+            .map(String::as_str)
+            .collect();
+        assert!(live.is_empty(), "{} ability category value(s) carry a blacklist term: {live:?}", live.len());
     }
 
     fn pick(subtab: SubTab, option_id: &str) -> crate::rules_core::character_input::AbilitySelection {

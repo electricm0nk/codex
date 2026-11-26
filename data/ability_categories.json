@@ -1,6 +1,10 @@
 {
  "generator": "python3 scripts/derive_ability_categories.py",
  "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
+ "pi_screened": {
+  "background": 1,
+  "misc": 0
+ },
  "categories": [
   {
    "pool": "acadamae_reward",
@@ -110,16 +114,6 @@
    "member_pool": "special_ability",
    "member_tags": [
     "KintargoOperaHouseReward"
-   ]
-  },
-  {
-   "pool": "magaambya_reward",
-   "name": "Magaambya Reward",
-   "subtab": "background",
-   "editable_pool": true,
-   "member_pool": "special_ability",
-   "member_tags": [
-    "MagaambyaReward"
    ]
   },
   {

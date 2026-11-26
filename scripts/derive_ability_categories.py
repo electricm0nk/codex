@@ -14,6 +14,7 @@ Reads the pinned oracle only through `scripts/fetch-pcgen-oracle.sh` (`$PCGEN_CO
 `$PCGEN_REPO_DIR`); `--check` recomputes and compares (exit 1 on drift, 2 when an input is missing).
 """
 import glob
+import importlib.util
 import json
 import os
 import re
@@ -23,6 +24,14 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "ability_categories.json")
 SUBTABS = {"Background": "background", "Misc": "misc"}
+_spec = importlib.util.spec_from_file_location("pi_scrub", os.path.join(ROOT, "scripts", "pi_scrub.py"))
+pi_scrub = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(pi_scrub)
+
+
+def carries_pi(category: dict) -> bool:
+    """`pi_screening::classify_field`'s screen (a blacklist term as a substring) over the pool, name and tags."""
+    return any(t in v for v in [category["pool"], category["name"], *category["member_tags"]] for t in pi_scrub.PI_BLACKLIST_TERMS)
 
 
 def slug(name: str) -> str:
@@ -92,10 +101,16 @@ def build() -> dict:
                 # The engine filters members by parent category and tags only; a keyed list would need reading.
                 print(f"{name}: a member list by key is not read by the engine", file=sys.stderr)
                 sys.exit(1)
+    # A category whose name or member tag is PI ships nowhere (decisions.md §19a); its members' tags are
+    # already screened to the marker, so no neutral filter could name them. The count keeps E0.1's census whole.
+    screened = [c for c in merged.values() if carries_pi(c)]
+    for c in screened:
+        print(f"PI-screened category dropped ({c['subtab']})", file=sys.stderr)
     return {
         "generator": "python3 scripts/derive_ability_categories.py",
         "oracle_pin": head,
-        "categories": sorted(merged.values(), key=lambda c: (c["subtab"], c["pool"])),
+        "pi_screened": {tab: sum(c["subtab"] == tab for c in screened) for tab in SUBTABS.values()},
+        "categories": sorted((c for c in merged.values() if not carries_pi(c)), key=lambda c: (c["subtab"], c["pool"])),
     }
 
 
