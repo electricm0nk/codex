@@ -69,7 +69,12 @@ export interface CharacterCustom {
   overrides?: CustomOverrides;
   /** The GM's own rest and recovery words; set, they print instead of the rest table's rows. Absent: the table prints. */
   restText?: string;
+  /** The House Rule HP-at-level-up method (E6.3); absent: the rules' default, nothing stored. */
+  hpMethod?: HpMethod;
 }
+
+/** The backend's `HpMethod`: how a level gained after the first takes its hit points. */
+export type HpMethod = 'userRolled' | 'random' | 'randomHalfFloor' | 'average' | 'averageRoundUp' | 'maximum' | 'percentage';
 
 /** The backend's `Overrides`: each flag is read by the command enforcing that rule. */
 export interface CustomOverrides {

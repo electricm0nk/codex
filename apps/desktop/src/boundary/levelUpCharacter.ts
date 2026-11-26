@@ -32,6 +32,8 @@ export interface LevelUpCharacterRequest {
   additionalChoices?: SelectedChoiceEntryDto[];
   /** When present, replaces `chosen.skill_allocations` wholesale (same semantics as `setSkillAllocations`). Omit to leave existing allocations untouched. */
   skillAllocations?: SkillAllocationEntryDto[];
+  /** House Rule HP: the die result (User Rolled) or percentage of the die maximum (Percentage); the engine ignores it otherwise. */
+  hitPointEntry?: number;
   savedAt: string;
 }
 

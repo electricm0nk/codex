@@ -172,6 +172,49 @@ pub struct CharacterCustomDto {
     /// table prints.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub rest_text: Option<String>,
+    /// SD-43 House Rule (`decisions.md §11`): how a level gained after the first takes its hit points.
+    /// Left out (a new character): the rules' default, the die's average rounded up, nothing stored.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hp_method: Option<HpMethod>,
+}
+
+/// The seven level-up hit point methods (intake item 3). Level 1 always takes the full die (Q-3.1).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum HpMethod {
+    UserRolled,
+    Random,
+    RandomHalfFloor,
+    Average,
+    AverageRoundUp,
+    Maximum,
+    Percentage,
+}
+
+impl HpMethod {
+    /// The die result (before Constitution) a level gained under this method takes on a `die`.
+    /// `entry` is the player's roll (User Rolled) or percentage of the die maximum (Percentage);
+    /// `roll` rolls the die, called only by the two Random methods. Q-3.2: Average and Percentage
+    /// round down, Percentage never below 1.
+    pub fn level_up_result(self, die: u8, entry: Option<u8>, roll: impl FnOnce(u8) -> u8) -> Result<u8, String> {
+        match self {
+            HpMethod::UserRolled => match entry {
+                Some(value) if (1..=die).contains(&value) => Ok(value),
+                Some(value) => Err(format!("the rolled hit points {value} are outside the d{die}")),
+                None => Err(format!("the house rule is User Rolled: enter the d{die} result")),
+            },
+            HpMethod::Random => Ok(roll(die)),
+            HpMethod::RandomHalfFloor => Ok(roll(die).max(die / 2)),
+            HpMethod::Average => Ok(die.div_ceil(2)),
+            HpMethod::AverageRoundUp => Ok(die / 2 + 1),
+            HpMethod::Maximum => Ok(die),
+            HpMethod::Percentage => match entry {
+                Some(percent) if (1..=100).contains(&percent) => Ok(((u16::from(die) * u16::from(percent) / 100) as u8).max(1)),
+                Some(percent) => Err(format!("the percentage {percent} is outside 1 to 100")),
+                None => Err(format!("the house rule is Percentage: enter a percentage of the d{die} maximum")),
+            },
+        }
+    }
 }
 
 /// The targets a custom item's bonus may name (`decisions.md §13`). `ability:<name>` and
@@ -1121,6 +1164,33 @@ mod tests {
         assert!(load_character_custom_at_root(&aldric).unwrap().overrides.ignore_slot_limits, "A has it on");
         assert_eq!(load_character_custom_at_root(&elowen).unwrap().overrides, Overrides::default(), "B stays off");
         std::fs::remove_dir_all(&app_data).ok();
+    }
+
+    /// House rule HP at level-up (decisions.md §11, Q-3.2): each of the seven methods on a d10.
+    #[test]
+    fn hp_method_each_of_the_seven_on_a_d10() {
+        let never = |_: u8| -> u8 { panic!("only the Random methods roll") };
+        assert_eq!(HpMethod::UserRolled.level_up_result(10, Some(7), never), Ok(7), "User Rolled: the player's result");
+        assert_eq!(HpMethod::Random.level_up_result(10, None, |die| { assert_eq!(die, 10); 3 }), Ok(3), "Random: the roll");
+        assert_eq!(HpMethod::RandomHalfFloor.level_up_result(10, None, |_| 2), Ok(5), "Random, 50% floor: a 2 reads 5");
+        assert_eq!(HpMethod::RandomHalfFloor.level_up_result(10, None, |_| 8), Ok(8), "Random, 50% floor: an 8 stays 8");
+        assert_eq!(HpMethod::Average.level_up_result(10, None, never), Ok(5), "Average: 5.5 rounds down");
+        assert_eq!(HpMethod::AverageRoundUp.level_up_result(10, None, never), Ok(6), "Average, round up: 6");
+        assert_eq!(HpMethod::Maximum.level_up_result(10, None, never), Ok(10), "Maximum: the die");
+        assert_eq!(HpMethod::Percentage.level_up_result(10, Some(75), never), Ok(7), "Percentage: 7.5 rounds down");
+        assert_eq!(HpMethod::Percentage.level_up_result(10, Some(1), never), Ok(1), "Percentage: floor of 1");
+        for refused in [(HpMethod::UserRolled, None), (HpMethod::UserRolled, Some(0)), (HpMethod::UserRolled, Some(11)), (HpMethod::Percentage, None), (HpMethod::Percentage, Some(0)), (HpMethod::Percentage, Some(101))] {
+            assert!(refused.0.level_up_result(10, refused.1, never).is_err(), "{refused:?} is refused");
+        }
+    }
+
+    /// Random, 50% floor: whatever the die shows, a d10 never gives below 5.
+    #[test]
+    fn hp_method_random_half_floor_never_below_5_on_a_d10() {
+        for roll in 1..=10 {
+            let result = HpMethod::RandomHalfFloor.level_up_result(10, None, |_| roll).unwrap();
+            assert_eq!(result, roll.max(5), "a roll of {roll}");
+        }
     }
 
     /// Q-4.3: a file from another game system is refused with a message, and nothing is written.

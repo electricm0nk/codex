@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterProgression';
 import { knownClass } from './classCatalog';
+import type { HpMethod } from './customModel';
+import { HP_METHODS, hitPointEntryFor } from './houseRulesModel';
 import {
   canAcceptLevelUp,
   defaultLevelUpChoice,
@@ -53,9 +55,13 @@ export function LevelUpDialog(props: {
   heldClasses: HeldClass[];
   intelligenceModifier: number;
   isHuman: boolean;
-  onAccept: (classId: string) => void;
+  /** The character's House Rule HP method (E6.3); absent: the rules' default. */
+  hpMethod?: HpMethod;
+  /** `hitPointEntry`: the player's roll or percentage when the method asks for one. */
+  onAccept: (classId: string, hitPointEntry?: number) => void;
 }) {
   const [classId, setClassId] = useState<string>('');
+  const [hitPointEntry, setHitPointEntry] = useState('');
   /**
    * The engine's grants for the currently selected class. `null` while the
    * request is in flight or after it failed — rendered as an explicit
@@ -160,6 +166,10 @@ export function LevelUpDialog(props: {
   const skillPoints = preview ? totalSkillPoints(preview.skillPointsBase, props.intelligenceModifier, props.isHuman) : null;
   const hitDie = selectedChoice ? knownClass(classId)?.hitDie ?? null : null;
   const isNewClass = !props.heldClasses.some((held) => held.classId === classId);
+  const entryKind = hitPointEntryFor(props.hpMethod);
+  const entryNumber = Number(hitPointEntry);
+  const entryOk = entryKind === null || (hitPointEntry !== '' && Number.isInteger(entryNumber) && entryNumber >= 1 && entryNumber <= (entryKind === 'percent' ? 100 : hitDie ?? 0));
+  const canAccept = acceptable && entryOk;
 
   return createPortal(
     <div
@@ -346,6 +356,23 @@ export function LevelUpDialog(props: {
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.2rem 0 0.5rem' }}>
                 Hit die: {hitDie === null ? 'Unknown' : `d${hitDie}`} · Skill points: {skillPoints === null ? 'Unknown' : skillPoints}
               </p>
+              {props.hpMethod !== undefined ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 0.5rem' }}>
+                  Hit points (house rule): {HP_METHODS.find((method) => method.value === props.hpMethod)?.label}
+                  {entryKind !== null ? (
+                    <input
+                      type="number"
+                      aria-label={entryKind === 'roll' ? 'Hit die result' : 'Percentage of the die maximum'}
+                      min={1}
+                      max={entryKind === 'roll' ? hitDie ?? undefined : 100}
+                      value={hitPointEntry}
+                      onChange={(event) => setHitPointEntry(event.target.value)}
+                      style={{ marginLeft: '0.5rem', width: '5rem' }}
+                    />
+                  ) : null}
+                  {entryKind === 'roll' ? ` (1–${hitDie ?? '?'})` : entryKind === 'percent' ? ' % (1–100)' : null}
+                </p>
+              ) : null}
               <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
                 {preview.features.map((feature) => (
                   <li key={feature} style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>
@@ -511,13 +538,14 @@ export function LevelUpDialog(props: {
           <button
             type="button"
             onClick={() => {
-              if (!acceptable) {
+              if (!canAccept) {
                 return;
               }
-              props.onAccept(classId);
+              props.onAccept(classId, entryKind === null ? undefined : entryNumber);
+              setHitPointEntry('');
               props.onClose();
             }}
-            disabled={!acceptable}
+            disabled={!canAccept}
             style={{
               backgroundColor: 'var(--color-accent)',
               border: '1px solid var(--color-border)',
@@ -526,7 +554,7 @@ export function LevelUpDialog(props: {
               cursor: 'pointer',
               fontSize: '0.85rem',
               fontWeight: 600,
-              opacity: acceptable ? 1 : 0.6,
+              opacity: canAccept ? 1 : 0.6,
               padding: '0.45rem 0.9rem',
             }}
           >

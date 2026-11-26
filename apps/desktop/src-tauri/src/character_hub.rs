@@ -3712,6 +3712,10 @@ pub struct LevelUpCharacterRequest {
     /// existing skill allocations untouched.
     #[serde(default)]
     pub skill_allocations: Option<Vec<SkillAllocationDto>>,
+    /// The player's number for the House Rule HP methods that need one: the die result (User
+    /// Rolled) or a percentage of the die maximum (Percentage). Ignored by the other methods.
+    #[serde(default)]
+    pub hit_point_entry: Option<u8>,
     pub saved_at: String,
 }
 
@@ -3742,13 +3746,69 @@ pub fn level_up_character(
             })
             .collect()
     });
-    level_up_character_at_root(
+    level_up_character_with_hit_points_at_root(
         &root,
         &request.class_id,
         additional_choices,
         skill_allocations,
+        request.hit_point_entry,
         &request.saved_at,
+        roll_die,
     )
+}
+
+/// One roll of a `die`, 1 to `die`.
+// shortcut: std's OS-seeded RandomState hasher as the die (no rand crate); upgrade if more code needs randomness.
+fn roll_die(die: u8) -> u8 {
+    use std::hash::BuildHasher;
+    let noise = std::collections::hash_map::RandomState::new().hash_one(std::time::SystemTime::now());
+    (noise % u64::from(die.max(1))) as u8 + 1
+}
+
+/// `level_up_character_at_root` under the character's House Rule HP method (`decisions.md §11`):
+/// with none set, exactly that. With one set, the gained level's die result is worked out first
+/// (a bad or missing player number refuses the level-up, nothing changed), then stored once in
+/// `hit_points.json` after the level-up saves, so regenerating the sheet never re-rolls it (Q-3.3).
+/// Levels held before the first stored result keep what the sheet gave them: the first character
+/// level the full die, every other the rules' average.
+pub(crate) fn level_up_character_with_hit_points_at_root(
+    root: &Path,
+    class_id: &str,
+    additional_choices: Vec<SelectedChoice>,
+    skill_allocations: Option<Vec<SkillAllocation>>,
+    hit_point_entry: Option<u8>,
+    saved_at: &str,
+    roll: impl FnOnce(u8) -> u8,
+) -> Result<CreateCharacterResponse, String> {
+    let Some(method) = custom_or_empty(root).hp_method else {
+        return level_up_character_at_root(root, class_id, additional_choices, skill_allocations, saved_at);
+    };
+    let held = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input.chosen.class_levels;
+    let mut levels = load_character_hit_points_at_root(root)?.levels;
+    let first_stored = levels.is_empty();
+    for (index, class) in held.iter().enumerate() {
+        let Some(die) = class_hit_points_die(&class.class_id) else {
+            return Ok(invalid_hit_points(format!("{} has no known hit die, so its hit points cannot be recorded", class.class_id)));
+        };
+        let have = levels.iter().filter(|level| level.class_id == class.class_id).count();
+        for n in have..usize::from(class.level) {
+            let value = if first_stored && index == 0 && n == 0 { die } else { codex::rules_core::durability::average_hit_die_value(die) as u8 };
+            levels.push(HitPointLevelDto { class_id: class.class_id.clone(), value });
+        }
+    }
+    let Some(die) = class_hit_points_die(class_id) else {
+        return Ok(invalid_hit_points(format!("{class_id} has no known hit die, so its hit points cannot be recorded")));
+    };
+    let value = match method.level_up_result(die, hit_point_entry, roll) {
+        Ok(value) => value,
+        Err(message) => return Ok(invalid_hit_points(message)),
+    };
+    levels.push(HitPointLevelDto { class_id: class_id.to_owned(), value });
+    let response = level_up_character_at_root(root, class_id, additional_choices, skill_allocations, saved_at)?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) {
+        save_character_hit_points_at_root(root, &levels)?;
+    }
+    Ok(response)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -11474,6 +11534,8 @@ mod tests {
             overrides: Default::default(),
             // SD-43 E2.4: the rest and recovery override round-trips with the rest.
             rest_text: Some("A night at the inn restores every hit point.".to_owned()),
+            // SD-43 E6.3: the House Rule HP method round-trips too.
+            hp_method: Some(crate::character_custom::HpMethod::RandomHalfFloor),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -21435,6 +21497,102 @@ mod tests {
 
         assert!(result.is_err(), "leveling up a nonexistent saved character must fail");
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- House rule: HP at level-up (SD-43 decisions.md §11) -----
+
+    fn hp_method_fighter_1(label: &str, method: Option<crate::character_custom::HpMethod>) -> PathBuf {
+        let root = tempdir(label);
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("seed save");
+        let custom = crate::character_custom::CharacterCustomDto { hp_method: method, ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-26T00:00:00Z").expect("the house rule saves");
+        root
+    }
+
+    fn hp_method_level_up(root: &Path, entry: Option<u8>, roll: u8) -> CreateCharacterResponse {
+        level_up_character_with_hit_points_at_root(root, FIGHTER_CLASS_ID, Vec::new(), None, entry, "2026-11-26T00:00:01Z", |_| roll).expect("level up")
+    }
+
+    fn hp_method_sheet_max(root: &Path) -> i16 {
+        load_saved_character_at_root(root).expect("the sheet loads").explanations.iter().find(|row| row.id == "hit_points.max").expect("hit_points.max").value
+    }
+
+    /// Each of the seven methods on a Fighter (d10) going to level 2: level 1 stays the maximum, level
+    /// 2 is the method's result, stored in `hit_points.json`, and the sheet's total follows it. With no
+    /// method set, level 2 is the rules' average (6) and nothing is written.
+    #[test]
+    fn hp_method_each_of_the_seven_on_a_d10_at_level_2() {
+        use crate::character_custom::HpMethod;
+        let off = hp_method_fighter_1("hp-method-off", None);
+        assert!(matches!(hp_method_level_up(&off, None, 1), CreateCharacterResponse::Saved { .. }));
+        assert!(!off.join("hit_points.json").exists(), "no house rule: nothing stored");
+        let average_total = hp_method_sheet_max(&off);
+        std::fs::remove_dir_all(&off).ok();
+
+        let cases = [
+            (HpMethod::UserRolled, Some(7), 1, 7),
+            (HpMethod::Random, None, 3, 3),
+            (HpMethod::RandomHalfFloor, None, 2, 5),
+            (HpMethod::Average, None, 1, 5),
+            (HpMethod::AverageRoundUp, None, 1, 6),
+            (HpMethod::Maximum, None, 1, 10),
+            (HpMethod::Percentage, Some(75), 1, 7),
+        ];
+        for (method, entry, roll, expected) in cases {
+            let root = hp_method_fighter_1(&format!("hp-method-{method:?}"), Some(method));
+            let response = hp_method_level_up(&root, entry, roll);
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{method:?}: {response:?}");
+            let stored = load_character_hit_points_at_root(&root).unwrap().levels;
+            assert_eq!(stored, vec![hp_level(FIGHTER_CLASS_ID, 10), hp_level(FIGHTER_CLASS_ID, expected)], "{method:?}: level 1 maximum, level 2 the method's");
+            assert_eq!(hp_method_sheet_max(&root), average_total - 6 + i16::from(expected), "{method:?}: the sheet's total follows the stored result");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A method that needs the player's number refuses a level-up without one, and nothing changes.
+    #[test]
+    fn hp_method_user_rolled_without_a_result_is_refused_and_nothing_is_saved() {
+        let root = hp_method_fighter_1("hp-method-refused", Some(crate::character_custom::HpMethod::UserRolled));
+        let CreateCharacterResponse::Blocked { diagnostics } = hp_method_level_up(&root, None, 1) else { panic!("refused") };
+        assert!(diagnostics.iter().any(|d| d.id == "hit_points.invalid"), "{diagnostics:?}");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().character_input.chosen.class_levels[0].level, 1, "still level 1");
+        assert!(!root.join("hit_points.json").exists());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Q-3.3: a rolled result is stored once; regenerating the sheet never re-rolls it, and changing
+    /// the method later leaves it alone while the next level takes the new method.
+    #[test]
+    fn hp_method_regeneration_keeps_the_stored_result() {
+        use crate::character_custom::{CharacterCustomDto, HpMethod};
+        let root = hp_method_fighter_1("hp-method-kept", Some(HpMethod::Random));
+        hp_method_level_up(&root, None, 9);
+        let total = hp_method_sheet_max(&root);
+        assert_eq!(hp_method_sheet_max(&root), total, "a second regeneration reads the same total");
+        let custom = CharacterCustomDto { hp_method: Some(HpMethod::Maximum), ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-26T00:00:02Z").unwrap();
+        assert_eq!(hp_method_sheet_max(&root), total, "changing the method does not touch level 2");
+        hp_method_level_up(&root, None, 1);
+        let stored = load_character_hit_points_at_root(&root).unwrap().levels;
+        assert_eq!(stored.iter().map(|level| level.value).collect::<Vec<_>>(), vec![10, 9, 10], "level 2 kept its 9, level 3 takes Maximum");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character that gained levels before the house rule was set: those levels keep what the sheet
+    /// gave them (the rules' average) when the first method result is stored.
+    #[test]
+    fn hp_method_levels_before_the_rule_keep_the_rules_average() {
+        let root = tempdir("hp-method-backfill");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 2), &root).expect("seed save");
+        let before = hp_method_sheet_max(&root);
+        let custom = crate::character_custom::CharacterCustomDto { hp_method: Some(crate::character_custom::HpMethod::Maximum), ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-26T00:00:00Z").unwrap();
+        hp_method_level_up(&root, None, 1);
+        let stored = load_character_hit_points_at_root(&root).unwrap().levels;
+        assert_eq!(stored.iter().map(|level| level.value).collect::<Vec<_>>(), vec![10, 6, 10]);
+        let constitution = (before - 10 - 6) / 2; // Fighter 2 before: (10 + Con) + (6 + Con)
+        assert_eq!(hp_method_sheet_max(&root) - before, 10 + constitution, "levels 1-2 unchanged, level 3 adds the maximum");
         std::fs::remove_dir_all(&root).ok();
     }
 

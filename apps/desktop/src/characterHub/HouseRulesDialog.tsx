@@ -1,16 +1,17 @@
 import type { CSSProperties } from 'react';
-import { customOverrides, type CharacterCustom, type CustomOverrides } from './customModel';
-import { houseRulesFor } from './houseRulesModel';
+import { customOverrides, type CharacterCustom, type CustomOverrides, type HpMethod } from './customModel';
+import { HP_METHODS, houseRulesFor } from './houseRulesModel';
 
 /**
  * The ☰ House Rules dialog: this character's house rules for its game system. Each checkbox edits the
- * same `Overrides` the engine reads (NR-4), saved at once by `onChange`.
+ * same `Overrides` the engine reads (NR-4), saved at once by `onChange`; the HP method select saves by `onHpMethodChange`.
  */
 export function HouseRulesDialog(props: {
   gameSystem: string;
   custom: CharacterCustom;
   error: string | null;
   onChange: (key: keyof CustomOverrides, on: boolean) => void;
+  onHpMethodChange: (method: HpMethod | undefined) => void;
   onClose: () => void;
 }) {
   const rules = houseRulesFor(props.gameSystem);
@@ -26,6 +27,17 @@ export function HouseRulesDialog(props: {
             <label key={rule.label} style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
               <input type="checkbox" aria-label={rule.label} checked={overrides[rule.flag]} onChange={(event) => props.onChange(rule.flag as keyof CustomOverrides, event.target.checked)} />
               {rule.label}
+            </label>
+          ) : rule.choice === 'hpMethod' ? (
+            <label key={rule.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+              {rule.label}
+              <select aria-label={rule.label} value={props.custom.hpMethod ?? ''} onChange={(event) => props.onHpMethodChange(event.target.value === '' ? undefined : (event.target.value as HpMethod))}>
+                <option value="">Rules default (average, rounded up)</option>
+                {HP_METHODS.map((method) => (
+                  <option key={method.value} value={method.value}>{method.label}</option>
+                ))}
+              </select>
+              <span style={mutedStyle}>Level 1 always takes the full die. A result is stored when the level is gained and never re-rolled.</span>
             </label>
           ) : (
             <div key={rule.label}>

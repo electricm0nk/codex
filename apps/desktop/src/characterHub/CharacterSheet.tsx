@@ -43,7 +43,7 @@ import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
 import { CustomItemsExchangeDialog } from './CustomItemsExchangeDialog';
 import { HouseRulesDialog } from './HouseRulesDialog';
-import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, withFavoredSkillRanks, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, withFavoredSkillRanks, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides, type HpMethod } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -2619,7 +2619,7 @@ export function CharacterSheet(props: {
   // pick one via the reused feat `ItemPickerModal` (see `handleLevelUpAccept`/
   // `handleLevelUpFeatPick`) — null the rest of the time, including for a
   // plain Feats-tab "Add Feat" pick, which stays routed to `handleAddFeat`.
-  const [pendingFeatLevelUp, setPendingFeatLevelUp] = useState<{ classId: string; newClassLevel: number } | null>(null);
+  const [pendingFeatLevelUp, setPendingFeatLevelUp] = useState<{ classId: string; newClassLevel: number; hitPointEntry?: number } | null>(null);
   // Set only while the gear screen's Customize dialog waits on a pick from the reused Equipmods
   // `ItemPickerModal`: the held copy the pick attaches to (SD-42 `decisions.md §27.3`).
   const [pendingModifierAttachment, setPendingModifierAttachment] = useState<CustomizeTarget | null>(null);
@@ -2889,7 +2889,7 @@ export function CharacterSheet(props: {
    * both the level-up and the real feat grant once the user picks one. A
    * level that grants no feat still goes straight through, unchanged.
    */
-  async function handleLevelUpAccept(classId: string) {
+  async function handleLevelUpAccept(classId: string, hitPointEntry?: number) {
     setMutationError(null);
     const preview = previewLevelUp(heldClasses, classId);
     // The feat gate now reads the engine's real grants for this exact
@@ -2907,7 +2907,7 @@ export function CharacterSheet(props: {
       engineGrantNames = [];
     }
     if (levelGrantsFeat(preview.features, engineGrantNames)) {
-      setPendingFeatLevelUp({ classId, newClassLevel: preview.classLevel });
+      setPendingFeatLevelUp({ classId, newClassLevel: preview.classLevel, hitPointEntry });
       setItemPickerOpen('feat');
       return;
     }
@@ -2918,6 +2918,7 @@ export function CharacterSheet(props: {
         additionalChoices: [
           { choiceSetId: `choice:level_${preview.classLevel}_hit_points`, selectionId: 'hp:average' },
         ],
+        hitPointEntry,
         savedAt: new Date().toISOString(),
       });
       const refresh = toCharacterMutationRefresh(
@@ -2974,6 +2975,7 @@ export function CharacterSheet(props: {
         additionalChoices: [
           { choiceSetId: `choice:level_${pending.newClassLevel}_hit_points`, selectionId: 'hp:average' },
         ],
+        hitPointEntry: pending.hitPointEntry,
         savedAt: new Date().toISOString(),
       });
       const refresh = toCharacterMutationRefresh(
@@ -3843,6 +3845,15 @@ export function CharacterSheet(props: {
     }
   }
 
+  async function handleHpMethodChange(hpMethod: HpMethod | undefined) {
+    setCustomError(null);
+    try {
+      setCustom(await saveCharacterCustom(props.row.characterId, { ...custom, hpMethod }, new Date().toISOString()));
+    } catch (cause: unknown) {
+      setCustomError(`The hit point method was not saved: ${cause instanceof Error ? cause.message : String(cause)}`);
+    }
+  }
+
   async function handleSkillAllocationAccept(draft: Record<string, number>) {
     setMutationError(null);
     try {
@@ -4158,6 +4169,7 @@ export function CharacterSheet(props: {
               heldClasses={heldClasses}
               intelligenceModifier={budgetIntelligence}
               isHuman={isHuman}
+              hpMethod={custom.hpMethod}
               onAccept={handleLevelUpAccept}
             />
           </div>
@@ -4592,6 +4604,7 @@ export function CharacterSheet(props: {
           custom={custom}
           error={customError}
           onChange={(key, on) => void handleOverrideChange(key, on)}
+          onHpMethodChange={(method) => void handleHpMethodChange(method)}
           onClose={() => setHouseRulesOpen(false)}
         />
       ) : null}
