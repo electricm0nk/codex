@@ -100,7 +100,7 @@ export const NO_OVERRIDES: CustomOverrides = {
   ignoreAbilityBudget: false,
 };
 
-/** The Custom tab's Overrides group, one checkbox each. */
+/** Every flag's label, read by the override tag; the Custom tab shows those House Rules do not own (`CUSTOM_TAB_TOGGLES`). */
 export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label: string }> = [
   { key: 'featsWithoutPrerequisites', label: 'Feats without prerequisites' },
   { key: 'weaponsWithoutProficiency', label: 'Weapons without proficiency' },

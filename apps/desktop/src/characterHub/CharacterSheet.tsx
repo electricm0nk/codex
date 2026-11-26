@@ -42,6 +42,7 @@ import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progre
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
 import { CustomItemsExchangeDialog } from './CustomItemsExchangeDialog';
+import { HouseRulesDialog } from './HouseRulesDialog';
 import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, withFavoredSkillRanks, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
@@ -2681,6 +2682,7 @@ export function CharacterSheet(props: {
   const [customError, setCustomError] = useState<string | null>(null);
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
   const [exchangeOpen, setExchangeOpen] = useState(false);
+  const [houseRulesOpen, setHouseRulesOpen] = useState(false);
   // SD-41 E3.5: the character's campaigns (from the load response, then the dialog's save) and the
   // campaign copies the latest write could not make. A refresh without them keeps what the sheet has.
   const [campaignDialogOpen, setCampaignDialogOpen] = useState(false);
@@ -4010,6 +4012,7 @@ export function CharacterSheet(props: {
     { label: cloning ? 'Cloning…' : 'Clone', onSelect: () => void handleClone() },
     { label: exporting ? 'Exporting…' : 'Export', onSelect: () => void handleExport() },
     { label: 'Custom…', onSelect: () => setCustomDialogOpen(true) },
+    { label: 'House Rules…', onSelect: () => setHouseRulesOpen(true) },
     { label: 'Print', onSelect: handlePrint },
   ];
 
@@ -4583,6 +4586,15 @@ export function CharacterSheet(props: {
         <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
       ) : null}
 
+      {houseRulesOpen ? (
+        <HouseRulesDialog
+          gameSystem={props.detail?.summary.gameSystem ?? 'pathfinder-1e'}
+          custom={custom}
+          error={customError}
+          onChange={(key, on) => void handleOverrideChange(key, on)}
+          onClose={() => setHouseRulesOpen(false)}
+        />
+      ) : null}
       {exchangeOpen ? (
         <CustomItemsExchangeDialog
           characterId={props.row.characterId}

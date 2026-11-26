@@ -1107,6 +1107,22 @@ mod tests {
         std::fs::remove_dir_all(&app_data).ok();
     }
 
+    /// House Rules (decisions.md §11): a new character has every rule off, and a rule set on one
+    /// character is saved beside that character only.
+    #[test]
+    fn house_rules_are_off_on_a_new_character_and_set_per_character() {
+        let app_data = seeded("house-rules");
+        let characters = app_data.join("characters");
+        let aldric = characters.join("00000000-0000-0000-0000-000000000001");
+        let elowen = characters.join("00000000-0000-0000-0000-000000000002");
+        assert_eq!(load_character_custom_at_root(&aldric).unwrap().overrides, Overrides::default(), "a new character: every flag off");
+        let on = CharacterCustomDto { overrides: Overrides { ignore_slot_limits: true, ..Default::default() }, ..Default::default() };
+        save_character_custom_at_root(&aldric, &on, "2026-11-26T00:00:00Z").expect("Aldric's rule saves");
+        assert!(load_character_custom_at_root(&aldric).unwrap().overrides.ignore_slot_limits, "A has it on");
+        assert_eq!(load_character_custom_at_root(&elowen).unwrap().overrides, Overrides::default(), "B stays off");
+        std::fs::remove_dir_all(&app_data).ok();
+    }
+
     /// Q-4.3: a file from another game system is refused with a message, and nothing is written.
     #[test]
     fn custom_items_exchange_refuses_a_starfinder_file_into_a_pathfinder_character() {

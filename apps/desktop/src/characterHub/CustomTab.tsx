@@ -1,7 +1,8 @@
 import type { OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
 import { wornLabel } from './gearScreenModel';
 import { OverrideTag } from './OverrideTag';
-import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord, type CustomRecordKind } from './customModel';
+import { CUSTOM_TAB_TOGGLES } from './houseRulesModel';
+import { CUSTOM_RECORD_KINDS, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord, type CustomRecordKind } from './customModel';
 
 /** `Worn, Head` or `Carried` for custom equipment, `null` for a feat, spell or device; the Gear tab's Equipment control moves it. */
 function placeLine(kind: CustomRecordKind, record: CustomRecord): string | null {
@@ -65,10 +66,10 @@ export function CustomTab(props: {
         <fieldset aria-label="Overrides" className="no-print" style={{ border: '1px solid var(--color-border)', borderRadius: 6, margin: 0, padding: '0.5rem 0.75rem' }}>
           <legend style={{ fontSize: '1rem', fontWeight: 600 }}>Overrides</legend>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', margin: '0 0 0.4rem' }}>
-            Lets this character do what the rules would refuse.
+            Lets this character do what the rules would refuse. Body slot limits, feat prerequisites and weapon and armor proficiency are set under ☰ House Rules.
           </p>
           <div style={{ display: 'grid', gap: '0.2rem 1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))' }}>
-            {OVERRIDE_TOGGLES.map(({ key, label }) => (
+            {CUSTOM_TAB_TOGGLES.map(({ key, label }) => (
               <label key={key} style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
                 <input type="checkbox" aria-label={label} checked={overrides[key]} onChange={(event) => props.onOverrideChange(key, event.target.checked)} />
                 {label}
