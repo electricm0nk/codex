@@ -1834,4 +1834,186 @@ mod tests {
         let enemies: Vec<&str> = options.iter().filter(|o| o.pool == "lantern_bearer_favored_enemy").map(|o| o.label.as_str()).collect();
         assert!(enemies.contains(&"Aberration"), "Lantern Bearer 2 favored enemy options: {enemies:?}");
     }
+
+    /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
+    /// the cause's opening words.
+    const UNREACHABLE_CARDS: &[(&str, &str)] = &[
+        ("parameter_choose:", "E3.26"),
+        ("add_token:", "E3.27"),
+        ("domain_count:", "E3.28"),
+        ("abilityselection of PCGen's base category", "E3.29"),
+        ("abilitypool: the granting record carries no converted Pool line", "E3.29"),
+        ("no class of the granting record to seed", "E3.30"),
+        ("the pool is not granted", "E3.30"),
+        ("the pool is granted but lists no member", "E3.30"),
+        ("a member pick is not held after save and reload", "E3.30"),
+    ];
+
+    /// Acceptance census (E3.MC, intake §22c): every one of E0.1's class-granted choice sites
+    /// (`artifacts/epic_3/E3.MC/choice_sites.json`, written from E0.1's instrument by `choice_sites.py`) is reachable,
+    /// sits on its own sub-tab (a feat pool on Feats, the favored class bonus on Favored Class), is on E0.1's data-gap
+    /// list, or is unreachable for a cause a kanban card names. Reachable: a character of the record's class at level 20
+    /// holding the granting record's rules is granted the pool, the pool lists a member, and a pick of that member saved
+    /// through `SavedCharacterStore` and loaded again is held by the Class Features budget.
+    #[test]
+    fn ability_budget_class_features_census_every_class_granted_choice_site_is_reachable_or_a_named_card() {
+        use crate::rules_core::sheet_rule::split_rule_id;
+        use crate::saved_character::local_store::SavedCharacterStore;
+        use crate::saved_character::{SavedCharacterEnvelope, SavedCharacterRevisionKind, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION};
+        use std::collections::BTreeSet;
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("docs/release/SD-43-market-inventory-and-abilities/artifacts/epic_3/E3.MC");
+        let sites: Vec<serde_json::Value> =
+            serde_json::from_str(&std::fs::read_to_string(dir.join("choice_sites.json")).expect("choice sites")).expect("choice sites JSON");
+        let census = census();
+        assert_eq!(sites.len() as u64, census["class_granted_choices"]["total"].as_u64().expect("E0.1 total"), "E0.1's site count");
+        let gaps: Vec<&str> = census["data_gap_list"].as_array().expect("gap list").iter().filter_map(|gap| gap["pool"].as_str()).collect();
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let mut classes: Vec<&str> =
+            package().rules_of_kind("class").filter(|rule| !rule.id.contains('#')).map(|rule| split_rule_id(&rule.id).2).collect();
+        classes.sort_unstable();
+        classes.dedup();
+        let archetypes = archetype_records(package(), &archetype_keys());
+        let scratch = std::env::temp_dir().join(format!("codex-choice-site-census-{}", std::process::id()));
+        let offer_shape = |rules: &[&SheetRule]| -> String {
+            rules
+                .iter()
+                .find_map(|rule| rule.offers.as_ref())
+                .and_then(|offer| serde_json::to_value(&offer.from).ok())
+                .map(|from| from.as_object().and_then(|o| o.keys().next().cloned()).or_else(|| from.as_str().map(str::to_owned)).unwrap_or_default())
+                .unwrap_or_else(|| "nothing".to_owned())
+        };
+        let verdict = |(index, site): &(usize, &serde_json::Value)| -> (String, String) {
+            let mechanism = site["mechanism"].as_str().expect("mechanism");
+            let target = site["target"].as_str().expect("target");
+            let rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
+            let targets = |rule: &SheetRule, pool: &str| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
+            let pools: Vec<String> = match mechanism {
+                "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
+                "domain_count" => rules
+                    .iter()
+                    .filter_map(|rule| match (&rule.target, &rule.offers) {
+                        (Some(BonusTarget::Pool(p)), offer) if p.contains("domain") || offer.as_ref().is_some_and(|o| matches!(o.from, OptionSet::Domains)) => Some(p.clone()),
+                        _ => None,
+                    })
+                    .collect(),
+                _ => rules.iter().filter_map(|rule| selection_pool(package(), rule)).map(str::to_owned).collect(),
+            };
+            let unreachable = |cause: String| ("unreachable".to_owned(), cause);
+            if pools.is_empty() {
+                return match mechanism {
+                    "abilitypool" => unreachable("abilitypool: the granting record carries no converted Pool line for the pool".to_owned()),
+                    "abilityselection" if ["FEAT", "Internal", "Special Ability"].contains(&target) => {
+                        unreachable(format!("abilityselection of PCGen's base category {target}: no Class Features pool"))
+                    }
+                    _ => unreachable(format!("{mechanism}: no Class Features pool (the record offers {})", offer_shape(&rules))),
+                };
+            }
+            let mut last = unreachable(String::new());
+            for pool in &pools {
+                let grants: Vec<&SheetRule> = rules.iter().copied().filter(|rule| targets(rule, pool) || selection_pool(package(), rule) == Some(pool.as_str())).collect();
+                if pool == FEAT_POOL_ID || grants.iter().any(|rule| feat_pool_of(rule).is_some()) {
+                    return ("own sub-tab".to_owned(), "Feats".to_owned());
+                }
+                if pool == FAVORED_BONUS_POOL {
+                    return ("own sub-tab".to_owned(), "Favored Class".to_owned());
+                }
+                if gaps.contains(&target) {
+                    return ("data gap".to_owned(), target.to_owned());
+                }
+                // The seed: an archetype the record's owner names is held on its class; else the record's class.
+                let owner = id_slug(site["owner"].as_str().unwrap_or_default());
+                let archetype = archetypes.iter().find(|(_, rule)| split_rule_id(&rule.id).2.split("_archetype_").nth(1) == Some(owner.as_str()));
+                let class = archetype
+                    .map(|(_, rule)| archetype_class(rule).to_owned())
+                    .filter(|class| classes.contains(&class.as_str()))
+                    .or_else(|| rules.iter().find_map(|rule| class_of(rule, &classes)))
+                    .or_else(|| classes.contains(&owner.as_str()).then_some(owner.clone()));
+                let Some(class) = class else {
+                    last = unreachable("no class of the granting record to seed".to_owned());
+                    continue;
+                };
+                let mut principals: Vec<String> =
+                    rules.iter().flat_map(|rule| std::iter::once(rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).chain(rules_the_gate_reads(rule))).collect();
+                principals.extend(archetype.map(|(_, rule)| rule.id.clone()));
+                principals.sort();
+                principals.dedup();
+                let mut input = input_for(&fixture, &class, 20);
+                if let Some((selection, _)) = archetype {
+                    input.chosen.selected_choices.push(SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: selection.clone() });
+                }
+                let granted = class_feature_grants_holding(package(), &input, &principals, SubTab::ClassFeatures).get(pool).is_some_and(|(n, _)| *n > 0);
+                if !granted {
+                    last = unreachable("the pool is not granted to its class at 20 holding the granting record".to_owned());
+                    continue;
+                }
+                let Some(member) = pool_member_selector(package(), &grants, pool)
+                    .and_then(|selects| package().rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()).map(|rule| rule.id.clone()).min())
+                else {
+                    last = unreachable("the pool is granted but lists no member".to_owned());
+                    continue;
+                };
+                let mut picked = input.clone();
+                picked.chosen.ability_selections.push(crate::rules_core::character_input::AbilitySelection {
+                    subtab: SubTab::ClassFeatures.id().to_owned(),
+                    pool: pool.clone(),
+                    record_key: member.clone(),
+                    level: 20,
+                    target: None,
+                });
+                let root = scratch.join(index.to_string());
+                let envelope = SavedCharacterEnvelope {
+                    character_id: format!("choice-site-{index}"),
+                    revision_id: format!("choice-site-{index}.rev.1"),
+                    revision_kind: SavedCharacterRevisionKind::Authoritative,
+                    saved_at: "2026-11-25T00:00:00Z".to_owned(),
+                    schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+                    app_or_runtime_version: "codex-dev".to_owned(),
+                    content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
+                    game_system: "pf1".to_owned(),
+                    latest_authoritative_revision_ref: format!("choice-site-{index}.rev.1"),
+                    display_label: "Choice site census".to_owned(),
+                    character_input: picked,
+                };
+                SavedCharacterStore::save(&envelope, &root).expect("save");
+                let reloaded = SavedCharacterStore::load(&root).expect("load").character_input;
+                let _ = std::fs::remove_dir_all(&root);
+                let id = format!("{pool}:{member}");
+                if ability_budget_now(package(), &reloaded, SubTab::ClassFeatures).held.iter().any(|held| held.id == id) {
+                    return ("reachable".to_owned(), String::new());
+                }
+                last = unreachable("a member pick is not held after save and reload".to_owned());
+            }
+            last
+        };
+        let indexed: Vec<(usize, &serde_json::Value)> = sites.iter().enumerate().collect();
+        let verdicts = in_parallel(&indexed, verdict);
+        let _ = std::fs::remove_dir_all(&scratch);
+        let mut table: BTreeMap<(String, String, String), usize> = BTreeMap::new();
+        let mut examples: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        for ((_, site), (state, cause)) in indexed.iter().zip(&verdicts) {
+            let mechanism = site["mechanism"].as_str().unwrap_or_default().to_owned();
+            *table.entry((mechanism, state.clone(), cause.clone())).or_default() += 1;
+            let seen = examples.entry(cause.clone()).or_default();
+            if state == "unreachable" && seen.len() < 3 {
+                seen.push(format!("{} -> {}", site["path"].as_str().unwrap_or_default(), site["target"].as_str().unwrap_or_default()));
+            }
+        }
+        let mut uncovered: BTreeSet<String> = BTreeSet::new();
+        eprintln!("choice-site census ({} sites): mechanism | state | cause | sites | card", sites.len());
+        for ((mechanism, state, cause), n) in &table {
+            let card = UNREACHABLE_CARDS.iter().find(|(c, _)| !cause.is_empty() && cause.starts_with(c)).map(|(_, card)| *card);
+            if state == "unreachable" && card.is_none() {
+                uncovered.insert(cause.clone());
+            }
+            eprintln!("| {mechanism} | {state} | {cause} | {n} | {} |", card.unwrap_or("-"));
+        }
+        for cause in &uncovered {
+            eprintln!("uncovered cause {cause:?}, e.g. {:?}", examples.get(cause));
+        }
+        assert_eq!(table.values().sum::<usize>(), sites.len());
+        let kanban = std::fs::read_to_string(dir.join("../../../kanban.md")).expect("kanban.md");
+        let missing: Vec<&str> = UNREACHABLE_CARDS.iter().map(|(_, card)| *card).filter(|card| !kanban.contains(&format!("\n| {card} |"))).collect();
+        assert!(missing.is_empty(), "cards the census names have no kanban.md row: {missing:?}");
+        assert!(uncovered.is_empty(), "{} unreachable cause(s) no card names: {uncovered:?}", uncovered.len());
+    }
 }
