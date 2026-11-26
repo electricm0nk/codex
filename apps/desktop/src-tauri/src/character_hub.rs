@@ -3178,6 +3178,8 @@ fn load_saved_character_and_weapon_copies_at_root(root: &Path) -> Result<(LoadSa
         })
         .collect();
     push_weapon_attack_enhancement(&mut sheet, &size_penalties);
+    let weapon_copies: Vec<Option<CopyKey>> = breakdowns.iter().map(|breakdown| breakdown.copy.clone()).collect();
+    push_two_weapon_attack_rows(&mut sheet, &weapon_copies, &held_rows, &envelope.character_input, custom.overrides.ambidextrous);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
     sheet.fly_maneuverability = push_swim_and_fly_rows(&envelope.character_input, &mut sheet.explanations);
     sheet.resistances = resistances_for(&envelope.character_input, &sheet);
@@ -3301,6 +3303,63 @@ fn push_weapon_attack_enhancement(sheet: &mut LoadSavedCharacterResponse, size_p
         }
     }
     sheet.explanations.extend(extra);
+}
+
+/// SD-43 E6.4: with a weapon in each hand, the two-weapon attacks (CRB Table 8-7), each its weapon's
+/// own attack row plus its hand's penalty from `pilot_compute::two_weapon_attack_penalties` (a light
+/// off-hand weapon, Two-Weapon Fighting, the Ambidextrous house rule that removes the off-hand
+/// penalty): `combat.weapon_attack_bonus.two_weapon_main_hand` and `..._off_hand`. Each weapon's own
+/// row stays its single attack (PCGen's `TOTALHIT`); the print lists the two as lines of their own.
+/// Runs after [`push_weapon_attack_enhancement`].
+fn push_two_weapon_attack_rows(
+    sheet: &mut LoadSavedCharacterResponse,
+    copies: &[Option<CopyKey>],
+    held: &[HeldEquipmentCopyDto],
+    input: &CharacterInput,
+    ambidextrous: bool,
+) {
+    use codex::rules_core::damage_total::weapon_feat_damage_row_id;
+    use codex::rules_core::pilot_compute::{holds_two_weapon_fighting, two_weapon_attack_penalties};
+    const ATTACK: &str = "combat.weapon_attack_bonus.";
+    let hand = |index: usize| {
+        let weapon = &sheet.weapon_damage[index];
+        let copy = copies.get(index)?.as_ref()?;
+        let row = held.iter().find(|row| row.copies.first() == Some(copy) && row.active_state == ActiveStateDto::EquippedActive)?;
+        (weapon.in_hand && !weapon.unarmed).then_some(row.slot)
+    };
+    // The weapon's attack row: its copy's own when it has one, else its kind's.
+    let attack_row = |index: usize| {
+        let weapon = &sheet.weapon_damage[index];
+        let key = weapon.weapon_record_key.as_deref()?;
+        let kind = weapon_feat_damage_row_id(key).replacen("combat.weapon_damage_bonus.", ATTACK, 1);
+        let id = weapon.copy_row.as_deref().map_or(kind, |copy_row| format!("{ATTACK}{copy_row}"));
+        sheet.explanations.iter().find(|row| row.id == id).map(|row| (key.to_owned(), row.value))
+    };
+    let weapons = 0..sheet.weapon_damage.len();
+    let (Some(main), Some(off)) = (
+        weapons.clone().find(|index| hand(*index) == Some(BodySlot::WieldMain)),
+        weapons.clone().find(|index| hand(*index) == Some(BodySlot::WieldOff)),
+    ) else {
+        return;
+    };
+    let (Some((main_key, main_value)), Some((off_key, off_value))) = (attack_row(main), attack_row(off)) else { return };
+    let light = sheet.weapon_damage[off].wield_category.as_deref() == Some("Light");
+    let feat = holds_two_weapon_fighting(input);
+    let (primary, penalty) = two_weapon_attack_penalties(light, feat, ambidextrous);
+    let terms = format!(
+        "CRB Table 8-7{}{}{}",
+        if light { ", a light off-hand weapon" } else { "" },
+        if feat { ", Two-Weapon Fighting" } else { "" },
+        if ambidextrous { ", Ambidextrous house rule: no off-hand penalty" } else { "" },
+    );
+    for (hand, key, value, penalty) in [("main", main_key, main_value, primary), ("off", off_key, off_value, penalty)] {
+        let total = value + penalty;
+        sheet.explanations.push(ExplanationDto {
+            id: format!("{ATTACK}two_weapon_{hand}_hand"),
+            value: total,
+            detail: format!("Two-weapon fighting, {hand} hand ({key}): its attack ({value:+}) + two-weapon penalty ({penalty:+}; {terms}) = {total:+}."),
+        });
+    }
 }
 
 /// An attack row's words with `terms` added, before the carried row's closing note when it has one
@@ -19676,6 +19735,66 @@ mod tests {
         let root = slot_conflict_character("slot-conflict-off-hand", &["Dagger (Base)", "Shield (Heavy/Steel)"]);
         assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
         assert_slot_refused(&slot_conflict_wear(&root, "Shield (Heavy/Steel)"), "off hand slot is taken by Dagger");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-43 E6.4 (`decisions.md §11`): a Dagger worn beside the Longsword is in the off hand, and the
+    /// off-hand attack row is the Dagger's attack plus the light off-hand penalty (CRB Table 8-7: -8);
+    /// the Ambidextrous house rule removes the off-hand penalty, leaving the primary hand's -4. The
+    /// main-hand row takes -4 either way; each weapon's own row stays its single attack.
+    #[test]
+    fn ambidextrous_house_rule_removes_the_off_hand_penalty_from_the_off_hand_attack_row() {
+        let attack = |root: &Path, row: &str| {
+            let id = format!("combat.weapon_attack_bonus.{row}");
+            let sheet = load_saved_character_at_root(root).expect("load");
+            sheet.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("no {id}")).clone()
+        };
+        let root = slot_conflict_character("ambidextrous-off-hand", &["Dagger (Base)"]);
+        let (dagger, longsword) = (attack(&root, "dagger").value, attack(&root, "longsword").value);
+        assert!(load_saved_character_at_root(&root).unwrap().explanations.iter().all(|row| !row.id.contains("two_weapon")), "one weapon: no two-weapon rows");
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+        let off = attack(&root, "two_weapon_off_hand");
+        assert_eq!(off.value, dagger - 8, "the off hand takes the light off-hand penalty: {}", off.detail);
+        assert_eq!(attack(&root, "two_weapon_main_hand").value, longsword - 4);
+        assert_eq!((attack(&root, "dagger").value, attack(&root, "longsword").value), (dagger, longsword), "single attacks unchanged");
+
+        let mut custom = load_character_custom_at_root(&root).expect("custom");
+        custom.overrides.ambidextrous = true;
+        save_character_custom_at_root(&root, &custom, "2026-11-26T00:00:00Z").expect("save");
+        let ambidextrous = attack(&root, "two_weapon_off_hand");
+        assert_eq!(ambidextrous.value, dagger - 4, "no off-hand penalty, the primary hand's -4: {}", ambidextrous.detail);
+        assert!(ambidextrous.detail.contains("Ambidextrous"), "{}", ambidextrous.detail);
+        assert_eq!(attack(&root, "two_weapon_main_hand").value, longsword - 4);
+        // The print's Weapons block lists the two as lines of their own, at the engine's values.
+        let request = crate::print::PrintRequest { paper: crate::print::Paper::A4, sections: Some(crate::print::PrintSections::FIRST_TIME), campaigns: Vec::new() };
+        let document = crate::print::sheet_document_at_root(&root, &request).expect("the document builds");
+        let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+        let printed: Vec<(String, Vec<String>)> = weapons.rows.iter().map(|row| (row.label.clone(), row.values.clone())).collect();
+        eprintln!("E6.4 printed Weapons lines: {printed:?}");
+        let line = |label: &str| printed.iter().find(|(held, _)| held == label).map(|(_, values)| values[0].clone());
+        assert_eq!(line("Attack bonus (two weapon off hand)"), Some(format!("{:+}", dagger - 4)), "{printed:?}");
+        assert_eq!(line("Attack bonus (two weapon main hand)"), Some(format!("{:+}", longsword - 4)), "{printed:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-43 E6.4: two Daggers, the Longsword stowed, Two-Weapon Fighting: -2 in each hand, the house
+    /// rule or not; each Dagger's own row stays its single attack.
+    #[test]
+    fn ambidextrous_two_daggers_with_two_weapon_fighting_take_minus_2_each() {
+        let root = slot_conflict_character("ambidextrous-two-daggers", &["Dagger (Base)", "Dagger (Base)"]);
+        set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, "2026-11-26T00:00:00Z").expect("stow");
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.selected_feats.push("Two-Weapon Fighting".to_owned());
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let value = |sheet: &LoadSavedCharacterResponse, row: &str| {
+            sheet.explanations.iter().find(|held| held.id == format!("combat.weapon_attack_bonus.{row}")).map(|held| held.value)
+        };
+        let dagger = value(&load_saved_character_at_root(&root).unwrap(), "dagger").expect("a Dagger row");
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+        let sheet = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(value(&sheet, "dagger"), Some(dagger), "the single attack");
+        assert_eq!((value(&sheet, "two_weapon_main_hand"), value(&sheet, "two_weapon_off_hand")), (Some(dagger - 2), Some(dagger - 2)));
         std::fs::remove_dir_all(&root).ok();
     }
 

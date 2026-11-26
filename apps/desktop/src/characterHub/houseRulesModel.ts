@@ -2,12 +2,13 @@ import { OVERRIDE_TOGGLES, type CustomOverrides, type HpMethod } from './customM
 import { CYBERPUNK_GAME_SYSTEM } from './cyberpunkSheetModel';
 import { STARFINDER_GAME_SYSTEM } from './starfinderSheetModel';
 
-/** The four existing `Overrides` flags House Rules edit; the Custom tab no longer shows them (decisions.md §11, Q-3.4). */
+/** The `Overrides` flags House Rules edit (four existing, Ambidextrous from E6.4); the Custom tab does not show them (decisions.md §11, Q-3.4). */
 export const HOUSE_RULE_FLAGS: ReadonlyArray<keyof CustomOverrides> = [
   'ignoreSlotLimits',
   'featsWithoutPrerequisites',
   'weaponsWithoutProficiency',
   'armorWithoutProficiency',
+  'ambidextrous',
 ];
 
 /** A house rule: a flag the engine reads, the HP method choice, or (both null) a notice naming the card that brings its engine. */
@@ -44,7 +45,7 @@ const PATHFINDER_HOUSE_RULES: ReadonlyArray<HouseRule> = [
   flagRule('featsWithoutPrerequisites'),
   flagRule('weaponsWithoutProficiency'),
   flagRule('armorWithoutProficiency'),
-  { label: 'Ambidextrous', flag: null, choice: null, notice: 'No off-hand penalty arrives with card E6.4.' },
+  flagRule('ambidextrous'),
 ];
 
 /**

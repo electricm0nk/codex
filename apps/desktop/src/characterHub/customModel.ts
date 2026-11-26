@@ -89,6 +89,7 @@ export interface CustomOverrides {
   ignoreContainerCapacity: boolean;
   abilitiesWithoutPrerequisites: boolean;
   ignoreAbilityBudget: boolean;
+  ambidextrous: boolean;
 }
 
 export const NO_OVERRIDES: CustomOverrides = {
@@ -103,6 +104,7 @@ export const NO_OVERRIDES: CustomOverrides = {
   ignoreContainerCapacity: false,
   abilitiesWithoutPrerequisites: false,
   ignoreAbilityBudget: false,
+  ambidextrous: false,
 };
 
 /** Every flag's label, read by the override tag; the Custom tab shows those House Rules do not own (`CUSTOM_TAB_TOGGLES`). */
@@ -118,6 +120,7 @@ export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label
   { key: 'ignoreContainerCapacity', label: 'Ignore container capacity limits' },
   { key: 'abilitiesWithoutPrerequisites', label: 'Abilities without prerequisites' },
   { key: 'ignoreAbilityBudget', label: 'Ignore the ability budget' },
+  { key: 'ambidextrous', label: 'Ambidextrous' },
 ];
 
 /** The character's flags, all off for data saved before they existed. */

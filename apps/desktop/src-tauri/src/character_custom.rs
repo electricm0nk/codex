@@ -144,6 +144,9 @@ pub struct Overrides {
     pub abilities_without_prerequisites: bool,
     /// An Abilities sub-tab pick is admitted although its pool has no room left.
     pub ignore_ability_budget: bool,
+    /// SD-43 House Rule (`decisions.md §11`): the off-hand weapon's two-weapon attack row takes no
+    /// off-hand penalty (`pilot_compute::two_weapon_attack_penalties`), only the primary hand's.
+    pub ambidextrous: bool,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]

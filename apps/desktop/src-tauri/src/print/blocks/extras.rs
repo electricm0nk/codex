@@ -57,6 +57,10 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
     if flags.ignore_container_capacity {
         on.push("Override: Ignore container capacity limits".to_owned());
     }
+    // SD-43 E6.4: a house rule that moves the off-hand attack row, no admitted record.
+    if flags.ambidextrous {
+        on.push("Override: Ambidextrous".to_owned());
+    }
     if !on.is_empty() {
         rows.push(SheetRow::new("Overrides on", Vec::<String>::new()).with_notes(on));
     }

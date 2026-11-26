@@ -168,8 +168,8 @@ function verifiesTheMarketCannotSellACustomItem() {
 }
 
 function verifiesTheOverridesGroupHoldsTheBackendsElevenFlags() {
-  assertEqual(OVERRIDE_TOGGLES.length, 11, 'eleven toggles');
-  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 11, 'each flag once');
+  assertEqual(OVERRIDE_TOGGLES.length, 12, 'twelve toggles');
+  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 12, 'each flag once');
   assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'ignoreContainerCapacity')?.label, 'Ignore container capacity limits', 'decisions.md §32 (b)');
   assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'ignoreAbilityBudget')?.label, 'Ignore the ability budget', 'SD-43 E3.10');
   assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'abilitiesWithoutPrerequisites')?.label, 'Abilities without prerequisites', 'SD-43 E3.10');

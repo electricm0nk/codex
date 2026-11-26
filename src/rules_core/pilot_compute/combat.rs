@@ -957,6 +957,24 @@ pub fn holds_improved_unarmed_strike(input: &CharacterInput) -> bool {
         || input.chosen.class_levels.iter().any(|class_level| class_level.class_id == "class:unchained_monk")
 }
 
+/// Two-Weapon Fighting, chosen or granted (a Ranger's combat style), read through the same feat set
+/// every other attack term reads.
+pub fn holds_two_weapon_fighting(input: &CharacterInput) -> bool {
+    crate::rules_core::feat_identity::holds(&effective_character_feats(input), "Two-Weapon Fighting")
+}
+
+/// CRB Table 8-7, "Two-Weapon Fighting Penalties": the (primary hand, off hand) attack penalties
+/// while fighting with a weapon in each hand. A light off-hand weapon eases both by 2; Two-Weapon
+/// Fighting eases the primary hand by 2 and the off hand by 6. The off hand's penalty beyond the
+/// primary hand's (-4 without the feat) is the off-hand penalty the Ambidextrous house rule
+/// (SD-43 `decisions.md §11`) removes, so the off hand then attacks at the primary hand's penalty.
+pub fn two_weapon_attack_penalties(off_hand_light: bool, two_weapon_fighting: bool, ambidextrous: bool) -> (i16, i16) {
+    let light = if off_hand_light { 2 } else { 0 };
+    let primary = -6 + light + if two_weapon_fighting { 2 } else { 0 };
+    let off_hand = -10 + light + if two_weapon_fighting { 6 } else { 0 };
+    (primary, if ambidextrous { primary } else { off_hand })
+}
+
 /// Compute the baseline melee attack bonus and armor class from what is in hand and worn, or block
 /// the claim on what this path has no number for (`unmet_combat_posture_conditions`).
 ///
@@ -2481,5 +2499,23 @@ mod armor_class_parts_tests {
         }
         eprintln!("armor_class_parts fixed path: stated {stated}, without {without}, of {}", classes.len() * 5);
         assert!(stated > 0, "the population states at least one Armor Class");
+    }
+}
+
+#[cfg(test)]
+mod two_weapon_attack_penalty_tests {
+    use super::*;
+
+    /// CRB Table 8-7: without the house rule the off hand takes 4 more than the primary hand;
+    /// the Ambidextrous house rule removes that off-hand penalty; Two-Weapon Fighting already does.
+    #[test]
+    fn ambidextrous_removes_the_off_hand_penalty_and_nothing_else() {
+        assert_eq!(two_weapon_attack_penalties(false, false, false), (-6, -10), "normal off-hand weapon");
+        assert_eq!(two_weapon_attack_penalties(true, false, false), (-4, -8), "light off-hand weapon");
+        assert_eq!(two_weapon_attack_penalties(false, true, false), (-4, -4), "Two-Weapon Fighting");
+        assert_eq!(two_weapon_attack_penalties(true, true, false), (-2, -2), "Two-Weapon Fighting, light");
+        assert_eq!(two_weapon_attack_penalties(false, false, true), (-6, -6), "Ambidextrous: no off-hand penalty");
+        assert_eq!(two_weapon_attack_penalties(true, false, true), (-4, -4), "Ambidextrous, light");
+        assert_eq!(two_weapon_attack_penalties(true, true, true), (-2, -2), "Ambidextrous adds nothing to the feat");
     }
 }
