@@ -838,7 +838,13 @@ mod prerequisite_tests {
         // (Ulfen), `Ruthless Opportunist` (Chelaxian), `Scion of the Lost Empire` (Chelaxian or
         // Taldan). Attributed by diffing the eligible set on the tranche/16 and F3b2 packages
         // (every other record's verdict is unchanged), not adjusted to fit.
-        assert_eq!(eligible, 534, "a starting Fighter's real eligible-feat count");
+        // **534 -> 533 with SD-43 E3.25**, same direction: a reference to a codex-id-keyed
+        // record by its row's CATEGORY + KEY now resolves. `Reactive Reversion`
+        // (`ultimate_wilderness`) named `Leshy ~ Change Shape` as an unholdable `MissingRule`, so
+        // its gate was reported, not checked; it now names `bestiary_3:monster_ability:leshy_change_shape`
+        // and this Fighter holds neither alternative. Attributed by diffing the eligible set on
+        // the pre- and post-E3.25 packages (only that one record leaves), not adjusted to fit.
+        assert_eq!(eligible, 533, "a starting Fighter's real eligible-feat count");
         // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
         // report, never an exemption: it is still offered, with one "not verified" note.
         // **21 -> 12 with SD-35 operator ruling B18** (`decisions.md §21`): the nine

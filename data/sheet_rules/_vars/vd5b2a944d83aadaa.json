@@ -1,0 +1,1 @@
+{"var":"vd5b2a944d83aadaa","label":"Docile","declared_by":["bestiary:monster:horse","bestiary:monster:horse_pony"],"contributions":[{"rule_id":"bestiary:monster:horse","expr":{"Const":1},"when":"Always"},{"rule_id":"bestiary:monster:horse_pony","expr":{"Const":1},"when":"Always"}],"provenance":{}}

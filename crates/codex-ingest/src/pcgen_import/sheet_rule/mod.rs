@@ -503,6 +503,12 @@ fn is_codex_placeholder_key(key: &str) -> bool {
     key.starts_with(CODEX_PLACEHOLDER_KEY_PREFIX)
 }
 
+/// A corpus key that is the record's own codex id. The book segment may differ: the `beastiary`
+/// corpus directory converts as book `bestiary` (`walk_corpus`).
+fn is_own_codex_id(key: &str, id: &str) -> bool {
+    key.split_once(':').is_some_and(|(_, rest)| Some(rest) == id.split_once(':').map(|(_, r)| r))
+}
+
 /// The KEY (upper-cased) the record's own base row declares in the pinned tree -- its `KEY:`
 /// token, else its name field ([`closure::row_identity`]) -- or `None` when the record has no
 /// row there or the row is not a record declaration (plain or `.COPY=`).
@@ -548,6 +554,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let mut placeholder_declared: Vec<((String, String), RuleId)> = Vec::new();
     let mut placeholder_declared_name: Vec<((String, String), RuleId)> = Vec::new();
     let mut row_declared_category: Vec<((String, String), RuleId, bool)> = Vec::new();
+    let mut codex_id_declared: Vec<((String, String), RuleId)> = Vec::new();
     for r in &records {
         let closure = if r.rel_path.is_empty() {
             Closure::default()
@@ -595,6 +602,23 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             && declared != key_u
         {
             placeholder_declared.push(((cat_u.clone(), declared), r.id.clone()));
+        }
+        // SD-43 E3.25: a record whose corpus key is its own codex id
+        // (`ultimate_psionics:monster_ability:xeph_burst`) is named by others by its row's own
+        // CATEGORY + KEY (`Special Ability|Xeph ~ Burst`, `up_abilities_race.lst:337`). Indexed
+        // last (below), only where nothing else answers the pair.
+        if is_own_codex_id(&r.key, &r.id)
+            && let Some(declared) = declared_row_key(tree, r)
+            && declared != key_u
+        {
+            let cat = if cat_u.is_empty() {
+                tree.file_index(&r.rel_path).map(|i| closure::row_identity(tree.row_text(RowRef { file: i, line: r.line })).category).unwrap_or_default()
+            } else {
+                cat_u.clone()
+            };
+            if !cat.is_empty() {
+                codex_id_declared.push(((cat, declared), r.id.clone()));
+            }
         }
         // SD-37 E3.5: the name twin of F3b2, Starfinder only. A record the PI screen renamed
         // (`Driftborn`, `KEY:Gnome ~ Driftborn`) is named by other records' prerequisites by its
@@ -753,6 +777,26 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             index.mod_fragments.insert(pair, ids.into_iter().collect());
         } else {
             index.index_defects.entry("row-declared-category-shared".into()).or_default().push(format!("{}|{}: {}", pair.0, pair.1, ids.into_iter().collect::<Vec<_>>().join(", ")));
+        }
+    }
+    // SD-43 E3.25: the codex-id-keyed records' row CATEGORY + KEY, under the F3b2 rule, after
+    // every other claim so a pair that resolved before keeps its target.
+    let mut claimed_codex: BTreeSet<(String, String)> = BTreeSet::new();
+    for (pair, id) in codex_id_declared {
+        if index.mod_fragments.contains_key(&pair) {
+            continue;
+        }
+        match index.by_cat_key.get(&pair) {
+            None => {
+                claimed_codex.insert(pair.clone());
+                index.by_cat_key.insert(pair, id);
+            }
+            Some(existing) if *existing != id && claimed_codex.contains(&pair) => {
+                let existing = existing.clone();
+                push_candidates(&mut index.cat_key_candidates, &pair, &existing, &id);
+                index.ambiguous_cat_key.insert(pair);
+            }
+            Some(_) => {}
         }
     }
     // SD-36 F3b2b: the standing supersession ruling, applied to every ambiguous pair.
@@ -2205,5 +2249,21 @@ mod term_level_refusal_gate {
              VISIBLE:NO still print (hidden copy rows in the corpus: {hidden_copies}; not held by \
              the package under their own id: {not_in_package}). First offenders: {printing:?}"
         );
+    }
+}
+
+#[cfg(test)]
+mod codex_id_row_key_tests {
+    use super::*;
+
+    /// UP p.23, `up_abilities_race.lst:341`: Xeph Explorer is gated `PREABILITY` on `Xeph ~ Burst`
+    /// (`KEY:Xeph ~ Burst`, `:337`), whose corpus `data.key` is its codex id. The gate resolves to
+    /// that record, never a `MissingRule` the engine reads as never met.
+    #[test]
+    fn a_row_key_names_the_codex_id_keyed_record() {
+        let (converted, _) = convert_one(&repo_root(), "ultimate_psionics:monster_ability:xeph_explorer").expect("Xeph Explorer converts");
+        let json = serde_json::to_string(&converted.rules).expect("rules serialize");
+        assert!(!json.contains("\"name\":\"Xeph ~ Burst\""), "Xeph ~ Burst is still a MissingRule: {json}");
+        assert!(json.contains("\"Rule\":\"ultimate_psionics:monster_ability:xeph_burst\""), "the gate names xeph_burst: {json}");
     }
 }
