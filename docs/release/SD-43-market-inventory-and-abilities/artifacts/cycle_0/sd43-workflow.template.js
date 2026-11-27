@@ -214,9 +214,11 @@ async function runLane(name, ids) {
   let stopped = null
   for (const id of ids) {
     const c = byId[id]
-    const r = stopped ? notDispatched(id, `lane ${name} stopped at ${stopped}`) : await runCard(c)
+    // a DONE card stays complete after a stop (run 13: E4.1 read as not-dispatched, so E4.G never ran)
+    const r = stopped && !DONE.has(id) ? notDispatched(id, `lane ${name} stopped at ${stopped}`) : await runCard(c)
     done[id].resolve(r)
-    if (r.status !== 'complete' && !stopped) { stopped = id; log(`lane ${name} stops at ${id}: ${r.status} ${r.why || ''}`) }
+    // a SKIP card (awaiting a ruling) does not stop its lane; its dependents still wait on it
+    if (r.status !== 'complete' && !SKIP[id] && !stopped) { stopped = id; log(`lane ${name} stops at ${id}: ${r.status} ${r.why || ''}`) }
   }
 }
 
