@@ -30,6 +30,10 @@
 //! member renames that choice ([`creation_choice_swap`]) instead of adding a second pick. The chooser it was picked
 //! through is itself the pick of a held pool whose offer selects it (E3.20: the bloodline implies its kind,
 //! `Standard Bloodline`, in the `Bloodline` pool `Sorcerer ~ Standard Bloodline` grants).
+//! A held class feature with a parameter choice of its own (E3.26: `CHOOSE:` of a weapon, spell, skill, school, class,
+//! language or free text; [`parameter_choice`]) is a pool of its own, `<record slug>_choice`, sized by its offer's count:
+//! its one option is the record, and a pick saves the chosen value as its `target` (option id `<pool>:<record>|<value>`),
+//! which the character's facts record under the record's choice so its `Chosen` grants read it.
 //!
 //! **Archetype.** An archetype of a held class is one converted record in the `archetype` pool, named by
 //! its class (`rogue_archetype_acrobat`). It is saved as a `SelectedChoice` under
@@ -64,7 +68,7 @@ use crate::rules_core::archetype_resolver::{archetype_catalog_entries, archetype
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation, PilotBaseChassisComputation};
 use crate::rules_core::sheet_rule::{
     chooser_offered, display_label, evaluate_applies, held_set, id_slug, link_path_a_picks, slug, offer_selects, sibling_line_gate, split_rule_id, Applies,
-    BonusTarget, CharacterFacts, Choice, EvalContext, Granter, HeldRule, HeldSeed, Holdable, OptionSet, SheetRule, SheetRulePackage, SheetValue, Subject,
+    BonusTarget, CharacterFacts, Choice, Effect, EvalContext, Expr, Fact, Granter, HeldRule, HeldSeed, Holdable, OptionSet, SheetRule, SheetRulePackage, SheetValue, Subject,
 };
 use crate::rules_core::sheet_rule_catalog::catalog_prose;
 use crate::rules_core::trait_effects::{is_drawback, CREATION_TRAIT_LIMIT, DRAWBACKS};
@@ -395,6 +399,24 @@ fn class_feature_grants_holding(
                 row.1.push(rule.label.clone());
             }
         }
+        // A held class feature's parameter choice (E3.26) is a pool of its own, sized by its offer's count, unless a
+        // creation choice already answers it (a canonical seed: the Expert's ten class skills).
+        for (id, entry) in &held.rules {
+            let Some(rule) = package.rule(id).filter(|_| !held.removed.contains(id)) else { continue };
+            let Some(offer) = parameter_offer(rule) else { continue };
+            if input.chosen.selected_choices.iter().any(|choice| choice.choice_set_id == rule.id) {
+                continue;
+            }
+            let ctx = EvalContext { holder_class: entry.holder_class.clone(), spell_level: entry.spell_level.unwrap_or(0), item_tags: Vec::new() };
+            let amount = grant_amount(&offer.count, &held, package, &facts, ctx);
+            let amount = if amount.den == 0 { 0 } else { amount.num / amount.den };
+            let row = pools.entry(parameter_pool(rule)).or_default();
+            row.0 += amount;
+            let label = display_label(rule);
+            if amount != 0 && !row.1.contains(&label) {
+                row.1.push(label);
+            }
+        }
     }
     pools
 }
@@ -424,6 +446,109 @@ pub(crate) fn selection_pool<'a>(package: &SheetRulePackage, rule: &'a SheetRule
     let members = package.rules.values().any(|other| other.pool == pool);
     let granted = package.rules.values().any(|other| matches!(&other.target, Some(BonusTarget::Pool(p)) if p == pool));
     (members && !granted).then_some(pool)
+}
+
+/// The separator between a Class Features option id and the parameter its pick takes (E3.26): `<pool>:<record>|<target>`,
+/// the `target` its saved `ability_selection=` line carries.
+pub const TARGET_SEPARATOR: char = '|';
+
+/// What a class feature's parameter choice offers (E3.26).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ParameterChoice {
+    /// The offer in the rule's own words (`the weapons Longsword, Rapier`), the prompt when the player writes it in.
+    pub words: String,
+    /// The values the corpus lists for it, sorted; empty when it lists none and the player writes the value in.
+    pub values: Vec<String>,
+}
+
+/// The parameter choice a class feature asks for (E3.26, PCGen's `CHOOSE:` of a weapon, spell, skill, school, class,
+/// language or free text): its own offer (`offers.id` is the record's id) when that offer is not a pool's members
+/// ([`selection_offer`]), a domain, a deity, a template or a number. On a record that sizes a pool the offer describes the
+/// pool's members (a favored enemy's creature types), except a weapon list: a pool's members are records, never weapons
+/// (the Kensai's `Kensai Weapon Proficiency` grants its `Kensai Chosen Weapon` pool and asks for the weapon). A record
+/// whose `CHOOSE:` the corpus screened as product identity keeps its grant of the chosen skill
+/// (`ClassSkillChosen(<own id>)`), so its offer is a skill.
+fn parameter_offer(rule: &SheetRule) -> Option<Choice> {
+    let sizes_a_pool = matches!(rule.target, Some(BonusTarget::Pool(_))) && !matches!(&rule.offers, Some(Choice { from: OptionSet::Weapons(_), .. }));
+    if rule.id.contains('#') || split_rule_id(&rule.id).1 != "class_feature" || sizes_a_pool || selection_offer(rule).is_some() {
+        return None;
+    }
+    match &rule.offers {
+        Some(offer) => (offer.id == rule.id
+            && !matches!(offer.from, OptionSet::Domains | OptionSet::Deities | OptionSet::Templates(_) | OptionSet::Number { .. }))
+        .then(|| offer.clone()),
+        None => rule
+            .grants
+            .iter()
+            .any(|effect| matches!(effect, Effect::FactGrant(Fact::ClassSkillChosen(choice)) if *choice == rule.id))
+            .then(|| Choice { id: rule.id.clone(), count: Expr::Const(1), from: OptionSet::Skills(Vec::new()) }),
+    }
+}
+
+/// The Class Features pool a record's parameter choice is taken in: `<record slug>_choice`.
+pub fn parameter_pool(rule: &SheetRule) -> String {
+    format!("{}_choice", split_rule_id(&rule.id).2)
+}
+
+/// [`parameter_offer`]'s choice with the values the corpus lists for it: the records of the kind it names (a skill, a
+/// language, a class, a race; all of them for an empty list), the equipment records a weapon list names, the spells of
+/// the class list and levels it names, the members of a tagged ability list. A list the converter kept no member filter
+/// for (a weapon class, `QUALIFIED`, a spellcaster, an untagged base category), a school, an item and free text list no
+/// value: the player writes it in.
+pub fn parameter_choice(package: &SheetRulePackage, rule: &SheetRule) -> Option<ParameterChoice> {
+    let offer = parameter_offer(rule)?;
+    let named = |kind: &str, names: &[String], all: bool| -> Vec<String> {
+        package
+            .rules_of_kind(kind)
+            .filter(|record| !record.id.contains('#') && !record.label.is_empty())
+            .filter(|record| {
+                let label = display_label(record);
+                (all && names.is_empty()) || names.iter().any(|name| name.eq_ignore_ascii_case(&label) || name.eq_ignore_ascii_case(&record.label) || id_slug(name) == split_rule_id(&record.id).2)
+            })
+            .map(display_label)
+            .collect()
+    };
+    let mut values = match &offer.from {
+        OptionSet::Skills(names) => named("skill", names, true),
+        OptionSet::Languages(names) => named("language", names, true),
+        OptionSet::Classes(names) => named("class", names, true),
+        OptionSet::Races(names) => named("race", names, true),
+        OptionSet::Weapons(names) => named("equipment", names, false),
+        OptionSet::Spells { class, levels } => package
+            .rules_of_kind("spell")
+            .filter(|spell| !spell.id.contains('#') && !spell.label.is_empty())
+            .filter(|spell| {
+                spell.granted_by.iter().any(|grant| {
+                    matches!(&grant.by, Granter::ClassSpellList { id, spell_level } if (class.is_empty() || id == class) && (levels.0..=levels.1).contains(spell_level))
+                })
+            })
+            .map(display_label)
+            .collect(),
+        OptionSet::Rules { pool, tags, .. } if !(tags.is_empty() && BASE_CATEGORY_POOLS.contains(&pool.as_str())) => {
+            package.rules.values().filter(|member| offer_selects(&offer, member) && !member.label.is_empty()).map(display_label).collect()
+        }
+        _ => Vec::new(),
+    };
+    values.sort();
+    values.dedup();
+    Some(ParameterChoice { words: crate::rules_core::sheet_rule_catalog::option_set_words(package, &offer.from), values })
+}
+
+/// The option id a saved Class Features, Background or Misc pick is held under: `<pool>:<record>`, then
+/// `|<target>` when it takes a parameter (E3.26).
+pub fn pick_option_id(pick: &crate::rules_core::character_input::AbilitySelection) -> String {
+    match &pick.target {
+        Some(target) => format!("{}:{}{TARGET_SEPARATOR}{target}", pick.pool, pick.record_key),
+        None => format!("{}:{}", pick.pool, pick.record_key),
+    }
+}
+
+/// `<pool>:<record>|<target>` -> (`<pool>:<record>`, `Some(<target>)`); an id with no target is itself.
+pub fn split_target(option_id: &str) -> (&str, Option<&str>) {
+    match option_id.split_once(TARGET_SEPARATOR) {
+        Some((id, target)) => (id, Some(target)),
+        None => (option_id, None),
+    }
 }
 
 /// The Class Features picks a creation choice fills: each `selected_choices` entry (`choice:sorcerer_bloodline ->
@@ -614,6 +739,7 @@ fn category_options(package: &SheetRulePackage, input: &CharacterInput, base: &P
                 category: Some(category.name.clone()),
                 qualified: unmet.is_empty(),
                 unmet,
+                parameter: None,
                 description: (!prose.trim().is_empty()).then_some(prose),
             });
         }
@@ -661,15 +787,20 @@ fn class_feature_budget_from(package: &SheetRulePackage, input: &CharacterInput,
         }
     }
     // The saved picks, then the creation choices that fill a level-1 selection pool: `(pool, record)`.
-    let picks: Vec<(String, String)> = input
+    // `(pool, record, the parameter it takes)`.
+    let picks: Vec<(String, String, Option<String>)> = input
         .chosen
         .ability_selections
         .iter()
         .filter(|pick| pick.subtab == SubTab::ClassFeatures.id())
-        .map(|pick| (pick.pool.clone(), pick.record_key.clone()))
-        .chain(creation_choice_picks(package, input).into_iter().filter_map(|(id, _)| id.split_once(':').map(|(pool, record)| (pool.to_owned(), record.to_owned()))))
+        .map(|pick| (pick.pool.clone(), pick.record_key.clone(), pick.target.clone()))
+        .chain(
+            creation_choice_picks(package, input)
+                .into_iter()
+                .filter_map(|(id, _)| id.split_once(':').map(|(pool, record)| (pool.to_owned(), record.to_owned(), None))),
+        )
         .collect();
-    for (pool, _) in &picks {
+    for (pool, _, _) in &picks {
         pools
             .entry(pool.clone())
             .or_insert_with(|| AbilityPool {
@@ -684,10 +815,12 @@ fn class_feature_budget_from(package: &SheetRulePackage, input: &CharacterInput,
     }
     let held = picks
         .iter()
-        .map(|(pool, record)| HeldAbility {
-            id: format!("{pool}:{record}"),
-            label: package.rule(record).map_or_else(|| record.clone(), display_label),
-            category: None,
+        .map(|(pool, record, target)| {
+            let label = package.rule(record).map_or_else(|| record.clone(), display_label);
+            match target {
+                Some(target) => HeldAbility { id: format!("{pool}:{record}{TARGET_SEPARATOR}{target}"), label: format!("{label} ({target})"), category: None },
+                None => HeldAbility { id: format!("{pool}:{record}"), label, category: None },
+            }
         })
         .collect();
     pools.retain(|_, pool| pool.granted > 0 || pool.spent > 0);
@@ -788,6 +921,8 @@ pub struct AbilityOption {
     /// The record's rule text when the converted record carries it (Class Features); `None` for a
     /// sub-tab whose screen reads its prose elsewhere.
     pub description: Option<String>,
+    /// The parameter its pick names (E3.26: a class feature's weapon, spell, skill...); `None` when it takes none.
+    pub parameter: Option<ParameterChoice>,
 }
 
 /// Every pick the sub-tab offers, each with whether this character qualifies and why not.
@@ -969,6 +1104,7 @@ fn archetype_options(package: &SheetRulePackage, input: &CharacterInput, base: &
                 category: (!words.is_empty()).then(|| format!("Replaces {}", words.join(", "))),
                 qualified: unmet.is_empty(),
                 unmet,
+                parameter: None,
                 description: (!prose.trim().is_empty()).then_some(prose),
             }
         })
@@ -1043,6 +1179,23 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
     let held_rules: Vec<&SheetRule> = held.rules.keys().filter_map(|id| package.rule(id)).collect();
     let mut options: Vec<AbilityOption> = Vec::new();
     for pool in &pools {
+        // A parameter choice's pool (E3.26) offers its one record, with the values its pick names as the target.
+        if let Some((rule, parameter)) =
+            held_rules.iter().find(|rule| parameter_pool(rule) == *pool).and_then(|rule| parameter_choice(package, rule).map(|parameter| (*rule, parameter)))
+        {
+            let prose = catalog_prose(package, rule);
+            options.push(AbilityOption {
+                id: format!("{pool}:{}", rule.id),
+                label: display_label(rule),
+                pool: pool.clone(),
+                category: None,
+                qualified: true,
+                unmet: Vec::new(),
+                description: (!prose.trim().is_empty()).then_some(prose),
+                parameter: Some(parameter),
+            });
+            continue;
+        }
         let Some(selects) = pool_member_selector(package, &held_rules, pool) else { continue };
         // label -> index in `options` of the record kept for it.
         let mut labels: HashMap<String, usize> = HashMap::new();
@@ -1066,6 +1219,7 @@ fn class_feature_options(package: &SheetRulePackage, input: &CharacterInput, bas
                 category: None,
                 qualified: unmet.is_empty(),
                 unmet,
+                parameter: None,
                 description: (!prose.trim().is_empty()).then_some(prose),
             };
             match kept {
@@ -1105,6 +1259,7 @@ fn trait_options(package: &SheetRulePackage, input: &CharacterInput, base: &Pilo
                 category: category.as_deref().map(|c| category_words(c).to_owned()),
                 qualified: unmet.is_empty(),
                 unmet,
+                parameter: None,
                 description: None,
             }
         })
@@ -1116,6 +1271,7 @@ fn trait_options(package: &SheetRulePackage, input: &CharacterInput, base: &Pilo
         category: None,
         qualified: true,
         unmet: Vec::new(),
+        parameter: None,
         description: None,
     }));
     // Two books printing one slug resolve to one record (`SheetRulePackage::find`): offer it once.
@@ -1256,6 +1412,7 @@ fn favored_class_options(package: &SheetRulePackage, input: &CharacterInput) -> 
                 category: Some(format!("{} levels held", class.level)),
                 qualified: unmet.is_empty(),
                 unmet,
+                parameter: None,
                 description: Some(
                     "Core Rulebook p.31: each character chooses one favored class; whenever the character gains a level in it, \
                      the character receives either +1 hit point or +1 skill rank."
@@ -1274,6 +1431,7 @@ fn favored_class_options(package: &SheetRulePackage, input: &CharacterInput) -> 
             category: None,
             qualified: no_class.is_none(),
             unmet: no_class.clone().into_iter().collect(),
+            parameter: None,
             description: Some(format!("For one level of the favored class: {words}")),
         });
     }
@@ -1285,6 +1443,7 @@ fn favored_class_options(package: &SheetRulePackage, input: &CharacterInput) -> 
             category: None,
             qualified: true,
             unmet: Vec::new(),
+            parameter: None,
             description: None,
         });
     }
@@ -1295,6 +1454,7 @@ fn favored_class_options(package: &SheetRulePackage, input: &CharacterInput) -> 
         category: Some("not in the corpus".to_owned()),
         qualified: false,
         unmet: vec![RACE_ALTERNATES_GAP.to_owned()],
+        parameter: None,
         description: Some(RACE_ALTERNATES_GAP.to_owned()),
     });
     options
@@ -1835,10 +1995,48 @@ mod tests {
         assert!(enemies.contains(&"Aberration"), "Lantern Bearer 2 favored enemy options: {enemies:?}");
     }
 
+    /// One named site of E3.26's population: Minor Magic (Core Rulebook, Rogue Talents): "a rogue with this talent
+    /// gains the ability to cast a 0-level spell from the sorcerer/wizard spell list" (`CHOOSE:SPELLS`). The Class
+    /// Features sub-tab offers the spell, saves it as the pick's target, and the character's facts read it.
+    #[test]
+    fn ability_budget_class_features_minor_magic_takes_its_spell_as_the_picks_target() {
+        const MINOR_MAGIC: &str = "core_rulebook:class_feature:rogue_talent_minor_magic";
+        let mut input = input_for(&load_sweep_fixture().expect("census fixture"), "rogue", 2);
+        input.chosen.ability_selections.push(crate::rules_core::character_input::AbilitySelection {
+            subtab: SubTab::ClassFeatures.id().to_owned(),
+            pool: "rogue_talent".to_owned(),
+            record_key: MINOR_MAGIC.to_owned(),
+            level: 2,
+            target: None,
+        });
+        let pool = "rogue_talent_minor_magic_choice";
+        assert_eq!(row(&ability_budget(package(), &input, SubTab::ClassFeatures), &format!("abilities.budget.class_features.{pool}.granted")), 1);
+        let base = compute_pilot_base_chassis(&input);
+        let options = ability_options(package(), &input, &base, SubTab::ClassFeatures);
+        let option = options.iter().find(|option| option.pool == pool).unwrap_or_else(|| panic!("no {pool} option"));
+        assert_eq!(option.id, format!("{pool}:{MINOR_MAGIC}"));
+        let values = &option.parameter.as_ref().expect("Minor Magic takes a spell").values;
+        assert!(values.contains(&"Acid Splash".to_owned()) && !values.contains(&"Fireball".to_owned()), "{values:?}");
+
+        input.chosen.ability_selections.push(crate::rules_core::character_input::AbilitySelection {
+            subtab: SubTab::ClassFeatures.id().to_owned(),
+            pool: pool.to_owned(),
+            record_key: MINOR_MAGIC.to_owned(),
+            level: 2,
+            target: Some("Acid Splash".to_owned()),
+        });
+        let budget = ability_budget(package(), &input, SubTab::ClassFeatures);
+        assert_eq!(row(&budget, &format!("abilities.budget.class_features.{pool}.remaining")), 0);
+        let held = format!("{pool}:{MINOR_MAGIC}{TARGET_SEPARATOR}Acid Splash");
+        assert!(budget.held.iter().any(|pick| pick.id == held && pick.label == "Minor Magic (Acid Splash)"), "{:?}", budget.held);
+        assert!(budget.refusal(package(), &held).is_some(), "the same spell twice is refused");
+        let facts = CharacterFacts::from_character(&input, &compute_pilot_base_chassis(&input));
+        assert_eq!(facts.choices.get(MINOR_MAGIC).map(Vec::as_slice), Some(&[("acid_splash".to_owned(), "Acid Splash".to_owned())][..]));
+    }
+
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("parameter_choose:", "E3.26"),
         ("add_token:", "E3.27"),
         ("domain_count:", "E3.28"),
         ("abilityselection of PCGen's base category", "E3.29"),
@@ -1887,7 +2085,10 @@ mod tests {
             let target = site["target"].as_str().expect("target");
             let rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
             let targets = |rule: &SheetRule, pool: &str| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
+            // A parameter choice (E3.26) is taken in its record's own pool, its pick naming one of the offered values.
+            let parameter = rules.iter().find_map(|rule| parameter_choice(package(), rule).map(|choice| (*rule, choice))).filter(|_| mechanism == "parameter_choose");
             let pools: Vec<String> = match mechanism {
+                "parameter_choose" => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
                 "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
                 "domain_count" => rules
                     .iter()
@@ -1946,9 +2147,14 @@ mod tests {
                     last = unreachable("the pool is not granted to its class at 20 holding the granting record".to_owned());
                     continue;
                 }
-                let Some(member) = pool_member_selector(package(), &grants, pool)
-                    .and_then(|selects| package().rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()).map(|rule| rule.id.clone()).min())
-                else {
+                let member = match &parameter {
+                    Some((rule, _)) => Some(rule.id.clone()),
+                    None => pool_member_selector(package(), &grants, pool)
+                        .and_then(|selects| package().rules.values().filter(|rule| selects(rule) && !rule.label.is_empty()).map(|rule| rule.id.clone()).min()),
+                };
+                // The first value the corpus lists, else a value the player writes in.
+                let target = parameter.as_ref().map(|(_, choice)| choice.values.first().cloned().unwrap_or_else(|| "Written in".to_owned()));
+                let Some(member) = member else {
                     last = unreachable("the pool is granted but lists no member".to_owned());
                     continue;
                 };
@@ -1958,7 +2164,7 @@ mod tests {
                     pool: pool.clone(),
                     record_key: member.clone(),
                     level: 20,
-                    target: None,
+                    target: target.clone(),
                 });
                 let root = scratch.join(index.to_string());
                 let envelope = SavedCharacterEnvelope {
@@ -1977,7 +2183,10 @@ mod tests {
                 SavedCharacterStore::save(&envelope, &root).expect("save");
                 let reloaded = SavedCharacterStore::load(&root).expect("load").character_input;
                 let _ = std::fs::remove_dir_all(&root);
-                let id = format!("{pool}:{member}");
+                let id = match &target {
+                    Some(target) => format!("{pool}:{member}{TARGET_SEPARATOR}{target}"),
+                    None => format!("{pool}:{member}"),
+                };
                 if ability_budget_now(package(), &reloaded, SubTab::ClassFeatures).held.iter().any(|held| held.id == id) {
                     return ("reachable".to_owned(), String::new());
                 }

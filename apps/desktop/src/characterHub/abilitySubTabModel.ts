@@ -1,4 +1,4 @@
-import type { AbilityOptionDto } from '../boundary/abilities';
+import { TARGET_SEPARATOR, type AbilityOptionDto, type ParameterChoiceDto } from '../boundary/abilities';
 
 /**
  * Pure model behind the generic Abilities sub-tab (SD-43 E3.3). Every number is an engine row
@@ -26,6 +26,8 @@ export interface AbilityAvailableRow {
   description: string | null;
   /** Why Add is disabled, in the engine's words; `null` when Add is live. */
   addBlockedBy: string | null;
+  /** The parameter Add asks for first (E3.26), the engine's; `null` when it takes none. */
+  parameter: ParameterChoiceDto | null;
 }
 
 export interface AbilitySelectedRow {
@@ -93,11 +95,17 @@ export function buildAbilitySubTabModel(input: {
         : pool !== undefined && pool.remaining <= 0 && input.ignoreBudget !== true && !option.replaces
           ? `No room in the ${option.pool} pool: ${pool.spent} of ${pool.granted} spent, ${pool.remaining} remaining.`
           : null;
-      return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, description: option.description ?? null, addBlockedBy };
+      return { id: option.id, label: option.label, pool: option.pool, category: option.category, qualified: option.qualified, unmet: option.unmet, description: option.description ?? null, addBlockedBy, parameter: option.parameter ?? null };
     });
 
   const selected = input.selectedIds.map((id): AbilitySelectedRow => {
     const option = input.options.find((candidate) => candidate.id === id);
+    if (option === undefined && id.includes(TARGET_SEPARATOR)) {
+      // A pick naming a parameter (E3.26) is held as `<option id>|<value>`.
+      const at = id.indexOf(TARGET_SEPARATOR);
+      const base = input.options.find((candidate) => candidate.id === id.slice(0, at));
+      if (base !== undefined) return { id, label: `${base.label} (${id.slice(at + 1)})`, pool: base.pool, category: base.category };
+    }
     return { id, label: option?.label ?? id, pool: option?.pool ?? null, category: option?.category ?? null };
   });
 

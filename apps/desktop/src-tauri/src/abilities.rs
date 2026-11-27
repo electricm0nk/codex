@@ -27,8 +27,8 @@
 use std::path::Path;
 
 use codex::rules_core::ability_budget::{
-    ability_budget, ability_options, creation_choice_picks, creation_choice_swap, favored_class_budget, favored_next_level, favored_pick_of, AbilityOption, SubTab,
-    FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL,
+    ability_budget, ability_options, creation_choice_picks, creation_choice_swap, favored_class_budget, favored_next_level, favored_pick_of, pick_option_id, split_target, AbilityOption,
+    SubTab, FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL,
 };
 use codex::rules_core::ability_prereqs;
 use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
@@ -99,6 +99,7 @@ fn racial_options(input: &CharacterInput) -> Result<(Vec<AbilityOptionDto>, Vec<
                 unmet,
                 description: Some(alternate.description.clone()).filter(|d| !d.trim().is_empty()),
                 replaces: None,
+                parameter: None,
             }
         })
         .collect();
@@ -184,6 +185,18 @@ pub struct AbilityOptionDto {
     /// The held pick this option replaces instead of taking room: another member of a level-1 selection pool a
     /// creation choice fills renames that choice (E3.13, [`creation_choice_swap`]).
     pub replaces: Option<String>,
+    /// The parameter a pick of it names (E3.26: a class feature's weapon, spell, skill); Add sends it as
+    /// `<id>|<value>`. `None` when it takes none.
+    pub parameter: Option<ParameterChoiceDto>,
+}
+
+/// A class feature's parameter choice (E3.26): the offer's words and the values the corpus lists; no values means
+/// the player writes it in.
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct ParameterChoiceDto {
+    pub words: String,
+    pub values: Vec<String>,
 }
 
 impl From<AbilityOption> for AbilityOptionDto {
@@ -197,6 +210,7 @@ impl From<AbilityOption> for AbilityOptionDto {
             unmet: option.unmet,
             description: option.description,
             replaces: None,
+            parameter: option.parameter.map(|parameter| ParameterChoiceDto { words: parameter.words, values: parameter.values }),
         }
     }
 }
@@ -282,10 +296,22 @@ pub(crate) fn add_ability_selection_at_root(
         flags.push(OverrideFlag::IgnoreAbilityBudget);
     }
     let base = compute_pilot_base_chassis(&input);
+    // A Class Features option that takes a parameter (E3.26) arrives as `<id>|<value>`.
+    let (base_id, target) = if subtab == SubTab::ClassFeatures { split_target(option_id) } else { (option_id, None) };
     let option = ability_options(package, &input, &base, subtab)
         .into_iter()
-        .find(|option| option.id == option_id)
-        .ok_or_else(|| format!("'{option_id}' is not an option of the {} sub-tab", subtab.id()))?;
+        .find(|option| option.id == base_id)
+        .ok_or_else(|| format!("'{base_id}' is not an option of the {} sub-tab", subtab.id()))?;
+    let target = match (&option.parameter, target.map(str::trim)) {
+        (None, None) => None,
+        (None, Some(_)) => return Err(format!("{} takes no choice", option.label)),
+        (Some(parameter), None | Some("")) => return Err(format!("Choose {} for {} first", parameter.words, option.label)),
+        (Some(_), Some(value)) if value.contains(['|', '\n']) => return Err(format!("A choice for {} may not hold '|' or a line break", option.label)),
+        (Some(parameter), Some(value)) if !parameter.values.is_empty() && !parameter.values.iter().any(|offered| offered == value) => {
+            return Err(format!("'{value}' is not one of {} for {}", parameter.words, option.label));
+        }
+        (Some(_), Some(value)) => Some(value.to_owned()),
+    };
     if let Some(refusal) = ability_prereqs::refusal(&option) {
         if !overrides.abilities_without_prerequisites {
             return Err(refusal);
@@ -303,13 +329,13 @@ pub(crate) fn add_ability_selection_at_root(
     match subtab {
         SubTab::Traits => mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| apply_add_trait_selection(input, option_id, None)),
         SubTab::ClassFeatures => {
-            let (pool, record_key) = option_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no class feature pool"))?;
+            let (pool, record_key) = base_id.split_once(':').ok_or_else(|| format!("'{option_id}' names no class feature pool"))?;
             let level = budget
                 .pool(pool)
                 .and_then(|pool| pool.next_pick_level())
                 .or_else(|| flags.contains(&OverrideFlag::IgnoreAbilityBudget).then_some(character_level))
                 .ok_or_else(|| format!("The {pool} pool has no grant left to charge '{}' to", option.label))?;
-            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target: None };
+            let pick = AbilitySelection { subtab: subtab.id().to_owned(), pool: pool.to_owned(), record_key: record_key.to_owned(), level, target };
             mutate_saved_character_admitting_at_root(root, saved_at, admit(option_id), |input| input.chosen.ability_selections.push(pick))
         }
         SubTab::Background | SubTab::Misc => {
@@ -362,7 +388,7 @@ pub(crate) fn remove_ability_selection_at_root(
         SubTab::Traits => remove_trait_selection_at_root(root, option_id, saved_at),
         subtab @ (SubTab::ClassFeatures | SubTab::Background | SubTab::Misc) => {
             let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
-            let held = |pick: &AbilitySelection| pick.subtab == subtab.id() && format!("{}:{}", pick.pool, pick.record_key) == option_id;
+            let held = |pick: &AbilitySelection| pick.subtab == subtab.id() && pick_option_id(pick) == option_id;
             let Some(at) = input.chosen.ability_selections.iter().rposition(held) else {
                 // A pick a creation choice holds (E3.13: the bloodline chosen at creation) is removed with its choice.
                 let chosen = if subtab == SubTab::ClassFeatures { creation_choice_picks(package()?, &input) } else { Vec::new() };
@@ -442,6 +468,40 @@ mod tests {
         remove_ability_selection_at_root(&root, "traits", "trait:trait_acrobat", SAVED_AT).expect("remove");
         assert_eq!(held_traits(&root), ["trait:trait_axe_to_grind"]);
         assert!(list_ability_options_at_root(&root, "no_such_subtab").is_err(), "a sub-tab with no engine budget is refused");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// E3.26: Minor Magic (Core Rulebook, Rogue Talents) takes a 0-level sorcerer/wizard spell; the sub-tab offers the
+    /// spells, saves the chosen one as the pick's `target`, lists the pick under it and removes it by it.
+    #[test]
+    fn abilities_class_features_minor_magic_saves_its_spell_as_the_picks_target() {
+        const MINOR_MAGIC: &str = "core_rulebook:class_feature:rogue_talent_minor_magic";
+        let root = aldric_root("parameter-choice");
+        mutate_saved_character_at_root(&root, SAVED_AT, |input| {
+            input.chosen.class_levels =
+                vec![codex::rules_core::character_input::CharacterClassLevel { class_id: "class:rogue".to_owned(), level: 2 }];
+        })
+        .expect("make Aldric a Rogue 2");
+        add_ability_selection_at_root(&root, "class_features", &format!("rogue_talent:{MINOR_MAGIC}"), SAVED_AT).expect("Minor Magic");
+        let listed = list_ability_options_at_root(&root, "class_features").expect("options");
+        let id = format!("rogue_talent_minor_magic_choice:{MINOR_MAGIC}");
+        let option = listed.options.iter().find(|o| o.id == id).unwrap_or_else(|| panic!("no {id}"));
+        let parameter = option.parameter.as_ref().expect("Minor Magic takes a spell");
+        assert!(parameter.values.iter().any(|v| v == "Acid Splash"), "{:?}", parameter.values);
+
+        let refusal = add_ability_selection_at_root(&root, "class_features", &id, SAVED_AT).expect_err("no spell named");
+        assert!(refusal.contains("first"), "{refusal}");
+        let refusal = add_ability_selection_at_root(&root, "class_features", &format!("{id}|Fireball"), SAVED_AT).expect_err("not a cantrip");
+        assert!(refusal.contains("is not one of"), "{refusal}");
+        add_ability_selection_at_root(&root, "class_features", &format!("{id}|Acid Splash"), SAVED_AT).expect("Acid Splash");
+        let picks = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        assert!(picks.iter().any(|p| p.pool == "rogue_talent_minor_magic_choice" && p.target.as_deref() == Some("Acid Splash")), "{picks:?}");
+        let held = format!("{id}|Acid Splash");
+        assert!(list_ability_options_at_root(&root, "class_features").expect("options").selected.contains(&held));
+
+        remove_ability_selection_at_root(&root, "class_features", &held, SAVED_AT).expect("remove");
+        let picks = SavedCharacterStore::load(&root).expect("reload").character_input.chosen.ability_selections;
+        assert!(!picks.iter().any(|p| p.target.is_some()), "{picks:?}");
         std::fs::remove_dir_all(&root).ok();
     }
 

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { AdmittedRecordDto, OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
 import { OverrideTag, flagsOf } from './OverrideTag';
-import { listAbilityOptions, type AbilityOptionsDto, type AbilitySubTabId } from '../boundary/abilities';
+import { listAbilityOptions, TARGET_SEPARATOR, type AbilityOptionsDto, type AbilitySubTabId } from '../boundary/abilities';
 import { buildAbilitySubTabModel, formatPoolLine, type AbilitySubTabModel } from './abilitySubTabModel';
 
 /** What a sub-tab knows about one option beyond the engine's list: prose, a grants line, choices. */
@@ -55,7 +55,12 @@ export function AbilitySubTabView(props: {
   const focused = props.model.available.find((row) => row.id === props.focusedId) ?? null;
   const focusedInfo = focused ? props.info(focused.id) : null;
   const needsChoice = (focusedInfo?.choices.length ?? 0) > 0;
-  const blockedBy = focused?.addBlockedBy ?? (needsChoice && choice === '' ? 'Choose one first.' : null);
+  // A class feature's parameter (E3.26): one of the engine's values, or written in when it lists none.
+  const parameter = needsChoice ? null : (focused?.parameter ?? null);
+  const parameterBlocked = parameter === null ? null : choice.trim() === ''
+    ? `Choose ${parameter.words} first.`
+    : parameter.values.length > 0 && !parameter.values.includes(choice.trim()) ? `Choose one of ${parameter.words}.` : null;
+  const blockedBy = focused?.addBlockedBy ?? (needsChoice && choice === '' ? 'Choose one first.' : parameterBlocked);
 
   return (
     <div style={{ marginTop: '0.5rem' }}>
@@ -132,7 +137,30 @@ export function AbilitySubTabView(props: {
                     ))}
                   </select>
                 ) : null}
-                <button type="button" disabled={props.busy || blockedBy !== null} title={blockedBy ?? undefined} onClick={() => props.onAdd(focused.id, choice || null)}>
+                {parameter !== null ? (
+                  <>
+                    <input
+                      aria-label={`Choice for ${focused.label}`}
+                      list={parameter.values.length > 0 ? `parameter-${focused.id}` : undefined}
+                      title={parameter.words}
+                      value={choice}
+                      onChange={(event) => setChoice(event.target.value)}
+                    />
+                    {parameter.values.length > 0 ? (
+                      <datalist id={`parameter-${focused.id}`}>
+                        {parameter.values.map((value) => (
+                          <option key={value} value={value} />
+                        ))}
+                      </datalist>
+                    ) : null}
+                  </>
+                ) : null}
+                <button
+                  type="button"
+                  disabled={props.busy || blockedBy !== null}
+                  title={blockedBy ?? undefined}
+                  onClick={() => (parameter !== null ? props.onAdd(`${focused.id}${TARGET_SEPARATOR}${choice.trim()}`, null) : props.onAdd(focused.id, choice || null))}
+                >
                   Add
                 </button>
               </div>

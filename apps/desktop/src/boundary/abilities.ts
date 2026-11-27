@@ -24,7 +24,20 @@ export interface AbilityOptionDto {
   description?: string | null;
   /** The held pick this option replaces instead of taking room (Class Features: a bloodline renames the creation choice). */
   replaces?: string | null;
+  /**
+   * The parameter a pick of it names (E3.26: a class feature's weapon, spell, skill): the offer's words and the
+   * values the corpus lists; no values means the player writes it in. Add sends `<id>|<value>`.
+   */
+  parameter?: ParameterChoiceDto | null;
 }
+
+export interface ParameterChoiceDto {
+  words: string;
+  values: string[];
+}
+
+/** The separator between an option id and the parameter its pick names (`ability_budget::TARGET_SEPARATOR`). */
+export const TARGET_SEPARATOR = '|';
 
 export interface AbilityOptionsDto {
   budget: ExplanationDto[];

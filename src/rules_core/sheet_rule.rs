@@ -1553,6 +1553,12 @@ impl CharacterFacts {
         for c in &chosen.selected_choices {
             picks.record_pick(&c.choice_set_id, &c.selection_id);
         }
+        // A pick that names a parameter (E3.26: a class feature's weapon, spell, skill) records it under the record's own choice.
+        for pick in &chosen.ability_selections {
+            if let Some(target) = &pick.target {
+                picks.record_pick(&pick.record_key, target);
+            }
+        }
         CharacterFacts {
             level,
             caster_levels,
@@ -1592,6 +1598,12 @@ impl CharacterFacts {
         let mut picks = CharacterFacts::default();
         for c in &chosen.selected_choices {
             picks.record_pick(&c.choice_set_id, &c.selection_id);
+        }
+        // A pick that names a parameter (E3.26: a class feature's weapon, spell, skill) records it under the record's own choice.
+        for pick in &chosen.ability_selections {
+            if let Some(target) = &pick.target {
+                picks.record_pick(&pick.record_key, target);
+            }
         }
         CharacterFacts {
             level: class_levels.iter().map(|(_, l)| *l).sum(),

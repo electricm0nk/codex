@@ -423,7 +423,7 @@ fn named_list(kind: &str, names: &[String]) -> String {
     )
 }
 
-fn option_set_words(package: &SheetRulePackage, from: &OptionSet) -> String {
+pub(crate) fn option_set_words(package: &SheetRulePackage, from: &OptionSet) -> String {
     match from {
         OptionSet::Rules { pool, tags, .. } => {
             if tags.is_empty() {

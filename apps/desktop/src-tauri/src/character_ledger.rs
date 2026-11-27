@@ -27,7 +27,7 @@ use crate::feat_catalog::build_feat_catalog;
 use crate::pf1_adapter::OVERRIDE_SPELL_SOURCE;
 use codex::rules_core::character_input::{ActiveState, CharacterClassLevel, CharacterInput};
 use codex::rules_core::class_seeds::canonical_seeds_for;
-use codex::rules_core::ability_budget::{SubTab, FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL};
+use codex::rules_core::ability_budget::{pick_option_id, SubTab, FAVORED_BONUS_POOL, FAVORED_CLASS_CHOICE_ID, FAVORED_CLASS_POOL};
 use codex::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
 use codex::rules_core::feat_budget::feat_slot_levels;
 use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, spells_known_table, PilotBaseChassisComputation};
@@ -44,7 +44,7 @@ pub(crate) fn selected_ids(input: &CharacterInput, subtab: SubTab) -> Vec<String
             .ability_selections
             .iter()
             .filter(|pick| pick.subtab == subtab.id())
-            .map(|pick| format!("{}:{}", pick.pool, pick.record_key))
+            .map(pick_option_id)
             .collect(),
         SubTab::Archetype => input
             .chosen

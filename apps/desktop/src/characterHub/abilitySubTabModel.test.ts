@@ -147,6 +147,35 @@ const talentHtml = renderToStaticMarkup(
 );
 assert(talentHtml.includes('Move at full speed using Stealth.') && !talentHtml.includes('bundled roster'), 'the Info pane prints the engine description');
 
+// SD-43 E3.26: a class feature's parameter choice: the Info pane asks for one of the engine's values before Add, and a
+// held pick naming one (`<id>|<value>`) is listed under its option's label with the value.
+const minorMagic: AbilityOptionDto = {
+  ...option('rogue_talent_minor_magic_choice:core_rulebook:class_feature:rogue_talent_minor_magic', 'Minor Magic', 'rogue_talent_minor_magic_choice'),
+  parameter: { words: 'wizard spells of levels 0 to 0', values: ['Acid Splash', 'Light'] },
+};
+const minorModel = buildAbilitySubTabModel({ subtab: 'class_features', budget: [], options: [minorMagic], selectedIds: [`${minorMagic.id}|Light`], search: '', qualifiedOnly: false });
+assertEqual(minorModel.selected[0]?.label ?? '', 'Minor Magic (Light)', 'a held parameter pick is labelled with its value');
+assertEqual(minorModel.available[0]?.parameter?.values.length ?? 0, 2, 'the available row carries the engine values');
+const minorHtml = renderToStaticMarkup(
+  createElement(AbilitySubTabView, {
+    title: 'Class Features',
+    model: minorModel,
+    search: '',
+    qualifiedOnly: false,
+    focusedId: minorMagic.id,
+    info: () => null,
+    busy: false,
+    error: null,
+    onSearch: () => undefined,
+    onQualifiedOnly: () => undefined,
+    onFocus: () => undefined,
+    onAdd: () => undefined,
+    onRemove: () => undefined,
+  }),
+);
+assert(minorHtml.includes('aria-label="Choice for Minor Magic"') && minorHtml.includes('<option value="Acid Splash">'), 'the Info pane offers the values');
+assert(minorHtml.includes('title="Choose wizard spells of levels 0 to 0 first."'), 'Add waits for a value');
+
 console.log('abilitySubTabModel tests passed');
 
 // SD-43 E3.10: the two Abilities overrides lift Add's block, and only when on.
