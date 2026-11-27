@@ -2093,6 +2093,36 @@ mod tests {
         assert!(languages.contains(&"Aquan".to_owned()) && languages.contains(&"Common".to_owned()), "{languages:?}");
     }
 
+    /// One named site of E3.29's population: Warpriest Bonus Feat ~ Impaling Critical (Advanced Class Guide,
+    /// `CHOOSE:ABILITYSELECTION|FEAT|Weapon Specialization`): "whenever you score a critical hit with the selected
+    /// piercing melee weapon". A choice drawing from PCGen's base category `FEAT` is the record's parameter pick (E3.26):
+    /// the Class Features sub-tab offers it, the weapon is written in (the converter keeps no member filter for an
+    /// untagged base category), and the pick is held. A tagged base-category choice (Magus Spell Blending LVL 0,
+    /// `ABILITYSELECTION|Internal|TYPE=MagusSpellblendLVL0`, `SELECT:2`) offers its tagged members, two picks.
+    #[test]
+    fn ability_budget_class_features_a_base_category_abilityselection_is_a_parameter_pick() {
+        const IMPALING: &str = "advanced_class_guide:class_feature:warpriest_bonus_feat_impaling_critical";
+        let mut input = input_for(&load_sweep_fixture().expect("census fixture"), "warpriest", 20);
+        input.chosen.ability_selections.push(pick(SubTab::ClassFeatures, &format!("warpriest_bonus_feat:{IMPALING}")));
+        let pool = "warpriest_bonus_feat_impaling_critical_choice";
+        assert_eq!(row(&ability_budget(package(), &input, SubTab::ClassFeatures), &format!("abilities.budget.class_features.{pool}.granted")), 1);
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        let option = options.iter().find(|option| option.pool == pool).unwrap_or_else(|| panic!("no {pool} option"));
+        assert_eq!(option.parameter.as_ref().expect("Impaling Critical takes a weapon").values, Vec::<String>::new(), "written in");
+        input.chosen.ability_selections.push(crate::rules_core::character_input::AbilitySelection {
+            target: Some("Spear".to_owned()),
+            ..pick(SubTab::ClassFeatures, &format!("{pool}:{IMPALING}"))
+        });
+        let budget = ability_budget(package(), &input, SubTab::ClassFeatures);
+        assert_eq!(row(&budget, &format!("abilities.budget.class_features.{pool}.remaining")), 0);
+        assert!(budget.held.iter().any(|held| held.id == format!("{pool}:{IMPALING}{TARGET_SEPARATOR}Spear")), "{:?}", budget.held);
+
+        let blending = package().rule("ultimate_magic:class_feature:magus_spell_blending_lvl_0").expect("Magus Spell Blending LVL 0");
+        let spells = parameter_choice(package(), blending).expect("Spell Blending takes a spell").values;
+        assert!(spells.contains(&"Acid Splash".to_owned()) && spells.contains(&"Mage Hand".to_owned()), "{spells:?}");
+        assert_eq!(parameter_offer(blending).map(|offer| offer.count), Some(Expr::Const(2)), "SELECT:2");
+    }
+
     /// "A cleric chooses two domains from among those belonging to her deity" (Core Rulebook, Cleric): PCGen's
     /// `BONUS:DOMAIN|NUMBER|ClericDomainCount` (2) is a Class Features pool of two domain picks (E3.28). The seed's
     /// creation domain (Good) is one of them, the sub-tab lists the domains, and a second domain is added, not
@@ -2148,7 +2178,6 @@ mod tests {
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("abilityselection of PCGen's base category", "E3.29"),
         ("abilitypool: the granting record carries no converted Pool line", "E3.29"),
         ("no class of the granting record to seed", "E3.30"),
         ("the pool is not granted", "E3.30"),
@@ -2207,11 +2236,13 @@ mod tests {
                 return ("granted (its class's domains)".to_owned(), "the class's own DOMAIN: rows fill the count".to_owned());
             }
             // A parameter choice (E3.26) is taken in its record's own pool, its pick naming one of the offered values.
-            // An `ADD:` of a list (E3.27) is the same: its record's own offer, taken as the pick's target.
+            // An `ADD:` of a list (E3.27) is the same: its record's own offer, taken as the pick's target. So is an
+            // `ABILITYSELECTION` of PCGen's base categories (E3.29: `FEAT`, `Internal`, `Special Ability`).
+            let base_category = mechanism == "abilityselection" && ["FEAT", "Internal", "Special Ability"].contains(&target);
             let parameter = rules
                 .iter()
                 .find_map(|rule| parameter_choice(package(), rule).map(|choice| (*rule, choice)))
-                .filter(|_| ["parameter_choose", "add_token"].contains(&mechanism));
+                .filter(|_| base_category || ["parameter_choose", "add_token"].contains(&mechanism));
             // An `ADD:` naming one choice is PCGen's automatic pick, a grant (E3.27, decisions.md §32): the record holds
             // the ability, grants the language or item, or prints its spellcasting class.
             if mechanism == "add_token"
@@ -2221,7 +2252,7 @@ mod tests {
                 return ("granted (one option)".to_owned(), how.to_owned());
             }
             let pools: Vec<String> = match mechanism {
-                "parameter_choose" | "add_token" => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
+                _ if base_category || ["parameter_choose", "add_token"].contains(&mechanism) => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
                 "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
                 // The domain count's own pool (E3.28), else the pool a record grants beside it (Nature's Bond's
                 // `Druid Domain`).
@@ -2239,9 +2270,6 @@ mod tests {
             if pools.is_empty() {
                 return match mechanism {
                     "abilitypool" => unreachable("abilitypool: the granting record carries no converted Pool line for the pool".to_owned()),
-                    "abilityselection" if ["FEAT", "Internal", "Special Ability"].contains(&target) => {
-                        unreachable(format!("abilityselection of PCGen's base category {target}: no Class Features pool"))
-                    }
                     _ => unreachable(format!("{mechanism}: no Class Features pool (the record offers {})", offer_shape(&rules))),
                 };
             }
