@@ -103,6 +103,7 @@ THE LEAD'S PRE-DISPATCH RED (logged in progress.md Dispatch log):
 - exit: ${red.exitCode}
 - failing line: ${red.failingLine}
 SECOND CALL SITES (lead's git grep): ${red.secondCallSites}
+${(A.note || {})[c.id] ? `\nLEAD NOTE (binding): ${A.note[c.id]}\n` : ''}
 ${c.id === 'E3.1' ? '\nOPERATOR RULING Q-22.3 (2026-11-22): the Feats tab is renamed Abilities; Feats becomes one of its seven sub-tabs (today\'s FeatsTab unchanged in behaviour). No second feat picker, no tab beside Feats.\n' : ''}
 RECEIPT AND BOARD (checked by a separate verify step; a miss fails the card):
 - The receipt has rows literally named "closure check", "RED", "Does not cover"${isScreen(c) ? ', and "Looked at" naming every image path you Read and what you saw in it' : ''} (receipts.md §2).
