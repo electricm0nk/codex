@@ -520,3 +520,12 @@ command when the repo can settle it, else the operator.
 - **P-8 met:** the CI secret `CODEX_REPORT_KEY` was created 2026-11-22 from the operator's key file
   (`~/workspace/.report_key`, outside the repo; the key is never written into the repo). Check:
   `gh secret list -R electricm0nk/codex | awk '$1=="CODEX_REPORT_KEY"' | awk 'END{print NR}'` → 1.
+- **E3.27 (DEFAULT, §27 + §28; 2026-11-26):** PCGen's `ADD:<kind>|[<count>|]<choices>` (`ADD:ABILITY|[<count>|]<category>|<nature>|<choices>`)
+  naming **one** choice taken once is PCGen's automatic pick — there is nothing to choose — so the converter writes it
+  as a grant, not an offer: `ADD:ABILITY` / `ADD:VFEAT` / `ADD:FEAT` hold the one ability as an automatic `ABILITY:`
+  row would; `ADD:LANGUAGE` grants the language fact; `ADD:EQUIP` grants the item fact (printed as `the item <name>`);
+  `ADD:SPELLCASTER` prints `Casts spells as a <class>.` (the paper-sheet rule: print the rule). A **list** (or a
+  `TYPE=` selector, or a count above 1) stays an offer and is a parameter pick on the Class Features sub-tab
+  (`ADD:SPELLCASTER|Bard,Inquisitor,Mesmerist` offers the three classes; `ADD:LANGUAGE|1|TYPE=Spoken` the
+  languages tagged `Spoken`). The choice-site census counts a one-option site as `granted (one option)`, not
+  `unreachable`. Alternative not taken: a one-value pick for each (a pick with one possible answer is not a choice).

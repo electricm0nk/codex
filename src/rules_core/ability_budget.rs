@@ -503,7 +503,14 @@ pub fn parameter_choice(package: &SheetRulePackage, rule: &SheetRule) -> Option<
             .filter(|record| !record.id.contains('#') && !record.label.is_empty())
             .filter(|record| {
                 let label = display_label(record);
-                (all && names.is_empty()) || names.iter().any(|name| name.eq_ignore_ascii_case(&label) || name.eq_ignore_ascii_case(&record.label) || id_slug(name) == split_rule_id(&record.id).2)
+                (all && names.is_empty())
+                    || names.iter().any(|name| {
+                        name.eq_ignore_ascii_case(&label)
+                            || name.eq_ignore_ascii_case(&record.label)
+                            || id_slug(name) == split_rule_id(&record.id).2
+                            // A language list may name a type (`ADD:LANGUAGE|1|TYPE=Spoken`, E3.27): its languages.
+                            || (kind == "language" && record.tags.iter().any(|tag| tag.eq_ignore_ascii_case(name)))
+                    })
             })
             .map(display_label)
             .collect()
@@ -2034,10 +2041,49 @@ mod tests {
         assert_eq!(facts.choices.get(MINOR_MAGIC).map(Vec::as_slice), Some(&[("acid_splash".to_owned(), "Acid Splash".to_owned())][..]));
     }
 
+    /// One named site of E3.27's population: Master Caster (Adventurer's Guide, Aspis Agency Secret,
+    /// `ADD:SPELLCASTER|Bard,Inquisitor,Mesmerist`): the agent's spellcasting advances in one of three classes. The
+    /// Class Features sub-tab offers the three as the pick's target; a typed language list (`Raven Master ~ Companion
+    /// Abilities`, `ADD:LANGUAGE|1|TYPE=Spoken`) offers the spoken languages.
+    #[test]
+    fn ability_budget_class_features_an_add_list_is_a_parameter_pick() {
+        let master_caster = package().rule("adventurers_guide:class_feature:aspis_agency_secret_master_caster").expect("Master Caster");
+        let classes = parameter_choice(package(), master_caster).expect("Master Caster takes a class").values;
+        assert_eq!(classes, ["Bard", "Inquisitor", "Mesmerist"]);
+        let raven = package().rule("adventurers_guide:class_feature:raven_master_companion_abilities").expect("Raven Master");
+        let languages = parameter_choice(package(), raven).expect("Raven Master takes a language").values;
+        assert!(languages.contains(&"Aquan".to_owned()) && languages.contains(&"Common".to_owned()), "{languages:?}");
+    }
+
+    /// How a converted `ADD:<kind>` naming one choice grants it (E3.27), by the site's kind: `ABILITY` / `VFEAT` / `FEAT`
+    /// grant another rule held with this one, `LANGUAGE` / `EQUIP` grant the language or item fact, `SPELLCASTER` prints
+    /// its spellcasting class. `None` for a record that offers a choice or carries no such grant.
+    fn one_option_add(rule: &SheetRule, kind: &str) -> Option<&'static str> {
+        if rule.offers.is_some() {
+            return None;
+        }
+        let fact = |matches: fn(&Fact) -> bool| rule.grants.iter().any(|effect| matches!(effect, Effect::FactGrant(fact) if matches(fact)));
+        match kind {
+            "ABILITY" | "VFEAT" | "FEAT" => package()
+                .rules
+                .values()
+                .any(|other| other.granted_by.iter().any(|grant| grant.by == Granter::Rule(rule.id.clone())))
+                .then_some("the one ability is held with the record"),
+            "LANGUAGE" => fact(|f| matches!(f, Fact::Language(_))).then_some("the one language is granted"),
+            "EQUIP" => fact(|f| matches!(f, Fact::Equipment(_))).then_some("the one item prints as granted"),
+            "SPELLCASTER" => rule
+                .prose
+                .iter()
+                .flat_map(|segment| &segment.pieces)
+                .any(|piece| matches!(piece, crate::rules_core::sheet_rule::ProsePiece::Text(text) if text.starts_with("Casts spells as a ")))
+                .then_some("the one spellcasting class prints"),
+            _ => None,
+        }
+    }
+
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("add_token:", "E3.27"),
         ("domain_count:", "E3.28"),
         ("abilityselection of PCGen's base category", "E3.29"),
         ("abilitypool: the granting record carries no converted Pool line", "E3.29"),
@@ -2086,9 +2132,21 @@ mod tests {
             let rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
             let targets = |rule: &SheetRule, pool: &str| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
             // A parameter choice (E3.26) is taken in its record's own pool, its pick naming one of the offered values.
-            let parameter = rules.iter().find_map(|rule| parameter_choice(package(), rule).map(|choice| (*rule, choice))).filter(|_| mechanism == "parameter_choose");
+            // An `ADD:` of a list (E3.27) is the same: its record's own offer, taken as the pick's target.
+            let parameter = rules
+                .iter()
+                .find_map(|rule| parameter_choice(package(), rule).map(|choice| (*rule, choice)))
+                .filter(|_| ["parameter_choose", "add_token"].contains(&mechanism));
+            // An `ADD:` naming one choice is PCGen's automatic pick, a grant (E3.27, decisions.md §32): the record holds
+            // the ability, grants the language or item, or prints its spellcasting class.
+            if mechanism == "add_token"
+                && parameter.is_none()
+                && let Some(how) = rules.iter().find_map(|rule| one_option_add(rule, target))
+            {
+                return ("granted (one option)".to_owned(), how.to_owned());
+            }
             let pools: Vec<String> = match mechanism {
-                "parameter_choose" => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
+                "parameter_choose" | "add_token" => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
                 "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
                 "domain_count" => rules
                     .iter()

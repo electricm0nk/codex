@@ -3094,27 +3094,76 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
         }
         "ADD" => {
-            let (fields, _gates) = split_gates(v);
+            // PCGen `ADD:<kind>|[<count>|]<choices>` (`ADD:ABILITY|[<count>|]<category>|<nature>|<choices>`): a field
+            // before the positional ones is the count. One named choice taken once is PCGen's automatic pick: a grant
+            // of that one thing, never an offer (E3.27).
+            let (fields, gates) = split_gates(v);
             let head = fields.first().map(|s| s.trim().to_ascii_uppercase()).unwrap_or_default();
-            match head.as_str() {
-                "SPELLCASTER" => {
+            let positional = if head == "ABILITY" { 3 } else { 1 };
+            let counted = fields.len() > positional + 1;
+            let count = match fields.get(1).filter(|_| counted) {
+                Some(c) => match integer_literal(c) {
+                    Some(n) => Expr::Const(n),
+                    None => convert_formula(ctx, c)?,
+                },
+                None => Expr::Const(1),
+            };
+            let body = &fields[(if counted { 2 } else { 1 }).min(fields.len())..];
+            let (category, choices_at) = match head.as_str() {
+                "ABILITY" => (body.first().map(|s| s.trim().to_string()).unwrap_or_default(), 2),
+                _ => ("FEAT".to_string(), 0),
+            };
+            let choices: Vec<String> = body.iter().skip(choices_at).flat_map(|f| f.split(',')).map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect();
+            let one = match choices.as_slice() {
+                [name] if matches!(count, Expr::Const(1))
+                    && !name.contains('%')
+                    && !name.to_ascii_uppercase().starts_with("TYPE")
+                    && !["ALL", "ANY"].contains(&name.to_ascii_uppercase().as_str()) =>
+                {
+                    Some(name.clone())
+                }
+                _ => None,
+            };
+            // A list naming its classes is a choice of one; `ANY` / `TYPE=` (a prestige class's "+1 level of an existing
+            // spellcasting class", a class-level choice) prints as before.
+            let named_classes = head == "SPELLCASTER" && choices.len() > 1 && choices.iter().all(|c| !c.to_ascii_uppercase().starts_with("TYPE") && !["ALL", "ANY"].contains(&c.to_ascii_uppercase().as_str()));
+            match (head.as_str(), one) {
+                ("SPELLCASTER", _) if !named_classes => {
                     let who = fields.get(1).cloned().unwrap_or_default();
                     if pi_hit(ctx.tree.system, &who).is_none() {
                         acc.special.push(ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text(format!("Casts spells as a {who}."))], applies: None, pick_last: false, suppress_when_all_zero: false });
                     }
                 }
-                "LANGUAGE" | "FEAT" | "VFEAT" | "ABILITY" => {
-                    let count = fields.get(1).and_then(|c| integer_literal(c)).map(Expr::Const).unwrap_or(Expr::Const(1));
+                ("SPELLCASTER", _) => {
+                    ctx.choice_id = Some(ctx.record.id.clone());
+                    acc.offers = Some(Choice { id: ctx.record.id.clone(), count, from: OptionSet::Classes(choices.iter().map(|c| ctx.class_id(c)).collect()) });
+                }
+                ("LANGUAGE", Some(name)) => {
+                    if let Some(name) = sf_screened_record_name(ctx, "language", &name) {
+                        acc.grants.push(Effect::FactGrant(Fact::Language(tag_word(&name))));
+                    }
+                }
+                ("EQUIP", Some(name)) => {
+                    if pi_hit(ctx.tree.system, &name).is_none() {
+                        acc.grants.push(Effect::FactGrant(Fact::Equipment(tag_word(&name))));
+                    }
+                }
+                // The one ability is granted as an automatic `ABILITY:` row of the record would grant it.
+                ("ABILITY" | "FEAT" | "VFEAT", Some(name)) => {
+                    let row = std::iter::once(format!("{category}|AUTOMATIC|{name}")).chain(gates.iter().cloned()).collect::<Vec<_>>().join("|");
+                    return convert_token(ctx, acc, out, "ABILITY", &row, level_gate, row_kind);
+                }
+                ("LANGUAGE" | "FEAT" | "VFEAT" | "ABILITY", None) => {
                     let from = match head.as_str() {
-                        "LANGUAGE" => OptionSet::Languages(fields.iter().skip(2).flat_map(|f| f.split(',')).filter(|s| !s.contains('%')).map(tag_word).collect()),
-                        "ABILITY" => OptionSet::Rules { pool: slug(fields.get(2).map(|s| s.as_str()).unwrap_or("")), tags: fields.iter().skip(4).filter_map(|f| f.strip_prefix("TYPE=").map(|t| t.to_string())).collect(), requires: Applies::Always },
-                        _ => OptionSet::Rules { pool: "feat".into(), tags: fields.iter().skip(2).filter_map(|f| f.strip_prefix("TYPE=").map(|t| t.to_string())).collect(), requires: Applies::Always },
+                        "LANGUAGE" => OptionSet::Languages(choices.iter().filter(|s| !s.contains('%')).map(|s| tag_word(s)).collect()),
+                        "ABILITY" => OptionSet::Rules { pool: slug(&category), tags: choices.iter().filter_map(|f| f.strip_prefix("TYPE=").map(|t| t.to_string())).collect(), requires: Applies::Always },
+                        _ => OptionSet::Rules { pool: "feat".into(), tags: choices.iter().filter_map(|f| f.strip_prefix("TYPE=").map(|t| t.to_string())).collect(), requires: Applies::Always },
                     };
                     ctx.choice_id = Some(ctx.record.id.clone());
                     acc.offers = Some(Choice { id: ctx.record.id.clone(), count, from });
                 }
-                "EQUIP" => {}
-                other => return Err(format!("ADD ({other})")),
+                ("EQUIP", None) => {}
+                (other, _) => return Err(format!("ADD ({other})")),
             }
         }
         "CHOOSE" => {
@@ -3306,6 +3355,41 @@ mod ability_type_selector_tests {
             record("book:class_feature:prof_martial", "Prof ~ Martial", "Internal", "ProfMartial"),
             record("book:class_feature:unrelated", "Unrelated", "Internal", "SomethingElse"),
         ])
+    }
+
+    fn convert_with_add(index: &CorpusIndex, value: &str) -> Converted {
+        let granter = index.records.iter().find(|r| r.id == "book:class_feature:granter").expect("granter present");
+        let closure = Closure {
+            rows: vec![ClosureRow { cite: "book/abilities.lst:1".into(), row: None, tokens: vec![("ADD".into(), value.into())], kind: ClosureRowKind::Base, level_gate: None }],
+            ..Closure::default()
+        };
+        convert_record(&empty_tree(), index, granter, &closure)
+    }
+
+    /// E3.27: PCGen's `ADD:<kind>|[<count>|]<choices>`. One named choice is a grant of it (an ability held, a
+    /// language or item granted, a spellcasting class printed); a list is an offer of its members; the category of
+    /// `ADD:ABILITY|<category>|<nature>|<name>` is its first field, not a count (`acg_abilities_class.lst:1501`).
+    #[test]
+    fn an_add_naming_one_choice_grants_it_and_a_list_offers_its_members() {
+        let index = index_of(vec![
+            record("book:class_feature:granter", "Granter", "Special Ability", ""),
+            record("book:class_feature:weapon_choice", "Shaman Battle Master ~ Weapon Choice", "Special Ability", ""),
+        ]);
+        let c = convert_with_add(&index, "ABILITY|Special Ability|NORMAL|Shaman Battle Master ~ Weapon Choice");
+        assert_eq!(c.grants_out.iter().map(|(id, g)| (id.as_str(), &g.by)).collect::<Vec<_>>(), [("book:class_feature:weapon_choice", &Granter::Rule("book:class_feature:granter".into()))]);
+        assert!(c.rules[0].offers.is_none(), "{:?}", c.rules[0].offers);
+
+        let c = convert_with_add(&index, "LANGUAGE|Sylvan");
+        assert!(c.rules[0].grants.contains(&Effect::FactGrant(Fact::Language("Sylvan".into()))), "{:?}", c.rules[0].grants);
+        assert!(c.rules[0].offers.is_none());
+        let c = convert_with_add(&index, "EQUIP|1|Spellbook");
+        assert!(c.rules[0].grants.contains(&Effect::FactGrant(Fact::Equipment("Spellbook".into()))), "{:?}", c.rules[0].grants);
+
+        let c = convert_with_add(&index, "SPELLCASTER|Bard,Inquisitor,Mesmerist");
+        let offer = c.rules[0].offers.as_ref().expect("a list of classes is a choice");
+        assert_eq!(offer.from, OptionSet::Classes(vec!["bard".into(), "inquisitor".into(), "mesmerist".into()]));
+        let c = convert_with_add(&index, "LANGUAGE|1|TYPE=Spoken");
+        assert_eq!(c.rules[0].offers.as_ref().map(|o| &o.from), Some(&OptionSet::Languages(vec!["Spoken".into()])));
     }
 
     /// RED before F1c-1: the row was dropped into `grant-by-type`. Now every record of the

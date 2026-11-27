@@ -1451,6 +1451,13 @@
       "core_rulebook\u003aclass_feature\u003aweapon_training_3_thrown"
     ]
   },
+  "spell_focus": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core_rulebook\u003afeat\u003aspell_focus"
+    ]
+  },
   "spellbreaker_arcane_defense": {
     "member_pool": "special_ability",
     "any_tags": [],

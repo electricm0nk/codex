@@ -1,0 +1,123 @@
+{
+  "2_racial_bonus_to_skill": {
+    "member_pool": "racial_trait",
+    "any_tags": [],
+    "rules": [
+      "core\u003aability\u003a2_racial_bonus_to_skill"
+    ]
+  },
+  "2_racial_stat_bonus": {
+    "member_pool": "racial_trait",
+    "any_tags": [],
+    "rules": [
+      "core\u003aability\u003a2_racial_stat_bonus"
+    ]
+  },
+  "acrobatics_specialty": {
+    "member_pool": "theme",
+    "any_tags": [
+      "Acrobatics Specialty"
+    ],
+    "rules": []
+  },
+  "athletics_specialty": {
+    "member_pool": "theme",
+    "any_tags": [
+      "Athletics Specialty"
+    ],
+    "rules": []
+  },
+  "bellflower_training_feat": {
+    "member_pool": "class_feature",
+    "any_tags": [
+      "Bellflower Training Feat"
+    ],
+    "rules": []
+  },
+  "bluff_specialty": {
+    "member_pool": "theme",
+    "any_tags": [
+      "Bluff Specialty"
+    ],
+    "rules": []
+  },
+  "combat_drone_initial_mod": {
+    "member_pool": "class_feature",
+    "any_tags": [],
+    "rules": [
+      "core\u003aability\u003adrone_mod_melee_weapon_arm",
+      "core\u003aability\u003adrone_mod_weapon_mount"
+    ]
+  },
+  "diplomacy_specialty": {
+    "member_pool": "theme",
+    "any_tags": [
+      "Diplomacy Specialty"
+    ],
+    "rules": []
+  },
+  "drone_weapon_proficiency": {
+    "member_pool": "class_feature",
+    "any_tags": [],
+    "rules": [
+      "core\u003aability\u003adrone_mod_weapon_proficiency"
+    ]
+  },
+  "grifter_theme_skill": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Grifter Theme Skill"
+    ],
+    "rules": []
+  },
+  "ijtikri_variant_ability": {
+    "member_pool": "variant_ability",
+    "any_tags": [
+      "Ijtikri Variant Ability"
+    ],
+    "rules": []
+  },
+  "mechanic_ai_level_divestment": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Mechanic AI Level Divestment"
+    ],
+    "rules": []
+  },
+  "operative_exploit": {
+    "member_pool": "class_feature",
+    "any_tags": [
+      "OPERATIVE EXPLOIT",
+      "Operative Exploit"
+    ],
+    "rules": []
+  },
+  "skill_focus": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core\u003afeat\u003askill_focus"
+    ]
+  },
+  "solarian_weapon_damage_type": {
+    "member_pool": "internal",
+    "any_tags": [
+      "Solarian Weapon Damage Type"
+    ],
+    "rules": []
+  },
+  "weapon_focus": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core\u003afeat\u003aweapon_focus"
+    ]
+  },
+  "weapon_specialization": {
+    "member_pool": "feat",
+    "any_tags": [],
+    "rules": [
+      "core\u003afeat\u003aweapon_specialization"
+    ]
+  }
+}
