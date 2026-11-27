@@ -351,9 +351,9 @@ fn class_feature_grants_holding(
             continue;
         }
         let Some(rule) = package.rule(id) else { continue };
-        let (Some(BonusTarget::Pool(pool)), SheetValue::Number(amount)) = (&rule.target, &rule.value) else { continue };
+        let (Some(pool), SheetValue::Number(amount)) = (granted_pool(package, rule), &rule.value) else { continue };
         let grants = match subtab {
-            SubTab::ClassFeatures => is_class_feature_grant(rule),
+            SubTab::ClassFeatures => is_class_feature_grant(rule) || pool == DOMAIN_POOL,
             _ => rule.subject == Subject::Character && ability_category(pool).is_some_and(|category| category.subtab == subtab.id()),
         };
         if !grants {
@@ -374,7 +374,7 @@ fn class_feature_grants_holding(
         }
         let amount = grant_amount(amount, &held, package, &facts, ctx);
         let amount = if amount.den == 0 { 0 } else { amount.num / amount.den };
-        let row = pools.entry(pool.clone()).or_default();
+        let row = pools.entry(pool.to_owned()).or_default();
         row.0 += amount;
         if amount != 0 && !row.1.contains(&rule.label) {
             row.1.push(rule.label.clone());
@@ -570,7 +570,8 @@ pub fn creation_choice_picks(package: &SheetRulePackage, input: &CharacterInput)
         .into_iter()
         .filter_map(|link| {
             let chooser = package.rule(&link.chooser)?;
-            let pool = selection_pool(package, chooser)?;
+            // A domain chosen at creation (`choice:cleric_domain`) fills its domain count's pool (E3.28).
+            let pool = selection_pool(package, chooser).or_else(|| granted_pool(package, chooser).filter(|pool| *pool == DOMAIN_POOL))?;
             let choice = input
                 .chosen
                 .selected_choices
@@ -608,19 +609,56 @@ pub fn creation_choice_swap(package: &SheetRulePackage, input: &CharacterInput, 
         return None;
     }
     let (_, old) = picks.into_iter().find(|(id, _)| id.split_once(':').is_some_and(|(p, _)| p == pool))?;
+    // A pool with room (a cleric's second domain, E3.28) takes the pick beside the creation choice.
+    if ability_budget_now(package, input, SubTab::ClassFeatures).pool(pool).is_some_and(|p| p.remaining() > 0) {
+        return None;
+    }
     let legacy = old.choice_set_id.strip_prefix("choice:")?;
     let (namespace, _) = old.selection_id.split_once(':')?;
-    package
-        .rules
-        .values()
-        .filter(|rule| rule.granted_by.iter().any(|g| matches!(&g.by, Granter::Rule(by) if by == record)))
-        .filter_map(|rule| split_rule_id(&rule.id).2.strip_prefix(legacy)?.strip_prefix('_').map(str::to_owned))
+    // A domain's member is its own slug (`domain:fire`); a selection pool's, the slug of a rule the record grants.
+    let domain = (pool == DOMAIN_POOL).then(|| split_rule_id(record).2.to_owned());
+    domain
+        .into_iter()
+        .chain(
+            package
+                .rules
+                .values()
+                .filter(|rule| rule.granted_by.iter().any(|g| matches!(&g.by, Granter::Rule(by) if by == record)))
+                .filter_map(|rule| split_rule_id(&rule.id).2.strip_prefix(legacy)?.strip_prefix('_').map(str::to_owned)),
+        )
         .find_map(|member| {
             let new = SelectedChoice { choice_set_id: old.choice_set_id.clone(), selection_id: format!("{namespace}:{member}") };
             let mut swapped = input.clone();
             swapped.chosen.selected_choices.iter_mut().filter(|c| **c == old).for_each(|c| *c = new.clone());
             creation_choice_picks(package, &swapped).iter().any(|(id, _)| id == option_id).then(|| (old.clone(), new))
         })
+}
+
+/// The Class Features pool a domain count fills (E3.28, [`granted_pool`]).
+pub const DOMAIN_POOL: &str = "domain";
+
+/// The Class Features pool `rule` grants picks into: its `Pool` target, or [`DOMAIN_POOL`] for a domain count (E3.28).
+/// The converter writes `BONUS:DOMAIN|NUMBER|<n>` as `Other("domains")` offering the domains
+/// (`pool_link::link_pool_choices`): `<n>` domain picks. A count the converter withheld (its class's own `DOMAIN:` rows
+/// fill it: no offer) is none, and so is one on a record that grants a pool of its own (Nature's Bond's `Druid
+/// Domain`): that pool's pick is the domain.
+pub(crate) fn granted_pool<'a>(package: &SheetRulePackage, rule: &'a SheetRule) -> Option<&'a str> {
+    if let Some(BonusTarget::Pool(pool)) = &rule.target {
+        return Some(pool);
+    }
+    let counts = matches!(&rule.target, Some(BonusTarget::Other(t)) if t == "domains")
+        && rule.offers.as_ref().is_some_and(|offer| offer.id == rule.id && matches!(offer.from, OptionSet::Domains))
+        && rule.subject == Subject::Character
+        && !NOT_CLASS_FEATURE_KINDS.contains(&split_rule_id(&rule.id).1);
+    if !counts {
+        return None;
+    }
+    let base = rule.id.split('#').next().unwrap_or(&rule.id);
+    let lines = format!("{base}#");
+    let own_pool = |r: &SheetRule| matches!(r.target, Some(BonusTarget::Pool(_)));
+    let pooled = package.rule(base).is_some_and(own_pool)
+        || package.rules.range(lines.clone()..).take_while(|(id, _)| id.starts_with(&lines)).any(|(_, r)| own_pool(r));
+    (!pooled).then_some(DOMAIN_POOL)
 }
 
 /// Record kinds whose pools sit on another sub-tab (see [`class_feature_grants`]).
@@ -1123,7 +1161,7 @@ fn archetype_options(package: &SheetRulePackage, input: &CharacterInput, base: &
 /// The offer that lists a pool's members: a held grant's first, else any converted grant's. Only an offer of
 /// records lists members: the Ranger's own `Favored Enemy` grant offers a number (its +2 to +10 bonus), not an enemy.
 fn pool_offer<'a>(package: &'a SheetRulePackage, held_rules: &[&'a SheetRule], pool: &str) -> Option<&'a Choice> {
-    let targets = |rule: &&SheetRule| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
+    let targets = |rule: &&SheetRule| granted_pool(package, rule) == Some(pool);
     fn members(rule: &SheetRule) -> Option<&Choice> {
         rule.offers.as_ref().filter(|offer| matches!(offer.from, OptionSet::Rules { .. } | OptionSet::Domains))
     }
@@ -2055,6 +2093,32 @@ mod tests {
         assert!(languages.contains(&"Aquan".to_owned()) && languages.contains(&"Common".to_owned()), "{languages:?}");
     }
 
+    /// "A cleric chooses two domains from among those belonging to her deity" (Core Rulebook, Cleric): PCGen's
+    /// `BONUS:DOMAIN|NUMBER|ClericDomainCount` (2) is a Class Features pool of two domain picks (E3.28). The seed's
+    /// creation domain (Good) is one of them, the sub-tab lists the domains, and a second domain is added, not
+    /// swapped; once the pool is full another domain renames the creation choice.
+    #[test]
+    fn ability_budget_class_features_cleric_1_is_granted_two_domains_one_the_creation_choice() {
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "cleric", 1);
+        let budget = ability_budget(package(), &input, SubTab::ClassFeatures);
+        assert_eq!(row(&budget, "abilities.budget.class_features.domain.granted"), 2);
+        assert_eq!(row(&budget, "abilities.budget.class_features.domain.spent"), 1, "the creation domain is a pick");
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        let domain = |label: &str| options.iter().find(|o| o.pool == DOMAIN_POOL && o.label == label).map(|o| o.id.clone()).expect(label);
+        let (war, fire) = (domain("War"), domain("Fire"));
+        let picks: Vec<String> = creation_choice_picks(package(), &input).into_iter().map(|(id, _)| id).collect();
+        assert_eq!(picks, [domain("Good")], "the sub-tab shows the creation domain as its held option");
+        assert!(budget.refusal(package(), &war).is_none(), "room for a second domain");
+        assert!(creation_choice_swap(package(), &input, &war).is_none(), "with room a second domain is added");
+        let mut picked = input.clone();
+        picked.chosen.ability_selections.push(pick(SubTab::ClassFeatures, &war));
+        let budget = ability_budget(package(), &picked, SubTab::ClassFeatures);
+        assert_eq!(row(&budget, "abilities.budget.class_features.domain.remaining"), 0);
+        assert!(budget.refusal(package(), &fire).expect("full").contains("domain pool"));
+        let (old, new) = creation_choice_swap(package(), &picked, &fire).expect("a full pool renames the creation domain");
+        assert_eq!((old.selection_id.as_str(), new.selection_id.as_str()), ("domain:good", "domain:fire"));
+    }
+
     /// How a converted `ADD:<kind>` naming one choice grants it (E3.27), by the site's kind: `ABILITY` / `VFEAT` / `FEAT`
     /// grant another rule held with this one, `LANGUAGE` / `EQUIP` grant the language or item fact, `SPELLCASTER` prints
     /// its spellcasting class. `None` for a record that offers a choice or carries no such grant.
@@ -2084,7 +2148,6 @@ mod tests {
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("domain_count:", "E3.28"),
         ("abilityselection of PCGen's base category", "E3.29"),
         ("abilitypool: the granting record carries no converted Pool line", "E3.29"),
         ("no class of the granting record to seed", "E3.30"),
@@ -2130,7 +2193,19 @@ mod tests {
             let mechanism = site["mechanism"].as_str().expect("mechanism");
             let target = site["target"].as_str().expect("target");
             let rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
-            let targets = |rule: &SheetRule, pool: &str| matches!(&rule.target, Some(BonusTarget::Pool(p)) if p == pool);
+            let targets = |rule: &SheetRule, pool: &str| granted_pool(package(), rule) == Some(pool);
+            // A class's domain count its own `DOMAIN:` rows fill is no pick (SD-36 F6c,
+            // `pool_link::withhold_class_granted_domain_counts`: no offer, not printed): the Shaman's spirit-magic lists.
+            if mechanism == "domain_count"
+                && rules.iter().any(|rule| {
+                    split_rule_id(&rule.id).1 == "class"
+                        && matches!(&rule.target, Some(BonusTarget::Other(t)) if t == "domains")
+                        && rule.offers.is_none()
+                        && !rule.print
+                })
+            {
+                return ("granted (its class's domains)".to_owned(), "the class's own DOMAIN: rows fill the count".to_owned());
+            }
             // A parameter choice (E3.26) is taken in its record's own pool, its pick naming one of the offered values.
             // An `ADD:` of a list (E3.27) is the same: its record's own offer, taken as the pick's target.
             let parameter = rules
@@ -2148,10 +2223,13 @@ mod tests {
             let pools: Vec<String> = match mechanism {
                 "parameter_choose" | "add_token" => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
                 "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
+                // The domain count's own pool (E3.28), else the pool a record grants beside it (Nature's Bond's
+                // `Druid Domain`).
                 "domain_count" => rules
                     .iter()
-                    .filter_map(|rule| match (&rule.target, &rule.offers) {
-                        (Some(BonusTarget::Pool(p)), offer) if p.contains("domain") || offer.as_ref().is_some_and(|o| matches!(o.from, OptionSet::Domains)) => Some(p.clone()),
+                    .filter_map(|rule| match (granted_pool(package(), rule), &rule.offers) {
+                        (Some(DOMAIN_POOL), _) => Some(DOMAIN_POOL.to_owned()),
+                        (Some(p), offer) if p.contains("domain") || offer.as_ref().is_some_and(|o| matches!(o.from, OptionSet::Domains)) => Some(p.to_owned()),
                         _ => None,
                     })
                     .collect(),

@@ -243,15 +243,18 @@ pub(crate) fn list_ability_options_at_root(root: &Path, subtab: &str) -> Result<
     let base = compute_pilot_base_chassis(&input);
     let mut selected = selected_ids(&input, subtab);
     let mut options: Vec<AbilityOptionDto> = ability_options(package, &input, &base, subtab).into_iter().map(AbilityOptionDto::from).collect();
-    // A bloodline chosen at creation is its Class Features pool's pick (E3.13); another member replaces it.
+    let budget = budget_at_root(root, package, &input, subtab);
+    // A bloodline chosen at creation is its Class Features pool's pick (E3.13); another member replaces it once the
+    // pool is full (a cleric's second domain takes room beside the first, E3.28).
     if subtab == SubTab::ClassFeatures {
         let chosen: Vec<String> = creation_choice_picks(package, &input).into_iter().map(|(id, _)| id).collect();
         for option in &mut options {
-            option.replaces = chosen.iter().find(|held| **held != option.id && held.split_once(':').is_some_and(|(pool, _)| pool == option.pool)).cloned();
+            let full = budget.pool(&option.pool).is_none_or(|pool| pool.remaining() <= 0);
+            option.replaces = chosen.iter().filter(|_| full).find(|held| **held != option.id && held.split_once(':').is_some_and(|(pool, _)| pool == option.pool)).cloned();
         }
         selected.extend(chosen);
     }
-    Ok(AbilityOptionsDto { budget: map_explanations_dto(&budget_at_root(root, package, &input, subtab).explanation_rows()), options, selected })
+    Ok(AbilityOptionsDto { budget: map_explanations_dto(&budget.explanation_rows()), options, selected })
 }
 
 #[derive(Debug, Clone, Deserialize)]
