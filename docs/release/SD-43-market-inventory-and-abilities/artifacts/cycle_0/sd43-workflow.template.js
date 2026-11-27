@@ -77,6 +77,9 @@ You do NOT implement anything. Steps, inside your lane tree (make it per the pre
 2. Run the card's acceptance command(s) from its section below on this pre-change tree (for a merge-check / closure /
    census card whose acceptance is a review or a not-yet-written artifact, the RED is the existence check of the
    receipt or artifact the card must create, e.g. \`test -f ${PKG}/artifacts/epic_<n>/${c.id}_cycle_receipt.md\`).
+   If the acceptance is that a printed row goes away (a census test that passes while it still prints the card's rows,
+   run 13, E3.28), the RED command is that test piped to a check that fails while the row prints, e.g.
+   \`cargo test … -- --nocapture 2>&1 | awk '/\\| ${c.id} \\|/{n++} END{print n+0, "rows"; exit n>0}'\`.
    Capture the exit code and the first failing line. A cargo command obeys the prefix's cargo rules.
 3. Second call sites: \`git grep -n\` over every producer / file the card names; summarise the hits (paths:lines).
 4. Re-fetch, then append ONE row to ${PKG}/progress.md "## Dispatch log" table:
