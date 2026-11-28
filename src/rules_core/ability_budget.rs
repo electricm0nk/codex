@@ -2175,13 +2175,338 @@ mod tests {
         }
     }
 
+    /// The records a rule's gate requires held (`Holds` of a rule, outside a `Not`): Slayer Talent ~ Grit opens on
+    /// Firearm Training, an Inspired Chemist's discovery on its archetype. Holding them is making that choice (E3.30).
+    fn rules_the_gate_holds(rule: &SheetRule) -> Vec<String> {
+        fn walk(value: &serde_json::Value, out: &mut Vec<String>) {
+            match value {
+                serde_json::Value::Object(map) if map.contains_key("Not") => {}
+                serde_json::Value::Object(map) => {
+                    let what = map.get("what");
+                    if let Some(serde_json::Value::String(id)) = what.and_then(|what| what.get("Rule").or_else(|| what.get("Template"))) {
+                        out.push(id.split('#').next().unwrap_or(id).to_owned());
+                    }
+                    // A tag held (`Arcanist School`): the first record of the pool carrying it.
+                    if let Some(serde_json::Value::Object(tagged)) = what.and_then(|what| what.get("RuleTag"))
+                        && let (Some(pool), Some(tag)) = (tagged.get("pool").and_then(|p| p.as_str()), tagged.get("tag").and_then(|t| t.as_str()))
+                        && let Some(record) = package().rules.values().find(|r| !r.id.contains('#') && r.pool == pool && r.tags.iter().any(|t| t.eq_ignore_ascii_case(tag)))
+                    {
+                        out.push(record.id.clone());
+                    }
+                    map.values().for_each(|inner| walk(inner, out));
+                }
+                serde_json::Value::Array(items) => items.iter().for_each(|item| walk(item, out)),
+                _ => {}
+            }
+        }
+        let mut ids = Vec::new();
+        walk(&serde_json::to_value(&rule.applies).expect("applies serialize"), &mut ids);
+        ids
+    }
+
+    /// Why no seed can be granted a pool whose grant line is `rule` (E3.30's diagnosis), when the cause is in the converted
+    /// data rather than the census's seed, by the kanban card that owns it:
+    /// - E3.33: a variable the line reads has no declarer and no contribution (the PI-named class's own `DEFINE:` /
+    ///   `BONUS:VAR` of its `<Class>LVL` was redacted with the class's name: Golden Legionnaire's Legion Feats);
+    /// - E3.34: the line's gate is the record's own once-only prerequisite (`!PREABILITY:<itself>` read as the grant's
+    ///   gate: a held record never meets it), names a record the converter did not convert (`Allow Vows`), or reads a
+    ///   fact the character record does not carry (alignment, a deity's alignment, a companion's race).
+    fn converted_gate_cause(rule: &SheetRule) -> Option<String> {
+        fn walk(value: &serde_json::Value, negated: bool, out: &mut Vec<(bool, String, String)>) {
+            match value {
+                serde_json::Value::Object(map) => {
+                    for (key, inner) in map {
+                        match (key.as_str(), inner) {
+                            ("Var", serde_json::Value::String(var)) => out.push((negated, "Var".to_owned(), var.clone())),
+                            ("what", serde_json::Value::Object(what)) => {
+                                for (kind, held) in what {
+                                    out.push((negated, kind.clone(), held.as_str().map_or_else(|| held.to_string(), str::to_owned)));
+                                }
+                            }
+                            ("Not", inner) => walk(inner, !negated, out),
+                            _ => walk(inner, negated, out),
+                        }
+                    }
+                }
+                serde_json::Value::Array(items) => items.iter().for_each(|item| walk(item, negated, out)),
+                _ => {}
+            }
+        }
+        let base = rule.id.split('#').next().unwrap_or(&rule.id);
+        let mut gate = Vec::new();
+        walk(&serde_json::to_value(&rule.applies).expect("applies serialize"), false, &mut gate);
+        let mut value = Vec::new();
+        walk(&serde_json::to_value(&rule.value).expect("value serialize"), false, &mut value);
+        let unraised = gate.iter().chain(&value).filter(|(_, kind, _)| kind == "Var").find_map(|(_, _, var)| {
+            package().vars.get(var).filter(|table| table.declared_by.is_empty() && table.contributions.is_empty()).map(|table| table.label.clone())
+        });
+        if let Some(label) = unraised {
+            return Some(format!("PI redaction: the variable {label} has no declarer or contribution (its PI-named class's own line was redacted)"));
+        }
+        if let Some((_, _, missing)) = gate.iter().find(|(negated, kind, _)| !negated && kind == "MissingRule") {
+            return Some(format!("engine gate: the gate names a record the converter did not convert ({missing})"));
+        }
+        let not_itself = serde_json::json!({"Not": {"Holds": {"what": {"Rule": base}, "count": 1}}}).to_string();
+        if serde_json::to_value(&rule.applies).expect("applies serialize").to_string().contains(&not_itself) {
+            return Some("engine gate: the record's own once-only prerequisite (`!PREABILITY:<itself>`) gates its pool line".to_owned());
+        }
+        if let Some((_, kind, _)) = gate.iter().find(|(negated, kind, _)| !negated && ["Alignment", "DeityAlignment", "Deity", "Race"].contains(&kind.as_str())) {
+            return Some(format!("engine gate: the gate reads a fact the character record does not carry ({kind})"));
+        }
+        None
+    }
+
+    /// The rules that raise a variable a gate needs at least some value of (E3.30): its declarers and contributors, for a
+    /// `>=`, `>` or `==` a non-zero comparison outside a `Not` (an `== 0` is met by holding none of them: the Dragon
+    /// Disciple's bloodline opens only without a sorcerer's).
+    fn rules_the_gate_raises(rule: &SheetRule) -> Vec<String> {
+        fn walk(value: &serde_json::Value, out: &mut Vec<String>) {
+            match value {
+                serde_json::Value::Object(map) if map.contains_key("Not") => {}
+                serde_json::Value::Object(map) => {
+                    if let Some(serde_json::Value::Object(compare)) = map.get("Compare") {
+                        let op = compare.get("op").and_then(|op| op.as_str()).unwrap_or_default();
+                        let zero = compare.get("rhs").is_some_and(|rhs| rhs == &serde_json::json!({"Const": 0}));
+                        if let Some(serde_json::Value::String(var)) = compare.get("lhs").and_then(|lhs| lhs.get("Var"))
+                            && (["Gte", "Gt"].contains(&op) || (op == "Eq" && !zero))
+                        {
+                            out.push(var.clone());
+                        }
+                        return;
+                    }
+                    map.values().for_each(|inner| walk(inner, out));
+                }
+                serde_json::Value::Array(items) => items.iter().for_each(|item| walk(item, out)),
+                _ => {}
+            }
+        }
+        let mut names = Vec::new();
+        walk(&serde_json::to_value(&rule.applies).expect("applies serialize"), &mut names);
+        let mut ids: Vec<String> = names
+            .iter()
+            .filter_map(|var| package().vars.get(var))
+            .flat_map(|table| table.declared_by.iter().cloned().chain(table.contributions.iter().map(|c| c.rule_id.clone()).take(8)))
+            .map(|id| id.split('#').next().unwrap_or(&id).to_owned())
+            .collect();
+        ids.sort();
+        ids.dedup();
+        ids
+    }
+
+    /// The rules contributing to a variable the pool's grant lines count (E3.30): holding one is the choice that
+    /// raises the count (an archetype giving the paladin a domain).
+    fn rules_the_value_raises(grants: &[&SheetRule], pool: &str) -> Vec<String> {
+        fn vars(value: &serde_json::Value, out: &mut Vec<String>) {
+            match value {
+                serde_json::Value::Object(map) => {
+                    for (key, inner) in map {
+                        match (key.as_str(), inner) {
+                            ("Var", serde_json::Value::String(var)) => out.push(var.clone()),
+                            _ => vars(inner, out),
+                        }
+                    }
+                }
+                serde_json::Value::Array(items) => items.iter().for_each(|item| vars(item, out)),
+                _ => {}
+            }
+        }
+        let mut names = Vec::new();
+        for rule in grants.iter().filter(|rule| granted_pool(package(), rule) == Some(pool)) {
+            vars(&serde_json::to_value(&rule.value).expect("value serialize"), &mut names);
+        }
+        let mut ids: Vec<String> = names
+            .iter()
+            .filter_map(|var| package().vars.get(var))
+            .flat_map(|table| table.contributions.iter().map(|c| c.rule_id.split('#').next().unwrap_or(&c.rule_id).to_owned()))
+            .filter(|id| !grants.iter().any(|g| g.id.split('#').next() == Some(id.as_str())))
+            .collect();
+        ids.sort();
+        ids.dedup();
+        ids.truncate(6);
+        ids
+    }
+
+    /// Who offers each record (E3.30): record id -> the records granting a pool whose members include it (its grant's
+    /// offer, else the converter's member filter, as [`pool_member_selector`] reads them), and the choosers whose own
+    /// offer selects it (an `ABILITYSELECTION`).
+    fn offered_by() -> &'static HashMap<String, Vec<String>> {
+        static OFFERED: OnceLock<HashMap<String, Vec<String>>> = OnceLock::new();
+        OFFERED.get_or_init(|| {
+            let mut by_pool: HashMap<&str, Vec<&SheetRule>> = HashMap::new();
+            for rule in package().rules.values().filter(|rule| !rule.id.contains('#')) {
+                by_pool.entry(rule.pool.as_str()).or_default().push(rule);
+            }
+            let mut grants: BTreeMap<&str, Vec<&SheetRule>> = BTreeMap::new();
+            for rule in package().rules.values() {
+                if let Some(pool) = granted_pool(package(), rule) {
+                    grants.entry(pool).or_default().push(rule);
+                }
+            }
+            let mut offered: HashMap<String, Vec<String>> = HashMap::new();
+            let mut add = |member: &str, by: &SheetRule| {
+                let by = by.id.split('#').next().unwrap_or(&by.id).to_owned();
+                let list = offered.entry(member.to_owned()).or_default();
+                if !list.contains(&by) && by != member {
+                    list.push(by);
+                }
+            };
+            let selected = |offer: &Choice| -> Vec<&SheetRule> {
+                match &offer.from {
+                    // An untagged offer of a whole category (any special ability, any feat) names no record's place.
+                    OptionSet::Rules { pool, tags, .. } if tags.is_empty() && ["special_ability", "internal", "feat"].contains(&pool.as_str()) => Vec::new(),
+                    OptionSet::Rules { pool, .. } => by_pool.get(pool.as_str()).into_iter().flatten().copied().filter(|rule| offer_selects(offer, rule)).collect(),
+                    OptionSet::Domains => package().rules_of_kind("domain").filter(|rule| offer_selects(offer, rule)).collect(),
+                    _ => Vec::new(),
+                }
+            };
+            for (pool, rules) in &grants {
+                let members: Vec<&SheetRule> = match pool_offer(package(), rules, pool) {
+                    Some(offer) => selected(offer),
+                    None => pool_members(pool).map_or_else(Vec::new, |members| {
+                        let tagged = by_pool.get(members.member_pool.as_str()).into_iter().flatten().copied().filter(|rule| {
+                            rule.tags.iter().any(|tag| members.any_tags.iter().any(|t| t.eq_ignore_ascii_case(tag)))
+                        });
+                        members.rules.iter().filter_map(|id| package().rule(id)).chain(tagged).collect()
+                    }),
+                };
+                for member in members {
+                    for rule in rules {
+                        add(&member.id, rule);
+                    }
+                }
+            }
+            for rule in package().rules.values().filter(|rule| !rule.id.contains('#') && !matches!(rule.target, Some(BonusTarget::Pool(_)))) {
+                if let Some(offer) = rule.offers.as_ref() {
+                    for member in selected(offer) {
+                        add(&member.id, rule);
+                    }
+                }
+            }
+            offered
+        })
+    }
+
+    /// The seeds a record reaches up its grant chain (E3.30): the nearest classes (`Granter::Class`, a class record) and
+    /// archetypes above it through `granted_by`, the pools that offer it ([`offered_by`]) and the rules its gate holds,
+    /// each with the records on the way (held as the choices that lead to it). The record's owner name is not a seed
+    /// when its key carries no ` ~ ` (`Blade Adept Blade Selection`).
+    fn seeds_up_the_chain(start: &[&SheetRule], classes: &[&str]) -> Vec<(String, Option<String>, Vec<String>)> {
+        use crate::rules_core::sheet_rule::split_rule_id;
+        let mut parent: BTreeMap<String, Option<String>> = BTreeMap::new();
+        let mut frontier: Vec<String> = start.iter().map(|rule| rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).collect();
+        for id in &frontier {
+            parent.insert(id.clone(), None);
+        }
+        let path = |parent: &BTreeMap<String, Option<String>>, mut id: String| {
+            let mut out = vec![id.clone()];
+            while let Some(Some(up)) = parent.get(&id) {
+                out.push(up.clone());
+                id = up.clone();
+            }
+            out
+        };
+        let mut seeds: Vec<(String, Option<String>, Vec<String>)> = Vec::new();
+        let mut anyone: Vec<(String, Option<String>, Vec<String>)> = Vec::new();
+        for _ in 0..6 {
+            let mut found: Vec<(String, Option<String>, Vec<String>)> = Vec::new();
+            let mut next = Vec::new();
+            for id in &frontier {
+                let Some(rule) = package().rule(id) else { continue };
+                let (_, kind, slug) = split_rule_id(id);
+                if !start.iter().any(|s| s.id.split('#').next() == Some(id.as_str())) {
+                    if kind == "class" && classes.contains(&slug) {
+                        found.push((slug.to_owned(), None, path(&parent, id.clone())));
+                        continue;
+                    }
+                    if rule.pool == ARCHETYPE_POOL && slug.contains("_archetype_") {
+                        found.push((archetype_class(rule).to_owned(), Some(id.clone()), path(&parent, id.clone())));
+                        continue;
+                    }
+                }
+                // A feat, a trait or a variant rule (`Rule - Use Background Skills`) any character may take: any class
+                // holding it, when no class or archetype is found above.
+                if kind == "feat" || kind == "trait" || slug.starts_with("rule_") {
+                    anyone.push(("fighter".to_owned(), None, path(&parent, id.clone())));
+                }
+                let lines = format!("{id}#");
+                let own = std::iter::once(rule).chain(package().rules.range(lines.clone()..).take_while(|(k, _)| k.starts_with(&lines)).map(|(_, r)| r));
+                let mut ups: Vec<String> = Vec::new();
+                for line in own {
+                    for grant in &line.granted_by {
+                        match &grant.by {
+                            Granter::Class { id: class, .. } if classes.contains(&class.as_str()) => {
+                                found.push((class.clone(), None, path(&parent, id.clone())));
+                            }
+                            Granter::Rule(up) | Granter::Choice(up) => ups.push(up.split('#').next().unwrap_or(up).to_owned()),
+                            _ => {}
+                        }
+                    }
+                    ups.extend(rules_the_gate_holds(line));
+                    // A gate on a class's level (`Take Inquisition`: druid level 1) or on a variable a class raises
+                    // (`HKDiscipline`, the hellknight's level / 3) names that class.
+                    ups.extend(rules_the_gate_raises(line));
+                    let gate = serde_json::to_value(&line.applies).expect("applies serialize").to_string();
+                    for class in classes.iter().filter(|class| gate.contains(&format!("{{\"ClassLevel\":\"{class}\"}}"))) {
+                        found.push(((*class).to_owned(), None, path(&parent, id.clone())));
+                    }
+                }
+                ups.extend(offered_by().get(id).into_iter().flatten().cloned());
+                for up in ups {
+                    if !parent.contains_key(&up) {
+                        parent.insert(up.clone(), Some(id.clone()));
+                        next.push(up);
+                    }
+                }
+            }
+            found.sort();
+            for seed in found {
+                if !seeds.contains(&seed) {
+                    seeds.push(seed);
+                }
+            }
+            if next.is_empty() {
+                break;
+            }
+            frontier = next;
+        }
+        if seeds.is_empty() {
+            anyone.truncate(2);
+            return anyone;
+        }
+        seeds
+    }
+
+    /// One named site of E3.30's population: Inspired Discovery ~ Rogue Talent (Advanced Class Guide, Inspired Chemist:
+    /// "the inspired chemist can select a rogue talent ... in place of a discovery"), `BONUS:ABILITYPOOL|Investigator Rogue
+    /// Talent|1`, gated on holding the Inspired Chemist archetype. The record's key carries no ` ~ ` owner class, so the
+    /// census found no seed; up its grant chain (the archetype its gate holds) it is the alchemist's, and an alchemist 20
+    /// with that archetype holding the discovery is granted the pool and takes a talent from it.
+    #[test]
+    fn ability_budget_class_features_inspired_discovery_rogue_talent_is_seeded_up_its_grant_chain() {
+        use crate::rules_core::sheet_rule::split_rule_id;
+        const DISCOVERY: &str = "advanced_class_guide:class_feature:inspired_discovery_rogue_talent";
+        const CHEMIST: &str = "advanced_class_guide:class_feature:alchemist_archetype_inspired_chemist";
+        let mut classes: Vec<&str> = package().rules_of_kind("class").filter(|rule| !rule.id.contains('#')).map(|rule| split_rule_id(&rule.id).2).collect();
+        classes.sort_unstable();
+        classes.dedup();
+        let discovery = package().rule(DISCOVERY).expect("Inspired Discovery ~ Rogue Talent");
+        let seeds = seeds_up_the_chain(&[discovery], &classes);
+        let (class, archetype, on_the_way) = seeds.iter().find(|(_, archetype, _)| archetype.as_deref() == Some(CHEMIST)).unwrap_or_else(|| panic!("no Inspired Chemist seed: {seeds:?}"));
+        assert_eq!(class, "alchemist");
+        let selection = archetype_records(package(), &archetype_keys()).into_iter().find(|(_, rule)| Some(rule.id.as_str()) == archetype.as_deref()).expect("archetype record").0;
+        let mut input = input_for(&load_sweep_fixture().expect("census fixture"), class, 20);
+        input.chosen.selected_choices.push(SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: selection });
+        let held: Vec<String> = on_the_way.iter().cloned().chain([DISCOVERY.to_owned()]).collect();
+        let grants = class_feature_grants_holding(package(), &input, &held, SubTab::ClassFeatures);
+        assert!(grants.get("investigator_rogue_talent").is_some_and(|(n, _)| *n > 0), "{:?}", grants.get("investigator_rogue_talent"));
+    }
+
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("no class of the granting record to seed", "E3.30"),
-        ("the pool is not granted", "E3.30"),
-        ("the pool is granted but lists no member", "E3.30"),
-        ("a member pick is not held after save and reload", "E3.30"),
+        ("PI redaction:", "E3.33"),
+        ("converter:", "E3.33"),
+        ("engine gate:", "E3.34"),
     ];
 
     /// Acceptance census (E3.MC, intake §22c): every one of E0.1's class-granted choice sites
@@ -2303,7 +2628,8 @@ mod tests {
                 if gaps.contains(&target) {
                     return ("data gap".to_owned(), target.to_owned());
                 }
-                // The seed: an archetype the record's owner names is held on its class; else the record's class.
+                // The seed: an archetype the record's owner names is held on its class; else the record's class; else
+                // (E3.30) the classes and archetypes up the record's grant chain, holding the records on the way.
                 let owner = id_slug(site["owner"].as_str().unwrap_or_default());
                 let archetype = archetypes.iter().find(|(_, rule)| split_rule_id(&rule.id).2.split("_archetype_").nth(1) == Some(owner.as_str()));
                 let class = archetype
@@ -2311,24 +2637,168 @@ mod tests {
                     .filter(|class| classes.contains(&class.as_str()))
                     .or_else(|| rules.iter().find_map(|rule| class_of(rule, &classes)))
                     .or_else(|| classes.contains(&owner.as_str()).then_some(owner.clone()));
-                let Some(class) = class else {
-                    last = unreachable("no class of the granting record to seed".to_owned());
-                    continue;
-                };
-                let mut principals: Vec<String> =
-                    rules.iter().flat_map(|rule| std::iter::once(rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).chain(rules_the_gate_reads(rule))).collect();
-                principals.extend(archetype.map(|(_, rule)| rule.id.clone()));
-                principals.sort();
-                principals.dedup();
-                let mut input = input_for(&fixture, &class, 20);
-                if let Some((selection, _)) = archetype {
-                    input.chosen.selected_choices.push(SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: selection.clone() });
+                type Seed<'a> = (String, Option<&'a (String, &'a SheetRule)>, Vec<String>);
+                let mut seeds: Vec<Seed> = Vec::new();
+                if let Some(class) = class {
+                    seeds.push((class, archetype, Vec::new()));
                 }
-                let granted = class_feature_grants_holding(package(), &input, &principals, SubTab::ClassFeatures).get(pool).is_some_and(|(n, _)| *n > 0);
-                if !granted {
+                for (class, up, on_the_way) in seeds_up_the_chain(&rules, &classes) {
+                    let up = up.and_then(|id| archetypes.iter().find(|(_, rule)| rule.id == id));
+                    seeds.push((class, up, on_the_way));
+                }
+                // A record every character holds (`always_held`: Default) is seeded on any class.
+                if seeds.is_empty() && rules.iter().any(|rule| package().rule(rule.id.split('#').next().unwrap_or(&rule.id)).is_some_and(|r| r.always_held)) {
+                    seeds.push(("fighter".to_owned(), None, Vec::new()));
+                }
+                if seeds.is_empty() {
+                    if let Some(cause) = rules.iter().find_map(|rule| converted_gate_cause(rule)) {
+                        last = unreachable(cause);
+                        continue;
+                    }
+                    // A record whose type tag was redacted as product identity (`[redacted PI]`) is selected by no
+                    // pool's offer: nothing above it in the data names it.
+                    if rules.iter().any(|rule| rule.tags.iter().any(|tag| tag.contains("redacted PI"))) {
+                        last = unreachable("PI redaction: the record's type tag is redacted, so no pool offer selects it".to_owned());
+                        continue;
+                    }
+                    if site["owner"].as_str().is_some_and(|owner| owner.starts_with("Codex-Named Unit (")) {
+                        last = unreachable("PI redaction: the record is PI-named and no converted grant or offer reaches it".to_owned());
+                        continue;
+                    }
+                    // Nothing in the converted data grants the record or offers it (its oracle grantor is a record the
+                    // converter did not convert or redacted: a Hellknight order's favored weapon).
+                    let ungranted = rules.iter().all(|rule| {
+                        let base = rule.id.split('#').next().unwrap_or(&rule.id);
+                        package().rule(base).is_some_and(|r| r.granted_by.is_empty()) && !offered_by().contains_key(base)
+                    });
+                    if ungranted {
+                        last = unreachable("converter: no converted record grants or offers the granting record".to_owned());
+                        continue;
+                    }
+                    // The record is granted, but its chain dead-ends before any class, archetype, feat or variant rule
+                    // (Haunted Implement ~ Trickster Spirit: its implement-school grantors are offered only by the haunt
+                    // collector's two-tag offer, which none of them carries both tags of).
+                    last = unreachable("converter: the record's grant chain reaches no class, archetype, feat or variant rule".to_owned());
+                    continue;
+                }
+                // The pool's own grant lines on the granting record, evaluated on a seed holding `principals`: (gate
+                // includes, amount). A line on a record its parameter choice sizes is that record's offer.
+                let pool_lines = |input: &CharacterInput, principals: &[String]| -> Vec<(bool, i64)> {
+                    let base = compute_pilot_base_chassis(input);
+                    let mut seed = HeldSeed::from_character(input, &base);
+                    seed.rule_ids.extend(principals.iter().cloned());
+                    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package(), &seed);
+                    let held = held_set(package(), &seed, &facts);
+                    grants
+                        .iter()
+                        .filter(|rule| granted_pool(package(), rule) == Some(pool.as_str()))
+                        .filter_map(|rule| {
+                            let SheetValue::Number(amount) = &rule.value else { return None };
+                            let ctx = held.rules.get(&rule.id).map_or_else(EvalContext::default, |e| EvalContext {
+                                holder_class: e.holder_class.clone(),
+                                spell_level: e.spell_level.unwrap_or(0),
+                                item_tags: Vec::new(),
+                            });
+                            let gate = if rule.id.contains('#') {
+                                sibling_line_gate(package(), &held, &facts, rule, ctx.clone())
+                            } else {
+                                evaluate_applies(&rule.applies, &held, package(), &facts, ctx.clone())
+                            };
+                            let amount = grant_amount(amount, &held, package(), &facts, ctx);
+                            Some((gate.includes(), if amount.den == 0 { 0 } else { amount.num / amount.den }))
+                        })
+                        .collect()
+                };
+                // A seed: the class at 20 (with its archetype) holding the granting record, the rules its gates hold or
+                // read, the records on the way to it, and (a second try) the rules raising the variables its grant
+                // counts (the paladin's domain count is 0 until an archetype raises it). A creation choice answering the
+                // record's own parameter is left out: the pick is the census's to make.
+                let mut first: Option<(CharacterInput, Vec<String>)> = None;
+                let held_seed = seeds.iter().take(8).find_map(|(class, archetype, on_the_way)| {
+                    let with = |reads: fn(&SheetRule) -> Vec<String>| -> Vec<String> {
+                        let mut principals: Vec<String> = rules
+                            .iter()
+                            .flat_map(|rule| std::iter::once(rule.id.split('#').next().unwrap_or(&rule.id).to_owned()).chain(reads(rule)).chain(rules_the_gate_holds(rule)))
+                            .chain(on_the_way.iter().flat_map(|id| std::iter::once(id.clone()).chain(package().rule(id).map(reads).unwrap_or_default())))
+                            .collect();
+                        principals.extend(archetype.map(|(_, rule)| rule.id.clone()));
+                        principals.sort();
+                        principals.dedup();
+                        principals
+                    };
+                    let principals = with(rules_the_gate_reads);
+                    let mut input = input_for(&fixture, class, 20);
+                    if let Some((selection, _)) = archetype {
+                        input.chosen.selected_choices.push(SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(), selection_id: selection.clone() });
+                    }
+                    input.chosen.selected_choices.retain(|choice| parameter.as_ref().is_none_or(|(rule, _)| choice.choice_set_id != rule.id));
+                    // A count the player sets (`CHOOSE:NUMBER`: how many manifesting levels advance) is set to 1.
+                    for line in grants.iter().filter(|rule| granted_pool(package(), rule) == Some(pool.as_str())) {
+                        if let SheetValue::Number(Expr::Choice(choice)) = &line.value {
+                            input.chosen.selected_choices.push(SelectedChoice { choice_set_id: choice.clone(), selection_id: "1".to_owned() });
+                        }
+                    }
+                    let granted = |principals: &[String]| class_feature_grants_holding(package(), &input, principals, SubTab::ClassFeatures).get(pool).is_some_and(|(n, _)| *n > 0);
+                    if granted(&principals) {
+                        return Some(input.clone());
+                    }
+                    // Second try: the rules raising what the gates compare (not merely declaring it), then each rule
+                    // raising the count itself.
+                    let raised = with(rules_the_gate_raises);
+                    if raised != principals && granted(&raised) {
+                        return Some(input.clone());
+                    }
+                    if rules_the_value_raises(&grants, pool).iter().any(|id| granted(&[raised.clone(), vec![id.clone()]].concat())) {
+                        return Some(input.clone());
+                    }
+                    first.get_or_insert((input, principals));
+                    None
+                });
+                let Some(input) = held_seed else {
+                    // A grant line that only takes picks away (an archetype's `BONUS:ABILITYPOOL|<pool>|-1` replacing the
+                    // class feature) offers no choice: there is nothing to reach.
+                    if let Some((input, principals)) = &first {
+                        let lines = pool_lines(input, principals);
+                        let negated = grants.iter().filter(|rule| granted_pool(package(), rule) == Some(pool.as_str())).all(|rule| {
+                            matches!(&rule.value, SheetValue::Number(Expr::Const(n)) if *n < 0)
+                                || matches!(&rule.value, SheetValue::Number(Expr::Mul(a, _)) if matches!(**a, Expr::Const(n) if n < 0))
+                        });
+                        if !lines.is_empty() && lines.iter().all(|(includes, n)| !includes || *n <= 0) && (negated || lines.iter().any(|(includes, n)| *includes && *n < 0)) {
+                            return ("removes picks".to_owned(), "an archetype's negative pool line takes the class's pick away".to_owned());
+                        }
+                    }
+                    let lines: Vec<&SheetRule> = grants.iter().copied().filter(|rule| granted_pool(package(), rule) == Some(pool.as_str())).collect();
+                    if let Some(cause) = lines.iter().find_map(|rule| converted_gate_cause(rule)) {
+                        last = unreachable(cause);
+                        continue;
+                    }
+                    // Every rule raising what the gates compare was held and the gate still excludes: the oracle's own
+                    // data never meets it (Resonant Power's `OccultistTransmutationFocus` >= 3 has one +1 source).
+                    let raisable = lines.iter().all(|rule| {
+                        let mut names = Vec::new();
+                        fn vars(value: &serde_json::Value, out: &mut Vec<String>) {
+                            match value {
+                                serde_json::Value::Object(map) => map.iter().for_each(|(k, v)| match (k.as_str(), v) {
+                                    ("Var", serde_json::Value::String(var)) => out.push(var.clone()),
+                                    _ => vars(v, out),
+                                }),
+                                serde_json::Value::Array(items) => items.iter().for_each(|item| vars(item, out)),
+                                _ => {}
+                            }
+                        }
+                        vars(&serde_json::to_value(&rule.applies).expect("applies serialize"), &mut names);
+                        !names.is_empty()
+                            && names.iter().filter_map(|var| package().vars.get(var)).all(|table| {
+                                !table.contributions.is_empty() && table.contributions.len() <= 8 && table.contributions.iter().all(|c| matches!(c.expr, Expr::Const(_) | Expr::ClassLevel(_)) && c.when == Applies::Always)
+                            })
+                    });
+                    if !lines.is_empty() && raisable {
+                        last = unreachable("engine gate: the gate is not met with every rule raising its variables held (an oracle gate its own data cannot meet)".to_owned());
+                        continue;
+                    }
                     last = unreachable("the pool is not granted to its class at 20 holding the granting record".to_owned());
                     continue;
-                }
+                };
                 let member = match &parameter {
                     Some((rule, _)) => Some(rule.id.clone()),
                     None => pool_member_selector(package(), &grants, pool)
@@ -2337,6 +2807,12 @@ mod tests {
                 // The first value the corpus lists, else a value the player writes in.
                 let target = parameter.as_ref().map(|(_, choice)| choice.values.first().cloned().unwrap_or_else(|| "Written in".to_owned()));
                 let Some(member) = member else {
+                    // The pool's category name was redacted with its PI-named granting record (`Hellknight Order`), so the
+                    // converter's member filter (keyed by the category's own name) is not keyed to it.
+                    if pool.starts_with("codex_named_unit_") {
+                        last = unreachable("PI redaction: the pool's category name is redacted, so its member filter is keyed to another name".to_owned());
+                        continue;
+                    }
                     last = unreachable("the pool is granted but lists no member".to_owned());
                     continue;
                 };
