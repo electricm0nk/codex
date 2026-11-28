@@ -40,6 +40,7 @@ for line in kb.splitlines():
     if len(f) < 10 or not re.match(r"^ (C|E)\d", f[1]):
         continue
     cid = f[1].strip()
+    assert len(f) == 11, f"kanban row {cid} has {len(f) - 1} cells, not 10 (run 16: E3.29 added a cell, so the receipt moved out of column 10)"
     deps = [] if f[5].strip() in ("—", "") else [d.strip() for d in f[5].split(",")]
     cards.append({
         "id": cid, "tier": f[3].strip(), "deps": deps, "lane": f[6].strip(),
