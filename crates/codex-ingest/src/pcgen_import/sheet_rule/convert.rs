@@ -860,6 +860,43 @@ fn internal_spell_known_grants(tree: &PinnedTree, key: &str) -> Option<Vec<(Stri
     (!out.is_empty()).then_some(out)
 }
 
+/// SD-43 E3.29 (operator ruling A, progress.md Operator replies 2026-11-27): three
+/// `BONUS:ABILITYPOOL` shapes of the pinned oracle that PCGen itself never grants, repaired to the
+/// rule their own record states. These values are NOT stated by PCGen.
+/// - a gate glued onto the count, its `|` missing: `Hunter Animal Focus|-1PRECLASS:1,Hunter=8`
+///   (Plant Master ~ Plant Focus, `uw_abilities_class.lst:677`) is `-1` gated on `PRECLASS:1,Hunter=8`;
+/// - a class name and category in the count field: `Special Ability|Barbarian Rage Power|1`
+///   (Blood God Disciple ~ Rage Power, `arg_abilities_class.lst:255`; the category is `Rage Power`)
+///   is 1 pick in `Rage Power`;
+/// - `MyrmidarchWeaponTrainingLVL`, `DEFINE`d 0 and raised by no oracle row
+///   (`uc_abilities_class_um.lst:45`), is the magus level its record states (6th, 12th, 18th).
+fn repair_ability_pool_defects(classes: &BTreeMap<String, (RuleId, ClassId)>, fields: &mut Vec<String>, gates: &mut Vec<String>) {
+    if fields.len() < 3 || !fields[0].eq_ignore_ascii_case("ABILITYPOOL") {
+        return;
+    }
+    if let Some(at) = fields[2].find("PRE")
+        && at > 0
+        && fields[2][..at].parse::<i32>().is_ok()
+    {
+        gates.push(fields[2][at..].to_string());
+        fields[2].truncate(at);
+    }
+    if fields.len() == 4
+        && fields[2].parse::<i32>().is_err()
+        && fields[3].parse::<i32>().is_ok()
+        && let Some((class, category)) = fields[2].split_once(' ')
+        && classes.contains_key(&class.to_ascii_uppercase())
+    {
+        fields[1] = category.trim().to_string();
+        fields.remove(2);
+    }
+    for gate in gates.iter_mut() {
+        if let Some(level) = gate.strip_prefix("PREVARGTEQ:MyrmidarchWeaponTrainingLVL,") {
+            *gate = format!("PRECLASS:1,Magus={level}");
+        }
+    }
+}
+
 /// The sheet total(s) a `BONUS:<sub>|<target>` feeds, with the label words for the line.
 fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(BonusTarget, String)>, String> {
     let t = target.trim();
@@ -2537,7 +2574,10 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         // ---- the bonus rows ----------------------------------------------------------------
         "BONUS" | "TEMPBONUS" => {
-            let (mut fields, gates) = split_gates(v);
+            let (mut fields, mut gates) = split_gates(v);
+            if key == "BONUS" {
+                repair_ability_pool_defects(&ctx.index.classes, &mut fields, &mut gates);
+            }
             let situational = if key == "TEMPBONUS" {
                 // Row TEMPBONUS (C16): drop the target-scope field; the line is situational.
                 if fields.is_empty() {
@@ -3545,5 +3585,62 @@ mod sf_engine_row_tests {
         let lines: Vec<&SheetRule> = rules.iter().filter(|r| r.target == Some(BonusTarget::Resolve)).collect();
         assert_eq!(lines.len(), 1, "{rules:?}");
         assert_eq!(serde_json::to_value(&lines[0].value).unwrap(), serde_json::json!({"Number": {"Const": 2}}));
+    }
+}
+
+/// SD-43 E3.29 (operator ruling A): the three oracle `BONUS:ABILITYPOOL` defects convert to the
+/// pools their records state. These values are not stated by PCGen.
+#[cfg(test)]
+mod ability_pool_defect_tests {
+    use super::*;
+
+    fn fields_of(v: &str) -> (Vec<String>, Vec<String>) {
+        let mut classes = BTreeMap::new();
+        classes.insert("BARBARIAN".to_string(), ("core_rulebook:class:barbarian".to_string(), "barbarian".to_string()));
+        let (mut fields, mut gates) = split_gates(v);
+        repair_ability_pool_defects(&classes, &mut fields, &mut gates);
+        (fields, gates)
+    }
+
+    fn rules(rel: &str) -> Vec<SheetRule> {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data/sheet_rules").join(rel);
+        serde_json::from_str(&std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))).expect("parses")
+    }
+
+    fn pool_lines(rules: &[SheetRule], pool: &str) -> Vec<(i32, String)> {
+        rules
+            .iter()
+            .filter(|r| matches!(&r.target, Some(BonusTarget::Pool(p)) if p == pool))
+            .map(|r| match &r.value {
+                SheetValue::Number(Expr::Const(n)) => (*n, serde_json::to_string(&r.applies).expect("applies")),
+                other => panic!("{}: {other:?}", r.id),
+            })
+            .collect()
+    }
+
+    #[test]
+    fn the_three_oracle_ability_pool_defects_repair_to_their_stated_rule() {
+        let s = |v: &[&str]| v.iter().map(|x| x.to_string()).collect::<Vec<_>>();
+        assert_eq!(fields_of("ABILITYPOOL|Hunter Animal Focus|-1PRECLASS:1,Hunter=8"), (s(&["ABILITYPOOL", "Hunter Animal Focus", "-1"]), s(&["PRECLASS:1,Hunter=8"])));
+        assert_eq!(fields_of("ABILITYPOOL|Special Ability|Barbarian Rage Power|1"), (s(&["ABILITYPOOL", "Rage Power", "1"]), vec![]));
+        assert_eq!(
+            fields_of("ABILITYPOOL|Weapon Training II|1|PREVARGTEQ:MyrmidarchWeaponTrainingLVL,12"),
+            (s(&["ABILITYPOOL", "Weapon Training II", "1"]), s(&["PRECLASS:1,Magus=12"]))
+        );
+        // Well-formed lines are read as they are.
+        assert_eq!(fields_of("ABILITYPOOL|Rage Power|1|TYPE=Base"), (s(&["ABILITYPOOL", "Rage Power", "1", "TYPE=Base"]), vec![]));
+        assert_eq!(fields_of("VAR|Foo|-1PRECLASS:1,Hunter=8").0[2], "-1PRECLASS:1,Hunter=8");
+
+        // The regenerated package carries them (`sheet_rule_convert --write`).
+        let blood = rules("advanced_race_guide/class_feature/blood_god_disciple_rage_power.json");
+        assert_eq!(pool_lines(&blood, "rage_power").len(), 1, "Blood God Disciple ~ Rage Power: one rage power pick");
+        let plant = rules("ultimate_wilderness/class_feature/plant_master_plant_focus.json");
+        let hunter = pool_lines(&plant, "hunter_animal_focus");
+        assert!(hunter.len() == 1 && hunter[0].0 == -1 && hunter[0].1.contains("hunter") && hunter[0].1.contains('8'), "Plant Focus: -1 animal focus at hunter 8: {hunter:?}");
+        let myrm = rules("ultimate_combat/class_feature/myrmidarch_weapon_training__dd4e4cb0a86be4b1.json");
+        for (pool, level) in [("weapon_training_i", "6"), ("weapon_training_ii", "12"), ("weapon_training_iii", "18")] {
+            let lines = pool_lines(&myrm, pool);
+            assert!(lines.len() == 1 && lines[0].0 == 1 && lines[0].1.contains("magus") && lines[0].1.contains(level), "Myrmidarch {pool} at magus {level}: {lines:?}");
+        }
     }
 }

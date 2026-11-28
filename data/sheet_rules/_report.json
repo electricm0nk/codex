@@ -2,7 +2,7 @@
   "records": 49450,
   "converted": 49450,
   "refused": 0,
-  "rules_written": 73363,
+  "rules_written": 73367,
   "var_tables": 6213,
   "by_kind": {
     "ability": {
@@ -102,7 +102,7 @@
     }
   },
   "refused_by_token_type": {},
-  "degraded_records": 424,
+  "degraded_records": 422,
   "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 2,
     "ASPECT\u003a<malformed sub-key>": 1,
@@ -139,7 +139,7 @@
     "FORMULA\u003aidentifier DEFINEd nowhere (SightedSeekeerPLStatScore inside a function or under * /)": 1,
     "FORMULA\u003aidentifier DEFINEd nowhere (SneakAttack inside a function or under * /)": 1,
     "FORMULA\u003aidentifier DEFINEd nowhere (Sorcerer inside a function or under * /)": 1,
-    "FORMULA\u003amalformed (parser refusals)": 94,
+    "FORMULA\u003amalformed (parser refusals)": 92,
     "FORMULA\u003amalformed (parser refusals) (empty)": 2,
     "FORMULA\u003avar(<export token>) (ACCHECK\u003a equipment/encumbrance state)": 8,
     "FORMULA\u003avar(<export token>) (ENCUMBERANCE\u003a equipment/encumbrance state)": 25,

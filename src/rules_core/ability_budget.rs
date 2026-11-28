@@ -2178,7 +2178,6 @@ mod tests {
     /// The kanban cards that own each cause a class-granted choice site is not reachable for (E3.MC, intake §22c), by
     /// the cause's opening words.
     const UNREACHABLE_CARDS: &[(&str, &str)] = &[
-        ("abilitypool: the granting record carries no converted Pool line", "E3.29"),
         ("no class of the granting record to seed", "E3.30"),
         ("the pool is not granted", "E3.30"),
         ("the pool is granted but lists no member", "E3.30"),
@@ -2221,7 +2220,18 @@ mod tests {
         let verdict = |(index, site): &(usize, &serde_json::Value)| -> (String, String) {
             let mechanism = site["mechanism"].as_str().expect("mechanism");
             let target = site["target"].as_str().expect("target");
-            let rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
+            let mut rules: Vec<&SheetRule> = site["rules"].as_array().expect("rules").iter().filter_map(|id| package().rule(id.as_str()?)).collect();
+            // E3.29: a record's pool lines are its `#bonusN` siblings too, which E0.1's site does not list when the
+            // converter wrote them later (the repaired oracle defects, operator ruling A).
+            if mechanism == "abilitypool" {
+                let bases: BTreeSet<&str> = rules.iter().map(|rule| rule.id.split('#').next().unwrap_or(&rule.id)).collect();
+                let siblings: Vec<&SheetRule> = package()
+                    .rules
+                    .values()
+                    .filter(|rule| rule.id.split_once('#').is_some_and(|(base, _)| bases.contains(base)) && !rules.iter().any(|r| r.id == rule.id))
+                    .collect();
+                rules.extend(siblings);
+            }
             let targets = |rule: &SheetRule, pool: &str| granted_pool(package(), rule) == Some(pool);
             // A class's domain count its own `DOMAIN:` rows fill is no pick (SD-36 F6c,
             // `pool_link::withhold_class_granted_domain_counts`: no offer, not printed): the Shaman's spirit-magic lists.
@@ -2253,7 +2263,15 @@ mod tests {
             }
             let pools: Vec<String> = match mechanism {
                 _ if base_category || ["parameter_choose", "add_token"].contains(&mechanism) => parameter.iter().map(|(rule, _)| parameter_pool(rule)).collect(),
-                "abilitypool" => Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))).into_iter().collect(),
+                "abilitypool" => match Some(id_slug(target)).filter(|slug| rules.iter().any(|rule| targets(rule, slug))) {
+                    Some(slug) => vec![slug],
+                    // E3.29 (ruling A): a line naming a base category (`Special Ability|Barbarian Rage Power|1`) converts to
+                    // the category its record states (`Rage Power`).
+                    None if ["FEAT", "Internal", "Special Ability"].contains(&target) => {
+                        rules.iter().filter_map(|rule| granted_pool(package(), rule)).map(str::to_owned).collect::<BTreeSet<_>>().into_iter().collect()
+                    }
+                    None => Vec::new(),
+                },
                 // The domain count's own pool (E3.28), else the pool a record grants beside it (Nature's Bond's
                 // `Druid Domain`).
                 "domain_count" => rules

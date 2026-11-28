@@ -1990,7 +1990,8 @@ mod term_level_refusal_gate {
             }
         }
         // Re-derive with: `python3 -c "import json; tokens=json.load(open('data/sheet_rules/_tokens.json')); refused={e['id'] for e in json.load(open('data/sheet_rules/_refused.json'))['entries']}; degraded=[e for e in tokens['entries'] if e.get('degradations') and e['id'] not in refused]; print(len(degraded))"` for record count, and the loop above (without `numbered.truncate`) for the line count.
-        assert_eq!(degraded.len(), 424, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
+        // 424 -> 422 (SD-43 E3.29): Blood God Disciple ~ Rage Power and Plant Master ~ Plant Focus read their repaired pool lines.
+        assert_eq!(degraded.len(), 422, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
         let numbered_count = numbered.len();
         still_refused.truncate(10);
         missing.truncate(10);
@@ -2002,7 +2003,9 @@ mod term_level_refusal_gate {
         // each, Hellknight Signifer, Red Mantis Assassin (both printings) and Cyphermage
         // (`inner_sea_magic`) +1 each. Their degradation (`BONUS:[redacted PI]`, a redacted
         // DEFINE) is unchanged.
-        assert_eq!(numbered_count, 636, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
+        // 636 -> 635 (SD-43 E3.29, operator ruling A): Plant Master ~ Plant Focus is no longer degraded (its glued
+        // `-1PRECLASS` is split), so its `plant_master_plant_focus` pool line leaves this count.
+        assert_eq!(numbered_count, 635, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
     }
 
     /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape
