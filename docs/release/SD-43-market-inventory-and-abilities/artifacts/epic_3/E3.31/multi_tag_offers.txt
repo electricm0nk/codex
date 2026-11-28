@@ -1,0 +1,77 @@
+56 offers with 2+ tags; 19 distinct (pool, tags) lists
+  1 | feat | Combat + Performance | all-of 13 | any-of 751
+  1 | feat | Combat + Psionic | all-of 4 | any-of 904
+  2 | feat | GunslingerFeat + Combat + Grit | all-of 0 | any-of 758
+ 10 | feat | Psionic + Combat | all-of 4 | any-of 904
+  1 | special_ability | CavalierOrder + Cavalier Order | all-of 2 | any-of 19
+  1 | special_ability | Haunted Implement School + Implement School | all-of 0 | any-of 16
+  2 | special_ability | Oracle Mysteries + ShamanSpirit | all-of 0 | any-of 12
+ 16 | special_ability | RagePower + Rage Power | all-of 13 | any-of 171
+  1 | special_ability | SamuraiOrder + CavalierOrder | all-of 2 | any-of 19
+  2 | special_ability | ShamanSpiritHex + ShamanFlameHex | all-of 5 | any-of 64
+  3 | special_ability | ShamanSpiritHex + ShamanHeavensHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanLifeHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanLoreHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanNatureHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanStoneHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanWavesHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanWindHex | all-of 5 | any-of 64
+  2 | special_ability | ShamanSpiritHex + ShamanWoodHex | all-of 5 | any-of 64
+  2 | special_ability | Sorcerer Bloodline + Bloodrager Bloodlines | all-of 0 | any-of 33
+--- offers
+advanced_class_guide:class_feature:primal_choice_rage_power_12 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:class_feature:primal_choice_rage_power_16 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:class_feature:primal_choice_rage_power_20 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:class_feature:primal_choice_rage_power_4 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:class_feature:primal_choice_rage_power_8 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_flame | True | special_ability | ['ShamanSpiritHex', 'ShamanFlameHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_heavens | True | special_ability | ['ShamanSpiritHex', 'ShamanHeavensHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_life | True | special_ability | ['ShamanSpiritHex', 'ShamanLifeHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_lore | True | special_ability | ['ShamanSpiritHex', 'ShamanLoreHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_nature | True | special_ability | ['ShamanSpiritHex', 'ShamanNatureHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_stone | True | special_ability | ['ShamanSpiritHex', 'ShamanStoneHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_waves | True | special_ability | ['ShamanSpiritHex', 'ShamanWavesHex'] | 5 | 64
+advanced_class_guide:class_feature:secondary_shaman_wandering_spirit_wind | True | special_ability | ['ShamanSpiritHex', 'ShamanWindHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_flame | True | special_ability | ['ShamanSpiritHex', 'ShamanFlameHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_heavens | True | special_ability | ['ShamanSpiritHex', 'ShamanHeavensHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_life | True | special_ability | ['ShamanSpiritHex', 'ShamanLifeHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_lore | True | special_ability | ['ShamanSpiritHex', 'ShamanLoreHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_nature | True | special_ability | ['ShamanSpiritHex', 'ShamanNatureHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_stone | True | special_ability | ['ShamanSpiritHex', 'ShamanStoneHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_waves | True | special_ability | ['ShamanSpiritHex', 'ShamanWavesHex'] | 5 | 64
+advanced_class_guide:class_feature:shaman_wandering_spirit_wind | True | special_ability | ['ShamanSpiritHex', 'ShamanWindHex'] | 5 | 64
+advanced_class_guide:class_feature:skald_rage_powers | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_class_guide:equipment_modifier:bloodhunting | True | special_ability | ['Sorcerer Bloodline', 'Bloodrager Bloodlines'] | 0 | 33
+advanced_class_guide:equipment_modifier:bloodhunting_amf | True | special_ability | ['Sorcerer Bloodline', 'Bloodrager Bloodlines'] | 0 | 33
+advanced_class_guide:equipment_modifier:spirithunting | True | special_ability | ['Oracle Mysteries', 'ShamanSpirit'] | 0 | 12
+advanced_class_guide:equipment_modifier:spirithunting_amf | True | special_ability | ['Oracle Mysteries', 'ShamanSpirit'] | 0 | 12
+advanced_players_guide:class_feature:cavalier_order | True | special_ability | ['CavalierOrder', 'Cavalier Order'] | 2 | 19
+advanced_players_guide:feat:extra_rage_power | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+advanced_race_guide:class_feature:blood_god_disciple_rage_power | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+adventurers_guide:ability:student_of_perfection_gunslinger_bonus_feat | True | feat | ['GunslingerFeat', 'Combat', 'Grit'] | 0 | 758
+adventurers_guide:class_feature:shaman_wandering_spirit_mammoth | True | special_ability | ['ShamanSpiritHex', 'ShamanHeavensHex'] | 5 | 64
+core_rulebook:class_feature:barbarian_rage_powers | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+horror_adventures:class_feature:exciter_rapturous_rage | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+horror_adventures:class_feature:haunt_collector_possessed_possessions | True | special_ability | ['Haunted Implement School', 'Implement School'] | 0 | 16
+inner_sea_combat:class_feature:guard_dedication_rage_power | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+ultimate_combat:class_feature:gladiator_bonus_feats | True | feat | ['Combat', 'Performance'] | 13 | 751
+ultimate_combat:class_feature:gunslinger_feat | True | feat | ['GunslingerFeat', 'Combat', 'Grit'] | 0 | 758
+ultimate_combat:class_feature:samurai_order | True | special_ability | ['SamuraiOrder', 'CavalierOrder'] | 2 | 19
+ultimate_combat:class_feature:wild_stalker_rage_powers | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+ultimate_combat:class_feature:wild_stalker_talent_rage_power | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+ultimate_psionics:class:psychic_warrior#bonus11 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus12 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus13 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus14 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus6 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus7 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus8 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class:psychic_warrior#bonus9 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class_feature:pathmaster_other_feat | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class_feature:psionic_fighter_psionic_feats#bonus2 | True | feat | ['Combat', 'Psionic'] | 4 | 904
+ultimate_psionics:class_feature:psychic_warrior_archetype_martial_kineticist#bonus1 | True | feat | ['Psionic', 'Combat'] | 4 | 904
+ultimate_psionics:class_feature:raging_surge#bonus0 | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+ultimate_psionics:class_feature:raging_surge_bonus_rage | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171
+ultimate_wilderness:class_feature:secondary_shaman_wandering_spirit_wood | True | special_ability | ['ShamanSpiritHex', 'ShamanWoodHex'] | 5 | 64
+ultimate_wilderness:class_feature:shaman_wandering_spirit_wood | True | special_ability | ['ShamanSpiritHex', 'ShamanWoodHex'] | 5 | 64
+ultimate_wilderness:class_feature:viking_viking_rage_power | True | special_ability | ['RagePower', 'Rage Power'] | 13 | 171

@@ -1994,6 +1994,19 @@ mod tests {
         assert_eq!(row(&class_features_at("barbarian", 4), "abilities.budget.class_features.rage_power.granted"), 2);
     }
 
+    /// The Rage Power category is `TYPE:RagePower.Rage Power`, and PCGen takes an ability carrying either type
+    /// (`AbilityCategory`'s member loop breaks on the first type matched), so the Barbarian lists the Core
+    /// Rulebook's rage powers (Powerful Blow, Animal Fury), which carry only `RagePower`.
+    #[test]
+    fn ability_budget_class_features_barbarian_4_rage_power_options_include_powerful_blow() {
+        let input = input_for(&load_sweep_fixture().expect("census fixture"), "barbarian", 4);
+        let options = ability_options(package(), &input, &compute_pilot_base_chassis(&input), SubTab::ClassFeatures);
+        let powers: Vec<&str> = options.iter().filter(|o| o.pool == "rage_power").map(|o| o.label.as_str()).collect();
+        for want in ["Powerful Blow", "Animal Fury"] {
+            assert!(powers.iter().any(|p| p.contains(want)), "{want} missing from {} Barbarian 4 rage power options: {powers:?}", powers.len());
+        }
+    }
+
     #[test]
     fn ability_budget_class_features_ninja_2_is_granted_one_ninja_trick_and_ninja_1_none() {
         assert_eq!(row(&class_features_at("ninja", 2), "abilities.budget.class_features.ninja_trick.granted"), 1);

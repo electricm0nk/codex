@@ -2660,16 +2660,18 @@ fn held_set_skipping(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charac
 }
 
 /// SD-36 F4pre: whether `offer`'s option set names `rule` as one of its options -- a principal
-/// rule (no `#` sibling) of the offered pool carrying every offered tag (`Rules`, the PCGen
-/// ability-category member test, `TYPE` matched without case), or a domain (`Domains`). The
-/// set's own `requires` gate is read separately ([`offer_requires`]).
+/// rule (no `#` sibling) of the offered pool carrying any offered tag (`Rules`, `TYPE` matched
+/// without case), or a domain (`Domains`). Any, not all (E3.31): a 2+ tag list is a category's
+/// `TYPE:A.B` (PCGen's `AbilityCategory` member loop takes an ability of either type) or separate
+/// `CHOOSE:...|TYPE=A|TYPE=B` arguments (a union). The set's own `requires` gate is read
+/// separately ([`offer_requires`]).
 pub fn offer_selects(offer: &Choice, rule: &SheetRule) -> bool {
     if rule.id.contains('#') {
         return false;
     }
     match &offer.from {
         OptionSet::Rules { pool, tags, .. } => {
-            &rule.pool == pool && tags.iter().all(|t| rule.tags.iter().any(|o| o.eq_ignore_ascii_case(t)))
+            &rule.pool == pool && (tags.is_empty() || tags.iter().any(|t| rule.tags.iter().any(|o| o.eq_ignore_ascii_case(t))))
         }
         OptionSet::Domains => split_rule_id(&rule.id).1 == "domain",
         _ => false,
